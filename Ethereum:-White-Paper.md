@@ -15,42 +15,43 @@ However, most of these applications are difficult to implement today, simply bec
     * Metacoins
 * Philosophy
 * Basic Building Blocks
-* Modified GHOST Implementation
-* Ethereum Client P2P Protocol
-* Currency and Issuance
-* Data Format
-* Mining Algorithm
-* Transactions
-* Difficulty Adjustment
-* Block Rewards
+    * Modified GHOST Implementation
+    * Ethereum Client P2P Protocol
+    * Currency and Issuance
+    * Data Format
+    * Mining Algorithm
+    * Transactions
+    * Difficulty Adjustment
+    * Block Rewards
 * Contracts
-* Applications
-* Sub-currencies
-* Financial derivatives
-* Identity and Reputation Systems
-* Decentralized Autonomous Organizations
-* Further Applications
-* How Do Contracts Work?
-* Language Specification
+    * Applications
+    * Sub-currencies
+    * Financial derivatives
+    * Identity and Reputation Systems
+    * Decentralized Autonomous Organizations
+    * Further Applications
+    * How Do Contracts Work?
+    * Language Specification
 * Fees
 * Conclusion
 * References and Further Reading
 
 
-Why A New Platform?
+## Why A New Platform?
 
-When one wants to create a new application, especially in an area as delicate as cryptography or cryptocurrency, the immediate, and correct, first instinct is to use existing protocols as much as possible. There is no need to create a new currency, or even a new protocol, when the problem can be solved entirely by using existing technologies. Indeed, the puzzle of attempting to solve the problems of smart property, smart contracts and decentralized autonomous corporations on top of Bitcoin is how our interest in next-generation cryptocurrency protocols originally started. Over the course of our research, however, it became evident that while the Bitcoin protocol is more than adequate for currency, basic multisignature escrow and certain simple versions of smart contracts, there are fundamental limitations that make it non-viable for anything beyond a certain very limited scope of features.
+When one wants to create a new application, especially in an area as delicate as cryptography or cryptocurrency, the immediate, and correct, first instinct is to use existing protocols as much as possible. There is no need to create a new currency, or even a new protocol, when the problem can be solved entirely by using existing technologies. Indeed, the puzzle of attempting to solve the problems of [smart property](https://en.bitcoin.it/wiki/Smart_Property), [smart contracts](https://en.bitcoin.it/wiki/Contracts) and [decentralized autonomous corporations](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) on top of Bitcoin is how our interest in next-generation cryptocurrency protocols originally started. Over the course of our research, however, it became evident that while the Bitcoin protocol is more than adequate for currency, basic multisignature escrow and certain simple versions of smart contracts, there are fundamental limitations that make it non-viable for anything beyond a certain very limited scope of features.
 
 
-Colored Coins
+## Colored Coins
 
-The first attempt to implement a system for managing smart property and custom currencies and assets on top of a blockchain was built as a sort of overlay protocol on top of Bitcoin, with many advocates making a comparison to the way that, in the internet protocol stack, HTTP serves as a layer on top of TCP. The colored coins protocol is roughly defined as follows:
+The first attempt to implement a system for managing smart property and custom currencies and assets on top of a blockchain was built as a sort of overlay protocol on top of Bitcoin, with many advocates making a comparison to the way that, in the [internet protocol stack](http://en.wikipedia.org/wiki/Internet_protocol_suite), [HTTP](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) serves as a layer on top of [TCP](http://en.wikipedia.org/wiki/Transmission_Control_Protocol). The [colored coins](https://docs.google.com/a/ursium.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) protocol is roughly defined as follows:
 
-A colored coin issuer determines that a given transaction output H:i (H being the transaction hash and i the output index) represents a certain asset, and publishes a "color definition" specifying this transaction output alongside what it represents (eg. 1 satoshi from H:i = 1 ounce of gold redeemable at Stephen's Gold Company)
-Others "install" the color definition file in their colored coin clients.
-When the color is first released, output H:i is the only transaction output to have that color.
-If a transaction spends inputs with color X, then its outputs will also have color X. For example, if the owner of H:i immediately makes a transaction to split that output among five addresses, then those transaction outputs will all also have color X. If a transaction has inputs of different colors, then a "color transfer rule" or "color kernel" determines which colors which outputs are (eg. a very naive implementation may say that output 0 has the same color as input 0, output 1 the same color as input 1, etc).
-When a colored coin client notices that it received a new transaction output, it uses a back-tracing algorithm based on the color kernel to determine the color of the output. Because the rule is deterministic, all clients will agree on what color (or colors) each output has.
+1. A colored coin issuer determines that a given transaction output H:i (H being the transaction hash and i the output index) represents a certain asset, and publishes a "color definition" specifying this transaction output alongside what it represents (eg. 1 satoshi from H:i = 1 ounce of gold redeemable at Stephen's Gold Company)
+2. Others "install" the color definition file in their colored coin clients.
+3. When the color is first released, output H:i is the only transaction output to have that color.
+4. If a transaction spends inputs with color X, then its outputs will also have color X. For example, if the owner of H:i immediately makes a transaction to split that output among five addresses, then those transaction outputs will all also have color X. If a transaction has inputs of different colors, then a "color transfer rule" or "color kernel" determines which colors which outputs are (eg. a very naive implementation may say that output 0 has the same color as input 0, output 1 the same color as input 1, etc).
+5. When a colored coin client notices that it received a new transaction output, it uses a back-tracing algorithm based on the color kernel to determine the color of the output. Because the rule is deterministic, all clients will agree on what color (or colors) each output has.
+
 However, the protocol has several fundamental flaws:
 
 Simplified Payment Verification in Bitcoin 
