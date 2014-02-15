@@ -11,8 +11,8 @@ However, most of these applications are difficult to implement today, simply bec
 ### Table of Contents
 
 * Why A New Platform?
-..* Colored Coins
-..* Metacoins
+    * Colored Coins
+    * Metacoins
 * Philosophy
 * Basic Building Blocks
 * Modified GHOST Implementation
