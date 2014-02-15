@@ -10,31 +10,32 @@ However, most of these applications are difficult to implement today, simply bec
 
 ### Table of Contents
 
-*Why A New Platform?
-**Colored Coins
-*Metacoins
-Philosophy
-Basic Building Blocks
-Modified GHOST Implementation
-Ethereum Client P2P Protocol
-Currency and Issuance
-Data Format
-Mining Algorithm
-Transactions
-Difficulty Adjustment
-Block Rewards
-Contracts
-Applications
-Sub-currencies
-Financial derivatives
-Identity and Reputation Systems
-Decentralized Autonomous Organizations
-Further Applications
-How Do Contracts Work?
-Language Specification
-Fees
-Conclusion
-References and Further Reading
+* Why A New Platform?
+..* Colored Coins
+..* Metacoins
+* Philosophy
+* Basic Building Blocks
+* Modified GHOST Implementation
+* Ethereum Client P2P Protocol
+* Currency and Issuance
+* Data Format
+* Mining Algorithm
+* Transactions
+* Difficulty Adjustment
+* Block Rewards
+* Contracts
+* Applications
+* Sub-currencies
+* Financial derivatives
+* Identity and Reputation Systems
+* Decentralized Autonomous Organizations
+* Further Applications
+* How Do Contracts Work?
+* Language Specification
+* Fees
+* Conclusion
+* References and Further Reading
+
 
 Why A New Platform?
 
