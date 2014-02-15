@@ -5,9 +5,6 @@ In the last few months, there has been a great amount of interest into the area 
 However, most of these applications are difficult to implement today, simply because the scripting systems of Bitcoin, and even next-generation cryptocurrency protocols such as the Bitcoin-based colored coins protocol and so-called "metacoins", are far too limited to allow the kind of arbitrarily complex computation that DAOs require. What this project intends to do is take the innovations that such protocols bring, and generalize them - create a fully-fledged, Turing-complete (but heavily fee-regulated) cryptographic ledger that allows participants to encode arbitrarily complex contracts, autonomous agents and relationships that will be mediated entirely by the blockchain. Rather than being limited to a specific set of transaction types, users will be able to use Ethereum as a sort of "Lego of crypto-finance" - that is to say, one will be able to implement any feature that one desires simply by coding it in the protocol's internal scripting language. Custom currencies, financial derivatives, identity systems and decentralized organizations will all be easy to do, but more importantly, unlike previous systems, it will also be possible to construct transaction types that even the Ethereum developers did not imagine. Altogether, we believe that this design is a solid step toward the realization of "cryptocurrency 2.0"; we hope that Ethereum will be as significant an addition to the cryptocurrency ecosystem as the advent of Web 2.0 was to the static-content-only internet of 1999.
 
 
-
-
-
 ### Table of Contents
 
 * Why A New Platform?
@@ -55,10 +52,11 @@ The first attempt to implement a system for managing smart property and custom c
 However, the protocol has several fundamental flaws:
 
 Simplified Payment Verification in Bitcoin 
+![SPV in bitcoin](https://www.ethereum.org/gh_wiki/spv_bitcoin.png)
+#### Left: it suffices to present only a small number of nodes in a Merkle tree to give a proof of the validity of a branch.
+#### Right: any attempt to change any part of the Merkle tree will eventually lead to an inconsistency somewhere up the chain.
 
-   
-Left: it suffices to present only a small number of nodes in a Merkle tree to give a proof of the validity of a branch.
-Right: any attempt to change any part of the Merkle tree will eventually lead to an inconsistency somewhere up the chain.
+
 Difficulty of simplified payment verification - Bitcoin's Merkle tree construction allows for a protocol known as "simplified payment verification", where a client that does not download the full blockchain can quickly determine the validity of a transaction output by asking other nodes to provide a cryptographic proof of the validity of a single branch of the tree. The client will still need to download the block headers to be secure, but the amount of data bandwidth and verification time required drops by a factor of nearly a thousand. With colored coins, this is much harder. The reason is that one cannot determine the color of a transaction output simply by looking up the Merkle tree; rather, one needs to employ the backward scanning algorithm, fetching potentially thousands of transactions and requesting a Merkle tree validity proof of each one, before a client can be fully satisfied that a transaction has a certain color. After over a year of investigation, including help from ourselves, no solution has been found to this problem.
 Incompatibility with scripting - as mentioned above, Bitcoin does have a moderately flexible scripting system, for example allowing users to sign transactions of the form "I release this transaction output to anyone willing to pay to me 1 BTC". Other examples include assurance contracts, efficient micropayments and on-blockchain auctions. However, this system is inherently not color-aware; that is to say, one cannot make a transaction of the form "I release this transaction output to anyone willing to pay me one gold coin defined by the genesis H:i", because the scripting language has no idea that a concept of "colors" even exists. One major consequence of this is that, while trust-free swapping of two different colored coins is possible, a full decentralized exchange is not since there is no way to place an enforceable order to buy or sell.
 Same limitations as Bitcoin - ideally, on-blockchain protocols would be able to support advanced derivatives, bets and many forms of conditional transfers. Unfortunately, colored coins inherits the limitations of Bitcoin in terms of the impossibility of many such arrangements.
