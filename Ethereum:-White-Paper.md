@@ -1,7 +1,4 @@
-Ethereum: White Paper
-----
-A Next-Generation Smart Contract and Decentralized Application Platform
-
+### A Next-Generation Smart Contract and Decentralized Application Platform
 
 In the last few months, there has been a great amount of interest into the area of using Bitcoin-like blockchains - the mechanism that allows for the entire world to agree on the state of a public ownership database - for more than just money. Commonly cited applications include using on-blockchain digital assets to represent custom currencies and financial instruments ("colored coins"), "smart property" devices such as cars which track a colored coin on a blockchain to determine their present legitimate owner, as well as more advanced applications such as decentralized exchange, financial derivatives, peer-to-peer gambling and on-blockchain identity and reputation systems. Perhaps the most ambitious of all cited applications is the concept of autonomous agents or decentralized autonomous organizations (DAOs) - autonomous entities that operate on the blockchain without any central control whatsoever, eschewing all dependence on legal contracts and organizational bylaws in favor of having resources and funds autonomously managed by a self-enforcing smart contract on a cryptographic blockchain.
 
