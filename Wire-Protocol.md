@@ -15,7 +15,7 @@ Though TCP provides a connection-oriented medium, Ethereum nodes communicate in 
 There are a number of different types of payload that may be encoded within the RLP. This ''type'' is always determined by the first entry of the RLP, interpreted as an integer:
 
 **Hello**
-* <code>[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID]</code>
+* `[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID]`
 * First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
 * CLIENT_ID Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
 * PROTOCOL_VERSION is one of:
@@ -27,7 +27,7 @@ There are a number of different types of payload that may be encoded within the 
 * NODE_ID is optional and specifies a 512-bit hash, (potentially to be used as public key) that identifies this node.
 
 **Disconnect**
-* <code>[0x01, REASON]</code>
+* `[0x01, REASON]`
 * Inform the peer that a disconnection is imminent; if received, a peer should disconnect immediately. When sending, well-behaved hosts give their peers a fighting chance (read: wait 2 seconds) to disconnect to before disconnecting themselves.
 * REASON is an optional integer specifying one of a number of reasons for disconnect:
 * 0x00 Disconnect requested;
@@ -40,27 +40,27 @@ There are a number of different types of payload that may be encoded within the 
 * 0x07 Incompatible network protocols.
 
 **Ping**
-* <code>[0x02]</code> 
+* `[0x02]`
 * Requests an immediate reply of '''Pong''' from the peer.
 
 **Pong**
-* <code>[0x03]</code> 
+* `[0x03]`
 * Reply to peer's '''Ping''' packet.
 
 **GetPeers**
-* <code>[0x10]</code> 
+* `[0x10]`
 * Request the peer to enumerate some known peers for us to connect to. This should include the peer itself.
 
 **Peers**
-* [0x11, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]
+* `[0x11, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]`
 * Specifies a number of known peers. IPx is a 4-byte array 'ABCD' that should be interpreted as the IP address A.B.C.D. Port is a 2-byte array that should be interpreted as a 16-bit big-endian integer. Id is the 512-bit hash that acts as the unique identifier of the node.
 
 **Transactions**
-* [0x12, [nonce, receiving_address, value, ... ], ... ]
+* `[0x12, [nonce, receiving_address, value, ... ], ... ]`
 * Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item 0x12) are transactions in the format described in the main Ethereum specification.
 
 **Blocks**
-* [0x13, [block_header, transaction_list, uncle_list], ... ]
+* `[0x13, [block_header, transaction_list, uncle_list], ... ]`
 * Specify (a) block(s) that the peer should know about. The items in the list (following the first item, 0x13) are blocks in the format described in the main Ethereum specification.
 
 **GetChain**
