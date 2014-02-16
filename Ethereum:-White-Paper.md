@@ -7,7 +7,7 @@ However, most of these applications are difficult to implement today, simply bec
 
 ### Table of Contents
 
-* Why A New Platform?
+* [Why A New Platform](#why-a-new-platform)
     * Colored Coins
     * Metacoins
 * Philosophy
