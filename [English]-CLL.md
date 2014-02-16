@@ -100,7 +100,7 @@ In the context of a statement:
 
 ### Syntax
 
-* Arithmetic is done using infix notation using the [http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence C++ operator precedence]: `^` then `* / % s/ s%` then `+ -` then `&lt; &lt;= &gt; &gt;=` then `==` then `&amp;&amp;` then `||`. That is to say, arithmetic formulas will behave as they normally do; for example, `(+ (* 3 5) (* x y))` would be (3 * 5 + x * y) and `(* (+ 3 5) (+ x y))` would be `((3 + 5) * (x + y))`
+* Arithmetic is done using infix notation using the [C++ operator precedence](http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence ): `^` then `* / % s/ s%` then `+ -` then `&lt; &lt;= &gt; &gt;=` then `==` then `&amp;&amp;` then `||`. That is to say, arithmetic formulas will behave as they normally do; for example, `(+ (* 3 5) (* x y))` would be (3 * 5 + x * y) and `(* (+ 3 5) (+ x y))` would be `((3 + 5) * (x + y))`
 * `(&quot;arr&quot; a b)` and `(&quot;pseudo&quot; a b)` will both be represented as `a[b]`
 * `(&quot;fun&quot; a b...)`, `(&quot;mfun&quot; a b...)`, `(&quot;afun&quot; a b...)` and `(&quot;pfun&quot; a...)` will all be represented as `a(b1,b2, ... ,bn)`
 * Multiexpressions will be represented as `a1, a2, ... an`
