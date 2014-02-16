@@ -116,7 +116,8 @@ The mining function is tentative, and will be replaced once we know that we have
 
 When mining a block, a miner goes through the following process:
 
-1. Take as inputs:
+1- Take as inputs:
+
 * `uncle_headers` to be the list of known unused valid uncle headers
 * `timestamp` to be the current timestamp
 * `parent` to be the parent block
@@ -124,18 +125,19 @@ When mining a block, a miner goes through the following process:
 * `coinbase` to be the desired coinbase address
 * `txlist` to be the list of transactions to be added
 
-2. Set:
+2- Set:
+
 * `difficulty = adjust_difficulty(parent.difficulty,timestamp,parent.timestamp)`
 * `reward = 15 * 10^18` (tentatively)
 * `block_header = [ parent.hash, parent.number + 1, TRIEHASH(txlist), TRIEHASH(uncle_headers), 0, coinbase, 0, difficulty, timestamp, extra_data, 0 ]`
 
-3. Initialize:
+3- Initialize:
 
 * `state` to be the parent block state
 * `txstack = TRIE(txlist)`
 * `stacktrace = TRIE([])`
 
-4. While `stacktrace.root != ''`:
+4- While `stacktrace.root != ''`:
 
 * `TRIEPUSH(stacktrace,[state.root,txstack.root])`
 * Apply the transaction `TRIETOP(txstack)` to `state`.
@@ -143,20 +145,20 @@ When mining a block, a miner goes through the following process:
 * Let `L[0] ... L[m-1]` be the list of new transactions spawned by that transaction via `MKTX`, in the order that they were produced during script execution.
 * Initialize `j = m-1`. While `j &gt;= 0`, `TRIEPUSH(txstack,L[j])` and `j -= 1`
 
-5. Make the following modifications to the state tree:
+5- Make the following modifications to the state tree:
 
 * Increase the balance of `coinbase` by `reward`
 * For each uncle `u` in `uncle_headers`, increase the balance of `u.coinbase` by `reward * 13/16` and increase the balance of `coinbase` by `reward * 1/16`
 
-6. Fill in the first two zeroes in `block_header` with `state.root` and `TRIEHASH(stack_trace)`
+6- Fill in the first two zeroes in `block_header` with `state.root` and `TRIEHASH(stack_trace)`
 
-7. Set `nonce = compute_valid_nonce(block_header)`, and fill in the remaining zero in the block header with this value
+7- Set `nonce = compute_valid_nonce(block_header)`, and fill in the remaining zero in the block header with this value
 
 ### Block Validation Algorithm
 
 [[File:Minerchart2.png|500px|right]]
 
-1. Take as inputs:
+1- Take as inputs:
 
 * `block` to be the block header
 * `uncle_list` to be the block's uncle list
@@ -164,7 +166,7 @@ When mining a block, a miner goes through the following process:
 * `stacktrace` to be the block's stack trace
 * `now` to be the current time as measured by the miner's CPU
 
-2. Check the following:
+2- Check the following:
 
 * Is there an object, which is a block, in the database with `block.prevhash` as its hash? Let `parent` be that block.
 * Is the proof of work on the block valid?
@@ -177,13 +179,13 @@ When mining a block, a miner goes through the following process:
 * Is `block.stacktrace_hash = TRIEHASH(stacktrace)`?
 * Is `block.uncle_hash = H(uncle_list)`?
 
-3. Initialize:
+3- Initialize:
 
 * `state` to be block parent block's state
 * `txstack = TRIE(transaction_list)`
 * `i = 0`
 
-4. Let `stacktrace[k] = [ M[k], H[k] ]`, defaulting to '' if `k` is out of bounds. While `i &lt; len(stacktrace)`:
+4- Let `stacktrace[k] = [ M[k], H[k] ]`, defaulting to '' if `k` is out of bounds. While `i &lt; len(stacktrace)`:
 
 * Check that `state.root == M[i]` and `txstack.root == H[i]`
 * Apply `transaction_list[i]` to `state`.
@@ -193,16 +195,16 @@ When mining a block, a miner goes through the following process:
 * Initialize `j = m-1`. While `j &gt;= 0`, `TRIEPUSH(txstack,L[j])` and `j -= 1`
 * Set `i += 1`
 
-5. Make the following modifications to `state`:
+5- Make the following modifications to `state`:
 
 * Increase the balance of `coinbase` by `reward`
 * For each uncle `u` in `uncle_headers`, increase the balance of `u.coinbase` by `reward * 13/16` and increase the balance of `coinbase` by `reward * 1/16`
 
-6. Check that `txstack.root == ''`
+6- Check that `txstack.root == ''`
 
-7. Check that `state.root == block.state_root`
+7- Check that `state.root == block.state_root`
 
-8. If any check failed, return FALSE. Otherwise, return TRUE.
+8- If any check failed, return FALSE. Otherwise, return TRUE.
 
 If a block is valid, determine TD(block) (&quot;total difficulty&quot;) for the new block. TD is defined recursively by `TD(genesis_block) = 0` and `TD(B) = TD(B.parent) + sum([u.difficulty for u in B.uncles]) + B.difficulty`. If the new block has higher TD than the current block, set the current block to the new block and continue to the next step. Otherwise, exit.
 
