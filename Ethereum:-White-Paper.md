@@ -10,7 +10,7 @@ However, most of these applications are difficult to implement today, simply bec
 * [Why A New Platform](#why-a-new-platform)
     * [Colored Coins](#Colored-Coins)
     * [Metacoins](#Metacoins)
-* [Philosophy](#Philosophy)
+* [Philosophy](#philosophy)
 * [Basic Building Blocks](#Basic-Building-Blocks)
     * [Modified GHOST Implementation](#Modified-GHOST-Implementation)
     * [Ethereum Client P2P Protocol](#Ethereum-Client-P2P-Protocol)
