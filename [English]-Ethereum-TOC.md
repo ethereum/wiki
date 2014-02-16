@@ -11,3 +11,9 @@
 [CLL](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-CLL), High-level "C-Like Language" specification, used to author contracts.
 
 [Dagger](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Dagger), Ethereum's "proof-of-work" specification.
+
+[Block Protocol 2.0](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Block-Protocol-2.0)
+
+[Layers](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Layers)
+
+[Clearinghouse](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Clearinghouse)
