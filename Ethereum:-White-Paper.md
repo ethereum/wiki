@@ -405,21 +405,21 @@ DAOs and DACs have already been the topic of a large amount of interest among cr
 
 ### Further Applications
 
-1. Savings wallets. Suppose that Alice wants to keep her funds safe, but is worried that she will lose or someone will hack her private key. She puts ether into a contract with Bob, a bank, as follows: Alice alone can withdraw a maximum of 1% of the funds per day, Alice and Bob together can withdraw everything, and Bob alone can withdraw a maximum of 0.05% of the funds. Normally, 1% per day is enough for Alice, and if Alice wants to withdraw more she can contact Bob for help. If Alice's key gets hacked, she runs to Bob to move the funds to a new contract. If she loses her key, Bob will get the funds out eventually. If Bob turns out to be malicious, she can still withdraw 20 times faster than he can.
+1. **Savings wallets**. Suppose that Alice wants to keep her funds safe, but is worried that she will lose or someone will hack her private key. She puts ether into a contract with Bob, a bank, as follows: Alice alone can withdraw a maximum of 1% of the funds per day, Alice and Bob together can withdraw everything, and Bob alone can withdraw a maximum of 0.05% of the funds. Normally, 1% per day is enough for Alice, and if Alice wants to withdraw more she can contact Bob for help. If Alice's key gets hacked, she runs to Bob to move the funds to a new contract. If she loses her key, Bob will get the funds out eventually. If Bob turns out to be malicious, she can still withdraw 20 times faster than he can.
 
-2. Crop insurance. One can easily make a financial derivatives contract but using a data feed of the weather instead of any price index. If a farmer in Iowa purchases a derivative that pays out inversely based on the precipitation in Iowa, then if there is a drought, the farmer will automatically receive money and if there is enough rain the farmer will be happy because their crops would do well.
+2. **Crop insurance**. One can easily make a financial derivatives contract but using a data feed of the weather instead of any price index. If a farmer in Iowa purchases a derivative that pays out inversely based on the precipitation in Iowa, then if there is a drought, the farmer will automatically receive money and if there is enough rain the farmer will be happy because their crops would do well.
 
-3. A decentrally managed data feed, using proof-of-stake voting to give an average (or more likely, median) of everyone's opinion on the price of a commodity, the weather or any other relevant data.
+3. **A decentrally managed data feed**, using proof-of-stake voting to give an average (or more likely, median) of everyone's opinion on the price of a commodity, the weather or any other relevant data.
 
-4. Smart multisignature escrow. Bitcoin allows multisignature transaction contracts where, for example, three out of a given five keys can spend the funds. Ethereum allows for more granularity; for example, four out of five can spend everything, three out of five can spend up to 10% per day, and two out of five can spend up to 0.5% per day. Additionally, Ethereum multisig is asynchronous - two parties can register their signatures on the blockchain at different times and the last signature will automatically send the transaction.
+4. **Smart multisignature escrow**. Bitcoin allows multisignature transaction contracts where, for example, three out of a given five keys can spend the funds. Ethereum allows for more granularity; for example, four out of five can spend everything, three out of five can spend up to 10% per day, and two out of five can spend up to 0.5% per day. Additionally, Ethereum multisig is asynchronous - two parties can register their signatures on the blockchain at different times and the last signature will automatically send the transaction.
 
-5. Peer-to-peer gambling. Any number of peer-to-peer gambling protocols, such as Frank Stajano and Richard Clayton's Cyberdice, can be implemented on the Ethereum blockchain. The simplest gambling protocol is actually simply a contract for difference on the next block hash. From there, entire gambling services such as SatoshiDice can be replicated on the blockchain either by creating a unique contract per bet or by using a quasi-centralized contract.
+5. **Peer-to-peer gambling**. Any number of peer-to-peer gambling protocols, such as Frank Stajano and Richard Clayton's [Cyberdice](http://www.cl.cam.ac.uk/~fms27/papers/2008-StajanoCla-cyberdice.pdf), can be implemented on the Ethereum blockchain. The simplest gambling protocol is actually simply a contract for difference on the next block hash. From there, entire gambling services such as SatoshiDice can be replicated on the blockchain either by creating a unique contract per bet or by using a quasi-centralized contract.
 
-6. A full-scale on-chain stock market. Prediction markets are also easy to implement as a trivial consequence.
+6. A full-scale **on-chain stock market**. Prediction markets are also easy to implement as a trivial consequence.
 
-7. An on-chain decentralized marketplace, using the identity and reputation system as a base.
+7. An **on-chain decentralized marketplace**, using the identity and reputation system as a base.
 
-8. Decentralized Dropbox. One setup is to encrypt a file, build a Merkle tree out of it, put the Merkle root into a contract alongside a certain quantity of ether, and distribute the file across some secondary network. Every day, the contract would randomly select a branch of the Merkle tree depending on the block hash, and give X ether to the first node to provide that branch to the contract, thereby encouraging nodes to store the data for the long term in an attempt to earn the prize. If one wants to download any portion of the file, one can use a micropayment channel-style contract to download the file from a few nodes a block at a time.
+8. **Decentralized Dropbox**. One setup is to encrypt a file, build a Merkle tree out of it, put the Merkle root into a contract alongside a certain quantity of ether, and distribute the file across some secondary network. Every day, the contract would randomly select a branch of the Merkle tree depending on the block hash, and give X ether to the first node to provide that branch to the contract, thereby encouraging nodes to store the data for the long term in an attempt to earn the prize. If one wants to download any portion of the file, one can use a [micropayment-channel](https://bitcointalk.org/index.php?topic=244656.0)-style contract to download the file from a few nodes a block at a time.
 
 
 ### How do contracts work?
@@ -459,12 +459,14 @@ The contract scripting language is a hybrid of assembly language and Bitcoin's s
 
 Whenever a transaction is sent to a contract, the contract executes its scripting code. The precise steps that happen when a contract receives a transaction are as follows:
 
-Contract Script Interpretation 
+**Contract Script Interpretation **
+
 ![SPV in bitcoin](https://www.ethereum.org/gh_wiki/flowchart.png)
 
 1. The contract's ether balance increases by the amount sent
 2. The index pointer is set to zero, and STEPCOUNT = 0
 3. Repeat forever:
+
 * if the command at the index pointer is STOP, invalid or greater than 63, exit from the loop
 * set MINERFEE = 0, VOIDFEE = 0
 * set STEPCOUNT <- STEPCOUNT + 1
