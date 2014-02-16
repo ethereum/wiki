@@ -49,7 +49,7 @@ Where:
 
 Each transaction and uncle block header is itself provided directly in the form of a list, not in a serialized form. `uncle_list` and `transaction_list` are the lists of the uncle block headers and transactions in the block, respectively. Note that the block number, difficulty and timestamp are integers, and therefore cannot have leading zeroes; `extra_data` and `nonce` can be byte arrays of at most 32 bytes, NOT lists, although this particular check should not be performed for the genesis block where the `extra_data` field will take up many kilobytes.
 
-The `state_root` is the root of a [http://wiki.ethereum.org/index.php/Patricia_Tree Merkle Patricia tree] containing (key, value) pairs for all accounts where each address is represented as a 20-byte binary string. At the address of each account, the value stored in the Merkle Patricia tree is a string which is the RLP-serialized form of an object of the form:
+The `state_root` is the root of a [Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) containing (key, value) pairs for all accounts where each address is represented as a 20-byte binary string. At the address of each account, the value stored in the Merkle Patricia tree is a string which is the RLP-serialized form of an object of the form:
 
     [ balance, nonce, contract_root ]
 
@@ -227,8 +227,8 @@ In the validation algorithm described in the previous section, note that there a
 
 For (2) and (3), in order for a trie hash check to pass it means that two conditions must be met:
 
-# For all indices `i &lt; k` for some `k`, there must be a valid transaction in the trie at `i`
-# For all indices `i &gt;= k`, everything must be blank.
+1. For all indices `i &lt; k` for some `k`, there must be a valid transaction in the trie at `i`
+2. For all indices `i &gt;= k`, everything must be blank.
 
 A challenge of invalidity consists of either (1) an index `i` pointing to a potential invalid transaction, or (2) an index `i` pointing to a blank space and an index `j &gt; i` pointing to a transaction. A response should contain (1) `i`, (2) `j` if applicable, (3) the subset of Patricia tree nodes needed to verify the values at `i` and `j` in the trie.
 
@@ -242,7 +242,7 @@ The protocol altogether can be shown to be incentive-compatible as follows:
 
 1. Miners have the incentive to submit challenges to blocks mined by other nodes because if a challenge is successful and then they mine the next block they will have the opportunity to gain an extra 0.0625X reward by including the header of the invalid block as an uncle.
 2. The miner of a block, and all uncles inside the block, at the very least have the incentive to respond to challenges.
-3. Light nodes have the incentive to respect the block validity rules because everyone else does, an argument advanced in http://themonetaryfuture.blogspot.ca/2011/07/bitcoin-decentralization-and-nash.html . Without the challenge-response protocol, this argument does not apply because the cost of determining whether or not a block is valid is prohibitively high; with the protocol, this reasoning no longer applies.
+3. Light nodes have the incentive to respect the block validity rules because everyone else does, an argument advanced in http://themonetaryfuture.blogspot.ca/2011/07/bitcoin-decentralization-and-nash.html. Without the challenge-response protocol, this argument does not apply because the cost of determining whether or not a block is valid is prohibitively high; with the protocol, this reasoning no longer applies.
 4. Substantial stakeholders have the incentive to promote the perceived integrity of the system to maximize the value of their currency units, and thus may want to help actively submit both challenges and responses where possible.
 5. Statistically speaking, far more than 0.01% of agents inside of real-world economic agents, whether or not weighted by economic power, tend to motivated by altruistic/ideological considerations. The market share of charities around the world is sufficient evidence of this.
 
