@@ -1,8 +1,8 @@
-== Merkle Patricia Tree Specification ==
+### Merkle Patricia Tree Specification
 
 Merkle Patricia trees provide a cryptographically authenticated data structure that can be used to store all (key, value) bindings, although for the scope of this paper we are restricting keys and values to strings (to remove this restriction, just use any serialization format for other data types). They are fully deterministic, meaning that a Patricia tree with the same (key,value) bindings is guaranteed to be exactly the same down to the last byte and therefore have the same root hash, provide the holy grail of O(log(n)) efficiency for inserts, lookups and deletes, and are much easier to understand and code than more complex comparison-based alternatives like red-black trees.
 
-=== Preamble: Basic Radix Trees ===
+### Preamble: Basic Radix Trees
 
 In a basic radix tree, every node looks as follows:
 
@@ -43,7 +43,7 @@ The "Merkle" part of the radix tree arises in the fact that a deterministic cryp
 
 However, radix trees have one major limitation: their inefficiency. If you want to store just one (key,value) binding where the key is a few hundred characters long, you will need over a kilobyte of extra space to store one level per character, and each lookup or delete will take hundreds of steps. The Patricia tree introduced here solves this issue.
 
-=== Specification: Compact encoding of hex sequence with optional terminator ===
+### Specification: Compact encoding of hex sequence with optional terminator
 
 The traditional compact way of encoding a hex string is to convert it into binary - that is, a string like 0f1248 would become three bytes [ 15, 18, 72 ] (or in string representation \x0f\x18H). However, this approach has one slight problem: what if the length of the hex string is odd? In that case, there is no way to distinguish between, say, 0f1248 and f1248. Additionally, our application in the Merkle Patricia tree requires the additional feature that a hex string can also have a special &quot;terminator symbol&quot; at the end (denoted by the 'T'). A terminator symbol can occur only once, and only at the end. An alternative way of thinking about this to not think of there being a terminator symbol, but instead treat bit specifying the existence of the terminator symbol as a bit specifying that the given node encodes a final node, where the value is an actual value, rather than the hash of yet another node.
 
