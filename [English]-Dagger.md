@@ -86,4 +86,4 @@ This algorithm provides a proof of work mining function with memory hardness pro
 ## Acknowledgements
 
 * Thanks to Adam Back and Charles Hoskinson, for discussion and critique of earlier drafts of the protocol
-* See also: [http://www.cri.ensmp.fr/classement/doc/A-370-v1.pdf Fabien Coelho's paper], in which Fabien Coelho had independently discovered a similar algorithm in 2005.
+* See also: [Fabien Coelho's paper](http://www.cri.ensmp.fr/classement/doc/A-370-v1.pdf), in which Fabien Coelho had independently discovered a similar algorithm in 2005.
