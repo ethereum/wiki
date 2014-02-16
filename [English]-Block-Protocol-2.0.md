@@ -117,7 +117,6 @@ The mining function is tentative, and will be replaced once we know that we have
 When mining a block, a miner goes through the following process:
 
 1. Take as inputs:
-
 * `uncle_headers` to be the list of known unused valid uncle headers
 * `timestamp` to be the current timestamp
 * `parent` to be the parent block
@@ -126,7 +125,6 @@ When mining a block, a miner goes through the following process:
 * `txlist` to be the list of transactions to be added
 
 2. Set:
-
 * `difficulty = adjust_difficulty(parent.difficulty,timestamp,parent.timestamp)`
 * `reward = 15 * 10^18` (tentatively)
 * `block_header = [ parent.hash, parent.number + 1, TRIEHASH(txlist), TRIEHASH(uncle_headers), 0, coinbase, 0, difficulty, timestamp, extra_data, 0 ]`
