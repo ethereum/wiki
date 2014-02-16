@@ -61,8 +61,8 @@ _Left: it suffices to present only a small number of nodes in a Merkle tree to g
 _Right: any attempt to change any part of the Merkle tree will eventually lead to an inconsistency somewhere up the chain._
 
 
-1. **Difficulty of simplified payment verification** - Bitcoin's Merkle tree construction allows for a protocol known as "simplified payment verification", where a client that does not download the full blockchain can quickly determine the validity of a transaction output by asking other nodes to provide a cryptographic proof of the validity of a single branch of the tree. The client will still need to download the block headers to be secure, but the amount of data bandwidth and verification time required drops by a factor of nearly a thousand. With colored coins, this is much harder. The reason is that one cannot determine the color of a transaction output simply by looking up the Merkle tree; rather, one needs to employ the backward scanning algorithm, fetching potentially thousands of transactions and requesting a Merkle tree validity proof of each one, before a client can be fully satisfied that a transaction has a certain color. After over a year of investigation, including help from ourselves, no solution has been found to this problem.
-2. **Incompatibility with scripting** - as mentioned above, Bitcoin does have a moderately flexible scripting system, for example allowing users to sign transactions of the form "I release this transaction output to anyone willing to pay to me 1 BTC". Other examples include assurance contracts, efficient micropayments and on-blockchain auctions. However, this system is inherently not color-aware; that is to say, one cannot make a transaction of the form "I release this transaction output to anyone willing to pay me one gold coin defined by the genesis H:i", because the scripting language has no idea that a concept of "colors" even exists. One major consequence of this is that, while trust-free swapping of two different colored coins is possible, a full decentralized exchange is not since there is no way to place an enforceable order to buy or sell.
+1. **Difficulty of simplified payment verification** - Bitcoin's [Merkle Tree](http://en.wikipedia.org/wiki/Merkle_tree) construction allows for a protocol known as "[simplified payment verification](https://en.bitcoin.it/wiki/Scalability#Simplified_payment_verification)", where a client that does not download the full blockchain can quickly determine the validity of a transaction output by asking other nodes to provide a cryptographic proof of the validity of a single branch of the tree. The client will still need to download the block headers to be secure, but the amount of data bandwidth and verification time required drops by a factor of nearly a thousand. With colored coins, this is much harder. The reason is that one cannot determine the color of a transaction output simply by looking up the Merkle tree; rather, one needs to employ the backward scanning algorithm, fetching potentially thousands of transactions and requesting a Merkle tree validity proof of each one, before a client can be fully satisfied that a transaction has a certain color. After over a year of investigation, including help from ourselves, no solution has been found to this problem.
+2. **Incompatibility with scripting** - as mentioned above, Bitcoin does have a moderately flexible scripting system, for example allowing users to sign transactions of the form "I release this transaction output to anyone willing to pay to me 1 BTC". Other examples include [assurance contracts](http://en.wikipedia.org/wiki/Assurance_contract), [efficient micropayments](https://en.bitcoin.it/wiki/Contracts#Example_7:_Rapidly-adjusted_.28micro.29payments_to_a_pre-determined_party) and on-blockchain auctions. However, this system is inherently not color-aware; that is to say, one cannot make a transaction of the form "I release this transaction output to anyone willing to pay me one gold coin defined by the genesis H:i", because the scripting language has no idea that a concept of "colors" even exists. One major consequence of this is that, while trust-free swapping of two different colored coins is possible, a full decentralized exchange is not since there is no way to place an enforceable order to buy or sell.
 3. **Same limitations as Bitcoin** - ideally, on-blockchain protocols would be able to support advanced derivatives, bets and many forms of conditional transfers. Unfortunately, colored coins inherits the limitations of Bitcoin in terms of the impossibility of many such arrangements.
 
 ### Metacoins
@@ -93,84 +93,94 @@ The design behind Ethereum is intended to follow the following principles:
 
 1. **Simplicity** - the Ethereum protocol should be as simple as possible, even at the cost of some data storage or time inefficiency. An average programmer should ideally be able to follow and implement the entire specification, so as to fully realize the unprecedented democratizing potential that cryptocurrency brings and further the vision of Ethereum as a protocol that is open to all. Any optimization which adds complexity should not be included unless that optimization provides very substantial benefit.
 2. **Universality** - a fundamental part of Ethereum's design philosophy is that Ethereum does not have "features". Instead, Ethereum provides an internal Turing-complete scripting language, which a programmer can use to construct any smart contract or transaction type that can be mathematically defined. Want to invent your own financial derivative? With Ethereum, you can. Want to make your own currency? Set it up as an Ethereum contract. Want to set up a full-scale Daemon or Skynet? You may need to have a few thousand interlocking contracts, and be sure to feed them generously, to do that, but nothing is stopping you with Ethereum at your fingertips.
-3. **Modularity** - the parts of the Ethereum protocol should be designed to be as modular and separable as possible. Over the course of development, our goal is to create a program where if one was to make a small protocol modification in one place, the application stack would continue to function without any further modification. Innovations such as Dagger, Patricia trees and RLP should be implemented as separate libraries and made to be feature-complete even if Ethereum does not require certain features so as to make them usable in other protocols as well. Ethereum development should be maximally done so as to benefit the entire cryptocurrency ecosystem, not just itself.
+3. **Modularity** - the parts of the Ethereum protocol should be designed to be as modular and separable as possible. Over the course of development, our goal is to create a program where if one was to make a small protocol modification in one place, the application stack would continue to function without any further modification. Innovations such as [Dagger](https://wiki.ethereum.org/index.php/Dagger), [Patricia trees](https://wiki.ethereum.org/index.php/Patricia_Tree) and [RLP](https://wiki.ethereum.org/index.php/RLP) should be implemented as separate libraries and made to be feature-complete even if Ethereum does not require certain features so as to make them usable in other protocols as well. Ethereum development should be maximally done so as to benefit the entire cryptocurrency ecosystem, not just itself.
 4. **Agility** - details of the Ethereum protocol are not set in stone. Although we will be extremely judicious about making modifications to high-level constructs such as the C-like language and the address system, computational tests later on in the development process may lead us to discover that certain modifications to the algorithm or scripting language will substantially improve scalability or security. If any such opportunities are found, we will exploit them.
 5. **Non-discrimination** - the protocol should not attempt to actively restrict or prevent specific categories of usage. All regulatory mechanisms in the protocol should be designed to directly regulate the harm and not attempt to oppose specific undesirable applications. A programmer can even run an infinite loop script on top of Ethereum for as long as they are willing to keep paying the per-computational-step transaction fee.
+
 
 ## Basic Building Blocks
 
 At its core, Ethereum starts off as a fairly regular memory-hard proof-of-work mined cryptocurrency without many extra complications. In fact, Ethereum is in some ways simpler than the Bitcoin-based cryptocurrencies that we use today. The concept of a transaction having multiple inputs and outputs, for example, is gone, replaced by a more intuitive balance-based model (to prevent transaction replay attacks, as part of each account balance we also store an incrementing nonce). Sequence numbers and lock times are also removed, and all transaction and block data is encoded in a single format. Instead of addresses being the RIPEMD160 hash of the SHA256 hash of the public key prefixed with 04, addresses are simply the last 20 bytes of the SHA3 hash of the public key. Unlike other cryptocurrencies, which aim to offer a large number of "features", Ethereum intends to take features away, and instead provide its users with near-infinite power through an all-encompassing mechanism known as "contracts".
 
+### Modified GHOST Implementation
 
-Modified GHOST Implementation
-
-The "Greedy Heavist Observed Subtree" (GHOST) protocol is an innovation first introduced by Yonatan Sompolinsky and Aviv Zohar in December 2013. The motivation behind GHOST is that blockchains with fast confirmation times currently suffer from reduced security due to a high stale rate - because blocks take a certain time to propagate through the network, if miner A mines a block and then miner B happens to mine another block before miner A's block propagates to B, miner B's block will end up wasted and will not contribute to network security. Furthermore, there is a centralization issue: if miner A is a mining pool with 30% hashpower and B has 10% hashpower, A will have a risk of producing stale blocks 70% of the time whereas B will have a risk of producing stale blocks 90% of the time. Thus, if the stale rate is high, A will be substantially more efficient simply by virtue of its size. With these two effects combined, blockchains which produce blocks quickly are very likely to lead to one mining pool having a large enough percentage of the network hashpower to have de facto control over the mining process.
+The "Greedy Heavist Observed Subtree" (GHOST) protocol is an innovation first introduced by Yonatan Sompolinsky and Aviv Zohar in [December 2013](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf). The motivation behind GHOST is that blockchains with fast confirmation times currently suffer from reduced security due to a high stale rate - because blocks take a certain time to propagate through the network, if miner A mines a block and then miner B happens to mine another block before miner A's block propagates to B, miner B's block will end up wasted and will not contribute to network security. Furthermore, there is a centralization issue: if miner A is a mining pool with 30% hashpower and B has 10% hashpower, A will have a risk of producing stale blocks 70% of the time whereas B will have a risk of producing stale blocks 90% of the time. Thus, if the stale rate is high, A will be substantially more efficient simply by virtue of its size. With these two effects combined, blockchains which produce blocks quickly are very likely to lead to one mining pool having a large enough percentage of the network hashpower to have de facto control over the mining process.
 
 As descrived by Sompolinsky and Zohar, GHOST solves the first issue of network security loss by including stale blocks in the calculation of which chain is the "longest"; that is to say, not just the parent and further ancestors of a block, but also the stale descendants of the block's ancestor (in Ethereum jargon, "uncles") are added to the calculation of which block has the largest total proof of work backing it. To solve the second issue of centralization bias, we go beyond the protocol described by Sompolinsky and Zohar, and also provide block rewards to stales: a stale block receives 87.5% of its base reward, and the nephew that includes the stale block receives the remaining 12.5%. Transaction fees, however, are not awarded to uncles.
 
 Ethereum implements a simplified version of GHOST which only goes down one level. Specifically, a stale block can only be included as an uncle by the direct child of one of its direct siblings, and not any block with a more distant relation. This was done for several reasons. First, unlimited GHOST would include too many complications into the calculation of which uncles for a given block are valid. Second, unlimited GHOST with compensation as used in Ethereum removes the incentive for a miner to mine on the main chain and not the chain of a public attacker. Finally, calculations show that single-level GHOST has over 80% of the benefit of unlimited GHOST, and provides a stale rate comparable to the 2.5 minute Litecoin even with a 40-second block time. However, we will be conservative and still retain a Primecoin-like 60-second block time because individual blocks may take a longer time to verify.
 
 
-Ethereum Client P2P Protocol
+### Ethereum Client P2P Protocol
 
-P2P Protocol 
-
+**P2P Protocol **
+![SPV in bitcoin](https://www.ethereum.org/gh_wiki/minerchart.png)
 
 The Ethereum client P2P protocol is a fairly standard cryptocurrency protocol, and can just as easily be used for any other cryptocurrency; the only modification is the introduction of the GHOST protocol described above. The Ethereum client will be mostly reactive; if not provoked, the only thing the client will do by itself is have the networking daemon maintain connections and periodically send a message asking for blocks whose parent is the current block. However, the client will also be more powerful. Unlike bitcoind, which only stores a limited amount of data about the blockchain, the Ethereum client will also act as a fully functional backend for a block explorer.
 
 When the client reads a message, it will perform the following steps:
 
-Hash the data, and check if the data with that hash has already been received. If so, exit.
-Determine the data type. If the data is a transaction, if the transaction is valid add it to the local transaction list, process it onto the current block and publish it to the network. If the data item is a message, respond to it. If the data item is a block, go to step 3.
-Check if the parent of the block is already stored in the database. If it is not, exit.
-Check if the proof of work on the block header and all block headers in the "uncle list" is valid. If any are not, exit.
-Check if every block header in the "uncle list" in the block has the block's parent's parent as its own parent. If any is not, exit. Note that uncle block headers do not need to be in the database; they just need to have the correct parent and a valid proof of work. Also, make sure that uncles are unique and distinct from the parent.
-Check if the timestamp of the block is at most 15 minutes into the future and ahead of the timestamp of the parent. Check if the difficulty of the block and the block number are correct. If either of these checks fails, exit.
-Start with the state of the parent of the block, and sequentially apply every transaction in the block to it. At the end, add the miner rewards. If the root hash of the resulting state tree does not match the state root in the block header, exit. If it does, add the block to the database and advance to the next step.
-Determine TD(block) ("total difficulty") for the new block. TD is defined recursively by TD(genesis_block) = 0 and TD(B) = TD(B.parent) + sum([u.difficulty for u in B.uncles]) + B.difficulty. If the new block has higher TD than the current block, set the current block to the new block and continue to the next step. Otherwise, exit.
-If the new block was changed, apply all transactions in the transaction list to it, discarding from the transaction list any that turn out to be invalid, and rebroadcast the block and those transactions to the network.
+1. Hash the data, and check if the data with that hash has already been received. If so, exit.
+2. Determine the data type. If the data is a transaction, if the transaction is valid add it to the local transaction list, process it onto the current block and publish it to the network. If the data item is a message, respond to it. If the data item is a block, go to step 3.
+3. Check if the parent of the block is already stored in the database. If it is not, exit.
+4. Check if the proof of work on the block header and all block headers in the "uncle list" is valid. If any are not, exit.
+5. Check if every block header in the "uncle list" in the block has the block's parent's parent as its own parent. If any is not, exit. Note that uncle block headers do not need to be in the database; they just need to have the correct parent and a valid proof of work. Also, make sure that uncles are unique and distinct from the parent.
+6. Check if the timestamp of the block is at most 15 minutes into the future and ahead of the timestamp of the parent. Check if the difficulty of the block and the block number are correct. If either of these checks fails, exit.
+7. Start with the state of the parent of the block, and sequentially apply every transaction in the block to it. At the end, add the miner rewards. If the root hash of the resulting state tree does not match the state root in the block header, exit. If it does, add the block to the database and advance to the next step.
+8. Determine TD(block) ("total difficulty") for the new block. TD is defined recursively by TD(genesis_block) = 0 and TD(B) = TD(B.parent) + sum([u.difficulty for u in B.uncles]) + B.difficulty. If the new block has higher TD than the current block, set the current block to the new block and continue to the next step. Otherwise, exit.
+9. If the new block was changed, apply all transactions in the transaction list to it, discarding from the transaction list any that turn out to be invalid, and rebroadcast the block and those transactions to the network.
+
 The "current block" is a pointer maintained by each node that refers to the block that the node deems as representing the current official state of the network. All messages asking for balances, contract states, etc, have their responses computed by looking at the current block. If a node is mining, the process is only slightly changed: while doing all of the above, the node also continuously mines on the current block, using its transaction list as the transaction list of the block.
 
 
-Currency and Issuance
+### Currency and Issuance
 
-The Ethereum network includes its own built-in currency, ether. The main reason for including a currency in the network is twofold. First, like Bitcoin, ether is rewarded to miners so as to incentivize network security. Second, it serves as a mechanism for paying transaction fees for anti-spam purposes. Of the two main alternatives to fees, per-transaction proof of work similar to Hashcash and zero-fee laissez-faire, the former is wasteful of resources and unfairly punitive against weak computers and smartphones and the latter would lead to the network being almost immediately overwhelmed by an infinitely looping "logic bomb" contract. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate), the denominations will be pre-labelled:
+The Ethereum network includes its own built-in currency, ether. The main reason for including a currency in the network is twofold. First, like Bitcoin, ether is rewarded to miners so as to incentivize network security. Second, it serves as a mechanism for paying transaction fees for anti-spam purposes. Of the two main alternatives to fees, per-transaction proof of work similar to [Hashcash](http://en.wikipedia.org/wiki/Hashcash) and zero-fee laissez-faire, the former is wasteful of resources and unfairly punitive against weak computers and smartphones and the latter would lead to the network being almost immediately overwhelmed by an infinitely looping "logic bomb" contract. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate), the denominations will be pre-labelled:
 
-After 1 year	 After 5 years
-Currency units	 1.9X	 3.5X
-Fundraiser participants	 52.6%	 28.6%
-Fiduciary members and early contributors	 11.8%	 6.42%
-Additional pre-launch allocations	 2.63%	 1.42%
-Reserve	 11.8%	 6.42%
-Miners	 21.1%	 57.1%
 1: wei
-103: (unspecified)
-106: (unspecified)
-109: (unspecified)
-1012: szabo
-1015: finney
-1018: ether
+10^3: (unspecified)
+10^6: (unspecified)
+10^9: (unspecified)
+10^12: szabo
+10^15: finney
+10^18: ether
+
 This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi" that is intended to be future proof. Szabo, finney and ether will likely be used in the foreseeable future, and the other units will be more . "ether" is intended to be the primary unit in the system, much like the dollar or bitcoin. The right to name the 103, 106 and 109 units will be left as a high-level secondary reward for the fundraiser subject to pre-approval from ourselves.
 
 The issuance model will be as follows:
 
-Ether will be released in a fundraiser at the price of 1000-2000 ether per BTC, with earlier funders getting a better price to compensate for the increased uncertainty of participating at an earlier stage. The minimum funding amount will be 0.01 BTC. Suppose that X ether gets released in this way
-0.225X ether will be allocated to the fiduciary members and early contributors who substantially participated in the project before the start of the fundraiser. This share will be stored in a time-lock contract; about 40% of it will be spendable after one year, 70% after two years and 100% after 3 years.
-0.05X ether will be allocated to a fund to use to pay expenses and rewards in ether between the start of the fundraiser and the launch of the currency
-0.225X ether will be allocated as a long-term reserve pool to pay expenses, salaries and rewards in ether after the launch of the currency
-0.4X ether will be mined per year forever after that point
-Long-Term Inflation Rate (percent) 
+* Ether will be released in a fundraiser at the price of 1000-2000 ether per BTC, with earlier funders getting a better price to compensate for the increased uncertainty of participating at an earlier stage. The minimum funding amount will be 0.01 BTC. Suppose that X ether gets released in this way
+* 0.225X ether will be allocated to the fiduciary members and early contributors who substantially participated in the project before the start of the fundraiser. This share will be stored in a time-lock contract; about 40% of it will be spendable after one year, 70% after two years and 100% after 3 years.
+* 0.05X ether will be allocated to a fund to use to pay expenses and rewards in ether between the start of the fundraiser and the launch of the currency
+* 0.225X ether will be allocated as a long-term reserve pool to pay expenses, salaries and rewards in ether after the launch of the currency
+* 0.4X ether will be mined per year forever after that point
 
- 
+
+| Group  | After 1 year | After 5 years
+| ------------- | ------------- |-------------|
+| Currency units  | 1.9X  |  3.5X |
+| Fundraiser participants  | 52.6%  | 28.6% |
+| Fiduciary members and early contributors | 11.8% | 6.42% |
+| Additional pre-launch allocations | 2.63% | 1.42% |
+| Reserve | 11.8% | 6.42% |
+| Miners | 21.1% | 57.1% |
+	 	 
+
+** Long-Term Inflation Rate (percent) **
+
+![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
+
 Despite the linear currency issuance, just like with Bitcoin over time the inflation rate nevertheless tends to zero
+
+
 For example, after five years and assuming no transactions, 28.6% of the ether will be in the hands of the fundraiser participants, 6.42% in the fiduciary member and early contributor pool, 6.42% paid to the reserve pool, and 57.1% will belong to miners. The permanent linear inflation model reduces the risk of what some see as excessive wealth concentration in Bitcoin, and gives individuals living in present and future eras a fair chance to acquire currency units, while at the same time retaining a strong incentive to obtain and hold ether because the inflation "rate" still tends to zero over time (eg. during year 1000001 the money supply would increase from 500001.5 * X to 500002 * X, an inflation rate of 0.0001%). Furthermore, much of the interest in Ethereum will be medium-term; we predict that if Ethereum succeeds it will see the bulk of its growth on a 1-10 year timescale, and supply during that period will be very much limited.
 
 We also theorize that because coins are always lost over time due to carelessness, death, etc, and coin loss can be modeled as a percentage of the total supply per year, that the total currency supply in circulation will in fact eventually stabilize at a value equal to the annual issuance divided by the loss rate (eg. at a loss rate of 1%, once the supply reaches 40X then 0.4X will be mined and 0.4X lost every year, creating an equilibrium).
 
 
-Data Format
+### Data Format
 
-All data in Ethereum will be stored in recursive length prefix encoding, which serializes arrays of strings of arbitrary length and dimension into strings. For example, ['dog', 'cat'] is serialized (in byte array format) as [ 130, 67, 100, 111, 103, 67, 99, 97, 116]; the general idea is to encode the data type and length in a single byte followed by the actual data (eg. converted into a byte array, 'dog' becomes [ 100, 111, 103 ], so its serialization is [ 67, 100, 111, 103 ]. Note that RLP encoding is, as suggested by the name, recursive; when RLP encoding an array, one is really encoding a string which is the concatenation of the RLP encodings of each of the elements. Additionally, note that block number, timestamp, difficulty, memory deposits, account balances and all values in contract storage are integers, and Patricia tree hashes, root hashes, addresses, transaction list hashes and all keys in contract storage are strings. The main difference between the two is that strings are stored as fixed-length data (20 bytes for addresses, 32 bytes for everything else), and integers take up only as much space as they need. Integers are stored in big-endian base 256 format (eg. 32767 in byte array format as [ 127, 255 ]).
+All data in Ethereum will be stored in [recursive length prefix encoding](https://github.com/ethereum/wiki/wiki/RLP), which serializes arrays of strings of arbitrary length and dimension into strings. For example, ['dog', 'cat'] is serialized (in byte array format) as [ 130, 67, 100, 111, 103, 67, 99, 97, 116]; the general idea is to encode the data type and length in a single byte followed by the actual data (eg. converted into a byte array, 'dog' becomes [ 100, 111, 103 ], so its serialization is [ 67, 100, 111, 103 ]. Note that RLP encoding is, as suggested by the name, recursive; when RLP encoding an array, one is really encoding a string which is the concatenation of the RLP encodings of each of the elements. Additionally, note that block number, timestamp, difficulty, memory deposits, account balances and all values in contract storage are integers, and Patricia tree hashes, root hashes, addresses, transaction list hashes and all keys in contract storage are strings. The main difference between the two is that strings are stored as fixed-length data (20 bytes for addresses, 32 bytes for everything else), and integers take up only as much space as they need. Integers are stored in big-endian base 256 format (eg. 32767 in byte array format as [ 127, 255 ]).
 
 A full block is stored as:
 
@@ -179,6 +189,7 @@ A full block is stored as:
         transaction_list,
         uncle_list 
     ]
+
 Where:
 
     transaction_list = [
@@ -204,58 +215,64 @@ Where:
         extra_data,
         nonce
     ]
+
 Each transaction and uncle block header is itself a list. The data for the proof of work is the RLP encoding of the block WITHOUT the nonce. uncle_list and transaction_list are the lists of the uncle block headers and transactions in the block, respectively. nonce and extra_data are both limited to a maximum of 32 bytes, except the genesis block where the extra_data parameter will be much larger.
 
-The state_root is the root of a Merkle Patricia tree containing (key, value) pairs for all accounts where each address is represented as a 20-byte binary string. At the address of each account, the value stored in the Merkle Patricia tree is a string which is the RLP-serialized form of an object of the form:
+The state_root is the root of a [Merkle Patricia tree](https://github.com/ethereum/wiki/wiki/Patricia-Tree) containing (key, value) pairs for all accounts where each address is represented as a 20-byte binary string. At the address of each account, the value stored in the Merkle Patricia tree is a string which is the RLP-serialized form of an object of the form:
 
     [ balance, nonce, contract_root, storage_deposit ]
+
 The nonce is the number of transactions made from the account, and is incremented every time a transaction is made. The purpose of this is to (1) make each transaction valid only once to prevent replay attacks, and (2) to make it impossible (more precisely, cryptographically infeasible) to construct a contract with the same hash as a pre-existing contract. balance refers to the account's balance, denominated in wei. contract_root is the root of yet another Patricia tree, containing the contract's memory, if that account is controlled by a contract. If an account is not controlled by a contract, the contract root will simply be the empty string. storage_deposit is a counter that stores paid storage fees; its function will be discussed in more detail further in this paper.
 
 
-Mining algorithm
+### Mining algorithm
 
 One highly desirable property in mining algorithms is resistance to optimization through specialized hardware. Originally, Bitcoin was conceived as a highly democratic currency, allowing anyone to participate in the mining process with a CPU. In 2010, however, much faster miners exploiting the rapid parallelization offered by graphics processing units (GPUs) rapidly took over, increasing network hashpower by a factor of 100 and leaving CPUs essentially in the dust. In 2013, a further category of specialized hardware, application-specific integrated circuits (ASICs) outcompeted the GPUs in turn, achieving another 100x speedup by using chips fabricated for the sole purpose of computing SHA256 hashes. Today, it is virtually impossible to mine without first purchasing a mining device from one of these companies, and some people are concerned that in 5-10 years' time mining will be entirely dominated by large centralized corporations such as AMD and Intel.
 
 To date, the main way of achieving this goal has been "memory-hardness", constructing proof of work algorithms that require not only a large number of computations, but also a large amount of memory, to validate, thereby making highly parallelized specialized hardware implementations less effective. There have been several implementations of memory-hard proof of work, all of which have their flaws:
 
-Scrypt - Scrypt is a function which is designed to take 128 KB of memory to compute. The algorithm essentially works by filling a memory array with hashes, and then computing intermediate values and finally a result based on the values in the memory array. However, the 128 KB parameter is a very weak threshold, and ASICs for Litecoin are already under development. Furthermore, there is a natural limit to how much memory hardness with Scrypt can be tweaked up to achieve, as the verification process takes just as much memory, and just as much computation, as one round of the mining process.
-Birthday attacks - the idea behind birthday-based proofs of work is simple: find values xn,i,j such that i < k, j < k and |H(data+xn+i) - H(data+xn+j)| < 2^256 / d^2. The d parameter sets the computational difficulty of finding a block, and the k parameter sets the memory hardness. Any birthday algorithm must somehow store all computations of H(data+xn+i) in memory so that future computations can be compared against them. Here, computation is memory-hard, but verification is memory-easy, allowing for extreme memory hardness without compromising the ease of verification. However, the algorithm is problematic for two reasons. First, there is a time-memory tradeoff attack where users 2x less memory can compensate with 2x more computational power, so its memory hardness is not absolute. Second, it may be easy to build specialized hardware devices for the problem, especially once one moves beyond traditional chip and processor architecture and into various classes of hardware-based hash tables or probabilistic analog computing.
-Dagger - the idea behind Dagger, an in-house algorithm developed by the Ethereum team, is to have an algorithm that is similar to Scrypt, but which is specially designed so that each individual nonce only depends on a small portion of the data tree that gets built up for each group of ~10 million nonces. Computing nonces with any reasonable level of efficiency requires building up the entire tree, taking up over 100 MB of memory, whereas verifying a nonce only takes about 100 KB. However, Dagger-style algorithms are vulnerable to devices that have multiple computational circuits sharing the same memory, and although this threat can be mitigated it is arguably impossible to fully remove.
+* **Scrypt** - Scrypt is a function which is designed to take 128 KB of memory to compute. The algorithm essentially works by filling a memory array with hashes, and then computing intermediate values and finally a result based on the values in the memory array. However, the 128 KB parameter is a very weak threshold, and ASICs for Litecoin are already under development. Furthermore, there is a natural limit to how much memory hardness with Scrypt can be tweaked up to achieve, as the verification process takes just as much memory, and just as much computation, as one round of the mining process.
+* **Birthday attacks** - the idea behind birthday-based proofs of work is simple: find values xn,i,j such that i < k, j < k and |H(data+xn+i) - H(data+xn+j)| < 2^256 / d^2. The d parameter sets the computational difficulty of finding a block, and the k parameter sets the memory hardness. Any birthday algorithm must somehow store all computations of H(data+xn+i) in memory so that future computations can be compared against them. Here, computation is memory-hard, but verification is memory-easy, allowing for extreme memory hardness without compromising the ease of verification. However, the algorithm is problematic for two reasons. First, there is a time-memory tradeoff attack where users 2x less memory can compensate with 2x more computational power, so its memory hardness is not absolute. Second, it may be easy to build specialized hardware devices for the problem, especially once one moves beyond traditional chip and processor architecture and into various classes of hardware-based hash tables or probabilistic analog computing.
+* **Dagger** - the idea behind Dagger, an in-house algorithm developed by the Ethereum team, is to have an algorithm that is similar to Scrypt, but which is specially designed so that each individual nonce only depends on a small portion of the data tree that gets built up for each group of ~10 million nonces. Computing nonces with any reasonable level of efficiency requires building up the entire tree, taking up over 100 MB of memory, whereas verifying a nonce only takes about 100 KB. However, Dagger-style algorithms are vulnerable to devices that have multiple computational circuits sharing the same memory, and although this threat can be mitigated it is arguably impossible to fully remove.
+
+
 As a default, we are currently considering a Dagger-like algorithm with tweaked parameters to minimize specialized hardware attacks, perhaps together with a proof of stake algorithm such as our own Slasher for added security if deemed necessary. However, in order to come up with a proof-of-work algorithm that is better than all existing competitors, our intention is to use some of the funds raised in the fundraiser to host a contest, similar to those used to determine the algorithm for the Advanced Encryption Standard (AES) in 2005 and the SHA3 hash algorithm in 2013, where research groups from around the world compete to develop ASIC-resistant mining algorithms, and have a selection process with multiple rounds of judging determine the winners. The contest will have prizes, and will be open-ended; we encourage research into memory-hard proofs of work, self-modifying proofs of work, proofs of work based on x86 instructions, multiple proofs of work with a human-driven incentive-compatible economic protocol for swapping one out in the future, and any other design that accomplishes the task. There will be opportunities to explore alternatives such as proof of stake, proof of burn and proof of excellence as well.
 
 
-Transactions
+### Transactions
 
 A transaction is stored as:
 
-[ nonce, receiving_address, value, [ data item 0, data item 1 ... data item n ], v, r, s ]
+    [ nonce, receiving_address, value, [ data item 0, data item 1 ... data item n ], v, r, s ]
+
 nonce is the number of transactions already sent by that account, encoded in binary form (eg. 0 -> '', 7 -> '\x07', 1000 -> '\x03\xd8'). (v,r,s) is the raw Electrum-style signature of the transaction without the signature made with the private key corresponding to the sending account, with 0 <= v <= 3. From an Electrum-style signature (65 bytes) it is possible to extract the public key, and thereby the address, directly. A valid transaction is one where (i) the signature is well-formed (ie. 0 <= v <= 3, 0 <= r < P, 0 <= s < N, 0 <= r < P - N if v >= 2), and (ii) the sending account has enough funds to pay the fee and the value. A valid block cannot contain an invalid transaction; however, if a contract generates an invalid transaction that transaction will simply have no effect. Transaction fees will be included automatically. If one wishes to voluntarily pay a higher fee, one is always free to do so by constructing a contract which forwards transactions but automatically sends a certain amount or percentage to the miner of the current block.
 
 Transactions sent to the empty string as an address are a special type of transaction, creating a "contract".
 
 
-Difficulty adjustment
+### Difficulty adjustment
 
 Difficulty is adjusted by the formula:
 
-D(genesis_block) = 2^36
-D(block) =
-    if anc(block,1).timestamp >= anc(block,501).timestamp + 60 * 500: D(block.parent) - floor(D(block.parent) / 1000)
-    else:                                                             D(block.parent) + floor(D(block.parent) / 1000)
+    D(genesis_block) = 2^36
+    D(block) =
+        if anc(block,1).timestamp >= anc(block,501).timestamp + 60 * 500: D(block.parent) - floor(D(block.parent) / 1000)
+        else:                                                             D(block.parent) + floor(D(block.parent) / 1000)
+
 anc(block,n) is the nth generation ancestor of the block; all blocks before the genesis block are assumed to have the same timestamp as the genesis block. This stabilizes around a block time of 60 seconds automatically. The choice of 500 was made in order to balance the concern that for smaller values miners with sufficient hashpower to often produce two blocks in a row would have the incentive to provide an incorrect timestamp to maximize their own reward and the fact that with higher values the difficulty oscillates too much; with the constant of 500, simulations show that a constant hashpower produces a variance of about +/-20%.
 
 
-Block Rewards
+### Block Rewards
 
 A miner receives three kinds of rewards: a static block reward for producing a block, fees from transactions, and nephew/uncle rewards as described in the GHOST section above. The miner will receive 100% of the block reward for themselves, but transaction fee rewards will be split, so that 50% goes to the miner and the remaining 50% is evenly split among the last 64 miners. The reason for this is to prevent a miner from being able to create an Ethereum block with an unlimited number of operations, paying all transaction fees to themselves, while still maintaining an incentive for miners to include transactions. As described in the GHOST section, uncles only receive 87.5% of their block reward, with the remaining 12.5% going to the including nephew; the transaction fees from the stale block do not go to anyone.
 
 
-Contracts
+## Contracts
 
-In Ethereum, there are two types of entities that can generate and receive transactions: actual people (or bots, as cryptographic protocols cannot distinguish between the two) and contracts. A contract is essentially an automated agent that lives on the Ethereum network, has an Ethereum address and balance, and can send and receive transactions. A contract is "activated" every time someone sends a transaction to it, at which point it runs its code, perhaps modifying its internal state or even sending some transactions, and then shuts down. The "code" for a contract is written in a special-purpose low-level language consisting of a stack, which is not persistent, 2256 memory entries, which are also not persistent, and 2256 storage entries which constitute the contract's permanent state. Note that Ethereum users will not need to code in this low-level stack language; we will provide a simple C-like language with variables, expressions, conditionals, arrays and while loops, and provide a compiler down to Ethereum script code.
+In Ethereum, there are two types of entities that can generate and receive transactions: actual people (or bots, as cryptographic protocols cannot distinguish between the two) and contracts. A contract is essentially an automated agent that lives on the Ethereum network, has an Ethereum address and balance, and can send and receive transactions. A contract is "activated" every time someone sends a transaction to it, at which point it runs its code, perhaps modifying its internal state or even sending some transactions, and then shuts down. The "code" for a contract is written in a special-purpose low-level language consisting of a stack, which is not persistent, 2256 memory entries, which are also not persistent, and 2256 storage entries which constitute the contract's permanent state. Note that Ethereum users will not need to code in this low-level stack language; we will provide a simple [C-Like language](https://github.com/ethereum/wiki/wiki/CLL) with variables, expressions, conditionals, arrays and while loops, and provide a compiler down to Ethereum script code.
 
 
-Applications
+## Applications
 
 Here are some examples of what can be done with Ethereum contracts, with all code examples written in our C-like language. The variables tx.sender, tx.value, tx.fee, tx.data and tx.datan are properties of the incoming transaction, contract.storage, and contract.address of the contract itself, and block.contract_storage, block.account_balance, block.number, block.difficulty, block.parenthash, block.basefee and block.timestamp properties of the block. block.basefee is the "base fee" which all transaction fees in Ethereum are calculated as a multiple of; for more info see the "fees" section below. All variables expressed as capital letters (eg. A) are constants, to be replaced by actual values by the contract creator when actually releasing the contract.
 
