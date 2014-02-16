@@ -113,7 +113,7 @@ Ethereum implements a simplified version of GHOST which only goes down one level
 
 ### Ethereum Client P2P Protocol
 
-** P2P Protocol **
+**P2P Protocol**
 ![SPV in bitcoin](https://www.ethereum.org/gh_wiki/minerchart.png)
 
 The Ethereum client P2P protocol is a fairly standard cryptocurrency protocol, and can just as easily be used for any other cryptocurrency; the only modification is the introduction of the GHOST protocol described above. The Ethereum client will be mostly reactive; if not provoked, the only thing the client will do by itself is have the networking daemon maintain connections and periodically send a message asking for blocks whose parent is the current block. However, the client will also be more powerful. Unlike bitcoind, which only stores a limited amount of data about the blockchain, the Ethereum client will also act as a fully functional backend for a block explorer.
@@ -166,11 +166,11 @@ The issuance model will be as follows:
 | Miners | 21.1% | 57.1% |
 	 	 
 
-** Long-Term Inflation Rate (percent) **
+**Long-Term Inflation Rate (percent)**
 
 ![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
 
-Despite the linear currency issuance, just like with Bitcoin over time the inflation rate nevertheless tends to zero
+_Despite the linear currency issuance, just like with Bitcoin over time the inflation rate nevertheless tends to zero_
 
 
 For example, after five years and assuming no transactions, 28.6% of the ether will be in the hands of the fundraiser participants, 6.42% in the fiduciary member and early contributor pool, 6.42% paid to the reserve pool, and 57.1% will belong to miners. The permanent linear inflation model reduces the risk of what some see as excessive wealth concentration in Bitcoin, and gives individuals living in present and future eras a fair chance to acquire currency units, while at the same time retaining a strong incentive to obtain and hold ether because the inflation "rate" still tends to zero over time (eg. during year 1000001 the money supply would increase from 500001.5 * X to 500002 * X, an inflation rate of 0.0001%). Furthermore, much of the interest in Ethereum will be medium-term; we predict that if Ethereum succeeds it will see the bulk of its growth on a 1-10 year timescale, and supply during that period will be very much limited.
