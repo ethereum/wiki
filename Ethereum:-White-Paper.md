@@ -272,12 +272,12 @@ A miner receives three kinds of rewards: a static block reward for producing a b
 In Ethereum, there are two types of entities that can generate and receive transactions: actual people (or bots, as cryptographic protocols cannot distinguish between the two) and contracts. A contract is essentially an automated agent that lives on the Ethereum network, has an Ethereum address and balance, and can send and receive transactions. A contract is "activated" every time someone sends a transaction to it, at which point it runs its code, perhaps modifying its internal state or even sending some transactions, and then shuts down. The "code" for a contract is written in a special-purpose low-level language consisting of a stack, which is not persistent, 2256 memory entries, which are also not persistent, and 2256 storage entries which constitute the contract's permanent state. Note that Ethereum users will not need to code in this low-level stack language; we will provide a simple [C-Like language](https://github.com/ethereum/wiki/wiki/CLL) with variables, expressions, conditionals, arrays and while loops, and provide a compiler down to Ethereum script code.
 
 
-## Applications
+### Applications
 
 Here are some examples of what can be done with Ethereum contracts, with all code examples written in our C-like language. The variables tx.sender, tx.value, tx.fee, tx.data and tx.datan are properties of the incoming transaction, contract.storage, and contract.address of the contract itself, and block.contract_storage, block.account_balance, block.number, block.difficulty, block.parenthash, block.basefee and block.timestamp properties of the block. block.basefee is the "base fee" which all transaction fees in Ethereum are calculated as a multiple of; for more info see the "fees" section below. All variables expressed as capital letters (eg. A) are constants, to be replaced by actual values by the contract creator when actually releasing the contract.
 
 
-Sub-currencies
+### Sub-currencies
 
 Sub-currencies have many applications ranging from currencies representing assets such as USD or gold to company stocks and even currencies with only one unit issued to represent collectibles or smart property. Advanced special-purpose financial protocols sitting on top of Ethereum may also wish to organize themselves with an internal currency. Sub-currencies are surprisingly easy to implement in Ethereum; this section describes a fairly simple contract for doing so.
 
@@ -298,19 +298,23 @@ The idea is that if someone wants to send X currency units to account A in curre
     else:
         contract.storage[mycreator] = 10^18
         contract.storage[1000] = 1
+
+
 Ethereum sub-currency developers may also wish to add some other more advanced features:
 
-Include a mechanism by which people can buy currency units in exchange for ether, perhaps auctioning off a set number of units every day.
-Allow transaction fees to be paid in the internal currency, and then refund the ether transaction fee to the sender. This solves one major problem that all other "sub-currency" protocols have had to date: the fact that sub-currency users need to maintain a balance of sub-currency units to use and units in the main currency to pay transaction fees in. Here, a new account would need to be "activated" once with ether, but from that point on it would not need to be recharged.
-Allow for a trust-free decentralized exchange between the currency and ether. Note that trust-free decentralized exchange between any two contracts is theoretically possible in Ethereum even without special support, but special support will allow the process to be done about ten times more cheaply.
+* Include a mechanism by which people can buy currency units in exchange for ether, perhaps auctioning off a set number of units every day.
+* Allow transaction fees to be paid in the internal currency, and then refund the ether transaction fee to the sender. This solves one major problem that all other "sub-currency" protocols have had to date: the fact that sub-currency users need to maintain a balance of sub-currency units to use and units in the main currency to pay transaction fees in. Here, a new account would need to be "activated" once with ether, but from that point on it would not need to be recharged.
+* Allow for a trust-free decentralized exchange between the currency and ether. Note that trust-free decentralized exchange between any two contracts is theoretically possible in Ethereum even without special support, but special support will allow the process to be done about ten times more cheaply.
 
-Financial derivatives
 
-The underlying key ingredient of a financial derivative is a data feed to provide the price of a particular asset as expressed in another asset (in Ethereum's case, the second asset will usually be ether). There are many ways to implement a data feed; one method, pioneered by the developers of Mastercoin, is to include the data feed in the blockchain. Here is the code:
+### Financial derivatives
+
+The underlying key ingredient of a financial derivative is a data feed to provide the price of a particular asset as expressed in another asset (in Ethereum's case, the second asset will usually be ether). There are many ways to implement a data feed; one method, pioneered by the developers of [Mastercoin](http://mastercoin.org/), is to include the data feed in the blockchain. Here is the code:
 
     if tx.sender != FEEDOWNER:
         stop
     contract.storage[data[0]] = data[1]
+
 Any other contract will then be able to query index I of data store D by using block.contract_storage(D)[I]. A more advanced way to implement a data feed may be to do it off-chain - have the data feed provider sign all values and require anyone attempting to trigger the contract to include the latest signed data, and then use Ethereum's internal scripting functionality to verify the signature. Pretty much any derivative can be made from this, including leveraged trading, options, and even more advanced constructions like collateralized debt obligations (no bailouts here though, so be mindful of black swan risks).
 
 To show an example, let's make a hedging contract. The basic idea is that the contract is created by party A, who puts up 4000 ether as a deposit. The contract then lies open for any party to accept it by putting in 1000 ether. Say that 1000 ether is worth $25 at the time the contract is made, according to index I of data store D. If party B accepts it, then after 30 days anyone can send a transaction to make the contract process, sending the same dollar value worth of ether (in our example, $25) back to B and the rest to A. B gains the benefit of being completely insulated against currency volatility risk without having to rely on any issuers. The only risk to B is if the value of ether falls by over 80% in 30 days - and even then, if B is online B can simply quickly hop onto another hedging contract. The benefit to A is the implicit 0.2% fee in the contract, and A can hedge against losses by separately holding USD in another location (or, alternatively, A can be an individual who is optimistic about the future of Ethereum and wants to hold ether at 1.25x leverage, in which case the fee may even be in B's favor).
@@ -331,22 +335,24 @@ To show an example, let's make a hedging contract. The basic idea is that the co
         else if block.timestamp > contract.storage[1002]:
             mktx(contract.storage[1003],ethervalue,0,0)
             mktx(A,5000 - ethervalue,0,0)
+
 More advanced financial contracts are also possible; complex multi-clause options (eg. "Anyone, hereinafter referred to as X, can claim this contract by putting in 2 USD before Dec 1. X will have a choice on Dec 4 between receiving 1.95 USD on Dec 29 and the right to choose on Dec 11 between 2.20 EUR on Dec 28 and the right to choose on Dec 18 between 1.20 GBP on Dec 30 and paying 1 EUR and getting 3.20 EUR on Dec 29") can be defined simply by storing a state variable just like the contract above but having more clauses in the code, one clause for each possible state. Note that financial contracts of any form do need to be fully collateralized; the Ethereum network controls no enforcement agency and cannot collect debt.
 
 
-Identity and Reputation Systems
+### Identity and Reputation Systems
 
-The earliest alternative cryptocurrency of all, Namecoin, attempted to use a Bitcoin-like blockchain to provide a name registration system, where users can register their names in a public database alongside other data. The major cited use case is for a DNS system, mapping domain names like "bitcoin.org" (or, in Namecoin's case, "bitcoin.bit") to an IP address. Other use cases include email authentication and potentially more advanced reputation systems. Here is a simple contract to provide a Namecoin-like name registration system on Ethereum:
+The earliest alternative cryptocurrency of all, [Namecoin](http://namecoin.org/), attempted to use a Bitcoin-like blockchain to provide a name registration system, where users can register their names in a public database alongside other data. The major cited use case is for a [DNS](http://en.wikipedia.org/wiki/Domain_Name_System) system, mapping domain names like "bitcoin.org" (or, in Namecoin's case, "bitcoin.bit") to an IP address. Other use cases include email authentication and potentially more advanced reputation systems. Here is a simple contract to provide a Namecoin-like name registration system on Ethereum:
 
     if tx.value < block.basefee * 200:
         stop
     if contract.storage[tx.data[0]] or tx.data[0] < 100:
         stop
     contract.storage[tx.data[0]] = tx.data[1]
+
 One can easily add more complexity to allow users to change mappings, automatically send transactions to the contract and have them forwarded, and even add reputation and web-of-trust mechanics.
 
 
-Decentralized Autonomous Organizations
+### Decentralized Autonomous Organizations
 
 The general concept of a "decentralized autonomous organization" is that of a virtual entity that has a certain set of members or shareholders which, perhaps with a 67% majority, have the right to spend the entity's funds and modify its code. The members would collectively decide on how the organization should allocate its funds. Methods for allocating a DAO's funds could range from bounties, salaries to even more exotic mechanisms such as an internal currency to reward work. This essentially replicates the legal trappings of a traditional company or nonprofit but using only cryptographic blockchain technology for enforcement. So far much of the talk around DAOs has been around the "capitalist" model of a "decentralized autonomous corporation" (DAC) with dividend-receiving shareholders and tradable shared; an alternative, perhaps described as a "decentralized autonomous community", would have all members have an equal share in the decision making and require 67% of existing members to agree to add or remove a member. The requirement that one person can only have one membership would then need to be enforced collectively by the group.
 
@@ -354,9 +360,10 @@ Some "skeleton code" for a DAO might look as follows.
 
 There are three transaction types:
 
-[0,k] to register a vote in favor of a code change
-[1,k,L,v0,v1...vn] to register a code change at code k in favor of setting memory starting from location L to v0, v1 ... vn
-[2,k] to finalize a given code change
+* [0,k] to register a vote in favor of a code change
+* [1,k,L,v0,v1...vn] to register a code change at code k in favor of setting memory starting from location L to v0, v1 ... vn
+* [2,k] to finalize a given code change
+
 Note that the design relies on the randomness of addresses and hashes for data integrity; the contract will likely get corrupted in some fashion after about 2^128 uses, but that is acceptable since nothing close to that volume of usage will exist in the foreseeable future. 2^255 is used as a magic number to store the total number of members, and a membership is stored with a 1 at the member's address. The last three lines of the contract are there to add C as the first member; from there, it will be C's responsibility to use the democratic code change protocol to add a few other members and code to bootstrap the organization.
 
     if tx.value < tx.basefee * 200:
@@ -390,31 +397,32 @@ Note that the design relies on the randomness of addresses and hashes for data i
     if contract.storage[2 ^ 255 + 1] == 0:
         contract.storage[2 ^ 255 + 1] = 1
         contract.storage[C] = 1
+
 This implements the "egalitarian" DAO model where members have equal shares. One can easily extend it to a shareholder model by also storing how many shares each owner holds and providing a simple way to transfer shares.
 
 DAOs and DACs have already been the topic of a large amount of interest among cryptocurrency users as a future form of economic organization, and we are very excited about the potential that DAOs can offer. In the long term, the Ethereum fund itself intends to transition into being a fully self-sustaining DAO.
 
 
-Further Applications
+### Further Applications
 
-1) Savings wallets. Suppose that Alice wants to keep her funds safe, but is worried that she will lose or someone will hack her private key. She puts ether into a contract with Bob, a bank, as follows: Alice alone can withdraw a maximum of 1% of the funds per day, Alice and Bob together can withdraw everything, and Bob alone can withdraw a maximum of 0.05% of the funds. Normally, 1% per day is enough for Alice, and if Alice wants to withdraw more she can contact Bob for help. If Alice's key gets hacked, she runs to Bob to move the funds to a new contract. If she loses her key, Bob will get the funds out eventually. If Bob turns out to be malicious, she can still withdraw 20 times faster than he can.
+1. Savings wallets. Suppose that Alice wants to keep her funds safe, but is worried that she will lose or someone will hack her private key. She puts ether into a contract with Bob, a bank, as follows: Alice alone can withdraw a maximum of 1% of the funds per day, Alice and Bob together can withdraw everything, and Bob alone can withdraw a maximum of 0.05% of the funds. Normally, 1% per day is enough for Alice, and if Alice wants to withdraw more she can contact Bob for help. If Alice's key gets hacked, she runs to Bob to move the funds to a new contract. If she loses her key, Bob will get the funds out eventually. If Bob turns out to be malicious, she can still withdraw 20 times faster than he can.
 
-2) Crop insurance. One can easily make a financial derivatives contract but using a data feed of the weather instead of any price index. If a farmer in Iowa purchases a derivative that pays out inversely based on the precipitation in Iowa, then if there is a drought, the farmer will automatically receive money and if there is enough rain the farmer will be happy because their crops would do well.
+2. Crop insurance. One can easily make a financial derivatives contract but using a data feed of the weather instead of any price index. If a farmer in Iowa purchases a derivative that pays out inversely based on the precipitation in Iowa, then if there is a drought, the farmer will automatically receive money and if there is enough rain the farmer will be happy because their crops would do well.
 
-3) A decentrally managed data feed, using proof-of-stake voting to give an average (or more likely, median) of everyone's opinion on the price of a commodity, the weather or any other relevant data.
+3. A decentrally managed data feed, using proof-of-stake voting to give an average (or more likely, median) of everyone's opinion on the price of a commodity, the weather or any other relevant data.
 
-4) Smart multisignature escrow. Bitcoin allows multisignature transaction contracts where, for example, three out of a given five keys can spend the funds. Ethereum allows for more granularity; for example, four out of five can spend everything, three out of five can spend up to 10% per day, and two out of five can spend up to 0.5% per day. Additionally, Ethereum multisig is asynchronous - two parties can register their signatures on the blockchain at different times and the last signature will automatically send the transaction.
+4. Smart multisignature escrow. Bitcoin allows multisignature transaction contracts where, for example, three out of a given five keys can spend the funds. Ethereum allows for more granularity; for example, four out of five can spend everything, three out of five can spend up to 10% per day, and two out of five can spend up to 0.5% per day. Additionally, Ethereum multisig is asynchronous - two parties can register their signatures on the blockchain at different times and the last signature will automatically send the transaction.
 
-5) Peer-to-peer gambling. Any number of peer-to-peer gambling protocols, such as Frank Stajano and Richard Clayton's Cyberdice, can be implemented on the Ethereum blockchain. The simplest gambling protocol is actually simply a contract for difference on the next block hash. From there, entire gambling services such as SatoshiDice can be replicated on the blockchain either by creating a unique contract per bet or by using a quasi-centralized contract.
+5. Peer-to-peer gambling. Any number of peer-to-peer gambling protocols, such as Frank Stajano and Richard Clayton's Cyberdice, can be implemented on the Ethereum blockchain. The simplest gambling protocol is actually simply a contract for difference on the next block hash. From there, entire gambling services such as SatoshiDice can be replicated on the blockchain either by creating a unique contract per bet or by using a quasi-centralized contract.
 
-6) A full-scale on-chain stock market. Prediction markets are also easy to implement as a trivial consequence.
+6. A full-scale on-chain stock market. Prediction markets are also easy to implement as a trivial consequence.
 
-7) An on-chain decentralized marketplace, using the identity and reputation system as a base.
+7. An on-chain decentralized marketplace, using the identity and reputation system as a base.
 
-8) Decentralized Dropbox. One setup is to encrypt a file, build a Merkle tree out of it, put the Merkle root into a contract alongside a certain quantity of ether, and distribute the file across some secondary network. Every day, the contract would randomly select a branch of the Merkle tree depending on the block hash, and give X ether to the first node to provide that branch to the contract, thereby encouraging nodes to store the data for the long term in an attempt to earn the prize. If one wants to download any portion of the file, one can use a micropayment channel-style contract to download the file from a few nodes a block at a time.
+8. Decentralized Dropbox. One setup is to encrypt a file, build a Merkle tree out of it, put the Merkle root into a contract alongside a certain quantity of ether, and distribute the file across some secondary network. Every day, the contract would randomly select a branch of the Merkle tree depending on the block hash, and give X ether to the first node to provide that branch to the contract, thereby encouraging nodes to store the data for the long term in an attempt to earn the prize. If one wants to download any portion of the file, one can use a micropayment channel-style contract to download the file from a few nodes a block at a time.
 
 
-How do contracts work?
+### How do contracts work?
 
 A contract making transaction is encoded as follows:
 
@@ -431,6 +439,8 @@ A contract making transaction is encoded as follows:
         r,
         s
     ]
+
+
 The data items will, in most cases, be script codes (more on this below). Contract creation transaction validation happens as follows:
 
 Deserialize the transaction, and extract its sending address from its signature.
@@ -438,131 +448,139 @@ Calculate the transaction's fee as NEWCONTRACTFEE plus storage fees for the code
 Take the last 20 bytes of the sha3 hash of the RLP encoding of the transaction making the contract. If an account with that address already exists, exit. Otherwise, create the contract at that address
 Copy data item i to storage slot i in the contract for all i in [0 ... n-1] where n is the number of data items in the transaction, and initialize the contract with the transaction's value as its value. Subtract the value and fee from the creator's balance.
 
-Language Specification
+
+### Language Specification
 
 The contract scripting language is a hybrid of assembly language and Bitcoin's stack-based language, maintaining an index pointer that usually increments by one after every operation and continuously processing the operation found at the current index pointer. All opcodes are numbers in the range [0 ... 63]; labels further in this description such as STOP, EXTRO and BALANCE refer to specific values are defined further below. The scripting language has access to three kinds of memory:
 
-Stack - a form of temporary storage that is reset to an empty list every time a contract is executed. Operations typically add and remove values to and from the top of the stack, so the total length of the stack will shrink and grow over the course of the program's execution.
-Memory - a temporary key/value store that is reset to containing all zeroes every time a contract is executed. Keys and values in memory are integers in the range [0 ... 2^256-1]
-Storage - a persistent key/value store that is initially set to contain all zeroes, except for some script code inserted at the beginning when the contract is created as described above. Keys and values in storage are integers in the range [0 ... 2^256-1]
+* **Stack** - a form of temporary storage that is reset to an empty list every time a contract is executed. Operations typically add and remove values to and from the top of the stack, so the total length of the stack will shrink and grow over the course of the program's execution.
+* **Memory** - a temporary key/value store that is reset to containing all zeroes every time a contract is executed. Keys and values in memory are integers in the range [0 ... 2^256-1]
+* **Storage** - a persistent key/value store that is initially set to contain all zeroes, except for some script code inserted at the beginning when the contract is created as described above. Keys and values in storage are integers in the range [0 ... 2^256-1]
+
 Whenever a transaction is sent to a contract, the contract executes its scripting code. The precise steps that happen when a contract receives a transaction are as follows:
 
 Contract Script Interpretation 
+![SPV in bitcoin](https://www.ethereum.org/gh_wiki/flowchart.png)
 
+1. The contract's ether balance increases by the amount sent
+2. The index pointer is set to zero, and STEPCOUNT = 0
+3. Repeat forever:
+* if the command at the index pointer is STOP, invalid or greater than 63, exit from the loop
+* set MINERFEE = 0, VOIDFEE = 0
+* set STEPCOUNT <- STEPCOUNT + 1
+* if STEPCOUNT > 16, set MINERFEE <- MINERFEE + STEPFEE
+* see if the command is LOAD or STORE. If so, set MINERFEE <- MINERFEE + DATAFEE
+* see if the command will modify a storage field, say modifying KEY from OLDVALUE to NEWVALUE. Let F(K,V) be 0 if V == 0 else (len(K) + len(V)) * STORAGEFEE in bytes. Set VOIDFEE <- VOIDFEE - F(KEY,OLDVALUE) + F(KEY,NEWVALUE). Computing len(K) ignores leading zero bytes.
+* see if the command is EXTRO or BALANCE. If so, set MINERFEE <- MINERFEE + EXTROFEE
+* see if the command is a crypto operation. If so, set MINERFEE <- MINERFEE + CRYPTOFEE
+* if MINERFEE + VOIDFEE > CONTRACT.BALANCE, HALT and exit from the loop
+* subtract MINERFEE from the contract's balance and add MINERFEE to a running counter that will be added to the miner's balance once all transactions are parsed.
+* set DELTA = max(-CONTRACT.STORAGE_DEPOSIT,VOIDFEE) and CONTRACT.BALANCE <- CONTRACT.BALANCE - DELTA and CONTRACT.STORAGE_DEPOSIT <- CONTRACT.STORAGE_DEPOSIT + DELTA. Note that DELTA can be positive or negative; the only restriction is that the contract's deposit cannot go below zero.
+* run the command
+* if the command did not exit with an error, update the index pointer and return to the start of the loop. If the contract did exit with an error, break out of the loop. Note that a contract exiting with an error does not make the transaction or the block invalid; it simply means that the contract execution halts midway through.
 
-The contract's ether balance increases by the amount sent
-The index pointer is set to zero, and STEPCOUNT = 0
-Repeat forever:
-if the command at the index pointer is STOP, invalid or greater than 63, exit from the loop
-set MINERFEE = 0, VOIDFEE = 0
-set STEPCOUNT <- STEPCOUNT + 1
-if STEPCOUNT > 16, set MINERFEE <- MINERFEE + STEPFEE
-see if the command is LOAD or STORE. If so, set MINERFEE <- MINERFEE + DATAFEE
-see if the command will modify a storage field, say modifying KEY from OLDVALUE to NEWVALUE. Let F(K,V) be 0 if V == 0 else (len(K) + len(V)) * STORAGEFEE in bytes. Set VOIDFEE <- VOIDFEE - F(KEY,OLDVALUE) + F(KEY,NEWVALUE). Computing len(K) ignores leading zero bytes.
-see if the command is EXTRO or BALANCE. If so, set MINERFEE <- MINERFEE + EXTROFEE
-see if the command is a crypto operation. If so, set MINERFEE <- MINERFEE + CRYPTOFEE
-if MINERFEE + VOIDFEE > CONTRACT.BALANCE, HALT and exit from the loop
-subtract MINERFEE from the contract's balance and add MINERFEE to a running counter that will be added to the miner's balance once all transactions are parsed.
-set DELTA = max(-CONTRACT.STORAGE_DEPOSIT,VOIDFEE) and CONTRACT.BALANCE <- CONTRACT.BALANCE - DELTA and CONTRACT.STORAGE_DEPOSIT <- CONTRACT.STORAGE_DEPOSIT + DELTA. Note that DELTA can be positive or negative; the only restriction is that the contract's deposit cannot go below zero.
-run the command
-if the command did not exit with an error, update the index pointer and return to the start of the loop. If the contract did exit with an error, break out of the loop. Note that a contract exiting with an error does not make the transaction or the block invalid; it simply means that the contract execution halts midway through.
 In the following descriptions, S[-1], S[-2], etc represent the topmost, second topmost, etc items on the stack. The individual opcodes are defined as follows:
 
-(0) STOP - halts execution
-(1) ADD - pops two items and pushes S[-2] + S[-1] mod 2^256
-(2) MUL - pops two items and pushes S[-2] * S[-1] mod 2^256
-(3) SUB - pops two items and pushes S[-2] - S[-1] mod 2^256
-(4) DIV - pops two items and pushes floor(S[-2] / S[-1]). If S[-1] = 0, halts execution.
-(5) SDIV - pops two items and pushes floor(S[-2] / S[-1]), but treating values above 2^255 - 1 as negative (ie. x -> 2^256 - x). If S[-1] = 0, halts execution.
-(6) MOD - pops two items and pushes S[-2] mod S[-1]. If S[-1] = 0, halts execution.
-(7) SMOD - pops two items and pushes S[-2] mod S[-1], but treating values above 2^255 - 1 as negative (ie. x -> 2^256 - x). If S[-1] = 0, halts execution.
-(8) EXP - pops two items and pushes S[-2] ^ S[-1] mod 2^256
-(9) NEG - pops one item and pushes 2^256 - S[-1]
-(10) LT - pops two items and pushes 1 if S[-2] < S[-1] else 0
-(11) LE - pops two items and pushes 1 if S[-2] <= S[-1] else 0
-(12) GT - pops two items and pushes 1 if S[-2] > S[-1] else 0
-(13) GE - pops two items and pushes 1 if S[-2] >= S[-1] else 0
-(14) EQ - pops two items and pushes 1 if S[-2] == S[-1] else 0
-(15) NOT - pops one item and pushes 1 if S[-1] == 0 else 0
-(16) MYADDRESS - pushes the contract's address as a number
-(17) TXSENDER - pushes the transaction sender's address as a number
-(18) TXVALUE - pushes the transaction value
-(19) TXDATAN - pushes the number of data items
-(20) TXDATA - pops one item and pushes data item S[-1], or zero if index out of range
-(21) BLK_PREVHASH - pushes the hash of the previous block (NOT the current one since that's impossible!)
-(22) BLK_COINBASE - pushes the coinbase of the current block
-(23) BLK_TIMESTAMP - pushes the timestamp of the current block
-(24) BLK_NUMBER - pushes the current block number
-(25) BLK_DIFFICULTY - pushes the difficulty of the current block
-(26) BLK_NONCE - pushes the nonce of the current block
-(27) BASEFEE - pushes the base fee (x as defined in the fee section below)
-(32) SHA256 - pops two items, and then constructs a string by taking the ceil(S[-1] / 32) items in memory from index S[-2] to (S[-2] + ceil(S[-1] / 32) - 1) mod 2^256, prepending zero bytes to each one if necessary to get them to 32 bytes, and takes the last S[-1] bytes. Pushes the SHA256 hash of the string
-(33) RIPEMD160 - works just like SHA256 but with the RIPEMD-160 hash
-(34) ECMUL - pops three items. If (S[-2],S[-1]) are a valid point in secp256k1, including both coordinates being less than P, pushes (S[-2],S[-1]) * S[-3], using (0,0) as the point at infinity. Otherwise, pushes (2^256 - 1, 2^256 - 1). Note that there are no restrictions on S[-3]
-(35) ECADD - pops four items and pushes (S[-4],S[-3]) + (S[-2],S[-1]) if both points are valid, otherwise (2^256 - 1,2^256 - 1)
-(36) ECSIGN - pops two items and pushes (v,r,s) as the Electrum-style RFC6979 deterministic signature of message hash S[-1] with private key S[-2] mod N with 0 <= v <= 3
-(37) ECRECOVER - pops four items and pushes (x,y) as the public key from the signature (S[-3],S[-2],S[-1]) of message hash S[-4]. If the signature has invalid v,r,s values (ie. v not in [27,28], r not in [0,P], s not in [0,N]), return (2^256 - 1,2^256 - 1)
-(38) ECVALID - pops two items and pushes 1 if (S[-2],S[-1]) is a valid secp256k1 point (including (0,0)) else 0
-(39) SHA3 - works just like SHA256 but with the SHA3 hash, 256 bit version
-(48) PUSH - pushes the item in memory at the index pointer + 1, and advances the index pointer by 2.
-(49) POP - pops one item.
-(50) DUP - pushes S[-1] to the stack.
-(51) SWAP - pops two items and pushes S[-1] then S[-2]
-(52) MLOAD - pops two items and sets the item in memory at index S[-1] to S[-2]
-(53) MSTORE - pops two items and sets the item in memory at index S[-1] to S[-2]
-(54) SLOAD - pops two items and sets the item in storage at index S[-1] to S[-2]
-(55) SSTORE - pops two items and sets the item in storage at index S[-1] to S[-2]
-(56) JMP - pops one item and sets the index pointer to S[-1]
-(57) JMPI - pops two items and sets the index pointer to S[-2] only if S[-1] is nonzero
-(58) IND - pushes the index pointer
-(59) EXTRO - pops two items and pushes memory index S[-2] of contract S[-1]
-(60) BALANCE - pops one item and pushes balance of the account with that address, or zero if the address is invalid
-(61) MKTX - pops four items and initializes a transaction to send S[-2] ether to S[-1] with S[-3] data items. Takes items in memory from index S[-4] to index (S[-4] + S[-3] - 1) mod 2^256 as the transaction's data items.
-(63) SUICIDE - pops one item, destroys the contract and clears all storage, sending the entire balance plus the contract deposit to the account at S[-1]
+* (0) STOP - halts execution
+* (1) ADD - pops two items and pushes S[-2] + S[-1] mod 2^256
+* (2) MUL - pops two items and pushes S[-2] * S[-1] mod 2^256
+* (3) SUB - pops two items and pushes S[-2] - S[-1] mod 2^256
+* (4) DIV - pops two items and pushes floor(S[-2] / S[-1]). If S[-1] = 0, halts execution.
+* (5) SDIV - pops two items and pushes floor(S[-2] / S[-1]), but treating values above 2^255 - 1 as negative (ie. x -> 2^256 - x). If S[-1] = 0, halts execution.
+* (6) MOD - pops two items and pushes S[-2] mod S[-1]. If S[-1] = 0, halts execution.
+* (7) SMOD - pops two items and pushes S[-2] mod S[-1], but treating values above 2^255 - 1 as negative (ie. x -> 2^256 - x). If S[-1] = 0, halts execution.
+* (8) EXP - pops two items and pushes S[-2] ^ S[-1] mod 2^256
+* (9) NEG - pops one item and pushes 2^256 - S[-1]
+* (10) LT - pops two items and pushes 1 if S[-2] < S[-1] else 0
+* (11) LE - pops two items and pushes 1 if S[-2] <= S[-1] else 0
+* (12) GT - pops two items and pushes 1 if S[-2] > S[-1] else 0
+* (13) GE - pops two items and pushes 1 if S[-2] >= S[-1] else 0
+* (14) EQ - pops two items and pushes 1 if S[-2] == S[-1] else 0
+* (15) NOT - pops one item and pushes 1 if S[-1] == 0 else 0
+* (16) MYADDRESS - pushes the contract's address as a number
+* (17) TXSENDER - pushes the transaction sender's address as a number
+* (18) TXVALUE - pushes the transaction value
+* (19) TXDATAN - pushes the number of data items
+* (20) TXDATA - pops one item and pushes data item S[-1], or zero if index out of range
+* (21) BLK_PREVHASH - pushes the hash of the previous block (NOT the current one since that's impossible!)
+* (22) BLK_COINBASE - pushes the coinbase of the current block
+* (23) BLK_TIMESTAMP - pushes the timestamp of the current block
+* (24) BLK_NUMBER - pushes the current block number
+* (25) BLK_DIFFICULTY - pushes the difficulty of the current block
+* (26) BLK_NONCE - pushes the nonce of the current block
+* (27) BASEFEE - pushes the base fee (x as defined in the fee section below)
+* (32) SHA256 - pops two items, and then constructs a string by taking the ceil(S[-1] / 32) items in memory from index S[-2] to (S[-2] + ceil(S[-1] / 32) - 1) mod 2^256, prepending zero bytes to each one if necessary to get them to 32 bytes, and takes the last S[-1] bytes. Pushes the SHA256 hash of the string
+* (33) RIPEMD160 - works just like SHA256 but with the RIPEMD-160 hash
+* (34) ECMUL - pops three items. If (S[-2],S[-1]) are a valid point in secp256k1, including both coordinates being less than P, pushes (S[-2],S[-1]) * S[-3], using (0,0) as the point at infinity. Otherwise, pushes (2^256 - 1, 2^256 - 1). Note that there are no restrictions on S[-3]
+* (35) ECADD - pops four items and pushes (S[-4],S[-3]) + (S[-2],S[-1]) if both points are valid, otherwise (2^256 - 1,2^256 - 1)
+* (36) ECSIGN - pops two items and pushes (v,r,s) as the Electrum-style RFC6979 deterministic signature of message hash S[-1] with private key S[-2] mod N with 0 <= v <= 3
+* (37) ECRECOVER - pops four items and pushes (x,y) as the public key from the signature (S[-3],S[-2],S[-1]) of message hash S[-4]. If the signature has invalid v,r,s values (ie. v not in [27,28], r not in [0,P], s not in [0,N]), return (2^256 - 1,2^256 - 1)
+* (38) ECVALID - pops two items and pushes 1 if (S[-2],S[-1]) is a valid secp256k1 point (including (0,0)) else 0
+* (39) SHA3 - works just like SHA256 but with the SHA3 hash, 256 bit version
+* (48) PUSH - pushes the item in memory at the index pointer + 1, and advances the index pointer by 2.
+* (49) POP - pops one item.
+* (50) DUP - pushes S[-1] to the stack.
+* (51) SWAP - pops two items and pushes S[-1] then S[-2]
+* (52) MLOAD - pops two items and sets the item in memory at index S[-1] to S[-2]
+* (53) MSTORE - pops two items and sets the item in memory at index S[-1] to S[-2]
+* (54) SLOAD - pops two items and sets the item in storage at index S[-1] to S[-2]
+* (55) SSTORE - pops two items and sets the item in storage at index S[-1] to S[-2]
+* (56) JMP - pops one item and sets the index pointer to S[-1]
+* (57) JMPI - pops two items and sets the index pointer to S[-2] only if S[-1] is nonzero
+* (58) IND - pushes the index pointer
+* (59) EXTRO - pops two items and pushes memory index S[-2] of contract S[-1]
+* (60) BALANCE - pops one item and pushes balance of the account with that address, or zero if the address is invalid
+* (61) MKTX - pops four items and initializes a transaction to send S[-2] ether to S[-1] with S[-3] data items. Takes items in memory from index S[-4] to index (S[-4] + S[-3] - 1) mod 2^256 as the transaction's data items.
+* (63) SUICIDE - pops one item, destroys the contract and clears all storage, sending the entire balance plus the contract deposit to the account at S[-1]
+
+
 As mentioned above, the intent is not for people to write scripts directly in Ethereum script code; rather, we will release compilers to generate ES from higher-level languages. The first supported language will likely be the simple C-like language used in the descriptions above, and the second will be a more complete first-class-function language with support for arrays and arbitrary-length strings. Compiling the C-like language is fairly simple as far as compilers go: variables can be assigned a memory index, and compiling an arithmetic expression essentially involves converting it to reverse Polish notation (eg. (3 + 5) * (x + y) -> PUSH 3 PUSH 5 ADD PUSH 0 MLOAD PUSH 1 MLOAD ADD MUL). First-class function languages are more involved due to variable scoping, but the problem is nevertheless tractable. The likely solution will be to maintain a linked list of stack frames in memory, giving each stack frame N memory slots where N is the total number of distinct variable names in the program. Variable access will consist of searching down the stack frame list until one frame contains a pointer to the variable, copying the pointer to the top stack frame for memoization purposes, and returning the value at the pointer. However, these are longer term concerns; compilation is separate from the actual protocol, and so it will be possible to continue to research compilation strategies long after the network is set running.
 
 
-Fees
+## Fees
 
 In Bitcoin, there are no mandatory transaction fees. Transactions can optionally include fees which are paid to miners, and it is up to the miners to decide what fees they are willing to accept. In Bitcoin, such a mechanism is already imperfect; the need for a 1 MB block size limit alongside the fee mechanism shows this all too well. In Ethereum, because of its Turing-completeness, a purely voluntary fee system would be catastrophic. Instead, Ethereum will have a system of mandatory fees, including a transaction fee and six fees for contract computations. The fees are currently set to:
 
-TXFEE (100x) - fee for sending a transaction
-NEWCONTRACTFEE (100x) - fee for creating a new contract, not including the storage fee for each item in script code
-STEPFEE (1x) - fee for every computational step after than first sixteen in contract execution
-STORAGEFEE (5x) - per-byte fee for adding to contract storage. The storage fee is the only fee that is not paid to a miner, and is refunded when storage used by a contract is reduced or removed.
-DATAFEE (20x) - fee for accessing or setting a contract's memory from inside that contract
-EXTROFEE (40x) - fee for accessing memory from another contract inside a contract
-CRYPTOFEE (20x) - fee for using any of the cryptographic operations
+* TXFEE (100x) - fee for sending a transaction
+* NEWCONTRACTFEE (100x) - fee for creating a new contract, not including the storage fee for each item in script code
+* STEPFEE (1x) - fee for every computational step after than first sixteen in contract execution
+* STORAGEFEE (5x) - per-byte fee for adding to contract storage. The storage fee is the only fee that is not paid to a miner, and is refunded when storage used by a contract is reduced or removed.
+* DATAFEE (20x) - fee for accessing or setting a contract's memory from inside that contract
+* EXTROFEE (40x) - fee for accessing memory from another contract inside a contract
+* CRYPTOFEE (20x) - fee for using any of the cryptographic operations
+
+
 The coefficients will be revised as more hard data on the relative computational cost of each operation becomes available. The hardest part will be setting the value of x. There are currently two main solutions that we are considering:
 
-Make x inversely proportional to the square root of the difficulty, so x = floor(10^21 / floor(difficulty ^ 0.5)). This automatically adjusts fees down as the value of ether goes up, and adjusts fees down as computers get more powerful due to Moore's Law.
-Use proof of stake voting to determine the fees. In theory, stakeholders do not benefit directly from fees going up or down, so their incentives would be to make the decision that would maximize the value of the network.
+* Make x inversely proportional to the square root of the difficulty, so x = floor(10^21 / floor(difficulty ^ 0.5)). This automatically adjusts fees down as the value of ether goes up, and adjusts fees down as computers get more powerful due to Moore's Law.
+* Use proof of stake voting to determine the fees. In theory, stakeholders do not benefit directly from fees going up or down, so their incentives would be to make the decision that would maximize the value of the network.
+
 A hybrid solution is also possible, using proof of stake voting, but with the inverse square root mechanism as an initial policy.
 
 
-Conclusion
+## Conclusion
 
 The Ethereum protocol's design philosophy is in many ways the opposite from that taken by many other cryptocurrencies today. Other cryptocurrencies aim to add complexity and increase the number of "features"; Ethereum, on the other hand, takes features away. The protocol does not "support" multisignature transactions, multiple inputs and outputs, hash codes, lock times or many other features that even Bitcoin provides. Instead, all complexity comes from a universal, Turing-complete scripting language, which can be used to build up literally any feature that is mathematically describable through the contract mechanism. As a result, we have a protocol with unique potential; rather than being a closed-ended, single-purpose protocol intended for a specific array of applications in data storage, gambling or finance, Ethereum is open-ended by design, and we believe that it is extremely well-suited to serving as a foundational layer for a very large number of both financial and non-financial protocols in the years to come.
 
 
-References and Further Reading
+## References and Further Reading
 
-Colored coins whitepaper: https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit
-Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec
-Decentralized autonomous corporations, Bitcoin Magazine: http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/
-Smart property: https://en.bitcoin.it/wiki/Smart_Property
-Smart contracts: https://en.bitcoin.it/wiki/Contracts
-Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification
-Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree
-Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree
-Bitcoin whitepaper: http://bitcoin.org/bitcoin.pdf
-GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf
-StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html
-Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y
-Ethereum RLP: http://wiki.ethereum.org/index.php/RLP
-Ethereum Merkle Patricia trees: http://wiki.ethereum.org/index.php/Patricia_Tree
-Ethereum Dagger: http://wiki.ethereum.org/index.php/Dagger
-Ethereum C-like language: http://wiki.ethereum.org/index.php/CLL
-Ethereum Slasher: http://blog.ethereum.org/?p=39/slasher-a-punitive-proof-of-stake-algorithm
-Scrypt parameters: https://litecoin.info/User:Iddo/ComparisonbetweenLitecoinandBitcoin#SHA256miningvsscryptmining
-Litecoin ASICs: https://axablends.com/merchants-accepting-bitcoin/litecoin-discussion/litecoin-scrypt-asic-miners/
+1. Colored coins whitepaper: https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit
+2. Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec
+3. Decentralized autonomous corporations, Bitcoin Magazine: http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/
+4. Smart property: https://en.bitcoin.it/wiki/Smart_Property
+5. Smart contracts: https://en.bitcoin.it/wiki/Contracts
+6. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification
+7. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree
+8. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree
+9. Bitcoin whitepaper: http://bitcoin.org/bitcoin.pdf
+10. GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf
+11. StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html
+12. Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y
+13. Ethereum RLP: http://wiki.ethereum.org/index.php/RLP
+14. Ethereum Merkle Patricia trees: http://wiki.ethereum.org/index.php/Patricia_Tree
+15. Ethereum Dagger: http://wiki.ethereum.org/index.php/Dagger
+16. Ethereum C-like language: http://wiki.ethereum.org/index.php/CLL
+17. Ethereum Slasher: http://blog.ethereum.org/?p=39/slasher-a-punitive-proof-of-stake-algorithm
+18. Scrypt parameters: https://litecoin.info/User:Iddo/ComparisonbetweenLitecoinandBitcoin#SHA256miningvsscryptmining
+19. Litecoin ASICs: https://axablends.com/merchants-accepting-bitcoin/litecoin-discussion/litecoin-scrypt-asic-miners/
