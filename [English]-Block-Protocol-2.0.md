@@ -112,7 +112,8 @@ The mining function is tentative, and will be replaced once we know that we have
 
 ### Mining Process
 
-[[File:Minerchart3.png|500px|right]]
+![Mining Process](https://www.ethereum.org/gh_wiki/500px-Minerchart3.png)
+
 
 When mining a block, a miner goes through the following process:
 
@@ -156,7 +157,7 @@ When mining a block, a miner goes through the following process:
 
 ### Block Validation Algorithm
 
-[[File:Minerchart2.png|500px|right]]
+![Mining Process](https://www.ethereum.org/gh_wiki/500px-Minerchart2.png)
 
 1- Take as inputs:
 
