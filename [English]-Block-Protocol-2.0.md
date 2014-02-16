@@ -4,7 +4,7 @@ One of the main criticisms that has been made of Ethereum, and Bitcoin-like bloc
 
 A full block is stored as:
 
-   [
+    [
         block_header,
         transaction_list,
         uncle_list,
