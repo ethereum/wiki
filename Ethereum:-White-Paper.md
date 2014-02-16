@@ -8,30 +8,30 @@ However, most of these applications are difficult to implement today, simply bec
 ### Table of Contents
 
 * [Why A New Platform](#why-a-new-platform)
-    * Colored Coins
-    * Metacoins
-* Philosophy
-* Basic Building Blocks
-    * Modified GHOST Implementation
-    * Ethereum Client P2P Protocol
-    * Currency and Issuance
-    * Data Format
-    * Mining Algorithm
-    * Transactions
-    * Difficulty Adjustment
-    * Block Rewards
-* Contracts
-    * Applications
-    * Sub-currencies
-    * Financial derivatives
-    * Identity and Reputation Systems
-    * Decentralized Autonomous Organizations
-    * Further Applications
-    * How Do Contracts Work?
-    * Language Specification
-* Fees
-* Conclusion
-* References and Further Reading
+    * [Colored Coins](#Colored-Coins)
+    * [Metacoins](#Metacoins)
+* [Philosophy](#Philosophy)
+* [Basic Building Blocks](#Basic-Building-Blocks)
+    * [Modified GHOST Implementation](#Modified-GHOST-Implementation)
+    * [Ethereum Client P2P Protocol](#Ethereum-Client-P2P-Protocol)
+    * [Currency and Issuance](#Currency-and-Issuance)
+    * [Data Format](#Data-Format)
+    * [Mining Algorithm](#Mining-Algorithm)
+    * [Transactions](#Transactions)
+    * [Difficulty Adjustment](#Difficulty-Adjustment)
+    * [Block Rewards](#Block-Rewards)
+* [Contracts](#Contracts)
+    * [Applications](#Applications)
+    * [Sub-currencies](#Sub-currencies)
+    * [Financial derivatives](#Financial-derivatives)
+    * [Identity and Reputation Systems](#Identity-and-Reputation-Systems)
+    * [Decentralized Autonomous Organizations](#Decentralized-Autonomous-Organizations)
+    * [Further Applications](#Further-Applications)
+    * [How Do Contracts Work?](#How-Do-Contracts-Work)
+    * [Language Specification](#Language-Specification)
+* [Fees](#Fees)
+* [Conclusion](#Conclusion)
+* [References and Further Reading](#References-and-Further-Reading)
 
 
 ## Why A New Platform?
