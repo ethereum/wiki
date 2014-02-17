@@ -1,8 +1,8 @@
-## Introduction
+### Introduction
 
 In some type of financial instruments like Futures (but not Forwards), parties are guaranteed against credit losses resulting from the counterparty default by a "clearinghouse". Essentially, a clearinghouse provides this guarantee via a procedure in which the gains and losses that accrue on daily basis throughout the life of a contract are converted into actual cash (daily settlement of gains or losses).
 
-## Daily Settlement
+### Daily Settlement
 
 As explained a daily settlement is the actual conversion into cash of daily gains or losses. This procedure is called **daily settlement** or **marking to market** and it is best illustrated via an actual example.
 
@@ -43,7 +43,7 @@ A complete example, is provided in the table below. Notice the two panels report
 
 The day the contract is entered will be referred as ''Day 0'', both parties will deposit an initial margin of 50 USD and we shall assume that on ''Day 1'' the future price moves down to 99.20 USD as indicated in Column 4 of Panel A. In Column 5 we can see the Future price change -0.80 (99.20 - 100) and this amount is multipled by the number of contract, 10, to obtain the number in Column 6: -0.80 x 10 = - 8 USD. The ending balance is shown in Column 7 and it is the beginning balance plus/minus any gain/loss. The ending balance on Day 1 for the Holder of the Long Position is 42 USD and it is above the maintenance margin of 30 USD so no extra deposit is required.
 
-## Ethereum clearinghouse implementation and logic
+### Ethereum clearinghouse implementation and logic
 
 * does it apply to all contracts?
 * which flag should be set to enable clearinghouse?
@@ -55,4 +55,4 @@ The day the contract is entered will be referred as ''Day 0'', both parties will
 * what if the parties really want to exchange the underlying? i.e. no cash/ether settlement? (NOT SPECIFIC TO CLEARINGHOUSE)
 * losses/gains are magnified by the leverage inherently provided by the clearinghouse. ACCEPTABLE FOR ETHEREUM? NOTICE ALTHOUGH A FULL SUM DO NOT NEED TO BE DEPOSITED UPFRONT.
 
-## Code reference sample
+### Code reference sample
