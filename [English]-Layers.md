@@ -15,12 +15,12 @@ Dependencies: internet, bootstrapping nodes
 1. Process_network_message(string) -> msg or transaction or block
 2. Create_network_message
 
-###IO Layer (ie. usually database)
+### IO Layer (ie. usually database)
 
 1. Insert object(value)   (key = sha256(value))
 2. Get object (key) -> value
 
-###Data layer
+### Data layer
 
 1. get_transaction
 2. get_block
@@ -37,7 +37,7 @@ Dependencies: internet, bootstrapping nodes
 2. add_block (including validation and total difficulty calculation)
 3. apply_transactions_to_block (for miners)
 
-## Application Layer
+### Application Layer
 
 1. Wallet
 2. Full
@@ -47,7 +47,7 @@ Dependencies: internet, bootstrapping nodes
 
 ## Classes
 
-###Block class
+### Block class
 
 Purpose: the block class should be able to parse blocks, serialize blocks and handle certain updating operations to blocks.
 
