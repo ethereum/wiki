@@ -4,7 +4,7 @@
 
 [RLP](https://google.com), Prefijo Linear Recursivo (Recursive Linear Prefix), usado para codificación de datos a través de Ethereum.
 
-[Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) for the specification of the Merkle Patricia tree (aka Trie), the structure used for storing and hashing block-chain state in Ethereum.
+[Patricia Tree](https://google.com) especificaciones del  árbol Merkle Patricia (“Merkle Patria Tree”, también conocido como Trie), la estructura usada para almacenar y procesar a través de funciones Hash el estado de la cadena de bloques en Ethereum.
 
 [Protocolo de conexión](https://google.com), especificaciones.
 
@@ -14,6 +14,6 @@
 
 [Protocolo de Bloques 2.0](https://google.com)
 
-[Layers](https://google.com)
+[Capas](https://google.com)
 
 [Cámara de compensación](https://google.com)
