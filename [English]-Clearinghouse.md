@@ -55,4 +55,4 @@ The day the contract is entered will be referred as ''Day 0'', both parties will
 * what if the parties really want to exchange the underlying? i.e. no cash/ether settlement? (NOT SPECIFIC TO CLEARINGHOUSE)
 * losses/gains are magnified by the leverage inherently provided by the clearinghouse. ACCEPTABLE FOR ETHEREUM? NOTICE ALTHOUGH A FULL SUM DO NOT NEED TO BE DEPOSITED UPFRONT.
 
-== Code reference sample ==
+## Code reference sample
