@@ -1,6 +1,6 @@
 ### Bienvenidos a Ethereum, la plataforma para la siguiente generación de contratos inteligentes y aplicaciones descentralizadas.
 
-[Ethereum whitepaper](https://google.com)
+[Whitepaper de Ethereum](https://google.com)
 
 [RLP](https://google.com), Prefijo Linear Recursivo (Recursive Linear Prefix), usado para codificación de datos a través de Ethereum.
 
