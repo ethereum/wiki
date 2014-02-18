@@ -14,10 +14,9 @@ A full block is stored as:
 Where:
 
     transaction_list = [
-        transaction 0, medstate 0, stkhash 0, subhash 0],
+        transaction 0,
         transaction 1,
         ...
-        transaction n,
     ]
 
     uncle list = [
@@ -44,7 +43,6 @@ Where:
         [ medhash 0, stkhash 0 ],
         [ medhash 1, stkhash 1 ],
         ...
-        [ medhash n, stkhash n ]
     ]
 
 Each transaction and uncle block header is itself provided directly in the form of a list, not in a serialized form. `uncle_list` and `transaction_list` are the lists of the uncle block headers and transactions in the block, respectively. Note that the block number, difficulty and timestamp are integers, and therefore cannot have leading zeroes; `extra_data` and `nonce` can be byte arrays of at most 32 bytes, NOT lists, although this particular check should not be performed for the genesis block where the `extra_data` field will take up many kilobytes.
@@ -58,15 +56,15 @@ The `nonce` is the number of transactions made from the account, and is incremen
 In order to understand all of what is above, we also need a few function definitions:
 
     def H(x):
-        if len(rlp.encode(x)) &lt; 32: return x
+        if len(rlp.encode(x)) < 32: return x
         else: return sha3(rlp.encode(x))
 
     def H20(x):
-        if len(rlp.encode(x)) &lt; 20: return x
+        if len(rlp.encode(x)) < 20: return x
         else: return sha3(rlp.encode(x))[:12]
 
     def adjust_difficulty(pdiff,ptime,ntime):
-        if ntime &gt; ptime + 42: return pdiff - int(pdiff / 1024)
+        if ntime > ptime + 42: return pdiff - int(pdiff / 1024)
         else: return pdiff + int(pdiff / 1024)
 
     def int_to_bin(n,bytes):
@@ -107,7 +105,7 @@ The mining function is tentative, and will be replaced once we know that we have
         return header[10]
 
     def verify_pow(header):
-        return sha3(sha3(header[:10]) + header[10]) * header[7] &lt;= 2**256
+        return sha3(sha3(header[:10]) + header[10]) * header[7] <= 2**256
 
 
 ### Mining Process
@@ -144,7 +142,7 @@ When mining a block, a miner goes through the following process:
 * Apply the transaction `TRIETOP(txstack)` to `state`.
 * `TRIEPOP(txstack)`
 * Let `L[0] ... L[m-1]` be the list of new transactions spawned by that transaction via `MKTX`, in the order that they were produced during script execution.
-* Initialize `j = m-1`. While `j &gt;= 0`, `TRIEPUSH(txstack,L[j])` and `j -= 1`
+* Initialize `j = m-1`. While `j >= 0`, `TRIEPUSH(txstack,L[j])` and `j -= 1`
 
 5- Make the following modifications to the state tree:
 
@@ -173,7 +171,7 @@ When mining a block, a miner goes through the following process:
 * Is the proof of work on the block valid?
 * Is the proof of work on all uncle headers valid?
 * Are all uncles unique and actually uncles (ie. children of the parent of the parent, but not the parent)?
-* Is `block.timestamp &lt;= now + 900` and is `block.timestamp &gt;= parent.timestamp`?
+* Is `block.timestamp <= now + 900` and is `block.timestamp >= parent.timestamp`?
 * Is `block.number == parent.number + 1`?
 * Is `block.difficulty == adjust_difficulty(parent.difficulty,timestamp,parent.timestamp)`?
 * Is `block.transaction_hash = TRIEHASH(transaction_list)`?
@@ -186,14 +184,14 @@ When mining a block, a miner goes through the following process:
 * `txstack = TRIE(transaction_list)`
 * `i = 0`
 
-4- Let `stacktrace[k] = [ M[k], H[k] ]`, defaulting to '' if `k` is out of bounds. While `i &lt; len(stacktrace)`:
+4- Let `stacktrace[k] = [ M[k], H[k] ]`, defaulting to '' if `k` is out of bounds. While `i < len(stacktrace)`:
 
 * Check that `state.root == M[i]` and `txstack.root == H[i]`
 * Apply `transaction_list[i]` to `state`.
 * Apply the transaction `TRIETOP(txstack)` to `state`.
 * `TRIEPOP(txstack)`
 * Let `L[0] ... L[m-1]` be the list of new transactions spawned by that transaction via `MKTX`, in the order that they were produced during script execution.
-* Initialize `j = m-1`. While `j &gt;= 0`, `TRIEPUSH(txstack,L[j])` and `j -= 1`
+* Initialize `j = m-1`. While `j >= 0`, `TRIEPUSH(txstack,L[j])` and `j -= 1`
 * Set `i += 1`
 
 5- Make the following modifications to `state`:
@@ -211,9 +209,9 @@ If a block is valid, determine TD(block) (&quot;total difficulty&quot;) for the 
 
 ### Semi-collaborative Block Validation Via Challenge-Response Protocol
 
-In Ethereum, a ''light node'' can be defined as a node that accepts block headers, and performs the verifications in (2) with the possible exception of the transaction trie hash verification but does not perform the verifications in (4) and (6), similar to the headers-only verification that light nodes do in Bitcoin. Light nodes would thus store the state roots, and perhaps some portion of the state, but not the entire state. If a light node wants to know the balance or contract state of a given account, it can request the value from other nodes in the network alongside the minimal subset of Patricia tree nodes that prove that the given key/value pair is actually in the state.
+In Ethereum, a ''light node'' can be defined as a node that accepts block headers, and performs the verifications in (2) with the exception of the transaction and stacktrace trie hash verifications but does not perform the verifications in (4) and (6), similar to the headers-only verification that light nodes do in Bitcoin. Light nodes would thus store the state roots, and perhaps some portion of the state, but not the entire state. If a light node wants to know the balance or contract state of a given account, it can request the value from other nodes in the network alongside the minimal subset of Patricia tree nodes that prove that the given key/value pair is actually in the state.
 
-The purpose of the extended stack trace mechanism described here is to provide a solution to this problem for Ethereum, allowing light nodes to maintain full security under the much weaker assumption that only one honest full node needs to exist. The mechanism relies on a challenge-response protocol in which a node can, subject to certain conditions, submit a challenge that a certain part of a block is invalid, and it would be up to the miner (or another good samaritan node) to provide a response. If a challenge goes uncontested, then light nodes would distrust the block.
+Although Ethereum cannot run without at least some full nodes processing and verifying every transaction that takes place in the network, this block protocol is designed to provide a somewhat weaker assurance: as long as at least one honest full node exists, light clients can be just as secure and provide the same incentives toward decentralization that full nodes do. The mechanism relies on a challenge-response protocol in which a full node can, subject to certain conditions, submit a challenge that a certain part of a block is invalid, and it would be up to the miner (or another good samaritan node) to provide a response which light nodes can then efficiently verify. If a challenge goes uncontested, then light nodes would distrust the block.
 
 In the validation algorithm described in the previous section, note that there are a few specific places where a block can fail:
 
@@ -221,21 +219,21 @@ In the validation algorithm described in the previous section, note that there a
 2. The transaction list trie hash check fails.
 3. The stack trace trie hash check fails.
 4. One of the checks in (4) fails for `i=0`
-5. One of the checks in (4) succeeds for all `i&lt;k` but fails for `i=k`
+5. One of the checks in (4) succeeds for all `i<k` but fails for `i=k`
 6. The check in (6) or (7) fails.
 
-(1) is automatically done by light nodes, but the other six require a larger amount of data to properly verify, and so light clients by themselves will not be able to detect such flaws. However, other nodes will, and will be able to submit challenges at any step. Regardless of where a challenge comes in, a miner can construct a proof of localized legitimacy; in theory, a large collection of proofs of localized legitimacy can be combined together into a complete proof that a block is valid.
+(1) is automatically done by light nodes, but the other six require a larger amount of data to properly verify, and so light clients by themselves will not be able to detect such flaws. However, other nodes will, and will be able to submit challenges at any step. Regardless of where a challenge comes in, if the block is correct another node can construct a proof of localized legitimacy. The set of possible proofs of localized legitimacy has 100% cover; in theory, a large collection of proofs of localized legitimacy can be combined together into a complete proof that a block is valid.
 
 For (2) and (3), in order for a trie hash check to pass it means that two conditions must be met:
 
-1. For all indices `i &lt; k` for some `k`, there must be a valid transaction in the trie at `i`
-2. For all indices `i &gt;= k`, everything must be blank.
+1. For all indices `i < k` for some `k`, there must be a valid transaction in the trie at `i`
+2. For all indices `i >= k`, everything must be blank.
 
-A challenge of invalidity consists of either (1) an index `i` pointing to a potential invalid transaction, or (2) an index `i` pointing to a blank space and an index `j &gt; i` pointing to a transaction. A response should contain (1) `i`, (2) `j` if applicable, (3) the subset of Patricia tree nodes needed to verify the values at `i` and `j` in the trie.
+A challenge of invalidity consists of either (1) an index `i` pointing to a potential invalid transaction, or (2) an index `i` pointing to a blank space and an index `j > i` pointing to a transaction. A response should contain (1) `i`, (2) `j` if applicable, (3) the subset of Patricia tree nodes needed to verify the values at `i` and `j` in the trie.
 
 For (5), a challenge of invalidity consists of an index `k` such that everything up to index `k` is valid but index `k` is not. A response consists of (1) `k`, (2) the stack trace entries at `k-1` and `k` along with a subset of Patricia tree nodes to verify them, (3) a subset of Patricia tree nodes from the state tree needed to verify the computation. For (4), a response consists simply of a subset of Patricia tree nodes to prove the stack trace entry at index 0, from which the two components can be checked against the transaction list hash in the block header and the parent block state. For (6), a response functions in the same way as in (4), except verifying the response requires both processing the last transaction and giving the block rewards to the coinbase and the uncles.
 
-**Economics**
+### Economics
 
 There is one flaw in the protocol as described above: it is vulnerable to denial of service attacks. Specifically, because challenges are much easier to produce than responses are to produce or verify, it is possible for nodes to pollute the network with false challenges, forcing light nodes to reject every block as other nodes are unable to catch up with verification. To remedy this, we introduce a simple fix: a challenge must be signed by a node that either (1) mined one of the last 10000 blocks, or (2) owns at least 0.01% of all ether. Light nodes would then keep quality scores for all peers, and downgrade peers if they submit a challenge that is successfully countered. Because this method is not anonymous, requiring nodes to submit proof of ownership of an identity tied to the blockchain, it cannot be countered by reconnecting under a new IP address or other such mechanisms.
 
@@ -247,4 +245,6 @@ The protocol altogether can be shown to be incentive-compatible as follows:
 4. Substantial stakeholders have the incentive to promote the perceived integrity of the system to maximize the value of their currency units, and thus may want to help actively submit both challenges and responses where possible.
 5. Statistically speaking, far more than 0.01% of agents inside of real-world economic agents, whether or not weighted by economic power, tend to motivated by altruistic/ideological considerations. The market share of charities around the world is sufficient evidence of this.
 
-All in all, this protocol provides slightly better security and scalability properties to Ethereum compared to what is available in Bitcoin. In Bitcoin, one can create a similar challenge-response protocol, but there is one key way in which such a protocol in Bitcoin would be inadequate: miner fees. Because Bitcoin does not include a Merkle-tree mechanism for adding up transaction fees, the only way to prove that a block has a certain quantity of transaction fees is to process every transaction. Furthermore, in Bitcoin transaction fees all go to the miner. Thus, in Bitcoin a light node has no way of knowing if a given block is valid or if it gives its creator excessive fees, and can only rely on the computational majority as a source of information for this. In Ethereum, all changes to the state are incorporated into the stacktrace, so this weakness does not exist and, given the weak security assumption that at least one full node with at least 0.01% mining power or stake is honest, have 100% of the security properties that full nodes have.
+### Comparison with Bitcoin
+
+In Bitcoin, one can create a challenge-response protocol to achieve similar functionality along very similar principles, but there is one key way in which such a protocol in Bitcoin would be inadequate: miner fees. Because Bitcoin does not include a Merkle-tree mechanism for adding up transaction fees, the only way to prove that a block has a certain quantity of transaction fees is to process every transaction. Furthermore, in Bitcoin transaction fees all go to the miner. Thus, in Bitcoin a light node has no way of knowing if a given block is valid or if it gives its creator excessive fees, and can only rely on the computational majority as a source of information for this. In Ethereum, all changes to the state are incorporated into the stacktrace, so this weakness does not exist and, given the weak security assumption that at least one full node with at least 0.01% mining power or stake is honest, have 100% of the security properties that full nodes have.
