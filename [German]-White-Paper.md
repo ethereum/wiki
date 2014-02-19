@@ -59,6 +59,15 @@ Der erste Versuch zur Implementierung eines Systems zur Verarbeitung von elektro
 
 Das [Colored Coins - Protokoll] (https://docs.google.com/a/ursium.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) lässt sich annähernd wie folgt beschreiben:
 
+1. Der Herausgeber eines Clored Coins legt fest, dass eine bestimmte Transaktionsausgabe H:i einen bestimmten Vermögenswert repräsentiert. (H sei dabei der Transaktions-Hash und i der *?Ausgabeindex?*). Er veröffentlicht eine Colored-Coin-Definition, die besagt, welchen Vermögenswert die *?Transaktionsausgabe?* entspricht (z.B. 1 Satoshi von H:i = eine Unze Gold, einzulösen bei der "Stephan Gold Company").
+2. Die anderen "installieren" die Colored-Coin-Definitions-Datei in ihrem Clored-Coin- Clientprogramm.
+3. *?Ist die Color-Coin-Definition freigegen, die Ausgabe H:i ist die einzige Transaktionsausgabe, die diese Farbe hat.?*
+4. Wenn eine Transaktion Eingänge mit der Farbe X enthält, dann haben die Ausgaben auch die Farbe X. D.h. wenn der Eigentümer von H:i sofort eine Transaktion vornimmt, um die Ausgaben auf 5 Empfänger zu splitten, dann werden die Ausgaben auch die Farbe X haben.
+*?Hat?* ein Transaktion Eingänge unterschiedlicher Farben, dann wird eine "Color-Transfer-Richtlinie" oder ein "Color-Kernel" bestimmen, welche Farben welche Ausgaben sind (z.B. würde eine einfache Implementierung bedeutet, dass die Ausgabe 0 die selbe Farbe hat, wie die Eingabe 0, oder die Ausgabe 1 die selbe Farbe wie wie die Eingabe 1, usw.).
+5. Wenn eine Colored-Coin-Client-Software feststellt, das eine neue Transaktions-Ausgabe empfangen wurde, verwendet es einen Rückwerts-Such-Algorithmus, basierend auf dem "Color-Kernel", um die Farbe der Ausgabe festzustellen. Die die Regeln deterministisch sind, werden alle Colored-Coin-Client-Programme damit einverstanden sein, welche Farbe die jeweiligen Ausgaben haben.
+Wie auch immer, das Protokoll hat einige fundamentale Schwachstellen:
+
+
 
 1. A colored coin issuer determines that a given transaction output H:i (H being the transaction hash and i the output index) represents a certain asset, and publishes a "color definition" specifying this transaction output alongside what it represents (eg. 1 satoshi from H:i = 1 ounce of gold redeemable at Stephen's Gold Company)
 2. Others "install" the color definition file in their colored coin clients.
