@@ -72,9 +72,8 @@ Wie auch immer, das Protokoll hat einige fundamentale Schwachstellen:
 
 ![SPV in bitcoin](https://www.ethereum.org/gh_wiki/spv_bitcoin.png)
 
-_Left: it suffices to present only a small number of nodes in a Merkle tree to give a proof of the validity of a branch._
-
-_Right: any attempt to change any part of the Merkle tree will eventually lead to an inconsistency somewhere up the chain._
+_Links: Es genügt nur eine kleine Anzahl von Knoten im Merkle-Baum um einen Beweis für die Gültigkeit eines Zweigungs zu bekommen._
+_Rechts: Jeder Versuch, einen Teil des Merkle-Baums zu ändern, wird schließlich zu einer Inkonsistenz irgendwo in der Kette führen._
 
 
 1. **Difficulty of simplified payment verification** - Bitcoin's [Merkle Tree](http://en.wikipedia.org/wiki/Merkle_tree) construction allows for a protocol known as "[simplified payment verification](https://en.bitcoin.it/wiki/Scalability#Simplified_payment_verification)", where a client that does not download the full blockchain can quickly determine the validity of a transaction output by asking other nodes to provide a cryptographic proof of the validity of a single branch of the tree. The client will still need to download the block headers to be secure, but the amount of data bandwidth and verification time required drops by a factor of nearly a thousand. With colored coins, this is much harder. The reason is that one cannot determine the color of a transaction output simply by looking up the Merkle tree; rather, one needs to employ the backward scanning algorithm, fetching potentially thousands of transactions and requesting a Merkle tree validity proof of each one, before a client can be fully satisfied that a transaction has a certain color. After over a year of investigation, including help from ourselves, no solution has been found to this problem.
