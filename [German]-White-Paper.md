@@ -53,10 +53,12 @@ Es gibt keine Veranlassung eine neue Währung oder ein neues Protkoll zu erschaf
 In der Tat kommt es einem Puzzle gleich, zu versuchen Probleme zu lösen, die mit  elektronischen Besitztum, elektronischen Verträgen und Dezentrale Autonome Gesellschftsformen einhergehen, wenn man dies auf Basis des Bitcoins tun möchte. Dies war unser ursprünglicher Antrieb an einem Protokoll der nächsten Generation zu arbeiten.
 Während das Bitcoin-Protokoll für das Handling einer Währung mehr als ausreichend ist, wurde im Laufe unserer Forschung aber auch deutlich, dass es schon für einfache elektronische Verträge oder Treuhandfunktionen mit Mehrfachunterschriften grundlegende Einschränkungen gibt, die eine weitergehende Nutzung nur in sehr begrenzten Umfang möglich machen würden.
 
-
 ### Colored Coins
 
-The first attempt to implement a system for managing smart property and custom currencies and assets on top of a blockchain was built as a sort of overlay protocol on top of Bitcoin, with many advocates making a comparison to the way that, in the [internet protocol stack](http://en.wikipedia.org/wiki/Internet_protocol_suite), [HTTP](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) serves as a layer on top of [TCP](http://en.wikipedia.org/wiki/Transmission_Control_Protocol). The [colored coins](https://docs.google.com/a/ursium.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) protocol is roughly defined as follows:
+Der erste Versuch zur Implementierung eines Systems zur Verarbeitung von elektronischen Besitzständen, kundenspezifischen Währungen und Vermögenswerten auf Basis der Blockkette wurde realisiert als ein "Overlay-Protokoll" auf dem Bitcoin. Um einen Vergleich anzustellen: Etwa so, wie [HTTP] (http://de.wikipedia.org/wiki/Http) als eine obere Schicht des [TCP-Protokolls] (http://de.wikipedia.org/wiki/Transmission_Control_Protocol), so wie im [Interent-Protkoll-Stack](http://de.wikipedia.org/wiki/Internet_Protocol) definiert.
+
+Das [Colored Coins - Protokoll] (https://docs.google.com/a/ursium.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) lässt sich annähernd wie folgt beschreiben:
+
 
 1. A colored coin issuer determines that a given transaction output H:i (H being the transaction hash and i the output index) represents a certain asset, and publishes a "color definition" specifying this transaction output alongside what it represents (eg. 1 satoshi from H:i = 1 ounce of gold redeemable at Stephen's Gold Company)
 2. Others "install" the color definition file in their colored coin clients.
