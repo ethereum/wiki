@@ -19,7 +19,35 @@ Kundenspezifische Währungen, Finanzderivate, Identitätssysteme und dezentralis
 Alles in allem glauben wir, dass dieses Design ein großer Schritt in Richtung der Realisierung von "Cryptocurrency 2.0" ist und wir hoffen, dass Astraleums ein signifikanter Beitrag zum Cryptocurrency Ökosystem wird, wie es das Aufkommen von Web 2.0 wa, in Kontrast zum statischen-content-Internet von 1999.
 
 
-### Table of Contents
+### Inhaltsverzeichnis
+
+* [Warum eine neue Plattform?] (#Warum-eine-neue-Plattform?)
+    * [Colored Coins]
+    * [Metacoins]
+* [Philosophie]
+* [Grundbeusteine]
+    * [Modifizierte GHOST Implementierung]
+    * [Ethereum Client P2P Protokoll]
+    * [Währunge und Währungsausgabe]
+    * [Datenformat]
+    * [Mining Algorithmus]
+    * [Transaktionen]
+    * [Justierung des Schwierigkeitsgrades (Difficulty)]
+    * [Belohung (Block Rewards)]
+* [Verträge]
+    * [Anwendungen]
+    * [Unterwährungen]
+    * [Finanzderivate]
+    * [Identifizierugs- und Reputationsysteme]
+    * [Dezentrale Autonome Organisation]
+    * [Spätere Anwendungen]
+    * [Wie fundktioneren die Verträge?]
+    * [Spezifikation der Prommiersprache]
+* [Gebühren]
+* [Fazit]
+* [Refernzen und weiterführende Literatur]
+
+
 
 * [Why A New Platform](#why-a-new-platform)
     * [Colored Coins](#colored-coins)
