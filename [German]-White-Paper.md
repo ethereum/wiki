@@ -65,20 +65,10 @@ Das [Colored Coins - Protokoll] (https://docs.google.com/a/ursium.com/document/d
 4. Wenn eine Transaktion Eingänge mit der Farbe X enthält, dann haben die Ausgaben auch die Farbe X. D.h. wenn der Eigentümer von H:i sofort eine Transaktion vornimmt, um die Ausgaben auf 5 Empfänger zu splitten, dann werden die Ausgaben auch die Farbe X haben.
 *?Hat?* ein Transaktion Eingänge unterschiedlicher Farben, dann wird eine "Color-Transfer-Richtlinie" oder ein "Color-Kernel" bestimmen, welche Farben welche Ausgaben sind (z.B. würde eine einfache Implementierung bedeutet, dass die Ausgabe 0 die selbe Farbe hat, wie die Eingabe 0, oder die Ausgabe 1 die selbe Farbe wie wie die Eingabe 1, usw.).
 5. Wenn eine Colored-Coin-Client-Software feststellt, das eine neue Transaktions-Ausgabe empfangen wurde, verwendet es einen Rückwerts-Such-Algorithmus, basierend auf dem "Color-Kernel", um die Farbe der Ausgabe festzustellen. Die die Regeln deterministisch sind, werden alle Colored-Coin-Client-Programme damit einverstanden sein, welche Farbe die jeweiligen Ausgaben haben.
+
 Wie auch immer, das Protokoll hat einige fundamentale Schwachstellen:
 
-
-
-1. A colored coin issuer determines that a given transaction output H:i (H being the transaction hash and i the output index) represents a certain asset, and publishes a "color definition" specifying this transaction output alongside what it represents (eg. 1 satoshi from H:i = 1 ounce of gold redeemable at Stephen's Gold Company)
-2. Others "install" the color definition file in their colored coin clients.
-3. When the color is first released, output H:i is the only transaction output to have that color.
-4. If a transaction spends inputs with color X, then its outputs will also have color X. For example, if the owner of H:i immediately makes a transaction to split that output among five addresses, then those transaction outputs will all also have color X. If a transaction has inputs of different colors, then a "color transfer rule" or "color kernel" determines which colors which outputs are (eg. a very naive implementation may say that output 0 has the same color as input 0, output 1 the same color as input 1, etc).
-5. When a colored coin client notices that it received a new transaction output, it uses a back-tracing algorithm based on the color kernel to determine the color of the output. Because the rule is deterministic, all clients will agree on what color (or colors) each output has.
-
-However, the protocol has several fundamental flaws:
-
-
-**Simplified Payment Verification in Bitcoin **
+**Vereinfachte Zahlungsbestätigung beim Bitcoin **
 
 ![SPV in bitcoin](https://www.ethereum.org/gh_wiki/spv_bitcoin.png)
 
