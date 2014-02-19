@@ -296,7 +296,7 @@ The idea is that if someone wants to send X currency units to account A in curre
         contract.storage[from] = contract.storage[from] - value
         contract.storage[to] = contract.storage[to] + value
     else:
-        contract.storage[mycreator] = 10^18
+        contract.storage[MYCREATOR] = 10^18
         contract.storage[1000] = 1
 
 
@@ -324,17 +324,17 @@ To show an example, let's make a hedging contract. The basic idea is that the co
     if contract.storage[1000] == 0:
         if tx.value < 1000 * 10^18:
             stop
-        contract.storage[1000] = 0
+        contract.storage[1000] = 1
         contract.storage[1001] = 998 * block.contract_storage(D)[I]
         contract.storage[1002] = block.timestamp + 30 * 86400
         contract.storage[1003] = tx.sender
     else:
         ethervalue = contract.storage[1001] / block.contract_storage(D)[I]
-        if ethervalue >= 5000 * 10^18:
+        if ethervalue >= 5000:
             mktx(contract.storage[1003],5000 * 10^18,0,0)
         else if block.timestamp > contract.storage[1002]:
-            mktx(contract.storage[1003],ethervalue,0,0)
-            mktx(A,5000 - ethervalue,0,0)
+            mktx(contract.storage[1003],ethervalue * 10^18,0,0)
+            mktx(A,(5000 - ethervalue) * 10^18,0,0)
 
 More advanced financial contracts are also possible; complex multi-clause options (eg. "Anyone, hereinafter referred to as X, can claim this contract by putting in 2 USD before Dec 1. X will have a choice on Dec 4 between receiving 1.95 USD on Dec 29 and the right to choose on Dec 11 between 2.20 EUR on Dec 28 and the right to choose on Dec 18 between 1.20 GBP on Dec 30 and paying 1 EUR and getting 3.20 EUR on Dec 29") can be defined simply by storing a state variable just like the contract above but having more clauses in the code, one clause for each possible state. Note that financial contracts of any form do need to be fully collateralized; the Ethereum network controls no enforcement agency and cannot collect debt.
 
