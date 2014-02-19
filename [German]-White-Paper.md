@@ -22,30 +22,30 @@ Alles in allem glauben wir, dass dieses Design ein großer Schritt in Richtung d
 ### Inhaltsverzeichnis
 
 * [Warum eine neue Plattform?] (#Warum-eine-neue-Plattform?)
-    * [Colored Coins]
-    * [Metacoins]
-* [Philosophie]
-* [Grundbeusteine]
-    * [Modifizierte GHOST Implementierung]
-    * [Ethereum Client P2P Protokoll]
-    * [Währunge und Währungsausgabe]
-    * [Datenformat]
-    * [Mining Algorithmus]
-    * [Transaktionen]
-    * [Justierung des Schwierigkeitsgrades (Difficulty)]
-    * [Belohung (Block Rewards)]
-* [Verträge]
-    * [Anwendungen]
-    * [Unterwährungen]
-    * [Finanzderivate]
-    * [Identifizierugs- und Reputationsysteme]
-    * [Dezentrale Autonome Organisation]
-    * [Spätere Anwendungen]
-    * [Wie fundktioneren die Verträge?]
-    * [Spezifikation der Prommiersprache]
-* [Gebühren]
-* [Fazit]
-* [Refernzen und weiterführende Literatur]
+    * [Colored Coins] (#Colored-Coins)
+    * [Metacoins] (#Metacoins)
+* [Philosophie](#philosophy)
+* [Grundbeusteine](#basic-building-blocks)
+    * [Modifizierte GHOST Implementierung](#modified-ghost-implementation)
+    * [Ethereum Client P2P Protokoll](#ethereum-client-p2p-protocol)
+    * [Währunge und Währungsausgabe](#currency-and-issuance)
+    * [Datenformat](#data-format)
+    * [Mining Algorithmus](#mining-algorithm)
+    * [Transaktionen](#transactions)
+    * [Justierung des Schwierigkeitsgrades (Difficulty)](#difficulty-adjustment)
+    * [Belohung (Block Rewards)](#block-rewards)
+* [Verträge](#contracts)
+    * [Anwendungen](#applications)
+    * [Unterwährungen](#sub-currencies)
+    * [Finanzderivate](#financial-derivatives)
+    * [Identifizierugs- und Reputationsysteme](#identity-and-reputation-systems)
+    * [Dezentrale Autonome Organisation](#decentralized-autonomous-organizations)
+    * [Spätere Anwendungen](#further-applications)
+    * [Wie funktioneren die Verträge?](#how-do-contracts-work)
+    * [Spezifikation der Prommiersprache](#language-specification)
+* [Gebühren](#fees)
+* [Fazit](#conclusion)
+* [Refernzen und weiterführende Literatur](#references-and-further-reading)
 
 
 
