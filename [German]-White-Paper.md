@@ -47,38 +47,11 @@ Alles in allem glauben wir, dass dieses Design ein großer Schritt in Richtung d
 * [Fazit](#conclusion)
 * [Refernzen und weiterführende Literatur](#references-and-further-reading)
 
-
-
-* [Why A New Platform](#why-a-new-platform)
-    * [Colored Coins](#colored-coins)
-    * [Metacoins](#metacoins)
-* [Philosophy](#philosophy)
-* [Basic Building Blocks](#basic-building-blocks)
-    * [Modified GHOST Implementation](#modified-ghost-implementation)
-    * [Ethereum Client P2P Protocol](#ethereum-client-p2p-protocol)
-    * [Currency and Issuance](#currency-and-issuance)
-    * [Data Format](#data-format)
-    * [Mining Algorithm](#mining-algorithm)
-    * [Transactions](#transactions)
-    * [Difficulty Adjustment](#difficulty-adjustment)
-    * [Block Rewards](#block-rewards)
-* [Contracts](#contracts)
-    * [Applications](#applications)
-    * [Sub-currencies](#sub-currencies)
-    * [Financial derivatives](#financial-derivatives)
-    * [Identity and Reputation Systems](#identity-and-reputation-systems)
-    * [Decentralized Autonomous Organizations](#decentralized-autonomous-organizations)
-    * [Further Applications](#further-applications)
-    * [How Do Contracts Work?](#how-do-contracts-work)
-    * [Language Specification](#language-specification)
-* [Fees](#fees)
-* [Conclusion](#conclusion)
-* [References and Further Reading](#references-and-further-reading)
-
-
-## Why A New Platform?
-
-When one wants to create a new application, especially in an area as delicate as cryptography or cryptocurrency, the immediate, and correct, first instinct is to use existing protocols as much as possible. There is no need to create a new currency, or even a new protocol, when the problem can be solved entirely by using existing technologies. Indeed, the puzzle of attempting to solve the problems of [smart property](https://en.bitcoin.it/wiki/Smart_Property), [smart contracts](https://en.bitcoin.it/wiki/Contracts) and [decentralized autonomous corporations](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) on top of Bitcoin is how our interest in next-generation cryptocurrency protocols originally started. Over the course of our research, however, it became evident that while the Bitcoin protocol is more than adequate for currency, basic multisignature escrow and certain simple versions of smart contracts, there are fundamental limitations that make it non-viable for anything beyond a certain very limited scope of features.
+## Warum eine neue Plattform?
+Wenn man eine neue Anwendung erstellt, vor allem in so heiklen Bereichen wie Kryptographie oder Kryptowährungen, ist die naheliegenste Intention, bestehende Protokolle möglichst umfänglich zu nutzen.
+Es gibt keine Veranlassung eine neue Währung oder ein neues Protkoll zu erschaffen, wenn Probleme mit der vorhandenen Technologie gelöst werden können.
+In der Tat kommt es einem Puzzle gleich, zu versuchen Probleme zu lösen, die mit  elektronischen Besitztum, elektronischen Verträgen und Dezentrale Autonome Gesellschftsformen einhergehen, wenn man dies auf Basis des Bitcoins tun möchte. Dies war unser ursprünglicher Antrieb an einem Protokoll der nächsten Generation zu arbeiten.
+Während das Bitcoin-Protokoll für das Handling einer Währung mehr als ausreichend ist, wurde im Laufe unserer Forschung aber auch deutlich, dass es schon für einfache elektronische Verträge oder Treuhandfunktionen mit Mehrfachunterschriften grundlegende Einschränkungen gibt, die eine weitergehende Nutzung nur in sehr begrenzten Umfang möglich machen würden.
 
 
 ### Colored Coins
