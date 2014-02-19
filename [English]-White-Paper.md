@@ -137,13 +137,13 @@ The "current block" is a pointer maintained by each node that refers to the bloc
 
 The Ethereum network includes its own built-in currency, ether. The main reason for including a currency in the network is twofold. First, like Bitcoin, ether is rewarded to miners so as to incentivize network security. Second, it serves as a mechanism for paying transaction fees for anti-spam purposes. Of the two main alternatives to fees, per-transaction proof of work similar to [Hashcash](http://en.wikipedia.org/wiki/Hashcash) and zero-fee laissez-faire, the former is wasteful of resources and unfairly punitive against weak computers and smartphones and the latter would lead to the network being almost immediately overwhelmed by an infinitely looping "logic bomb" contract. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate), the denominations will be pre-labelled:
 
-1: wei
-10^3: (unspecified)
-10^6: (unspecified)
-10^9: (unspecified)
-10^12: szabo
-10^15: finney
-10^18: ether
+* 1: wei
+* 10^3: (unspecified)
+* 10^6: (unspecified)
+* 10^9: (unspecified)
+* 10^12: szabo
+* 10^15: finney
+* 10^18: ether
 
 This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi" that is intended to be future proof. Szabo, finney and ether will likely be used in the foreseeable future, and the other units will be more . "ether" is intended to be the primary unit in the system, much like the dollar or bitcoin. The right to name the 103, 106 and 109 units will be left as a high-level secondary reward for the fundraiser subject to pre-approval from ourselves.
 
