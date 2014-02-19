@@ -21,8 +21,8 @@ Alles in allem glauben wir, dass dieses Design ein großer Schritt in Richtung d
 
 ### Inhaltsverzeichnis
 
-* [Warum eine neue Plattform?] (#warum-eine-neue-Plattform?)
-    * [Colored Coins] (#colored-Coins)
+* [Warum eine neue Plattform?] (#warum-eine-neue-plattform?)
+    * [Colored Coins] (#colored-coins)
     * [Metacoins] (#metacoins)
 * [Philosophie](#philosophy)
 * [Grundbeusteine](#basic-building-blocks)
