@@ -1,4 +1,14 @@
-### A Next-Generation Smart Contract and Decentralized Application Platform
+### Ethereum: Die nächste Generation elektronischer Verträge und eine dezentrale Anwedungs-Plattform
+
+In den letzten Monaten war ein großes Interesse an der Verwendung von Blockketten (wie beim Bitcoin) zu verzeichnen, die einen Mechanismus darstellen, der es der ganzen Welt erlaubt, sich über den Status von Dingen in einer öffentlichen Eigentumsdatenbank einig zu sein - und das für mehr Dinge als nur für Geld.
+Die am häufigsten genannten Anwendungen bei der Nutzung von Online-Blockketten sind
+
+* digitale Wertanlagen, wie benutzerdefinierte Währungen oder Finanzinstrumente ("Farbige  Münzen / Colored Coins"),
+* "Elektronische Besitzstände / smart property" Dinge wie Autos, die einen "Colored Coin" in der Blockkette verfolgen, um den gegenwärtigen legitimen Besitzer festzustellen,
+* erweiterte Anwendungen wie dezentrale Tauschbörsen, Finanzderivate, Peer-to-Peer-Glücksspiele,
+* Online-Blockketten basierte Identitätsnachweise und Reputationssysteme.
+
+Die möglicherweise ambitionierteste aller Anwendungen ist das Konzept der autonomen Vermittlung oder die [Dezentrale Autonome Organisation] (http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAO) - autonome Instanzen, die auf Basis der Blockchain ohne jegliche zentrale Kontrolle und unter Verzicht auf alle Abhängigkeit von Rechtsverträgen und Organisationssatzungen operieren. *Und dies zu Gunsten / zu Lasten von Ressourcen und Mitteln*...autonom verwaltet durch Selbstregulierung der "Smart-Contracts" auf Basis einer kryptografischen Blockkette.
 
 In the last few months, there has been a great amount of interest into the area of using Bitcoin-like blockchains - the mechanism that allows for the entire world to agree on the state of a public ownership database - for more than just money. Commonly cited applications include using on-blockchain digital assets to represent custom currencies and financial instruments ("colored coins"), "smart property" devices such as cars which track a colored coin on a blockchain to determine their present legitimate owner, as well as more advanced applications such as decentralized exchange, financial derivatives, peer-to-peer gambling and on-blockchain identity and reputation systems. Perhaps the most ambitious of all cited applications is the concept of autonomous agents or [decentralized autonomous organizations](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAOs) - autonomous entities that operate on the blockchain without any central control whatsoever, eschewing all dependence on legal contracts and organizational bylaws in favor of having resources and funds autonomously managed by a self-enforcing smart contract on a cryptographic blockchain.
 
