@@ -21,9 +21,9 @@ Alles in allem glauben wir, dass dieses Design ein großer Schritt in Richtung d
 
 ### Inhaltsverzeichnis
 
-* [Warum eine neue Plattform?] (#Warum-eine-neue-Plattform?)
-    * [Colored Coins] (#Colored-Coins)
-    * [Metacoins] (#Metacoins)
+* [Warum eine neue Plattform?] (#warum-eine-neue-Plattform?)
+    * [Colored Coins] (#colored-Coins)
+    * [Metacoins] (#metacoins)
 * [Philosophie](#philosophy)
 * [Grundbeusteine](#basic-building-blocks)
     * [Modifizierte GHOST Implementierung](#modified-ghost-implementation)
