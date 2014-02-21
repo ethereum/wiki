@@ -1,6 +1,6 @@
 ### Willkommen bei Ethereum, der nächsten Generation von elektronischen Verträgen und der Plattform für dezentrale Anwendungen.
 
-[Ethereum whitepaper](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-White-Paper)
+[Ethereum whitepaper](https://github.com/ethereum/wiki/wiki/%5BGerman%5D-White-Paper)
 
 [RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP), die Recursive Linear Prefix - Spezifikation für Kodierung der Daten ation, used for data encoding bei Ethereum.
 
