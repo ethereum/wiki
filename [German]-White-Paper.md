@@ -1,4 +1,4 @@
-### Ethereum: Die nächste Generation elektronischer Verträge und eine dezentrale Anwendungs-Plattform
+### Ethereum: Die nächste Generation elektronischer Verträge und die Plattform für dezentrale Anwendungen
 
 In den letzten Monaten war ein großes Interesse an der Verwendung von Blockketten (wie beim Bitcoin) zu verzeichnen, die einen Mechanismus darstellen, der es der ganzen Welt erlaubt, sich über den Status von Dingen in einer öffentlichen Eigentumsdatenbank einig zu sein - und das für mehr Dinge als nur für Geld.
 Die am häufigsten genannten Anwendungen bei der Nutzung von Online-Blockketten sind
