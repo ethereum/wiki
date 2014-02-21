@@ -4,7 +4,7 @@
 
 [RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP), die Recursive Linear Prefix - Spezifikation für Kodierung der Daten ation, used for data encoding bei Ethereum.
 
-[Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) für die Spezifikation des Merkle Patricia Baums (aka Trie), die Struktur zum Speichern und das Hashen der Blockkette in Ethereum.
+[Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree), die Spezifikation des Merkle Patricia Baums (aka Trie), die Struktur zum Speichern und Hashen der Blockkette in Ethereum.
 
 [Wire protocol](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Wire-Protocol) Spezifikation.
 
