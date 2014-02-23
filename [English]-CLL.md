@@ -129,7 +129,7 @@ Fibonacci sequence:
     while i < 70:
         a[i] = a[i-1] + a[i-2]
         i = i + 1
-    mktx("0676d13c8d2cf5e9e988cc3b5f6dfb5a6a3938fa",a[69],a,70)
+    mktx("0676d13c8d2cf5e9e988cc3b5f6dfb5a6a3938fa",a[69],70,a)
 
 A real example - simple forwarding contract to create a transferable account:
 
@@ -149,7 +149,7 @@ A real example - simple forwarding contract to create a transferable account:
         while i < tx.datan - 1:
             o[i] = tx.data[i+1]
             i = i + 1
-        mktx(tx.data[0],tx.value - tx.basefee * 250,o,i)
+        mktx(tx.data[0],tx.value - tx.basefee * 250,i,o)
 
 ### Alternative Syntax: C++ style
 
