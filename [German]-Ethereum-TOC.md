@@ -16,4 +16,4 @@
 
 [Layers](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Layers)
 
-[Clearinghouse](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Clearinghouse)
+[Clearinghaus](https://github.com/ethereum/wiki/wiki/%5BGerman%5D-Clearinghaus)
