@@ -66,7 +66,7 @@ There are a number of different types of payload that may be encoded within the 
 
 **GetChain**
 * `[0x14, Parent1, Parent2, ..., ParentN, Count]`
-* Request the peer to send `Count` (to be interpreted as an integer) blocks in the current canonical block chain that are children of `Parent1` (to be interpreted as a SHA3 block hash). If `Parent1` is not present in the block chain, it should instead act as if the request were for `Parent2` &c. through to `ParentN`. If the designated parent is the present block chain head, an empty reply should be sent. If none of the parents are in the current canonical block chain, then `NotInChain` should be sent along with `ParentN` (i.e. the last Parent in the parents list). If no parents are passed, then a reply need not be made.
+* Request the peer to send `Count` (to be interpreted as an integer) blocks in the current canonical block chain that are children of `Parent1` (to be interpreted as a SHA3 block hash). If `Parent1` is not present in the block chain, it should instead act as if the request were for `Parent2` &c. through to `ParentN`. If the designated parent is the present block chain head, an empty reply should be sent. If none of the parents are in the current canonical block chain, then `NotInChain` should be sent along with `ParentN` (i.e. the last `Parent` in the parents list). If no parents are passed, then a reply need not be made.
 
 **NotInChain**
 * `[0x15, Hash]`
