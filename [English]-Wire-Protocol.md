@@ -46,7 +46,7 @@ There are a number of different types of payload that may be encoded within the 
 
 **Pong**
 * `[0x03]`
-* Reply to peer's '''Ping''' packet.
+* Reply to peer's `Ping` packet.
 
 **GetPeers**
 * `[0x10]`
