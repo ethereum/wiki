@@ -17,32 +17,32 @@ There are a number of different types of payload that may be encoded within the 
 **Hello**
 * `[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID]`
 * First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
-* CLIENT_ID Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
-* PROTOCOL_VERSION is one of:
-* 0x00 for PoC-1;
-* 0x01 for PoC-2;
-* 0x07 for PoC-3.
-* NETWORK_ID should be 0.
-* LISTEN_PORT specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
-* CAPABILITIES specifies the capabilities of the client as a set of flags; presently three bits are used: 0x01 for peers discovery, 0x02 for transaction relaying, 0x04 for block-chain querying.
-* NODE_ID is optional and specifies a 512-bit hash, (potentially to be used as public key) that identifies this node.
+* `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
+* `PROTOCOL_VERSION` is one of:
+* `0x00` for PoC-1;
+* `0x01` for PoC-2;
+* `0x07` for PoC-3.
+* `NETWORK_ID` should be 0.
+* `LISTEN_PORT` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
+* `CAPABILITIES` specifies the capabilities of the client as a set of flags; presently three bits are used: `0x01` for peers discovery, `0x02` for transaction relaying, `0x04` for block-chain querying.
+* `NODE_ID` is optional and specifies a 512-bit hash, (potentially to be used as public key) that identifies this node.
 
 **Disconnect**
 * `[0x01, REASON]`
 * Inform the peer that a disconnection is imminent; if received, a peer should disconnect immediately. When sending, well-behaved hosts give their peers a fighting chance (read: wait 2 seconds) to disconnect to before disconnecting themselves.
-* REASON is an optional integer specifying one of a number of reasons for disconnect:
-* 0x00 Disconnect requested;
-* 0x01 TCP sub-system error;
-* 0x02 Bad protocol;
-* 0x03 Useless peer;
-* 0x04 Too many peers;
-* 0x05 Already connected;
-* 0x06 Wrong genesis block;
-* 0x07 Incompatible network protocols.
+* `REASON` is an optional integer specifying one of a number of reasons for disconnect:
+* `0x00` Disconnect requested;
+* `0x01` TCP sub-system error;
+* `0x02` Bad protocol;
+* `0x03` Useless peer;
+* `0x04` Too many peers;
+* `0x05` Already connected;
+* `0x06` Wrong genesis block;
+* `0x07` Incompatible network protocols.
 
 **Ping**
 * `[0x02]`
-* Requests an immediate reply of '''Pong''' from the peer.
+* Requests an immediate reply of `Pong` from the peer.
 
 **Pong**
 * `[0x03]`
@@ -58,15 +58,15 @@ There are a number of different types of payload that may be encoded within the 
 
 **Transactions**
 * `[0x12, [nonce, receiving_address, value, ... ], ... ]`
-* Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item 0x12) are transactions in the format described in the main Ethereum specification.
+* Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
 
 **Blocks**
 * `[0x13, [block_header, transaction_list, uncle_list], ... ]`
-* Specify (a) block(s) that the peer should know about. The items in the list (following the first item, 0x13) are blocks in the format described in the main Ethereum specification.
+* Specify (a) block(s) that the peer should know about. The items in the list (following the first item, `0x13`) are blocks in the format described in the main Ethereum specification.
 
 **GetChain**
 * `[0x14, Parent1, Parent2, ..., ParentN, Count]`
-* Request the peer to send Count (to be interpreted as an integer) blocks in the current canonical block chain that are children of Parent1 (to be interpreted as a SHA3 block hash). If Parent1 is not present in the block chain, it should instead act as if the request were for Parent2 &c. through to ParentN. If the designated parent is the present block chain head, an empty reply should be sent. If none of the parents are in the current canonical block chain, then NotInChain should be sent along with ParentN (i.e. the last Parent in the parents list). If no parents are passed, then a reply need not be made.
+* Request the peer to send `Count` (to be interpreted as an integer) blocks in the current canonical block chain that are children of `Parent1` (to be interpreted as a SHA3 block hash). If `Parent1` is not present in the block chain, it should instead act as if the request were for `Parent2` &c. through to `ParentN`. If the designated parent is the present block chain head, an empty reply should be sent. If none of the parents are in the current canonical block chain, then `NotInChain` should be sent along with `ParentN` (i.e. the last Parent in the parents list). If no parents are passed, then a reply need not be made.
 
 **NotInChain**
 * `[0x15, Hash]`
