@@ -10,6 +10,8 @@
 
 [CLL](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-CLL), High-level "C-Like Language" specification, used to author contracts.
 
+[LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Low-level "Lisp-like Language" specification, used to author contracts in the PoC series from PoC-3.
+
 [Dagger](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Dagger), Ethereum's "proof-of-work" specification.
 
 [Block Protocol 2.0](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Block-Protocol-2.0)
