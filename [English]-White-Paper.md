@@ -274,7 +274,7 @@ In Ethereum, there are two types of entities that can generate and receive trans
 
 ### Applications
 
-Here are some examples of what can be done with Ethereum contracts, with all code examples written in our C-like language. The variables `tx.sender`, `tx.value`, `tx.fee`, `tx.data` and `tx.datan` are properties of the incoming transaction, contract.storage, and contract.address of the contract itself, and `block.contract_storage`, `block.account_balance`, `block.number`, `block.difficulty`, `block.parenthash`, `block.basefee` and `block.timestamp` properties of the block. `block.basefee` is the "base fee" which all transaction fees in Ethereum are calculated as a multiple of; for more info see the "fees" section below. All variables expressed as capital letters (eg. `A`) are constants, to be replaced by actual values by the contract creator when actually releasing the contract.
+Here are some examples of what can be done with Ethereum contracts, with all code examples written in our C-like language. The variables `tx.sender`, `tx.value`, `tx.fee`, `tx.data` and `tx.datan` are properties of the incoming transaction, `contract.storage`, and `contract.address` of the contract itself, and `block.contract_storage`, `block.account_balance`, `block.number`, `block.difficulty`, `block.parenthash`, `block.basefee` and `block.timestamp` properties of the block. `block.basefee` is the "base fee" which all transaction fees in Ethereum are calculated as a multiple of; for more info see the "fees" section below. All variables expressed as capital letters (eg. `A`) are constants, to be replaced by actual values by the contract creator when actually releasing the contract.
 
 
 ### Sub-currencies
