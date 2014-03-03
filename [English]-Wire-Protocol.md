@@ -17,12 +17,12 @@ There are a number of different types of payload that may be encoded within the 
 **Hello**
 * `[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID]`
 * First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
-* `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
 * `PROTOCOL_VERSION` is one of:
-* `0x00` for PoC-1;
-* `0x01` for PoC-2;
-* `0x07` for PoC-3.
+    * `0x00` for PoC-1;
+    * `0x01` for PoC-2;
+    * `0x07` for PoC-3.
 * `NETWORK_ID` should be 0.
+* `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
 * `LISTEN_PORT` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
 * `CAPABILITIES` specifies the capabilities of the client as a set of flags; presently three bits are used: `0x01` for peers discovery, `0x02` for transaction relaying, `0x04` for block-chain querying.
 * `NODE_ID` is optional and specifies a 512-bit hash, (potentially to be used as public key) that identifies this node.
