@@ -69,7 +69,7 @@ Pre-compilation, if there are `n` variables, each variable will be assigned an i
 
 In the context of a right-hand-side expression:
 
-* Arithmetic works in the obvious way. `(* (+ 3 5) (+ 4 8))`, for example, returns 84.
+* Arithmetic works in the obvious way. `(* (+ 3 5) (+ 4 8))`, for example, returns 96.
 * `a && b` is a shortcut for `!(!(a) + !(b))`
 * `a || b` is a shortcut for `!(!(a + b))`
 * A variable `x` should become `M[ind(x)]`
