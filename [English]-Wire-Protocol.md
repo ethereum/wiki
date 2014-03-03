@@ -38,7 +38,8 @@ There are a number of different types of payload that may be encoded within the 
 * `0x04` Too many peers;
 * `0x05` Already connected;
 * `0x06` Wrong genesis block;
-* `0x07` Incompatible network protocols.
+* `0x07` Incompatible network protocols;
+* `0x08` Client quitting.
 
 **Ping**
 * `[0x02]`
