@@ -137,7 +137,7 @@ A real example - simple forwarding contract to create a transferable account:
         exit
     else:
         a = contract.storage[2^256 - 1]
-        !(tx.sender == a) && (tx.sender > 0):
+        if !(tx.sender == a) && (tx.sender > 0):
             exit
     if tx.data[0] == 2^160:
         contract.storage[2^256 - 1] = tx.data[1]
