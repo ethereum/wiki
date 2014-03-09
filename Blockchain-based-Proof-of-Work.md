@@ -1,0 +1,5 @@
+One of the key ingredients in a standard cryptocurrency is the idea of proof of work. A proof of work, in general, if a function which is hard to compute, but easy to verify, allowing it to serve as a probabilistic cryptographic proof of the quantity of computational resources controlled by a given node. In Bitcoin, and Ethereum, this mechanism is intimately tied in with the blockchain: every block requires a proof of work of some prespecified difficulty level in order to be valid, and in the event of multiple competing blockchains the chain with the largest total quantity of proof of work is considered to be valid. Thus, in order to reverse a transaction, an attacker needs to start a new fork of the blockchain from before the block the transaction was confirmed in, and then apply more computational power than the rest of the network combined in order to overtake the legitimate fork.
+
+However, one of the key requirements for a proof of work algorithm to, well, work is decentralization. If the proof of work algorithm is designed in such a way as to prevent legitimate users from 
+
+... 
