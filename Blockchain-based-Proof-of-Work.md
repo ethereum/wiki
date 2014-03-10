@@ -2,7 +2,7 @@ One of the key ingredients in a standard cryptocurrency is the idea of proof of 
 
 However, one of the key requirements for a proof of work algorithm to, well, work is decentralization. If the proof of work algorithm is designed in such a way that the proof of work computation can only be efficiently done by entities with the millions of dollars of capital required to develop specialized hardware, then the number of participants in the process will be small enough that it will be possible for the majority of miners to conspire and reverse transactions. Alternatively, if the proof of work algorithm encourages miners to outsource their block verification work to centralized entities, then that is another way that centralization can creep in, and it would be the mining pools that have the potential to form conspiracies. Ideally, proof of work algorithms should solve both of those problems.
 
-===Blockchain Based PoW Specification===
+### Blockchain Based PoW Specification
 
 This mining algorithm is based on Adam Back's Hashcash, also used by Bitcoin. In Hashcash, we take a hash function `H` (assume 256-bit length) which takes as input data and a nonce and a difficulty parameter, and say that a valid nonce is one where `H(data,nonce) < 2^256 / difficulty`. Completing the proof of work essentially entails trying different nonces until one works, and verifying means applying the hash function to the data and nonce provided and making sure that the result is indeed below the target. In Bitcoin, `H` is a simple computation of `sha256(block_header + nonce)`. Here, however, `H` is much more complex, taking in as data not just the block header but also the state data and transactions from the last 16 blocks.
 
@@ -14,7 +14,7 @@ This mining algorithm is based on Adam Back's Hashcash, also used by Bitcoin. In
 4. Let `S` be the state at the beginning of block `N-16`. Sequentially apply `t[0]`, `t[1]` ... `t[15]` to `S`, and let `S'` be the resulting state.
 5. Return `sha3(S'.root)`
 
-===Properties===
+### Properties
 
 1. The algorithm is memory-hard; mining requires the miner to store the full state of the last 16 blocks in order to be able to query the blockchain. However, the algorithm is not sequentially memory-hard and is vulnerable to shared memory optimizations.
 2. The algorithm requires every node to store the entire blockchain state and be able to process transactions. Furthermore, as new blocks are created, it will likely be more efficient to generate the new blockchain state by computing it rather than by asking for and downloading the missing Patricia tree nodes. Hence, there is no reason why a miner would not want to be a full node.
