@@ -14,6 +14,14 @@ This mining algorithm is based on Adam Back's Hashcash, also used by Bitcoin. In
 4. Let `S` be the state at the beginning of block `N-16`. Sequentially apply `t[0]`, `t[1]` ... `t[15]` to `S`, and let `S'` be the resulting state.
 5. Return `sha3(S'.root)`
 
+Three attributes:
+
+0. Transactions should be chosen with probability weighted according to the difficulty of the contract (i.e. fees changed).
+
+1. Senders & receivers of the transactions should change, probably by rotation through the merkle (state) tree addresses - receivers, if a contract should rotate to another contract. Maybe don't rotate if the contract is of sufficient difficulty.
+
+2. Contracts should be slightly corrupted. This can happen either by random spewing of data in the lower part of contract memory, exchanging arbitrary non-zero locations, or rotation of known instructions through their sets (e.g. arithmetic operations).
+
 ### Properties
 
 1. The algorithm is memory-hard; mining requires the miner to store the full state of the last 16 blocks in order to be able to query the blockchain. However, the algorithm is not sequentially memory-hard and is vulnerable to shared memory optimizations.
