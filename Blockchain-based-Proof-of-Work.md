@@ -16,9 +16,9 @@ This mining algorithm is based on Adam Back's Hashcash, also used by Bitcoin. In
 
 Three attributes:
 
-0. Transactions should be chosen with probability weighted according to the difficulty of the contract (i.e. fees changed).
+0. Transactions should be chosen with probability weighted according to the difficulty of the contract (i.e. fees changed), with a minimum number of contract transactions used (e.g. 50%).
 
-1. Senders & receivers of the transactions should change, probably by rotation through the merkle (state) tree addresses - receivers, if a contract should rotate to another contract. Maybe don't rotate if the contract is of sufficient difficulty.
+1. Senders & receivers of the transactions should change, probably by rotation through the merkle (state) tree addresses - receivers, if a contract, should rotate to another contract. Maybe don't rotate if the contract is of over-average difficulty.
 
 2. Contracts should be slightly corrupted. This can happen either by random spewing of data in the lower part of contract memory, exchanging arbitrary non-zero locations, or rotation of known instructions through their sets (e.g. arithmetic operations).
 
