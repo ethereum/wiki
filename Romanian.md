@@ -1,0 +1,1 @@
+Traducere in limba romana pentru proiectul Ethereum.
