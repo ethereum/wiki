@@ -52,9 +52,9 @@ The empty string ('null') = `[ 0x80 ]`
 
 The empty list = `[ 0xc0 ]`
 
-The integer 15 = `[ 0x0f ]`
+The encoded integer 15 ('\x0f') = `[ 0x0f ]`
 
-The integer 1024 = `[ 0x82, 0x04, 0x00 ]`
+The encoded integer 1024 ('\x04\x00') = `[ 0x82, 0x04, 0x00 ]`
 
 The [set theoretical representation](http://en.wikipedia.org/wiki/Set-theoretic_definition_of_natural_numbers) of two, `[ [], [[]], [ [], [[]] ] ] = [ 0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0 ]`
 
