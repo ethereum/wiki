@@ -13,27 +13,28 @@ Codarea RLP este definita dupa cum urmeaza:
 
 In cod, arata astfel:
 
-> def rlp_encode(input):
->     if isinstance(input,str):
->         if len(input) == 1 and chr(input) < 128: return input
->         else: return encode_length(len(input),128) + input
->      elif isinstance(input,list):
->         output = encode_length(len(input),192)
->         for item in input: output += rlp_encode(item)
->         return output
 
-> def encode_length(L,offset):
->     if L < 56:
->          return chr(L + offset)
->     elif L < 256**8:
->          BL = to_binary(L)
->          return chr(len(BL) + offset + 55) + BL
->     else:
->          raise Exception("input too long")
+In cod, arata astfel:
+def rlp_encode(input):
+    if isinstance(input,str):
+        if len(input) == 1 and chr(input) < 128: return input
+        else: return encode_length(len(input),128) + input
+     elif isinstance(input,list):
+        output = encode_length(len(input),192)
+        for item in input: output += rlp_encode(item)
+        return output
 
-> def to_binary(x):
->     return '' if x == 0 else to_binary(int(x / 256)) + chr(x % 256)
+def encode_length(L,offset):
+    if L < 56:
+         return chr(L + offset)
+    elif L < 256**8:
+         BL = to_binary(L)
+         return chr(len(BL) + offset + 55) + BL
+    else:
+         raise Exception("input too long")
 
+def to_binary(x):
+    return '' if x == 0 else to_binary(int(x / 256)) + chr(x % 256)
 Exemple:
 Sirul “dog”= `[ 0x83, 'd', 'o', 'g' ]`
 Lista [ "cat", "dog" ] = `[ 0xc8, 0x83, 'c', 'a', 't', 0x83, 'd', 'o', 'g' ]`
