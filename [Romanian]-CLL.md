@@ -98,15 +98,15 @@ In contextul unei afirmatii:
 ###Exemple:
 
 Factorial:
-``pyton
+```python
  x = 1
  n = 1
  while x < 10:
      n = n * x
      x = x + 1
-``
+```
 Secventa Fibonacci:
-
+```python
  a = array()
  a[0] = 1
  a[1] = 1
@@ -115,9 +115,9 @@ Secventa Fibonacci:
      a[i] = a[i-1] + a[i-2]
      i = i + 1
  mktx("0676d13c8d2cf5e9e988cc3b5f6dfb5a6a3938fa",a[69],70,a)
-
+```
 Un exemplu real – un contract simplu de expediere pentru a crea un cont transferabil: 
-
+```python
  if tx.value < tx.basefee * 200:
      exit
  else:
@@ -135,7 +135,7 @@ Un exemplu real – un contract simplu de expediere pentru a crea un cont transf
          o[i] = tx.data[i+1]
          i = i + 1
      mktx(tx.data[0],tx.value - tx.basefee * 250,i,o)
-
+```
 Sintaxa alternativa: C++ style
 
 •	`("seq" a...)` este implementat prin separarea afirmatiilor prin semicoloane. Randurile libere sunt ignorate. 
