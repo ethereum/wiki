@@ -33,12 +33,12 @@ Totusi, majoritatea acestor aplicatii sunt dificil de implementat astazi, din si
 * [References and Further Reading](#references-and-further-reading)
 
 
-De ce o noua platforma?
+##De ce o noua platforma?
 
 Cand se doreste creearea unei noi aplicatii, in special intr-un domeniu delicat ca al criptografiei sau cryptocurrency, primul si cel mai corect instinct este acela de a se folosi protocoale existente pe cat mai mult posibil. Nu este nevoie sa se creeze un nou etalon monetar, sau chiar un nou protocol atunci cand problema poate fi rezolvata prin utilizarea tehnologiilor deja existente. Intradevar, complexitatea incercarilor de rezolvare a problemelor de smart property, smart contracts si corporatii autonome descentralizate, pe langa Bitcoin, este modul in care a aparut interesul fata de protocoalele cryptocurrency de ultima generatie. In decursul cercetarii noastre, totusi, devine evident ca in timp ce protocolul Bitcoin este mai mult decat adecvat pentru valuta, basic multisignature escrow and certain simple versions of smart contracts, there are fundamental limitations that make it non-viable for anything beyond a certain very limited scope of features.
 
 
-Colored Coins
+###Colored Coins
 
 Prima incercare de a implementa un sistem de administrare pentru smart property si valute personalizate si bunuri pe un blockchain a fost construita ca un fel de supra-protocol al Bitcoin-ului, pe care multi l-au comparat, in anumite privinte cu felul in care, in suita de protocoale a internetului, HTTP functioneaza ca un strat asupra TCP-ului. Colored coins protocol este definit dupa cum urmeaza:
 
