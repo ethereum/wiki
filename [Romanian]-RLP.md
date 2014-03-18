@@ -1,5 +1,7 @@
 Scopul RLP este acela de a coda matrici grupate arbitrar de date binare, si RLP este principala metoda folosita pentru a serializa obiecte in Ethereum. Singurul scop al RLP este acela de a coda structuri, codarea unor tipuri specifice de date atomice (strings, ints, float) sunt lasate pentru alte protocoale de ordin superior; in Ethereum standardul este reprezentarea numerelor intregi in forma endiana binara. Daca cineva doreste sa utilizeze RLP pentru a coda un dictionar, cele doua forme canonice sugerate vor folosi `[[k1,v1],[k2,v2]...]` keys in ordine lexicografica sau vor folosi codarea Patricia Tree, ca la Ethereum.
-DEFINITIE
+
+###DEFINITIE
+
 The RLP encoding function takes in an item. Un item/element este definit dupa cum urmeaza:
 -	Un sir (ex. o matrice octet) este un element
 -	O lista de elemente este un element
@@ -12,9 +14,7 @@ Codarea RLP este definita dupa cum urmeaza:
 - Daca sarcina utila a unei liste (payload) este mai mare de 55 bytes, codarea RLP consta intr-un singur byte cu valoarea de 0xf7 plus lungimea lungimii listei in forma binara, urmata de lungimea listei , urmata de concatenarea/juxtapunerea codarii RLP a elementelor. Intervalul in care este plasat primul octet este `[0xf8, 0xff]`.
 
 In cod, arata astfel:
-
-
-In cod, arata astfel:
+```python
 def rlp_encode(input):
     if isinstance(input,str):
         if len(input) == 1 and chr(input) < 128: return input
@@ -35,7 +35,10 @@ def encode_length(L,offset):
 
 def to_binary(x):
     return '' if x == 0 else to_binary(int(x / 256)) + chr(x % 256)
-Exemple:
+```
+
+###Exemple:
+
 Sirul “dog”= `[ 0x83, 'd', 'o', 'g' ]`
 Lista [ "cat", "dog" ] = `[ 0xc8, 0x83, 'c', 'a', 't', 0x83, 'd', 'o', 'g' ]`
 Sirul gol ('null') = `[ 0x80 ]`
