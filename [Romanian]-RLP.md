@@ -14,7 +14,7 @@ Codarea RLP este definita dupa cum urmeaza:
 - Daca sarcina utila a unei liste (payload) (ex. Suma lungimilor elementelor sale) are o lungime de 0-55 bytes, codarea RLP consta intr-un singur byte cu valoarea de 0xc0 plus lungimea listei urmata de concatenarea/juxtapunerea codarii RLP a elementelor. Intervalul in care se incadreaza primul byte este `[0xc0, 0xf7]`.
 - Daca sarcina utila a unei liste (payload) este mai mare de 55 bytes, codarea RLP consta intr-un singur byte cu valoarea de 0xf7 plus lungimea lungimii listei in forma binara, urmata de lungimea listei , urmata de concatenarea/juxtapunerea codarii RLP a elementelor. Intervalul in care este plasat primul octet este `[0xf8, 0xff]`.
 
-In cod, arata astfel:
+Codul, arata astfel:
 ```python
 def rlp_encode(input):
     if isinstance(input,str):
