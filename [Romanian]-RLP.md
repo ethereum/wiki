@@ -2,7 +2,7 @@ Scopul RLP este acela de a coda matrici grupate arbitrar de date binare, si RLP 
 
 ###Definitie
 
-The RLP encoding function takes in an item. Un item/element este definit dupa cum urmeaza:
+Functia de encodare RLP preia un element. Un element este definit dupa cum urmeaza:
 -	Un sir (ex. o matrice octet) este un element
 -	O lista de elemente este un element
 De exemplu, un sir gol este un element, cum este sirul care conține cuvantul "pisica", o lista ce contine orice numar de siruri, ca si structuri de date mai complexe precum` ["pisica",["catelus","vaca"],"cal",[[]],"porc",[""],"oaie"]`. Retineti ca in contextul acestui articol, “sir” va fi folosit ca un sinonim pentru “un anumit numar de bytes de date binare”, nu sunt folosite codari speciale si nu implica resurse legate de continutul sirurilor.
