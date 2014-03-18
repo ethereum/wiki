@@ -6,7 +6,7 @@ Specificarea va avea loc in trei parti. Prima parte va defini limbajul ca un arb
 
 
 
-Sintaxa arborescenta
+###Sintaxa arborescenta
 
 O expresie se defineste astfel:
 - un numar e o expresie
@@ -54,7 +54,7 @@ O afirmatie se defineste astfel:
 - `("while" a b)` unde `a` este o expresie si `b` este o afirmatie
 - `"exit"`.
 
-Definitii:
+###Definitii:
 
 Pre-compilarea, daca sunt `n` variabile, fiecarei variabile ii va fi repartizata un index in `[0,n-1]`. Fie `ind(x)` indexul variabilei `x`, si fie  `M[x]` contractul de memorie la indexul `x`
 In contextul unei expresii right-hand-side: 
@@ -99,42 +99,42 @@ In contextul unei afirmatii:
 
 Factorial:
 
-> x = 1
-> n = 1
-> while x < 10:
->     n = n * x
->     x = x + 1
+ x = 1
+ n = 1
+ while x < 10:
+     n = n * x
+     x = x + 1
 
 Secventa Fibonacci:
 
-> a = array()
-> a[0] = 1
-> a[1] = 1
-> i = 2
-> while i < 70:
->     a[i] = a[i-1] + a[i-2]
->     i = i + 1
-> mktx("0676d13c8d2cf5e9e988cc3b5f6dfb5a6a3938fa",a[69],70,a)
+ a = array()
+ a[0] = 1
+ a[1] = 1
+ i = 2
+ while i < 70:
+     a[i] = a[i-1] + a[i-2]
+     i = i + 1
+ mktx("0676d13c8d2cf5e9e988cc3b5f6dfb5a6a3938fa",a[69],70,a)
 
 Un exemplu real – un contract simplu de expediere pentru a crea un cont transferabil: 
 
-> if tx.value < tx.basefee * 200:
->     exit
-> else:
->     a = contract.storage[2^256 - 1]
->     if !(tx.sender == a) && (tx.sender > 0):
->         exit
-> if tx.data[0] == 2^160:
->     contract.storage[2^256 - 1] = tx.data[1]
-> else:
->     if a == 0:
->         contract.storage[2^256 - 1] = tx.sender
->     o = array()
->     i = 0
->     while i < tx.datan - 1:
->         o[i] = tx.data[i+1]
->         i = i + 1
->     mktx(tx.data[0],tx.value - tx.basefee * 250,i,o)
+ if tx.value < tx.basefee * 200:
+     exit
+ else:
+     a = contract.storage[2^256 - 1]
+     if !(tx.sender == a) && (tx.sender > 0):
+         exit
+ if tx.data[0] == 2^160:
+     contract.storage[2^256 - 1] = tx.data[1]
+ else:
+     if a == 0:
+         contract.storage[2^256 - 1] = tx.sender
+     o = array()
+     i = 0
+     while i < tx.datan - 1:
+         o[i] = tx.data[i+1]
+         i = i + 1
+     mktx(tx.data[0],tx.value - tx.basefee * 250,i,o)
 
 Sintaxa alternativa: C++ style
 
