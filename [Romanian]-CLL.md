@@ -1,4 +1,4 @@
-ECLL: Limbaj de programare ethereum, ce seamana cu C.
+ECLL: Limbaj de programare ethereum, ce seamana cu C++.
 
 Scopul ECLL este de a furniza un limbaj simplu si accesibil utilizatorilor, folosit pentru a scrie contracte, dar in acelasi timp poate compila usor si eficient script-ul Ethereum. ECLL indeparteaza concepte precum indici, accesaul direct la memorie si favorizarea unei sintaxe traditionale de conditionale, bucle, matrice si variabile. Suportul pentru funcii si suportul de prima clasa pentru functii vor fi atribuite unei viitoare versiuni a acestui limbaj, denumita EHLL ("Ethereum High Level Language"), mai puternica dar mai putin eficienta.
 
@@ -136,11 +136,11 @@ Un exemplu real – un contract simplu de expediere pentru a crea un cont transf
          i = i + 1
      mktx(tx.data[0],tx.value - tx.basefee * 250,i,o)
 ```
-Sintaxa alternativa: C++ style
+###Sintaxa alternativa: C++ style
 
 •	`("seq" a...)` este implementat prin separarea afirmatiilor prin semicoloane. Randurile libere sunt ignorate. 
 •	`("if" a b)` si `("while" a b)` vor fi reprezentate ca in C++, stocand `a` intre paranteze si `b` intre acolade.
 
-Sintaxa alternativa: Lisp style
+###Sintaxa alternativa: Lisp style
 
 AST  este utilizat ca si cod direct , cu modificarea minora urmatoare:`("fun" a b...)`, `("pfun" a b...)` si `("mfun" a b...)` sunt inlocuite cu `(a b...)`.
