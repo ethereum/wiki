@@ -1,36 +1,37 @@
 ###Ethereum: O platforma de aplicatii descentralizata ce faciliteaza crearea de contracte inteligente de ultima generatie.
 
-In ultimele cateva luni s-a manifestat un interes tot mai mare fata de utilizarea blockchain-urilor de tip Bitcoin- mecanismul care da intregii lumi sansa sa ajunga la un consens in privinta unei baze de date publice- pentru mai mult decat bani.Aplicatii frecvent citate includ utilizarea bunurilor digitale on-blockchain pentru a reprezenta valute personalizate si instrumente financiare ("colored coins"), dispozitive "smart property" cum ar fi masinile, care pot urmari un "colored coin" pe un blockchain pentru a determina proprietarul legitim al acestora, insa exista si aplicatii mult mai avansate cum ar fi schimburi decentralizate, derivate financiare,peer-to-peer gambling(?) si sisteme on-blockchain de identitate/reputatie. Dintre toate aceste tipuri de aplicatii, poate cel mai ambitios este conceptul de agenti autonomi sau organizatii autonome decentralizate (DAOs) - entitati autonome care opereaza in blockchain fara nici un fel de control central, evitand orice dependenta de contracte legale si statuturi organizatorice in favoarea resurselor si fondurilor administrate autonom de un smart-contract auto-impus pe un blockchain cryptografic.
+In ultimele cateva luni s-a manifestat un interes tot mai mare fata de utilizarea blockchain-urilor de tip Bitcoin- mecanismul care da intregii lumi sansa sa ajunga la un consens in privinta unei baze de date publice- pentru mai mult decat bani.Aplicatii frecvent citate includ utilizarea bunurilor digitale on-blockchain pentru a reprezenta valute personalizate si instrumente financiare ("colored coins"), dispozitive "smart property" cum ar fi masinile, care pot urmari un "colored coin" pe un blockchain pentru a determina proprietarul legitim al acestora, insa exista si aplicatii mult mai avansate cum ar fi schimburi decentralizate, derivate financiare,peer-to-peer gambling(?) si sisteme on-blockchain de identitate/reputatie. Dintre toate aceste tipuri de aplicatii, poate cel mai ambitios este conceptul de agenti autonomi sau organizatii autonome descentralizate (DAOs) - entitati autonome care opereaza in blockchain fara nici un fel de control central, evitand orice dependenta de contracte legale si statuturi organizatorice in favoarea resurselor si fondurilor administrate autonom de un smart-contract auto-impus pe un blockchain cryptografic.
 
 Totusi, majoritatea acestor aplicatii sunt dificil de implementat astazi, din simplul motiv ca sistemele de scripting ale Bitcoin, si chiar ale protocoalelor cryptocurrency de ultima generatie, cum ar fi protocoalele "colored coin" si asa-numitele "metacoins", sunt mult prea limitate pentru a permite metodele arbitrare complexe de calcul pe care DAO le solicita. Ceea ce intentioneaza acest proiect sa faca este sa preia inovatia adusa de astfel de protocoale si sa le generalizeze- create a fully-fledged, Turing-complete (but heavily fee-regulated) cryptographic ledger that allows participants to encode arbitrarily complex contracts, autonomous agents and relationships that will be mediated entirely by the blockchain. In loc sa se limiteze la un tip specific de tranczactii, utilizatorii vor putea folosi Ethereum ca un fel de "Lego de crypto-finante"-altfel spus, acestia vor putea implementa orice proprietate doresc doar prin codarea in limbajul scriptic intern protocolului.Valutele personalizate, derivatele financiare, sistemele de identitate si organizatiile decentralizate vor fi usor de facut, dar, mai important,spre deosebire de sistemele anterioare, va fi posibila construirea unor tipuri de tranzactii pe care nici macar dezvoltatorii Ethereum nu le-au prevazut.Per ansamblu, credem ca acest proiect este un pas in fata spre realizarea "cryptocurrency 2.0"; speram ca Ethereum va fi la fel de important in ecosistemul cryptocurrency pe cat a fost de semnificativa aparitia Web 2.0 pentru static-content-only internet in 1999.
 
-###Continut
+### Table of Contents
 
-Why A New Platform?
-Colored Coins
-Metacoins
-Philosophy
-Basic Building Blocks
-Modified GHOST Implementation
-Ethereum Client P2P Protocol
-Currency and Issuance
-Data Format
-Mining Algorithm
-Transactions
-Difficulty Adjustment
-Block Rewards
-Contracts
-Applications
-Sub-currencies
-Financial derivatives
-Identity and Reputation Systems
-Decentralized Autonomous Organizations
-Further Applications
-How Do Contracts Work?
-Language Specification
-Fees
-Conclusion
-References and Further Reading
+* [Why A New Platform](#why-a-new-platform)
+    * [Colored Coins](#colored-coins)
+    * [Metacoins](#metacoins)
+* [Philosophy](#philosophy)
+* [Basic Building Blocks](#basic-building-blocks)
+    * [Modified GHOST Implementation](#modified-ghost-implementation)
+    * [Ethereum Client P2P Protocol](#ethereum-client-p2p-protocol)
+    * [Currency and Issuance](#currency-and-issuance)
+    * [Data Format](#data-format)
+    * [Mining Algorithm](#mining-algorithm)
+    * [Transactions](#transactions)
+    * [Difficulty Adjustment](#difficulty-adjustment)
+    * [Block Rewards](#block-rewards)
+* [Contracts](#contracts)
+    * [Applications](#applications)
+    * [Sub-currencies](#sub-currencies)
+    * [Financial derivatives](#financial-derivatives)
+    * [Identity and Reputation Systems](#identity-and-reputation-systems)
+    * [Decentralized Autonomous Organizations](#decentralized-autonomous-organizations)
+    * [Further Applications](#further-applications)
+    * [How Do Contracts Work?](#how-do-contracts-work)
+    * [Language Specification](#language-specification)
+* [Fees](#fees)
+* [Conclusion](#conclusion)
+* [References and Further Reading](#references-and-further-reading)
+
 
 De ce o noua platforma?
 
