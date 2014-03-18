@@ -2,7 +2,7 @@ Bine ati venit la Ethereum, loc in care notiunea de contract va lua o noua forma
 
 Ethereum whitepaper
 
-, the recursive linear prefix specification, used for data encoding throughout Ethereum.
+[RLP](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-RLP), the recursive linear prefix specification, used for data encoding throughout Ethereum.
 
 Patricia Tree for the specification of the Merkle Patricia tree (aka Trie), the structure used for storing and hashing block-chain state in Ethereum.
 
