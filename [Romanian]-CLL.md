@@ -98,13 +98,13 @@ In contextul unei afirmatii:
 ###Exemple:
 
 Factorial:
-''pyton
+``pyton
  x = 1
  n = 1
  while x < 10:
      n = n * x
      x = x + 1
-''
+``
 Secventa Fibonacci:
 
  a = array()
