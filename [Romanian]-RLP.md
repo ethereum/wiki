@@ -40,10 +40,17 @@ def to_binary(x):
 ###Exemple:
 
 Sirul “dog”= `[ 0x83, 'd', 'o', 'g' ]`
+
 Lista [ "cat", "dog" ] = `[ 0xc8, 0x83, 'c', 'a', 't', 0x83, 'd', 'o', 'g' ]`
+
 Sirul gol ('null') = `[ 0x80 ]`
+
 Lista goala =`[ 0xc0 ]`
+
 Numarul intreg 15= `[ 0x0f ]`
+
 Numarul intreg 1024 =`[ 0x82, 0x04, 0x00 ]`
+
 Reprezentarea teoretica a setului de 2 , [ [], [[]], [ [], [[]] ] ] = `[ 0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0 ]`
+
 Sirul "Lorem ipsum dolor sit amet, consectetur adipisicing elit" = `[ 0xb8, 0x38, 'L', 'o', 'r', 'e', 'm', ' ', ... , 'e', 'l', 'i', 't' ]`
