@@ -6,7 +6,7 @@ Totusi, majoritatea acestor aplicatii sunt dificil de implementat astazi, din si
 
 ### Table of Contents
 
-* [De ce o noua platforma](#why-a-new-platform)
+* [De ce o noua platforma](##De-ce-o-noua-platforma?)
     * [Colored Coins](#colored-coins)
     * [Metacoins](#metacoins)
 * [Filozofie](#philosophy)
