@@ -11,7 +11,7 @@ Codarea RLP este definita dupa cum urmeaza:
 -Altfel, daca un sir are o lungime de 0-55 bytes, codarea RLP consta intr-un singur byte cu o valoare de 0x80 plus lungimea sirului, urmata de sir. Astfel, primul byte se incadreaza in intervalul `[0x80, 0xb7]`.
 -Daca un sir este mai lung de 55 bytes, codarea RLP consta intr-un singur byte cu valoarea 0xb7 plus lungimea lungimii sirului in forma binara, urmata de lungimea sirului,urmata de sir. De exemplu, un sir de o lungime 1024 ar fi codat \xb9\x04\x00 , urmat de sir. Intervalul in care se incadreaza primul byte este, deci, `[0xb8, 0xbf]`.
 
--Daca sarcina utila a unei liste (payload) (ex. Suma lungimilor elementelor sale) are o lungime de 0-55 bytes, codarea RLP consta intr-un singur byte cu valoarea de 0xc0 plus lungimea listei urmata de concatenarea/juxtapunerea codarii RLP a elementelor. Intervalul in care se incadreaza primul byte este `[0xc0, 0xf7]`.
+- Daca sarcina utila a unei liste (payload) (ex. Suma lungimilor elementelor sale) are o lungime de 0-55 bytes, codarea RLP consta intr-un singur byte cu valoarea de 0xc0 plus lungimea listei urmata de concatenarea/juxtapunerea codarii RLP a elementelor. Intervalul in care se incadreaza primul byte este `[0xc0, 0xf7]`.
 - Daca sarcina utila a unei liste (payload) este mai mare de 55 bytes, codarea RLP consta intr-un singur byte cu valoarea de 0xf7 plus lungimea lungimii listei in forma binara, urmata de lungimea listei , urmata de concatenarea/juxtapunerea codarii RLP a elementelor. Intervalul in care este plasat primul octet este `[0xf8, 0xff]`.
 
 In cod, arata astfel:
