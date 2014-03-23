@@ -25,6 +25,7 @@ However, most of these applications are difficult to implement today, simply bec
     * [Sub-currencies](#sub-currencies)
     * [Financial derivatives](#financial-derivatives)
     * [Identity and Reputation Systems](#identity-and-reputation-systems)
+    * [Decentralized File Storage](#decentralized-file-storage)
     * [Decentralized Autonomous Organizations](#decentralized-autonomous-organizations)
     * [Further Applications](#further-applications)
     * [How Do Contracts Work?](#how-do-contracts-work)
@@ -138,14 +139,14 @@ The "current block" is a pointer maintained by each node that refers to the bloc
 The Ethereum network includes its own built-in currency, ether. The main reason for including a currency in the network is twofold. First, like Bitcoin, ether is rewarded to miners so as to incentivize network security. Second, it serves as a mechanism for paying transaction fees for anti-spam purposes. Of the two main alternatives to fees, per-transaction proof of work similar to [Hashcash](http://en.wikipedia.org/wiki/Hashcash) and zero-fee laissez-faire, the former is wasteful of resources and unfairly punitive against weak computers and smartphones and the latter would lead to the network being almost immediately overwhelmed by an infinitely looping "logic bomb" contract. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate), the denominations will be pre-labelled:
 
 * 1: wei
-* 10^3: (unspecified)
-* 10^6: (unspecified)
-* 10^9: (unspecified)
+* 10^3: lovelace
+* 10^6: babbage
+* 10^9: turing
 * 10^12: szabo
 * 10^15: finney
 * 10^18: ether
 
-This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi" that is intended to be future proof. Szabo, finney and ether will likely be used in the foreseeable future, and the other units will be more . "ether" is intended to be the primary unit in the system, much like the dollar or bitcoin. The right to name the 10^3, 10^6 and 10^9 units will be left as a high-level secondary reward for the fundraiser subject to pre-approval from ourselves.
+This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi" that is intended to be future proof. In the near future, we expect "ether" to be the primary unit in the system, much like the dollar or bitcoin; "finney" will likely be used for microtransactions, "szabo" for per-step fees and "wei" to refer specifically to the lowest-level "base" unit much like the satoshi in Bitcoin. The remaining denominations will likely only come into play if Ethereum grows much larger or computers get much more efficient and it makes sense to use lower units than szabo to measure fees.
 
 The issuance model will be as follows:
 
@@ -220,10 +221,9 @@ Each transaction and uncle block header is itself a list. The data for the proof
 
 The `state_root` is the root of a [Merkle Patricia tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) containing (key, value) pairs for all accounts where each address is represented as a 20-byte binary string. At the address of each account, the value stored in the Merkle Patricia tree is a string which is the RLP-serialized form of an object of the form:
 
-    [ balance, nonce, contract_root, storage_deposit ]
+    [ balance, nonce, contract_root ]
 
-The nonce is the number of transactions made from the account, and is incremented every time a transaction is made. The purpose of this is to (1) make each transaction valid only once to prevent replay attacks, and (2) to make it impossible (more precisely, cryptographically infeasible) to construct a contract with the same hash as a pre-existing contract. `balance` refers to the account's balance, denominated in wei. `contract_root` is the root of yet another Patricia tree, containing the contract's memory, if that account is controlled by a contract. If an account is not controlled by a contract, the contract root will simply be the empty string. storage_deposit is a counter that stores paid storage fees; its function will be discussed in more detail further in this paper.
-
+The nonce is the number of transactions made from the account, and is incremented every time a transaction is made. The purpose of this is to (1) make each transaction valid only once to prevent replay attacks, and (2) to make it impossible (more precisely, cryptographically infeasible) to construct a contract with the same hash as a pre-existing contract. `balance` refers to the account's balance, denominated in wei. `contract_root` is the root of yet another Patricia tree, containing the contract's memory, if that account is controlled by a contract. If an account is not controlled by a contract, the contract root will simply be the empty string.
 
 ### Mining algorithm
 
@@ -235,9 +235,33 @@ To date, the main way of achieving this goal has been "memory-hardness", constru
 * **Birthday attacks** - the idea behind birthday-based proofs of work is simple: find values xn, i, j such that i < k, j < k and abs(H(data+xn+i) - H(data+xn+j)) < 2^256 / d^2. The d parameter sets the computational difficulty of finding a block, and the k parameter sets the memory hardness. Any birthday algorithm must somehow store all computations of H(data+xn+i) in memory so that future computations can be compared against them. Here, computation is memory-hard, but verification is memory-easy, allowing for extreme memory hardness without compromising the ease of verification. However, the algorithm is problematic for two reasons. First, there is a time-memory tradeoff attack where users 2x less memory can compensate with 2x more computational power, so its memory hardness is not absolute. Second, it may be easy to build specialized hardware devices for the problem, especially once one moves beyond traditional chip and processor architecture and into various classes of hardware-based hash tables or probabilistic analog computing.
 * **Dagger** - the idea behind [Dagger](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Dagger), an in-house algorithm developed by the Ethereum team, is to have an algorithm that is similar to Scrypt, but which is specially designed so that each individual nonce only depends on a small portion of the data tree that gets built up for each group of ~10 million nonces. Computing nonces with any reasonable level of efficiency requires building up the entire tree, taking up over 100 MB of memory, whereas verifying a nonce only takes about 100 KB. However, Dagger-style algorithms are vulnerable to devices that have multiple computational circuits sharing the same memory, and although this threat can be mitigated it is arguably impossible to fully remove.
 
+One of the key ingredients in a standard cryptocurrency is the idea of proof of work. A proof of work, in general, if a function which is hard to compute, but easy to verify, allowing it to serve as a probabilistic cryptographic proof of the quantity of computational resources controlled by a given node. In Bitcoin, and Ethereum, this mechanism is intimately tied in with the blockchain: every block requires a proof of work of some prespecified difficulty level in order to be valid, and in the event of multiple competing blockchains the chain with the largest total quantity of proof of work is considered to be valid. Thus, in order to reverse a transaction, an attacker needs to start a new fork of the blockchain from before the block the transaction was confirmed in, and then apply more computational power than the rest of the network combined in order to overtake the legitimate fork.
 
-As a default, we are currently considering a Dagger-like algorithm with tweaked parameters to minimize specialized hardware attacks, perhaps together with a proof of stake algorithm such as our own Slasher for added security if deemed necessary. However, in order to come up with a proof-of-work algorithm that is better than all existing competitors, our intention is to use some of the funds raised in the fundraiser to host a contest, similar to those used to determine the algorithm for the Advanced Encryption Standard (AES) in 2005 and the SHA3 hash algorithm in 2013, where research groups from around the world compete to develop ASIC-resistant mining algorithms, and have a selection process with multiple rounds of judging determine the winners. The contest will have prizes, and will be open-ended; we encourage research into memory-hard proofs of work, self-modifying proofs of work, proofs of work based on x86 instructions, multiple proofs of work with a human-driven incentive-compatible economic protocol for swapping one out in the future, and any other design that accomplishes the task. There will be opportunities to explore alternatives such as proof of stake, proof of burn and proof of excellence as well.
+However, one of the key requirements for a proof of work algorithm to, well, work is decentralization. If the proof of work algorithm is designed in such a way that the proof of work computation can only be efficiently done by entities with the millions of dollars of capital required to develop specialized hardware, then the number of participants in the process will be small enough that it will be possible for the majority of miners to conspire and reverse transactions. Alternatively, if the proof of work algorithm encourages miners to outsource their block verification work to centralized entities, then that is another way that centralization can creep in, and it would be the mining pools that have the potential to form conspiracies. Ideally, proof of work algorithms should solve both of those problems.
 
+#### Blockchain Based PoW Specification
+
+This mining algorithm is based on Adam Back's Hashcash, also used by Bitcoin. In Hashcash, we take a hash function `H` (assume 256-bit length) which takes as input data and a nonce and a difficulty parameter, and say that a valid nonce is one where `H(data,nonce) < 2^256 / difficulty`. Completing the proof of work essentially entails trying different nonces until one works, and verifying means applying the hash function to the data and nonce provided and making sure that the result is indeed below the target. In Bitcoin, `H` is a simple computation of `sha256(block_header + nonce)`. Here, however, `H` is much more complex, taking in as data not just the block header but also the state data and transactions from the last 16 blocks.
+
+In this early sketch of the mining algorithm, `H` is defined as follows:
+
+1. Let `h[i] = sha3(sha3(block_header) ++ nonce ++ i)` for `1 <= i <= 16`
+2. Let `S` be the blockchain state 16 blocks ago.
+3. Let `C[i]` be the transaction count of the block `i` blocks ago. Let `T[i]` be the `(h[i] mod C[i])`th transaction from the block `i` blocks ago.
+4. Apply `T[0]`, `T[1]` … `T[15]` sequentially to `S`. However, every time the transaction leads to processing a contract, (pseudo-)randomly make minor modifications to the code of all contracts affected.
+5. Let `S'` be the resulting state. Let `r` be the sha3 of the root of `S'`.
+
+#### Properties
+
+1. The algorithm is memory-hard; mining requires the miner to store the full state of the last 16 blocks in order to be able to query the blockchain. However, the algorithm is not sequentially memory-hard and is vulnerable to shared memory optimizations.
+2. The algorithm requires every node to store the entire blockchain state and be able to process transactions. Furthermore, as new blocks are created, it will likely be more efficient to generate the new blockchain state by computing it rather than by asking for and downloading the missing Patricia tree nodes. Hence, there is no reason why a miner would not want to be a full node.
+3. The EVM code is Turing-complete. Hence, an ASIC that performs transaction processing vastly more efficiently than existing CPUs would necessarily be a general-purpose computing device vastly more efficient  than existing CPUs. Thus, if you can make an Ethereum ASIC, you can push the entire computing industry forward by about 5 years.
+4. Because every miner must have the full blockchain, there is no equivalent to the Bitcoin mining strategy of only downloading headers from a centralized source. Hence, centralized mining pools offer no benefits over p2pools, and so miners are more likely to use p2pools.
+5. The algorithm is relatively computationally quick to verify, although there is no "nice" verification formula that can be run inside EVM code.
+
+(3) and (4) combined basically mean that this proof of work algorithm provides both forms of decentralization, and (2) helps prevent centralization due to blockchain bloat since it helps ensure that at least miners will store the chain.
+
+In the above given form, the algorithm has several faults. First, due to the Pareto effect, it is likely that over 90% of transactions will use up less than 10% of the blockchain, so a truly full node will not be required to mine. Second, some targeted optimizations involving executing contracts and caching results may be possible. Finally, arguably most importantly, a deep 51% attack becomes possible, where attackers start hundreds of blocks back, produce 16 blocks with transactions optimized for themselves to process quickly (eg. obfuscated loops, weakened trapdoor functions), and then mine much faster than the legitimate chain. For the last two reasons, we expect that very heavy use (perhaps even dominance) of contract corruption/randomization will be necessary in the final version of the algorithm.
 
 ### Transactions
 
@@ -262,10 +286,34 @@ Difficulty is adjusted by the formula:
 `anc(block,n)` is the nth generation ancestor of the block; all blocks before the genesis block are assumed to have the same timestamp as the genesis block. This stabilizes around a block time of 60 seconds automatically. The choice of 500 was made in order to balance the concern that for smaller values miners with sufficient hashpower to often produce two blocks in a row would have the incentive to provide an incorrect timestamp to maximize their own reward and the fact that with higher values the difficulty oscillates too much; with the constant of 500, simulations show that a constant hashpower produces a variance of about +/-20%.
 
 
-### Block Rewards
+### Block Rewards and Limits
 
-A miner receives three kinds of rewards: a static block reward for producing a block, fees from transactions, and nephew/uncle rewards as described in the GHOST section above. The miner will receive 100% of the block reward for themselves, but transaction fee rewards will be split, so that 50% goes to the miner and the remaining 50% is evenly split among the last 64 miners. The reason for this is to prevent a miner from being able to create an Ethereum block with an unlimited number of operations, paying all transaction fees to themselves, while still maintaining an incentive for miners to include transactions. As described in the GHOST section, uncles only receive 87.5% of their block reward, with the remaining 12.5% going to the including nephew; the transaction fees from the stale block do not go to anyone.
+A miner receives three kinds of rewards: a static block reward for producing a block, fees from transactions, and nephew/uncle rewards as described in the GHOST section above. The miner will receive 100% of the block reward and transaction fees for themselves. As described in the GHOST section, uncles only receive 87.5% of their block reward, with the remaining 12.5% going to the including nephew; the transaction fees from the stale block do not go to anyone.
 
+The default approach is to have no mandatory fees, allowing miners to include any transactions that they deem profitable to include. This approach has been received very favorably in the Bitcoin community particularly because it is "market-based" - that is, there is a "market" with miners on one side and transaction senders on the other where supply and demand determine the price. However, the problem with this line of reasoning is that transaction processing is not a market; although it is intuitively attractive to construe transaction processing as a service that the miner is making the effort to offer to transaction senders that needs to be paid for at an agreed-upon rate, in reality every transaction that a single miner includes needs to be processed by every node in the network, so the external costs of transaction processing borne by the network, which has no say in whether or not a transaction takes place, are thousands of times higher than the internal costs borne by the miner.
+
+However, as it turns out this flaw in the market-based mechanism, when given a particular inaccurate simplifying assumption, magically cancels itself out. The argument is as follows. Suppose that:
+
+1. The mining block reward is `B`.
+2. A transaction leads to `k` operations, offering the reward `kR` to any miner that includes it where `R` is set by the sender and `k` and `R` are visible to the miner beforehand.
+3. An operation has a processing cost of `C` to any node (ie. all nodes have equal efficiency)
+4. There are `N` mining nodes, each with exactly equal processing power (ie. `1/N` of total)
+5. No non-mining full nodes exist.
+
+A miner would be willing to process a transaction if the expected reward is greater than the cost. The expected reward is `kR/N` since the miner has a `1/N` chance of processing the next block. The cost is simply `kC`. Thus, the miner is willing to process transactions where:
+
+    kR/N > kC
+    kR > kNC
+    R > NC
+
+Note that `R` is the per-operation fee, and `NC` is the cost to the entire network together of processing an operation. Hence, miners have the incentive to include only those transactions for which the total utilitarian benefit exceeds the cost. However, there are three important deviations from those assumptions in reality:
+
+1. The miner does pay a higher cost to process the transaction than the other verifying nodes, since the extra verification time delays block propagation and thus increases the chance the block will become a stale.
+2. There do exist nonmining full nodes.
+3. The mining power distribution may end up radically inegalitarian in practice.
+4. Speculators, political enemies and crazies whose utility function includes causing harm to the network do exist, and they can cleverly set up contract where their cost is much lower than the cost paid by other verifying nodes.
+
+(1) provides a tendency for the miner to include fewer transactions, and (2) increases `NC`; hence, these two effects at least partially cancel each other out. (3) and (4) are the major issue; to solve them we simply institute a floating cap: no block can have more operations than 150% of the long-term exponential moving average (exact figure subject to change pending further economic analysis).
 
 ## Contracts
 
