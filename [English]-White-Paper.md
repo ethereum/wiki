@@ -19,7 +19,7 @@ However, most of these applications are difficult to implement today, simply bec
     * [Mining Algorithm](#mining-algorithm)
     * [Transactions](#transactions)
     * [Difficulty Adjustment](#difficulty-adjustment)
-    * [Block Rewards](#block-rewards)
+    * [Block Rewards and Limits](#block-rewards-and-limits)
 * [Contracts](#contracts)
     * [Applications](#applications)
     * [Sub-currencies](#sub-currencies)
@@ -311,7 +311,7 @@ Note that `R` is the per-operation fee, and `NC` is the cost to the entire netwo
 1. The miner does pay a higher cost to process the transaction than the other verifying nodes, since the extra verification time delays block propagation and thus increases the chance the block will become a stale.
 2. There do exist nonmining full nodes.
 3. The mining power distribution may end up radically inegalitarian in practice.
-4. Speculators, political enemies and crazies whose utility function includes causing harm to the network do exist, and they can cleverly set up contract where their cost is much lower than the cost paid by other verifying nodes.
+4. Speculators, political enemies and crazies whose utility function includes causing harm to the network do exist, and they can cleverly set up contracts where their cost is much lower than the cost paid by other verifying nodes.
 
 (1) provides a tendency for the miner to include fewer transactions, and (2) increases `NC`; hence, these two effects at least partially cancel each other out. (3) and (4) are the major issue; to solve them we simply institute a floating cap: no block can have more operations than 150% of the long-term exponential moving average (exact figure subject to change pending further economic analysis).
 
