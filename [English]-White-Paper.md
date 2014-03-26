@@ -497,7 +497,7 @@ Copy data item i to storage slot i in the contract for all i in [0 ... n-1] wher
 
 ### Language Specification
 
-The contract scripting language is a hybrid of assembly language and Bitcoin's stack-based language, maintaining an index pointer that usually increments by one after every operation and continuously processing the operation found at the current index pointer. All opcodes are numbers in the range [0 ... 63]; labels further in this description such as STOP, EXTRO and BALANCE refer to specific values are defined further below. The scripting language has access to three kinds of memory:
+The contract scripting language is a hybrid of assembly language and Bitcoin's stack-based language, maintaining an index pointer that usually increments by one after every operation and continuously processing the operation found at the current index pointer. All opcodes are numbers in the range [0 ... 63]; labels further in this description such as STOP, EXTRO and BALANCE refer to specific values and are defined further below. The scripting language has access to three kinds of memory:
 
 * **Stack** - a form of temporary storage that is reset to an empty list every time a contract is executed. Operations typically add and remove values to and from the top of the stack, so the total length of the stack will shrink and grow over the course of the program's execution.
 * **Memory** - a temporary key/value store that is reset to containing all zeroes every time a contract is executed. Keys and values in memory are integers in the range [0 ... 2^256-1]
