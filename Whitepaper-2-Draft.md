@@ -45,7 +45,7 @@ The innovation provided by Satoshi is the idea of combining a very simple decent
 
 ### Bitcoin As A State Transition System
 
-![statetransition.png](statetransition.png)
+![statetransition.png](http://vitalik.ca/files/statetransition.png)
 
 From a technical standpoint, the Bitcoin ledger can be thought of as a state transition system, where there is a "state" consisting of the ownership status of all existing bitcoins and a "state transition function" that takes a state and a transaction and outputs a new state which is the result. In a standard banking system, for example, the state is a balance sheet, a transaction is a request to move $X from A to B, and the state transition function reduces the value in A's account by $X and increases the value in B's account by $X. If A's account has less than $X in the first place, the state transition function returns an error. Hence, one can formally define:
 
@@ -73,7 +73,7 @@ The first half of the first step prevents transaction senders from spending coin
 
 ### Mining
 
-![](mining.png)
+![mining.jpg](http://vitalik.ca/files/mining.jpg)
 
 If we had access to a trustworthy centralized service, this system would be trivial to implement; it could simply be coded exactly as described. However, with Bitcoin we are trying to build a decentralized currency system, so we will need to combine the state transaction system with a consensus system in order to ensure that everyone agrees on the order of transactions. Bitcoin's decentralized consensus process requires nodes in the network to continuously attempt to produce packages of transactions called "blocks". The network is intended to produce roughly one block every ten minutes, with each block containing a timestamp, a nonce, a reference to (ie. hash of) the previous block and a list of all of the transactions that have taken place since the previous block. Over time, this creates a persistent, ever-growing, "blockchain" that constantly updates to represent the latest state of the Bitcoin ledger.
 
@@ -144,7 +144,7 @@ The intent of Ethereum is to merge and improve upon the concepts of scripting, a
 
 In Ethereum, the state is made up of objects called "accounts", with each account having a 20-byte address and state transitions being direct transfers of value and information between accounts. There are two types of accounts: externally owned accounts, controlled by an external human or bot via a private key, and contract accounts, controlled by Ethereum virtual machine code. Every contract account contains a balance, a key/value store to provide long-term internal state, and a computer program written in EVM code. That computer program is activated by incoming transactions or messages, and has the right to read and write to its internal state and itself send messages to other accounts. Ethereum, unlike Bitcoin, enforces a distinction between "messages" and "transactions"; a transaction is a signed block of data that can only be created outside of Ethereum, and each transaction triggers an associated message, but messages can be sent by contracts as well. This concept of messages provides a "first class citizenship" property to Ethereum contracts: by sending their own messages, contracts can do everything that outside entities can.
 
-![]()
+![ethertransition.png](http://vitalik.ca/files/ethertransition.png)
 
 A transaction in Ethereum contains the following values:
 
@@ -198,6 +198,8 @@ The code in Ethereum contracts is written in a low-level, stack-based bytecode l
 The code can also access the value, sender and data of the incoming message, and the code can also return a byte array of data as an output. Block header data is also accessible. The most interesting part, however, is the "first class citizen" property - contracts can do everything that external accounts can, including calling other contracts. This allows contracts to simultaneously serve many different roles: for example, one might have a member of a decentralized organization (a contract) be an escrow account (another contract) between an paranoid individual employing custom quantum-proof Lamport signatures (a third contract) and a co-signing entity which itself uses an account with five keys for security (a fourth contract). The magic of the Ethereum platform is that the decentralized organization and the escrow contract do not need to care about what kind of account each party to the contract is.
 
 ### Blockchain and Mining
+
+![apply_block_diagram.png](http://vitalik.ca/files/apply_block_diagram.png)
 
 The Ethereum blockchain is in many ways similar to the Bitcoin blockchain, although it does have some differences. The main difference between Ethereum and Bitcoin with regard to the blockchain architecture is that, unlike Bitcoin, Ethereum blocks contain a copy of both the transaction list and the most recent state. Aside from that, two other values, the block number and the difficulty, are also stored in the block. The block validation algorithm in Ethereum is as follows:
 
@@ -422,7 +424,7 @@ The concept of an arbitrary state transition function as implemented by the Ethe
 
 1. A sophisticated reader may notice that in fact a Bitcoin address is the hash of the elliptic curve public key, and not the public key itself. However, it is in fact perfectly legitimate cryptographic terminology to refer to the pubkey hash as a public key itself. This is because Bitcoin's cryptography can be considered to be a custom digital signature algorithm, where the public key consists of the hash of the ECC pubkey, the signature consists of the ECC pubkey concatenated with the ECC signature, and the verification algorithm involves checking the ECC pubkey in the signature against the ECC pubkey hash provided as a public key and then verifying the ECC signature against the ECC pubkey.
 2. Technically, the median of the 11 previous blocks.
-3. Internally, 2 and "CHARLIE" are both numbers, with the latter being in big-endian base 256 representation. Numbers can be at least 0 and at most 2<sup>256<sup>-1.
+3. Internally, 2 and "CHARLIE" are both numbers, with the latter being in big-endian base 256 representation. Numbers can be at least 0 and at most 2<sup>256</sup>-1.
 
 #### Further Reading
 
