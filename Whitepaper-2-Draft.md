@@ -45,7 +45,7 @@ The innovation provided by Satoshi is the idea of combining a very simple decent
 
 ### Bitcoin As A State Transition System
 
-![statetransition.png](http://vitalik.ca/files/statetransition.png)
+![statetransition.png](http://vitalik.ca/files/statetransition.png?1)
 
 From a technical standpoint, the Bitcoin ledger can be thought of as a state transition system, where there is a "state" consisting of the ownership status of all existing bitcoins and a "state transition function" that takes a state and a transaction and outputs a new state which is the result. In a standard banking system, for example, the state is a balance sheet, a transaction is a request to move $X from A to B, and the state transition function reduces the value in A's account by $X and increases the value in B's account by $X. If A's account has less than $X in the first place, the state transition function returns an error. Hence, one can formally define:
 
@@ -73,7 +73,7 @@ The first half of the first step prevents transaction senders from spending coin
 
 ### Mining
 
-![mining.jpg](http://vitalik.ca/files/mining.jpg)
+![mining.jpg](http://vitalik.ca/files/mining.jpg?1)
 
 If we had access to a trustworthy centralized service, this system would be trivial to implement; it could simply be coded exactly as described. However, with Bitcoin we are trying to build a decentralized currency system, so we will need to combine the state transaction system with a consensus system in order to ensure that everyone agrees on the order of transactions. Bitcoin's decentralized consensus process requires nodes in the network to continuously attempt to produce packages of transactions called "blocks". The network is intended to produce roughly one block every ten minutes, with each block containing a timestamp, a nonce, a reference to (ie. hash of) the previous block and a list of all of the transactions that have taken place since the previous block. Over time, this creates a persistent, ever-growing, "blockchain" that constantly updates to represent the latest state of the Bitcoin ledger.
 
@@ -142,7 +142,7 @@ The intent of Ethereum is to merge and improve upon the concepts of scripting, a
 
 ### Ethereum State Transition Function
 
-![ethertransition.png](http://vitalik.ca/files/ethertransition.png)
+![ethertransition.png](http://vitalik.ca/files/ethertransition.png?1)
 
 In Ethereum, the state is made up of objects called "accounts", with each account having a 20-byte address and state transitions being direct transfers of value and information between accounts. There are two types of accounts: externally owned accounts, controlled by an external human or bot via a private key, and contract accounts, controlled by Ethereum virtual machine code. Every contract account contains a balance, a key/value store to provide long-term internal state, and a computer program written in EVM code. That computer program is activated by incoming transactions or messages, and has the right to read and write to its internal state and itself send messages to other accounts. Ethereum, unlike Bitcoin, enforces a distinction between "messages" and "transactions"; a transaction is a signed block of data that can only be created outside of Ethereum, and each transaction triggers an associated message, but messages can be sent by contracts as well. This concept of messages provides a "first class citizenship" property to Ethereum contracts: by sending their own messages, contracts can do everything that outside entities can.
 
