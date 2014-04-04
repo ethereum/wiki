@@ -159,17 +159,17 @@ A transaction in Ethereum contains the following values:
 The purpose of "gas" is to serve as the limiting factor in computation; because Ethereum contracts can contain arbitrary code, there is the potential for execution to take an arbitrarily long time, necessitating a regulatory mechanism preventing users and miners from creating transactions and blocks that run forever. One unit of gas is basically one computational step, although some operations consume more than one unit of gas. Transactions set for themselves the amount of gas that they start off with, as well as a per-gas-unit fee to be paid to the miner, and there is also a dynamically adjusted protocol-level limit on how much gas can be consumed in a block. The Ethereum state transition function, `APPLY(S,TX) -> S'` can be defined as follows:
 
 1. Check if the transaction is well-formed (ie. has the right number of values), the signature is valid, and the nonce matches the nonce in the sender's account. If not, return an error.
-2. Calculate the transaction fee as `STARTGAS * GASPRICE`, and determine the sending address from the signature. Subtract the fee from the sender's account balance, add it to the miner's balance, and increment the sender's nonce. If there is not enough balance to spend, return an error.
+2. Calculate the transaction fee as `STARTGAS * GASPRICE`, and determine the sending address from the signature. Subtract the fee from the sender's account balance and increment the sender's nonce. If there is not enough balance to spend, return an error.
 3. Initialize `GAS = STARTGAS`, and take off a certain quantity of gas per byte to pay for the bytes in the transaction.
-4. Transfer the transaction value from the sender's account to the receiving account. If the receiving account does not yet exist, create it. If there is not enough value to send, revert to the end of step 2 (ie. after paying fees and incrementing the nonce but before anything else) and return.
-5. If the receiving account is a contract, run the contract's code either to completion or until the execution runs out of gas. If execution runs out of gas, revert to the end of step 2 and return. If execution runs to completion with `G` gas remaining, refund `G * GASPRICE` to the sender's account, and return the final state.
+4. Transfer the transaction value from the sender's account to the receiving account. If the receiving account does not yet exist, create it. If there is not enough value to send, revert to the end of step 2, add `GASPRICE * STARTGAS` to the miner's account and return.
+5. If the receiving account is a contract, run the contract's code either to completion or until the execution runs out of gas. If execution runs out of gas, revert to the end of step 2, add `GASPRICE * STARTGAS` to the miner's account and return. If execution runs to completion with `G` gas remaining, refund `G * GASPRICE` to the sender's account, give the rest to the miner, and return the final state.
 
 For example, suppose that the contract's code is:
 
     if !contract.storage[msg.data[0]]:
         contract.storage[msg.data[0]] = msg.data[1]
 
-Note that in reality the contract code is written in a low-level stack-based language, not easily human-readable pseudo-Python; the example here is given just for clarity. Suppose that a contract's storage starts off empty, and a transaction is sent with 10 ether value, 2000 gas, 0.001 ether gasprice, and two data fields: `[ 2, 'CHARLIE' ]`<sup>[3]</sup>. The process for the state transition function in this case is as follows:
+Note that in reality the contract code is written in a low-level stack-based language, not easily human-readable pseudocode; the example here is given just for clarity. Suppose that a contract's storage starts off empty, and a transaction is sent with 10 ether value, 2000 gas, 0.001 ether gasprice, and two data fields: `[ 2, 'CHARLIE' ]`<sup>[3]</sup>. The process for the state transition function in this case is as follows:
 
 1. Check that the transaction is valid and well formed.
 2. Check that the transaction sender has at least 2000 * 0.001 = 2 ether. If it is, then subtract 2 ether from the sender's account.
@@ -178,7 +178,9 @@ Note that in reality the contract code is written in a low-level stack-based lan
 4. Run the code. Suppose this takes 187 gas.
 5. Add 963 * 0.001 = 0.963 ether back to the sender's account, and return the resulting state.
 
-Additionally, note that contract-initiated messages can assign a gas limit to the computation that they spawn, and if the sub-computation runs out of gas it gets reverted only to the point of the message call. Hence, just like transactions contracts can secure their limited computational resources by setting strict limits on the sub-computations that they spawn.
+If there was no contract at the receiving end of the transaction, then the total transaction fee would simply be equal to the provided `GASPRICE` multiplied by the length of the transaction in bytes, and the data sent alongside the transaction would be irrelevant. Additionally, note that contract-initiated messages can assign a gas limit to the computation that they spawn, and if the sub-computation runs out of gas it gets reverted only to the point of the message call. Hence, just like transactions, contracts can secure their limited computational resources by setting strict limits on the sub-computations that they spawn.
+
+There is also a separate transaction type, and message type, for creating a contract; the address of a contract is calculated based on the hash of the account nonce and transaction data.
 
 ### Code Execution
 
@@ -195,7 +197,7 @@ The code in Ethereum contracts is written in a low-level, stack-based bytecode l
 * **Memory**, an infinitely expandable byte array
 * The contract's long-term **storage**, a key/value store. Unlike stack and memory, which reset after computation ends, storage persists for the long term.
 
-The code can also access the value, sender and data of the incoming message, and the code can also return a byte array of data as an output. Block header data is also accessible. The most interesting part, however, is the "first class citizen" property - contracts can do everything that external accounts can, including calling other contracts. This allows contracts to simultaneously serve many different roles: for example, one might have a member of a decentralized organization (a contract) be an escrow account (another contract) between an paranoid individual employing custom quantum-proof Lamport signatures (a third contract) and a co-signing entity which itself uses an account with five keys for security (a fourth contract). The magic of the Ethereum platform is that the decentralized organization and the escrow contract do not need to care about what kind of account each party to the contract is.
+The code can also access the value, sender and data of the incoming message, and the code can also return a byte array of data as an output. Block header data is also accessible. The most interesting part, however, is the "first class citizen" property that contracts have equivalent powers to external accounts, including the ability to call and create other contracts. This allows contracts to simultaneously serve many different roles: for example, one might have a member of a decentralized organization (a contract) be an escrow account (another contract) between an paranoid individual employing custom quantum-proof Lamport signatures (a third contract) and a co-signing entity which itself uses an account with five keys for security (a fourth contract). The strength of the Ethereum platform is that the decentralized organization and the escrow contract do not need to care about what kind of account each party to the contract is.
 
 ### Blockchain and Mining
 
