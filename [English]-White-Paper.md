@@ -1,59 +1,107 @@
 ### A Next-Generation Smart Contract and Decentralized Application Platform
 
-In the last few months, there has been a great amount of interest into the area of using Bitcoin-like blockchains - the mechanism that allows for the entire world to agree on the state of a public ownership database - for more than just money. Commonly cited applications include using on-blockchain digital assets to represent custom currencies and financial instruments (["colored coins"](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit)), ["smart property"](https://en.bitcoin.it/wiki/Smart_Property) devices such as cars which track a colored coin on a blockchain to determine their present legitimate owner, as well as more advanced applications such as decentralized exchange, financial derivatives, peer-to-peer gambling and on-blockchain identity and reputation systems. Perhaps the most ambitious of all cited applications is the concept of autonomous agents or [decentralized autonomous organizations](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAOs) - autonomous entities that operate on the blockchain without any central control whatsoever, eschewing all dependence on legal contracts and organizational bylaws in favor of having resources and funds autonomously managed by a self-enforcing smart contract on a cryptographic blockchain.
+When Satoshi Nakamoto first set the Bitcoin blockchain into motion in January 2009, he was simultaneously introducing two radical and highly untested concepts. The first is the "bitcoin", a decentralized peer-to-peer online currency that maintains a value without any backing, [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) or central issuer. So far, the "bitcoin" as a currency unit has taken up the bulk of the public attention, both in terms of the political aspects of a currency without a central bank and its extreme upward and downward volatility in price. However, there is also another, equally important, part to Satoshi's grand experiment: the concept of a proof of work-based blockchain to allow for public agreement on the order of transactions. Bitcoin as an application can be described as a first-to-file system: if one entity has 50 BTC, and simultaneously sends the same 50 BTC to A and to B, only the transaction that gets confirmed first will process. There is no intrinsic way of determining from two transactions which came earlier, and for decades this stymied the development of decentralized digital currency. Satoshi's blockchain was the first credible decentralized solution. And now, attention is rapidly starting to shift toward this second part of Bitcoin's technology, and how the blockchain concept can be used for more than just money.
 
-However, most of these applications are difficult to implement today, simply because the scripting systems of Bitcoin, and even next-generation cryptocurrency protocols such as the Bitcoin-based colored coins protocol and so-called "metacoins", are far too limited to allow the kind of arbitrarily complex computation that DAOs require. What this project intends to do is take the innovations that such protocols bring, and generalize them - create a fully-fledged, Turing-complete (but heavily fee-regulated) cryptographic ledger that allows participants to encode arbitrarily complex contracts, autonomous agents and relationships that will be mediated entirely by the blockchain. Rather than being limited to a specific set of transaction types, users will be able to use Ethereum as a sort of "Lego of crypto-finance" - that is to say, one will be able to implement any feature that one desires simply by coding it in the protocol's internal scripting language. Custom currencies, financial derivatives, identity systems and decentralized organizations will all be easy to do, but more importantly, unlike previous systems, it will also be possible to construct transaction types that even the Ethereum developers did not imagine. Altogether, we believe that this design is a solid step toward the realization of "cryptocurrency 2.0"; we hope that Ethereum will be as significant an addition to the cryptocurrency ecosystem as the advent of Web 2.0 was to the static-content-only internet of 1999.
-
+Commonly cited applications include using on-blockchain digital assets to represent custom currencies and financial instruments (["colored coins"](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit)), the ownership of an underlying physical device (["smart property"](htups://en.bitcoin.it/wiki/Smart_Property)), non-fungible assets such as domain names ("Namecoin") as well as more advanced applications such as decentralized exchange, financial derivatives, peer-to-peer gambling and on-blockchain identity and reputation systems. Another important area of inquiry is "smart contracts" - systems which automatically move digital assets according to arbitrary pre-specified rules. For example, one might have a treasury contract of the form "A can withdraw up to X currency units per day, B can withdraw up to Y per day, A and B together can withdraw anything, and A can shut off B's ability to withdraw". The logical extension of this is [decentralized autonomous organizations](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAOs) - long-term smart contracts that contain the assets and encode the bylaws of an entire organization. What Ethereum intends to provide is a blockchain with a built-in fully fledged Turing-complete programming language that can be used to create "contracts" that can be used to encode arbitrary state transition functions, allowing users to create any of the systems described above, as well as many others that we have not yet imagined, simply by writing up the logic in a few lines of code.
 
 ### Table of Contents
 
-* [Why A New Platform](#why-a-new-platform)
-    * [Colored Coins](#colored-coins)
-    * [Metacoins](#metacoins)
-* [Philosophy](#philosophy)
-* [Basic Building Blocks](#basic-building-blocks)
-    * [Modified GHOST Implementation](#modified-ghost-implementation)
-    * [Ethereum Client P2P Protocol](#ethereum-client-p2p-protocol)
-    * [Currency and Issuance](#currency-and-issuance)
-    * [Data Format](#data-format)
-    * [Mining Algorithm](#mining-algorithm)
-    * [Transactions](#transactions)
-    * [Difficulty Adjustment](#difficulty-adjustment)
-    * [Block Rewards and Limits](#block-rewards-and-limits)
-* [Contracts](#contracts)
-    * [Applications](#applications)
+* [History](#history)
+    * [Bitcoin As A State Transition System](#bitcoin-as-a-state-transition-system)
+    * [Mining](#mining)
+    * [Merkle Trees](#merkle-trees)
+    * [Alternative Blockchain Applications](#alternative-blockchain-applications)
+    * [Scripting](#scripting)
+* [Ethereum](#ethereum)
+    * [Ethereum Accounts](#ethereum-accounts)
+    * [Messages and Transactions](#messages-and-transactions)
+    * [Ethereum State Transition Function](#ethereum-state-transition-function)
+    * [Code Execution](#code-execution)
+    * [Blockchain and Mining](#blockchain-and-mining)
+* [Applications](#applications)
     * [Sub-currencies](#sub-currencies)
     * [Financial derivatives](#financial-derivatives)
     * [Identity and Reputation Systems](#identity-and-reputation-systems)
     * [Decentralized File Storage](#decentralized-file-storage)
     * [Decentralized Autonomous Organizations](#decentralized-autonomous-organizations)
     * [Further Applications](#further-applications)
-    * [How Do Contracts Work?](#how-do-contracts-work)
-    * [Language Specification](#language-specification)
-* [Fees](#fees)
+* [Miscellanea And Concerns](#miscellanea-and-concerns)
+    * [Modified GHOST Implementation](#modified-ghost-implementation)
+    * [Fees](#fees)
+    * [Computation And Turing-Completeness](#computation-and-turing-completeness)
+    * [Currency And Issuance](#currency-and-issuance)
+    * [Mining Centralization](#mining-centralization)
+    * [Scalability](#scalability)
 * [Conclusion](#conclusion)
 * [References and Further Reading](#references-and-further-reading)
 
+## Introduction to Bitcoin and Existing Concepts
 
-## Why A New Platform?
+### History
 
-When one wants to create a new application, especially in an area as delicate as cryptography or cryptocurrency, the immediate, and correct, first instinct is to use existing protocols as much as possible. There is no need to create a new currency, or even a new protocol, when the problem can be solved entirely by using existing technologies. Indeed, the puzzle of attempting to solve the problems of [smart property](https://en.bitcoin.it/wiki/Smart_Property), [smart contracts](https://en.bitcoin.it/wiki/Contracts) and [decentralized autonomous corporations](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) on top of Bitcoin is how our interest in next-generation cryptocurrency protocols originally started. Over the course of our research, however, it became evident that while the Bitcoin protocol is more than adequate for currency, basic multisignature escrow and certain simple versions of smart contracts, there are fundamental limitations that make it non-viable for anything beyond a certain very limited scope of features.
+The concept of decentralized digital currency, as well as alternative applications like property registries, has been around for decades. The anonymous e-cash protocols of the 1980s and the 1990s, mostly reliant on a cryptographic primitive known as Chaumian blinding, provided a currency with a high degree of privacy, but the protocols largely failed to gain traction because of their reliance on a centralized intermediary. In 1998, Wei Dai's [b-money](http://www.weidai.com/bmoney.txt) became the first proposal to introduce the idea of creating money through solving computational puzzles as well as decentralized consensus, but the proposal was scant on details as to how decentralized consensus could actually be implemented. In 2005, Hal Finney introduced a concept of "[reusable proofs of work](http://www.finney.org/~hal/rpow/)", a system which uses ideas from b-money together with Adam Back's computationally difficult Hashcash puzzles to create a concept for a cryptocurrency, but once again fell short of the ideal by relying on trusted computing as a backend.
 
+Because currency is a first-to-file application, where the order of transactions is often of critical importance, decentralized currencies require a solution to decentralized consensus. The main roadblock that all pre-Bitcoin currency protocols faced is the fact that, while there had been plenty of research on creating secure Byzantine-fault-tolerant multiparty consensus systems for many years, all of the protocols described were solving only half of the problem. The protocols assumed that all participants in the system were known, and produced security margins of the form "if N parties participate, then the system can tolerate up to N/4 malicious actors". The problem is, however, that in an anonymous setting such security margins are vulnerable to sybil attacks, where a single attacker creates thousands of simulated nodes on a server or botnet and uses these nodes to unilaterally secure a majority share.
 
-### Colored Coins
+The innovation provided by Satoshi is the idea of combining a very simple decentralized consensus protocol, based on nodes combining transactions into a "block" every ten minutes creating an ever-growing blockchain, with proof of work as a mechanism through which nodes gain the right to participate in the system. While nodes with a large amount of computational power do have proportionately greater influence, coming up with more computational power than the entire network combined is much harder than simulating a million nodes. Despite the Bitcoin blockchain model's crudeness and simplicity, it has proven to be good enough, and would over the next five years become the bedrock of over two hundred currencies and protocols around the world.
 
-The first attempt to implement a system for managing smart property and custom currencies and assets on top of a blockchain was built as a sort of overlay protocol on top of Bitcoin, with many advocates making a comparison to the way that, in the [internet protocol stack](http://en.wikipedia.org/wiki/Internet_protocol_suite), [HTTP](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) serves as a layer on top of [TCP](http://en.wikipedia.org/wiki/Transmission_Control_Protocol). The [colored coins](https://docs.google.com/a/ursium.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) protocol is roughly defined as follows:
+### Bitcoin As A State Transition System
 
-1. A colored coin issuer determines that a given transaction output H:i (H being the transaction hash and `i` the output index) represents a certain asset, and publishes a "color definition" specifying this transaction output alongside what it represents (eg. 1 satoshi from `H:i` = 1 ounce of gold redeemable at Stephen's Gold Company)
-2. Others "install" the color definition file in their colored coin clients.
-3. When the color is first released, output H:i is the only transaction output to have that color.
-4. If a transaction spends inputs with color X, then its outputs will also have color X. For example, if the owner of H:i immediately makes a transaction to split that output among five addresses, then those transaction outputs will all also have color X. If a transaction has inputs of different colors, then a "color transfer rule" or "color kernel" determines which colors which outputs are (eg. a very naive implementation may say that output 0 has the same color as input 0, output 1 the same color as input 1, etc).
-5. When a colored coin client notices that it received a new transaction output, it uses a back-tracing algorithm based on the color kernel to determine the color of the output. Because the rule is deterministic, all clients will agree on what color (or colors) each output has.
+![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
 
-However, the protocol has several fundamental flaws:
+From a technical standpoint, the Bitcoin ledger can be thought of as a state transition system, where there is a "state" consisting of the ownership status of all existing bitcoins and a "state transition function" that takes a state and a transaction and outputs a new state which is the result. In a standard banking system, for example, the state is a balance sheet, a transaction is a request to move $X from A to B, and the state transition function reduces the value in A's account by $X and increases the value in B's account by $X. If A's account has less than $X in the first place, the state transition function returns an error. Hence, one can formally define:
 
+    APPLY(S,TX) -> S' or ERROR
 
-**Simplified Payment Verification in Bitcoin **
+In the banking system defined above:
+
+    APPLY({ Alice: $50, Bob: $50 },"send $20 from Alice to Bob") = { Alice: $30, Bob: $70 }
+
+But:
+    
+    APPLY({ Alice: $50, Bob: $50 },"send $70 from Alice to Bob") = ERROR
+
+The "state" in Bitcoin is the collection of all coins (technically, "unspent transaction outputs" or UTXO) that have been minted and not yet spent, with each UTXO having a denomination and an owner (defined by a 20-byte address which is essentially a cryptographic public key<sup>[1]</sup>). A transaction contains one or more inputs, with each input containing a reference to an existing UTXO and a cryptographic signature produced by the private key associated with the owner's address, and one or more outputs, with each output containing a new UTXO to be added to the state.
+
+The state transition function `APPLY(S,TX) -> S'` can be defined roughly as follows:
+
+1. For each input in `TX`:
+    * If the referenced UTXO is not in `S`, return an error.
+    * If the provided signature does not match the owner of the UTXO, return an error.
+2. If the sum of the denominations of all input UTXO is less than the sum of the denominations of all output UTXO, return an error.
+3. Return `S` with all input UTXO removed and all output UTXO added.
+
+The first half of the first step prevents transaction senders from spending coins that do not exist, the second half of the first step prevents transaction senders from spending other people's coins, and the second step enforces conservation of value. In order to use this for payment, the protocol is as follows. Suppose Alice wants to send 11.7 BTC to Bob. First, Alice will look for a set of available UTXO that she owns that totals up to at least 11.7 BTC. Realistically, Alice will not be able to get exactly 11.7 BTC; say that the smallest she can get is 6+4+2=12. She then creates a transaction with those three inputs and two outputs. The first output will be 11.7 BTC with Bob's address as its owner, and the second output will be the remaining 0.3 BTC "change", with the owner being Alice herself.
+
+### Mining
+
+![block_picture.jpg](http://vitalik.ca/files/block_picture.png)
+
+If we had access to a trustworthy centralized service, this system would be trivial to implement; it could simply be coded exactly as described. However, with Bitcoin we are trying to build a decentralized currency system, so we will need to combine the state transaction system with a consensus system in order to ensure that everyone agrees on the order of transactions. Bitcoin's decentralized consensus process requires nodes in the network to continuously attempt to produce packages of transactions called "blocks". The network is intended to produce roughly one block every ten minutes, with each block containing a timestamp, a nonce, a reference to (ie. hash of) the previous block and a list of all of the transactions that have taken place since the previous block. Over time, this creates a persistent, ever-growing, "blockchain" that constantly updates to represent the latest state of the Bitcoin ledger.
+
+The algorithm for checking if a block is valid, expressed in this paradigm, is as follows:
+
+1. Check if the previous block referenced by the block exists and is valid.
+2. Check that the timestamp of the block is greater than that of the previous block<sup>[2]</sup> and less than 2 hours into the future
+3. Check that the proof of work on the block is valid.
+4. Let `S[0]` be the state at the end of the previous block.
+5. Suppose `TX` is the block's transaction list with `n` transactions. For all `i` in `0...n-1`, set `S[i+1] = APPLY(S[i],TX[i])` If any application returns an error, exit and return false.
+6. Return true, and register `S[n]` as the state at the end of this block.
+
+Essentially, each transaction in the block must provide a state transition that is valid. Note that the state is not encoded in the block in any way; it is purely an abstraction to be remembered by the validating node and can only be (securely) computed for any block by starting from the genesis state and sequentially applying every transaction in every block. Note that the order in which the miner includes transactions into the block matters; if there are two transactions A and B in a block such that B spends a UTXO created by A, then the block will be valid if A comes before B but not otherwise.
+
+The interesting part of the block validation algorithm is the concept of "proof of work": the condition is that the SHA256 hash of every block, treated as a 256-bit number, must be less than a dynamically adjusted target, which as of the time of this writing is approximately 2<sup>192</sup>. The purpose of this is to make block creation computationally "hard", thereby preventing sybil attackers from remaking the entire blockchain in their favor. Because SHA256 is designed to be a completely unpredictable pseudorandom function, the only way to create a valid block is simply trial and error, repeatedly incrementing the nonce and seeing if the new hash matches. At the current target of 2<sup>192</sup>, this means an average of 2<sup>64</sup> tries; in general, the target is recalibrated by the network every 2016 blocks so that on average a new block is produced by some node in the network every ten minutes. In order to compensate miners for this computational work, the miner of every block is entitled to include a transaction giving themselves 25 BTC out of nowhere. Additionally, if any transaction has a higher total denomination in its inputs than in its outputs, the difference also goes to the miner as a "transaction fee". Incidentally, this is also the only mechanism by which BTC are issued; the genesis state contained no coins at all.
+
+In order to better understand the purpose of mining, let us examine what happens in the event of a malicious attacker. Since Bitcoin's underlying cryptography is known to be secure, the attacker will target the one part of the Bitcoin system that is not protected by cryptography directly: the order of transactions. The attacker's strategy is simple:
+
+1. Send 100 BTC to a merchant in exchange for some product (preferably a rapid-delivery digital good)
+2. Wait for the delivery of the product
+3. Produce another transaction sending the same 100 BTC to himself
+4. Try to convince the network that his transaction to himself was the one that came first.
+
+Once step (1) has taken place, after a few minutes some miner will include the transaction in a block, say block number 270000. After about one hour, five more blocks will have been added to the chain after that block, with each of those blocks indirectly pointing to the transaction and thus "confirming" it. At this point, the merchant will accept the payment as finalized and deliver the product; since we are assuming this is a digital good, delivery is instant. Now, the attacker creates another transaction sending the 100 BTC to himself. If the attacker simply releases it into the wild, the transaction will not be processed; miners will attempt to run `APPLY(S,TX)` and notice that `TX` consumes a UTXO which is no longer in the state. So instead, the attacker creates a "fork" of the blockchain, starting by mining another version of block 270000 pointing to the same block 269999 as a parent but with the new transaction in place of the old one. Because the block data is different, this requires redoing the proof of work. Furthermore, the attacker's new version of block 270000 has a different hash, so the original blocks 270001 to 270005 do not "point" to it; thus, the original chain and the attacker's new chain are completely separate. The rule is that in a fork the longest blockchain is taken to be the truth, and so legitimate miners will work on the 270005 chain while the attacker alone is working on the 270000 chain. In order for the attacker to make his blockchain the longest, he would need to have more computational power than the rest of the network combined in order to catch up (hence, "51% attack").
+
+### Merkle Trees
 
 ![SPV in bitcoin](https://www.ethereum.org/gh_wiki/spv_bitcoin.png)
 
@@ -61,574 +109,351 @@ _Left: it suffices to present only a small number of nodes in a Merkle tree to g
 
 _Right: any attempt to change any part of the Merkle tree will eventually lead to an inconsistency somewhere up the chain._
 
+An important scalability feature of Bitcoin is that the block is stored in a multi-level data structure. The "hash" of a block is actually only the hash of the block header, a roughly 200-byte piece of data that contains the timestamp, nonce, previous block hash and the root hash of a data structure called the Merkle tree storing all transactions in the block. A Merkle tree is a type of binary tree, composed of a set of nodes with a large number of leaf nodes at the bottom of the tree containing the underlying data, a set of intermediate nodes where each node is the hash of its two children, and finally a single root node, also formed from the hash of its two children, representing the "top" of the tree. The purpose of the Merkle tree is to allow the data in a block to be delivered piecemeal: a node can download only the header of a block from one source, the small part of the tree relevant to them from another source, and still be assured that all of the data is correct. The reason why this works is that hashes propagate upward: if a malicious user attempts to swap in a fake transaction into the bottom of a Merkle tree, this change will cause a change in the node above, and then a change in the node above that, finally changing the root of the tree and therefore the hash of the block, causing the protocol to register it as a completely different block (almost certainly with an invalid proof of work).
 
-1. **Difficulty of simplified payment verification** - Bitcoin's [Merkle Tree](http://en.wikipedia.org/wiki/Merkle_tree) construction allows for a protocol known as "[simplified payment verification](https://en.bitcoin.it/wiki/Scalability#Simplified_payment_verification)", where a client that does not download the full blockchain can quickly determine the validity of a transaction output by asking other nodes to provide a cryptographic proof of the validity of a single branch of the tree. The client will still need to download the block headers to be secure, but the amount of data bandwidth and verification time required drops by a factor of nearly a thousand. With colored coins, this is much harder. The reason is that one cannot determine the color of a transaction output simply by looking up the Merkle tree; rather, one needs to employ the backward scanning algorithm, fetching potentially thousands of transactions and requesting a Merkle tree validity proof of each one, before a client can be fully satisfied that a transaction has a certain color. After over a year of investigation, including help from ourselves, no solution has been found to this problem.
-2. **Incompatibility with scripting** - as mentioned above, Bitcoin does have a moderately flexible scripting system, for example allowing users to sign transactions of the form "I release this transaction output to anyone willing to pay to me 1 BTC". Other examples include [assurance contracts](http://en.wikipedia.org/wiki/Assurance_contract), [efficient micropayments](https://en.bitcoin.it/wiki/Contracts#Example_7:_Rapidly-adjusted_.28micro.29payments_to_a_pre-determined_party) and on-blockchain auctions. However, this system is inherently not color-aware; that is to say, one cannot make a transaction of the form "I release this transaction output to anyone willing to pay me one gold coin defined by the genesis H:i", because the scripting language has no idea that a concept of "colors" even exists. One major consequence of this is that, while trust-free swapping of two different colored coins is possible, a full decentralized exchange is not since there is no way to place an enforceable order to buy or sell.
-3. **Same limitations as Bitcoin** - ideally, on-blockchain protocols would be able to support advanced derivatives, bets and many forms of conditional transfers. Unfortunately, colored coins inherits the limitations of Bitcoin in terms of the impossibility of many such arrangements.
+The Merkle tree protocol is arguably essential to long-term sustainability. A "full node" in the Bitcoin network, one that stores and processes the entirety of every block, takes up about 15 GB of disk space in the Bitcoin network as of April 2014, and is growing by over a gigabyte per month. Currently, this is viable for some desktop computers and not phones, and later on in the future only businesses and hobbyists will be able to participate. A protocol known as "simplified payment verification" (SPV) allows for another class of nodes to exist, called "light nodes", which download the block headers, verify the proof of work on the block headers, and then download only the "branches" associated with transactions that are relevant to them. This allows light nodes to determine with a strong guarantee of security what the status of any Bitcoin transaction, and their current balance, is while downloading only a very small portion of the entire blockchain.
 
-### Metacoins
+### Alternative Blockchain Applications
 
-Another concept, once again in the spirit of sitting on top of Bitcoin much like HTTP over TCP, is that of "metacoins". The concept of a metacoin is simple: the metacoin protocol provides for a way of encoding metacoin transaction data into the outputs of a Bitcoin transaction, and a metacoin node works by processing all Bitcoin transactions and evaluating Bitcoin transactions that are valid metacoin transactions in order to determine the current account balances at any given time. For example, a simple metacoin protocol might require a transaction to have four outputs: MARKER, FROM, TO and VALUE. MARKER would be a specific marker address to identify a transaction as a metacoin transaction. FROM would be the address that coins are sent from. `TO` would be the address that coins are sent to, and VALUE would be an address encoding the amount sent. Because the Bitcoin protocol is not metacoin-aware, and thus will not reject invalid metacoin transactions, the metacoin protocol must treat all transactions with the first output going to MARKER as valid and react accordingly. For example, an implementation of the transaction processing part of the above described metacoin protocol might look like this:
+The idea of taking the underlying blockchain idea and applying it to other concepts also has a long history. In 2005, Nick Szabo came out with the concept of "[secure property titles with owner authority](http://szabo.best.vwh.net/securetitle.html)", a document describing how "new advances in replicated database technology" will allow for a blockchain-based system for storing a registry of who owns what land, creating an elaborate framework including concepts such as homesteading, adverse possession and Georgian land tax. However, there was unfortunately no effective replicated database system available at the time, and so the protocol was never implemented in practice. After 2009, however, once Bitcoin's decentralized consensus was developed a number of alternative applications rapidly began to emerge.
 
-    if tx.output[0] != MARKER:
-        break
-    else if balance[tx.output[1]] < decode_value(tx.output[3]):
-        break
-    else if not tx.hasSignature(tx.output[1]):
-        break
-    else:
-        balance[tx.output[1]] -= decode_value(tx.output[3]);
-        balance[tx.output[2]] += decode_value(tx.output[3]);
+* **Namecoin** - created in 2010, [Namecoin](https://namecoin.org/) is best described as a decentralized name registration database. In decentralized protocols like Tor, Bitcoin and BitMessage, there needs to be some way of identifying accounts so that other people can interact with them, but in all existing solutions the only kind of identifier available is a pseudorandom hash like `1LW79wp5ZBqaHW1jL5TCiBCrhQYtHagUWy`. Ideally, one would like to be able to have an account with a name like "george". However, the problem is that if one person can create an account named "george" then someone else can use the same process to register "george" for themselves as well and impersonate them. The only solution is a first-to-file paradigm, where the first registerer succeeds and the second fails - a problem perfectly suited for the Bitcoin consensus protocol. Namecoin is the oldest, and most successful, implementation of a name registration system using such an idea.
+* **Colored coins** - the purpose of [colored coins](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) is to serve as a protocol to allow people to create their own digital currencies - or, in the important trivial case of a currency with one unit, digital tokens, on the Bitcoin blockchain. In the colored coins protocol, one "issues" a new currency by publicly assigning a color to a specific Bitcoin UTXO, and the protocol recursively defines the color of other UTXO to be the same as the color of the inputs that the transaction creating them spent (some special rules apply in the case of mixed-color inputs). This allows users to maintain wallets containing only UTXO of a specific color and send them around much like regular bitcoins, backtracking through the blockchain to determine the color of any UTXO that they receive.
+* **Metacoins** - the idea behind a metacoin is to have a protocol that lives on top of Bitcoin, using Bitcoin transactions to store metacoin transactions but having a different state transition function, `APPLY'`. Because the metacoin protocol cannot prevent invalid metacoin transactions from appearing in the Bitcoin blockchain, a rule is added that if `APPLY'(S,TX)` returns an error, the protocol defaults to `APPLY'(S,TX) = S`. This provides an easy mechanism for creating an arbitrary cryptocurrency protocol, potentially with advanced features that cannot be implemented inside of Bitcoin itself, but with a very low development cost since the complexities of mining and networking are already handled by the Bitcoin protocol.
 
+Thus, in general, there are two approaches toward building a consensus protocol: building an independent network, and building a protocol on top of Bitcoin. The former approach, while reasonably successful in the case of applications like Namecoin, is difficult to implement; each individual implementation needs to bootstrap an independent blockchain, as well as building and testing all of the necessary state transition and networking code. Additionally, we predict that the set of applications for decentralized consensus technology will follow a power law distribution where the vast majority of applications would be too small to warrant their own blockchain, and we note that there exist large classes of decentralized applications, particularly decentralized autonomous organizations, that need to interact with each other.
 
-The advantage of a metacoin protocol is that the protocol can allow for more advanced transaction types, including custom currencies, decentralized exchange, derivatives, etc, that are impossible to implement using the underlying Bitcoin protocol by itself. However, metacoins on top of Bitcoin have one major flaw: simplified payment verification, already difficult with colored coins, is outright impossible on a metacoin. The reason is that while one can use SPV to determine that there is a transaction sending 30 metacoins to address X, that by itself does not mean that address X has 30 metacoins. What if the sender of the transaction did not have 30 metacoins to start with and so the transaction is invalid? Ultimately, finding out any part of the current state requires scanning through all transactions since the metacoin's original launch to figure out which transactions are valid and which ones are not. This makes it impossible to have a truly secure client without downloading the entire, arguably prohibitively large, Bitcoin blockchain.
+The Bitcoin-based approach, on the other hand, has the flaw that it does not inherit the simplified payment verification features of Bitcoin. SPV works for Bitcoin because it can use blockchain depth as a proxy for validity; at some point, once the ancestors of a transaction go far enough back, it is safe to say that they were legitimately part of the state. Blockchain-based meta-protocols, on the other hand, cannot force the blockchain not to include transactions that are not valid within the context of their own protocols. Hence, a fully secure SPV meta-protocol implementation would need to backward scan all the way to the beginning of the Bitcoin blockchain to determine whether or not certain transactions are valid. Currently, all "light" implementations of Bitcoin-based meta-protocols rely on a trusted server to provide the data, arguably a highly suboptimal result especially when one of the primary purposes of a cryptocurrency is to eliminate the need for trust.
 
-In both cases, the conclusion is as follows. The effort to build more advanced protocols on top of Bitcoin, like HTTP over TCP, is admirable, and is indeed the correct way to go in terms of implementing advanced decentralized applications. However, the attempt to build colored coins and metacoins on top of Bitcoin is more like building HTTP over SMTP. The intention of SMTP was to transfer email messages, not serve as a backbone for generic internet communications, and one would have had to implement many inefficient and architecturally ugly practices in order to make it effective. Similarly, while Bitcoin is a great protocol for making simple transactions and storing value, the evidence above shows that Bitcoin is absolutely not intended to function, and cannot function, as a base layer for financial peer-to-peer protocols in general.
+### Scripting
 
-Ethereum solves the scalability issues by being hosted on its own blockchain, and by storing a distinct "state tree" in each block along with a transaction list. Each "state tree" represents the current state of the entire system, including address balances and contract states. Ethereum contracts are allowed to store data in a persistent memory storage. This storage, combined with the Turing-complete scripting language, allows us to encode an entire currency inside of a single contract, alongside countless other types of cryptographic assets. Thus, the intention of Ethereum is not to replace the colored coins and metacoin protocols described above. Rather, Ethereum intends to serve as a superior foundational layer offering a uniquely powerful scripting system on top of which arbitrarily advanced contracts, currencies and other decentralized applications can be built. If existing colored coins and metacoin projects were to move onto Ethereum, they would gain the benefits of Ethereum's simplified payment verification, the option to be compatible with Ethereum's financial derivatives and decentralized exchange, and the ability to work together on a single network. With Ethereum, someone with an idea for a new contract or transaction type that might drastically improve the state of what can be done with cryptocurrency would not need to start their own coin; they could simply implement their idea in Ethereum script code. In short, Ethereum is a foundation for innovation.
+Even without any extensions, the Bitcoin protocol actually does facilitate a weak version of a concept of "smart contracts". UTXO in Bitcoin can be owned not just by a public key, but also by a more complicated script expressed in a simple stack-based programming language. In this paradigm, a transaction spending that UTXO must provide data that satisfies the script. Indeed, even the basic public key ownership mechanism is implemented via a script: the script takes an elliptic curve signature as input, verifies it against the transaction and the address that owns the UTXO, and returns 1 if the verification is successful and 0 otherwise. Other, more complicated, scripts exist for various additional use cases. For example, one can construct a script that requires signatures from two out of a given three private keys to validate ("multisig"), a setup useful for corporate accounts, secure savings accounts and some merchant escrow situations. Scripts can also be used to pay bounties for solutions to computational problems, and one can even construct a script that says something like "this Bitcoin UTXO is yours if you can provide an SPV proof that you sent a Dogecoin transaction of this denomination to me", essentially allowing decentralized cross-cryptocurrency exchange.
 
+However, the scripting language as implemented in Bitcoin has several important limitations:
 
-## Philosophy
+* **Lack of Turing-completeness** - that is to say, while there is a large subset of computation that the Bitcoin scripting language supports, it does not nearly support everything. The main category that is missing is loops. This is done to avoid infinite loops during transaction verification; theoretically it is a surmountable obstacle for script programmers, since any loop can be simulated by simply repeating the underlying code many times with an if statement, but it does lead to scripts that are very space-inefficient. For example, implementing an alternative elliptic curve signature algorithm would likely require 256 repeated multiplication rounds all individually included in the code.
+* **Value-blindness** - there is no way for a UTXO script to provide fine-grained control over the amount that can be withdrawn. For example, one powerful use case of an oracle contract would be a hedging contract, where A and B put in $1000 worth of BTC and after 30 days the script sends $1000 worth of BTC to A and the rest to B. This would require an oracle to determine the value of 1 BTC in USD, but even then it is a massive improvement in terms of trust and infrastructure requirement over the fully centralized solutions that are available now. However, because UTXO are all-or-nothing, the only way to achieve this is through the very inefficient hack of having many UTXO of varying denominations (eg. one UTXO of 2<sup>k</sup> for every k up to 30) and having O pick which UTXO to send to A and which to B.
+* **Lack of state** - UTXO can either be spent or unspent; there is no opportunity for multi-stage contracts or scripts which keep any other internal state beyond that. This makes it hard to make multi-stage options contracts, decentralized exchange offers or two-stage cryptographic commitment protocols (necessary for secure computational bounties). It also means that UTXO can only be used to build simple, one-off contracts and not more complex "stateful" contracts such as decentralized organizations, and makes meta-protocols difficult to implement. Binary state combined with value-blindness also mean that another important application, withdrawal limits, is impossible.
+* **Blockchain-blindness** - UTXO are blind to blockchain data such as the nonce and previous hash. This severely limits applications in gambling, and several other categories, by depriving the scripting language of a potentially valuable source of randomness.
 
-The design behind Ethereum is intended to follow the following principles:
+Thus, we see three approaches to building advanced applications on top of cryptocurrency: building a new blockchain, using scripting on top of Bitcoin, and building a meta-protocol on top of Bitcoin. Building a new blockchain allows for ulimited freedom in building a feature set, but at the cost of development time and bootstrapping effort. Using scripting is easy to implement and standardize, but is very limited in its capabilities, and meta-protocols, while easy, suffer from faults in scalability. With Ethereum, we intend to build a generalized framework that can provide the advantages of all three paradigms at the same time.
 
-1. **Simplicity** - the Ethereum protocol should be as simple as possible, even at the cost of some data storage or time inefficiency. An average programmer should ideally be able to follow and implement the entire specification, so as to fully realize the unprecedented democratizing potential that cryptocurrency brings and further the vision of Ethereum as a protocol that is open to all. Any optimization which adds complexity should not be included unless that optimization provides very substantial benefit.
-2. **Universality** - a fundamental part of Ethereum's design philosophy is that Ethereum does not have "features". Instead, Ethereum provides an internal Turing-complete scripting language, which a programmer can use to construct any smart contract or transaction type that can be mathematically defined. Want to invent your own financial derivative? With Ethereum, you can. Want to make your own currency? Set it up as an Ethereum contract. Want to set up a full-scale Daemon or Skynet? You may need to have a few thousand interlocking contracts, and be sure to feed them generously, to do that, but nothing is stopping you with Ethereum at your fingertips.
-3. **Modularity** - the parts of the Ethereum protocol should be designed to be as modular and separable as possible. Over the course of development, our goal is to create a program where if one was to make a small protocol modification in one place, the application stack would continue to function without any further modification. Innovations such as [Dagger](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Dagger), [Patricia trees](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) and [RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP) should be implemented as separate libraries and made to be feature-complete even if Ethereum does not require certain features so as to make them usable in other protocols as well. Ethereum development should be maximally done so as to benefit the entire cryptocurrency ecosystem, not just itself.
-4. **Agility** - details of the Ethereum protocol are not set in stone. Although we will be extremely judicious about making modifications to high-level constructs such as the [C-like language](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-CLL) and the address system, computational tests later on in the development process may lead us to discover that certain modifications to the algorithm or scripting language will substantially improve scalability or security. If any such opportunities are found, we will exploit them.
-5. **Non-discrimination** - the protocol should not attempt to actively restrict or prevent specific categories of usage. All regulatory mechanisms in the protocol should be designed to directly regulate the harm and not attempt to oppose specific undesirable applications. A programmer can even run an infinite loop script on top of Ethereum for as long as they are willing to keep paying the per-computational-step transaction fee.
+## Ethereum
 
+The intent of Ethereum is to merge together and improve upon the concepts of scripting, altcoins and on-chain meta-protocols, and allow developers to create arbitrary consensus-based applications that have the scalability, standardization, feature-completeness, ease of development and interoperability offered by these different paradigms all at the same time. Ethereum does this by building what is essentially the ultimate abstract foundational layer: a blockchain with a built-in Turing-complete programming language, allowing anyone to write smart contracts and decentralized applications where they can create their own arbitrary rules for ownership, transaction formats and state transition functions. A bare-bones version of Namecoin can be written in two lines of code, and other protocols like currencies and reputation systems can be built in under twenty. Smart contracts, cryptographic "boxes" that contain value and only unlock it if certain conditions are made, can also be built on top of our platform, with vastly more power than that offered by Bitcoin scripting because of the added powers of Turing-completeness, value-awareness, blockchain-awareness and state.
 
-## Basic Building Blocks
+### Ethereum Accounts
 
-At its core, Ethereum starts off as a fairly regular memory-hard proof-of-work mined cryptocurrency without many extra complications. In fact, Ethereum is in some ways simpler than the Bitcoin-based cryptocurrencies that we use today. The concept of a transaction having multiple inputs and outputs, for example, is gone, replaced by a more intuitive balance-based model (to prevent transaction replay attacks, as part of each account balance we also store an incrementing nonce). Sequence numbers and lock times are also removed, and all transaction and block data is encoded in a single format. Instead of addresses being the RIPEMD160 hash of the SHA256 hash of the public key prefixed with 04, addresses are simply the last 20 bytes of the SHA3 hash of the public key. Unlike other cryptocurrencies, which aim to offer a large number of "features", Ethereum intends to take features away, and instead provide its users with near-infinite power through an all-encompassing mechanism known as "contracts".
+In Ethereum, the state is made up of objects called "accounts", with each account having a 20-byte address and state transitions being direct transfers of value and information between accounts. An Ethereum account contains four fields:
+
+* The **nonce**, a counter used to make sure each transaction can only be processed once
+* The account's current **ether balance**
+* The account's **contract code**, if present
+* The account's **storage** (empty by default)
+
+"Ether" is the main internal crypto-fuel of Ethereum, and is used to pay transaction fees. In general, there are two types of accounts: externally owned accounts, controlled by private keys, and contract accounts, controlled by their contract code. An externally owned account has no code, and one can send messages from an externally owned account by creating and signing a transaction; in a contract account, every time the contract account receives a message its code activates, allowing it to read and write to internal storage and send other messages or create contracts in turn.
+
+### Messages and Transactions
+
+"Messages" in Ethereum are defined as transfers of value from one account to another with data attached; the main difference between an Ethereum message and a Bitcoin transaction, aside from the explicit data field, is that Ethereum messages can be created either by external entities or contracts whereas Bitcoin transactions can only be created externally. Another feature of Ethereum messages is that the recipient, if it is a contract account, has the option to return a response; this means that Ethereum messages also encompass the concept of functions.
+
+A "transaction" is defined as the signed data package that stores a messages to be sent from an eternally owned account. Transactions contain the recipient of the message, a signature identifying the sender, the amount of ether and the data to send, as well as two values called `STARTGAS` and `GASPRICE`. In order to prevent exponential blowup and infinite loops in code, each transaction is required to set a limit to how many computational steps of code execution it can spawn. `STARTGAS` is this limit, and `GASPRICE` is the fee to pay to the miner per computational step. If transaction execution "runs out of gas", all state changes revert - except for the payment of the fees, and if transaction execution halts with some gas remaining then the remaining portion of the fees is refunded to the sender. There is also a separate transaction type, and corresponding message type, for creating a contract; the address of a contract is calculated based on the hash of the account nonce and transaction data.
+
+An important consequence of the message mechanism is the "first class citizen" property - the idea that contracts have equivalent powers to external accounts, including the ability to send message and create other contracts. This allows contracts to simultaneously serve many different roles: for example, one might have a member of a decentralized organization (a contract) be an escrow account (another contract) between an paranoid individual employing custom quantum-proof Lamport signatures (a third contract) and a co-signing entity which itself uses an account with five keys for security (a fourth contract). The strength of the Ethereum platform is that the decentralized organization and the escrow contract do not need to care about what kind of account each party to the contract is.
+
+### Ethereum State Transition Function
+
+![ethertransition.png](http://vitalik.ca/files/ethertransition.png?1)
+
+The Ethereum state transition function, `APPLY(S,TX) -> S'` can be defined as follows:
+
+1. Check if the transaction is well-formed (ie. has the right number of values), the signature is valid, and the nonce matches the nonce in the sender's account. If not, return an error.
+2. Calculate the transaction fee as `STARTGAS * GASPRICE`, and determine the sending address from the signature. Subtract the fee from the sender's account balance and increment the sender's nonce. If there is not enough balance to spend, return an error.
+3. Initialize `GAS = STARTGAS`, and take off a certain quantity of gas per byte to pay for the bytes in the transaction.
+4. Transfer the transaction value from the sender's account to the receiving account. If the receiving account does not yet exist, create it. If there is not enough value to send, revert to the end of step 2, add `GASPRICE * STARTGAS` to the miner's account and return.
+5. If the receiving account is a contract, run the contract's code either to completion or until the execution runs out of gas. If execution runs out of gas, revert to the end of step 2, add `GASPRICE * STARTGAS` to the miner's account and return. If execution runs to completion with `G` gas remaining, refund `G * GASPRICE` to the sender's account, give the rest to the miner, and return the final state.
+6. If the receiving account is not a contract, add `G * STARTGAS` back to the sender's account and the rest to the miner, where `G` is equal to `STARTGAS` minus the gas taken off to pay for the transaction bytes.
+
+For example, suppose that the contract's code is:
+
+    if !contract.storage[msg.data[0]]:
+        contract.storage[msg.data[0]] = msg.data[1]
+
+Note that in reality the contract code is written in the low-level EVM code; this example is written in Serpent, our high-level language, for clarity, and can be compiled down to EVM code. Suppose that the contract's storage starts off empty, and a transaction is sent with 10 ether value, 2000 gas, 0.001 ether gasprice, and two data fields: `[ 2, 'CHARLIE' ]`<sup>[3]</sup>. The process for the state transition function in this case is as follows:
+
+1. Check that the transaction is valid and well formed.
+2. Check that the transaction sender has at least 2000 * 0.001 = 2 ether. If it is, then subtract 2 ether from the sender's account.
+3. Initialize gas = 2000; assuming the transaction is 170 bytes long and the byte-fee is 5, subtract 850 so that there is 1150 gas left.
+3. Subtract 10 more ether from the sender's account, and add it to the contract's account.
+4. Run the code. In this case, this is simple: it checks if the contract's storage at index `2` is used, notices that it is not, and so it sets the storage at index `2` to the value `CHARLIE`. Suppose this takes 187 gas, so the remaining amount of gas is 1150 - 187 = 963
+5. Add 963 * 0.001 = 0.963 ether back to the sender's account, and return the resulting state.
+
+If there was no contract at the receiving end of the transaction, then the total transaction fee would simply be equal to the provided `GASPRICE` multiplied by the length of the transaction in bytes, and the data sent alongside the transaction would be irrelevant. Additionally, note that contract-initiated messages can assign a gas limit to the computation that they spawn, and if the sub-computation runs out of gas it gets reverted only to the point of the message call. Hence, just like transactions, contracts can secure their limited computational resources by setting strict limits on the sub-computations that they spawn.
+
+### Code Execution
+
+The code in Ethereum contracts is written in a low-level, stack-based bytecode language, referred to as "Ethereum virtual machine code" or "EVM code". The code consists of a series of bytes, where each byte represents an operation. In general, code execution is an infinite loop that consists of repeatedly carrying out the operation at the current program counter (which begins at zero) and then incrementing the program counter by one, until the end of the code is reached or an error or `STOP` or `RETURN` instruction is detected. The operations have access to three types of space in which to store data:
+
+* The **stack**, a last-in-first-out container to which values can be pushed and popped
+* **Memory**, an infinitely expandable byte array
+* The contract's long-term **storage**, a key/value store. Unlike stack and memory, which reset after computation ends, storage persists for the long term.
+
+The code can also access the value, sender and data of the incoming message, as well as block header data, and the code can also return a byte array of data as an output.
+
+The formal execution model of EVM code is surprisingly simple. While the Ethereum virtual machine is running, its full computational state can be defined by the tuple `(block_state, transaction, message, code, memory, stack, pc, gas)`, where `block_state` is the global state containing all accounts and includes balances and storage. Every round of execution, the current instruction is found by taking the `pc`th byte of `code`, and each instruction has its own definition in terms of how it affects the tuple. For example, `ADD` pops two items off the stack and pushes their sum, reduces `gas` by 1 and increments `pc` by 1, and `SSTORE` pushes the top two items off the stack and inserts the second item into the contract's storage at the index specified by the first item. Although there are many ways to optimize Ethereum via just-in-time compilation, a basic implementation of Ethereum can be done in a few hundred lines of code.
+
+### Blockchain and Mining
+
+![apply_block_diagram.png](http://vitalik.ca/files/apply_block_diagram.png)
+
+The Ethereum blockchain is in many ways similar to the Bitcoin blockchain, although it does have some differences. The main difference between Ethereum and Bitcoin with regard to the blockchain architecture is that, unlike Bitcoin, Ethereum blocks contain a copy of both the transaction list and the most recent state. Aside from that, two other values, the block number and the difficulty, are also stored in the block. The block validation algorithm in Ethereum is as follows:
+
+1. Check if the previous block referenced exists and is valid.
+2. Check that the timestamp of the block is greater than that of the referenced previous block and less than 15 minutes into the future
+3. Check that the block number, difficulty, transaction root, uncle root and gas limit (various low-level Ethereum-specific concepts) are valid.
+4. Check that the proof of work on the block is valid.
+5. Let `S[0]` be the `STATE_ROOT` of the previous block.
+6. Let `TX` be the block's transaction list, with `n` transactions. For all in in `0...n-1`, set `S[i+1] = APPLY(S[i],TX[i])`. If any applications returns an error, or if the total gas consumed in the block up until this point exceeds the `GASLIMIT`, return an error. 
+7. Let `S_FINAL` be `S[n]`, but adding the block reward paid to the miner.
+8. Check if `S_FINAL` is the same as the `STATE_ROOT`. If it is, the block is valid; otherwise, it is not valid.
+
+The approach may seem highly inefficient at first glance, because it needs to store the entire state with each block, but in reality efficiency should be comparable to that of Bitcoin. The reason is that the state is stored in the tree structure, and after every block only a small part of the tree needs to be changed. Thus, in general, between two adjacent blocks the vast majority of the tree should be the same, and therefore the data can be stored once and referenced twice using pointers (ie. hashes of subtrees). A special kind of tree known as a "Patricia tree" is used to accomplish this, including a modification to the Merkle tree concept that allows for nodes to be inserted and deleted, and not just changed, efficiently.  Additionally, because all of the state information is part of the last block, there is no need to store the entire blockchain history - a strategy which, if it could be applied to Bitcoin, can be calculated to provide 10-20x savings in space.
+
+## Applications
+
+In general, there are three types of applications on top of Ethereum. The first category is financial applications, providing users with more powerful ways of managing and entering into contracts using their money. This includes sub-currencies, financial derivatives, hedging contracts, savings wallets, wills, and ultimately even some classes of full-scale employment contracts. The second category is semi-financial applications, where money is involved but there is also a heavy non-monetary side to what is being done; a perfect example is self-enforcing bounties for solutions to computational problems. Finally, there are applications such as online voting and decentralized governance that are not financial at all.
+
+### Sub-currencies
+
+Sub-currencies have many applications ranging from currencies representing assets such as USD or gold to company stocks and even currencies with only one unit issued to represent collectibles or smart property. Sub-currencies are surprisingly easy to implement in Ethereum. The key point to understand is that all a currency fundamentally is is a database with one operation: subtract X units from A and give X units to B, with the proviso that (i) X had at least X units before the transaction and (2) the transaction is approved by A. All that it takes to implement a sub-currency is to implement this logic into a contract.
+
+The basic code for implementing a currency in Serpent looks as follows:
+
+    from = msg.sender
+    to = msg.data[0]
+    value = msg.data[1]
+
+    if contract.storage[from] >= value:
+        contract.storage[from] = contract.storage[from] - value
+        contract.storage[to] = contract.storage[to] + value
+
+This is essentially a literal implementation of the "banking system" state transition function described further above in this document. A few extra lines of code need to be added to provide for the initial step of distributing the currency units in the first place and a few other edge cases, and ideally a function would be added to let other contracts query for the balance of an address. But that's all there is to it. Theoretically, Ethereum-based sub-currencies can potentially include another important feature that on-chain Bitcoin-based meta-currencies lack: the ability to pay transaction fees directly in that currency. The way this would be implemented is that the contract would maintain an ether balance with which it would refund ether used to pay fees to the sender, and it would refill this balance by collecting the internal currency units that it takes in fees and reselling them in a constant running auction. Users would thus need to "activate" their accounts with ether, but once the ether is there it would be reusable because the contract would refund it each time.
+
+### Financial derivatives
+
+Financial derivatives are the most common application of a "smart contract", and one of the simplest to implement in code. The main challenge in implementing financial contracts is that the majority of them require reference to an external price ticker; for example, a very desirable application is a smart contract that hedges against the volatility of ether (or another cryptocurrency) with respect to the US dollar, but doing this requires the contract to know what the value of ETH/USD is. The simplest way to do this is through a "data feed" contract maintained by a specific party (eg. NASDAQ) designed so that that party has the ability to update the contract as needed, and providing an interface that allows other contracts to send a message to that contract and get back a response that provides the price.
+
+Given that critical ingredient, the hedging contract would look as follows:
+
+1. Wait for party A to input 1000 ether.
+2. Wait for party B to input 1000 ether.
+3. Record the USD value of 1000 ether, calculated by querying the data feed contract, in storage, say this is $x.
+4. After 30 days, allow A or B to "reactivate" the contract in order to send $x worth of ether (calculated by querying the data feed contract again to get the new price) to A and the rest to B.
+
+Such a contract would have significant potential in crypto-commerce. One of the main problems cited about cryptocurrency is the fact that it's volatile; although many users and merchants may want the security and convenience of dealing with cryptographic assets, they many not wish to face that prospect of losing 23% of the value of their funds in a single day. Up until now, the most commonly proposed solution has been issuer-backed assets; the idea is that an issuer creates a sub-currency in which they have the right to issue and revoke units, and provide one unit of the currency to anyone who provides them (offline) with one unit of a specified underlying asset (eg. gold, USD). The issuer then promises to provide one unit of the underlying asset to anyone who sends back one unit of the crypto-asset. This mechanism allows any non-cryptographic asset to be "uplifted" into a cryptographic asset, provided that the issuer can be trusted.
+
+In practice, however, issuers are not always trustworthy, and in some cases the banking infrastructure is too weak, or too hostile, for such services to exist. Financial derivatives provide an alternative. Here, instead of a single issuer providing the funds to back up an asset, a decentralized market of speculators, betting that the price of a cryptographic reference asset (eg. ETH) will go up, plays that role. Unike issuers, speculators have no option to default on their side of the bargain because the hedging contract holds their funds in escrow. Note that this approach is not fully decentralized, because a trusted source is still needed to provide the price ticker, although arguably even still this is a massive improvement in terms of reducing infrastructure requirements (unlike being an issuer, issuing a price feed requires no licenses and can likely be categorized as free speech) and reducing the potential for fraud.
+
+### Identity and Reputation Systems
+
+The earliest alternative cryptocurrency of all, [Namecoin](http://namecoin.org/), attempted to use a Bitcoin-like blockchain to provide a name registration system, where users can register their names in a public database alongside other data. The major cited use case is for a [DNS](http://en.wikipedia.org/wiki/Domain_Name_System) system, mapping domain names like "bitcoin.org" (or, in Namecoin's case, "bitcoin.bit") to an IP address. Other use cases include email authentication and potentially more advanced reputation systems. Here is the basic contract to provide a Namecoin-like name registration system on Ethereum:
+
+    if !contract.storage[tx.data[0]]:
+        contract.storage[tx.data[0]] = tx.data[1]
+
+The contract is very simple; all it is is a database inside the Ethereum network that can be added to, but not modified or removed from. Anyone can register a name with some value, and that registration then sticks forever. A more sophisticated name registration contract will also have a "function clause" allowing other contracts to query it, as well as a mechanism for the "owner" (ie. the first registerer) of a name to change the data or transfer ownership. One can even add reputation and web-of-trust functionality on top.
+
+### Decentralized File Storage
+
+Over the past few years, there have emerged a number of popular online file storage startups, the most prominent being Dropbox, seeking to allow users to upload a backup of their hard drive and have the service store the backup and allow the user to access it in exchange for a monthly fee. However, at this point the file storage market is at times relatively inefficient; a cursory look at various [existing solutions](http://online-storage-service-review.toptenreviews.com/) shows that, particularly at the "uncanny valley" 20-200 GB level at which neither free quotas nor enterprise-level discounts kick in, monthly prices for mainstream file storage costs are such that you are paying for more than the cost of the entire hard drive in a single month. Ethereum contracts can allow for the development of a decentralized file storage ecosystem, where individual users can earn small quantities of money by renting out their own hard drives and unused space can be used to further drive down the costs of file storage. 
+
+The key underpinning piece of such a device would be what we have termed the "decentralized Dropbox contract". This contract works as follows. First, one splits the desired data up into blocks, encrypting each block for privacy, and builds a Merkle tree out of it. One then makes a contract with the rule that, every N blocks, the contract would pick a random index in the Merkle tree (using the previous block hash, accessible from contract code, as a source of randomness), and give X ether to the first entity to supply a transaction with a simplified payment verification-like proof of ownership of the block at that particular index in the tree. When a user wants to re-download their file, they can use a micropayment channel protocol (eg. pay 1 szabo per 32 kilobytes) to recover the file; the most fee-efficient approach is for the payer not to publish the transaction until the end, instead replacing the transaction with a slightly more lucrative one with the same nonce after every 32 kilobytes.
+
+An important feature of the protocol is that, although it may seem like one is trusting many random nodes not to decide to forget the file, one can reduce that risk down to near-zero by splitting the file into many pieces via secret sharing, and watching the contracts to see each piece is still in some node's possession. If a contract is still paying out money, that provides a cryptographic proof that someone out there is still storing the file. 
+
+### Decentralized Autonomous Organizations
+
+The general concept of a "decentralized autonomous organization" is that of a virtual entity that has a certain set of members or shareholders which, perhaps with a 67% majority, have the right to spend the entity's funds and modify its code. The members would collectively decide on how the organization should allocate its funds. Methods for allocating a DAO's funds could range from bounties, salaries to even more exotic mechanisms such as an internal currency to reward work. This essentially replicates the legal trappings of a traditional company or nonprofit but using only cryptographic blockchain technology for enforcement. So far much of the talk around DAOs has been around the "capitalist" model of a "decentralized autonomous corporation" (DAC) with dividend-receiving shareholders and tradable shares; an alternative, perhaps described as a "decentralized autonomous community", would have all members have an equal share in the decision making and require 67% of existing members to agree to add or remove a member. The requirement that one person can only have one membership would then need to be enforced collectively by the group.
+
+A general outline for how to code a DAO is as follows. The simplest design is simply a piece of self-modifying code that changes if two thirds of members agree on a change. Although code is theoretically immutable, one can easily get around this and have de-facto mutability by having chunks of the code in separate contracts, and having the address of which contracts to call stored in the modifiable storage. In a simple implementation of such a DAO contract, there would be three transaction types, distinquished by the data provided in the transaction:
+
+* `[0,i,K,V]` to register a proposal with index `i` to change the address at storage index `K` to value `V`
+* `[0,i]` to register a vote in favor of proposal `i`
+* `[2,i]` to finalize proposal `i` if enough votes have been made
+
+The contract would then have clauses for each of these. It would maintain a record of all open storage changes, along with a list of who voted for them. It would also have a list of all members. When any storage change gets to two thirds of members voting for it, a finalizing transaction could execute the change. A more sophisticated skeleton would also have built-in voting ability for features like sending a transaction, adding members and removing members, and may even provide for [Liquid Democracy](http://en.wikipedia.org/wiki/Delegative_democracy)-style vote delegation (ie. anyone can assign someone to vote for them, and assignment is transitive so if A assigns B and B assigns C then C determines A's vote). This design would allow the DAO to grow organically as a decentralized community, allowing people to eventually delegate the task of filtering out who is a member to specialists, although unlike in the "current system" specialists can easily pop in and out of existence over time as individual community members change their alignments.
+
+An alternative model is for a decentralized corporation, where any account can have zero or more shares, and two thirds of the shares are required to make a decision. A complete skeleton would involve asset management functionality, the ability to make an offer to buy or sell shares, and the ability to accept offers (preferably with an order-matching mechanism inside the contract). Delegation would also exist Liquid Democracy-style, generalizing the concept of a "board of directors".
+
+### Further Applications
+
+**1. Savings wallets**. Suppose that Alice wants to keep her funds safe, but is worried that she will lose or someone will hack her private key. She puts ether into a contract with Bob, a bank, as follows:
+
+* Alice alone can withdraw a maximum of 1% of the funds per day.
+* Bob alone can withdraw a maximum of 1% of the funds per day, but Alice has the ability to make a transaction with her key shutting off this ability.
+* Alice and Bob together can withdraw anything.
+
+Normally, 1% per day is enough for Alice, and if Alice wants to withdraw more she can contact Bob for help. If Alice's key gets hacked, she runs to Bob to move the funds to a new contract. If she loses her key, Bob will get the funds out eventually. If Bob turns out to be malicious, then she can turn off his ability to withdraw.
+
+**2. Crop insurance**. One can easily make a financial derivatives contract but using a data feed of the weather instead of any price index. If a farmer in Iowa purchases a derivative that pays out inversely based on the precipitation in Iowa, then if there is a drought, the farmer will automatically receive money and if there is enough rain the farmer will be happy because their crops would do well.
+
+**3. A decentralized data feed**. For financial contracts for difference, it may actually be possible to decentralize the data feed via a protocol called "[SchellingCoin](http://blog.ethereum.org/2014/03/28/schellingcoin-a-minimal-trust-universal-data-feed/)". SchellingCoin basically works as follows: N parties all put into the system the value of a given datum (eg. the ETH/USD price), the values are sorted, and everyone between the 25th and 75th percentile gets one token as a reward. Everyone has the incentive to provide the answer that everyone else will provide, and the only value that a large number of players can realistically agree on is the obvious default: the truth. This creates a decentralized protocol that can theoretically provide any number of values, including the ETH/USD price, the temperature in Berlin or even the result of a particular hard computation.
+
+**4. Smart multisignature escrow**. Bitcoin allows multisignature transaction contracts where, for example, three out of a given five keys can spend the funds. Ethereum allows for more granularity; for example, four out of five can spend everything, three out of five can spend up to 10% per day, and two out of five can spend up to 0.5% per day. Additionally, Ethereum multisig is asynchronous - two parties can register their signatures on the blockchain at different times and the last signature will automatically send the transaction.
+
+**5. Peer-to-peer gambling**. Any number of peer-to-peer gambling protocols, such as Frank Stajano and Richard Clayton's [Cyberdice](http://www.cl.cam.ac.uk/~fms27/papers/2008-StajanoCla-cyberdice.pdf), can be implemented on the Ethereum blockchain. The simplest gambling protocol is actually simply a contract for difference on the next block hash. From there, entire gambling services such as SatoshiDice can be replicated on the blockchain either by creating a unique contract per bet or by using a quasi-centralized contract.
+
+Ultimately, the best P2P gambling implementation may be something like JustDice, where the contract has two ways of interacting with it. First, users can make bets, and receive either N*x or 0 depending on whether or not they won. Second, users can "invest" into the site, and receive shares where, as long as no investors enter or leave, each share is worth a constant percentage of the contract's total reserve. For example, if a contract has a reserve of 50000 ETH and 1000 shares, and someone invests 5000 ETH, they get 100 shares. If the contract then takes a few bets and its total reserve goes up from 55000 ETH to 66000 ETH, then each of the 1100 shares is now worth 60 ETH, so if the investor sells their shares the contract goes down to 60000 ETH and 1000 shares. The reserve provides the "float" for the contract to cover sudden unexpected losses, but in general the investors are expected to win as the odds are slightly in favor of the contract.
+
+**6. On-chain stock markets**. Provided an oracle or SchellingCoin, prediction markets are also easy to implement as a trivial consequence, and prediction markets together with SchellingCoin may prove to be the first mainstream application of [futarchy](http://hanson.gmu.edu/futarchy.html) as a governance protocol for decentralized organizations.
+
+**7. On-chain decentralized marketplaces**, using the identity and reputation system as a base.
+
+## Miscellanea And Concerns
 
 ### Modified GHOST Implementation
 
-The "Greedy Heavist Observed Subtree" (GHOST) protocol is an innovation first introduced by Yonatan Sompolinsky and Aviv Zohar in [December 2013](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf). The motivation behind GHOST is that blockchains with fast confirmation times currently suffer from reduced security due to a high stale rate - because blocks take a certain time to propagate through the network, if miner A mines a block and then miner B happens to mine another block before miner A's block propagates to B, miner B's block will end up wasted and will not contribute to network security. Furthermore, there is a centralization issue: if miner A is a mining pool with 30% hashpower and B has 10% hashpower, A will have a risk of producing stale blocks 70% of the time whereas B will have a risk of producing stale blocks 90% of the time. Thus, if the stale rate is high, A will be substantially more efficient simply by virtue of its size. With these two effects combined, blockchains which produce blocks quickly are very likely to lead to one mining pool having a large enough percentage of the network hashpower to have de facto control over the mining process.
+The "Greedy Heavist Observed Subtree" (GHOST) protocol is an innovation first introduced by Yonatan Sompolinsky and Aviv Zohar in [December 2013](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf). The motivation behind GHOST is that blockchains with fast confirmation times currently suffer from reduced security due to a high stale rate - because blocks take a certain time to propagate through the network, if miner A mines a block and then miner B happens to mine another block before miner A's block propagates to B, miner B's block will end up wasted and will not contribute to network security. Furthermore, there is a centralization issue: if miner A is a mining pool with 30% hashpower and B has 10% hashpower, A will have a risk of producing a stale block 70% of the time (since the other 30% of the time A produced the last block and so will get mining data immediately) whereas B will have a risk of producing a stale block 90% of the time. Thus, if the block interval is short enough for the stale rate to be high, A will be substantially more efficient simply by virtue of its size. With these two effects combined, blockchains which produce blocks quickly are very likely to lead to one mining pool having a large enough percentage of the network hashpower to have de facto control over the mining process.
 
 As described by Sompolinsky and Zohar, GHOST solves the first issue of network security loss by including stale blocks in the calculation of which chain is the "longest"; that is to say, not just the parent and further ancestors of a block, but also the stale descendants of the block's ancestor (in Ethereum jargon, "uncles") are added to the calculation of which block has the largest total proof of work backing it. To solve the second issue of centralization bias, we go beyond the protocol described by Sompolinsky and Zohar, and also provide block rewards to stales: a stale block receives 87.5% of its base reward, and the nephew that includes the stale block receives the remaining 12.5%. Transaction fees, however, are not awarded to uncles.
 
 Ethereum implements a simplified version of GHOST which only goes down one level. Specifically, a stale block can only be included as an uncle by the direct child of one of its direct siblings, and not any block with a more distant relation. This was done for several reasons. First, unlimited GHOST would include too many complications into the calculation of which uncles for a given block are valid. Second, unlimited GHOST with compensation as used in Ethereum removes the incentive for a miner to mine on the main chain and not the chain of a public attacker. Finally, calculations show that single-level GHOST has over 80% of the benefit of unlimited GHOST, and provides a stale rate comparable to the 2.5 minute Litecoin even with a 40-second block time. However, we will be conservative and still retain a Primecoin-like 60-second block time because individual blocks may take a longer time to verify.
 
+### Fees
 
-### Ethereum Client P2P Protocol
-
-**P2P Protocol**
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/minerchart.png)
-
-The Ethereum client P2P protocol is a fairly standard cryptocurrency protocol, and can just as easily be used for any other cryptocurrency; the only modification is the introduction of the GHOST protocol described above. The Ethereum client will be mostly reactive; if not provoked, the only thing the client will do by itself is have the networking daemon maintain connections and periodically send a message asking for blocks whose parent is the current block. However, the client will also be more powerful. Unlike bitcoind, which only stores a limited amount of data about the blockchain, the Ethereum client will also act as a fully functional backend for a block explorer.
-
-When the client reads a message, it will perform the following steps:
-
-1. Hash the data, and check if the data with that hash has already been received. If so, exit.
-2. Determine the data type. If the data is a transaction, if the transaction is valid add it to the local transaction list, process it onto the current block and publish it to the network. If the data item is a message, respond to it. If the data item is a block, go to step 3.
-3. Check if the parent of the block is already stored in the database. If it is not, exit.
-4. Check if the proof of work on the block header and all block headers in the "uncle list" is valid. If any are not, exit.
-5. Check if every block header in the "uncle list" in the block has the block's parent's parent as its own parent. If any is not, exit. Note that uncle block headers do not need to be in the database; they just need to have the correct parent and a valid proof of work. Also, make sure that uncles are unique and distinct from the parent.
-6. Check if the timestamp of the block is at most 15 minutes into the future and that it is ahead of the timestamp of the parent. Check if the difficulty of the block and the block number are correct. If either of these checks fails, exit.
-7. Start with the state of the parent of the block, and sequentially apply every transaction in the block to it. At the end, add the miner rewards. If the root hash of the resulting state tree does not match the state root in the block header, exit. If it does, add the block to the database and advance to the next step.
-8. Determine TD(block) ("total difficulty") for the new block. TD is defined recursively by TD(genesis_block) = 0 and TD(B) = TD(B.parent) + sum([u.difficulty for u in B.uncles]) + B.difficulty. If the new block has higher TD than the current block, set the current block to the new block and continue to the next step. Otherwise, exit.
-9. If the new block was changed, apply all transactions in the transaction list to it, discarding from the transaction list any that turn out to be invalid, and rebroadcast the block and those transactions to the network.
-
-The "current block" is a pointer maintained by each node that refers to the block that the node deems as representing the current official state of the network. All messages asking for balances, contract states, etc, have their responses computed by looking at the current block. If a node is mining, the process is only slightly changed: while doing all of the above, the node also continuously mines on the current block, using its transaction list as the transaction list of the block.
-
-
-### Currency and Issuance
-
-The Ethereum network includes its own built-in currency, ether. The main reason for including a currency in the network is twofold. First, like Bitcoin, ether is rewarded to miners so as to incentivize network security. Second, it serves as a mechanism for paying transaction fees for anti-spam purposes. Of the two main alternatives to fees, per-transaction proof of work similar to [Hashcash](http://en.wikipedia.org/wiki/Hashcash) and zero-fee laissez-faire, the former is wasteful of resources and unfairly punitive against weak computers and smartphones and the latter would lead to the network being almost immediately overwhelmed by an infinitely looping "logic bomb" contract. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate), the denominations will be pre-labelled:
-
-* 1: wei
-* 10^3: lovelace
-* 10^6: babbage
-* 10^9: turing
-* 10^12: szabo
-* 10^15: finney
-* 10^18: ether
-
-This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi" that is intended to be future proof. In the near future, we expect "ether" to be the primary unit in the system, much like the dollar or bitcoin; "finney" will likely be used for microtransactions, "szabo" for per-step fees and "wei" to refer specifically to the lowest-level "base" unit much like the satoshi in Bitcoin. The remaining denominations will likely only come into play if Ethereum grows much larger or computers get much more efficient and it makes sense to use lower units than szabo to measure fees.
-
-The issuance model will be as follows:
-
-* Ether will be released in a fundraiser at the price of 1000-2000 ether per BTC, with earlier funders getting a better price to compensate for the increased uncertainty of participating at an earlier stage. The minimum funding amount will be 0.01 BTC. Suppose that X ether gets released in this way
-* 0.225X ether will be allocated to the fiduciary members and early contributors who substantially participated in the project before the start of the fundraiser. This share will be stored in a time-lock contract; about 40% of it will be spendable after one year, 70% after two years and 100% after 3 years.
-* 0.05X ether will be allocated to a fund to use to pay expenses and rewards in ether between the start of the fundraiser and the launch of the currency
-* 0.225X ether will be allocated as a long-term reserve pool to pay expenses, salaries and rewards in ether after the launch of the currency
-* 0.4X ether will be mined per year forever after that point
-
-
-| Group  | After 1 year | After 5 years
-| ------------- | ------------- |-------------|
-| Currency units  | 1.9X  |  3.5X |
-| Fundraiser participants  | 52.6%  | 28.6% |
-| Fiduciary members and early contributors | 11.8% | 6.42% |
-| Additional pre-launch allocations | 2.63% | 1.42% |
-| Reserve | 11.8% | 6.42% |
-| Miners | 21.1% | 57.1% |
-	 	 
-
-**Long-Term Inflation Rate (percent)**
-
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
-
-_Despite the linear currency issuance, just like with Bitcoin over time the inflation rate nevertheless tends to zero_
-
-
-For example, after five years and assuming no transactions, 28.6% of the ether will be in the hands of the fundraiser participants, 6.42% in the fiduciary member and early contributor pool, 6.42% paid to the reserve pool, and 57.1% will belong to miners. The permanent linear inflation model reduces the risk of what some see as excessive wealth concentration in Bitcoin, and gives individuals living in present and future eras a fair chance to acquire currency units, while at the same time retaining a strong incentive to obtain and hold ether because the inflation "rate" still tends to zero over time (eg. during year 1000001 the money supply would increase from 500001.5 * X to 500002 * X, an inflation rate of 0.0001%). Furthermore, much of the interest in Ethereum will be medium-term; we predict that if Ethereum succeeds it will see the bulk of its growth on a 1-10 year timescale, and supply during that period will be very much limited.
-
-We also theorize that because coins are always lost over time due to carelessness, death, etc, and coin loss can be modeled as a percentage of the total supply per year, that the total currency supply in circulation will in fact eventually stabilize at a value equal to the annual issuance divided by the loss rate (eg. at a loss rate of 1%, once the supply reaches 40X then 0.4X will be mined and 0.4X lost every year, creating an equilibrium).
-
-
-### Data Format
-
-All data in Ethereum will be stored in [recursive length prefix encoding](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP), which serializes arrays of strings of arbitrary length and dimension into strings. For example, ['dog', 'cat'] is serialized (in byte array format) as [ 130, 67, 100, 111, 103, 67, 99, 97, 116]; the general idea is to encode the data type and length in a single byte followed by the actual data (eg. converted into a byte array, 'dog' becomes [ 100, 111, 103 ], so its serialization is [ 67, 100, 111, 103 ]. Note that RLP encoding is, as suggested by the name, recursive; when RLP encoding an array, one is really encoding a string which is the concatenation of the RLP encodings of each of the elements. Additionally, note that block number, timestamp, difficulty, memory deposits, account balances and all values in contract storage are integers, and Patricia tree hashes, root hashes, addresses, transaction list hashes and all keys in contract storage are strings. The main difference between the two is that strings are stored as fixed-length data (20 bytes for addresses, 32 bytes for everything else), and integers take up only as much space as they need. Integers are stored in big-endian base 256 format (eg. 32767 in byte array format as [ 127, 255 ]).
-
-A full block is stored as:
-
-    [
-        block_header,
-        transaction_list,
-        uncle_list 
-    ]
-
-Where:
-
-    transaction_list = [
-        transaction 1,
-        transaction 2,
-        ...
-    ]
-
-    uncle list = [
-        uncle_block_header_1,
-        uncle_block_header_2,
-        ...
-    ]
-
-    block_header = [
-        parent hash,
-        sha3(rlp_encode(uncle_list)),
-        coinbase address,
-        state_root,
-        sha3(rlp_encode(transaction_list)),
-        difficulty,
-        timestamp,
-        extra_data,
-        nonce
-    ]
-
-Each transaction and uncle block header is itself a list. The data for the proof of work is the RLP encoding of the block WITHOUT the nonce. `uncle_list` and `transaction_list` are the lists of the uncle block headers and transactions in the block, respectively. `nonce` and `extra_data` are both limited to a maximum of 32 bytes, except the genesis block where the `extra_data` parameter will be much larger.
-
-The `state_root` is the root of a [Merkle Patricia tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) containing (key, value) pairs for all accounts where each address is represented as a 20-byte binary string. At the address of each account, the value stored in the Merkle Patricia tree is a string which is the RLP-serialized form of an object of the form:
-
-    [ balance, nonce, contract_root ]
-
-The nonce is the number of transactions made from the account, and is incremented every time a transaction is made. The purpose of this is to (1) make each transaction valid only once to prevent replay attacks, and (2) to make it impossible (more precisely, cryptographically infeasible) to construct a contract with the same hash as a pre-existing contract. `balance` refers to the account's balance, denominated in wei. `contract_root` is the root of yet another Patricia tree, containing the contract's memory, if that account is controlled by a contract. If an account is not controlled by a contract, the contract root will simply be the empty string.
-
-### Mining algorithm
-
-One highly desirable property in mining algorithms is resistance to optimization through specialized hardware. Originally, Bitcoin was conceived as a highly democratic currency, allowing anyone to participate in the mining process with a CPU. In 2010, however, much faster miners exploiting the rapid parallelization offered by graphics processing units (GPUs) rapidly took over, increasing network hashpower by a factor of 100 and leaving CPUs essentially in the dust. In 2013, a further category of specialized hardware, application-specific integrated circuits (ASICs) outcompeted the GPUs in turn, achieving another 100x speedup by using chips fabricated for the sole purpose of computing SHA256 hashes. Today, it is virtually impossible to mine without first purchasing a mining device from one of these companies, and some people are concerned that in 5-10 years' time mining will be entirely dominated by large centralized corporations such as AMD and Intel.
-
-To date, the main way of achieving this goal has been "memory-hardness", constructing proof of work algorithms that require not only a large number of computations, but also a large amount of memory, to validate, thereby making highly parallelized specialized hardware implementations less effective. There have been several implementations of memory-hard proof of work, all of which have their flaws:
-
-* **Scrypt** - Scrypt is a function which is designed to take 128 KB of memory [to compute](https://litecoin.info/User:Iddo/Comparison_between_Litecoin_and_Bitcoin#SHA256_mining_vs_scrypt_mining). The algorithm essentially works by filling a memory array with hashes, and then computing intermediate values and finally a result based on the values in the memory array. However, the 128 KB parameter is a very weak threshold, and ASICs for Litecoin are [already under development](https://axablends.com/merchants-accepting-bitcoin/litecoin-discussion/litecoin-scrypt-asic-miners/). Furthermore, there is a natural limit to how much memory hardness with Scrypt can be tweaked up to achieve, as the verification process takes just as much memory, and just as much computation, as one round of the mining process.
-* **Birthday attacks** - the idea behind birthday-based proofs of work is simple: find values xn, i, j such that i < k, j < k and abs(H(data+xn+i) - H(data+xn+j)) < 2^256 / d^2. The d parameter sets the computational difficulty of finding a block, and the k parameter sets the memory hardness. Any birthday algorithm must somehow store all computations of H(data+xn+i) in memory so that future computations can be compared against them. Here, computation is memory-hard, but verification is memory-easy, allowing for extreme memory hardness without compromising the ease of verification. However, the algorithm is problematic for two reasons. First, there is a time-memory tradeoff attack where users 2x less memory can compensate with 2x more computational power, so its memory hardness is not absolute. Second, it may be easy to build specialized hardware devices for the problem, especially once one moves beyond traditional chip and processor architecture and into various classes of hardware-based hash tables or probabilistic analog computing.
-* **Dagger** - the idea behind [Dagger](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Dagger), an in-house algorithm developed by the Ethereum team, is to have an algorithm that is similar to Scrypt, but which is specially designed so that each individual nonce only depends on a small portion of the data tree that gets built up for each group of ~10 million nonces. Computing nonces with any reasonable level of efficiency requires building up the entire tree, taking up over 100 MB of memory, whereas verifying a nonce only takes about 100 KB. However, Dagger-style algorithms are vulnerable to devices that have multiple computational circuits sharing the same memory, and although this threat can be mitigated it is arguably impossible to fully remove.
-
-One of the key ingredients in a standard cryptocurrency is the idea of proof of work. A proof of work, in general, is a function which is hard to compute, but easy to verify, allowing it to serve as a probabilistic cryptographic proof of the quantity of computational resources controlled by a given node. In Bitcoin, and Ethereum, this mechanism is intimately tied in with the blockchain: every block requires a proof of work of some prespecified difficulty level in order to be valid, and in the event of multiple competing blockchains the chain with the largest total quantity of proof of work is considered to be valid. Thus, in order to reverse a transaction, an attacker needs to start a new fork of the blockchain from before the block the transaction was confirmed in, and then apply more computational power than the rest of the network combined in order to overtake the legitimate fork.
-
-However, one of the key requirements for a proof of work algorithm to, well, work is decentralization. If the proof of work algorithm is designed in such a way that the proof of work computation can only be efficiently done by entities with the millions of dollars of capital required to develop specialized hardware, then the number of participants in the process will be small enough that it will be possible for the majority of miners to conspire and reverse transactions. Alternatively, if the proof of work algorithm encourages miners to outsource their block verification work to centralized entities, then that is another way that centralization can creep in, and it would be the mining pools that have the potential to form conspiracies. Ideally, proof of work algorithms should solve both of those problems.
-
-#### Blockchain Based PoW Specification
-
-This mining algorithm is based on Adam Back's Hashcash, also used by Bitcoin. In Hashcash, we take a hash function `H` (assume 256-bit length) which takes as input data and a nonce and a difficulty parameter, and say that a valid nonce is one where `H(data,nonce) < 2^256 / difficulty`. Completing the proof of work essentially entails trying different nonces until one works, and verifying means applying the hash function to the data and nonce provided and making sure that the result is indeed below the target. In Bitcoin, `H` is a simple computation of `sha256(block_header + nonce)`. Here, however, `H` is much more complex, taking in as data not just the block header but also the state data and transactions from the last 16 blocks.
-
-In this early sketch of the mining algorithm, `H` is defined as follows:
-
-1. Let `h[i] = sha3(sha3(block_header) ++ nonce ++ i)` for `1 <= i <= 16`
-2. Let `S` be the blockchain state 16 blocks ago.
-3. Let `C[i]` be the transaction count of the block `i` blocks ago. Let `T[i]` be the `(h[i] mod C[i])`th transaction from the block `i` blocks ago.
-4. Apply `T[0]`, `T[1]` … `T[15]` sequentially to `S`. However, every time the transaction leads to processing a contract, (pseudo-)randomly make minor modifications to the code of all contracts affected.
-5. Let `S'` be the resulting state. Let `r` be the sha3 of the root of `S'`.
-
-#### Properties
-
-1. The algorithm is memory-hard; mining requires the miner to store the full state of the last 16 blocks in order to be able to query the blockchain. However, the algorithm is not sequentially memory-hard and is vulnerable to shared memory optimizations.
-2. The algorithm requires every node to store the entire blockchain state and be able to process transactions. Furthermore, as new blocks are created, it will likely be more efficient to generate the new blockchain state by computing it rather than by asking for and downloading the missing Patricia tree nodes. Hence, there is no reason why a miner would not want to be a full node.
-3. The EVM (Ethereum Virtual Machine) code is Turing-complete. Hence, an ASIC that performs transaction processing vastly more efficiently than existing CPUs would necessarily be a general-purpose computing device vastly more efficient  than existing CPUs. Thus, if you can make an Ethereum ASIC, you can push the entire computing industry forward by about 5 years.
-4. Because every miner must have the full blockchain, there is no equivalent to the Bitcoin mining strategy of only downloading headers from a centralized source. Hence, centralized mining pools offer no benefits over p2pools, and so miners are more likely to use p2pools.
-5. The algorithm is relatively computationally quick to verify, although there is no "nice" verification formula that can be run inside EVM code.
-
-(3) and (4) combined basically mean that this proof of work algorithm provides both forms of decentralization, and (2) helps prevent centralization due to blockchain bloat since it helps ensure that at least miners will store the chain.
-
-In the above given form, the algorithm has several faults. First, due to the Pareto effect, it is likely that over 90% of transactions will use up less than 10% of the blockchain, so a truly full node will not be required to mine. Second, some targeted optimizations involving executing contracts and caching results may be possible. Finally, arguably most importantly, a deep 51% attack becomes possible, where attackers start hundreds of blocks back, produce 16 blocks with transactions optimized for themselves to process quickly (eg. obfuscated loops, weakened trapdoor functions), and then mine much faster than the legitimate chain. For the last two reasons, we expect that very heavy use (perhaps even dominance) of contract corruption/randomization will be necessary in the final version of the algorithm.
-
-### Transactions
-
-A transaction is stored as:
-
-    [ nonce, receiving_address, value, [ data item 0, data item 1 ... data item n ], v, r, s ]
-
-nonce is the number of transactions already sent by that account, encoded in binary form (eg. 0 -> '', 7 -> '\x07', 1000 -> '\x03\xd8'). (v,r,s) is the raw Electrum-style signature of the transaction without the signature made with the private key corresponding to the sending account, with 0 <= v <= 3. From an Electrum-style signature (65 bytes) it is possible to extract the public key, and thereby the address, directly. A valid transaction is one where (i) the signature is well-formed (ie. 0 <= v <= 3, 0 <= r < P, 0 <= s < N, 0 <= r < P - N if v >= 2), and (ii) the sending account has enough funds to pay the fee and the value. A valid block cannot contain an invalid transaction; however, if a contract generates an invalid transaction that transaction will simply have no effect. Transaction fees will be included automatically. If one wishes to voluntarily pay a higher fee, one is always free to do so by constructing a contract which forwards transactions but automatically sends a certain amount or percentage to the miner of the current block.
-
-Transactions sent to the empty string as an address are a special type of transaction, creating a "contract".
-
-
-### Difficulty adjustment
-
-Difficulty is adjusted by the formula:
-
-    D(genesis_block) = 2^36
-    D(block) =
-        if anc(block,1).timestamp >= anc(block,501).timestamp + 60 * 500: D(block.parent) - floor(D(block.parent) / 1000)
-        else:                                                             D(block.parent) + floor(D(block.parent) / 1000)
-
-`anc(block,n)` is the nth generation ancestor of the block; all blocks before the genesis block are assumed to have the same timestamp as the genesis block. This stabilizes around a block time of 60 seconds automatically. The choice of 500 was made in order to balance the concern that for smaller values miners with sufficient hashpower to often produce two blocks in a row would have the incentive to provide an incorrect timestamp to maximize their own reward and the fact that with higher values the difficulty oscillates too much; with the constant of 500, simulations show that a constant hashpower produces a variance of about +/-20%.
-
-### Block Rewards and Limits
-
-A miner receives three kinds of rewards: a static block reward for producing a block, fees from transactions, and nephew/uncle rewards as described in the GHOST section above. The miner will receive 100% of the block reward and transaction fees for themselves. As described in the GHOST section, uncles only receive 87.5% of their block reward, with the remaining 12.5% going to the including nephew; the transaction fees from the stale block do not go to anyone.
-
-The default approach is to have no mandatory fees, allowing miners to include any transactions that they deem profitable to include. This approach has been received very favorably in the Bitcoin community particularly because it is "market-based" - that is, there is a market with miners on one side and transaction senders on the other where supply and demand determine the price. However, the problem with this line of reasoning is that transaction processing is not a market; although it is intuitively attractive to construe transaction processing as a service that the miner is making the effort to offer to transaction senders that needs to be paid for at an agreed-upon rate, in reality every transaction that a single miner includes needs to be processed by every node in the network, so the external costs of transaction processing borne by the network, which has no say in whether or not a transaction takes place, are thousands of times higher than the internal costs borne by the miner.
+Because every transaction published into the blockchain imposes on the network the cost of needing to download and verify it, there is a need for some regulatory mechanism, typically involving transaction fees, to prevent abuse. The default approach, used in Bitcoin, is to have purely voluntary fees, relying on miners to act as the gatekeepers and set dynamic minimums. This approach has been received very favorably in the Bitcoin community particularly because it is "market-based", allowing supply and demand between miners and transaction senders determine the price. The problem with this line of reasoning is, however, that transaction processing is not a market; although it is intuitively attractive to construe transaction processing as a service that the miner is offering to the sender, in reality every transaction that a miner includes will need to be processed by every node in the network, so the vast majority of the cost of transaction processing is borne by third parties and not the miner that is making the decision of whether or not to include it. Hence, tragedy-of-the-commons problems are very likely to occur.
 
 However, as it turns out this flaw in the market-based mechanism, when given a particular inaccurate simplifying assumption, magically cancels itself out. The argument is as follows. Suppose that:
 
-1. The mining block reward is `B`.
-2. A transaction leads to `k` operations, offering the reward `kR` to any miner that includes it where `R` is set by the sender and `k` and `R` are visible to the miner beforehand.
-3. An operation has a processing cost of `C` to any node (ie. all nodes have equal efficiency)
-4. There are `N` mining nodes, each with exactly equal processing power (ie. `1/N` of total)
-5. No non-mining full nodes exist.
+1. A transaction leads to `k` operations, offering the reward `kR` to any miner that includes it where `R` is set by the sender and `k` and `R` are (roughly) visible to the miner beforehand.
+2. An operation has a processing cost of `C` to any node (ie. all nodes have equal efficiency)
+3. There are `N` mining nodes, each with exactly equal processing power (ie. `1/N` of total)
+4. No non-mining full nodes exist.
 
-A miner would be willing to process a transaction if the expected reward is greater than the cost. The expected reward is `kR/N` since the miner has a `1/N` chance of processing the next block. The cost is simply `kC`. Thus, the miner is willing to process transactions where:
+A miner would be willing to process a transaction if the expected reward is greater than the cost. Thus, the expected reward is `kR/N` since the miner has a `1/N` chance of processing the next block, and the processing cost for the miner is simply `kC`. Hence, miners will include transactions where `kR/N > kC`, or `R > NC`. Note that `R` is the per-operation fee provided by the sender, and is thus a lower bound on the benefit that the sender derives from the transaction, and `NC` is the cost to the entire network together of processing an operation. Hence, miners have the incentive to include only those transactions for which the total utilitarian benefit exceeds the cost.
 
-    kR/N > kC
-    kR > kNC
-    R > NC
-
-Note that `R` is the per-operation fee, and `NC` is the cost to the entire network together of processing an operation. Hence, miners have the incentive to include only those transactions for which the total utilitarian benefit exceeds the cost. However, there are three important deviations from those assumptions in reality:
+However, there are several important deviations from those assumptions in reality:
 
 1. The miner does pay a higher cost to process the transaction than the other verifying nodes, since the extra verification time delays block propagation and thus increases the chance the block will become a stale.
 2. There do exist nonmining full nodes.
 3. The mining power distribution may end up radically inegalitarian in practice.
 4. Speculators, political enemies and crazies whose utility function includes causing harm to the network do exist, and they can cleverly set up contracts where their cost is much lower than the cost paid by other verifying nodes.
 
-(1) provides a tendency for the miner to include fewer transactions, and (2) increases `NC`; hence, these two effects at least partially cancel each other out. (3) and (4) are the major issue; to solve them we simply institute a floating cap: no block can have more operations than 150% of the long-term exponential moving average (exact figure subject to change pending further economic analysis).
+(1) provides a tendency for the miner to include fewer transactions, and (2) increases `NC`; hence, these two effects at least partially cancel each other out. (3) and (4) are the major issue; to solve them we simply institute a floating cap: no block can have more operations than `BLK_LIMIT_FACTOR` times the long-term exponential moving average. Specifically:
 
-## Contracts
+    blk.oplimit = floor((blk.parent.oplimit * (EMAFACTOR - 1) + floor(parent.opcount * BLK_LIMIT_FACTOR)) / EMA_FACTOR)
 
-In Ethereum, there are two types of entities that can generate and receive transactions: actual people (or bots, as cryptographic protocols cannot distinguish between the two) and contracts. A contract is essentially an automated agent that lives on the Ethereum network, has an Ethereum address and balance, and can send and receive transactions. A contract is "activated" every time someone sends a transaction to it, at which point it runs its code, perhaps modifying its internal state or even sending some transactions, and then shuts down. The "code" for a contract is written in a special-purpose low-level language consisting of a stack, which is not persistent, 2^256 memory entries, which are also not persistent, and 2^256 storage entries which constitute the contract's permanent state. Note that Ethereum users will not need to code in this low-level stack language; we are providing a simple [C-Like language](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-CLL) with variables, expressions, conditionals, arrays and while loops, and provide a compiler down to Ethereum script code.
+`BLK_LIMIT_FACTOR` and `EMA_FACTOR` are constants that will be set to 65536 and 1.5 for the time being, but will likely be changed after further analysis.
 
-### Applications
+### Computation And Turing-Completeness
 
-Here are some examples of what can be done with Ethereum contracts, with all code examples written in our C-like language. The variables `call.sender`, `call.value`, `call.data` and `call.datasize` are properties of the incoming transaction, `contract.storage`, and `contract.address` of the contract itself, and `block.account_balance`, `block.number`, `block.difficulty`, `block.parenthash`, `block.basefee` and `block.timestamp` properties of the block. `block.basefee` is the "base fee" which all transaction fees in Ethereum are calculated as a multiple of; for more info see the "fees" section below. All variables expressed as capital letters (eg. `A`) are constants, to be replaced by actual values by the contract creator when actually releasing the contract.
+An important note is that the Ethereum virtual machine is Turing-complete; this means that EVM code can encode any computation that can be conceivably carried out, including infinite loops. EVM code allows looping in two ways. First, there is a `JUMP` instruction that allows the program to jump back to a previous spot in the code, and a `JUMPI` instruction to do conditional jumping, allowing for statements like `while x < 27: x = x * 2`. Second, contracts can call other contracts, potentially allowing for looping through recursion. This naturally leads to a problem: can malicious users essentially shut miners and full nodes down by forcing them to enter into an infinite loop? The issue arises because of a problem in computer science known as the halting problem: there is no way to tell, in the general case, whether or not a given program will ever halt.
 
+As described in the state transition section, our solution works by requiring a transaction to set a maximum number of computational steps that it is allowed to take, and if execution takes longer computation is reverted but fees are still paid. Messages work in the same way. To show the motivation behind our solution, consider the following examples:
 
-### Sub-currencies
+* An attacker creates a contract which runs an infinite loop, and then sends a transaction activating that loop to the miner. The miner will process the transaction, running the infinite loop, and wait for it to run out of gas. Even though the execution runs out of gas and stops halfway through, the transaction is still valid and the miner still claims the fee from the attacker for each computational step.
+* An attacker creates a very long infinite loop with the intent of forcing the miner to keep computing for such a long time that by the time computation finishes a few more blocks will have come out and it will not be possible for the miner to include the transaction to claim the fee. However, the attacker will be required to submit a value for `STARTGAS` limiting the number of computational steps that execution can take, so the miner will know ahead of time that the computation will take an excessively large number of steps.
+* An attacker sees a contract with code of some form like `send(A,contract.storage[A]); contract.storage[A] = 0`, and sends a transaction with just enough gas to run the first step but not the second (ie. making a withdrawal but not letting the balance go down). The contract author does not need to worry about protecting against such attacks, because if execution stops halfway through the changes get reverted.
+* A financial contract works by taking the median of nine proprietary data feeds in order to minimize risk. An attacker takes over one of the data feeds, which is designed to be modifiable via the variable-address-call mechanism described in the section on DAOs, and converts it to run an infinite loop, thereby attempting to force any attempts to claim funds from the financial contract to run out of gas. However, the financial contract can set a gas limit on the message to prevent this problem.
 
-Sub-currencies have many applications ranging from currencies representing assets such as USD or gold to company stocks and even currencies with only one unit issued to represent collectibles or smart property. Advanced special-purpose financial protocols sitting on top of Ethereum may also wish to organize themselves with an internal currency. Sub-currencies are surprisingly easy to implement in Ethereum; this section describes a fairly simple contract for doing so.
+The alternative to Turing-completeness is Turing-incompleteness, where `JUMP` and `JUMPI` do not exist and only one copy of each contract is allowed to exist in the call stack at any given time. With this system, the fee system described and the uncertainties around the effectiveness of our solution might not be necessary, as the cost of executing a contract would be bounded above by its size. Additionally, Turing-incompleteness is not even that big a limitation; out of all the contract examples we have conceived internally, so far only one required a loop, and even that loop could be removed by making 26 repetitions of a one-line piece of code. Given the serious implications of Turing-completeness, and the limited benefit, why not simply have a Turing-incomplete language? In reality, however, Turing-incompleteness is far from a neat solution to the problem. To see why, consider the following contracts:
 
-The idea is that if someone wants to send X currency units to account A in currency contract C, they will need to make a transaction of the form `(C, 100 * block.basefee, [A, X])`, and the contract parses the transaction and adjusts balances accordingly. For a transaction to be valid, it must send 100 times the base fee worth of ether to the contract in order to "feed" the contract (as each computational step after the first 16 for any contract costs the contract a small fee and the contract will stop working if its balance drains to zero).
+    C0: call(C1); call(C1);
+    C1: call(C2); call(C2);
+    C2: call(C3); call(C3);
+    ...
+    C49: call(C50); call(C50);
+    C50: (run one step of a program and record the change in storage)
 
-    if tx.value < 100 * block.basefee:
-        stop
-    elif contract.storage[1000]:
-        from = tx.sender
-        to = tx.data[0]
-        value = tx.data[1]
-        if to <= 1000:
-            stop
-        if contract.storage[from] < value:
-            stop
-        contract.storage[from] = contract.storage[from] - value
-        contract.storage[to] = contract.storage[to] + value
-    else:
-        contract.storage[MYCREATOR] = 10^18
-        contract.storage[1000] = 1
+Now, send a transaction to A. Thus, in 51 transactions, we have a contract that takes up 2<sup>50</sup> computational steps. Miners could try to detect such logic bombs ahead of time by maintaining a value alongside each contract specifying the maximum number of computational steps that it can take, and calculating this for contracts calling other contracts recursively, but that would require miners to forbid contracts that create other contracts (since the creation and execution of all 26 contracts above could easily be rolled into a single contract). Another problematic point is that the address field of a message is a variable, so in general it may not even be possible to tell which other contracts a given contract will call ahead of time. Hence, all in all, we have a surprising conclusion: Turing-completeness is surprisingly easy to manage, and the lack of Turing-completeness is equally surprisingly difficult to manage unless the exact same controls are in place - but in that case why not just let the protocol be Turing-complete?
 
+### Currency And Issuance
 
-Ethereum sub-currency developers may also wish to add some other more advanced features:
+The Ethereum network includes its own built-in currency, ether, which serves the dual purpose of providing a primary liquidity layer to allow for efficient exchange between various types of digital assets and, more importantly, of providing a mechanism for paying transaction fees. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate in Bitcoin), the denominations will be pre-labelled:
 
-* Include a mechanism by which people can buy currency units in exchange for ether, perhaps auctioning off a set number of units every day.
-* Allow transaction fees to be paid in the internal currency, and then refund the ether transaction fee to the sender. This solves one major problem that all other "sub-currency" protocols have had to date: the fact that sub-currency users need to maintain a balance of sub-currency units to use and units in the main currency to pay transaction fees in. Here, a new account would need to be "activated" once with ether, but from that point on it would not need to be recharged.
-* Allow for a trust-free decentralized exchange between the currency and ether. Note that trust-free decentralized exchange between any two contracts is theoretically possible in Ethereum even without special support, but special support will allow the process to be done about ten times more cheaply.
+* 1: wei
+* 10<sup>3</sup>: lovelace
+* 10<sup>6</sup>: babbage
+* 10<sup>9</sup>: shannon
+* 10<sup>12</sup>: szabo
+* 10<sup>15</sup>: finney
+* 10<sup>18</sup>: ether
 
+This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi". In the near future, we expect "ether" to be used for ordinary transactions, "finney" for microtransactions and "szabo" and "wei" for technical discussions around fees and protocol implementation; the remaining denominations may become useful later and should not be included in clients at this point.
 
-### Financial derivatives
+The issuance model will be as follows:
 
-The underlying key ingredient of a financial derivative is a data feed to provide the price of a particular asset as expressed in another asset (in Ethereum's case, the second asset will usually be ether). There are many ways to implement a data feed; one method, pioneered by the developers of [Mastercoin](http://mastercoin.org/), is to include the data feed in the blockchain. Here is the code:
+* Ether will be released in a currency sale at the price of 1000-2000 ether per BTC, a mechanism intended to fund the Ethereum organization and pay for development that has been used with success by other platforms such as Mastercoin and NXT. Earlier buyers will benefit from larger discounts.
+* 0.4x the total amount sold will be allocated to the organization to compensate early contributors, pay ETH-denominated expenses before the genesis block and as a long-term reserve [NOT FINALIZED]
+* 0.3x the total amount sold will be allocated to miners per year forever after that point
 
-    if tx.sender != FEEDOWNER:
-        stop
-    contract.storage[data[0]] = data[1]
+| Group  | After 1 year | After 5 years
+| ------------- | ------------- |-------------|
+| Currency units  | 1.7X  |  2.9X |
+| Purchasers  | 58.8%  | 34.4% |
+| Reserve | 29.4% | 17.2% |
+| Miners | 17.6% | 51.7% |
 
-Any other contract will then be able to query index I of data store D by using `block.contract_storage(D)[I]`. A more advanced way to implement a data feed may be to do it off-chain - have the data feed provider sign all values and require anyone attempting to trigger the contract to include the latest signed data, and then use Ethereum's internal scripting functionality to verify the signature. Pretty much any derivative can be made from this, including leveraged trading, options, and even more advanced constructions like collateralized debt obligations (no bailouts here though, so be mindful of black swan risks).
+**Long-Term Supply Growth Rate (percent)**
 
-To show an example, let's make a hedging contract. The basic idea is that the contract is created by party A, who puts up 4000 ether as a deposit. The contract then lies open for any party to accept it by putting in 1000 ether. Say that 1000 ether is worth $25 at the time the contract is made, according to index I of data store D. If party B accepts it, then after 30 days anyone can send a transaction to make the contract process, sending the same dollar value worth of ether (in our example, $25) back to B and the rest to A. B gains the benefit of being completely insulated against currency volatility risk without having to rely on any issuers. The only risk to B is if the value of ether falls by over 80% in 30 days - and even then, if B is online B can simply quickly hop onto another hedging contract. The benefit to A is the implicit 0.2% fee in the contract, and A can hedge against losses by separately holding USD in another location (or, alternatively, A can be an individual who is optimistic about the future of Ethereum and wants to hold ether at 1.25x leverage, in which case the fee may even be in B's favor).
+![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
 
-    if tx.value < 200 * block.basefee:
-        stop
-    if contract.storage[1000] == 0:
-        if tx.value < 1000 * 10^18:
-            stop
-        contract.storage[1000] = 1
-        contract.storage[1001] = 998 * block.contract_storage(D)[I]
-        contract.storage[1002] = block.timestamp + 30 * 86400
-        contract.storage[1003] = tx.sender
-    else:
-        ethervalue = contract.storage[1001] / block.contract_storage(D)[I]
-        if ethervalue >= 5000:
-            mktx(contract.storage[1003],5000 * 10^18,0,0)
-        else if block.timestamp > contract.storage[1002]:
-            mktx(contract.storage[1003],ethervalue * 10^18,0,0)
-            mktx(A,(5000 - ethervalue) * 10^18,0,0)
+_Despite the linear currency issuance, just like with Bitcoin over time the supply growth rate nevertheless tends to zero_
 
-More advanced financial contracts are also possible; complex multi-clause options (eg. "Anyone, hereinafter referred to as X, can claim this contract by putting in 2 USD before Dec 1. X will have a choice on Dec 4 between receiving 1.95 USD on Dec 29 and the right to choose on Dec 11 between 2.20 EUR on Dec 28 and the right to choose on Dec 18 between 1.20 GBP on Dec 30 and paying 1 EUR and getting 3.20 EUR on Dec 29") can be defined simply by storing a state variable just like the contract above but having more clauses in the code, one clause for each possible state. Note that financial contracts of any form do need to be fully collateralized; the Ethereum network controls no enforcement agency and cannot collect debt.
+The permanent linear supply growth model reduces the risk of what some see as excessive wealth concentration in Bitcoin, and gives individuals living in present and future eras a fair chance to acquire currency units, while at the same time retaining a strong incentive to obtain and hold ether because the "supply growth rate" as a percentage still tends to zero over time. We also theorize that because coins are always lost over time due to carelessness, death, etc, and coin loss can be modeled as a percentage of the total supply per year, that the total currency supply in circulation will in fact eventually stabilize at a value equal to the annual issuance divided by the loss rate (eg. at a loss rate of 1%, once the supply reaches 30X then 0.3X will be mined and 0.3X lost every year, creating an equilibrium).
 
+### Mining Centralization
 
-### Identity and Reputation Systems
+The Bitcoin mining algorithm basically works by having miners compute SHA256 on slightly modified versions of the block header millions of times over and over again, until eventually one node comes up with a version whose hash is less than the target (currently around 2<sup>192</sup>). However, this mining algorithm is vulnerable to two forms of centralization. First, the mining ecosystem has come to be dominated by ASICs (application-specific integrated circuits), computer chips designed for, and therefore thousands of times more efficient at, the specific task of Bitcoin mining. This means that Bitcoin mining is no longer a highly decentralized and egalitarian pursuit, requiring millions of dollars of capital to effectively participate in. Second, most Bitcoin miners do not actually perform block validation locally; instead, they rely on a centralized mining pool to provide the block headers. This problem is arguably worse: as of the time of this writing, the top three mining pools indirectly control roughly 50% of processing power in the Bitcoin network, although this is mitigated by the fact that miners can switch to other mining pools if a pool or coalition attempts a 51% attack.
 
-The earliest alternative cryptocurrency of all, [Namecoin](http://namecoin.org/), attempted to use a Bitcoin-like blockchain to provide a name registration system, where users can register their names in a public database alongside other data. The major cited use case is for a [DNS](http://en.wikipedia.org/wiki/Domain_Name_System) system, mapping domain names like "bitcoin.org" (or, in Namecoin's case, "bitcoin.bit") to an IP address. Other use cases include email authentication and potentially more advanced reputation systems. Here is a simple contract to provide a Namecoin-like name registration system on Ethereum:
+The current intent at Ethereum is to use a mining algorithm where miners are required to fetch random data from the state, compute some randomly selected transactions from the last N blocks in the blockchain, and return the hash of the result. This has two important benefits. First, Ethereum contracts can include any kind of computation, so an Ethereum ASIC would essentially be an ASIC for general computation - ie. a better CPU. Second, mining requires access to the entire blockchain, forcing miners to store the entire blockchain and at least be capable of verifying every transaction. This removes the need for centralized mining pools; although mining pools can still serve the legitimate role of evening out the randomness of reward distribution, this function can be served equally well by peer-to-peer pools with no central control.
 
-    if tx.value < block.basefee * 200:
-        stop
-    if contract.storage[tx.data[0]] or tx.data[0] < 100:
-        stop
-    contract.storage[tx.data[0]] = tx.data[1]
+This model is untested, and there may be difficulties along the way in avoiding certain clever optimizations when using contract execution as a mining algorithm. However, one notably interesting feature of this algorithm is that it allows anyone to "poison the well", by introducing a large number of contracts into the blockchain specifically designed to stymie certain ASICs. The economic incentives exist for ASIC manufacturers to use such a trick to attack each other. Thus, the solution that we are developing is ultimately an adaptive economic human solution rather than purely a technical one.
 
-One can easily add more complexity to allow users to change mappings, automatically send transactions to the contract and have them forwarded, and even add reputation and web-of-trust mechanics.
+### Scalability
 
+One common concern about Ethereum is the issue of scalability. Like Bitcoin, Ethereum suffers from the flaw that every transaction needs to be processed by every node in the network. With Bitcoin, the size of the current blockchain rests at about 15 GB, growing by about 1 MB per hour. If the Bitcoin network were to process Visa's 2000 transactions per second, it would grow by 1 MB per three seconds (1 GB per hour, 8 TB per year). Ethereum is likely to suffer a similar growth pattern, worsened by the fact that there will be many applications on top of the Ethereum blockchain instead of just a currency as is the case with Bitcoin, but ameliorated by the fact that Ethereum full nodes need to store just the state instead of the entire blockchain history.
 
-### Decentralized Autonomous Organizations
+The problem with such a large blockchain size is centralization risk. If the blockchain size increases to, say, 100 TB, then the likely scenario would be that only a very small number of large businesses would run full nodes, with all regular users using light SPV nodes. In such a situation, there arises the potential concern that the full nodes could band together and all agree to cheat in some profitable fashion (eg. change the block reward, give themselves BTC). Light nodes would have no way of detecting this immediately. Of course, at least one honest full node would likely exist, and after a few hours information about the fraud would trickle out through channels like Reddit, but at that point it would be too late: it would be up to the ordinary users to organize an effort to blacklist the given blocks, a massive and likely infeasible coordination problem on a similar scale as that of pulling off a successful 51% attack. In the case of Bitcoin, this is currently a problem, but there exists a blockchain modification [suggested by Peter Todd](http://sourceforge.net/p/bitcoin/mailman/message/31709140/) which will alleviate this issue.
 
-The general concept of a "decentralized autonomous organization" is that of a virtual entity that has a certain set of members or shareholders which, perhaps with a 67% majority, have the right to spend the entity's funds and modify its code. The members would collectively decide on how the organization should allocate its funds. Methods for allocating a DAO's funds could range from bounties, salaries to even more exotic mechanisms such as an internal currency to reward work. This essentially replicates the legal trappings of a traditional company or nonprofit but using only cryptographic blockchain technology for enforcement. So far much of the talk around DAOs has been around the "capitalist" model of a "decentralized autonomous corporation" (DAC) with dividend-receiving shareholders and tradable shares; an alternative, perhaps described as a "decentralized autonomous community", would have all members have an equal share in the decision making and require 67% of existing members to agree to add or remove a member. The requirement that one person can only have one membership would then need to be enforced collectively by the group.
+In the near term, Ethereum will use two additional strategies to cope with this problem. First, because of the blockchain-based mining algorithms, at least every miner will be forced to be a full node, creating a lower bound on the number of full nodes. Second and more importantly, however, we will include an intermediate state tree root in the blockchain after processing each transaction. Even if block validation is centralized, as long as one honest verifying node exists, the centralization problem can be circumvented via a verification protocol. If a miner publishes an invalid block, that block must either be badly formatted, or the state `S[n]` is incorrect. Since `S[0]` is known to be correct, there must be some first state `S[i]` that is incorrect where `S[i-1]` is correct. The verifying node would provide the index `i`, along with a "proof of invalidity" consisting of the subset of Patricia tree nodes needing to process `APPLY(S[i-1],TX[i]) -> S[i]`. Nodes would be able to use those nodes to run that part of the computation, and see that the `S[i]` generated does not match the `S[i]` provided.
 
-Some "skeleton code" for a DAO might look as follows.
-
-There are three transaction types:
-
-* [0,k] to register a vote in favor of a code change
-* [1,k,L,v0,v1...vn] to register a code change at code k in favor of setting memory starting from location L to v0, v1 ... vn
-* [2,k] to finalize a given code change
-
-Note that the design relies on the randomness of addresses and hashes for data integrity; the contract will likely get corrupted in some fashion after about 2^128 uses, but that is acceptable since nothing close to that volume of usage will exist in the foreseeable future. 2^255 is used as a magic number to store the total number of members, and a membership is stored with a 1 at the member's address. The last three lines of the contract are there to add C as the first member; from there, it will be C's responsibility to use the democratic code change protocol to add a few other members and code to bootstrap the organization.
-
-    if tx.value < tx.basefee * 200:
-        stop
-    if contract.storage[tx.sender] == 0:
-        stop
-    k = sha3(32,tx.data[1])
-    if tx.data[0] == 0:
-        if contract.storage[k + tx.sender] == 0:
-            contract.storage[k + tx.sender] = 1
-            contract.storage[k] += 1
-    else if tx.data[0] == 1:
-        if tx.value <= tx.datan * block.basefee * 200 or contract.storage[k]:
-            stop
-        i = 2
-        while i < tx.datan:
-            contract.storage[k + i] = tx.data[i]
-            i = i + 1
-        contract.storage[k] = 1
-        contract.storage[k+1] = tx.datan
-    else if tx.data[0] == 2:
-        if contract.storage[k] >= contract.storage[2 ^ 255] * 2 / 3:
-            if tx.value <= tx.datan * block.basefee * 200:
-                stop
-            i = 3
-            L = contract.storage[k+1]
-            loc = contract.storage[k+2]
-            while i < L:
-                contract.storage[loc+i-3] = tx.data[i]
-                i = i + 1
-    if contract.storage[2 ^ 255 + 1] == 0:
-        contract.storage[2 ^ 255 + 1] = 1
-        contract.storage[C] = 1
-
-This implements the "egalitarian" DAO model where members have equal shares. One can easily extend it to a shareholder model by also storing how many shares each owner holds and providing a simple way to transfer shares.
-
-DAOs and DACs have already been the topic of a large amount of interest among cryptocurrency users as a future form of economic organization, and we are very excited about the potential that DAOs can offer. In the long term, the Ethereum fund itself intends to transition into being a fully self-sustaining DAO.
-
-
-### Further Applications
-
-1. **Savings wallets**. Suppose that Alice wants to keep her funds safe, but is worried that she will lose or someone will hack her private key. She puts ether into a contract with Bob, a bank, as follows: Alice alone can withdraw a maximum of 1% of the funds per day, Alice and Bob together can withdraw everything, and Bob alone can withdraw a maximum of 0.05% of the funds. Normally, 1% per day is enough for Alice, and if Alice wants to withdraw more she can contact Bob for help. If Alice's key gets hacked, she runs to Bob to move the funds to a new contract. If she loses her key, Bob will get the funds out eventually. If Bob turns out to be malicious, she can still withdraw 20 times faster than he can.
-
-2. **Crop insurance**. One can easily make a financial derivatives contract but using a data feed of the weather instead of any price index. If a farmer in Iowa purchases a derivative that pays out inversely based on the precipitation in Iowa, then if there is a drought, the farmer will automatically receive money and if there is enough rain the farmer will be happy because their crops would do well.
-
-3. **A decentralized (non-centrally managed) data feed**, using proof-of-stake voting to give an average (or more likely, median) of everyone's opinion on the price of a commodity, the weather or any other relevant data.
-
-4. **Smart multisignature escrow**. Bitcoin allows multisignature transaction contracts where, for example, three out of a given five keys can spend the funds. Ethereum allows for more granularity; for example, four out of five can spend everything, three out of five can spend up to 10% per day, and two out of five can spend up to 0.5% per day. Additionally, Ethereum multisig is asynchronous - two parties can register their signatures on the blockchain at different times and the last signature will automatically send the transaction.
-
-5. **Peer-to-peer gambling**. Any number of peer-to-peer gambling protocols, such as Frank Stajano and Richard Clayton's [Cyberdice](http://www.cl.cam.ac.uk/~fms27/papers/2008-StajanoCla-cyberdice.pdf), can be implemented on the Ethereum blockchain. The simplest gambling protocol is actually simply a contract for difference on the next block hash. From there, entire gambling services such as SatoshiDice can be replicated on the blockchain either by creating a unique contract per bet or by using a quasi-centralized contract.
-
-6. A full-scale **on-chain stock market**. Prediction markets are also easy to implement as a trivial consequence.
-
-7. An **on-chain decentralized marketplace**, using the identity and reputation system as a base.
-
-8. **Decentralized Dropbox**. One setup is to encrypt a file, build a Merkle tree out of it, put the Merkle root into a contract alongside a certain quantity of ether, and distribute the file across some secondary network. Every day, the contract would randomly select a branch of the Merkle tree depending on the block hash, and give X ether to the first node to provide that branch to the contract, thereby encouraging nodes to store the data for the long term in an attempt to earn the prize. If one wants to download any portion of the file, one can use a [micropayment-channel](https://bitcointalk.org/index.php?topic=244656.0)-style contract to download the file from a few nodes a block at a time.
-
-
-### How do contracts work?
-
-A contract making transaction is encoded as follows:
-
-    [
-        nonce,
-        '',
-        value,
-        [
-            data item 0,
-            data item 1,
-            ...
-        ],
-        v,
-        r,
-        s
-    ]
-
-
-The data items will, in most cases, be script codes (more on this below). Contract creation transaction validation happens as follows:
-
-Deserialize the transaction, and extract its sending address from its signature.
-Calculate the transaction's fee as NEWCONTRACTFEE plus storage fees for the code. Check that the balance of the creator is at least the transaction value plus the fee. If not, exit.
-Take the last 20 bytes of the sha3 hash of the RLP encoding of the transaction making the contract. If an account with that address already exists, exit. Otherwise, create the contract at that address
-Copy data item i to storage slot i in the contract for all i in [0 ... n-1] where n is the number of data items in the transaction, and initialize the contract with the transaction's value as its value. Subtract the value and fee from the creator's balance.
-
-
-### Language Specification
-
-The contract scripting language is a hybrid of assembly language and Bitcoin's stack-based language, maintaining an index pointer that usually increments by one after every operation and continuously processing the operation found at the current index pointer. All opcodes are numbers in the range [0 ... 63]; labels further in this description such as STOP, EXTRO and BALANCE refer to specific values and are defined further below. The scripting language has access to three kinds of memory:
-
-* **Stack** - a form of temporary storage that is reset to an empty list every time a contract is executed. Operations typically add and remove values to and from the top of the stack, so the total length of the stack will shrink and grow over the course of the program's execution.
-* **Memory** - a temporary key/value store that is reset to containing all zeroes every time a contract is executed. Keys and values in memory are integers in the range [0 ... 2^256-1]
-* **Storage** - a persistent key/value store that is initially set to contain all zeroes, except for some script code inserted at the beginning when the contract is created as described above. Keys and values in storage are integers in the range [0 ... 2^256-1]
-
-Whenever a transaction is sent to a contract, the contract executes its scripting code. The precise steps that happen when a contract receives a transaction are as follows:
-
-**Contract Script Interpretation **
-
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/flowchart.png)
-
-1. The contract's ether balance increases by the amount sent
-2. The index pointer is set to zero, and STEPCOUNT = 0
-3. Repeat forever:
-
-* if the command at the index pointer is STOP, invalid or greater than 63, exit from the loop
-* set MINERFEE = 0, VOIDFEE = 0
-* set STEPCOUNT <- STEPCOUNT + 1
-* if STEPCOUNT > 16, set MINERFEE <- MINERFEE + STEPFEE
-* see if the command is LOAD or STORE. If so, set MINERFEE <- MINERFEE + DATAFEE
-* see if the command will modify a storage field, say modifying KEY from OLDVALUE to NEWVALUE. Let F(K,V) be 0 if V == 0 else (len(K) + len(V)) * STORAGEFEE in bytes. Set VOIDFEE <- VOIDFEE - F(KEY,OLDVALUE) + F(KEY,NEWVALUE). Computing len(K) ignores leading zero bytes.
-* see if the command is EXTRO or BALANCE. If so, set MINERFEE <- MINERFEE + EXTROFEE
-* see if the command is a crypto operation. If so, set MINERFEE <- MINERFEE + CRYPTOFEE
-* if MINERFEE + VOIDFEE > CONTRACT.BALANCE, HALT and exit from the loop
-* subtract MINERFEE from the contract's balance and add MINERFEE to a running counter that will be added to the miner's balance once all transactions are parsed.
-* set DELTA = max(-CONTRACT.STORAGE_DEPOSIT,VOIDFEE) and CONTRACT.BALANCE <- CONTRACT.BALANCE - DELTA and CONTRACT.STORAGE_DEPOSIT <- CONTRACT.STORAGE_DEPOSIT + DELTA. Note that DELTA can be positive or negative; the only restriction is that the contract's deposit cannot go below zero.
-* run the command
-* if the command did not exit with an error, update the index pointer and return to the start of the loop. If the contract did exit with an error, break out of the loop. Note that a contract exiting with an error does not make the transaction or the block invalid; it simply means that the contract execution halts midway through.
-
-In the following descriptions, S[-1], S[-2], etc represent the topmost, second topmost, etc items on the stack. The individual opcodes are defined as follows:
-
-* (0) STOP - halts execution
-* (1) ADD - pops two items and pushes S[-2] + S[-1] mod 2^256
-* (2) MUL - pops two items and pushes S[-2] * S[-1] mod 2^256
-* (3) SUB - pops two items and pushes S[-2] - S[-1] mod 2^256
-* (4) DIV - pops two items and pushes floor(S[-2] / S[-1]). If S[-1] = 0, halts execution.
-* (5) SDIV - pops two items and pushes floor(S[-2] / S[-1]), but treating values above 2^255 - 1 as negative (ie. x -> 2^256 - x). If S[-1] = 0, halts execution.
-* (6) MOD - pops two items and pushes S[-2] mod S[-1]. If S[-1] = 0, halts execution.
-* (7) SMOD - pops two items and pushes S[-2] mod S[-1], but treating values above 2^255 - 1 as negative (ie. x -> 2^256 - x). If S[-1] = 0, halts execution.
-* (8) EXP - pops two items and pushes S[-2] ^ S[-1] mod 2^256
-* (9) NEG - pops one item and pushes 2^256 - S[-1]
-* (10) LT - pops two items and pushes 1 if S[-2] < S[-1] else 0
-* (11) LE - pops two items and pushes 1 if S[-2] <= S[-1] else 0
-* (12) GT - pops two items and pushes 1 if S[-2] > S[-1] else 0
-* (13) GE - pops two items and pushes 1 if S[-2] >= S[-1] else 0
-* (14) EQ - pops two items and pushes 1 if S[-2] == S[-1] else 0
-* (15) NOT - pops one item and pushes 1 if S[-1] == 0 else 0
-* (16) MYADDRESS - pushes the contract's address as a number
-* (17) TXSENDER - pushes the transaction sender's address as a number
-* (18) TXVALUE - pushes the transaction value
-* (19) TXDATAN - pushes the number of data items
-* (20) TXDATA - pops one item and pushes data item S[-1], or zero if index out of range
-* (21) BLK_PREVHASH - pushes the hash of the previous block (NOT the current one since that's impossible!)
-* (22) BLK_COINBASE - pushes the coinbase of the current block
-* (23) BLK_TIMESTAMP - pushes the timestamp of the current block
-* (24) BLK_NUMBER - pushes the current block number
-* (25) BLK_DIFFICULTY - pushes the difficulty of the current block
-* (26) BLK_NONCE - pushes the nonce of the current block
-* (27) BASEFEE - pushes the base fee (x as defined in the fee section below)
-* (32) SHA256 - pops two items, and then constructs a string by taking the ceil(S[-1] / 32) items in memory from index S[-2] to (S[-2] + ceil(S[-1] / 32) - 1) mod 2^256, prepending zero bytes to each one if necessary to get them to 32 bytes, and takes the last S[-1] bytes. Pushes the SHA256 hash of the string
-* (33) RIPEMD160 - works just like SHA256 but with the RIPEMD-160 hash
-* (34) ECMUL - pops three items. If (S[-2],S[-1]) are a valid point in secp256k1, including both coordinates being less than P, pushes (S[-2],S[-1]) * S[-3], using (0,0) as the point at infinity. Otherwise, pushes (2^256 - 1, 2^256 - 1). Note that there are no restrictions on S[-3]
-* (35) ECADD - pops four items and pushes (S[-4],S[-3]) + (S[-2],S[-1]) if both points are valid, otherwise (2^256 - 1,2^256 - 1)
-* (36) ECSIGN - pops two items and pushes (v,r,s) as the Electrum-style RFC6979 deterministic signature of message hash S[-1] with private key S[-2] mod N with 0 <= v <= 3
-* (37) ECRECOVER - pops four items and pushes (x,y) as the public key from the signature (S[-3],S[-2],S[-1]) of message hash S[-4]. If the signature has invalid v,r,s values (ie. v not in [27,28], r not in [0,P], s not in [0,N]), return (2^256 - 1,2^256 - 1)
-* (38) ECVALID - pops two items and pushes 1 if (S[-2],S[-1]) is a valid secp256k1 point (including (0,0)) else 0
-* (39) SHA3 - works just like SHA256 but with the SHA3 hash, 256 bit version
-* (48) PUSH - pushes the item in memory at the index pointer + 1, and advances the index pointer by 2.
-* (49) POP - pops one item.
-* (50) DUP - pushes S[-1] to the stack.
-* (51) SWAP - pops two items and pushes S[-1] then S[-2]
-* (52) MLOAD - pops two items and sets the item in memory at index S[-1] to S[-2]
-* (53) MSTORE - pops two items and sets the item in memory at index S[-1] to S[-2]
-* (54) SLOAD - pops two items and sets the item in storage at index S[-1] to S[-2]
-* (55) SSTORE - pops two items and sets the item in storage at index S[-1] to S[-2]
-* (56) JMP - pops one item and sets the index pointer to S[-1]
-* (57) JMPI - pops two items and sets the index pointer to S[-2] only if S[-1] is nonzero
-* (58) IND - pushes the index pointer
-* (59) EXTRO - pops two items and pushes memory index S[-2] of contract S[-1]
-* (60) BALANCE - pops one item and pushes balance of the account with that address, or zero if the address is invalid
-* (61) MKTX - pops four items and initializes a transaction to send S[-2] ether to S[-1] with S[-3] data items. Takes items in memory from index S[-4] to index (S[-4] + S[-3] - 1) mod 2^256 as the transaction's data items.
-* (63) SUICIDE - pops one item, destroys the contract and clears all storage, sending the entire balance plus the contract deposit to the account at S[-1]
-
-
-As mentioned above, the intent is not for people to write scripts directly in Ethereum script code; rather, we will release compilers to generate ES from higher-level languages. The first supported language will likely be the simple [C-like language](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-CLL) used in the descriptions above, and the second will be a more complete first-class-function language with support for arrays and arbitrary-length strings. Compiling the C-like language is fairly simple as far as compilers go: variables can be assigned a memory index, and compiling an arithmetic expression essentially involves converting it to reverse Polish notation (eg. `(3 + 5) * (x + y)` -> `PUSH 3 PUSH 5 ADD PUSH 0 MLOAD PUSH 1 MLOAD ADD MUL`). First-class function languages are more involved due to variable scoping, but the problem is nevertheless tractable. The likely solution will be to maintain a linked list of stack frames in memory, giving each stack frame N memory slots where N is the total number of distinct variable names in the program. Variable access will consist of searching down the stack frame list until one frame contains a pointer to the variable, copying the pointer to the top stack frame for memoization purposes, and returning the value at the pointer. However, these are longer term concerns; compilation is separate from the actual protocol, and so it will be possible to continue to research compilation strategies long after the network is set running.
-
-
-## Fees
-
-In Bitcoin, there are no mandatory transaction fees. Transactions can optionally include fees which are paid to miners, and it is up to the miners to decide what fees they are willing to accept. In Bitcoin, such a mechanism is already imperfect; the need for a 1 MB block size limit alongside the fee mechanism shows this all too well. In Ethereum, because of its Turing-completeness, a purely voluntary fee system would be catastrophic. Instead, Ethereum will have a system of mandatory fees, including a transaction fee and six fees for contract computations. The fees are currently set to:
-
-* TXFEE (100x) - fee for sending a transaction
-* NEWCONTRACTFEE (100x) - fee for creating a new contract, not including the storage fee for each item in script code
-* STEPFEE (1x) - fee for every computational step after the first sixteen in contract execution
-* STORAGEFEE (5x) - per-byte fee for adding to contract storage. The storage fee is the only fee that is not paid to a miner, and is refunded when storage used by a contract is reduced or removed.
-* DATAFEE (20x) - fee for accessing or setting a contract's memory from inside that contract
-* EXTROFEE (40x) - fee for accessing memory from another contract inside a contract
-* CRYPTOFEE (20x) - fee for using any of the cryptographic operations
-
-
-The coefficients will be revised as more hard data on the relative computational cost of each operation becomes available. The hardest part will be setting the value of x. There are currently two main solutions that we are considering:
-
-* Make x inversely proportional to the square root of the difficulty, so x = floor(10^21 / floor(difficulty ^ 0.5)). This automatically adjusts fees down as the value of ether goes up, and adjusts fees down as computers get more powerful due to Moore's Law.
-* Use proof of stake voting to determine the fees. In theory, stakeholders do not benefit directly from fees going up or down, so their incentives would be to make the decision that would maximize the value of the network.
-
-A hybrid solution is also possible, using proof of stake voting, but with the inverse square root mechanism as an initial policy.
-
+Another, more sophisticated, attack would involve the malicious miners publishing incomplete blocks, so the full information does not even exist to determine whether or not blocks are valid. The solution to this is a challenge-response protocol: verification nodes issue "challenges" in the form of target transaction indices, and upon receiving a node a light node treats the block as untrusted until another node, whether the miner or another verifier, provides a subset of Patricia nodes as a proof of validity.
 
 ## Conclusion
 
-The Ethereum protocol's design philosophy is in many ways the opposite from that taken by many other cryptocurrencies today. Other cryptocurrencies aim to add complexity and increase the number of "features"; Ethereum, on the other hand, takes features away. The protocol does not "support" multisignature transactions, multiple inputs and outputs, hash codes, lock times or many other features that even Bitcoin provides. Instead, all complexity comes from a universal, Turing-complete scripting language, which can be used to build up literally any feature that is mathematically describable through the contract mechanism. As a result, we have a protocol with unique potential; rather than being a closed-ended, single-purpose protocol intended for a specific array of applications in data storage, gambling or finance, Ethereum is open-ended by design, and we believe that it is extremely well-suited to serving as a foundational layer for a very large number of both financial and non-financial protocols in the years to come.
+The Ethereum protocol was originally conceived as an upgraded version of a cryptocurrency, providing advanced features such as on-blockchain escrow, withdrawal limits, financial contracts, gambling markets and the like via a highly generalized programming language. The Ethereum protocol would not "support" any of the applications directly, but the existence of a Turing-complete programming language means that arbitrary contracts can theoretically be created for any transaction type or application. What is more interesting about Ethereum, however, is that the Ethereum protocol moves far beyond just currency. Protocols around decentralized file storage, decentralized computation and decentralized prediction markets, among dozens of other such concepts, have the potential to substantially increase the efficiency of the computational industry, and provide a massive boost to other peer-to-peer protocols by adding for the first time an economic layer. Finally, there is also a substantial array of applications that have nothing to do with money at all.
 
+The concept of an arbitrary state transition function as implemented by the Ethereum protocol provides for a platform with unique potential; rather than being a closed-ended, single-purpose protocol intended for a specific array of applications in data storage, gambling or finance, Ethereum is open-ended by design, and we believe that it is extremely well-suited to serving as a foundational layer for a very large number of both financial and non-financial protocols in the years to come.
 
-## References and Further Reading
+## Notes and Further Reading
 
-1. Colored coins whitepaper: https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit
-2. Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec
-3. Decentralized autonomous corporations, Bitcoin Magazine: http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/
-4. Smart property: https://en.bitcoin.it/wiki/Smart_Property
-5. Smart contracts: https://en.bitcoin.it/wiki/Contracts
-6. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification
-7. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree
-8. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree
-9. Bitcoin whitepaper: http://bitcoin.org/bitcoin.pdf
-10. GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf
-11. StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html
-12. Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y
-13. Ethereum RLP: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP
-14. Ethereum Merkle Patricia trees: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree
-15. Ethereum Dagger: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Dagger
-16. Ethereum C-like language: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-CLL
-17. Ethereum Slasher: http://blog.ethereum.org/?p=39/slasher-a-punitive-proof-of-stake-algorithm
-18. Scrypt parameters: https://litecoin.info/User:Iddo/ComparisonbetweenLitecoinandBitcoin#SHA256miningvsscryptmining
-19. Litecoin ASICs: https://axablends.com/merchants-accepting-bitcoin/litecoin-discussion/litecoin-scrypt-asic-miners/
+#### Notes
+
+1. A sophisticated reader may notice that in fact a Bitcoin address is the hash of the elliptic curve public key, and not the public key itself. However, it is in fact perfectly legitimate cryptographic terminology to refer to the pubkey hash as a public key itself. This is because Bitcoin's cryptography can be considered to be a custom digital signature algorithm, where the public key consists of the hash of the ECC pubkey, the signature consists of the ECC pubkey concatenated with the ECC signature, and the verification algorithm involves checking the ECC pubkey in the signature against the ECC pubkey hash provided as a public key and then verifying the ECC signature against the ECC pubkey.
+2. Technically, the median of the 11 previous blocks.
+3. Internally, 2 and "CHARLIE" are both numbers, with the latter being in big-endian base 256 representation. Numbers can be at least 0 and at most 2<sup>256</sup>-1.
+
+#### Further Reading
+
+1. Intrinsic value: http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/
+2. Smart property: https://en.bitcoin.it/wiki/Smart_Property
+3. Smart contracts: https://en.bitcoin.it/wiki/Contracts
+4. B-money: http://www.weidai.com/bmoney.txt
+5. Reusable proofs of work: http://www.finney.org/~hal/rpow/ 
+6. Secure property titles with owner authority: http://szabo.best.vwh.net/securetitle.html
+7. Bitcoin whitepaper: http://bitcoin.org/bitcoin.pdf
+8. Namecoin: https://namecoin.org/
+9. Zooko's triangle: http://en.wikipedia.org/wiki/Zooko's_triangle
+10. Colored coins whitepaper: https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit
+11. Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec
+12. Decentralized autonomous corporations, Bitcoin Magazine: http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/
+13. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification
+14. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree
+15. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree
+16. GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf
+17. StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html
+18. Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y
+19. Ethereum RLP: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP
+20. Ethereum Merkle Patricia trees: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree
+21. Peter Todd on Merkle sum trees: http://sourceforge.net/p/bitcoin/mailman/message/31709140/
