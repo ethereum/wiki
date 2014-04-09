@@ -13,6 +13,8 @@ Commonly cited applications include using on-blockchain digital assets to repres
     * [Alternative Blockchain Applications](#alternative-blockchain-applications)
     * [Scripting](#scripting)
 * [Ethereum](#ethereum)
+    * [Ethereum Accounts](#ethereum-accounts)
+    * [Messages and Transactions](#messages-and-transactions)
     * [Ethereum State Transition Function](#ethereum-state-transition-function)
     * [Code Execution](#code-execution)
     * [Blockchain and Mining](#blockchain-and-mining)
@@ -140,7 +142,7 @@ Thus, we see three approaches to building advanced applications on top of crypto
 
 The intent of Ethereum is to merge together and improve upon the concepts of scripting, altcoins and on-chain meta-protocols, and allow developers to create arbitrary consensus-based applications that have the scalability, standardization, feature-completeness, ease of development and interoperability offered by these different paradigms all at the same time. Ethereum does this by building what is essentially the ultimate abstract foundational layer: a blockchain with a built-in Turing-complete programming language, allowing anyone to write smart contracts and decentralized applications where they can create their own arbitrary rules for ownership, transaction formats and state transition functions. A bare-bones version of Namecoin can be written in two lines of code, and other protocols like currencies and reputation systems can be built in under twenty. Smart contracts, cryptographic "boxes" that contain value and only unlock it if certain conditions are made, can also be built on top of our platform, with vastly more power than that offered by Bitcoin scripting because of the added powers of Turing-completeness, value-awareness, blockchain-awareness and state.
 
-## Ethereum Accounts, Messages and Transactions
+### Ethereum Accounts
 
 In Ethereum, the state is made up of objects called "accounts", with each account having a 20-byte address and state transitions being direct transfers of value and information between accounts. An Ethereum account contains four fields:
 
@@ -151,11 +153,11 @@ In Ethereum, the state is made up of objects called "accounts", with each accoun
 
 "Ether" is the main internal crypto-fuel of Ethereum, and is used to pay transaction fees. In general, there are two types of accounts: externally owned accounts, controlled by private keys, and contract accounts, controlled by their contract code. An externally owned account has no code, and one can send messages from an externally owned account by creating and signing a transaction; in a contract account, every time the contract account receives a message its code activates, allowing it to read and write to internal storage and send other messages or create contracts in turn.
 
+### Messages and Transactions
+
 "Messages" in Ethereum are defined as transfers of value from one account to another with data attached; the main difference between an Ethereum message and a Bitcoin transaction, aside from the explicit data field, is that Ethereum messages can be created either by external entities or contracts whereas Bitcoin transactions can only be created externally. Another feature of Ethereum messages is that the recipient, if it is a contract account, has the option to return a response; this means that Ethereum messages also encompass the concept of functions.
 
-A "transaction" is defined as the signed data package that stores a messages to be sent from an eternally owned account. Transactions contain the recipient of the message, a signature identifying the sender, the amount of ether and the data to send, as well as two values called `STARTGAS` and `GASPRICE`. In order to prevent exponential blowup and infinite loops in code, each transaction is required to set a limit to how many computational steps of code execution it can spawn. `STARTGAS` is this limit, and `GASPRICE` is the fee to pay to the miner per computational step. If transaction execution "runs out of gas", all state changes revert - except for the payment of the fees, and if transaction execution halts with some gas remaining then the remaining portion of the fees is refunded to the sender.
-
-There is also a separate transaction type, and corresponding message type, for creating a contract; the address of a contract is calculated based on the hash of the account nonce and transaction data.
+A "transaction" is defined as the signed data package that stores a messages to be sent from an eternally owned account. Transactions contain the recipient of the message, a signature identifying the sender, the amount of ether and the data to send, as well as two values called `STARTGAS` and `GASPRICE`. In order to prevent exponential blowup and infinite loops in code, each transaction is required to set a limit to how many computational steps of code execution it can spawn. `STARTGAS` is this limit, and `GASPRICE` is the fee to pay to the miner per computational step. If transaction execution "runs out of gas", all state changes revert - except for the payment of the fees, and if transaction execution halts with some gas remaining then the remaining portion of the fees is refunded to the sender. There is also a separate transaction type, and corresponding message type, for creating a contract; the address of a contract is calculated based on the hash of the account nonce and transaction data.
 
 An important consequence of the message mechanism is the "first class citizen" property - the idea that contracts have equivalent powers to external accounts, including the ability to send message and create other contracts. This allows contracts to simultaneously serve many different roles: for example, one might have a member of a decentralized organization (a contract) be an escrow account (another contract) between an paranoid individual employing custom quantum-proof Lamport signatures (a third contract) and a co-signing entity which itself uses an account with five keys for security (a fourth contract). The strength of the Ethereum platform is that the decentralized organization and the escrow contract do not need to care about what kind of account each party to the contract is.
 
