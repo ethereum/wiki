@@ -79,6 +79,12 @@ And:
 
 Note that `if x > 5: y = 7` on one line is invalid.
 
+### Comments
+
+    x = 4 //this is a comment and does not appear in the compiled code
+      // this also is a comment on its own line
+      /* this style is not supported however */
+
 ### Halting
 
 * `stop` - this keyword by itself on one line stops execution
