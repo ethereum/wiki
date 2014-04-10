@@ -8,7 +8,7 @@
 
 [Wire protocol](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Wire-Protocol) specification.
 
-[CLL](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-CLL), High-level "C-Like Language" specification, used to author contracts.
+[Serpent](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Serpent-programming-language-operations), the high-level language used to write contracts. See tutorial [here](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Serpent-programming-language-operations).
 
 [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Low-level "Lisp-like Language" specification, used to author contracts in the PoC series from PoC-3.
 
