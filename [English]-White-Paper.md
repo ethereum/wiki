@@ -391,8 +391,8 @@ The issuance model will be as follows:
 | ------------- | ------------- |-------------| ----------- |
 | Currency units  | 1.3X | 1.6X  |  2.8X |
 | Purchasers  | 76.9% | 62.5%  | 35.7% |
-| Spent reserve (pre-sale) | 5.77% | 4.69% | 2.68% |
-| Remaining reserve (post-sale) | 17.3% | 14.1% | 8.04% |
+| Reserve spent pre-sale | 5.77% | 4.69% | 2.68% |
+| Reserve used post-sale | 17.3% | 14.1% | 8.04% |
 | Miners | 0% | 23.1% | 53.6% |
 
 **Long-Term Supply Growth Rate (percent)**
