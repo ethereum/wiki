@@ -383,7 +383,7 @@ This should be taken as an expanded version of the concept of "dollars" and "cen
 
 The issuance model will be as follows:
 
-* Ether will be released in a currency sale at the price of 1000-2000 ether per BTC, a mechanism intended to fund the Ethereum organization and pay for development that has been used with success by other platforms such as Mastercoin and NXT. Earlier buyers will benefit from larger discounts.
+* Ether will be released in a currency sale at the price of 1000-2000 ether per BTC, a mechanism intended to fund the Ethereum organization and pay for development that has been used with success by other platforms such as Mastercoin and NXT. Earlier buyers will benefit from larger discounts. The BTC received from the sale will be used entrirely to pay salaries and bounties to developers and invested into various for-profit and non-profit projects in the Ethereum and cryptocurrency ecosystem.
 * 0.3x the total amount sold will be allocated to the organization to compensate early contributors, pay ETH-denominated expenses before the genesis block and as a long-term reserve. This amount is distributed according to an exponentially decreasing formula; every month, up to 5.6% of the remaining endowment can be distributed among developers and others who participated in project development, and this distribution starts in December.
 * 0.3x the total amount sold will be allocated to miners per year forever after that point
 
