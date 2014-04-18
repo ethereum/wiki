@@ -384,15 +384,16 @@ This should be taken as an expanded version of the concept of "dollars" and "cen
 The issuance model will be as follows:
 
 * Ether will be released in a currency sale at the price of 1000-2000 ether per BTC, a mechanism intended to fund the Ethereum organization and pay for development that has been used with success by other platforms such as Mastercoin and NXT. Earlier buyers will benefit from larger discounts.
-* 0.4x the total amount sold will be allocated to the organization to compensate early contributors, pay ETH-denominated expenses before the genesis block and as a long-term reserve [NOT FINALIZED]
+* 0.3x the total amount sold will be allocated to the organization to compensate early contributors, pay ETH-denominated expenses before the genesis block and as a long-term reserve. This amount is distributed according to an exponentially decreasing formula; every month, up to 5.6% of the remaining endowment can be distributed among developers and others who participated in project development, and this distribution starts in December.
 * 0.3x the total amount sold will be allocated to miners per year forever after that point
 
-| Group  | After 1 year | After 5 years
-| ------------- | ------------- |-------------|
-| Currency units  | 1.7X  |  2.9X |
-| Purchasers  | 58.8%  | 34.4% |
-| Reserve | 29.4% | 17.2% |
-| Miners | 17.6% | 51.7% |
+| Group  | At launch | After 1 year | After 5 years
+| ------------- | ------------- |-------------| ----------- |
+| Currency units  | 1.3X | 1.6X  |  2.8X |
+| Purchasers  | 76.9% | 62.5%  | 35.7% |
+| Spent reserve (pre-sale) | 5.77% | 4.69% | 2.68% |
+| Remaining reserve (post-sale) | 17.3% | 14.1% | 8.04% |
+| Miners | 0% | 23.1% | 53.6% |
 
 **Long-Term Supply Growth Rate (percent)**
 
