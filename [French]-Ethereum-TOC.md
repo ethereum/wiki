@@ -8,39 +8,39 @@ Les applications les plus communément citées utilisent un avoir numérique sur
 
 **Table des matières :**
 
-* Histoire
-Bitcoin comme système d'états transitoires
-Mining
-Arbre de Merkle
-Application alternative sur le blockchain
-Scripting
+1. Histoire
+1.1. Bitcoin comme système d'états transitoires
+1.2. Mining
+1.3. Arbre de Merkle
+1.4. Application alternative sur le blockchain
+1.5. Scripting
 
 
-* Ethereum
-Compte Ethereum
-Messages and Transactions
-Fonction de Transition d'Etat Ethereum 
-Code d'Execution
-Blockchain et Mining
+2. Ethereum
+2.1 Compte Ethereum
+2.2 Messages and Transactions
+2.3 Fonction de Transition d'Etat Ethereum 
+2.4 Code d'Execution
+2.5 Blockchain et Mining
 
-* Applications
-Monnaies
-Dérivés Financiers
-Système d'Identité et de Reputation
-Stockage de Fichiers Décentralisé
-Organisation Autonome décentralisée
-Nouvelles applications
+3. Applications
+3.1 Monnaies
+3.2 Dérivés Financiers
+3.3 Système d'Identité et de Reputation
+3.4 Stockage de Fichiers Décentralisé
+3.5 Organisation Autonome décentralisée
+3.6 Nouvelles applications
 
-* Miscellanées et préoccupations
-Mise en oeuvre GHOST modifiée
-Commissions
-Calculs et Turing-Complet
-Monnaie et émission de monnaie
-Centralisation du minage
-Extensibilité du modèle
+4. Miscellanées et préoccupations
+4.1 Mise en oeuvre GHOST modifiée
+4.2 Commissions
+4.3 Calculs et Turing-Complet
+4.4 Monnaie et émission de monnaie
+4.5 Centralisation du minage
+4.6 Extensibilité du modèle
 
-* Conclusion
-* References et suggestions de lecture
+5. Conclusion
+5.1 References et suggestions de lecture
 
 
 
@@ -55,6 +55,9 @@ Satoshi innova en proposant l'association d'un protocol de consensus décentrali
 
 **Bitcoin comme système d'états transitoires**
 
+From a technical standpoint, the Bitcoin ledger can be thought of as a state transition system, where there is a "state" consisting of the ownership status of all existing bitcoins and a "state transition function" that takes a state and a transaction and outputs a new state which is the result. In a standard banking system, for example, the state is a balance sheet, a transaction is a request to move $X from A to B, and the state transition function reduces the value in A's account by $X and increases the value in B's account by $X. If A's account has less than $X in the first place, the state transition function returns an error. Hence, one can formally define:
+
+D'un point de vue technique, le "grand livre" du Bitcoin peut être perçu comme un système d'états transitoires. 
 
 
 Signature Aveugle de Chaum :
