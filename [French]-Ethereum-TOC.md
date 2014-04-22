@@ -6,9 +6,9 @@ Les applications les plus communément citées utilisent un avoir numérique sur
 
 
 
-Table des matières :
+**Table des matières :**
 
-Histoire
+* Histoire
 Bitcoin comme système d'états transitoires
 Mining
 Arbre de Merkle
@@ -16,7 +16,7 @@ Application alternative sur le blockchain
 Scripting
 
 
-Ethereum
+* Ethereum
 Compte Ethereum
 Messages and Transactions
 Fonction de Transition d'Etat Ethereum 
@@ -24,14 +24,14 @@ Code d'Execution
 Blockchain et Mining
 
 * Applications
-* * Monnaies
+Monnaies
 Dérivés Financiers
 Système d'Identité et de Reputation
 Stockage de Fichiers Décentralisé
 Organisation Autonome décentralisée
 Nouvelles applications
 
-Miscellanées et préoccupations
+* Miscellanées et préoccupations
 Mise en oeuvre GHOST modifiée
 Commissions
 Calculs et Turing-Complet
@@ -39,8 +39,8 @@ Monnaie et émission de monnaie
 Centralisation du minage
 Extensibilité du modèle
 
-Conclusion
-References et suggestions de lecture
+* Conclusion
+* References et suggestions de lecture
 
 
 
