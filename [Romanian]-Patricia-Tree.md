@@ -12,7 +12,7 @@ Unde i0… in reprezentarea valorii simbolurilor alfabetului (deseori binare sau
 
 Update-urile si operatiile de stergere pentru arborele radix sunt simple, si pot fi definite mai pe scurt dupa cum urmeaza:
 
-`
+```
 def update(node,key,value):
     if key == '':
         curnode = db.get(node) if node else [ NULL ] * 17
