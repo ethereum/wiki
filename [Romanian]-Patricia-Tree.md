@@ -68,7 +68,7 @@ def compact_encode(hexarray):
     return o
 ```
 Exemple:
-
+```python
 &gt; [ 1, 2, 3, 4, 5 ]
 '\x11\x23\x45'
 &gt; [ 0, 1, 2, 3, 4, 5 ]
@@ -77,7 +77,7 @@ Exemple:
 '\x20\x0f\x1c\xb8'
 &gt; [ 15, 1, 12, 11, 8, T ]
 '\x3f\x1c\xb8'
-
+```
 ###Principalele specificatii: Arborele Merkle Patricia
 
 Arborele Merkle Patricia rezolva problemele prezentate mai sus prin adaugarea  unei extra complexitati  structurii datelor. Un nod intr-un arbore Merkle Patricia este unul dintre urmatoarele:
