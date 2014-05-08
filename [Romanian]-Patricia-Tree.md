@@ -12,7 +12,7 @@ Unde i0… in reprezentarea valorii simbolurilor alfabetului (deseori binare sau
 
 Update-urile si operatiile de stergere pentru arborele radix sunt simple, si pot fi definite mai pe scurt dupa cum urmeaza:
 
-```python
+
 def update(node,key,value):
     if key == '':
         curnode = db.get(node) if node else [ NULL ] * 17
@@ -39,7 +39,7 @@ def delete(node,key):
         else:
             db.put(hash(newnode),newnode)
             return hash(newnode)
-```
+
 
 Partea “Merkle” din arborele  radix provine din faptul ca hash-ul cryptografic deterministic al unui nod este utilizat ca indicator spre nod, si nu dintr-o locatie de memorie 32-bit sau 64-bit  cum s-ar putea intampla intr-un arbore mai traditional implementat in C. Acesta furnizeaza o forma de autentificare cryptografica  la structura datelor. Daca radacina hash a unui trie este cunoscuta public, atunci oricine poate furniza  o dovada a unei (key/valori) perechi care nu exista din moment ce hash-ul radacina este bazat pe toate hash-urile de sub el, deci orice modificari ar schimba radacina hash.
 
