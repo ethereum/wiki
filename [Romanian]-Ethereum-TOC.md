@@ -1,4 +1,4 @@
-Bine ati venit la Ethereum, locul unde notiunea de contract are o noua forma si veti beneficia de o platforma de aplicatii descentralizata.
+## Bine ati venit la Ethereum, platforma pe care se vor dezvolta noua generatie de contracte si aplicatiile descentralizate. 
 
 Raport Ethereum 
 
