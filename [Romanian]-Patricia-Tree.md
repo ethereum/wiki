@@ -39,7 +39,7 @@ def delete(node,key):
         else:
             db.put(hash(newnode),newnode)
             return hash(newnode)
-
+```
 
 Partea “Merkle” din arborele  radix provine din faptul ca hash-ul cryptografic deterministic al unui nod este utilizat ca indicator spre nod, si nu dintr-o locatie de memorie 32-bit sau 64-bit  cum s-ar putea intampla intr-un arbore mai traditional implementat in C. Acesta furnizeaza o forma de autentificare cryptografica  la structura datelor. Daca radacina hash a unui trie este cunoscuta public, atunci oricine poate furniza  o dovada a unei (key/valori) perechi care nu exista din moment ce hash-ul radacina este bazat pe toate hash-urile de sub el, deci orice modificari ar schimba radacina hash.
 
@@ -51,6 +51,7 @@ Modul compact traditional de a coda un sir hex este de a-l converti in binar , a
  
 Pentru a rezolva ambele probleme, fortam primul nibble al bytestreamului final pentru a coda doua flags, specificand ca lungimea e impara (ignorand simbolul T) si statusul terminator, acestea sunt plasate, respectiv, in cei mai de jos doi biti ai primului nibble.In eventualitatea in care un sir hex este par, trebuie introdus un al doile nibble (cu valoarea zero) pentru a asigura ca sirul hex este par in lungime si astfel este reprezentabil  prin un numar intreg de bytes.  Astfel putem construi urmatoarea codare:
 
+```python
 def compact_encode(hexarray):
     term = 1 if hexarray[-1] == 16 else 0
     if term: hexarray = hexarray[:-1]
@@ -65,7 +66,7 @@ def compact_encode(hexarray):
     for i in range(0,len(hexarray),2):
         o += chr(16 * hexarray[i] + hexarray[i+1])
     return o
-
+```
 Exemple:
 
 &gt; [ 1, 2, 3, 4, 5 ]
