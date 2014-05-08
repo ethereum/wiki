@@ -6,7 +6,7 @@ Arborele Merkle Patricia furnizeaza o structura autentificata cryptografic de da
 
 Intr-un arbore de baza radix, fiecare nod arata astfel:
 
-   > [ value, i0, i1 ... in]
+    [ value, i0, i1 ... in]
 
 Unde i0… in reprezentarea valorii simbolurilor alfabetului (deseori binare sau hex) este valoarea terminala a nodului, si valorile din i0… in sloturi sunt fie NULL fie indicatoare (in cazul  nostr hash-uri) pentru alte noduri.  Aceasta formeaza un stoc de baza (key, valoare), de exemplu, daca esti interesat de valoarea din arbore a obiectului “dog”, intai va trebui efectuata convertirea in alfabet ( rezultand 646f67 daca folosim hex), iar apoi de coboara pe traiectoria arborelui pana la sfarsitul ei, unde se poate citi valoarea.  Adica, intai se cauta hash-ul radacina in stocarea key/value pentru a ajunge la nodul radacina, dupa care se cauta nodul 6 al nodului radacina, pentru a cobori acel nod cu un nivel, apoi se cauta nodul 4 al acestui rezultat, urmand nodul 6, si tot asa, mergand pe urmatoarul traseu root ->6->4->6->f->6->7,  iar la sfarsit se cauta valoarea nodului obtinut si se returneaza rezultatul.
 
