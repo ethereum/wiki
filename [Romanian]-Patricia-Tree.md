@@ -39,8 +39,8 @@ def delete(node,key):
         else:
             db.put(hash(newnode),newnode)
             return hash(newnode)
+``
 
-`
 Partea “Merkle” din arborele  radix provine din faptul ca hash-ul cryptografic deterministic al unui nod este utilizat ca indicator spre nod, si nu dintr-o locatie de memorie 32-bit sau 64-bit  cum s-ar putea intampla intr-un arbore mai traditional implementat in C. Acesta furnizeaza o forma de autentificare cryptografica  la structura datelor. Daca radacina hash a unui trie este cunoscuta public, atunci oricine poate furniza  o dovada a unei (key/valori) perechi care nu exista din moment ce hash-ul radacina este bazat pe toate hash-urile de sub el, deci orice modificari ar schimba radacina hash.
 
 Cu toate acestea, arborii radix au o limitare majora: ineficienta. In cazul in care se doreste stocarea doar unei legaturi (key/valoare) unde key are o lungime de cateva sute de caractere, va fi necesar un KB de spatiu extra pentru a stoca cate un pivel per caracter, iar fiecare cautare sau stergere va insemna sute de pasi. Arborele Patricia rezolva aceasta problema.
