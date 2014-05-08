@@ -51,7 +51,7 @@ Modul compact traditional de a coda un sir hex este de a-l converti in binar , a
  
 Pentru a rezolva ambele probleme, fortam primul nibble al bytestreamului final pentru a coda doua flags, specificand ca lungimea e impara (ignorand simbolul T) si statusul terminator, acestea sunt plasate, respectiv, in cei mai de jos doi biti ai primului nibble.In eventualitatea in care un sir hex este par, trebuie introdus un al doile nibble (cu valoarea zero) pentru a asigura ca sirul hex este par in lungime si astfel este reprezentabil  prin un numar intreg de bytes.  Astfel putem construi urmatoarea codare:
 
-```python
+```
 def compact_encode(hexarray):
     term = 1 if hexarray[-1] == 16 else 0
     if term: hexarray = hexarray[:-1]
@@ -68,7 +68,7 @@ def compact_encode(hexarray):
     return o
 ```
 Exemple:
-```python
+```
 &gt; [ 1, 2, 3, 4, 5 ]
 '\x11\x23\x45'
 &gt; [ 0, 1, 2, 3, 4, 5 ]
@@ -90,7 +90,7 @@ Ideea este aceea ca in eventualitatea in care exista o ruta lunga de noduri fiec
 
 Mai jos este codul extins pentru a obtine un nod intr-un arbore Merkle Patricia:
 def get_helper(node,key):
-
+```
     if key == []: return node
     if node = '': return ''
     curnode = rlp.decode(node if len(node) < 32 else db.get(node))
@@ -111,16 +111,16 @@ def get(node,key):
         key2.push(ord(key) % 16)
     key2.push(16)
     return get_helper(node,key2)
-
+```
 Exemplu: presupunem ca avem un arbore care contine perechile ('dog', 'puppy'), ('horse', 'stallion'), ('do', 'verb'), ('doge', 'coin'). In primul rand convertim keys in format hex:
-
+```
 [ 6, 4, 6, 15, 16 ] : 'verb'
 [ 6, 4, 6, 15, 6, 7, 16 ] : 'puppy'
 [ 6, 4, 6, 15, 6, 7, 6, 5, 16 ] : 'coin'
 [ 6, 8, 6, 15, 7, 2, 7, 3, 6, 5, 16 ] : 'stallion'
-
+```
 Acum alcatuim arborele:
-
+```
 ROOT: [ '\x16', A ]
 A: [ '', '', '', '', B, '', '', '', C, '', '', '', '', '', '', '', '' ]
 B: [ '\x00\x6f', D ]
@@ -129,3 +129,4 @@ E: [ '\x17', F ]
 F: [ '', '', '', '', '', '', G, '', '', '', '', '', '', '', '', '', 'puppy' ]
 G: [ '\x35', 'coin' ]
 C: [ '\x20\x6f\x72\x73\x65', 'stallion' ]
+```
