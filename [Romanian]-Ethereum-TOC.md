@@ -1,4 +1,4 @@
-## Bine ati venit la Ethereum, platforma pe care se vor dezvolta noua generatie de contracte si aplicatiile descentralizate. 
+### Bine ati venit la Ethereum, platforma pe care se vor dezvolta noua generatie de contracte si aplicatiile descentralizate. 
 
 Raport Ethereum 
 
