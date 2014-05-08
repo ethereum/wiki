@@ -1,4 +1,4 @@
-### Bine ati venit la Ethereum, platforma pe care se vor dezvolta noua generatie de contracte si aplicatiile descentralizate. 
+### Bine ati venit la Ethereum, platforma pe care se vor dezvolta noua generatie de contracte si aplicatii descentralizate. 
 
 [Raportul Ethereum (white-paper)](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-White-Paper)
 
