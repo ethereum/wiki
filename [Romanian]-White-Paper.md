@@ -4,7 +4,7 @@ In ultimele cateva luni s-a manifestat un interes tot mai mare fata de utilizare
 
 Totusi, majoritatea acestor aplicatii sunt dificil de implementat astazi, din simplul motiv ca sistemele de scripting ale Bitcoin, si chiar ale protocoalelor cryptocurrency de ultima generatie, cum ar fi protocoalele "colored coin" si asa-numitele "metacoins", sunt mult prea limitate pentru a permite metodele arbitrare complexe de calcul pe care DAO le solicita. Ceea ce intentioneaza acest proiect sa faca este sa preia inovatia adusa de astfel de protocoale si sa le generalizeze- create a fully-fledged, Turing-complete (but heavily fee-regulated) cryptographic ledger that allows participants to encode arbitrarily complex contracts, autonomous agents and relationships that will be mediated entirely by the blockchain. In loc sa se limiteze la un tip specific de tranczactii, utilizatorii vor putea folosi Ethereum ca un fel de "Lego de crypto-finante"-altfel spus, acestia vor putea implementa orice proprietate doresc doar prin codarea in limbajul scriptic intern protocolului.Valutele personalizate, derivatele financiare, sistemele de identitate si organizatiile decentralizate vor fi usor de facut, dar, mai important,spre deosebire de sistemele anterioare, va fi posibila construirea unor tipuri de tranzactii pe care nici macar dezvoltatorii Ethereum nu le-au prevazut.Per ansamblu, credem ca acest proiect este un pas in fata spre realizarea "cryptocurrency 2.0"; speram ca Ethereum va fi la fel de important in ecosistemul cryptocurrency pe cat a fost de semnificativa aparitia Web 2.0 pentru static-content-only internet in 1999.
 
-### Table of Contents
+### Continut
 
 * [De ce o noua platforma](#de-ce-o-noua-platforma)
     * [Colored Coins](#colored-coins)
