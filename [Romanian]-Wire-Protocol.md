@@ -24,7 +24,7 @@ o	0x07 pentru PoC-3.
 •	NODE_ID este optional si specifica un hash de 512 biti, (cu potential de a fi utilizat ca public key) care identifica acest nod. 
 
 Disconnect
-•	[0x01, REASON]
+•	`[0x01, REASON]`
 •	Informeaza perechea ca o deconectare este iminenta, daca se primeste acest mesaj, perechea trebuie sa se deconecteze automat. Cand se efectueaza operatiunea de trimitere, gazdele dau perechilor o sansa de lupta (a fighting chance) (a se citi: asteptati 2 secunde) pentru a se deconecta, inainte de a se deconecta ei insisi.
 •	REASON este un intreg optional care specifica unul dintr-un numar de motive pentru care se efectueaza deconectarea:
 •	 0x00 Deconectare solicitata;
@@ -37,22 +37,22 @@ Disconnect
 •	0x07 Protocoale de retea incompatibile;
 •	0x08 Clientul a renuntat.
 Ping
-•	[0x02]
+•	`[0x02]`
 •	Solicita un raspuns imediat la Pong de la pereche.
 Pong
-•	[0x03]
+•	`[0x03]`
 •	Raspunde la pachetul Ping al perechii.
 GetPeers
-•	[0x10]
+•	`[0x10]`
 •	Solicita perechii sa enumere cateva alte perechi cunoscute pentru ca noi sa ne putem conecta la ele. Aceasta enumerare ar trebui sa contina si perechea solicitata. 
 Peers
-•	[0x11, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]
+•	`[0x11, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]`
 •	Specifica un numar de perechi cunoscute. IP este o multime de 4 biti “ABCD” care trebuie interpretata ca adresa IP A.B.C.D. Port este o multime care trebuie intrepretata ca un intreg de 16 biti endian. Id este hash-ul de 512 biti care se comporta ca unicul identificator al nodului.
  Tranzactii
-•	[0x12, [nonce, receiving_address, value, ... ], ... ]
+•	`[0x12, [nonce, receiving_address, value, ... ], ... ]`
 •	Specifica unei tranzactii(unor tranzactii) ca perechea trebuie sa se asigure ca este inclusa in sirul tranzactiei.Elementele din lista (cele care il urmeaza primul 0x12) sunt tranzactii in formatul descris in specificatiile Ethereum principale.
  Blocks
-•	[0x13, [block_header, transaction_list, uncle_list], ... ]
+•	`[0x13, [block_header, transaction_list, uncle_list], ... ]`
 •	Specifica block-ului/-urilor ca perechea trebuie sa stie despre (atat scria, nu inteleg despre ce e vorba). Elementele din lista (cele care il urmeaza pe primul, 0x13) sunt blocks in formatul descris in specificatiile Ethereum principale.
  GetChain
 •	[0x14, Parent1, Parent2, ..., ParentN, Count]
