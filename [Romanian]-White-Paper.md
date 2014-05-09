@@ -77,7 +77,7 @@ In ambele cazuri, concluzia este urmatoarea: efortul de a construi protocoale ma
 Ethereum rezolva problemele de scalabilitate, fiind hostat pe propriul blockchain, si prin stocarea unui "state tree" distinct in fiecare block impreuna cu o lista a tranzactiilor.Fiecare "state tree" reprezinta stadiul curent al intregului sistem , incluzand balantele adreselor si starea contractelor.Contractele Ethereum pot stoca datele in memorie(contracts are allowed to store data in a persistent memory storage). Aceasta stocare, combinata cu limbajul de scripting Turing-complete,ne permite sa codam un intreg etalon monetar intr-un singur contract, alaturi de numeroase alte tipuri de bunuri criptografice.Prin urmare, intentia Ethereum nu este aceea de a inlocui protocoalele colored coin si metacoin descrise mai sus. Mai degraba, Ethereum intentioneaza sa serveasca drept un strat fundamental superior oferind un sistem unic si puternic de scripting pe baza caruia se pot construi contracte arbitrare avansate, valute si alte aplicatii descentralizate.Daca proiectele deja existente de colored coins si metacoins s-ar muta in Ethereum , ar beneficia de SPV-ul oferit de Ethereum, de optiunea de a fi compatibile cu derivatele financiare ale Ethereum si de abilitatea de a lucra impreuna intr-o singura retea.Cu Ethereum, cineva care are o idee pentru un nou tip de contract sau tranzactie care poate imbunatati in mod considerabil ceea ce se poate face cu cryptocurrency nu ar mai trebui sa isi lanseze propria moneda; isi poate implementa simplu ideea in codul script al Ethereul. Pe scurt, Ethereum este o fundatie pentru inovatie.
 
 
-Filozofie
+###Filozofie
 
 Designul care sta in spatele Ethereum este creat sa urmeze principiile enumerate mai jos:
 
@@ -92,13 +92,16 @@ Basic Building Blocks
 La origine, Ethereum este a fairly regular memory-hard proof-of-work mined cryptocurrency without many extra complications. De fapt, Ethereum este , din anumite puncte de vedere, mai simplu decat cryptocurrencies bazate pe Bitcoin folosite astazi.Conceptul conform caruia o tranzactie poate avea mai multe output-uri si input-uri, de exemplu, a fost inlocuit cu model bazat pe balante mai intuitiv( pentru a preveni replay-attacks, (to prevent transaction replay attacks, as part of each account balance we also store an incrementing nonce). Sequence numbers and lock times are also removed, and all transaction and block data is encoded in a single format. Instead of addresses being the RIPEMD160 hash of the SHA256 hash of the public key prefixed with 04, addresses are simply the last 20 bytes of the SHA3 hash of the public key. Unlike other cryptocurrencies, which aim to offer a large number of "features", Ethereum intends to take features away, and instead provide its users with near-infinite power through an all-encompassing mechanism known as "contracts".
 
 
+La origine, Ethereum este a fairly regular memory-hard proof-of-work mined cryptocurrency without many extra complications. De fapt, Ethereum este , din anumite puncte de vedere, mai simplu decat cryptocurrencies bazate pe Bitcoin folosite astazi.Conceptul conform caruia o tranzactie poate avea mai multe output-uri si input-uri, de exemplu, a fost inlocuit cu model bazat pe balante mai intuitiv( pentru a preveni replay-attacks, (to prevent transaction replay attacks, as part of each account balance we also store an incrementing nonce). Sequence numbers and lock times are also removed, and all transaction and block data is encoded in a single format. Instead of addresses being the RIPEMD160 hash of the SHA256 hash of the public key prefixed with 04, addresses are simply the last 20 bytes of the SHA3 hash of the public key. Unlike other cryptocurrencies, which aim to offer a large number of "features", Ethereum intends to take features away, and instead provide its users with near-infinite power through an all-encompassing mechanism known as "contracts".
+
+
 Modified GHOST Implementation
 
-The "Greedy Heavist Observed Subtree" (GHOST) protocol is an innovation first introduced by Yonatan Sompolinsky and Aviv Zohar in December 2013. The motivation behind GHOST is that blockchains with fast confirmation times currently suffer from reduced security due to a high stale rate - because blocks take a certain time to propagate through the network, if miner A mines a block and then miner B happens to mine another block before miner A's block propagates to B, miner B's block will end up wasted and will not contribute to network security. Furthermore, there is a centralization issue: if miner A is a mining pool with 30% hashpower and B has 10% hashpower, A will have a risk of producing stale blocks 70% of the time whereas B will have a risk of producing stale blocks 90% of the time. Thus, if the stale rate is high, A will be substantially more efficient simply by virtue of its size. With these two effects combined, blockchains which produce blocks quickly are very likely to lead to one mining pool having a large enough percentage of the network hashpower to have de facto control over the mining process.
+Protocolul "Greedy Heavist Observed Subtree" (GHOST) este o inovatie  introdusa de Yonatan Sompolinsky si  Aviv Zohar in Decembrie 2013. Motivul din spatele GHOST este acela ca in prezent, blockchains cu rata mare de confirmare sufera de probleme de securitate datorate unui stale rate ridicat – deoarece block-urile necesita un anume timp pentru a circula in retea; daca un miner A exploateaza un block si minerul B exploateaza un alt block, inainte ca block-ul minerului A sa se propage catre minerul B, block-ul minerului B se va corupe, si nu va contribui la securitatea retelei.Mai mult de atat, exista problema centralizarii: daca minerul A reprezinta un mining pool cu un hashpower de 30% si minerul B are hashpower de 10%, A risca sa produca stale blocks 70% din timp, iar B sa produca block-uri invalide 90% din timp. Astfel, daca stale rate este ridicat, A va fi mult mai eficient, numai multumita marimii sale.Combinand aceste doua efecte, acele blockchains care produc block-uri mai rapid sunt mai probabil sa conduca la un mining pool -cu un procentaj mare din hashpower-ul retelei- care sa aiba control efectiv asupra procesului de mining.
 
-As descrived by Sompolinsky and Zohar, GHOST solves the first issue of network security loss by including stale blocks in the calculation of which chain is the "longest"; that is to say, not just the parent and further ancestors of a block, but also the stale descendants of the block's ancestor (in Ethereum jargon, "uncles") are added to the calculation of which block has the largest total proof of work backing it. To solve the second issue of centralization bias, we go beyond the protocol described by Sompolinsky and Zohar, and also provide block rewards to stales: a stale block receives 87.5% of its base reward, and the nephew that includes the stale block receives the remaining 12.5%. Transaction fees, however, are not awarded to uncles.
+Asa cum descriu Sompolinsky si Zohar, GHOST rezolva prima problema a pierderilor de securitate ale retelei prin includerea stale blocks in calculul care determina care lant este mai lung: asta inseamna ca nu numai predecesorii unui block, dar si stale blocks care deriva din acesti predecesori („unchi” in jargonul Ethereus) sunt luati in calcul in a determina care block are cea mai vizibila dovada de munca ca sa il sustina. Pentru a rezolva aceasta problema secundara a centralization bias, trebuie sa mergem dincolo de protocolul descris de Sompolinsky si  Zohar, si sa atribuim block rewards pentru stale blocks: un stale block primeste 87.5% din base reward, si „nepotul” care include stale block-ul primeste cei 12.5% ramasi. Taxele de tranzactie totusi, nu sunt acordate „unchilor”.
 
-Ethereum implements a simplified version of GHOST which only goes down one level. Specifically, a stale block can only be included as an uncle by the direct child of one of its direct siblings, and not any block with a more distant relation. This was done for several reasons. First, unlimited GHOST would include too many complications into the calculation of which uncles for a given block are valid. Second, unlimited GHOST with compensation as used in Ethereum removes the incentive for a miner to mine on the main chain and not the chain of a public attacker. Finally, calculations show that single-level GHOST has over 80% of the benefit of unlimited GHOST, and provides a stale rate comparable to the 2.5 minute Litecoin even with a 40-second block time. However, we will be conservative and still retain a Primecoin-like 60-second block time because individual blocks may take a longer time to verify.
+Ethereum implementeaza o versiune simplificata a GHOST care merge in jos doar un nivel. Un stale block poate fi inclus ca „unchi” numai de catre descendentul direct al unuia din „fratii” lui, nu si al altor block-uri mai indepartate. Aceasta s-a facut pentru mai multe motive. In primul rand, un protocol GHOST nelimitat ar include prea multe complicatii in calculul numarului de „unchi” valizi pentru fiecare block. In al doilea rand, un GHOST nelimitat, cu o compensare ca aceea folosita de Ethereum nu mai constrange un miner sa actioneze pe chain-ul principal si nu pe chain-ul unui atacator public. In ultimul rand,  calculele arata ca GHOST la single-level are 80% din avantajele unui GHOST nelimitat, si ofera un stale rate comparabil cu Litecoin de 2.5 minute chiar si cu un block time de 40 de secunde. Totusi, ca sa nu exageram, vom pastra un block time de 60 de secunde, specific pentru Primecoin, deoarece block-urile individuale pot necesita mai mult timp pentru a fi verificate.
 
 
 Ethereum Client P2P Protocol
@@ -106,70 +109,70 @@ Ethereum Client P2P Protocol
 P2P Protocol 
 
 
-The Ethereum client P2P protocol is a fairly standard cryptocurrency protocol, and can just as easily be used for any other cryptocurrency; the only modification is the introduction of the GHOST protocol described above. The Ethereum client will be mostly reactive; if not provoked, the only thing the client will do by itself is have the networking daemon maintain connections and periodically send a message asking for blocks whose parent is the current block. However, the client will also be more powerful. Unlike bitcoind, which only stores a limited amount of data about the blockchain, the Ethereum client will also act as a fully functional backend for a block explorer.
+Clientul P2P de protocol Ethereum este un protocol standard de cryptocurrency, si poate fi folosit la fel de usor pentru alte tipuri de cryptocurrency; singura modificare este introducerea protocolului GHOST, descris mai sus. Clientul Ethereum va fi in mare parte reactiv; daca nu e provocat, singurul lucru care il va face de unul singur este sa determine daemon-ul de retea, sa mentina conexiunile, si sa trimita periodic un mesaj prin care sa ceara block-uri derivate din block-ul curent. De asemenea, clientul va fi mai puternic. Spre deosebire de Bitcoin, care stocheaza o cantitate limitata de date despre blockchain, clientul Ethereum va opera si ca un back-end functional pentru un block explorer.
 
-When the client reads a message, it will perform the following steps:
+Cand clientul citeste un mesaj, va parcurge pasii urmatori:
 
 Hash the data, and check if the data with that hash has already been received. If so, exit.
-Determine the data type. If the data is a transaction, if the transaction is valid add it to the local transaction list, process it onto the current block and publish it to the network. If the data item is a message, respond to it. If the data item is a block, go to step 3.
-Check if the parent of the block is already stored in the database. If it is not, exit.
-Check if the proof of work on the block header and all block headers in the "uncle list" is valid. If any are not, exit.
-Check if every block header in the "uncle list" in the block has the block's parent's parent as its own parent. If any is not, exit. Note that uncle block headers do not need to be in the database; they just need to have the correct parent and a valid proof of work. Also, make sure that uncles are unique and distinct from the parent.
-Check if the timestamp of the block is at most 15 minutes into the future and ahead of the timestamp of the parent. Check if the difficulty of the block and the block number are correct. If either of these checks fails, exit.
-Start with the state of the parent of the block, and sequentially apply every transaction in the block to it. At the end, add the miner rewards. If the root hash of the resulting state tree does not match the state root in the block header, exit. If it does, add the block to the database and advance to the next step.
-Determine TD(block) ("total difficulty") for the new block. TD is defined recursively by TD(genesis_block) = 0 and TD(B) = TD(B.parent) + sum([u.difficulty for u in B.uncles]) + B.difficulty. If the new block has higher TD than the current block, set the current block to the new block and continue to the next step. Otherwise, exit.
-If the new block was changed, apply all transactions in the transaction list to it, discarding from the transaction list any that turn out to be invalid, and rebroadcast the block and those transactions to the network.
-The "current block" is a pointer maintained by each node that refers to the block that the node deems as representing the current official state of the network. All messages asking for balances, contract states, etc, have their responses computed by looking at the current block. If a node is mining, the process is only slightly changed: while doing all of the above, the node also continuously mines on the current block, using its transaction list as the transaction list of the block.
+Stabileste tipul de date. Daca datele sunt tranzactii, daca tranzactia este valida, este adaugata la lista de tranzactii locale, e procesata pe block-ul curent, si emisa pe retea. Daca datele reprezinta un mesaj, se raspunde la acesta. Daca datele reprezinta un block, se trece la pasul 3.
+Verificati daca „parintele” unui block este deja stocat in baza de date. Daca nu este, iesiti.
+Verificati daca este validat lucrul pe header-ul block-urilor din lista de „unchi”. Daca nu, iesiti.
+Verificati daca fiecare block header  din lista de „unchi” din block are ca parinte la randul lui fiecare parinte al block-ului respectiv. Daca nu, iesiti. Tineti minte ca block headers care sunt „unchi” nu trebuie sa fie in baza de date; ei trebuie doar sa aiba parintele corect si dovada de lucru. De asemenea, asigurati-va ca „unchii” sunt unici, si separati de parinte.
+Verificati daca marcajul de timp al block-ului este cu maxim 15 minute in viitor, si inaintea timpului parintelui. Verificati daca dificultatea block-ului si numarul acestuia sunt corecte. Daca vreuna din aceste verificari esueaza, iesiti.
+Incepeti cu starea parintelui blocului, si aplicati succesiv pe acesta fiecare tranzactie din block. La sfarsit, adaugati reward-urile minerului. Daca root hash a state tree-ului rezultat nu se potriveste cu state root din block header, iesiti. Daca se potriveste, adaugati blocul la baza de date si avansati la pasul urmator
+Determinati TD(block) ("total difficulty") pentru noul block. TD se defineste prin TD(genesis_block) = 0 si TD(B) = TD(B.parent) + sum([u.difficulty for u in B.uncles]) + B.difficulty.Daca noul block are un TD mai mare decat block-ul curent, setati noul block pentru block-ul curent, si continuati la pasul urmator. Daca nu, iesiti.
+Daca noul block a fost schimbat, aplicati toate tranzactiile in lista de tranzactii, omiteti-le pe cele invalide, si retrimiteti block-ul si tranzactiile pe retea.
+„Current block” este un indicator pastrat de fiecare nod care se refera  la blocul considerat reprezentativ pentru starea actuala a retelei. Toate mesajele care cer informatii referitoare la sold, starea contractelor etc, au raspunsurile calculate in raport cu current block. Daca un nod este in procesul de mining, procedeul este doar putin alterat: cand se fac operatiile  de mai sus, nodul mineaza continuu current block-ul, folosindu-i lista de tranzactii ca si lista de tranzactii pentru block.
 
 
-Currency and Issuance
+Currency and Issuance(Moneda si emiterea ei)
 
-The Ethereum network includes its own built-in currency, ether. The main reason for including a currency in the network is twofold. First, like Bitcoin, ether is rewarded to miners so as to incentivize network security. Second, it serves as a mechanism for paying transaction fees for anti-spam purposes. Of the two main alternatives to fees, per-transaction proof of work similar to Hashcash and zero-fee laissez-faire, the former is wasteful of resources and unfairly punitive against weak computers and smartphones and the latter would lead to the network being almost immediately overwhelmed by an infinitely looping "logic bomb" contract. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate), the denominations will be pre-labelled:
+Reteaua Ethereum are o moneda inclusa, numita „ether”.  Exista doua motive pentru includerea unei monede in retea. In primul rand, ca si Bitcoin, ether este acordat minerilor pentru a stimula securitatea retelei.In al doilea rand, serveste ca metoda de plata pentru servicii anti-spam. Din cele doua alternative la taxa, dovada de lucru pentru fiecare tranzactie similara cu Hashcashsi metoda laissez-faire fara taxa, prima nu este eficienta cu resursele si prea punitiva pentru calculatoare slabe si smartphone-uri, pe cand cea din urma ar cauza ca reteaua sa fie suprasolicitata imediat de contracte tip „logic bomb” repetate. Pentru convenienta, si pentru a evita viitoare dispute (vezi dezbateream BTC/uBTC/satoshi), denominatiile vor fi pre-marcate:
 
-After 1 year	 After 5 years
+Dupa 1 an	 Dupa 5 ani
 Currency units	 1.9X	 3.5X
 Fundraiser participants	 52.6%	 28.6%
 Fiduciary members and early contributors	 11.8%	 6.42%
-Additional pre-launch allocations	 2.63%	 1.42%
-Reserve	 11.8%	 6.42%
+Alocatii pre-lansare aditionale	 2.63%	 1.42%
+Rezerve	 11.8%	 6.42%
 Miners	 21.1%	 57.1%
 1: wei
-103: (unspecified)
-106: (unspecified)
-109: (unspecified)
+103: (nespecificat)
+106: (nespecificat)
+109: (nespecificat)
 1012: szabo
 1015: finney
 1018: ether
-This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi" that is intended to be future proof. Szabo, finney and ether will likely be used in the foreseeable future, and the other units will be more . "ether" is intended to be the primary unit in the system, much like the dollar or bitcoin. The right to name the 103, 106 and 109 units will be left as a high-level secondary reward for the fundraiser subject to pre-approval from ourselves.
+Acestea trebuie vazute ca o viziune expandata a conceptelor de ""dolari" si "centi" sau ca "BTC" si "satoshi" reprezinta viitorul.Szabo, finney si ether putin probabil vor fi folosite in viitorul apropiat, in timp ce celelalte unitati vor fi folosite in continuare la fel de mult."ether" este destinata sa fie unitatea primara in sistem, cum este spre exemplu dolarul sau bitcoin-ul.Dreptul de a numi unitati 103, 106 si 109 va fi lasat ca recompensa secundara de nivel inalt pentru obiectul strangerii de fonduri, cu pre-aprobare de la noi.
 
-The issuance model will be as follows:
+Modelul de emitere va arata in modul urmator:
 
-Ether will be released in a fundraiser at the price of 1000-2000 ether per BTC, with earlier funders getting a better price to compensate for the increased uncertainty of participating at an earlier stage. The minimum funding amount will be 0.01 BTC. Suppose that X ether gets released in this way
-0.225X ether will be allocated to the fiduciary members and early contributors who substantially participated in the project before the start of the fundraiser. This share will be stored in a time-lock contract; about 40% of it will be spendable after one year, 70% after two years and 100% after 3 years.
-0.05X ether will be allocated to a fund to use to pay expenses and rewards in ether between the start of the fundraiser and the launch of the currency
-0.225X ether will be allocated as a long-term reserve pool to pay expenses, salaries and rewards in ether after the launch of the currency
+Ether va fi lansat intr-o strangere de fonduri la pretul de 1000-2000 ether per BTC, primii investitori primind preturi mai bune pentru a compensa numarul incert de mare al participantilor intr-o faza incipienta.Suma minima de finantare va fi de 0.01 BTC. Presupunem ca X ether sunt lansati in acest mod.
+0.225X ether vor fi alocati membrilor fiduciari si primilor contribuabili care s-au implicat substantial in proiect, inaintea inceperii strangerii de fonduri. Aceasta parte va fi stocata intr-un contract time-lock, aproximativ 40% va putea fi folosita dupa un an, 70% dupa doi ani, iar 100% dupa 3 ani..
+0.05X ether vor fi alocati pentru un fond folosit pentru platile cheltuielilor si premiilor in ether in perioada dintre stratul strangerii de fonduri si lansarea valutei.
+0.225X ether vor fi alocati ca rezerva pe termen lung pentru a plati cheltuieli, salarii si premii dupa lansarea valutei.
 0.4X ether will be mined per year forever after that point
-Long-Term Inflation Rate (percent) 
+Rata de inflatie pe termen lung(procentaje) 
 
  
 Despite the linear currency issuance, just like with Bitcoin over time the inflation rate nevertheless tends to zero
-For example, after five years and assuming no transactions, 28.6% of the ether will be in the hands of the fundraiser participants, 6.42% in the fiduciary member and early contributor pool, 6.42% paid to the reserve pool, and 57.1% will belong to miners. The permanent linear inflation model reduces the risk of what some see as excessive wealth concentration in Bitcoin, and gives individuals living in present and future eras a fair chance to acquire currency units, while at the same time retaining a strong incentive to obtain and hold ether because the inflation "rate" still tends to zero over time (eg. during year 1000001 the money supply would increase from 500001.5 * X to 500002 * X, an inflation rate of 0.0001%). Furthermore, much of the interest in Ethereum will be medium-term; we predict that if Ethereum succeeds it will see the bulk of its growth on a 1-10 year timescale, and supply during that period will be very much limited.
+De exemplu, dupa cinci ani si presupunand ca nu s-au realizat tranzactii, 28.6% din ether va reveni primilor participanti la strangerea de fonduri, 6.42% membrilor fiduciari si primilor contribuabili, 6.42% platiti pentru rezerve si 57.1% -miners Modelul permanent linear de inflatie reduce riscul unei concentrari de resurse financiare destul de mare in Bitcoin, dupa cum ar vedea unii, si da sanse egale indivizilor care traiesc in prezent, dar si celor din viitor, sa obtina unitati valutare,in acelasi timp retinand stimulente puternice pentru a obtine si pentru a pastra ether, pentru ca "rata" de inflatie tot va tinde catre zero pe parcursul timpului(ex. pe parcursul anului 1000001 "proviziile" de bani vor creste de la 500001.5 * X la 500002 * X, cu o rata de inflatie de 0.0001%).Mai mult decat atat, o mare parte din interesul in Ethereum va fi pe termen mediu, prezicem ca daca Ethereum va fi un succes,vom vedea cea mai mare parte a cresterii sale pe un interval de timp 1-10 ani, iar aprovizionarea in aceasta perioada va fi foarte limitata.
 
-We also theorize that because coins are always lost over time due to carelessness, death, etc, and coin loss can be modeled as a percentage of the total supply per year, that the total currency supply in circulation will in fact eventually stabilize at a value equal to the annual issuance divided by the loss rate (eg. at a loss rate of 1%, once the supply reaches 40X then 0.4X will be mined and 0.4X lost every year, creating an equilibrium).
+De asemenea, sustinem ca, deoarece monedele sunt intotdeauna pierdute in timp din cauza neglijentei, etc, si pierderea monedei poate fi modelata ca un procent din totalul ofertei pe an, ca totalul valutei aflat in circulatie se va stabiliza, in cele din urma, la o valoare echivalenta cu emiterea anuala impartita la rata de pierdere (de exemplu, la o rata de pierdere de 1%, odată ce alimentarea ajunge 40X atunci 0.4X vor fi exploatate si 0.4X pierdute in fiecare an, creand un echilibru).
 
 
 Data Format
 
-All data in Ethereum will be stored in recursive length prefix encoding, which serializes arrays of strings of arbitrary length and dimension into strings. For example, ['dog', 'cat'] is serialized (in byte array format) as [ 130, 67, 100, 111, 103, 67, 99, 97, 116]; the general idea is to encode the data type and length in a single byte followed by the actual data (eg. converted into a byte array, 'dog' becomes [ 100, 111, 103 ], so its serialization is [ 67, 100, 111, 103 ]. Note that RLP encoding is, as suggested by the name, recursive; when RLP encoding an array, one is really encoding a string which is the concatenation of the RLP encodings of each of the elements. Additionally, note that block number, timestamp, difficulty, memory deposits, account balances and all values in contract storage are integers, and Patricia tree hashes, root hashes, addresses, transaction list hashes and all keys in contract storage are strings. The main difference between the two is that strings are stored as fixed-length data (20 bytes for addresses, 32 bytes for everything else), and integers take up only as much space as they need. Integers are stored in big-endian base 256 format (eg. 32767 in byte array format as [ 127, 255 ]).
+Toate datele din Ethereum vor fi stocate in recursive length prefix encoding, care serializeaza matrice de siruri de caractere de lungime si dimensiuni arbitrare in siruri de caractere. De exemplu, ['caine', 'pisica'] este serializat (in byte array format) ca [ 130, 67, 100, 111, 103, 67, 99, 97, 116]; ideea generala este sa se codeze tipul de date si lungimea acestora intr-un singur byte urmat de datele efective (ex. transformata intr-o matrice byte, 'caine' devine [ 100, 111, 103 ], deci serializarea sa este[ 67, 100, 111, 103 ].Dupa cum este sugerata si de numele sau, codarea RLP este recursiva; atunci cand folosim codarea RLP pentru o matrice, de fapt codam un sir care este concatenarea codificarii RLP al fiecarui element. In plus, retineti ca numarul de bloc, marcajele de timp, dificultatea, depozitele de memorie, soldurile conturilor si toate valorile din contractul de depozitare sunt numere intregi, si Patricia tree hashes,root hashes, adresele, listele tranzactii hash si toate cheile in depozite de contract sunt siruri de caractere.Principala diferenta dintre cele doua este ca sirurile de caractere sunt stocate ca date de lungime fixa (20 bytes pentru adrese, 32 bytes pentru orice altceva), si numerele intregi ocupa atat spatiu cat au nevoie. Numerele intregi sunt stocate intr-o baza de format 256 big-endian(ex. 32767 in format de matrice byte ca [ 127, 255 ]).
 
-A full block is stored as:
+Un block intreg este stocat ca:
 
     [
         block_header,
         transaction_list,
         uncle_list 
     ]
-Where:
+Unde:
 
     transaction_list = [
         transaction 1,
@@ -194,67 +197,71 @@ Where:
         extra_data,
         nonce
     ]
-Each transaction and uncle block header is itself a list. The data for the proof of work is the RLP encoding of the block WITHOUT the nonce. uncle_list and transaction_list are the lists of the uncle block headers and transactions in the block, respectively. nonce and extra_data are both limited to a maximum of 32 bytes, except the genesis block where the extra_data parameter will be much larger.
+Fiecare tranzactie si header de block unchi este in sine o lista.Datele pentru dovada de functionare este codarea RLP a block-ului FARA nonce. uncle_list si transaction_list sunt listele de headere block unchi si tranzactiile din block, respectiv . nonce si extra_data sunt ambele limitate la un maxin de 32 bytes, exceptand genesis block unde parametriiextra_data vor fi mult mai mari.
 
-The state_root is the root of a Merkle Patricia tree containing (key, value) pairs for all accounts where each address is represented as a 20-byte binary string. At the address of each account, the value stored in the Merkle Patricia tree is a string which is the RLP-serialized form of an object of the form:
+State_root este radacina unei scheme Merkle Patricia continand (cheie, valoare) perechi pentru toate conturile in care fiecare adresa este reprezentata de un sir de caractere binar de 20 bytes. La adresa fiecarui cont in parte , valoarea stocata in schema Merkel Patricia este un sir de caractere serializarea RLP a unui obiect de forma:
 
     [ balance, nonce, contract_root, storage_deposit ]
-The nonce is the number of transactions made from the account, and is incremented every time a transaction is made. The purpose of this is to (1) make each transaction valid only once to prevent replay attacks, and (2) to make it impossible (more precisely, cryptographically infeasible) to construct a contract with the same hash as a pre-existing contract. balance refers to the account's balance, denominated in wei. contract_root is the root of yet another Patricia tree, containing the contract's memory, if that account is controlled by a contract. If an account is not controlled by a contract, the contract root will simply be the empty string. storage_deposit is a counter that stores paid storage fees; its function will be discussed in more detail further in this paper.
+nonce este numarul de tranzactii facute din cont si este incrementat de fiecare data cand este realizata o tranzactie.Scopul este acela de (1) a face o tranzactie valida o singura data pentru a preveni atacurile, si (2) pentru a face imposibil (mai exact cryptografic nefezabil) construirea unui contract cu acelasi hash ca al unui contract existent. balance se refera la balanta contului, denominata in wei. contract_root este radacina unei alte scheme Patricia, continand memoria contractului, daca acel cont este controlat de un contract.Daca un cont nu este controlat de un contract, contract root va fi un sir de caractere gol. storage_deposit este un contor care stocheaza taxele de depozitare achitate; functia sa va fi discutata in detaliu mai jos.
+
+ 
 
 
 Mining algorithm
 
-One highly desirable property in mining algorithms is resistance to optimization through specialized hardware. Originally, Bitcoin was conceived as a highly democratic currency, allowing anyone to participate in the mining process with a CPU. In 2010, however, much faster miners exploiting the rapid parallelization offered by graphics processing units (GPUs) rapidly took over, increasing network hashpower by a factor of 100 and leaving CPUs essentially in the dust. In 2013, a further category of specialized hardware, application-specific integrated circuits (ASICs) outcompeted the GPUs in turn, achieving another 100x speedup by using chips fabricated for the sole purpose of computing SHA256 hashes. Today, it is virtually impossible to mine without first purchasing a mining device from one of these companies, and some people are concerned that in 5-10 years' time mining will be entirely dominated by large centralized corporations such as AMD and Intel.
+O proprietate de dorit in mining algorithms este rezistenta la optimizare prin hardware specializat. La inceput, Bitcoin a fost conceput ca o moneda democratica, dand oricui sansa de a participa in procesul de mining cu un CPU. In 2010 totusi, mineri mai rapizi care exploatau paralelizarea oferita de procesoare video (GPU) au preluat controlul, crescand network hashpower cu un factor de 100, si lasand CPU-urile in urma. In 2013, o alta categorie de hardware specializat, application-specific integrated circuits (ASICs) a depasit ca performante GPU-urile, atingand viteze de 100 de ori mai mari, folosind chip-uri fabricate special pentru computarea SHA256 hashes. Astazi, este practic imposibila minarea fara achizitionarea unui mining device de la una din aceste companii, si exista ingrijorari ca in 5-10 ani, mining-ul va fi dominat in intregime de de corporatii centralizate precum AMD sau Intel.
 
-To date, the main way of achieving this goal has been "memory-hardness", constructing proof of work algorithms that require not only a large number of computations, but also a large amount of memory, to validate, thereby making highly parallelized specialized hardware implementations less effective. There have been several implementations of memory-hard proof of work, all of which have their flaws:
+Pana acum, calea principala de a atinge acest scop a fost "memory-hardness", construirea unor algoritmi proof of work care necesita nu numai un numar mare de calcule, dar si multa memorie pentru validare, astfel reducand eficacitatea implementarilor de hardware paralelizat si specializat. Exista cateva implementari de memory-hard proof of work, fiecare cu defectele ei:
 
-Scrypt - Scrypt is a function which is designed to take 128 KB of memory to compute. The algorithm essentially works by filling a memory array with hashes, and then computing intermediate values and finally a result based on the values in the memory array. However, the 128 KB parameter is a very weak threshold, and ASICs for Litecoin are already under development. Furthermore, there is a natural limit to how much memory hardness with Scrypt can be tweaked up to achieve, as the verification process takes just as much memory, and just as much computation, as one round of the mining process.
-Birthday attacks - the idea behind birthday-based proofs of work is simple: find values xn,i,j such that i < k, j < k and |H(data+xn+i) - H(data+xn+j)| < 2^256 / d^2. The d parameter sets the computational difficulty of finding a block, and the k parameter sets the memory hardness. Any birthday algorithm must somehow store all computations of H(data+xn+i) in memory so that future computations can be compared against them. Here, computation is memory-hard, but verification is memory-easy, allowing for extreme memory hardness without compromising the ease of verification. However, the algorithm is problematic for two reasons. First, there is a time-memory tradeoff attack where users 2x less memory can compensate with 2x more computational power, so its memory hardness is not absolute. Second, it may be easy to build specialized hardware devices for the problem, especially once one moves beyond traditional chip and processor architecture and into various classes of hardware-based hash tables or probabilistic analog computing.
-Dagger - the idea behind Dagger, an in-house algorithm developed by the Ethereum team, is to have an algorithm that is similar to Scrypt, but which is specially designed so that each individual nonce only depends on a small portion of the data tree that gets built up for each group of ~10 million nonces. Computing nonces with any reasonable level of efficiency requires building up the entire tree, taking up over 100 MB of memory, whereas verifying a nonce only takes about 100 KB. However, Dagger-style algorithms are vulnerable to devices that have multiple computational circuits sharing the same memory, and although this threat can be mitigated it is arguably impossible to fully remove.
-As a default, we are currently considering a Dagger-like algorithm with tweaked parameters to minimize specialized hardware attacks, perhaps together with a proof of stake algorithm such as our own Slasher for added security if deemed necessary. However, in order to come up with a proof-of-work algorithm that is better than all existing competitors, our intention is to use some of the funds raised in the fundraiser to host a contest, similar to those used to determine the algorithm for the Advanced Encryption Standard (AES) in 2005 and the SHA3 hash algorithm in 2013, where research groups from around the world compete to develop ASIC-resistant mining algorithms, and have a selection process with multiple rounds of judging determine the winners. The contest will have prizes, and will be open-ended; we encourage research into memory-hard proofs of work, self-modifying proofs of work, proofs of work based on x86 instructions, multiple proofs of work with a human-driven incentive-compatible economic protocol for swapping one out in the future, and any other design that accomplishes the task. There will be opportunities to explore alternatives such as proof of stake, proof of burn and proof of excellence as well.
+Scrypt - este o functie proiectata sa ocupe 128 kb de memorie pentru calcul. In esenta, algoritmul  functioneaza prin ocuparea unui memory array cu hashes, si apoi calculand valori intermediare si finalmente, un rezultat bazat pe aceste valori din memory array.Totusi, parametrul de 128 kb este o limitare, si ASICs pentru Litecoin sunt deja in proces de dezvoltare. In plus, exista o limita naturala pe cantitatea de memory hardness in Scrypt care poate fi atinsa, caci procesul de verificare necesita la fel de mult calcul si memorie, ca o etapa a procesului de mining.
+Birthday attacks - ideea din spatele birthday-based proofs of work este simpla: gasiti valorile xn,i,j astfel incat i < k, j < k si|H(data+xn+i) - H(data+xn+j)| < 2^256 / d^2. Parametrul d seteaza dificultatea calculului de a gasi un block, si parametrul k seteaza memory hardness. Orice birthday algorithm trebuie sa stocheze cumva toate calculele de H(data+xn+i)in memorie, astfel ca viitoarele calcule sa fie comparate cu acestea. Aici, calculul este memory-hard, dar verificarea este memory-easy, permitand extreme memory hardness fara a compromite usurinta verificarii.Totusi, algoritmul este problematic din doua motive. In primul rand, exista un time-memory tradeoff attack, unde utilizatorii cu 2x mai putina memorie pot compensa cu 2x putere de calcul, prin urmare memory hardness nu este absoluta. In al doilea rand, echipamentul hardware specializat poate fi usor de construit, in special daca se trece de traditionala arhitectura pe baza de chip si procesor, catre diverse clase de hash tables bazate pe hardware sau probabilistic analog computing.
+Dagger - ideea din spatele Dagger,, un algoritm in-house dezvoltat de echipa Ethereum, este aceea de a avea un algoritm similar lui Scrypt, dar proiectat special ca fiecare nonce sa depinda numai de o mica portiune din data tree care rezulta din fiecare grup de ~10 milioane nonces. Calculul nonces la un nivel rezonabil de eficienta solicita construirea unui intreg tree, ocupand 100mb de memorie, pe cand verificarea unui nonce necesita doar 100kb. Totusi, aloritmii in genul Dagger sunt vulnerabili la dispozitive cu circuite computationale multiple care impart aceeasi memorie, si desi acest pericol poate fi diminuat, este probabil imposibil de inlaturat complet.
+Ca un standard, avem in vedere un algoritm in genul Dagger cu parametri ajustati sa minimizeze atacurile de hardware specializat, probabil impreuna cu un proof of stake algorithm ca propriul nostru Slasher, pentru securitate sporita, daca este necesar. Totusi, pentru a veni cu un proof-of-work algorithm mai bun ca al competitiei, intentia noastra este sa folosim o parte din fondurile stranse pentru a organiza o competitie cu premii, similara cu cele pentru a determina algoritmul pentru Advanced Encryption Standard (AES) in 2005 si SHA3 hash algorithm in 2013, unde grupuri de cercetare din toata lumea concureaza pentru a dezvolta mining algorithms rezistenti la ASIC, si sa avem un proces de selectie cu mai multe runde de jurizare pentru a alege invingatorii. Incurajam cercetari despre memory-hard proofs of work, self-modifying proofs of work, proofs of work bazate pe instructiuni x86, multiple proofs of work cu protocoale economice ca stimulente pentru dezvoltare, si orice design care atinge scopul dorit. De asemenea vor exista oportunitati de a explora alternative precum proof of stake, proof of burn si proof of excellence.
+
+ 
 
 
-Transactions
+Tranzactii
 
-A transaction is stored as:
+O tranzactie este stocata astfel:
 
 [ nonce, receiving_address, value, [ data item 0, data item 1 ... data item n ], v, r, s ]
-nonce is the number of transactions already sent by that account, encoded in binary form (eg. 0 -> '', 7 -> '\x07', 1000 -> '\x03\xd8'). (v,r,s) is the raw Electrum-style signature of the transaction without the signature made with the private key corresponding to the sending account, with 0 <= v <= 3. From an Electrum-style signature (65 bytes) it is possible to extract the public key, and thereby the address, directly. A valid transaction is one where (i) the signature is well-formed (ie. 0 <= v <= 3, 0 <= r < P, 0 <= s < N, 0 <= r < P - N if v >= 2), and (ii) the sending account has enough funds to pay the fee and the value. A valid block cannot contain an invalid transaction; however, if a contract generates an invalid transaction that transaction will simply have no effect. Transaction fees will be included automatically. If one wishes to voluntarily pay a higher fee, one is always free to do so by constructing a contract which forwards transactions but automatically sends a certain amount or percentage to the miner of the current block.
+nonce este numarul de trnazactii deja trimise de acel cont, codate in forma binara(ex. 0 -> '', 7 -> '\x07', 1000 -> '\x03\xd8'). (v,r,s) este semnatura bruta Electrum-style a tranzactiei fara ca acea semnatura sa fie facuta cu private key corespunzatoare contului expeditor, cu 0 <= v <= 3. De la o semnatura Electrum-style (65 bytes) este posibila extractia public key, si , deci, si adresa, in mod direct.O tranzactie valida este una in care (i) semnatura este bine formata(ie. 0 <= v <= 3, 0 <= r < P, 0 <= s < N, 0 <= r < P - N if v >= 2), si (ii) contul expeditor are destule fonduri pentru a plati taxele si valoarea.Un block valid nu poate contine o tranzactie invalida; cu toate acestea, daca un contract genereaza o tranzactie invalida, acea tranzactie pur si simplu nu va avea efect.Daca cineva doreste sa plateasca voluntar o taxa mai mare, este liber sa faca asta, prin construirea unui contract care trimite mai departe tranzactia , dar care trimite automat o suma sau un procentaj minerului block-ului curent.
 
-Transactions sent to the empty string as an address are a special type of transaction, creating a "contract".
+Tranzactiile trimise la un sir gol , ca adresa, sunt tranzactii speciale, creand un "contract".
 
 
-Difficulty adjustment
+Difficulty adjustment( Adjustarea dificultatilor)
 
-Difficulty is adjusted by the formula:
+Dificultatea este adjustata prin formula:
 
 D(genesis_block) = 2^36
 D(block) =
     if anc(block,1).timestamp >= anc(block,501).timestamp + 60 * 500: D(block.parent) - floor(D(block.parent) / 1000)
     else:                                                             D(block.parent) + floor(D(block.parent) / 1000)
-anc(block,n) is the nth generation ancestor of the block; all blocks before the genesis block are assumed to have the same timestamp as the genesis block. This stabilizes around a block time of 60 seconds automatically. The choice of 500 was made in order to balance the concern that for smaller values miners with sufficient hashpower to often produce two blocks in a row would have the incentive to provide an incorrect timestamp to maximize their own reward and the fact that with higher values the difficulty oscillates too much; with the constant of 500, simulations show that a constant hashpower produces a variance of about +/-20%.
+anc(block,n)este generatia "n" ascendenta a block-ului; toate block-urile dinaintea block-ului geneza(original) se presupune ca au acelasi timestamp ca block-ul geneza.Acesta se stabilizeaza automat in jurul a 60 de secunde. Alegerea valorii de 500 a fost facuta pentru a balansa preocuparea ca minerii cu valori mai mici , cu hashpower suficient pentru a produce des doua block-uri la rand ,ar avea imboldul de a da un timestapt incorect pentru a-si maximiza propria rasplata si, pentru ca, odata cu valorile mari si dificultatea oscileaza prea mult, cu constanta de 500 simularile arata ca un hashpower constant produce o variatie de aproximativ +/-20%.
 
 
 Block Rewards
 
-A miner receives three kinds of rewards: a static block reward for producing a block, fees from transactions, and nephew/uncle rewards as described in the GHOST section above. The miner will receive 100% of the block reward for themselves, but transaction fee rewards will be split, so that 50% goes to the miner and the remaining 50% is evenly split among the last 64 miners. The reason for this is to prevent a miner from being able to create an Ethereum block with an unlimited number of operations, paying all transaction fees to themselves, while still maintaining an incentive for miners to include transactions. As described in the GHOST section, uncles only receive 87.5% of their block reward, with the remaining 12.5% going to the including nephew; the transaction fees from the stale block do not go to anyone.
+Un miner primeste trei tipuri de rasplata: o rasplata static block pentru producerea unui block, platile din tranzactii si recompense "nepot/unchi" descrise in sectiunea GHOST de mai sus.Minerul va primi 100% din recompensa block, dar plata pentru tranzactie va fi impartita, astfel 50% din ea merge la miner, iar restul de 50% este impartit in mod egal intre ultimii 64 de mineri.Motivul pentru aceasta impartire este unul de preventie impotriva creerii de catre un miner a unui block Ethereum cu un numar nelimitat de operatii, care sa plateasca taxele de tranzactii catre ei insisi, mentinand in acelasi timp un stimulent pentru ca alti mineri sa includa tranzactii.Dupa cum am descris in in sectiunea GHOST, unchii primesc doar 87.5% din rasplata block, celelalte 12.5% procente ramanand la nepotul fiecaruia in parte, platile pentru tanzactiile provenite din block-uri vechi nu merg la nimeni.
 
 
 Contracts
 
-In Ethereum, there are two types of entities that can generate and receive transactions: actual people (or bots, as cryptographic protocols cannot distinguish between the two) and contracts. A contract is essentially an automated agent that lives on the Ethereum network, has an Ethereum address and balance, and can send and receive transactions. A contract is "activated" every time someone sends a transaction to it, at which point it runs its code, perhaps modifying its internal state or even sending some transactions, and then shuts down. The "code" for a contract is written in a special-purpose low-level language consisting of a stack, which is not persistent, 2256 memory entries, which are also not persistent, and 2256 storage entries which constitute the contract's permanent state. Note that Ethereum users will not need to code in this low-level stack language; we will provide a simple C-like language with variables, expressions, conditionals, arrays and while loops, and provide a compiler down to Ethereum script code.
+In Ethereum exista doua tipuri de entitati care pot genera si pot primi tranzactii: persoane reale(sau bots, protocoalele cryptografice nu ii pot distinge) si contracte. Un contract este, esential , un agent automat care traieste in reteaua Ethereum, are o adresa si o balanta Ethereum, si care poate primi si trimite tranzactii.Un contract este "activat" de fiecare data cand cineva trimite o tranzactie spre el, punct in care isi ruleaza codul, poate modificandu-si starea interna sau chiar trimitand anumite tranzactii, dupa care se inchide (shut down)."Codul" pentru un contract este scris special intr-un limbaj de un nivel scazut, constand intr-o stiva , care nu este persistenta, si2256 storage entries care constituie starea permanenta a contractului. Retineti ca utilizatorii Ethereum nu vor trebui sa codeze in acest limbaj, vom furniza un C-like language cu variabile, expresii, conditionale, tablouri si while loops, si ofera un compiler down to Ethereum script code.
 
 
 Applications
 
-Here are some examples of what can be done with Ethereum contracts, with all code examples written in our C-like language. The variables tx.sender, tx.value, tx.fee, tx.data and tx.datan are properties of the incoming transaction, contract.storage, and contract.address of the contract itself, and block.contract_storage, block.account_balance, block.number, block.difficulty, block.parenthash, block.basefee and block.timestamp properties of the block. block.basefee is the "base fee" which all transaction fees in Ethereum are calculated as a multiple of; for more info see the "fees" section below. All variables expressed as capital letters (eg. A) are constants, to be replaced by actual values by the contract creator when actually releasing the contract.
+Aici sunt cateva exemple a ceea ce se poate face cu contractele Ethereum, cu toate exemplele de coduri scrise in our C-like language. Variabileletx.sender, tx.value, tx.fee, tx.data si tx.datan sunt proprietati ale tranzactiilor viitoare, contract.storage, si contract.address ale contractului in sine, si block.contract_storage, block.account_balance, block.number, block.difficulty, block.parenthash, block.basefee si block.timestamp proprietati ale block-ului. block.basefee este "taxa de baza" in care toate taxele de tranzactii din Ethereum sunt calculate ca multipli (is the "base fee" which all transaction fees in Ethereum are calculated as a multiple of; for more info see the "fees" section below). Toate variabilele exprimate prin majuscule (ex. A) sunt constante, pentru a fi inlocuite de valori adevarate de creatorul contractului, in momentul in care acel contract este eliberat.
 
 
 Sub-currencies
 
-Sub-currencies have many applications ranging from currencies representing assets such as USD or gold to company stocks and even currencies with only one unit issued to represent collectibles or smart property. Advanced special-purpose financial protocols sitting on top of Ethereum may also wish to organize themselves with an internal currency. Sub-currencies are surprisingly easy to implement in Ethereum; this section describes a fairly simple contract for doing so.
+Sub-currencies (sub-valutele) au multe aplicatii, de la valute care reprezinta bunuri ca dolari sau aur la actiuni si chiar valute emise cu o singura unitate pentru a reprezenta obiecte de colectie sau proprietate intelectuala (smart property).Protocoale financiare avansate cu destinatie avansata care se afla pe Ethereum pot dori sa se organizeze cu o valuta interna.Sub-currencies sunt surprinzator de usor de implementat in Ethereum, aceasta sectiune descrie un contract destul de simplu pentru acest lucru.
 
-The idea is that if someone wants to send X currency units to account A in currency contract C, they will need to make a transaction of the form (C, 100 * block.basefee, [A, X]), and the contract parses the transaction and adjusts balances accordingly. For a transaction to be valid, it must send 100 times the base fee worth of ether to the contract in order to "feed" the contract (as each computational step after the first 16 for any contract costs the contract a small fee and the contract will stop working if its balance drains to zero).
+Ideea este aceea ca daca cineva doreste sa trimita x unitati de valuta contului A in valuta contractului C,vor trebui sa faca o tranzactie de format(C, 100 * block.basefee, [A, X]), iar contractul analizeaza tranzactia si adjusteaza balanta corespunzator.Pentru ca o tranzactie sa fie valabila, trebuie trimisa de 100 de ori taxa de baza in ether, pentru a alimenta contractul (and the contract parses the transaction and adjusts balances accordingly. For a transaction to be valid, it must send 100 times the base fee worth of ether to the contract in order to "feed" the contract (cu fiecare pas computational ce urmeaza dupa primii 16 contractul va fi taxat cu o mica plata si contractul va inceta sa functioneze daca balanta sa ajunge la zero).
 
     if tx.value < 100 * block.basefee:
         stop
@@ -271,22 +278,22 @@ The idea is that if someone wants to send X currency units to account A in curre
     else:
         contract.storage[mycreator] = 10^18
         contract.storage[1000] = 1
-Ethereum sub-currency developers may also wish to add some other more advanced features:
+Programatorii sub-valutelor Ethereum pot , deasemenea, sa doreasca adaugarea unor alte trasaturi mai avansate:
 
-Include a mechanism by which people can buy currency units in exchange for ether, perhaps auctioning off a set number of units every day.
-Allow transaction fees to be paid in the internal currency, and then refund the ether transaction fee to the sender. This solves one major problem that all other "sub-currency" protocols have had to date: the fact that sub-currency users need to maintain a balance of sub-currency units to use and units in the main currency to pay transaction fees in. Here, a new account would need to be "activated" once with ether, but from that point on it would not need to be recharged.
-Allow for a trust-free decentralized exchange between the currency and ether. Note that trust-free decentralized exchange between any two contracts is theoretically possible in Ethereum even without special support, but special support will allow the process to be done about ten times more cheaply.
+Includerea unui mecanism prin care oamenii pot cumpara unitati valutare in schimbul ether-ilor, poate licitand un numar fix de unitati zilnic.
+Permiterea platii taxelor de tranzactii in valute interne, si apoi rambursarea taxei pentru tranzactiile ether expeditorului.Acest lucru rezolva una din problemele majore pe care toate celelalte protocoale "sub-valuta" le-au avut pana in momentul de fata: faptul ca utilizatorii de sub-valute trebuie sa mentina o balanta de unitati de sub-valute pentru utilizare si unitati in principala valuta pentru a plati taxele pentru tanzactii.Aici, un cont nou ar trebui sa fie "activat" o data cu ether-ul, dar de aici mai departe nu ar mai trecui reincarcat.
+Permiterea unui schimb trust-free descentralizat intre valuta si ether. Retineti ca acest schimb trust-free descentralizat intre orice doua contracte este teoretic posibil in Ethereum chiar si fara un suport special, dar suportul special va permite ca procesul sa fie realizat de aproximativ zece ori mai ieftin.
 
-Financial derivatives
+Derivate financiare
 
-The underlying key ingredient of a financial derivative is a data feed to provide the price of a particular asset as expressed in another asset (in Ethereum's case, the second asset will usually be ether). There are many ways to implement a data feed; one method, pioneered by the developers of Mastercoin, is to include the data feed in the blockchain. Here is the code:
+Ingredientul-cheie care sta la baza derivatelor financiare este un data feed care furnizeaza pretul unui bun, asa cum e desemnat in alt bun (in cazul Ethereum, al doilea bun va fi de obicei ether). Sunt mai multe cai de a implementa un data feed; o metoda, implementata de creatorii Mastercoin, consta in includerea data feed in blockchain. Codul este acesta:
 
     if tx.sender != FEEDOWNER:
         stop
     contract.storage[data[0]] = data[1]
-Any other contract will then be able to query index I of data store D by using block.contract_storage(D)[I]. A more advanced way to implement a data feed may be to do it off-chain - have the data feed provider sign all values and require anyone attempting to trigger the contract to include the latest signed data, and then use Ethereum's internal scripting functionality to verify the signature. Pretty much any derivative can be made from this, including leveraged trading, options, and even more advanced constructions like collateralized debt obligations (no bailouts here though, so be mindful of black swan risks).
+Orice alt contract va putea apoi sa interogheze index-ul I din data store D folosind block.contract_storage(D)[I]. Un mod mai avansat de a implementa un data feed este efectuarea acestei operatii off-chain – provider-ul de data feed sa semneze toate valorile, facand posibila incercarea de a declansa contractul numai prin includerea signed data, si apoi folosirea functiei de internal scripting a Ethereum pentru a verifica semnatura. In mare, orice derivat poate fi efectuat astfel, incluzand leverage trading, optiuni si operatiuni mai avansate precum collateralized debt obligations (no bailouts here though, so be mindful of black swan risks).
 
-To show an example, let's make a hedging contract. The basic idea is that the contract is created by party A, who puts up 4000 ether as a deposit. The contract then lies open for any party to accept it by putting in 1000 ether. Say that 1000 ether is worth $25 at the time the contract is made, according to index I of data store D. If party B accepts it, then after 30 days anyone can send a transaction to make the contract process, sending the same dollar value worth of ether (in our example, $25) back to B and the rest to A. B gains the benefit of being completely insulated against currency volatility risk without having to rely on any issuers. The only risk to B is if the value of ether falls by over 80% in 30 days - and even then, if B is online B can simply quickly hop onto another hedging contract. The benefit to A is the implicit 0.2% fee in the contract, and A can hedge against losses by separately holding USD in another location (or, alternatively, A can be an individual who is optimistic about the future of Ethereum and wants to hold ether at 1.25x leverage, in which case the fee may even be in B's favor).
+Pentru a exemplifica, facem un contract de hedging. Ideea de baza este ca acel contract este creat de o persoana A, care depune 4000 ether. Contractul este apoi disponibil pentru acceptare de catre altcineva, care mai depune 1000 ether. Sa spunem ca 1000 ether valoreaza 25$ cand este facut contractul, potrivit indexului I din data store D. Daca persoana B accepta, dupa 30 de zile oricine poate trimite o tranzactie pentru a face contractul sa proceseze, trimitand acelasi echivalent de dolari in ether (in exemplul nostru, 25$) inapoi la B si restul catre A. B are avatajul de a fi protejat de currency volatility risk, fara a fi nevoit sa depinda de alti emitenti. Singurul risc pe care si-l asuma B este daca valoarea ether scade cu 80% in 30 de zile – chiar si atunci, daca B este online, se poate transfera catre un alt hedging contract. Avantajul lui Aeste taxa implicita de 0.2% din contract, si A se poate feri de pierderi daca detine valuta (USD) in alte locatii (sau Apoate fi optimist in legatura cu viitorul Ethereum, si vrea sa mentina ether la un leverage de 1.25x, caz in care taxa ar fi in favoarea lui B).
 
     if tx.value < 200 * block.basefee:
         stop
@@ -304,33 +311,34 @@ To show an example, let's make a hedging contract. The basic idea is that the co
         else if block.timestamp > contract.storage[1002]:
             mktx(contract.storage[1003],ethervalue,0,0)
             mktx(A,5000 - ethervalue,0,0)
-More advanced financial contracts are also possible; complex multi-clause options (eg. "Anyone, hereinafter referred to as X, can claim this contract by putting in 2 USD before Dec 1. X will have a choice on Dec 4 between receiving 1.95 USD on Dec 29 and the right to choose on Dec 11 between 2.20 EUR on Dec 28 and the right to choose on Dec 18 between 1.20 GBP on Dec 30 and paying 1 EUR and getting 3.20 EUR on Dec 29") can be defined simply by storing a state variable just like the contract above but having more clauses in the code, one clause for each possible state. Note that financial contracts of any form do need to be fully collateralized; the Ethereum network controls no enforcement agency and cannot collect debt.
+Si alte contracte financiare avansate sunt posibile; optiuni de clauze complexe (ex: “Oricine, denumit in continuare X, poate revendica acest cont prin depunerea a 2$ pana la 1 decembrie). X va avea de ales pe 4 decembrie intre a primi 1.95$ pe 29 decembrie si dreptul de a se decide pe 11 decembrie intre 2.20$ pe 29 decembrie si dreptul de a alege pe 18 decembrie intre suma de 1.89 GBP si a plati 1 EUR si a primi 3.20 EUR pe 29 decembrie) pot fi definite mai simplu prin stocarea unui state variable la fel ca in contractul mentionat, dar cu mai multe clauze in cod, cate una pentru fiecare stare posibila. Tineti minte ca orice forma de contract financiar trebuie sa fie colaterale; reteaua Ethereum nu detine o agentie de executare silita si nu poate colecta datorii.
 
 
 Identity and Reputation Systems
 
-The earliest alternative cryptocurrency of all, Namecoin, attempted to use a Bitcoin-like blockchain to provide a name registration system, where users can register their names in a public database alongside other data. The major cited use case is for a DNS system, mapping domain names like "bitcoin.org" (or, in Namecoin's case, "bitcoin.bit") to an IP address. Other use cases include email authentication and potentially more advanced reputation systems. Here is a simple contract to provide a Namecoin-like name registration system on Ethereum:
+Cea mai veche alternativa cryptocurrency, Namecoin,a incercat sa foloseasca un blockchain specific Bitcoin pentru a furniza un sistem de inregistrare a numelor, unde utilizatorii isi pot inregistra numele si si alte date intr-o baza de date publica. Cel mai folosit caz este un sistem DNScare alocheaza nume de domenii precum “bitcoin.org” (sau in cazul Namecoin, “bitcoin.bit”) unei adrese IP. In alte cazuri se includ autentificarea prin e-mail si posibil alte advanced reputation systems. Aici este un contract simplu pentru un sistem de inregistrare a numelor in genul Namecoin, in Ethereum:
 
     if tx.value < block.basefee * 200:
         stop
     if contract.storage[tx.data[0]] or tx.data[0] < 100:
         stop
     contract.storage[tx.data[0]] = tx.data[1]
-One can easily add more complexity to allow users to change mappings, automatically send transactions to the contract and have them forwarded, and even add reputation and web-of-trust mechanics.
+Se poate adauga mai multa complexitate, pentru a permite utilizatorilor sa schimbe mappings, sa trimita tranzactii automat catre contract, de unde sa fie retrimise, si chiar sa adauge reputatie si web-of-trust mechanics.
 
 
-Decentralized Autonomous Organizations
+Organizatii Descentralizate Autonome
 
-The general concept of a "decentralized autonomous organization" is that of a virtual entity that has a certain set of members or shareholders which, perhaps with a 67% majority, have the right to spend the entity's funds and modify its code. The members would collectively decide on how the organization should allocate its funds. Methods for allocating a DAO's funds could range from bounties, salaries to even more exotic mechanisms such as an internal currency to reward work. This essentially replicates the legal trappings of a traditional company or nonprofit but using only cryptographic blockchain technology for enforcement. So far much of the talk around DAOs has been around the "capitalist" model of a "decentralized autonomous corporation" (DAC) with dividend-receiving shareholders and tradable shared; an alternative, perhaps described as a "decentralized autonomous community", would have all members have an equal share in the decision making and require 67% of existing members to agree to add or remove a member. The requirement that one person can only have one membership would then need to be enforced collectively by the group.
+Conceptul general din spatele Organizatiilor Descentralizate Autonome este acela ca o entitate virtuala are un anumit numar de membri sau actionari, care daca detin 67% din actiuni, sunt autorizati sa foloseasca fondurile entitatii, si sa modifice codul. Membrii ar decide impreuna cum ar trebui alocate fondurile organizatiei. Metodele de alocare pot fi diverse: de la cadouri si salarii pana la implementarea unei monede interne sau bonusuri. In esenta, aceasta imita metodele folosite de o companie traditionala sau organizatie non-profit, doar ca foloseste tehnologia cryptographic blockchain. Pana acum discutiile legate de DAO au vizat modelul “capitalist” al corporatiilor descentralizate autonome (DAC) cu actionari care primesc dividende; o alternativa ar permite tuturor actionarilor sa aiba un rol egal in luarea deciziilor, si un numar de 67% din membri pentru a decide acceptarea sau eliminarea unui membri. Pretentia de a apartine unei singure companii va fi atunci impusa de grup.
 
-Some "skeleton code" for a DAO might look as follows.
+Exemple de “skeleton code” pentru o DAO
 
-There are three transaction types:
 
-[0,k] to register a vote in favor of a code change
-[1,k,L,v0,v1...vn] to register a code change at code k in favor of setting memory starting from location L to v0, v1 ... vn
-[2,k] to finalize a given code change
-Note that the design relies on the randomness of addresses and hashes for data integrity; the contract will likely get corrupted in some fashion after about 2^128 uses, but that is acceptable since nothing close to that volume of usage will exist in the foreseeable future. 2^255 is used as a magic number to store the total number of members, and a membership is stored with a 1 at the member's address. The last three lines of the contract are there to add C as the first member; from there, it will be C's responsibility to use the democratic code change protocol to add a few other members and code to bootstrap the organization.
+Exista 3 tipuri de tranzactii:
+
+[0,k]pentru a inregistra un vot pentru schimbarea codului
+[1,k,L,v0,v1...vn]pentru a inregistra o shimbare de cod k in favoarea setarii memoriei incepand cu locatia L pana la v0, v1 ... vn
+[2,k]pentru a finaliza o schimbare de cod
+Tineti minte ca acest design e bazat pe un model aleatoriu de adrese si hashes, pentru a asigura integritatea datelor; contractul va fi corupt in vreun fel dupa 2^128 utilizari, dar acest numar este acceptabil, deoarece un astfel de nivel de uzare este improbabil in viitorul apropiat.2^255 este folosit ca un numar “magic” pentru a stoca numarul total de membri, si apartenenta este denotata cu un 1 la adresa membrului. Ultimele 3 randuri din contract sunt folosite pentru a adauga C ca un prim membru; din acel moment, va fi responsabilitatea lui C sa foloseasca protocolul democratic de a schimba codul pentru activitati precum adaugarea membrilor si bootstrap.
 
     if tx.value < tx.basefee * 200:
         stop
@@ -363,33 +371,36 @@ Note that the design relies on the randomness of addresses and hashes for data i
     if contract.storage[2 ^ 255 + 1] == 0:
         contract.storage[2 ^ 255 + 1] = 1
         contract.storage[C] = 1
-This implements the "egalitarian" DAO model where members have equal shares. One can easily extend it to a shareholder model by also storing how many shares each owner holds and providing a simple way to transfer shares.
-
-DAOs and DACs have already been the topic of a large amount of interest among cryptocurrency users as a future form of economic organization, and we are very excited about the potential that DAOs can offer. In the long term, the Ethereum fund itself intends to transition into being a fully self-sustaining DAO.
+Aceasta implementeaza modelul egalitar DAO unde membrii au un numar egal de actiuni. Se poate adapta la un “shareholder model” prin introducerea numarului de actiuni detinute de fiecare membru, si furnizarea unui mod simplu de transfer de actiuni.
 
 
-Further Applications
+DAO si DAC au fost un punct de interes pentru utilizatorii de cryptocurrency ca o viitoare forma de organizare economica, si suntem incantati de potentialul oferit de DAO. Pe termen lung, chiar fondul Ethereum intentioneaza sa faca o tranzitie, devenind un DAO autonom.
 
-1) Savings wallets. Suppose that Alice wants to keep her funds safe, but is worried that she will lose or someone will hack her private key. She puts ether into a contract with Bob, a bank, as follows: Alice alone can withdraw a maximum of 1% of the funds per day, Alice and Bob together can withdraw everything, and Bob alone can withdraw a maximum of 0.05% of the funds. Normally, 1% per day is enough for Alice, and if Alice wants to withdraw more she can contact Bob for help. If Alice's key gets hacked, she runs to Bob to move the funds to a new contract. If she loses her key, Bob will get the funds out eventually. If Bob turns out to be malicious, she can still withdraw 20 times faster than he can.
-
-2) Crop insurance. One can easily make a financial derivatives contract but using a data feed of the weather instead of any price index. If a farmer in Iowa purchases a derivative that pays out inversely based on the precipitation in Iowa, then if there is a drought, the farmer will automatically receive money and if there is enough rain the farmer will be happy because their crops would do well.
-
-3) A decentrally managed data feed, using proof-of-stake voting to give an average (or more likely, median) of everyone's opinion on the price of a commodity, the weather or any other relevant data.
-
-4) Smart multisignature escrow. Bitcoin allows multisignature transaction contracts where, for example, three out of a given five keys can spend the funds. Ethereum allows for more granularity; for example, four out of five can spend everything, three out of five can spend up to 10% per day, and two out of five can spend up to 0.5% per day. Additionally, Ethereum multisig is asynchronous - two parties can register their signatures on the blockchain at different times and the last signature will automatically send the transaction.
-
-5) Peer-to-peer gambling. Any number of peer-to-peer gambling protocols, such as Frank Stajano and Richard Clayton's Cyberdice, can be implemented on the Ethereum blockchain. The simplest gambling protocol is actually simply a contract for difference on the next block hash. From there, entire gambling services such as SatoshiDice can be replicated on the blockchain either by creating a unique contract per bet or by using a quasi-centralized contract.
-
-6) A full-scale on-chain stock market. Prediction markets are also easy to implement as a trivial consequence.
-
-7) An on-chain decentralized marketplace, using the identity and reputation system as a base.
-
-8) Decentralized Dropbox. One setup is to encrypt a file, build a Merkle tree out of it, put the Merkle root into a contract alongside a certain quantity of ether, and distribute the file across some secondary network. Every day, the contract would randomly select a branch of the Merkle tree depending on the block hash, and give X ether to the first node to provide that branch to the contract, thereby encouraging nodes to store the data for the long term in an attempt to earn the prize. If one wants to download any portion of the file, one can use a micropayment channel-style contract to download the file from a few nodes a block at a time.
+.
 
 
-How do contracts work?
+Alte Aplicatii
 
-A contract making transaction is encoded as follows:
+1) Savings wallets. Sa presupunem ca Alice vrea sa aiba conturile in siguranta, dar e ingrijorata ca isi va pierde (sau cineva ii va fura) codul. Depune ether intr-un contract cu Bob, o banca, dupa cum urmeaza: Alice poate retrage maxim 1% din fonduri pe zi, Alice impreuna cu Bob pot retrage totul, si Bob de unul singur poate retrage 0.05% din fonduri. In mod normal, 1% pe zi este destul pentru Alice, si daca vrea sa retraga mai mult, poate cere ajutorul lui Bob. Daca codul lui Alice este folosit ilicit de altcineva, apeleaza la Bob pentru a muta fondurile pe un nou contract. Daca ea isi pierde codul, Bob va retrage fondurile in cele din urma. Daca Bob este rau intentionat, Alice oricum poate retrage de 20 de ori mai repede decat el.
+
+2) Crop insurance.Se poate face usor un  “financial derivatives contract” folosind date de prognoza meteo in locul unui index de preturi. Daca un fermier in Iowa cumpara derivative achitate invers proportional bazat pe precipitatiile din Iowa si vine seceta, fermierul va primi automat bani; daca precipitatiile sunt abundente, fermierul va fi fericit ca recolta va prospera.
+
+3) Un decentrally managed data feed, care foloseste un sistem de votare proof-of-stake pentru a furniza o medie intre opiniile tuturor asupra pretului unui produs, vremea sau alte date relevante.
+
+4) Smart multisignature escrow. Bitcoin accepta contracte de tranzactii multisignature unde, de exemplu, 3 din 5 keys pot folosi fondurile. Ethereum permite mai multa granularitate; de exemplu, 4 din 5 pot cheltui toate fondurile, 3 din 5 pot folosi pana la 10% pe zi si 2 din 5 pot folosi pana la 0.5% pe zi. In plus, Ethereum multisig este asincron – doi membri isi pot inregistra semnaturile pe blockchain la perioade diferite, si ultima semnatura va trimite automat tranzactia.
+
+5) Peer-to-peer gambling. Orice numar de protocoale de gambling, precum Cyberdice, al lui Frank Stajano si Richard Clayton, poate fi implementat pe blockchain-ul Ethereum. Cel mai simplu gambling protocol este de fapt un contract de diferenta pe urmatorul block hash. De aici, servicii de gambling precum SatoshiDice pot fi imitate pe blockchain prin crearea unui contract unic pe pariu sau prin folosirea unui contract quasi-centralizat.
+
+6) O piata de capital on-chain pe scara larga. Prediction markets (piete de predictie) sunt de asemenea usor de implementat ca si consecinta triviala.
+
+7O piata on-chain descentralizata , care foloseste   un sistem bazat pe identitate si reputatie.
+
+8) Dropbox Decentralizat. O metoda este aceea de a cripta un fisier, a organiza o schema Merkel, a depune o radacina Merkle intr-un contract alaturi de o anume suma de ether, si a distribui fisierul pe o retea secundara. In fiecare zi, contractul va alege o ramura aleatorie din acea schema Merkel in functie de block hash, si va acorda un numar X de ether primului nod care furnizeaza ramura catre contract, astfel incurajand nodurile sa stocheze datele pe termen lung, pentru a revendica premiul. Daca cineva incearca sa download-eze o portiune a fisierului, poate folosi un contract in stilul micropayment channel pentru a downloada fisierul de la cateva noduri, cate un block pe rand.
+
+
+Cum functioneaza contractele?
+
+Un contract care face tranzactii este codat dupa cum urmeaza:
 
     [
         nonce,
@@ -404,48 +415,48 @@ A contract making transaction is encoded as follows:
         r,
         s
     ]
-The data items will, in most cases, be script codes (more on this below). Contract creation transaction validation happens as follows:
+Itemii data vor fi, in majoritatea cazurilor, coduri script(mai mult despre acest lucru , mai jos). Validarea tranzactiei crearii contractului se desfasoara dupa cum urmeaza:
 
-Deserialize the transaction, and extract its sending address from its signature.
-Calculate the transaction's fee as NEWCONTRACTFEE plus storage fees for the code. Check that the balance of the creator is at least the transaction value plus the fee. If not, exit.
-Take the last 20 bytes of the sha3 hash of the RLP encoding of the transaction making the contract. If an account with that address already exists, exit. Otherwise, create the contract at that address
-Copy data item i to storage slot i in the contract for all i in [0 ... n-1] where n is the number of data items in the transaction, and initialize the contract with the transaction's value as its value. Subtract the value and fee from the creator's balance.
+Deserializeaza tranzactia si extrage adresa expeditoare din semnatura sa.
+Calculeaza taxa de tranzactie ca NEWCONTRACTFEE plus taxe de depozitare pentru cod.Verifica daca balanta creatorului este cel putin egala cu valoarea tranzactiei plus taxa. Daca nu, iese.
+Ia ultimii 20 bytes ai sha3 hash ai codarii RLP a tranzactiei, realizand contractul. Daca un cont cu aceeasi adresa exista deja, se paraseste operatiunea. Altfel, creati contractul la acea adresa.
+Se copiaza itemul data i pentru a depozita slotul i in contract pentru toti i in [0 ... n-1]unde n este numarul itemilor data din tranzactie, si initializeaza contractul cu valoarea tranzactiei ca fiind valoarea contractului. Se scade valoarea si taxa din balanta creatorului.
 
-Language Specification
+Specificatii de limbaj
 
-The contract scripting language is a hybrid of assembly language and Bitcoin's stack-based language, maintaining an index pointer that usually increments by one after every operation and continuously processing the operation found at the current index pointer. All opcodes are numbers in the range [0 ... 63]; labels further in this description such as STOP, EXTRO and BALANCE refer to specific values are defined further below. The scripting language has access to three kinds of memory:
+Limbajul de scripting al contractului este un hibrid din limbajul de asamblare si din limbajul stack-based al Bitcoin-ului, mentinand un indicator de index care de obicei creste cu unu dupa fiecare operatie si proceseaza continuu operatia gasita la indicatorul de index curent. Toate opcodes sunt numere in gama[0 ... 63]; etichete mai departe in descrierea sa ca STOP, EXTRO si BALANCE se refera la valori specifice care sunt definite mai departe. Limbajul scripting are acces la tri feluri de memorie:
 
-Stack - a form of temporary storage that is reset to an empty list every time a contract is executed. Operations typically add and remove values to and from the top of the stack, so the total length of the stack will shrink and grow over the course of the program's execution.
-Memory - a temporary key/value store that is reset to containing all zeroes every time a contract is executed. Keys and values in memory are integers in the range [0 ... 2^256-1]
-Storage - a persistent key/value store that is initially set to contain all zeroes, except for some script code inserted at the beginning when the contract is created as described above. Keys and values in storage are integers in the range [0 ... 2^256-1]
-Whenever a transaction is sent to a contract, the contract executes its scripting code. The precise steps that happen when a contract receives a transaction are as follows:
+Stack - o forma temporara de depozitare care este resetata pentru a goli lista de fiecare data cand un contract este executat. Operatiile , de obicei, adauga sau elimina valori la/de la varful stack-ului, astfel lungimea totala a unui stack va creste sau va scadea pe parcursul executarii programului.
+Memory - un stoc temporar de valori/keys care este resetat la continutul tuturor zerourilor de fiecare data cand un contract este executat.Keys si valori in memorie sunt numere intregi in gama [0 ... 2^256-1]
+Storage - un stoc persistent de valori/keys care initial este setat sa contina toate zerourile, exceptand anumite coduri script inserate la inceput cand contractul este creat. Valorile si keys aflate in storage sunt numere integrale aflate in gama [0 ... 2^256-1]
+Oricand o tranzactie este trimisa catre un contract, contractul va executa codul sau scripting.Pasii precisi care sunt facuti atunci cand un contract primeste o tranzactie sunt urmatorii:
 
-Contract Script Interpretation 
+Interpretarea Script-ului Contractelor 
 
 
-The contract's ether balance increases by the amount sent
-The index pointer is set to zero, and STEPCOUNT = 0
-Repeat forever:
-if the command at the index pointer is STOP, invalid or greater than 63, exit from the loop
-set MINERFEE = 0, VOIDFEE = 0
-set STEPCOUNT <- STEPCOUNT + 1
-if STEPCOUNT > 16, set MINERFEE <- MINERFEE + STEPFEE
-see if the command is LOAD or STORE. If so, set MINERFEE <- MINERFEE + DATAFEE
-see if the command will modify a storage field, say modifying KEY from OLDVALUE to NEWVALUE. Let F(K,V) be 0 if V == 0 else (len(K) + len(V)) * STORAGEFEE in bytes. Set VOIDFEE <- VOIDFEE - F(KEY,OLDVALUE) + F(KEY,NEWVALUE). Computing len(K) ignores leading zero bytes.
-see if the command is EXTRO or BALANCE. If so, set MINERFEE <- MINERFEE + EXTROFEE
-see if the command is a crypto operation. If so, set MINERFEE <- MINERFEE + CRYPTOFEE
-if MINERFEE + VOIDFEE > CONTRACT.BALANCE, HALT and exit from the loop
-subtract MINERFEE from the contract's balance and add MINERFEE to a running counter that will be added to the miner's balance once all transactions are parsed.
-set DELTA = max(-CONTRACT.STORAGE_DEPOSIT,VOIDFEE) and CONTRACT.BALANCE <- CONTRACT.BALANCE - DELTA and CONTRACT.STORAGE_DEPOSIT <- CONTRACT.STORAGE_DEPOSIT + DELTA. Note that DELTA can be positive or negative; the only restriction is that the contract's deposit cannot go below zero.
-run the command
-if the command did not exit with an error, update the index pointer and return to the start of the loop. If the contract did exit with an error, break out of the loop. Note that a contract exiting with an error does not make the transaction or the block invalid; it simply means that the contract execution halts midway through.
-In the following descriptions, S[-1], S[-2], etc represent the topmost, second topmost, etc items on the stack. The individual opcodes are defined as follows:
+Balanta ether a contractului creste odata cu suma trimisa.
+Indicatorul de index este setat la zero, si STEPCOUNT = 0
+Repeta la nesfarsit:
+daca comanda de la indicatorul de index este STOP, invalida sau mai mare de 63, iesiti din bucla
+setati MINERFEE = 0, VOIDFEE = 0
+setati STEPCOUNT <- STEPCOUNT + 1
+daca STEPCOUNT > 16, set MINERFEE <- MINERFEE + STEPFEE
+verificati daca comanda este LOAD sau STORE. Daca este asa, setati MINERFEE <- MINERFEE + DATAFEE
+vedeti daca comanda va modifica un camp de depozitare, sa spunem KEY din OLDVALUE in NEWVALUE. Lasati F(K,V)fie 0daca V == 0 altfel (len(K) + len(V)) * STORAGEFEE in bytes. Set VOIDFEE <- VOIDFEE - F(KEY,OLDVALUE) + F(KEY,NEWVALUE). Calcularea len(K) ignora leading zero bytes.
+vedeti daca comanda este EXTRO sau BALANCE. Daca este asa, setati MINERFEE <- MINERFEE + EXTROFEE
+verificati daca comanda este o operatie crypto.Daca este asa, setati MINERFEE <- MINERFEE + CRYPTOFEE
+daca MINERFEE + VOIDFEE > CONTRACT.BALANCE, OPRITI-VA si iesiti din bucla
+scadeti MINERFEE din balanta contractului si adaugati MINERFEE la un running counter care va fi daugat la balanta minerului odata ce toate tranzactiile sunt analizate.
+setati DELTA = max(-CONTRACT.STORAGE_DEPOSIT,VOIDFEE) si CONTRACT.BALANCE <- CONTRACT.BALANCE - DELTA si CONTRACT.STORAGE_DEPOSIT <- CONTRACT.STORAGE_DEPOSIT + DELTA. Retineti ca DELTA poate fi pozitiva sau negativa; singura restrictie este aceea ca depozitul contractului nu poate merge sub zero.
+rulati comanda
+daca comanda nu a iesit cu o eroare, updatati indicatorul de index si intoarceti-va la inceputul buclei.Daca contractul a iesit cu o eroare, iesiti din bucla. Retineti ca un contract existent cu o eroare nu face tranzactia sau block-ul invalide; pur si simplu inseamna ca execturia contractului s-a oprit la mijlocul procesului.
+In urmatoarele descrieri, S[-1], S[-2], etc reprezinta cei mai importanti, descrescator, itemi ai stack-ului. Opcode-urile individuale sunt definite dupa cum urmeaza:
 
-(0) STOP - halts execution
+(0) STOP - opreste executia
 (1) ADD - pops two items and pushes S[-2] + S[-1] mod 2^256
 (2) MUL - pops two items and pushes S[-2] * S[-1] mod 2^256
 (3) SUB - pops two items and pushes S[-2] - S[-1] mod 2^256
-(4) DIV - pops two items and pushes floor(S[-2] / S[-1]). If S[-1] = 0, halts execution.
+(4) DIV - pops two items and pushes floor(S[-2] / S[-1]). If S[-1] = 0, opreste executia.
 (5) SDIV - pops two items and pushes floor(S[-2] / S[-1]), but treating values above 2^255 - 1 as negative (ie. x -> 2^256 - x). If S[-1] = 0, halts execution.
 (6) MOD - pops two items and pushes S[-2] mod S[-1]. If S[-1] = 0, halts execution.
 (7) SMOD - pops two items and pushes S[-2] mod S[-1], but treating values above 2^255 - 1 as negative (ie. x -> 2^256 - x). If S[-1] = 0, halts execution.
@@ -492,33 +503,35 @@ In the following descriptions, S[-1], S[-2], etc represent the topmost, second t
 (60) BALANCE - pops one item and pushes balance of the account with that address, or zero if the address is invalid
 (61) MKTX - pops four items and initializes a transaction to send S[-2] ether to S[-1] with S[-3] data items. Takes items in memory from index S[-4] to index (S[-4] + S[-3] - 1) mod 2^256 as the transaction's data items.
 (63) SUICIDE - pops one item, destroys the contract and clears all storage, sending the entire balance plus the contract deposit to the account at S[-1]
-As mentioned above, the intent is not for people to write scripts directly in Ethereum script code; rather, we will release compilers to generate ES from higher-level languages. The first supported language will likely be the simple C-like language used in the descriptions above, and the second will be a more complete first-class-function language with support for arrays and arbitrary-length strings. Compiling the C-like language is fairly simple as far as compilers go: variables can be assigned a memory index, and compiling an arithmetic expression essentially involves converting it to reverse Polish notation (eg. (3 + 5) * (x + y) -> PUSH 3 PUSH 5 ADD PUSH 0 MLOAD PUSH 1 MLOAD ADD MUL). First-class function languages are more involved due to variable scoping, but the problem is nevertheless tractable. The likely solution will be to maintain a linked list of stack frames in memory, giving each stack frame N memory slots where N is the total number of distinct variable names in the program. Variable access will consist of searching down the stack frame list until one frame contains a pointer to the variable, copying the pointer to the top stack frame for memoization purposes, and returning the value at the pointer. However, these are longer term concerns; compilation is separate from the actual protocol, and so it will be possible to continue to research compilation strategies long after the network is set running.
+Dupa cum am mentionat si mai sus, intentia nu este ca oamenii sa scrie script-uri direct in codul script al Ethereum, ci, vom pune la dispozitie compilatoare pentru a genera ES din limbaje de un nivel mai inalt.Primul limbaj suportat va fi cel mai probabil limbajul simplu C-like utilizat in descrierile de mai sus, iar al doilea va fi mai un limbaj de prima clasa mai complet cu suport pentru matrice si pentru siruri de lungimi arbitrare.Compilarea limbajului C este destul de simpla in ceea ce priveste eficienta compilatoarelor: variabilelor le pot fi repartizate in index de memorie, si formarea unei expresii aritmetice implica, esential, convertirea la reverse Polish notation (eg. (3 + 5) * (x + y) -> PUSH 3 PUSH 5 ADD PUSH 0 MLOAD PUSH 1 MLOAD ADD MUL). Limbajul de prima clasa este mai implicat datorita definirii variabile a domeniului, dar problema este cu toate acestea usor de manuit. Solutia posibila va fi mentinerea unei liste linked a frame-urilor stack in memorie, dand fiecarui stack frame N sloturi de memorie unde N este numarul total de nume de variabile distincte in program.Accesul varialilelor va consta in cautarea in lista stck frame pana cand un frame va contine un indicator spre variabila, copiind indicatorul in varful stack-ului pentru scopuri de memorare, si returnarea valorii la indicator.Totusi, acestea sunt griji pe termen lung; compilarea este separata de protocolul in sine, si, astfel, va fi pobila continuarea cercetarii strategiilor de compilare si dupa ce reteaua este in functiune.
 
 
-Fees
+Taxe
 
-In Bitcoin, there are no mandatory transaction fees. Transactions can optionally include fees which are paid to miners, and it is up to the miners to decide what fees they are willing to accept. In Bitcoin, such a mechanism is already imperfect; the need for a 1 MB block size limit alongside the fee mechanism shows this all too well. In Ethereum, because of its Turing-completeness, a purely voluntary fee system would be catastrophic. Instead, Ethereum will have a system of mandatory fees, including a transaction fee and six fees for contract computations. The fees are currently set to:
+In Bitcoin, nu exista taxe obligatorii pe tranzactie. Tranzactiile pot include taxe platite catre mineri, si acestia pot decide ce taxe vor accepta. In Bitcoin, un astfel de mecanism este imperfect; nevoia unui block size limit de 1 MB pe langa mecanismul de taxare ilustreaza acest fapt. In Ethereum, datorita Turing-completeness, un sistem de taxare voluntara ar fi catastrofal. In loc, Ethereum va avea un sistem de taxe obligatorii, care includ taxele de tranzactie si 6 taxe pentru calculele contractului.
 
-TXFEE (100x) - fee for sending a transaction
-NEWCONTRACTFEE (100x) - fee for creating a new contract, not including the storage fee for each item in script code
-STEPFEE (1x) - fee for every computational step after than first sixteen in contract execution
-STORAGEFEE (5x) - per-byte fee for adding to contract storage. The storage fee is the only fee that is not paid to a miner, and is refunded when storage used by a contract is reduced or removed.
-DATAFEE (20x) - fee for accessing or setting a contract's memory from inside that contract
-EXTROFEE (40x) - fee for accessing memory from another contract inside a contract
-CRYPTOFEE (20x) - fee for using any of the cryptographic operations
-The coefficients will be revised as more hard data on the relative computational cost of each operation becomes available. The hardest part will be setting the value of x. There are currently two main solutions that we are considering:
+Taxele sunt setate astfel:
 
-Make x inversely proportional to the square root of the difficulty, so x = floor(10^21 / floor(difficulty ^ 0.5)). This automatically adjusts fees down as the value of ether goes up, and adjusts fees down as computers get more powerful due to Moore's Law.
-Use proof of stake voting to determine the fees. In theory, stakeholders do not benefit directly from fees going up or down, so their incentives would be to make the decision that would maximize the value of the network.
-A hybrid solution is also possible, using proof of stake voting, but with the inverse square root mechanism as an initial policy.
+TXFEE (100x) - taxa pentru a trimite o tranzactie
+NEWCONTRACTFEE (100x) - ftaxa pentru crearea unui nou contract; nu include taxa de stocare a fiecarui item in script code
+STEPFEE (1x) - taxa pentru fiecare pas computational ce urmeaza dupa primii 16 in executia contractului
+STORAGEFEE (5x) - taxa per-byte pentru a adauga la stocarea contractului. Taxa de stocare este singura taxa care nu este platita catre un miner, si e inapoiata cand spatiul de stocare folosit de un contract e redus sau eliminat.
+DATAFEE (20x) - taxa pentru accesarea sau setarea memoriei unui contract, in interiorul acelui contract
+EXTROFEE (40x) - taxa pentru accesarea memoriei dintr-un alt contract in alt contract
+CRYPTOFEE (20x) - taxa pentru folosirea oricarei operatiuni criptografice
+Coeficientii vor fi revizuiti pe masura ce creste numarul datelor despre costul computational al fiecarei operatii. Partea cea mai dificila va fi setarea valoarea lui x.In prezent avem in vedere doua solutii principale:
 
-
-Conclusion
-
-The Ethereum protocol's design philosophy is in many ways the opposite from that taken by many other cryptocurrencies today. Other cryptocurrencies aim to add complexity and increase the number of "features"; Ethereum, on the other hand, takes features away. The protocol does not "support" multisignature transactions, multiple inputs and outputs, hash codes, lock times or many other features that even Bitcoin provides. Instead, all complexity comes from a universal, Turing-complete scripting language, which can be used to build up literally any feature that is mathematically describable through the contract mechanism. As a result, we have a protocol with unique potential; rather than being a closed-ended, single-purpose protocol intended for a specific array of applications in data storage, gambling or finance, Ethereum is open-ended by design, and we believe that it is extremely well-suited to serving as a foundational layer for a very large number of both financial and non-financial protocols in the years to come.
+Faceti x proportional cu radacina patrata a dificultatii, astfel ca x = floor(10^21 / floor(difficulty ^ 0.5)). Aceasta ajusteaza automat taxele pe masura ce valoarea ether creste, si scade taxele pe masura ce calculatoarele devin mai performante, datorita legii lui Moore.
+Folositi votarea proof-of-stake pentru a stabili taxele. Teoretic, partile interesate nu beneficiaza direct de cresterea sau diminuarea taxelor, deci stimulentele ar fi luarea deciziilor pentru a maximiza valoarea retelei..
+O solutie hibrida este de asemenea posibila, prin folosirea votarii proof-of-stake, dar avand mecanismul inversului radacinii patrate ca metoda initiala.
 
 
-References and Further Reading
+Concluzie
+
+Filosofia de baza a protocolului Ethereum este in multe feluri diferita de cea din spatele multor feluri de cryptocurrency actuale. Alte cryptocurrencies urmaresc sa creasca complexitatea si sa mareasca numarul de "functii"; Ethereum, pe de alta parte, elimina din functii. Protocolul nu "suporta" tranzactii multisignature, multiple input-uri si output-uri, hash codes, lock times sau multe alte functii oferite chiar si de Bitcoin. In schimb, complexitatea vine dintr-un scripting language Turing universal, care poate fi folosit pentru a crea orice functie care poate fi descrisa matematic prin mecanismul contractului. Ca rezultat, avem un protocol cu un potential unic; departe de a fi un protocol limitat, cu un singur scop, intentionat pentru un numar specific de aplicatii in stocarea de date, gambling sau finante,  Ethereum este open-ended in esenta, si avem motive sa credem ca este foarte potrivit pentru a servi ca fundatie pentru un numar mare de protocoale financiare si non-financiare in anii ce vor urma.
+
+
+Referinte si Documentare
 
 Colored coins whitepaper: https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit
 Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec
