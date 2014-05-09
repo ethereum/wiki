@@ -11,7 +11,7 @@ Desi TCP furnizeaza un mediu orientat spre conexiuni, nodurile Ethereum function
 Continutul sarcinei utile
 Exista un numar de diferite tipuri de sarcini utile care pot fi codate in RLP. Acest “tip” este intotdeauna determinat de prima intrare a RPL, interpretata ca un numar intreg: 
 Hello
-•	[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID]
+•	`[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID]`
 •	Primul pachet trimis prin conexiune, si trimis o data de ambele parti. Nici un alt mesaj nu poate fi trimis pana cand  “Hello” este primit.
 •	PROTOCOL_VERSION este unul dintre:
 o	0x00 pentru PoC-1;
