@@ -1,5 +1,7 @@
-Wire Protocol
+###Wire Protocol
+
 Comunicatiile peer-to-peer intre noduri care opereaza clienti Ethereum sunt create pentru a fi guvernate de un simplu protocol wire, care utilizeaza tehnologii  si standarde Ethereum existente , cum ar fi RLP, care este practic oriunde.
+
 Acest document are ca scop explicarea acestui tip de protocol intr-un mod comprehensibil.
 Low-level
 Nodurile Ethereul se pot conecta intre ele doar prin TCP.Perechile (peers) sunt libere sa promoveze si sa accepte conexiuni pe orice port/porturi doresc, cu toate acestea va exista un port default -30303; pe care conexiunea poate fi ascultata si facuta.
