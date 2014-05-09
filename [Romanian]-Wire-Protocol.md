@@ -3,8 +3,10 @@
 Comunicatiile peer-to-peer intre noduri care opereaza clienti Ethereum sunt create pentru a fi guvernate de un simplu protocol wire, care utilizeaza tehnologii  si standarde Ethereum existente , cum ar fi RLP, care este practic oriunde.
 
 Acest document are ca scop explicarea acestui tip de protocol intr-un mod comprehensibil.
-Low-level
-Nodurile Ethereul se pot conecta intre ele doar prin TCP.Perechile (peers) sunt libere sa promoveze si sa accepte conexiuni pe orice port/porturi doresc, cu toate acestea va exista un port default -30303; pe care conexiunea poate fi ascultata si facuta.
+
+###Low-level
+
+Nodurile Ethereum se pot conecta intre ele doar prin TCP.Perechile (peers) sunt libere sa promoveze si sa accepte conexiuni pe orice port/porturi doresc, cu toate acestea va exista un port default -30303; pe care conexiunea poate fi ascultata si facuta.
 Desi TCP furnizeaza un mediu orientat spre conexiuni, nodurile Ethereum functioneaza in termeni de pachete. Aceste pachete sunt formate ca jetoane(token) de 4 biti de sincronizare (0x22400891), 4 biti de “sarcina utila”, pentru a fi interpretate ca un intreg endian si, finalmente, o structura de date N-byte  serializata RLP, unde N este “sarcina utila” mentionata mai sus. Pentru a clarifica, sarcina utila specifica numarul de biti din pachetul care “urmeaza” dupa primii 8.
 Continutul sarcinei utile
 Exista un numar de diferite tipuri de sarcini utile care pot fi codate in RLP. Acest “tip” este intotdeauna determinat de prima intrare a RPL, interpretata ca un numar intreg: 
