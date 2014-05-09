@@ -1,6 +1,6 @@
 ### Bine ati venit la Ethereum, platforma pe care se vor dezvolta noua generatie de contracte si aplicatii descentralizate. 
 
-[Raportul Ethereum (white-paper)](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-White-Paper)
+[Raportul Ethereum (whitepaper)](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-White-Paper)
 
 [RLP](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-RLP), the recursive linear prefix specification, used for data encoding throughout Ethereum.
 
