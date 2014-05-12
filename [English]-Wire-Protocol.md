@@ -26,7 +26,7 @@ There are a number of different types of payload that may be encoded within the 
 * `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
 * `LISTEN_PORT` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
 * `CAPABILITIES` specifies the capabilities of the client as a set of flags; presently three bits are used: `0x01` for peers discovery, `0x02` for transaction relaying, `0x04` for block-chain querying.
-* `NODE_ID` is optional and specifies a 512-bit hash, (potentially to be used as public key) that identifies this node.
+* `NODE_ID` is the Unique Identity of the node and specifies a 512-bit hash that identifies this node.
 
 **Disconnect**
 * `[0x01, REASON]`
