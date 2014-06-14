@@ -1,4 +1,4 @@
-### Benvenuti, il contratto intelligente di nuova generazione e di applicazioni decentralizzate.
+### Benvenuti. Ethereum: il contratto intelligente di nuova generazione e piattaforma di applicazioni decentralizzate.
 
 [Libro Bianco di Ethereum](https://google.it)
 
