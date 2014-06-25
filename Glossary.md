@@ -47,6 +47,7 @@ See also: http://ethereum.org/ethereum.html
 * **Whisper**: an upcoming P2P messaging protocol that will be integrated into the EtherBrowser
 * **Swarm**: an upcoming P2P data storage protocol optimized for static web hosting that will be integrated into the EtherBrowser
 * **LLL**, **Serpent** and **Mutan**: prorgamming languages for writing contract code which can be compiled into EVM code. Serpent can also be compiled into LLL.
+* **PoC**: proof-of-concept, another name for a pre-launch release
 
 ### Surrounding concepts: applications and governance
 
