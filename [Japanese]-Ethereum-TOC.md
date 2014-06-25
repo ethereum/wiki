@@ -8,6 +8,8 @@
 
 [ワイヤプロトコル](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Wire-Protocol) 仕様
 
+[Serpent](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Serpent-programming-language-operations), contractを書くための高水準言語. チュートリアルは [こちら](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Serpent-programming-language-operations).
+
 [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), 低水準Lispに似た言語 "Lisp-like Language" の仕様, PoC-3以降のPoCシリーズでcontractを書くために使用される。
 
 [用語集](https://github.com/ethereum/wiki/wiki/Glossary)
