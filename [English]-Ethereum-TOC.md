@@ -12,10 +12,6 @@
 
 [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Low-level "Lisp-like Language" specification, used to author contracts in the PoC series from PoC-3.
 
-[Dagger](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Dagger), Ethereum's "proof-of-work" specification.
+[Glossary](https://github.com/ethereum/wiki/wiki/Glossary)
 
-[Block Protocol 2.0](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Block-Protocol-2.0)
-
-[Layers](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Layers)
-
-[Clearinghouse](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Clearinghouse)
+[Hard Problems of Cryptocurrency (work-in-progress)](https://github.com/ethereum/wiki/wiki/Problems)
