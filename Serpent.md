@@ -1,5 +1,7 @@
 Serpent is one of the high-level programming languages used to write Ethereum contracts. The language, as suggested by its name, is designed to be very similar to Python; later versions may even eventually come to target the entire [RPython spec](http://pypy.readthedocs.org/en/latest/coding-guide.html#rpython-definition). The language is designed to be maximally clean and simple, combining many of the efficiency benefits of a low-level language with ease-of-use in programming style. The latest version of the Serpent compiler, available [on github](http://github.com/ethereum/serpent), is written in C++, allowing it to be easily included in any client, and works by compiling the code first to LLL then to EVM; thus, if you like LLL, a possible intermediate option is to write Serpent, compile it to LLL, and then hand-tweak the LLL at the end.
 
+This tutorial assumes basic knowledge of how Ethereum works, including the concept of blocks, transactions, contracts and messages and the fact that contracts take a byte array as input and provide a byte array as output.
+
 ### Differences Between Serpent and Python
 
 The important differences between Serpent and Python are:
@@ -21,7 +23,19 @@ Now, let's write our first contract. Paste the following into a file called "mul
 
     return(msg.data[0] * 2)
 
-Now, type:
+This contract is a simple one line of code. The first thing to point out is that Serpent sees message data, memory and output in 32-byte chunks; `msg.data[0]` returns bytes 0-31 of the input, `msg.data[5]` returns bytes 160-191, etc, and `return(202020)` returns the value 202020 encoded in binary form padded to 32 bytes. From now on, these mechanics will be assumed; "the zeroth data field" will be synonymous with "bytes 0-31 of the input" and "returns three values a,b,c" will be synonymous with "returns 96 bytes consisting of the values a, b and c, each padded to 32 bytes".
+
+Note that the Serpent compiler includes some tools to make this conversion convenient; `serpent encode_datalist "1 2 3"` gives:
+
+    000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
+
+And `serpent decode 000..003` gives:
+
+    1 2 3
+
+Additionally, the Pyethereum testing environment that we will be using simply assumes that data input and output are in this format.
+
+Now, let's try actually compiling the code. Type:
 
     > serpent compile mul2.se
     600e516000600b3960195860026000350260005460206000f26000f2
@@ -44,7 +58,7 @@ Alternatively, you can compile to LLL (the compiler compiles through LLL anyway,
         )
     )
 
-This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. In the innermost layer, we take the 32 bytes in the message data starting from zero, multiply that value by two, and save it in a temp variable called `_temp4_1`. We then supply the memory address of that variable to the `RETURN` opcode.
+This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. In the innermost layer, we take bytes 0-31 from the input, multiply that value by two, and save it in a temp variable called `_temp4_1`. We then supply the memory address of that variable, and the length 32, to the `RETURN` opcode. Note that LLL does not automatically divide everything into 32-byte chunks the way Serpent does, so the conversion needs to introduce these more low-level mechanics. `msg.data[1]`, for examples, is translated into `(calldataload 32)`, and `msg.data[3]` into `(calldataload 96).
 
 Now, what if you want to actually run the contract? That is where pyethereum comes in. Open up a Python console in the same directory, and run:
 
@@ -56,7 +70,7 @@ Now, what if you want to actually run the contract? That is where pyethereum com
     > s.send(t.k0, c, 0, [303030])
     [606060]
 
-The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and sets `c` to its address. The fourth line sends a transaction from private key zero (the `tester` submodule includes ten pre-made key/address pairs at `k0`/`a0`, `k1`/`a1`, etc) to the address of the contract with 0 wei and with data input 42, and we see 84 predictably come out.
+The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and sets `c` to its address. The fourth line sends a transaction from private key zero (the `tester` submodule includes ten pre-made key/address pairs at `k0`, `a0`, `k1`, `a1`, etc) to the address of the contract with 0 wei and with data input 42, and we see 84 predictably come out.
 
 And there you go.
 
@@ -73,7 +87,7 @@ However, having a multiplier on the blockchain is kind of boring. So let's do so
     else:
        return([0], 1)  # Key already claimed
 
-Here, we see a few parts in action. First, we have the `msg.data` pseudo-array, which can be used to access message input data. Then, we have `key` and `value`, which are variables that we set. The third line is a comment; it does not get compiled and only serves to remind you what the code does. Then, we have a standard if/else clause, which checks if `contract.storage[key]` is zero (ie. unclaimed), and if it is then it sets `contract.storage[key] = value` and returns 1. Otherwise, it returns zero (which we expressed as a literal array just to exhibit this other style of returning; it's more cumbersome but lets you do return multiple values). `contract.storage` is also a pseudo-array, acting like an array but without any particular memory location.
+Here, we see a few parts in action. First, we have the `msg.data` pseudo-array, which can be used to access message input data items. Then, we have `key` and `value`, which are variables that we set. The third line is a comment; it does not get compiled and only serves to remind you what the code does. Then, we have a standard if/else clause, which checks if `contract.storage[key]` is zero (ie. unclaimed), and if it is then it sets `contract.storage[key] = value` and returns 1. Otherwise, it returns zero (which we expressed as a literal array just to exhibit this other style of returning; it's more cumbersome but lets you do return multiple values). `contract.storage` is also a pseudo-array, acting like an array but without any particular memory location.
 
 Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opcodes or EVM, and let's try it out in the pyethereum tester environment:
 
@@ -86,6 +100,31 @@ Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opc
     [0]
     > s.send(t.k2, c, 0, ["harry", 65])
     [1]
+
+### Including files
+
+Once your projects become larger, you will not want to put everything into the same file; things become particularly inconvenient when one piece of code needs to create a contract. Fortunately, the process for doing so is quite simple. Make the following two files:
+
+mul2.se:
+
+    return(msg.data[0] * 2)
+
+returnten.se:
+
+    MUL2 = create('mul2.se')
+    return(call(MUL2, 5))
+
+And open Python:
+
+    > from pyethereum import tester as t
+    > s = t.state()
+    > c = s.contract('returnten.se')
+    > s.send(t.k0, c, 0, [])
+    [10]
+
+### Miscellaneous
+
+Additional Serpent coding examples can be found here: https://github.com/ethereum/serpent/tree/master/examples
 
 The three other useful features in the tester environment are:
 
