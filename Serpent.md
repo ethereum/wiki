@@ -186,23 +186,23 @@ An expression is defined as anything that fits on one line. An expression is rec
 
 A code block constitutes a complete program in Ethereum. A code block is defined as follows: 
 
-* An expression is a code block.
+(1) An expression is a code block.  
 
-* A statement of the form:
+(2) A statement of the form:
 
     a
     b
 
 is a code block, where `a` and `b` are code blocks. Note that this can be expanded to basically mean that any number of code blocks with the same indenting level put together is a code block.
 
-* A statement of the form:
+(3) A statement of the form:
 
     if a:
         b
 
 is a code block, where `a` is an expression and `b` is a code block.
 
-* A statement of the form:
+(4) A statement of the form:
 
     if a:
         b
@@ -211,7 +211,7 @@ is a code block, where `a` is an expression and `b` is a code block.
 
 is a code block, where `a` is an expression and `b` and `c` are code blocks.
 
-* A statement of the form:
+(5) A statement of the form:
 
     if a:
         b
@@ -222,14 +222,14 @@ is a code block, where `a` is an expression and `b` and `c` are code blocks.
 
 is a code block, and an unlimited number of other elif clauses can be added in the middle.
 
-* A statement of the form:
+(6) A statement of the form:
 
     while a:
         b
 
 is a code block, where `a` is an expression and `b` is a code block.
 
-* A statement of the form:
+(7) A statement of the form:
 
     init:
         a
@@ -238,7 +238,7 @@ is a code block, where `a` is an expression and `b` is a code block.
 
 is a code block. This block should only be used at the top level; the `init` sub-block is called during initialization and the `code` sub-block is called during future executions.
 
-* A statement of the form:
+(8) A statement of the form:
 
     shared:
         a
