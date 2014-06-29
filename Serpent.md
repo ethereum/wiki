@@ -187,6 +187,7 @@ An expression is defined as anything that fits on one line. An expression is rec
 A code block constitutes a complete program in Ethereum. A code block is defined as follows: 
 
 * An expression is a code block.
+
 * A statement of the form:
 
     a
