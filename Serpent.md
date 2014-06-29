@@ -122,6 +122,8 @@ And open Python:
     > s.send(t.k0, c, 0, [])
     [10]
 
+Another, similar, operation is `(inset 'filename')`, which simply puts code into a particular place without adding a separate contract.
+
 ### Miscellaneous
 
 Additional Serpent coding examples can be found here: https://github.com/ethereum/serpent/tree/master/examples
@@ -176,11 +178,14 @@ An expression is defined as anything that fits on one line. An expression is rec
   * `call(addr, datarray, insize, outsize)` - equivalent to `msg(GAS - 25, addr, 0, datarray, insize, outsize)`
   * `send(gas, addr, value)` - sends the desired amount of value to the desired address with the desired gas limit
   * `send(addr, value)` - equivalent to `send(GAS - 25, addr, value)`
-  * `create(filename)` - creates a contract out of code from the desired filename and returns the address
+  * `create('filename')` - creates a contract out of code from the desired filename and returns the address
   * `sha3(value)` - returns the SHA3 of the given value (as 32 bytes, zero-padded if necessary)
   * `sha3(str, bytes)` - returns the SHA3 of the given byte array with the given number of bytes
   * `return(value)` - exits execution, returning the given value (as 32 bytes, zero-padded if necessary)
   * `return(array, size)` - exits execution, returning the given array with the given number of 32-byte chunks
+  * `stop` - exits execution, returning nothing
+  * `suicide(addr)` - destroys the contract, sending all ether to the given address
+  * `debug(num)` - does nothing (in the pyethereum implementation with the `DUP POP POP` sequence of opcodes). However, implementations may wish to show the number in some kind of debug output.
 
 ### Code blocks
 
@@ -255,3 +260,5 @@ is a code block, and is synonymous with:
     code:
         a
         c
+
+(9) `inset('filename')` is a code block, and is substituted at compile time with the text of the file.
