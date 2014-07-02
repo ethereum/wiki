@@ -42,7 +42,7 @@ Ethereum provides the following pseudovariables and pseudoarrays:
 
 * `send(to, value, gas)` - sends `value` ether to `to`, allowing the computation the given amount of gas. 
 * `x = msg(to, value, gas, datastart, datalen)` - sends a message to `to`, using the data at memory indices `datastart ... datastart+datalen*32-1`, with the given amount of ether and gas, and sets `x` to the first 32 bytes of the result.
-* `msg(to, value, gas, datastart, datalen, outputstart, outputlen) - sends a message to `to`, using the data at memory indices `datastart ... datastart+datalen*32-1`, with the given amount of ether and gas, and pastes the result to memory indices `outputstart ... outputstart+outputlen*32-1`
+* `msg(to, value, gas, datastart, datalen, outputstart, outputlen)` - sends a message to `to`, using the data at memory indices `datastart ... datastart+datalen*32-1`, with the given amount of ether and gas, and pastes the result to memory indices `outputstart ... outputstart+outputlen*32-1`
 * `x = create(endowment, gas, datastart, datalen)` - creates a new contract using code from the given indices in memory as above, and return the address of the contract
 * `x = sha3(v)` - returns the SHA3 of the given 32-byte value
 * `x = byte(y,z)` - sets x to the zth byte of y
