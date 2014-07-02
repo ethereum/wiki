@@ -139,22 +139,56 @@ The opcodes in the EVM are as follows:
 * `0x13`: `BYTE`, pops 2 values `a`, `b`, pushes the `a`th byte of `b` (zero if `a >= 32`)
 * `0x20`: `SHA3`, pops 2 values `a`, `b`, pushes `SHA3(memory[a: a+b])`
 * `0x30`: `ADDRESS`, pushes the contract address
-* `0x30`: `ADDRESS`, pushes the contract address
-* `0x30`: `ADDRESS`, pushes the contract address
-* `0x30`: `ADDRESS`, pushes the contract address
-* `0x01` - `0x0f`: arithmetic (ie. pop two values `a`,`b` from the stack, push `a+b`, `a%b`, etc)
-* `0x10` - `0x13`: bitwise operations (eg. AND, OR, XOR)
-* `0x20`: SHA3 (takes a start location and length in memory, and outputs the SHA3 of that onto the stack)
-* `0x30` - `0x3a`: data about the incoming message, originating transaction, and your contract
-* `0x40` - `0x45`: data about the block (eg. number, timestamp, prevhash)
-* `0x50` - `0x5c`: operations that manipulate or provide information about the temporary state (stack, program counter, memory) and storage
-* `0x60` - `0x7f`: push the next 1 to 32 bytes as a value onto the stack, zero-padding to 32 bytes
-* `0xf0` - create a new contract
-* `0xf1` - send a message to a contract
-* `0xf2` - return data from memory
-* `0xff` - suicide, deleting the contract and sending remaining balance into a particular address
+* `0x31`: `BALANCE`, pushes the contract balance
+* `0x32`: `ORIGIN`, pushes the original sending account of the transaction that led to the current message (ie. the account that pays for the gas)
+* `0x33`: `CALLER`, pushes the sender of the current message
+* `0x34`: `CALLVALUE`, pushes the ether value sent with the current message
+* `0x35`: `CALLDATALOAD`, pops 1 value `a`, pushes `msgdata[a: a + 32]` where `msgdata` is the message data. All out-of-bounds bytes are assumed to be zero
+* `0x36`: `CALLDATASIZE`, pushes `len(msgdata)`
+* `0x37`: `CALLDATACOPY`, pops 3 values `a`, `b`, `c`, copies `msgdata[b: b+c]` to `memory[a: a+c]`
+* `0x38`: `CODESIZE`, pushes `len(code)` where `code` is the contract's code
+* `0x39`: `CODECOPY`, pops 3 values `a`, `b`, `c`, copies `code[b: b+c]` to `memory[a: a+c]`
+* `0x3a`: `GASPRICE`, pushes the `GASPRICE` of the current transaction
+* `0x40`: `PREVHASH`, pushes the hash of the previous block
+* `0x41`: `COINBASE`, pushes the coinbase (ie. miner's address) of the current block
+* `0x42`: `TIMESTAMP`, pushes the timestamp of the current block
+* `0x43`: `NUMBER`, pushes the number of the current block
+* `0x44`: `DIFFICULTY`, pushes the difficulty of the current block
+* `0x45`: `GASLIMIT`, pushes the gas limit of the current block
+* `0x50`: `POP`, pops one value from the stack
+* `0x51`: `DUP`, pops one value `a` from the stack and pushes `a` twice
+* `0x52`: `SWAP`, pops two values `a` and `b` and pushes them in reverse order
+* `0x53`: `MLOAD`, pops one value `a` and pushes `memory[a: a + 32]`
+* `0x54`: `MSTORE`, pops two values `a`, `b` and sets `memory[a: a + 32] = b`
+* `0x55`: `MSTORE8`, pops two values `a`, `b` and sets `memory[a] = b % 256`
+* `0x56`: `SLOAD`, pops one value `a` and pushes `storage[a]`
+* `0x57`: `SSTORE`, pops two values `a`, `b` and sets `storage[a] = b`
+* `0x58`: `JUMP`, pops one values `a`, and sets `PC = a` where `PC` is the program counter
+* `0x59`: `JUMPI`, pops two values `a`, `b` and sets `PC = a` if `b != 0`
+* `0x5a`: `PC`, pushes the program counter
+* `0x5b`: `MSIZE`, pushes `len(memory)`
+* `0x5c`: `GAS`, pushes the amount of gas remaining (before executing this operation)
+* `0x60` - `0x7f`: `PUSH1` - `PUSH32`, `PUSH_k` pushes a value corresponding to the next `k` bytes in the code, and sets `PC += k + 1` (ie. to the byte immediately after the `k` bytes pushed)
+* `0xf0`: `CREATE`, pops three values `a`, `b`, `c`, creates a new contract with initialization code `memory[b: b+c]` and endowment (ie. initial ether sent) `a`, and pushes the value of the contract
+* `0xf1`: `CALL`, pops seven values `a`, `b`, `c`, `d`, `e`, `f`, `g`, and sends a message to address `b` with `a` gas and `c` ether and data `memory[d: d+e]`. Output is saved to `memory[f: f+g]`, right-padding with zero bytes if the output length is less than `g` bytes. If execution did not run out of gas pushes 1, otherwise pushes 0.
+* `0xf2`: `RETURN`, pops two values `a`, `b`, and stops execution, returning `memory[a: a + b]`
+* `0xff`: `SUICIDE`, pops one value `a`, sends all remaining ether to that address, returns and flags the contract for deletion as soon as transaction execution ends
 
 Note that high-level languages will often have their own wrappers for these opcodes, sometimes with very different interfaces.
+
+### Graphical Interfaces
+
+A contract by itself is a powerful thing, but it is not a complete Đapp. A Đapp, rather, is defined as a combination of a contract and a graphical interface for using that contract (note: this is only true for now; future versions of Ethereum will include whisper, a protocol for allowing nodes in a Đapp to send direct peer-to-peer messages to each other without the blockchain). Right now, the interface is implemented as an HTML/CSS/JS webpage, with a special Javascript API in the form of the `eth` object for working with the Ethereum blockchain. The key parts of the Javascript API are as follows:
+
+* `eth.transact(from, ethervalue, to, data, gaslimit, gasprice)` - sends a transaction to the desired address from the desired address (note: `from` must be a private key and `to` must be an address in hex form) with the desired parameters
+* `(string).pad(n)` - converts a number, encoded as a string, to binary form `n` bytes long
+* `eth.gasPrice` - returns the current gas price
+* `eth.secretToAddress(key)` - converts a private key into an address
+* `eth.storageAt(acct, index)` - returns the desired account's storage entry at the desired index
+* `eth.key` - the user's private key
+* `eth.watch(acct, index, f)` - calls `f` when the given storage entry of the given account changes
+
+You do not need any special source file or library to use the `eth` object; however, your Đapp will only work when opened in an Ethereum client, not a regular web browser. For an example of the Javascript API being used in practice, see [the source code of this webpage](http://gavwood.com/gavcoin.html).
 
 ### Fine Points To Keep Track Of
 
@@ -165,9 +199,8 @@ Note that high-level languages will often have their own wrappers for these opco
 * Truncation and modulo operations with negative operators in the `SDIV`/`SMOD` case are handled as in Python (eg. , )
 * `DIV`, `SDIV`, `MOD` and `SMOD` with dividend (second argument) zero are equivalent to `STOP`
 * Any operation that tries to take more values off the stack than are on the stack is equivalent to `STOP`
-* The SHA3 and RETURN opcodes take two values off the stack: start memory index and memory length, eg. `PUSH1 13 PUSH1 75 SHA3` takes the SHA3 of memory bytes 75...87.
 * The `CREATE` opcode takes three values: endowment (ie. initial amount of ether), memory start and memory length, and pushes onto the stack the address of the new contract. `CREATE` gives the initializing sub-execution all the gas that you have (and if gas remains then it gets refunded back to the parent execution)
 * The `CALL` opcode takes seven values: gas, recipient, ether value, memory location of start of input data, length of input data, memory location to put start of output data, length of output data. It puts onto the stack either 1 for success (ie. did not run out of gas) or 0 for failure. Note that if execution stops due to a non-gas-related error (eg. division by zero) that still counts as success; the only thing that counts as failure is 0 gas.
-* When a contract calls `SUICIDE`, its ether is immediately sent to the desired address, but the contract continues existing until the end of transaction execution.
+* When a contract calls `SUICIDE`, its ether is immediately sent to the desired address, but the contract continues existing until the end of transaction execution. Note that this leads to the interesting effect that, unlike Bitcoin where funds can be locked away forever but never destroyed, if a contract either SUICIDEs into itself or receives ether in the context of the same transaction execution after it has SUICIDED that ether is actually destroyed.
 * If contract A calls contract B calls contract A, then the inner execution of A will have its own, fresh, memory, stack and PC, but it will modify and read the same balance and storage.
 * If contract initialization returns an empty array, then no contract will be created. This allows you to "abuse" contract initialization as an atomic multi-operation, which might be useful in some protocols where you want to do multiple things but you don't want some of them to be able to process without others.
