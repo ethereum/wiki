@@ -33,7 +33,7 @@ When Bob wants to finalize the bet, the following steps happen:
 
 Note that the GavCoin is all "stored" as database entries in the GavCoin contract; the word "account" in the context of step 6 simply means that there is a data entry in the GavCoin contract storage with its key being the bet contract's address and the value being some nonzero quantity, and after receiving this message the GavCoin contract decreases this value by some amount and increases the value in the entry corresponding to Bob's forwarding contract's address. We can see these steps in the following diagram:
 
-![img](http://vitalik.ca/files/contract_relationship2.png)
+![img](http://vitalik.ca/files/contract_relationship2.png?1)
 
 ### State Machine
 
