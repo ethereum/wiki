@@ -1,5 +1,3 @@
-WORK IN PROGRESS
-
 The purpose of this page is to serve as an introduction to the basics of Ethereum that you will need to understand from a development standpoint, in order to produce contracts and decentralized applications. For a general introduction to Ethereum, see [the white paper](http://ethereum.org/ethereum.html), and for a full technical spec see the [yellow](http://gavwood.com/Paper.pdf) papers, although those are not prerequisites for this page; that is to say, this page is meant as an alternative introduction to Ethereum specifically targeted toward application developers.
 
 ### Introduction
@@ -12,9 +10,9 @@ Contracts generally serve four purposes:
 
 1. Maintain a data store representing something which is useful to either other contracts or to the outside world; one example of this is a contract that simulates a currency, and another is a contract that records membership in a particular organization.
 
-2. Serve as a sort of externally owned account with a more complicated access policy; this is called a "forwarding contract" and typically involves simply resending incoming messages to some desired source only if certain conditions are met; for example, one can have a forwarding contract that waits until two out of a given three private keys have confirmed a particular message before resending it (ie. multisig). More complex forwarding contracts have different conditions based on the nature of the message sent; the simplest use case for this functionality is a withdrawal limit that is overridable via some more complicated access procedure.
+2. Serve as a sort of externally owned account with a more complicated access policy; this is called a "forwarding contract" and typically involves simply resending incoming messages to some desired destination only if certain conditions are met; for example, one can have a forwarding contract that waits until two out of a given three private keys have confirmed a particular message before resending it (ie. multisig). More complex forwarding contracts have different conditions based on the nature of the message sent; the simplest use case for this functionality is a withdrawal limit that is overridable via some more complicated access procedure.
 
-3. Manage an ongoing contract or relationship between multiple users. Examples of this include a financial contract, an escrow with some particular set of mediators, or some kind of insurance. One can also have an open contract that one party opens for any other party to engage with at any time; one example is a contract that automatically pays a bounty to whoever submits a valid solution to some mathematical problem, or proves that it is providing some computational resource.
+3. Manage an ongoing contract or relationship between multiple users. Examples of this include a financial contract, an escrow with some particular set of mediators, or some kind of insurance. One can also have an open contract that one party leaves open for any other party to engage with at any time; one example of this is a contract that automatically pays a bounty to whoever submits a valid solution to some mathematical problem, or proves that it is providing some computational resource.
 
 4. Provide functions to other contracts; essentially, a software library.
 
@@ -30,8 +28,8 @@ When Bob wants to finalize the bet, the following steps happen:
 2. Bob's forwarding contract sends the hash of the message and the Lamport signature to a contract which functions as a Lamport signature verification library.
 3. The Lamport signature verification library sees that Bob wants a SHA256-based Lamport sig, so it calls the SHA256 library many times as needed to verify the signature.
 4. Once the Lamport signature verification library returns 1, signifying that the signature has been verified, it sends a message to the contract representing the bet.
-5. The contract checks the contract providing the San Francisco price to see what the price is.
-6. The contract sees that the price is above 35'C, so it sends a message to the GavCoin contract to move the GavCoin from its account to Bob's forwarding contract.
+5. The bet contract checks the contract providing the San Francisco price to see what the price is.
+6. The bet contract sees that the response to the messages shows that the price is above 35'C, so it sends a message to the GavCoin contract to move the GavCoin from its account to Bob's forwarding contract.
 
 Note that the GavCoin is all "stored" as database entries in the GavCoin contract; the word "account" in the context of step 6 simply means that there is a data entry in the GavCoin contract storage with its key being the bet contract's address and the value being some nonzero quantity, and after receiving this message the GavCoin contract decreases this value by some amount and increases the value in the entry corresponding to Bob's forwarding contract's address. We can see these steps in the following diagram:
 
@@ -43,7 +41,7 @@ Computation in the EVM is done using a stack-based bytecode language that is lik
 
     PUSH1 0 CALLDATALOAD SLOAD NOT PUSH1 9 JUMPI STOP PUSH1 32 CALLDATALOAD PUSH1 0 CALLDATALOAD SSTORE
 
-The purpose of this contract is to serve as a name registry; anyone can send a message containing 64 bytes of data, 32 for the key and 32 for the value. The contract checks if the key has already been registered in storage, and if it has not been then the contract registers the value at that key.
+The purpose of this particular contract is to serve as a name registry; anyone can send a message containing 64 bytes of data, 32 for the key and 32 for the value. The contract checks if the key has already been registered in storage, and if it has not been then the contract registers the value at that key.
 
 During execution, an infinitely expandable byte-array called "memory", the "program counter" pointing to the current instruction, and a stack of 32-byte values is maintained. At the start of execution, memory and stack are empty and the PC is zero. Now, let us suppose the contract with this code is being accessed for the first time, and a message is sent in with 123 wei (10<sup>18</sup> wei = 1 ether) and 64 bytes of data where the first 32 bytes encode the number 54 and the second 32 bytes encode the number 2020202020.
 
@@ -95,7 +93,7 @@ Finally, we SSTORE to save the value 2020202020 in storage at index 54.
 
     PC: 17 STACK: [] MEM: [], STORAGE: {54: 2020202020}
 
-At index 17, there is no instruction, so we stop. If there was anything left in the stack or memory, it would be deleted, but the storage will stay and be available next time someone sends a message. Thus, if the sender of this message sends the same message again (or perhaps someone else tries to reregister 54 to 3030303030), the next time the JUMPI at position 7 would not process, and execution would STOP early at position 8.
+At index 17, there is no instruction, so we stop. If there was anything left in the stack or memory, it would be deleted, but the storage will stay and be available next time someone sends a message. Thus, if the sender of this message sends the same message again (or perhaps someone else tries to reregister 54 to 3030303030), the next time the `JUMPI` at position 7 would not process, and execution would STOP early at position 8.
 
 Fortunately, you do not have to program in low-level assembly; a number of high-level languages such as [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL-PoC-5), [serpent](https://github.com/ethereum/wiki/wiki/Serpent) and [Mutan](https://github.com/ethereum/go-ethereum/wiki/Mutan-0.2) exist to make it much easier for you to write contracts. Any code you write in these languages gets compiled into EVM, and to create the contracts you send the transaction containing the EVM bytecode.
 
@@ -117,8 +115,33 @@ During contract execution, when a contract sends a message, that message call it
 
 ### Virtual machine opcodes
 
-The opcodes in the EVM fall into the following categories:
+The opcodes in the EVM are as follows:
 
+* `0x00`: `STOP`, stops execution
+* `0x01`: `ADD`, pops 2 values `a`, `b` from the top of the stack and pushes `a+b` to the top of the stack (all arithmetic is modulo 2<sup>256</sup>)
+* `0x02`: `MUL`, pops 2 values `a`, `b`, pushes `a*b`
+* `0x03`: `SUB`, pops 2 values `a`, `b`, pushes `a-b` (`a` is the value immediately at the top of the stack before execution, `b` is second from top)
+* `0x04`: `DIV`, pops 2 values `a`, `b`, pushes `a/b`
+* `0x05`: `SDIV`, pops 2 values `a`, `b`, pushes `a/b`, except where `a` and `b` are treated as signed integers, ie. if `a >= 2^255` then it's treated as the negative value `a - 2^256`. Division with negative numbers is done as in Python, ie. `25 / 3 = 8`, `25 / -3 = -9`, `-25 / 3 = -9`, `-25 / -3 = 8`
+* `0x06`: `MOD`, pops 2 values `a`, `b`, pushes `a%b`
+* `0x07`: `SMOD`, pops 2 values `a`, `b`, pushes `a%b` treating `a`, `b` as signed values. Modulo with negative numbers is done as in Python, ie. `25 % 3 = 1`, `25 % -3 = -2`, `-25 % 3 = 2`, `-25 % -3 = -1`
+* `0x08`: `EXP`, pops 2 values `a`, `b`, pushes `a^b`
+* `0x09`: `NEG`, pops 1 value `a`, pushes `-a` (ie. `2^256 - a`)
+* `0x0a`: `LT`, pops 2 values `a`, `b`, pushes 1 if `a < b` else 0
+* `0x0b`: `GT`, pops 2 values `a`, `b`, pushes 1 if `a > b` else 0
+* `0x0c`: `SLT`, pops 2 values `a`, `b`, pushes 1 if `a < b` else 0, doing a signed comparison
+* `0x0d`: `SGT`, pops 2 values `a`, `b`, pushes 1 if `a > b` else 0, doing a signed comparison
+* `0x0e`: `EQ`, pops 2 values `a`, `b`, pushes 1 if `a == b` else 0
+* `0x0f`: `NOT`, pops 1 value `a`, pushes 1 if `a = 0` else 0
+* `0x10`: `AND`, pops 2 values `a`, `b`, pushes the bitwise and of `a` and `b`
+* `0x11`: `OR`, pops 2 values `a`, `b`, pushes the bitwise or of `a` and `b`
+* `0x12`: `XOR`, pops 2 values `a`, `b`, pushes the bitwise xor of `a` and `b`
+* `0x13`: `BYTE`, pops 2 values `a`, `b`, pushes the `a`th byte of `b` (zero if `a >= 32`)
+* `0x20`: `SHA3`, pops 2 values `a`, `b`, pushes `SHA3(memory[a: a+b])`
+* `0x30`: `ADDRESS`, pushes the contract address
+* `0x30`: `ADDRESS`, pushes the contract address
+* `0x30`: `ADDRESS`, pushes the contract address
+* `0x30`: `ADDRESS`, pushes the contract address
 * `0x01` - `0x0f`: arithmetic (ie. pop two values `a`,`b` from the stack, push `a+b`, `a%b`, etc)
 * `0x10` - `0x13`: bitwise operations (eg. AND, OR, XOR)
 * `0x20`: SHA3 (takes a start location and length in memory, and outputs the SHA3 of that onto the stack)
@@ -139,7 +162,7 @@ Note that high-level languages will often have their own wrappers for these opco
 * Values on the stack are 32 bytes
 * Memory is a byte-array. Memory starts off zero-size, but can be expanded in 32-byte chunks by simply accessing or storing memory at indices greater than its current size. There is a fee of 1 gas per 32 bytes for expanding memory.
 * All arithmetic is modulo 2<sup>256</sup>. For division, modulo and comparison, both signed and unsigned operators exist (eg. `(0 - 27) / 3` returns -9 if `SDIV` is used, but `38597363079105398474523661669562635951089994888546854679819194669304376546636` if `DIV` is used.
-* Truncation and modulo operations with negative operators in the `SDIV`/`SMOD` case are handled as in Python (eg. `25 / 3 = 8`, `25 / -3 = -9`, `-25 / 3 = -9`, `-25 / -3 = 8`, `25 % 3 = 1`, `25 % -3 = -2`, `-25 % 3 = 2`, `-25 % -3 = -1`)
+* Truncation and modulo operations with negative operators in the `SDIV`/`SMOD` case are handled as in Python (eg. , )
 * `DIV`, `SDIV`, `MOD` and `SMOD` with dividend (second argument) zero are equivalent to `STOP`
 * Any operation that tries to take more values off the stack than are on the stack is equivalent to `STOP`
 * The SHA3 and RETURN opcodes take two values off the stack: start memory index and memory length, eg. `PUSH1 13 PUSH1 75 SHA3` takes the SHA3 of memory bytes 75...87.
