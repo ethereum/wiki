@@ -44,7 +44,7 @@ Note that the Serpent compiler includes some tools to make this conversion conve
 
     000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
 
-And `sc decode 000..003` gives:
+And `sc decode_datalist 000..003` gives:
 
     1 2 3
 
@@ -57,12 +57,12 @@ Now, let's try actually compiling the code. Type:
 
 And there we go, that's the hexadecimal form of the code that you can put into transactions. Or, if you want to see opcodes:
 
-    > serpent pretty_compile mul2.se
+    > sc pretty_compile mul2.se
     PUSH1 14 DUP PUSH1 12 PUSH1 0 CODECOPY PUSH1 0 RETURN STOP PUSH1 2 PUSH1 0 CALLDATALOAD MUL PUSH1 64 MSTORE PUSH1 32 PUSH1 64 RETURN
 
 Alternatively, you can compile to LLL (the compiler compiles through LLL anyway, so this is just stopping at an intermediate step instead of at the end):
 
-    > serpent compile_to_lll mul2.se
+    > sc compile_to_lll mul2.se
     (return 0 
         (lll 
             (seq 
