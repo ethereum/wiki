@@ -1,12 +1,12 @@
 Serpent is one of the high-level programming languages used to write Ethereum contracts. The language, as suggested by its name, is designed to be very similar to Python; later versions may even eventually come to target the entire [RPython spec](http://pypy.readthedocs.org/en/latest/coding-guide.html#rpython-definition). The language is designed to be maximally clean and simple, combining many of the efficiency benefits of a low-level language with ease-of-use in programming style. The latest version of the Serpent compiler, available [on github](http://github.com/ethereum/serpent), is written in C++, allowing it to be easily included in any client, and works by compiling the code first to LLL then to EVM; thus, if you like LLL, a possible intermediate option is to write Serpent, compile it to LLL, and then hand-tweak the LLL at the end.
 
-This tutorial assumes basic knowledge of how Ethereum works, including the concept of blocks, transactions, contracts and messages and the fact that contracts take a byte array as input and provide a byte array as output. 
+This tutorial assumes basic knowledge of how Ethereum works, including the concept of blocks, transactions, contracts and messages and the fact that contracts take a byte array as input and provide a byte array as output. If you do not, then go [here](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for a basic tutorial.
 
 ### Differences Between Serpent and Python
 
 The important differences between Serpent and Python are:
 
-* Python numbers have potentially unlimited size, Serpent numbers wrap around 2<sup>256</sup>. For example, in Serpent the expression `3^(2^254)` evaluates to 1. 
+* Python numbers have potentially unlimited size, Serpent numbers wrap around 2<sup>256</sup>. For example, in Serpent the expression `3^(2^254)` suprisingly evaluates to 1, even though in reality the actual integer is too large to be recorded in its entirety within the universe.
 * Serpent has no decimals.
 * There is no way to take a Serpent array and access its length; this sometimes leads to inconveniences like needing to type `return([a,b,c], 3)` instead of Python's `return [a,b,c]`. Future versions may change this specifically in the case of array literals.
 * Serpent has no concept of strings (at this point); if you make an expression like `x = "george"`, the compiler converts that into a number using ASCII encoding, so you get 103 * 256<sup>5</sup> + 101 * 256<sup>4</sup> + 111 * 256<sup>3</sup> + 114 * 256<sup>2</sup> + 103 * 256 + 101 = 113685359126373. These numbers can be converted back into strings, so you can still represent strings, but they are limited to 32 characters in length. Future versions may change this to turn strings into char arrays, which would be accessible via `getch(str, i) -> byte` and `setch(str, i, byte)`
@@ -15,7 +15,22 @@ The important differences between Serpent and Python are:
 
 ### Installation
 
-In order to install Serpent on Linux use `pip install ethereum-serpent` (try `sudo apt-get install python-pip` before that if you do not have pip). On Mac, use `brew install serpent`, and on Windows download the source code at [http://github.com/ethereum/serpent](our repository) and use `sudo python setup.py install` or `sudo make install`. Then, in order to do the examples here, also install pyethereum using `pip install pyethereum` or from [our github](http://github.com/ethereum/pyethereum).
+In order to install Serpent follow these instructions:
+
+1. Download and unpack [this zip](https://github.com/ethereum/langs/archive/master.zip)
+2. Make sure you have cmake and [boost](http://www.boost.org/) installed
+3. `mkdir build && cd build && cmake .. -DLANGUAGES=1 && make`
+4. `sudo make install`
+
+On Linux, use:
+
+    sudo apt-get update && sudo apt-get upgrade
+    sudo apt-get install build-essential g++-4.8 git cmake libboost-all-dev unzip
+    wget https://github.com/ethereum/langs/archive/master.zip
+    unzip master.zip
+    cd langs-master
+
+Then follow the instructions from above. On Mac, use `brew install serpent`. Then, in order to do the examples here, also install pyethereum using `pip install pyethereum` or from [our github](http://github.com/ethereum/pyethereum).
 
 ### Tutorial
 
@@ -25,11 +40,11 @@ Now, let's write our first contract. Paste the following into a file called "mul
 
 This contract is a simple one line of code. The first thing to point out is that Serpent sees message data, memory and output in 32-byte chunks; `msg.data[0]` returns bytes 0-31 of the input, `msg.data[5]` returns bytes 160-191, etc, and `return(202020)` returns the value 202020 encoded in binary form padded to 32 bytes. From now on, these mechanics will be assumed; "the zeroth data field" will be synonymous with "bytes 0-31 of the input" and "returns three values a,b,c" will be synonymous with "returns 96 bytes consisting of the values a, b and c, each padded to 32 bytes".
 
-Note that the Serpent compiler includes some tools to make this conversion convenient; `serpent encode_datalist "1 2 3"` gives:
+Note that the Serpent compiler includes some tools to make this conversion convenient; `sc encode_datalist "1 2 3"` gives:
 
     000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
 
-And `serpent decode 000..003` gives:
+And `sc decode 000..003` gives:
 
     1 2 3
 
@@ -37,13 +52,13 @@ Additionally, the Pyethereum testing environment that we will be using simply as
 
 Now, let's try actually compiling the code. Type:
 
-    > serpent compile mul2.se
-    600e516000600b3960195860026000350260005460206000f26000f2
+    > sc compile mul2.se
+    600e51600c6000396000f20060026000350260405460206040f2
 
 And there we go, that's the hexadecimal form of the code that you can put into transactions. Or, if you want to see opcodes:
 
     > serpent pretty_compile mul2.se
-    PUSH1 14 DUP PUSH1 0 PUSH1 11 CODECOPY PUSH1 25 JUMP PUSH1 2 PUSH1 0 CALLDATALOAD MUL PUSH1 0 MSTORE PUSH1 32 PUSH1 0 RETURN PUSH1 0 RETURN
+    PUSH1 14 DUP PUSH1 12 PUSH1 0 CODECOPY PUSH1 0 RETURN STOP PUSH1 2 PUSH1 0 CALLDATALOAD MUL PUSH1 64 MSTORE PUSH1 32 PUSH1 64 RETURN
 
 Alternatively, you can compile to LLL (the compiler compiles through LLL anyway, so this is just stopping at an intermediate step instead of at the end):
 
@@ -51,14 +66,14 @@ Alternatively, you can compile to LLL (the compiler compiles through LLL anyway,
     (return 0 
         (lll 
             (seq 
-               (set _temp4_1 (mul (calldataload 0) 2))
-                (return (ref _temp4_1) 32)
+                (set '_temp4_1 (mul (calldataload 0) 2))
+                (return (ref '_temp4_1) 32)
             )
             0
         )
     )
 
-This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. In the innermost layer, we take bytes 0-31 from the input, multiply that value by two, and save it in a temp variable called `_temp4_1`. We then supply the memory address of that variable, and the length 32, to the `RETURN` opcode. Note that LLL does not automatically divide everything into 32-byte chunks the way Serpent does, so the conversion needs to introduce these more low-level mechanics. `msg.data[1]`, for examples, is translated into `(calldataload 32)`, and `msg.data[3]` into `(calldataload 96)`.
+This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. In the innermost layer, we take bytes 0-31 from the input, multiply that value by two, and save it in a temp variable called `_temp4_1`. We then supply the memory address of that variable, and the length 32, to the `RETURN` opcode. Note that, when dealing with message and memory data, LLL deals not with 32-byte chunks but with bytes directly, so the conversion needs to introduce these more low-level mechanics. `msg.data[1]`, for examples, is translated into `(calldataload 32)`, and `msg.data[3]` into `(calldataload 96)`.
 
 Now, what if you want to actually run the contract? That is where pyethereum comes in. Open up a Python console in the same directory, and run:
 
@@ -76,7 +91,7 @@ And there you go.
 
 ### Lesson 2: Name Registry
 
-However, having a multiplier on the blockchain is kind of boring. So let's do something marginally more interesting: a name registry. Our name registry will be fairly simple; it will take in two data items (ie. 64 bytes), treating the first item as the key and the second as the value. If the key is not yet registered, then it registers the key/value pair and returns 1; otherwise, it returns 0. Let's try it out:
+Having a multiply-by-two function on the blockchain is kind of boring. So let's do something marginally more interesting: a name registry. Our name registry will be fairly simple; it will take in two data items (ie. 64 bytes), treating the first item as the key and the second as the value. If the key is not yet registered, then it registers the key/value pair and returns 1; otherwise, it returns 0. Let's try it out:
 
     key = msg.data[0]
     value = msg.data[1]
@@ -103,7 +118,7 @@ Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opc
 
 ### Including files
 
-Once your projects become larger, you will not want to put everything into the same file; things become particularly inconvenient when one piece of code needs to create a contract. Fortunately, the process for doing so is quite simple. Make the following two files:
+Once your projects become larger, you will not want to put everything into the same file; things become particularly inconvenient when one piece of code needs to create a contract. Fortunately, the process for splitting code into multiple files is quite simple. Make the following two files:
 
 mul2.se:
 
@@ -133,6 +148,7 @@ The three other useful features in the tester environment are:
 * Block access - you can dig around `s.block` to see block data (eg. `s.block.number`, `s.block.get_balance(addr)`, `s.block.get_storage_data(addr, index)`)
 * Snapshots - you can do `x = s.snapshot()` and `s.revert(x)`
 * Advancing blocks - you can do `s.mine(100)` and 100 blocks magically pass by with a 60-second interval between blocks. `s.mine(100, addr)` mines into a particular address.
+* Full block data dump - type `s.to_dict()`
 
 ## Complete language spec
 
@@ -142,13 +158,13 @@ An expression is defined as anything that fits on one line. An expression is rec
 
 * A number is an expression (eg. `125`)
 * A number in hex is an expression (eg. `0xdeadbeef`), and evaluates to the corresponding decimal value (in this case, `3735928559`). Uppercase does not work.
-* A string is an expression (eg. "george"), and evaluates to the corresponding hex (in this case, `0x67656f726765`, ie. `113685359126373`). Note that due to wraparound all but the last 32 characters of a 33+ char string are truncated off.
+* A string is an expression (eg. `"george"`), and evaluates to the corresponding hex (in this case, `0x67656f726765`, ie. `113685359126373`). Note that due to wraparound all but the last 32 characters of a 33+ char string are truncated off.
 * A variable is an expression (eg. `a`)
 * An arithmetic expression built out of arithmetic operations and expressions is an expression (eg. `2 + 3`, `(4 + 5) ^ 7`, `"george" ^ 2 / (0xdeadbeef - 4848) ^ "harry"`). Supported operations are:
   * `+` (`ADD`)
   * `-` (`SUB`); note that right now `-5` is converted into `(sub 0 5)`
   * `*` (`MUL`)
-  * `/` (`SDIV`, ie. signed division)
+  * `/` (`SDIV`, ie. signed division, where negative values of `x` are stored as `x + 2^256`, eg. -3 is `0xfffffff....ffd`)
   * `%` (`SMOD`)
   * `@/` (`DIV`, ie. unsigned division)
   * `@%` (`MOD`)
@@ -173,17 +189,17 @@ An expression is defined as anything that fits on one line. An expression is rec
   * `msg(gas, to, value, dataval)`: sends a message with the specified recipient, quantity of ether (in wei) and amount of gas, with `dataval` as a 32-byte input, and returns the first 32 bytes of the output as a value on the stack
   * `msg(gas, to, value, datarray, insize)`: sends a message with the specified recipient, quantity of ether (in wei) and amount of gas, taking `insize` values from the specified array as input, and returns the first 32 bytes of the output as a value on the stack
   * `msg(gas, to, value, datarray, insize, outsize)`: sends a message with the specified recipient, quantity of ether (in wei) and amount of gas, taking `insize` values from the specified array as input, and returns an `outsize`-sized data array as the output
-  * `call(addr, dat)` - equivalent to `msg(GAS - 25, addr, 0, dat)` where `GAS` is the remaining gas
-  * `call(addr, datarray, insize)` - equivalent to `msg(GAS - 25, addr, 0, datarray, insize)`
-  * `call(addr, datarray, insize, outsize)` - equivalent to `msg(GAS - 25, addr, 0, datarray, insize, outsize)`
+  * `call(addr, dat)` - equivalent to `msg(tx.gas - 25, addr, 0, dat)` where `tx.gas` is the remaining gas
+  * `call(addr, datarray, insize)` - equivalent to `msg(tx.gas - 25, addr, 0, datarray, insize)`
+  * `call(addr, datarray, insize, outsize)` - equivalent to `msg(tx.gas - 25, addr, 0, datarray, insize, outsize)`
   * `send(gas, addr, value)` - sends the desired amount of value to the desired address with the desired gas limit
-  * `send(addr, value)` - equivalent to `send(GAS - 25, addr, value)`
+  * `send(addr, value)` - equivalent to `send(tx.gas - 25, addr, value)`
   * `create('filename')` - creates a contract out of code from the desired filename and returns the address
   * `sha3(value)` - returns the SHA3 of the given value (as 32 bytes, zero-padded if necessary)
   * `sha3(str, bytes)` - returns the SHA3 of the given byte array with the given number of bytes
-  * `return(value)` - exits execution, returning the given value (as 32 bytes, zero-padded if necessary)
-  * `return(array, size)` - exits execution, returning the given array with the given number of 32-byte chunks
-  * `stop` - exits execution, returning nothing
+  * `return(value)` - exits message execution, returning the given value (as 32 bytes, zero-padded if necessary) (ie. if you run `x = send(C)` and the contract at address `C` reaches a point where there is the code `return(7)`, then in the outer execution `x` will equal 7)
+  * `return(array, size)` - exits message execution, returning the given array with the given number of 32-byte chunks
+  * `stop` - exits message execution, reporting nothing
   * `suicide(addr)` - destroys the contract, sending all ether to the given address
   * `debug(num)` - does nothing (in the pyethereum implementation with the `DUP POP POP` sequence of opcodes). However, implementations may wish to show the number in some kind of debug output.
 
