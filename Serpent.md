@@ -30,7 +30,7 @@ On Linux, use:
     unzip master.zip
     cd langs-master
 
-Then follow the instructions from above. On Mac, use `brew install serpent`. Then, in order to do the examples here, also install pyethereum using `pip install pyethereum` or from [our github](http://github.com/ethereum/pyethereum).
+Then follow steps 3 and 4 from above. On Mac, use `brew install serpent`. Then, in order to do the examples here, also install pyethereum using `pip install pyethereum` or from [our github](http://github.com/ethereum/pyethereum).
 
 ### Tutorial
 
