@@ -1,6 +1,6 @@
 ### Benvenuti. Ethereum: il contratto intelligente di nuova generazione e piattaforma di applicazioni decentralizzate.
 
-[Libro Bianco di Ethereum](https://google.it)
+[Libro Bianco di Ethereum](https://github.com/ethereum/wiki/wiki/%5BItalian%5D-Libro-Bianco)
 
 [RLP](https://google.it), la caratteristica del prefisso lineare ricorsivo, utilizzato per la codifica dei dati attraverso Ethereum.
 
