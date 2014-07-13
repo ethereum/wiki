@@ -15,22 +15,16 @@ The important differences between Serpent and Python are:
 
 ### Installation
 
-In order to install Serpent follow these instructions:
+In order to install the Serpent python library and executable do:
 
-1. Download and unpack [this zip](https://github.com/ethereum/langs/archive/master.zip)
-2. Make sure you have cmake and [boost](http://www.boost.org/) installed
-3. `mkdir build && cd build && cmake .. -DLANGUAGES=1 && make`
-4. `sudo make install`
+    pip install ethereum-serpent
 
-On Linux, use:
+If you want a library you can directly call from C++, instead do:
 
-    sudo apt-get update && sudo apt-get upgrade
-    sudo apt-get install build-essential g++-4.8 git cmake libboost-all-dev unzip
-    wget https://github.com/ethereum/langs/archive/master.zip
-    unzip master.zip
-    cd langs-master
-
-Then follow steps 3 and 4 from above. On Mac, use `brew install serpent`. Then, in order to do the examples here, also install pyethereum using `pip install pyethereum` or from [our github](http://github.com/ethereum/pyethereum).
+    git clone http://github.com/ethereum/serpent
+    cd serpent
+    make
+    sudo make install
 
 ### Tutorial
 
