@@ -1,3 +1,7 @@
+General:
+
+* If you get "Permission denied" or a "readonly" error on any command, prepend sudo to the command and try again
+
 Make new vault:
 
 1. `cd ~/coldstorage`
