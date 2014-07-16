@@ -29,7 +29,11 @@ Lock:
 
 1. `cd ~`
 2. `sudo ./lock.sh`
-3. Distribute key parts in ~/output to their owners
+3. `cd output`
+4. Insert USB key and `sudo mount /dev/sd[b-z]1 /mnt`
+5. You should see a bunch of files with names like `SESSION5_6ABCD824.txt.gpg`. Suppose 23 is the highest session number. `cp SESSION23* /mnt`
+6. `sync`
+7. Remove the USB, insert it on your computer, and distribute the SESSION23...gpg files to their owners.
 
 Sign transaction:
 
