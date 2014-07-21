@@ -38,9 +38,29 @@ A proof with block headers:
 
 The purpose of the `blk_coarseness` parameter is to allow for "extra-light" nodes, which process all block headers but store only a few (eg. one block header per 16). Using exact powers of two for `blk_coarseness` is encouraged.
 
-### Miscellaneous Block Invalidity
+### Transaction Tree Structural Invalidity
 
-A proof that a block's transaction tree contains an 
+There are two ways in which a transaction tree can be invalid:
+
+1. Contain an badly formatted transaction at some index
+2. Contain a transaction which is invalid because the state at the time does not have enough ether at the sender account
+3. Contain a transaction at an index higher than at an index where the trie has no value
+
+Cases (1) and (2) will be dealt in a later section. However, case (3) does deserve specific attention.
+
+Request for proof of zero-past-a-point:
+
+    [ 50, blknum, index ]
+
+Request for proof of transaction at a particular index:
+
+    [ 51, blknum, index ]
+
+Responses are given in the same format as above. The proof of zero-past-a-point is a special kind of SPV proof, proving that there are no keys in the tree higher than some particular value. Each Patricia tree implementation should have a method for "find next key in the tree to the right of this key" (where the key provided may or may not itself be in the tree), and the way to verify the proof is to attempt to run this method with the provided index using only the Patricia tree nodes supplied in the proof, and see that there are no keys to be found.
+
+The general algorithm that a full verifying node will follow to make sure that no structural transaction tree invalidities exist is as follows:
+
+1. Let i = 0
 
 ### Transaction Execution Challenge-Response
 
