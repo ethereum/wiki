@@ -44,3 +44,22 @@ Da decenni sta circolando l'idea di una moneta digitale decentralizzata, così c
 Poichè la moneta è un'applicazione first-to-file, dove l'ordine delle transazioni è spesso di cruciale importanza, monete decentralizzate richiedono una soluzione al consenso decentralizzato. L'ostacolo principale che tutti i protocolli di valuta pre-Bitcoin hanno affrontato consiste nel fatto che, mentre c'era stata moltissima ricerca, per molti anni, sulla creazione di un consenso Byzantine-fault-tolerant condiviso da più parti, dove tutti i protocolli descritti in precedenza risolvevano soltanto la metà del problema. I protocolli supponevano che nel sistema fosse conosciuto, e prodotto margini di sicurezza della forma "se N parti partecipano, poi il sistema può tollerare fino a  N/4 cattivi attori". Tuttavia il problema è che in una regolazione anonima i margini di sicurezza sono vulnerabili da attacchi sibilla, dove un singolo attaccante può creare migliaia di nodi simulati su un server o su una botnet ed usare questi nodi per assicurarsi una quota di maggioranza.
 
 L'innovazione fornita da Satoshi è l'idea di riuscire a combinare un protocollo molto semplice di consenso decentralizzato, basato su dei nodi su cui avvengono le transazioni, che creano una sempre più crescente blockchain attraverso la creazione di "blocchi" ogni 10 minuti, con il proof of work come meccanimso attraverso cui i nodi guadagnano il diritto di partecipare al sistema. Mentre i nodi con una grande quantità di potenza di calcolo hanno proporzionalmente maggiore influenza, raggiungere più potenza computazionale rispetto l'intero network è più difficile rispetto al simulare milioni di nodi. Nonostante la crudezza e la semplicità del modello blockchain del Bitcoin, esso ha dimostrato di essere abbastanza valido, e nel corso dei successivi cinque anni sarebbe diventato il fondamento di oltre duecento monete e protocolli di tutto il mondo.
+
+### Il Bitcoin come un Sistema di Transizione di Stato
+
+![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
+
+Da un punto di vista tecnico, il libro mastro del Bitcoin può essere pensato come un sistema di transizione di stato, dove c'è uno "stato" consistente nella proprietà dello status di tutti i bitcoins esistenti e "la funzione di transizione di stato" che riceve uno stato ed una transizione e trasmette un nuovo stato che ne costituisce il risultato. Nel sistema bancario tradizionale, per esempio, lo stato è il documento costituente il saldo, una transazione è una richiesta di movimentare $X da A a B, e la funzione di transizione di stato sottrae un valore nel conto corrente di A equivalente $X ed incrementa il valore di $X nel conto corrente bancario di B. Se nel conto corrente di A ci sono meno che $X nel primo posto, la funzione di transizione di stato segnala un errore. Quindi, si può formalmente definire:
+
+    APPLY(S,TX) -> S' or ERROR
+
+Nel sistema bancario definito in precedenza:
+
+    APPLY({ Alice: $50, Bob: $50 },"send $20 from Alice to Bob") = { Alice: $30, Bob: $70 }
+
+Ma:
+    
+    APPLY({ Alice: $50, Bob: $50 },"send $70 from Alice to Bob") = ERROR
+
+Lo "stato" nel Bitcoin è la raccolta di tutte le monete (tecnicamente, "transazioni in uscita non spese" oUTXO) che sono state effettuate ma non ancora spese, con ogni UTXO che ha una denomoninazione ed un proprietario (definito da un indirizzo da 20-byte che è essenzialmente una chiave crittografica pubblica<sup>[1]</sup>). Una transazione contiene uno o più inputs, con ogni input che contiente un riferimento ad un UTXO esistente ed una firma crittografica prodotta da una chiave privata associata all'indirizzo del proprietario, ed uno o più outputs, con ogni outpout contenente un nuovo UTXO che deve essere aggiunto allo stato.
+
