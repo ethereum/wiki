@@ -63,3 +63,10 @@ Ma:
 
 Lo "stato" nel Bitcoin è la raccolta di tutte le monete (tecnicamente, "transazioni in uscita non spese" oUTXO) che sono state effettuate ma non ancora spese, con ogni UTXO che ha una denomoninazione ed un proprietario (definito da un indirizzo da 20-byte che è essenzialmente una chiave crittografica pubblica<sup>[1]</sup>). Una transazione contiene uno o più inputs, con ogni input che contiente un riferimento ad un UTXO esistente ed una firma crittografica prodotta da una chiave privata associata all'indirizzo del proprietario, ed uno o più outputs, con ogni outpout contenente un nuovo UTXO che deve essere aggiunto allo stato.
 
+1. Per ogni input in `TX`:
+    * Se il riferimento UTXO non è in `S`, si ha un errore.
+    * Se la firma provvista non combacia con il proprietario del UTXO, si ha un errore.
+2. Se la somma dei valori di tutti gli input UTXO è inferiore alla somma dei valori di tutti gli outpout UTXO, si ha un errore.
+3. Si ha `S` con tutti gli input UTXO meno tutti gli outpout UTXO aggiunti.
+
+La prima metà del primo step previene che ai mittenti delle transazioni di spendere monete che non esistono, la seconda metà del primo step previene ai mittenti delle transazioni di spendere monete di altre persone, ed il secondo step fa rispettare la conservazione del valore. Al fine di utilizzare questo per il pagamento, il protocollo è il seguente. Supponiamo che Alice vuole inviare 11.7 BTC a Bob. Per primo, Alice guarderà per un set di UTXO che lei possiede che ammonta fino ad almeno 11.7 BTC. Realisticamente, Alice non sarà in grado di ottenere esattamente 11.7 BTC; si può dire che il valore più piccolo che può ottenere è 6+4+2=12. Lei poi crea una transazione con quei tre inputs ed i due outputs. Il primo output sarà 11.7 BTC con l'indirizzo che appartiene a Bob, ed il secondo output sarà il rimanente 0.3 BTC "scambiato", con il proprietario essendo Alice stessa.
