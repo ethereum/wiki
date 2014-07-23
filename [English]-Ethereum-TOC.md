@@ -4,7 +4,7 @@
 
 [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 
-[RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP), the recursive linear prefix specification, used for data encoding throughout Ethereum.
+[RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP), the recursive length prefix specification, used for data encoding throughout Ethereum.
 
 [Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) for the specification of the Merkle Patricia tree (aka Trie), the structure used for storing and hashing block-chain state in Ethereum.
 
