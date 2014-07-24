@@ -71,3 +71,7 @@ For simplicity, we will combine all of these nodes into one list. The process of
 1. The execution used only nodes in the proof
 2. The transaction is valid
 3. Execution actually results in the medstate and gas at index i+1.
+
+Request for proof:
+
+    [ 60, blknum, index ]
