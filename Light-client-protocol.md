@@ -58,10 +58,16 @@ Request for proof of transaction at a particular index:
 
 Responses are given in the same format as above. The proof of zero-past-a-point is a special kind of SPV proof, proving that there are no keys in the tree higher than some particular value. Each Patricia tree implementation should have a method for "find next key in the tree to the right of this key" (where the key provided may or may not itself be in the tree), and the way to verify the proof is to attempt to run this method with the provided index using only the Patricia tree nodes supplied in the proof, and see that there are no keys to be found.
 
-The general algorithm that a full verifying node will follow to make sure that no structural transaction tree invalidities exist is as follows:
-
-1. Let i = 0
-
 ### Transaction Execution Challenge-Response
 
-Another function of the light client protocol is to verify the validity 
+Another function of the light client protocol is to verify the validity of transaction execution. The SPV proof here is very similar to any other SPV proof, except with a few small parts; a full proof-of-execution consists of the following:
+
+1. The subset of Patricia nodes used to prove the validity of the `[tx, medstate, gas]` tuple at index i
+2. The subset of Patricia nodes used to prove the validity of the `[tx, medstate, gas]` tuple at index i+1
+3. The subset of Patricia that at any point need to be accessed during the process of processing the state transition from index i to index i+1
+
+For simplicity, we will combine all of these nodes into one list. The process of verification will thus be accessing the `[tx, medstate, gas]` tuples at indices i and i+1, processing the state transition of the transaction at index i+1, and making sure that:
+
+1. The execution used only nodes in the proof
+2. The transaction is valid
+3. Execution actually results in the medstate and gas at index i+1.
