@@ -8,7 +8,7 @@ All substantial quantities of data in Ethereum are stored in a data structure kn
 
 The size complexity of a Merkle proof scales linearly with the height of a tree; because each child in a tree has a particular number of children (in our case, up to 17), this means that the size complexity of a Merkle proof is logarithmic in the quantity of data stored. This means that, even if the entire state tree is a few gigabytes in size, if a node receives a state root from a trusted source that node has the ability to know with full certainty the validity of any information with the tree by only downloading a few kilobytes of data in a proof.
 
-An SPV proof in a Patricia tree simply consists of the complete subset of tree nodes that were processed in order to access it (or, more specifically, the tree nodes that needed to be looked up in a reverse-hash-lookup database). In a simple implementation of a Patricia tree, retrieving the value associated with a particular key requires descending the hash tree, constantly looking up nodes in the database by their hashes, until you eventually reach the final leaf node; a simple algorithm for producing an SPV proof is to simply run this naive algorithm, and record all of the database lookups that were made. SPV verification consists of running the naive lookup algorithm but pointing it to a custom database populated only with the nodes in the SPV proof; if there is a "value not found" error, then the proof is invalid. 
+An SPV proof of a node in a Patricia tree simply consists of the complete subset of tree nodes that were processed in order to access it (or, more specifically, the tree nodes that needed to be looked up in a reverse-hash-lookup database). In a simple implementation of a Patricia tree, retrieving the value associated with a particular key requires descending the hash tree, constantly looking up nodes in the database by their hashes, until you eventually reach the final leaf node; a simple algorithm for producing an SPV proof is to simply run this naive algorithm, and record all of the database lookups that were made. SPV verification consists of running the naive lookup algorithm but pointing it to a custom database populated only with the nodes in the SPV proof; if there is a "node not found" error, then the proof is invalid. 
 
 #### Specifications
 
@@ -42,9 +42,9 @@ The purpose of the `blk_coarseness` parameter is to allow for "extra-light" node
 
 There are two ways in which a transaction tree can be invalid:
 
-1. Contain an badly formatted transaction at some index
-2. Contain a transaction which is invalid because the state at the time does not have enough ether at the sender account
-3. Contain a transaction at an index higher than at an index where the trie has no value
+1. The tree may contain an badly formatted transaction at some index
+2. The tree may contain a transaction which is invalid because the state at the time does not have enough ether at the sender account
+3. The tree may contain a transaction at an index higher than at an index where the trie has no value
 
 Cases (1) and (2) will be dealt in a later section. However, case (3) does deserve specific attention.
 
