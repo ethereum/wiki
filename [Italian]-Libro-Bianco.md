@@ -70,3 +70,20 @@ Lo "stato" nel Bitcoin è la raccolta di tutte le monete (tecnicamente, "transaz
 3. Si ha `S` con tutti gli input UTXO meno tutti gli outpout UTXO aggiunti.
 
 La prima metà del primo step previene che ai mittenti delle transazioni di spendere monete che non esistono, la seconda metà del primo step previene ai mittenti delle transazioni di spendere monete di altre persone, ed il secondo step fa rispettare la conservazione del valore. Al fine di utilizzare questo per il pagamento, il protocollo è il seguente. Supponiamo che Alice vuole inviare 11.7 BTC a Bob. Per primo, Alice guarderà per un set di UTXO che lei possiede che ammonta fino ad almeno 11.7 BTC. Realisticamente, Alice non sarà in grado di ottenere esattamente 11.7 BTC; si può dire che il valore più piccolo che può ottenere è 6+4+2=12. Lei poi crea una transazione con quei tre inputs ed i due outputs. Il primo output sarà 11.7 BTC con l'indirizzo che appartiene a Bob, ed il secondo output sarà il rimanente 0.3 BTC "scambiato", con il proprietario essendo Alice stessa.
+
+### Mining
+
+![block_picture.jpg](http://vitalik.ca/files/block_picture.png)
+
+Se abbiamo avuto accesso a un servizio centralizzato di fiducia, questo sistema potrebbe essere banale da implementare; esso potrebbe essere codificato esattamente come descritto. Tuttavia, con i Bitcoin noi abbiamo provato a costruire un sistema monetario, così noi avremo bisogno di combinare il sistema di transizione di stato con un sistema di consenso al fine di assicurare che ognuno è d'accordo sull'ordine delle transazioni. Il processo di consenso decentralizzato del Bitcoin richiede nodi nel network che continuamentetentano di produrre pacchetti di transazioni chiamati "blocchi". Il network è destinato a produrre all'incirca un blocco ogni dieci minuti, con ogni blocco che contiene una marca temporale, un numero, un riferimento a (ad esempio l'hash del) precedente blocco e una lista di tutte le transazione che sono avvenute dal precedente blocco. Con il passare del tempo, questo crea una persistente, sempre crescente, "blockchain" che si aggiorna costantemente per rappresentare l'ultimo stato del libro mastro del Bitcoin.
+
+L'algoritmo per controllare la validità di un blocco, espresso in questo paradigma, è il seguente:
+
+1. Controllo se il blocco precedente esiste ed è valido.
+2. Controllo se la marca temporale del blocco è più grande del blocco precedente<<sup>[2]</sup> ed è inferiore di 2 ore nel futuro.
+3. Controllo se il proof of work sul blocco è valido.
+4. Sia `S[0]` lo stato alla fine del blocco precedente.
+5. Si supponga `TX` la lista della transazione del blocco con `n` transazioni. Per tutti `i` in `0...n-1`, sia impostato `S[i+1] = APPLY(S[i],TX[i])` Se da qualsiasi applicazione risulti un errore, esce e ritorna falso.
+6. Ritorna vero, e registra `S[n]` come uno stato alla fine del blocco.
+
+Essenzialmente, ogni transazione del blocco deve fornire uno transazione di stato che sia valida. Sia abbia nota che ogni stato non è codificato nel blocco in qualsia modo; esso è puramente una astrazione da ricordare per la validiazione del nodo e può essere solo essere (in modo sicuro) computata per qualsiasi nodo iniziando dallo stato di genesi e applicata sequenzialmente ad ogni transazione in ogni nodo. Si abbia nota che è importante l'ordine nel quale ogni miner include le transazioni nel blocco; se ci sono due transazioni A e B nel blocco tale che B impiega una UTXO creata da A, poi il blocco sarà validato se A viene prima di  B ma non viceversa.
