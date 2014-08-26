@@ -1,3 +1,6 @@
+**Note:** There are [updates](https://github.com/ethereum/cpp-ethereum/wiki/PoC-6-Network-Protocol) to the protocol net yet described on this page. 
+
+
 Peer-to-peer communications between nodes running Ethereum clients are designed to be governed by a simple wire-protocol making use of existing Ethereum technologies and standards such as RLP wherever practical.
 
 This document intents to specify this protocol comprehensively.
