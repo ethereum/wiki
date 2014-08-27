@@ -1,6 +1,3 @@
-**Note:** There are [updates](https://github.com/ethereum/cpp-ethereum/wiki/PoC-6-Network-Protocol) to the protocol net yet described on this page. 
-
-
 Peer-to-peer communications between nodes running Ethereum clients are designed to be governed by a simple wire-protocol making use of existing Ethereum technologies and standards such as RLP wherever practical.
 
 This document intents to specify this protocol comprehensively.
@@ -12,24 +9,33 @@ Ethereum nodes may connect to each other over TCP only. Peers are free to advert
 
 Though TCP provides a connection-oriented medium, Ethereum nodes communicate in terms of packets. These packets are formed as a 4-byte synchronisation token (0x22400891), a 4-byte "payload size", to be interpreted as a big-endian integer and finally an N-byte RLP-serialised data structure, where N is the aforementioned "payload size". To be clear, the payload size specifies the number of bytes in the packet ''following'' the first 8.
 
+### Basic Chain Syncing Overview
+- Two peers connect & say Hello. Hello includes the TD & hash of their best block.
+- The client with the worst TD asks peer for full chain of just block hashes.
+- Chain of hashes is stored in space shared by all peer connections, and used as a "work pool".
+- While there are hashes in the chain of hashes that we don't have in our chain:
+  - Ask for N blocks from our peer using the hashes. Mark them as on their way so we don't get them from another peer.
 
 ### Payload Contents
 
 There are a number of different types of payload that may be encoded within the RLP. This ''type'' is always determined by the first entry of the RLP, interpreted as an integer:
 
 **Hello**
-* `[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID]`
+* `[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID, TD, BEST_HASH]`
 * First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
 * `PROTOCOL_VERSION` is one of:
     * `0x00` for PoC-1;
     * `0x01` for PoC-2;
     * `0x07` for PoC-3;
     * `0x09` for PoC-4.
+    * `0x1b` for PoC-6.
 * `NETWORK_ID` should be 0.
 * `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
 * `LISTEN_PORT` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
 * `CAPABILITIES` specifies the capabilities of the client as a set of flags; presently three bits are used: `0x01` for peers discovery, `0x02` for transaction relaying, `0x04` for block-chain querying.
 * `NODE_ID` is the Unique Identity of the node and specifies a 512-bit hash that identifies this node.
+* `TD`: Total Difficulty of the best chain. Integer, as found in block header.
+* `BEST_HASH`: The hash of the best (i.e. highest TD) known block.
 
 **Disconnect**
 * `[0x01, REASON]`
@@ -69,17 +75,21 @@ There are a number of different types of payload that may be encoded within the 
 * `[0x13, [block_header, transaction_list, uncle_list], ... ]`
 * Specify (a) block(s) that the peer should know about. The items in the list (following the first item, `0x13`) are blocks in the format described in the main Ethereum specification.
 
-**GetChain**
-* `[0x14, Parent1, Parent2, ..., ParentN, Count]`
-* Request the peer to send `Count` (to be interpreted as an integer) blocks in the current canonical block chain that are children of `Parent1` (to be interpreted as a SHA3 block hash). If `Parent1` is not present in the block chain, it should instead act as if the request were for `Parent2` &c. through to `ParentN`. If the designated parent is the present block chain head, an empty reply should be sent. If none of the parents are in the current canonical block chain, then `NotInChain` should be sent along with `ParentN` (i.e. the last `Parent` in the parents list). If no parents are passed, then a reply need not be made.
-
-**NotInChain**
-* `[0x15, Hash]`
-* Tell the peer that the given hash was not found in its block chain.
-
 **GetTransactions**
 * `[0x16]`
 * Request the peer to send all transactions currently in the queue. See Transactions.
+
+**GetBlockHashes**
+* [`0x17`, [ `hash` : `B_32`, `maxBlocks`: `P` ]] 
+* Requests a `BlockHashes` message of at most `maxBlocks` entries, of block hashes from the blockchain, starting at the parent of block `hash`. Does not _require_ the peer to give `maxBlocks` hashes - they could give somewhat fewer.
+
+**BlockHashes**
+* [`0x18`, [ `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]]
+* Gives a series of hashes of blocks (each the child of the next). This implies that the blocks are ordered from youngest to oldest.
+
+**GetBlocks**
+* [`0x19`,[ `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]]
+* Requests a `Blocks` message detailing a number of blocks to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these blocks in a single message - you might have to re-request them.
 
 
 ### Example Packets
