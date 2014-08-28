@@ -37,6 +37,7 @@ There are a number of different types of payload that may be encoded within the 
 * `TD`: Total Difficulty of the best chain. Integer, as found in block header.
 * `BEST_HASH`: The hash of the best (i.e. highest TD) known block.
 * `GENESIS_HASH`: The hash of the Genesis block
+
 **Disconnect**
 * `[0x01, REASON]`
 * Inform the peer that a disconnection is imminent; if received, a peer should disconnect immediately. When sending, well-behaved hosts give their peers a fighting chance (read: wait 2 seconds) to disconnect to before disconnecting themselves.
