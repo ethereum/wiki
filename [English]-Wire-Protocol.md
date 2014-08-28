@@ -9,7 +9,7 @@ Ethereum nodes may connect to each other over TCP only. Peers are free to advert
 
 Though TCP provides a connection-oriented medium, Ethereum nodes communicate in terms of packets. These packets are formed as a 4-byte synchronisation token (0x22400891), a 4-byte "payload size", to be interpreted as a big-endian integer and finally an N-byte RLP-serialised data structure, where N is the aforementioned "payload size". To be clear, the payload size specifies the number of bytes in the packet ''following'' the first 8.
 
-### Basic Chain Syncing Overview
+### Basic Chain Syncing 
 - Two peers connect & say Hello. Hello includes the TD & hash of their best block.
 - The client with the worst TD asks peer for full chain of just block hashes.
 - Chain of hashes is stored in space shared by all peer connections, and used as a "work pool".
@@ -21,7 +21,7 @@ Though TCP provides a connection-oriented medium, Ethereum nodes communicate in 
 There are a number of different types of payload that may be encoded within the RLP. This ''type'' is always determined by the first entry of the RLP, interpreted as an integer:
 
 **Hello**
-* `[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID, TD, BEST_HASH]`
+* `[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID, TD, BEST_HASH, GENESIS_HASH]`
 * First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
 * `PROTOCOL_VERSION` is one of:
     * `0x00` for PoC-1;
@@ -36,7 +36,7 @@ There are a number of different types of payload that may be encoded within the 
 * `NODE_ID` is the Unique Identity of the node and specifies a 512-bit hash that identifies this node.
 * `TD`: Total Difficulty of the best chain. Integer, as found in block header.
 * `BEST_HASH`: The hash of the best (i.e. highest TD) known block.
-
+* `GENESIS_HASH`: The hash of the Genesis block
 **Disconnect**
 * `[0x01, REASON]`
 * Inform the peer that a disconnection is imminent; if received, a peer should disconnect immediately. When sending, well-behaved hosts give their peers a fighting chance (read: wait 2 seconds) to disconnect to before disconnecting themselves.
