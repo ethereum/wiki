@@ -28,7 +28,8 @@ There are a number of different types of payload that may be encoded within the 
     * `0x01` for PoC-2;
     * `0x07` for PoC-3;
     * `0x09` for PoC-4.
-    * `0x1b` for PoC-6.
+    * `0x17` for PoC-5.
+    * `0x1c` for PoC-6.
 * `NETWORK_ID` should be 0.
 * `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
 * `LISTEN_PORT` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
