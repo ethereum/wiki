@@ -1,6 +1,5 @@
-### Navigation
+### Basics
 - [Ethereum whitepaper](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-White-Paper)
-- [Glossary](https://github.com/ethereum/wiki/wiki/Glossary)
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 
 ###Implementation
@@ -14,3 +13,4 @@
 
 ###Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
+- [Glossary](https://github.com/ethereum/wiki/wiki/Glossary)
