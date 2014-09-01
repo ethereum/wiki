@@ -8,9 +8,9 @@
 - [Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree)
 - [Wire protocol](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Wire-Protocol)
 
-**Languages**
+###Languages
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 
-**Misc**
+###Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
