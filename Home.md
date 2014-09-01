@@ -8,7 +8,7 @@ Users signed in with Github can edit and add pages using the [browser](https://h
 To get the basic concepts of Ethereum read the [ethereum whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper). See the [ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for quick start to developing smart contracts.
 
 ## Don't get lost
-Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FQ](https://github.com/ethereum/wiki/wiki/FAQ)
+Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
 
 ## Downloads
 Currently stable clients are available for PoC5 (Proof of Concept #5):
