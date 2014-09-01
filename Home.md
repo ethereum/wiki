@@ -1,19 +1,22 @@
-### Welcome to Ethereum, the next-generation smart contract and decentralized application layer.
+# Welcome to the Ethereum Wiki
 
-[Ethereum whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper)
+This is the community maintained wiki covering all sorts of information on Ethereum, _the next-generation smart contract and decentralized application layer_
 
-[Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
+Users signed in with Github can edit and add pages using the [browser](https://help.github.com/articles/editing-wiki-pages-via-the-online-interface) or [locally](https://help.github.com/articles/adding-and-editing-wiki-pages-locally).
 
-[RLP](https://github.com/ethereum/wiki/wiki/RLP), the recursive length prefix specification, used for data encoding throughout Ethereum.
+## Getting started
+To get the basic concepts of Ethereum read the [ethereum whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper). See the [ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for quick start to developing smart contracts.
 
-[Patricia Tree](https://github.com/ethereum/wiki/wiki/Patricia-Tree) for the specification of the Merkle Patricia tree (aka Trie), the structure used for storing and hashing block-chain state in Ethereum.
+## Don't get lost
+Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FQ](https://github.com/ethereum/wiki/wiki/FAQ)
 
-[Wire protocol](https://github.com/ethereum/wiki/wiki/Wire-Protocol) specification.
+## Downloads
+Currently stable clients are available for PoC5 (Proof of Concept #5):
+- [AlethZero](https://github.com/ethereum/cpp-ethereum/releases) (C++) 
+- [Ethereal](https://github.com/ethereum/go-ethereum/releases) (Go) 
+- [pyeth](https://github.com/ethereum/pyethereum/releases) (Python)
 
-[Serpent](https://github.com/ethereum/wiki/wiki/Serpent), the high-level language used to write contracts.
-
-[LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Low-level "Lisp-like Language" specification, used to author contracts in the PoC series from PoC-3.
-
-[Glossary](https://github.com/ethereum/wiki/wiki/Glossary)
-
-[Hard Problems of Cryptocurrency (work-in-progress)](https://github.com/ethereum/wiki/wiki/Problems)
+Bleeding edge PoC6 code can be cloned from their git repositories:
+- https://github.com/ethereum/cpp-ethereum/
+- https://github.com/ethereum/go-ethereum
+- https://github.com/ethereum/pyethereum
