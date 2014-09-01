@@ -8,6 +8,10 @@
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 
+### The Clients
+- [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
+- [Ethereal (Go)](https://github.com/ethereum/wiki/wiki/Ethereal) 
+- [pyeth (Python)](https://github.com/ethereum/wiki/wiki/Pyeth) 
 
 ###Implementation
 - [RLP](https://github.com/ethereum/wiki/wiki/RLP)
