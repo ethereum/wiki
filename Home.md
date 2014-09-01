@@ -1,14 +1,14 @@
 ### Welcome to Ethereum, the next-generation smart contract and decentralized application layer.
 
-[Ethereum whitepaper](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-White-Paper)
+[Ethereum whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper)
 
 [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 
-[RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP), the recursive length prefix specification, used for data encoding throughout Ethereum.
+[RLP](https://github.com/ethereum/wiki/wiki/RLP), the recursive length prefix specification, used for data encoding throughout Ethereum.
 
-[Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) for the specification of the Merkle Patricia tree (aka Trie), the structure used for storing and hashing block-chain state in Ethereum.
+[Patricia Tree](https://github.com/ethereum/wiki/wiki/Patricia-Tree) for the specification of the Merkle Patricia tree (aka Trie), the structure used for storing and hashing block-chain state in Ethereum.
 
-[Wire protocol](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Wire-Protocol) specification.
+[Wire protocol](https://github.com/ethereum/wiki/wiki/Wire-Protocol) specification.
 
 [Serpent](https://github.com/ethereum/wiki/wiki/Serpent), the high-level language used to write contracts.
 
