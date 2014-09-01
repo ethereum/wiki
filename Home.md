@@ -1,10 +1,19 @@
-### Select your language:
+### Welcome to Ethereum, the next-generation smart contract and decentralized application layer.
 
-- [English](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Ethereum-TOC)
-- [Japanese] (https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-Ethereum-TOC) - TBD
-- [Romanian](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-White-Paper) - TBD
-- [German](https://github.com/ethereum/wiki/wiki/%5BGerman%5D-Ethereum-TOC) - TBD
-- [Chinese](https://github.com/ethereum/wiki/wiki/%5BChinese%5D-Ethereum-TOC) - TBD
-- [Spanish](https://github.com/ethereum/wiki/wiki/%5BSpanish%5D-Ethereum-TOC) - TBD
-- [French](https://github.com/ethereum/wiki/wiki/%5BFrench%5D-Ethereum-TOC) - TBD
-- [فارسی (Persian)](https://github.com/ethereum/wiki/wiki/%5BPersian%5D-Ethereum-TOC) - TBD
+[Ethereum whitepaper](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-White-Paper)
+
+[Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
+
+[RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP), the recursive length prefix specification, used for data encoding throughout Ethereum.
+
+[Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) for the specification of the Merkle Patricia tree (aka Trie), the structure used for storing and hashing block-chain state in Ethereum.
+
+[Wire protocol](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Wire-Protocol) specification.
+
+[Serpent](https://github.com/ethereum/wiki/wiki/Serpent), the high-level language used to write contracts.
+
+[LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Low-level "Lisp-like Language" specification, used to author contracts in the PoC series from PoC-3.
+
+[Glossary](https://github.com/ethereum/wiki/wiki/Glossary)
+
+[Hard Problems of Cryptocurrency (work-in-progress)](https://github.com/ethereum/wiki/wiki/Problems)
