@@ -1,10 +1,10 @@
-Der Zweck von RLP ist es, beliebig verschachtelte Arrays von binären Daten zu kodieren. RLP wird als Hauptcodierungsverfahren verwendet, um Objekte in Etherieum in serieller Reihenfolge zu kodieren. Das heisst RLP kodiert Strukturen, spezielle Datentypen wie [Strings] (http://de.wikipedia.org/wiki/Zeichenkette), [Integers] (http://de.wikipedia.org/wiki/Integer_%28Datentyp%29) und [Floats] (http://de.wikipedia.org/wiki/Gleitkommazahl), bis hin zu höheren Protokollebenen. Integer werden in Ethereum standardmäßig im [Big Endian] (http://de.wikipedia.org/wiki/Byte-Reihenfolge) Binärfomat verarbeitet. 
+Der Zweck von RLP ist es, beliebig verschachtelte Arrays von binären Daten zu kodieren. RLP wird als Hauptcodierungsverfahren verwendet, um Objekte in Etherieum in serieller Reihenfolge zu kodieren. Das heisst RLP kodiert Strukturen, spezielle Datentypen wie [Strings] (http://de.wikipedia.org/wiki/Zeichenkette), [Integers] (http://de.wikipedia.org/wiki/Integer_%28Datentyp%29) und [Floats] (http://de.wikipedia.org/wiki/Gleitkommazahl), bis hin zu höheren Protokollebenen. Integer werden in Ethereum standardmäßig im [Big Endian] (http://de.wikipedia.org/wiki/Byte-Reihenfolge) Binärfomat verarbeitet.
 Wenn man RLP z.B. zum Kodieren eines Wörterbuchs verwendet, sind die beiden vorgeschalgenen Standardformen entweder `[[k1, v1], [k2, v2] ...]` mit Schlüsselwörtern in lexikographische Ordnung oder besser die Kodierung des [Patricia Baums] (https://github.com/ethereum/wiki/wiki/Patricia-Tree) (wie es Eutherium tut).
 
 ### Definition
 Die RLP-Koding erfolgt in einem Element. Ein Element wird wie folgt definiert:
 
-* Ein String (z.B. eine Byte Array) ist ein Element 
+* Ein String (z.B. eine Byte Array) ist ein Element
 * Eine Liste von Elementen ist ein Elemet
 
 Elemente können z.B. sein:
