@@ -1,11 +1,13 @@
 ### Basics
-- [Ethereum whitepaper](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-White-Paper)
+- [Ethereum whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper)
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
+- [FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
+
 
 ###Implementation
-- [RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP)
-- [Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree)
-- [Wire protocol](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Wire-Protocol)
+- [RLP](https://github.com/ethereum/wiki/wiki/RLP)
+- [Patricia Tree](https://github.com/ethereum/wiki/wiki/Patricia-Tree)
+- [Wire protocol](https://github.com/ethereum/wiki/wiki/Wire-Protocol)
 - [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
 
