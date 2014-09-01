@@ -15,5 +15,5 @@
 
 ###Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
-- [Blockchain based Proof of Work(https://github.com/ethereum/wiki/wiki/Blockchain-based-Proof-of-Work)
+- [Blockchain based Proof of Work](https://github.com/ethereum/wiki/wiki/Blockchain-based-Proof-of-Work)
 - [Glossary](https://github.com/ethereum/wiki/wiki/Glossary)
