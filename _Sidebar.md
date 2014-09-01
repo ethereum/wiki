@@ -3,7 +3,7 @@
 - [Glossary](https://github.com/ethereum/wiki/wiki/Glossary)
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 
-**Implementation**
+###Implementation
 - [RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP)
 - [Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree)
 - [Wire protocol](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Wire-Protocol)
