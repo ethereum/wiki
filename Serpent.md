@@ -34,7 +34,7 @@ Now, let's write our first contract. Paste the following into a file called "mul
 
 This contract is a simple one line of code. The first thing to point out is that Serpent sees message data, memory and output in 32-byte chunks; `msg.data[0]` returns bytes 0-31 of the input, `msg.data[5]` returns bytes 160-191, etc, and `return(202020)` returns the value 202020 encoded in binary form padded to 32 bytes. From now on, these mechanics will be assumed; "the zeroth data field" will be synonymous with "bytes 0-31 of the input" and "returns three values a,b,c" will be synonymous with "returns 96 bytes consisting of the values a, b and c, each padded to 32 bytes".
 
-Note that the Serpent compiler includes some tools to make this conversion convenient; `sc encode_datalist "1 2 3"` gives:
+Note that the Serpent compiler (included in the [cpp-ethereum toolkit](https://github.com/ethereum/cpp-ethereum)) includes some tools to make this conversion convenient; `sc encode_datalist "1 2 3"` gives:
 
     000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
 
