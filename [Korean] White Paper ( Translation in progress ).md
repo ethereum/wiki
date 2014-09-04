@@ -7,13 +7,13 @@ Satoshi Nakamoto가 2009년 1월 비트코인 블록체인을 처음 세상에 �
 ### Table of Contents
 
 * [역사](#역사)
-    * [Bitcoin As A State Transition System](#bitcoin-as-a-state-transition-system)
-    * [Mining](#mining)
-    * [Merkle Trees](#merkle-trees)
-    * [Alternative Blockchain Applications](#alternative-blockchain-applications)
-    * [Scripting](#scripting)
-* [Ethereum](#ethereum)
-    * [Ethereum Accounts](#ethereum-accounts)
+    * [Bitcoin As A State Transition System]
+    * [Mining]
+    * [Merkle Trees]
+    * [Alternative Blockchain Applications]
+    * [Scripting]
+* [Ethereum]
+    * [Ethereum Accounts]
     * [Messages and Transactions](#messages-and-transactions)
     * [Ethereum State Transition Function](#ethereum-state-transition-function)
     * [Code Execution](#code-execution)
