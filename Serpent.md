@@ -71,7 +71,7 @@ Alternatively, you can compile to LLL (the compiler compiles through LLL anyway,
 
 This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. In the innermost layer, we take bytes 0-31 from the input, multiply that value by two, and save it in a temp variable called `_temp4_1`. We then supply the memory address of that variable, and the length 32, to the `RETURN` opcode. Note that, when dealing with message and memory data, LLL deals not with 32-byte chunks but with bytes directly, so the conversion needs to introduce these more low-level mechanics. `msg.data[1]`, for examples, is translated into `(calldataload 32)`, and `msg.data[3]` into `(calldataload 96)`.
 
-Now, what if you want to actually run the contract? That is where pyethereum comes in. Open up a Python console in the same directory, and run:
+Now, what if you want to actually run the contract? That is where [pyethereum](https://github.com/ethereum/pyethereum) comes in. Open up a Python console in the same directory, and run:
 
     > from pyethereum import tester as t
     > s = t.state()
