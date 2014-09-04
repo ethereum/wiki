@@ -4,4 +4,41 @@ Satoshi Nakamoto가 2009년 1월 비트코인 블록체인을 처음 세상에 �
 
 블록체인 상의 디지털 자산을 이용하는 사례로는 커스텀 통화와 금융 상품을 나타내는 것(colored coins), 물리적 장치의 소유권을 기록하는 것(smart property), 도메인 이름 같은 대체되지 않는 자산을 표시하는 것 (Namecoin)등이 있다. 더 발전된 어플리케이션으로서 분산화된 환전(decentralized exchange), 금융 파생상품, p2p 도박, 개인신원증명 및 평판시스템 등이 있다. 그리고 또 다른 중요한 연구 분야는 "smart contract" - 사전에 정해진 임의의 규칙에 따라 디지털 자산을 자동으로 이동시는 시스템이다. 가령, 다음과 같은 재무계약을 한다고 하자. "A는 하루에 화폐를 X만큼 인출할 수 있고, B는 하루에 Y까지 통화를 인출할 수 있다. A와 B가 함께라면 얼마든지 인출할 수 있다. 그리고 A는 B가 인출할 권리를 정지시킬 수 있다". 이 계약의 논리적인 확장이 분산화된 자치 조직(decentralized autonomous organizations, DAOs) -  조직의 내부규칙이 프로그램 코딩되어 조직의 전체 자산을 자동으로 통제하는 장기적인 smart contract이다. Ethereum이 제공하려는 것은 튜링 완전(turing-complete) 프로그래밍 언어가 심어진 블록 체인이다. 이 프로그래밍 언어는 ethereum 유저들이 단지 몇 줄의 코딩으로 앞서 설명한 시스템을 구현할 수 있도록, '어떤 상태'를 코딩된 규칙에 따라 변화시키는 함수(arbitrary state transition functions)를 내재한 계약(contracts)을 만들 수 있다. 이 뿐만 아니라 우리가 아직 상상하지 못한 다른 많은 것들을 할 수 있다.
 
+### Table of Contents
+
+* [History](#history)
+    * [Bitcoin As A State Transition System](#bitcoin-as-a-state-transition-system)
+    * [Mining](#mining)
+    * [Merkle Trees](#merkle-trees)
+    * [Alternative Blockchain Applications](#alternative-blockchain-applications)
+    * [Scripting](#scripting)
+* [Ethereum](#ethereum)
+    * [Ethereum Accounts](#ethereum-accounts)
+    * [Messages and Transactions](#messages-and-transactions)
+    * [Ethereum State Transition Function](#ethereum-state-transition-function)
+    * [Code Execution](#code-execution)
+    * [Blockchain and Mining](#blockchain-and-mining)
+* [Applications](#applications)
+    * [Token Systems](#token-systems)
+    * [Financial derivatives](#financial-derivatives-and-stable-value-currencies)
+    * [Identity and Reputation Systems](#identity-and-reputation-systems)
+    * [Decentralized File Storage](#decentralized-file-storage)
+    * [Decentralized Autonomous Organizations](#decentralized-autonomous-organizations)
+    * [Further Applications](#further-applications)
+* [Miscellanea And Concerns](#miscellanea-and-concerns)
+    * [Modified GHOST Implementation](#modified-ghost-implementation)
+    * [Fees](#fees)
+    * [Computation And Turing-Completeness](#computation-and-turing-completeness)
+    * [Currency And Issuance](#currency-and-issuance)
+    * [Mining Centralization](#mining-centralization)
+    * [Scalability](#scalability)
+* [Conclusion](#conclusion)
+* [References and Further Reading](#references-and-further-reading)
+
+## 비트코인과 기존 개념들에 대한 소개
+
+### 역사
+
+분산화된 디지털 통화의 개념은, 재산등록 같은 어플리케이션과 마찬가지로 지난 10년간 우리 주변에 있었다. 1980~90년대의 익명 e-cash 프로토콜은 주로 Chaumian blinding로 알려진 암호 프리미티브(cryptographic primitive)에 의존하고 있었고, 개인정보를 강력하게 보호하는 통화를 제공하였으나 중앙집권적인 중개인에 의존했기 때문에 견인력을 얻는데 실패했다. 1998년 Wei Dai의 b-money는 분산합의 뿐만 아니라 계산 퍼즐을 풀게 함으로서 돈을 만드는 아이디어를 최초로 제안하였지만 분산합의를 실제로 어떻게 구현할지에 대한 자세한 방법을 제시하지 못했다. 2005년에 Hall Finney는 "재사용 가능한 작업증명(reusable proofs of work)" 개념을 소개하였다. 이 시스템은 b-money의 아이디어에 Adam Back의 계산 난이도 해시캐시 퍼즐(computationally difficult Hashcash puzzles)을 조합한 것이었다. 그러나 백엔드의 신뢰할 수 있는 컴퓨팅(trusted computing)에 의존함으로써, 이상적인 상황을 만드는데 또 다시 실패했다.
+
 in progress..
