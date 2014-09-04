@@ -6,7 +6,7 @@ Satoshi Nakamoto가 2009년 1월 비트코인 블록체인을 처음 세상에 �
 
 ### Table of Contents
 
-* [History](#history)
+* [역사](#역사)
     * [Bitcoin As A State Transition System](#bitcoin-as-a-state-transition-system)
     * [Mining](#mining)
     * [Merkle Trees](#merkle-trees)
