@@ -18,6 +18,7 @@ The important differences between Serpent and Python are:
 In order to install the Serpent python library and executable do:
 
     pip install ethereum-serpent
+    [Install the cpp-ethereum cli tools](https://github.com/ethereum/cpp-ethereum/wiki) to run the sc commands in the tutorial
 
 If you want a library you can directly call from C++, instead do:
 
