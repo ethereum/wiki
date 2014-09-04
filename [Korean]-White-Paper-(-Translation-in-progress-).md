@@ -14,26 +14,27 @@ Satoshi Nakamoto가 2009년 1월 비트코인 블록체인을 처음 세상에 �
     * [Scripting]
 * [Ethereum]
     * [Ethereum Accounts]
-    * [Messages and Transactions](#messages-and-transactions)
-    * [Ethereum State Transition Function](#ethereum-state-transition-function)
-    * [Code Execution](#code-execution)
-    * [Blockchain and Mining](#blockchain-and-mining)
-* [Applications](#applications)
-    * [Token Systems](#token-systems)
-    * [Financial derivatives](#financial-derivatives-and-stable-value-currencies)
-    * [Identity and Reputation Systems](#identity-and-reputation-systems)
-    * [Decentralized File Storage](#decentralized-file-storage)
-    * [Decentralized Autonomous Organizations](#decentralized-autonomous-organizations)
-    * [Further Applications](#further-applications)
-* [Miscellanea And Concerns](#miscellanea-and-concerns)
-    * [Modified GHOST Implementation](#modified-ghost-implementation)
-    * [Fees](#fees)
-    * [Computation And Turing-Completeness](#computation-and-turing-completeness)
-    * [Currency And Issuance](#currency-and-issuance)
-    * [Mining Centralization](#mining-centralization)
-    * [Scalability](#scalability)
-* [Conclusion](#conclusion)
-* [References and Further Reading](#references-and-further-reading)
+    * [Messages and Transactions]
+    * [Ethereum State Transition Function]
+    * [Code Execution]
+    * [Blockchain and Mining]
+* [Applications]
+    * [Token Systems]
+    * [Financial derivatives]
+    * [Identity and Reputation Systems]
+    * [Decentralized File Storage]
+    * [Decentralized Autonomous Organizations]
+    * [Further Applications]
+* [Miscellanea And Concerns]
+    * [Modified GHOST Implementation]
+    * [Fees]
+    * [Computation And Turing-Completeness]
+    * [Currency And Issuance]
+    * [Mining Centralization]
+    * [Scalability]
+* [Conclusion]
+* [References and Further Reading]
+
 
 ## 비트코인과 기존 개념들에 대한 소개
 
