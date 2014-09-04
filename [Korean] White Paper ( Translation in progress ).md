@@ -40,6 +40,6 @@ Satoshi Nakamoto가 2009년 1월 비트코인 블록체인을 처음 세상에 �
 
 ### 역사
 
-분산화된 디지털 통화의 개념은, 재산등록 같은 어플리케이션과 마찬가지로 지난 10년간 우리 주변에 있었다. 1980~90년대의 익명 e-cash 프로토콜은 주로 Chaumian blinding로 알려진 암호 프리미티브(cryptographic primitive)에 의존하고 있었고, 개인정보를 강력하게 보호하는 통화를 제공하였으나 중앙집권적인 중개인에 의존했기 때문에 견인력을 얻는데 실패했다. 1998년 Wei Dai의 b-money는 분산합의 뿐만 아니라 계산 퍼즐을 풀게 함으로서 돈을 만드는 아이디어를 최초로 제안하였지만 분산합의를 실제로 어떻게 구현할지에 대한 자세한 방법을 제시하지 못했다. 2005년에 Hall Finney는 "재사용 가능한 작업증명(reusable proofs of work)" 개념을 소개하였다. 이 시스템은 b-money의 아이디어에 Adam Back의 계산 난이도 해시캐시 퍼즐(computationally difficult Hashcash puzzles)을 조합한 것이었다. 그러나 백엔드의 신뢰할 수 있는 컴퓨팅(trusted computing)에 의존함으로써, 이상적인 상황을 만드는데 또 다시 실패했다.
+분산화된 디지털 통화의 개념은, 재산등록 같은 어플리케이션과 마찬가지로 지난 수십년간 우리 주변에 있었다. 1980~90년대의 익명 e-cash 프로토콜은 주로 Chaumian blinding로 알려진 암호 프리미티브(cryptographic primitive)에 의존하고 있었고, 개인정보를 강력하게 보호하는 통화를 제공하였으나 중앙집권적인 중개인에 의존했기 때문에 견인력을 얻는데 실패했다. 1998년 Wei Dai의 b-money는 분산합의 뿐만 아니라 계산 퍼즐을 풀게 함으로서 돈을 만드는 아이디어를 최초로 제안하였지만 분산합의를 실제로 어떻게 구현할지에 대한 자세한 방법을 제시하지 못했다. 2005년에 Hall Finney는 "재사용 가능한 작업증명(reusable proofs of work)" 개념을 소개하였다. 이 시스템은 b-money의 아이디어에 Adam Back의 계산 난이도 해시캐시 퍼즐(computationally difficult Hashcash puzzles)을 조합한 것이었다. 그러나 백엔드의 신뢰할 수 있는 컴퓨팅(trusted computing)에 의존함으로써, 이상적인 상황을 만드는데 또 다시 실패했다.
 
 in progress..
