@@ -7,7 +7,7 @@ Satoshi Nakamoto가 2009년 1월 비트코인 블록체인을 처음 세상에 �
 ### Table of Contents
 
 * [역사](#역사)
-    * [상태전이시스템으로서의 비트코인](#상태전이시스템으로서의-비트코인)
+    * [상태전이시스템(Bitcoin As A State Transition System)으로서의 비트코인](#상태전이시스템(bitcoin-as-a-state-transition-system)으로서의-비트코인)
     * [Mining]
     * [Merkle Trees]
     * [Alternative Blockchain Applications]
@@ -45,7 +45,7 @@ Satoshi Nakamoto가 2009년 1월 비트코인 블록체인을 처음 세상에 �
 
 Satoshi의 혁신은 매우 단순한 분산화된 합의 프로토콜과 작업증명(proof of work)을 결합한 것이다. 분산합의 프로토콜의 기반이 되는 비트코인의 노드들은, 트랜잭션을 매 10분마다 블록에 기록하고 이 블록을 이전블록에 연결하여 계속 성장하는 블록체인을 생성한다. 그리고 노드들은 Proof of work에 의해 이와 같이 관여할 수 있는 권리를 획득한다. 물론 거대한 계산 파워를 가진 노드는 큰 영향력을 가지게 되지만, 네트워크로 연결된 전체 노드들의 계산 능력을 몇몇 노드가 따라잡는 것은 백만 노드를 시뮬레이션 하는 것보다 훨씬 어렵다. 이처럼 Bitcoin 블록체인 모델은 단순하지만, 그럼에도 불구하고 충분히 훌륭하다는 것이 증명되어 왔다. 그리고 이 모델은 탄생이후 5년이 넘도록 전 세계 200가지가 넘는 통화 및 프로토콜들의 기초가 되었다.
 
-### 상태전이시스템으로서의 비트코인
+### 상태전이시스템(Bitcoin As A State Transition System)으로서의 비트코인
 
 ![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
 
