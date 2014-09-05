@@ -49,8 +49,8 @@ Satoshi의 혁신은 매우 단순한 분산화된 합의 프로토콜과 작업
 
 ![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
 
-기술적인 관점에서 봤을 때 Bitcoin 장부는 발행된 모든 bitcoin의 현재 소유권 상황으로 이루어진 "상태(state)", 현재 상태 정보를 얻고 트랜잭션을 실행하여 새로운 상태를 출력하는 "상태전이함수(state transition function)"로 구성된 상태전이시스템(state transition system)으로 생각할 수 있다. 표준 은행 시스템에 비유하자면 상태는 계좌잔고표(balance sheet)이고 트랜잭션은 A에서 B로 $X를 송금하라는 요청이며, 상태전이함수에 의해 A의 계좌에서는 $X가 감소하고 B의 계좌에서는 $X가 증가한다.
-만약 처음에 A의 계좌에 있는 금액이 $X 이하인 경우에는 상태전이함수가 에러를 리턴한다. 그러므로 다음과 같이 정의할 수 있다.:
+기술적인 관점에서 봤을 때 Bitcoin 장부는 발행된 모든 bitcoin의 현재 소유권 상황으로 이루어진 "상태(state, S)", 현재 상태 정보를 얻고 트랜잭션(transaction, TX)을 실행하여 새로운 상태(S')를 출력하는 "상태전이함수(state transition function)"로 구성된 상태전이시스템(state transition system)으로 생각할 수 있다. 표준 은행 시스템에 비유하자면 상태는 계좌잔고표(balance sheet)이고 트랜잭션은 A에서 B로 $X를 송금하라는 요청이며, 상태전이함수에 의해 A의 계좌에서는 $X가 감소하고 B의 계좌에서는 $X가 증가한다. 만약 처음에 A의 계좌에 있는 금액이 $X 이하인 경우에는 상태전이함수가 에러를 리턴한다.
+비트코인 장부의 상태전이를 다음과 같이 정의할 수 있다.
 
     APPLY(S,TX) -> S' or ERROR
 
