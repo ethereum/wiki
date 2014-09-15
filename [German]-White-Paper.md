@@ -122,7 +122,7 @@ Somit hat Ethereum nicht die Absicht, die oben beschriebenen Colored Coin- und M
 Wenn bestehende Colored Coin- und Metacoin-Projekte auf die Ethereum-Baisi wechseln, können sie die Vorteile der vereinfachten Zahlungsüberprüfung nutzen, hätten die Möglichkeit mit den auf Ethereum basierten Finanzderivaten und dezentralen Tauschbörsen kompatibel zu sein, und die Fähigkeit, auf einem einzigen Netzwerk zu zusammen zu arbeiten.
 Jemand mit einer Idee für einen neuen Vertrag oder eine Art von Transaktionen, die die Dinge, die mit Kryptowährungen getan werden können, drastisch verbessern, muss nicht seinen eigenen Kryptocoin starten. Dies kann einfach durch die Implementierung auf Basis des Ethereum Script-Codes erfolgen. Kurz gesagt, Ethereu ist ein Fundament für Innovationen.
 
-## Philosophy
+## Philosophie
 
 The design behind Ethereum is intended to follow the following principles:
 
