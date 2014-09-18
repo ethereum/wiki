@@ -9,8 +9,8 @@ Ethereum nodes may connect to each other over TCP only. Peers are free to advert
 
 Though TCP provides a connection-oriented medium, Ethereum nodes communicate in terms of packets. These packets are formed as a 4-byte synchronisation token (0x22400891), a 4-byte "payload size", to be interpreted as a big-endian integer and finally an N-byte RLP-serialised data structure, where N is the aforementioned "payload size". To be clear, the payload size specifies the number of bytes in the packet ''following'' the first 8.
 
-### Basic Chain Syncing 
-- Two peers connect & say Hello. Hello includes the TD & hash of their best block.
+### Basic Chain Syncing
+- Two peers connect & say Hello and send their Status message. Status includes the TD & hash of their best block.
 - The client with the worst TD asks peer for full chain of just block hashes.
 - Chain of hashes is stored in space shared by all peer connections, and used as a "work pool".
 - While there are hashes in the chain of hashes that we don't have in our chain:
@@ -21,23 +21,14 @@ Though TCP provides a connection-oriented medium, Ethereum nodes communicate in 
 There are a number of different types of payload that may be encoded within the RLP. This ''type'' is always determined by the first entry of the RLP, interpreted as an integer:
 
 **Hello**
-* `[0x00, PROTOCOL_VERSION, NETWORK_ID, CLIENT_ID, CAPABILITIES, LISTEN_PORT, NODE_ID, TD, BEST_HASH, GENESIS_HASH]`
+* `[0x00, P2P_VERSION, CLIEND_ID, CAPS, LISTEN_PORT, CLIENT_ID]`
 * First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
-* `PROTOCOL_VERSION` is one of:
-    * `0x00` for PoC-1;
-    * `0x01` for PoC-2;
-    * `0x07` for PoC-3;
-    * `0x09` for PoC-4.
-    * `0x17` for PoC-5.
-    * `0x1c` for PoC-6.
-* `NETWORK_ID` should be 0.
+* `P2P_VERSION` Specifies the implemented version of the P2P protocol.
 * `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
+* `CAPS` Specifies the peers capabilities. This is an arbitrary length array, each entry denoting the capability with 3 `8 bit` characters. Current supported capabilities are `eth`, `bzz`, `ssh`.
 * `LISTEN_PORT` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
-* `CAPABILITIES` specifies the capabilities of the client as a set of flags; presently three bits are used: `0x01` for peers discovery, `0x02` for transaction relaying, `0x04` for block-chain querying.
 * `NODE_ID` is the Unique Identity of the node and specifies a 512-bit hash that identifies this node.
-* `TD`: Total Difficulty of the best chain. Integer, as found in block header.
-* `BEST_HASH`: The hash of the best (i.e. highest TD) known block.
-* `GENESIS_HASH`: The hash of the Genesis block
+
 
 **Disconnect**
 * `[0x01, REASON]`
@@ -69,6 +60,21 @@ There are a number of different types of payload that may be encoded within the 
 * `[0x11, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]`
 * Specifies a number of known peers. `IP` is a 4-byte array 'ABCD' that should be interpreted as the IP address A.B.C.D. `Port` is a 2-byte array that should be interpreted as a 16-bit big-endian integer. `Id` is the 512-bit hash that acts as the unique identifier of the node.
 
+**Status**
+* `[0x10, [PROTOCOL_VERSION, NETWORK_ID, TD, BEST_HASH, GENESIS_HASH]`
+* Inform a peer of it's current **ethereum** state. This message should be send _after_ the initial handshake and _prior_ to any **ethereum** related messages.
+* `PROTOCOL_VERSION` is one of:
+    * `0x00` for PoC-1;
+    * `0x01` for PoC-2;
+    * `0x07` for PoC-3;
+    * `0x09` for PoC-4.
+    * `0x17` for PoC-5.
+    * `0x1c` for PoC-6.
+* `NETWORK_ID` should be 0.
+* `TD`: Total Difficulty of the best chain. Integer, as found in block header.
+* `BEST_HASH`: The hash of the best (i.e. highest TD) known block.
+* `GENESIS_HASH`: The hash of the Genesis block
+
 **Transactions**
 * `[0x12, [nonce, receiving_address, value, ... ], ... ]`
 * Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
@@ -92,7 +98,6 @@ There are a number of different types of payload that may be encoded within the 
 **GetBlocks**
 * [`0x19`,[ `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]]
 * Requests a `Blocks` message detailing a number of blocks to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these blocks in a single message - you might have to re-request them.
-
 
 ### Example Packets
 
