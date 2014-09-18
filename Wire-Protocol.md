@@ -18,7 +18,11 @@ Though TCP provides a connection-oriented medium, Ethereum nodes communicate in 
 
 ### Payload Contents
 
-There are a number of different types of payload that may be encoded within the RLP. This ''type'' is always determined by the first entry of the RLP, interpreted as an integer:
+There are a number of different types of payload that may be encoded within the RLP. This ''type'' is always determined by the first entry of the RLP, interpreted as an integer.
+
+The protocol is split up in two parts, the **P2P** protocol and **ethereum** messaging protocol.
+
+### P2P
 
 **Hello**
 * `[0x00, P2P_VERSION, CLIEND_ID, CAPS, LISTEN_PORT, CLIENT_ID]`
@@ -59,6 +63,8 @@ There are a number of different types of payload that may be encoded within the 
 **Peers**
 * `[0x11, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]`
 * Specifies a number of known peers. `IP` is a 4-byte array 'ABCD' that should be interpreted as the IP address A.B.C.D. `Port` is a 2-byte array that should be interpreted as a 16-bit big-endian integer. `Id` is the 512-bit hash that acts as the unique identifier of the node.
+
+### Ethereum
 
 **Status**
 * `[0x10, [PROTOCOL_VERSION, NETWORK_ID, TD, BEST_HASH, GENESIS_HASH]`
