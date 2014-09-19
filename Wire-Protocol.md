@@ -29,7 +29,7 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 * First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
 * `P2P_VERSION` Specifies the implemented version of the P2P protocol.
 * `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
-* `CAPS` Specifies the peers capabilities. This is an arbitrary length array, each entry denoting the capability with 3 `8 bit` characters. Current supported capabilities are `eth`, `bzz`, `ssh`.
+* `CAPS` Specifies the peers capabilities. This is an arbitrary length array, each entry denoting the capability with 3 `8 bit` characters. Current supported capabilities are `eth`, `bzz`, `shh`.
 * `LISTEN_PORT` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
 * `NODE_ID` is the Unique Identity of the node and specifies a 512-bit hash that identifies this node.
 
