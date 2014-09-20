@@ -57,11 +57,11 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 * Reply to peer's `Ping` packet.
 
 **GetPeers**
-* `[0x10]`
+* `[0x04]`
 * Request the peer to enumerate some known peers for us to connect to. This should include the peer itself.
 
 **Peers**
-* `[0x11, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]`
+* `[0x05, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]`
 * Specifies a number of known peers. `IP` is a 4-byte array 'ABCD' that should be interpreted as the IP address A.B.C.D. `Port` is a 2-byte array that should be interpreted as a 16-bit big-endian integer. `Id` is the 512-bit hash that acts as the unique identifier of the node.
 
 ### Ethereum
