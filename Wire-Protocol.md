@@ -25,7 +25,7 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 ### P2P
 
 **Hello**
-* `[0x00, P2P_VERSION, CLIEND_ID, CAPS, LISTEN_PORT, CLIENT_ID]`
+* `[0x00, P2P_VERSION, CLIEND_ID, CAPS, LISTEN_PORT, NODE_ID]`
 * First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
 * `P2P_VERSION` Specifies the implemented version of the P2P protocol.
 * `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
