@@ -81,29 +81,29 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 * `BEST_HASH`: The hash of the best (i.e. highest TD) known block.
 * `GENESIS_HASH`: The hash of the Genesis block
 
+**GetTransactions**
+* `[0x11]`
+* Request the peer to send all transactions currently in the queue. See Transactions.
+
 **Transactions**
 * `[0x12, [nonce, receiving_address, value, ... ], ... ]`
 * Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
 
-**Blocks**
-* `[0x13, [block_header, transaction_list, uncle_list], ... ]`
-* Specify (a) block(s) that the peer should know about. The items in the list (following the first item, `0x13`) are blocks in the format described in the main Ethereum specification.
-
-**GetTransactions**
-* `[0x16]`
-* Request the peer to send all transactions currently in the queue. See Transactions.
-
 **GetBlockHashes**
-* [`0x17`, [ `hash` : `B_32`, `maxBlocks`: `P` ]] 
+* [`0x13`, [ `hash` : `B_32`, `maxBlocks`: `P` ]] 
 * Requests a `BlockHashes` message of at most `maxBlocks` entries, of block hashes from the blockchain, starting at the parent of block `hash`. Does not _require_ the peer to give `maxBlocks` hashes - they could give somewhat fewer.
 
 **BlockHashes**
-* [`0x18`, [ `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]]
+* [`0x14`, [ `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]]
 * Gives a series of hashes of blocks (each the child of the next). This implies that the blocks are ordered from youngest to oldest.
 
 **GetBlocks**
-* [`0x19`,[ `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]]
+* [`0x15`,[ `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]]
 * Requests a `Blocks` message detailing a number of blocks to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these blocks in a single message - you might have to re-request them.
+
+**Blocks**
+* `[0x16, [block_header, transaction_list, uncle_list], ... ]`
+* Specify (a) block(s) that the peer should know about. The items in the list (following the first item, `0x13`) are blocks in the format described in the main Ethereum specification.
 
 ### Example Packets
 
