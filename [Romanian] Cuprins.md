@@ -2,15 +2,15 @@
 
 [Raportul Ethereum (whitepaper)](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-White-Paper)
 
-[RLP](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-RLP), the recursive linear prefix specification, used for data encoding throughout Ethereum.
+[RLP](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-RLP), specificatii pentru prefixul liniar recursiv, folosit pentru codificarea datelor in reteaua Ethereum.
 
-[Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Patricia-Tree) for the specification of the Merkle Patricia tree (aka Trie), the structure used for storing and hashing block-chain state in Ethereum.
+[Patricia Tree](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Patricia-Tree) Specificatii pentru arborele Merkle Patricia (aka Trie), structura folosita pentru stocare si hashing necesare starii blockchainului ethereum.
 
-[Wire protocol](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Wire-Protocol) specification.
+[Wire protocol](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Wire-Protocol) Specificatii.
 
 [Serpent](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations), un limbaj de programare high-level folosit pentru scrierea de smart-contracts. Tutorial [aici](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations).
 
-[LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Specificatii pentru limbajul low-level "Lisp-like Language" , used to author contracts in the PoC series from PoC-3.
+[LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Specificatii pentru limbajul low-level "Lisp-like Language" , folosit pentru definirea contractelor in clientul ethereum incepand cu PoC-3.
 
 [Dagger](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Dagger), Detalii depsre algoritmul "proof-of-work".
 
