@@ -1,4 +1,4 @@
-### Bine ati venit la Ethereum, platforma pe care se vor dezvolta noua generatie de contracte si aplicatii descentralizate. 
+### Ethereum este platforma pe care se vor dezvolta aplicatii descentralizate si noua generatie de smart-contracts. 
 
 [Raportul Ethereum (whitepaper)](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-White-Paper)
 
@@ -8,11 +8,11 @@
 
 [Wire protocol](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Wire-Protocol) specification.
 
-[Serpent](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations), the high-level language used to write contracts. See tutorial [here](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations).
+[Serpent](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations), un limbaj de programare high-level folosit pentru scrierea de smart-contracts. Tutorial [here](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations).
 
-[LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Low-level "Lisp-like Language" specification, used to author contracts in the PoC series from PoC-3.
+[LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Specificatii pentru limbajul low-level "Lisp-like Language" , used to author contracts in the PoC series from PoC-3.
 
-[Dagger](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Dagger), Ethereum's "proof-of-work" specification.
+[Dagger](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Dagger), Detalii depsre algoritmul "proof-of-work".
 
 [Block Protocol 2.0](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Block-Protocol-2.0)
 
