@@ -8,7 +8,7 @@
 
 [Wire protocol](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Wire-Protocol) specification.
 
-[Serpent](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations), un limbaj de programare high-level folosit pentru scrierea de smart-contracts. Tutorial [here](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations).
+[Serpent](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations), un limbaj de programare high-level folosit pentru scrierea de smart-contracts. Tutorial [aici](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Serpent-programming-language-operations).
 
 [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Specificatii pentru limbajul low-level "Lisp-like Language" , used to author contracts in the PoC series from PoC-3.
 
