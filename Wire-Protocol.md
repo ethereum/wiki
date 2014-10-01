@@ -90,15 +90,15 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 * Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
 
 **GetBlockHashes**
-* [`0x13`, [ `hash` : `B_32`, `maxBlocks`: `P` ]] 
+* [`0x13`, `hash` : `B_32`, `maxBlocks`: `P` ] 
 * Requests a `BlockHashes` message of at most `maxBlocks` entries, of block hashes from the blockchain, starting at the parent of block `hash`. Does not _require_ the peer to give `maxBlocks` hashes - they could give somewhat fewer.
 
 **BlockHashes**
-* [`0x14`, [ `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]]
+* [`0x14`, `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]
 * Gives a series of hashes of blocks (each the child of the next). This implies that the blocks are ordered from youngest to oldest.
 
 **GetBlocks**
-* [`0x15`,[ `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]]
+* [`0x15`, `hash_0`: `B_32`, `hash_1`: `B_32`, .... ]
 * Requests a `Blocks` message detailing a number of blocks to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these blocks in a single message - you might have to re-request them.
 
 **Blocks**
