@@ -25,8 +25,7 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 ### P2P
 
 **Hello**
-* `[0x00, P2P_VERSION, CLIEND_ID, CAPS, LISTEN_PORT, NODE_ID]`
-* First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
+`[0x00, P2P_VERSION, CLIEND_ID, CAPS, LISTEN_PORT, NODE_ID]` First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
 * `P2P_VERSION` Specifies the implemented version of the P2P protocol.
 * `CLIENT_ID` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
 * `CAPS` Specifies the peers capabilities. This is an arbitrary length array, each entry denoting the capability with 3 `8 bit` characters. Current supported capabilities are `eth`, `bzz`, `shh`.
@@ -35,18 +34,18 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 
 
 **Disconnect**
-* `[0x01, REASON]`
-* Inform the peer that a disconnection is imminent; if received, a peer should disconnect immediately. When sending, well-behaved hosts give their peers a fighting chance (read: wait 2 seconds) to disconnect to before disconnecting themselves.
+`[0x01, REASON]` Inform the peer that a disconnection is imminent; if received, a peer should disconnect immediately. When sending, well-behaved hosts give their peers a fighting chance (read: wait 2 seconds) to disconnect to before disconnecting themselves.
 * `REASON` is an optional integer specifying one of a number of reasons for disconnect:
-* `0x00` Disconnect requested;
-* `0x01` TCP sub-system error;
-* `0x02` Bad protocol;
-* `0x03` Useless peer;
-* `0x04` Too many peers;
-* `0x05` Already connected;
-* `0x06` Wrong genesis block;
-* `0x07` Incompatible network protocols;
-* `0x08` Client quitting.
+  * `0x00` Disconnect requested;
+  * `0x01` TCP sub-system error;
+  * `0x02` Bad protocol;
+  * `0x03` Useless peer;
+  * `0x04` Too many peers;
+  * `0x05` Already connected;
+  * `0x06` Incompatible network protocols;
+  * `0x07` Invalid node identity;
+  * `0x08` Client quitting.
+  * `0x10` Some other reason specific to a subprotocol.
 
 **Ping**
 * `[0x02]`
@@ -61,14 +60,15 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 * Request the peer to enumerate some known peers for us to connect to. This should include the peer itself.
 
 **Peers**
-* `[0x05, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]`
-* Specifies a number of known peers. `IP` is a 4-byte array 'ABCD' that should be interpreted as the IP address A.B.C.D. `Port` is a 2-byte array that should be interpreted as a 16-bit big-endian integer. `Id` is the 512-bit hash that acts as the unique identifier of the node.
+`[0x05, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]` Specifies a number of known peers.
+* `IP` is a 4-byte array 'ABCD' that should be interpreted as the IP address A.B.C.D.
+* `Port` is a 2-byte array that should be interpreted as a 16-bit big-endian integer.
+* `Id` is the 512-bit hash that acts as the unique identifier of the node.
 
-### Ethereum
+### Ethereum Sub-protocol
 
 **Status**
-* `[0x10, [PROTOCOL_VERSION, NETWORK_ID, TD, BEST_HASH, GENESIS_HASH]`
-* Inform a peer of it's current **ethereum** state. This message should be send _after_ the initial handshake and _prior_ to any **ethereum** related messages.
+`[0x10, [PROTOCOL_VERSION, NETWORK_ID, TD, BEST_HASH, GENESIS_HASH]` Inform a peer of it's current **ethereum** state. This message should be send _after_ the initial handshake and _prior_ to any **ethereum** related messages.
 * `PROTOCOL_VERSION` is one of:
     * `0x00` for PoC-1;
     * `0x01` for PoC-2;
@@ -82,28 +82,22 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 * `GENESIS_HASH`: The hash of the Genesis block
 
 **GetTransactions**
-* `[0x11]`
-* Request the peer to send all transactions currently in the queue. See Transactions.
+`[0x11]` Request the peer to send all transactions currently in the queue. See Transactions.
 
 **Transactions**
-* `[0x12, [nonce, receiving_address, value, ... ], ... ]`
-* Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
+`[0x12, [nonce, receiving_address, value, ... ], ... ]` Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
 
 **GetBlockHashes**
-* [`0x13`, `hash` : `B_32`, `maxBlocks`: `P` ] 
-* Requests a `BlockHashes` message of at most `maxBlocks` entries, of block hashes from the blockchain, starting at the parent of block `hash`. Does not _require_ the peer to give `maxBlocks` hashes - they could give somewhat fewer.
+[`0x13`, `hash` : `B_32`, `maxBlocks`: `P` ] Requests a `BlockHashes` message of at most `maxBlocks` entries, of block hashes from the blockchain, starting at the parent of block `hash`. Does not _require_ the peer to give `maxBlocks` hashes - they could give somewhat fewer.
 
 **BlockHashes**
-* [`0x14`, `hash_0`: `B_32`, `hash_1`: `B_32`, `....` ]
-* Gives a series of hashes of blocks (each the child of the next). This implies that the blocks are ordered from youngest to oldest.
+[`0x14`, `hash_0`: `B_32`, `hash_1`: `B_32`, `....` ] Gives a series of hashes of blocks (each the child of the next). This implies that the blocks are ordered from youngest to oldest.
 
 **GetBlocks**
-* [`0x15`, `hash_0`: `B_32`, `hash_1`: `B_32`, `....` ]
-* Requests a `Blocks` message detailing a number of blocks to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these blocks in a single message - you might have to re-request them.
+[`0x15`, `hash_0`: `B_32`, `hash_1`: `B_32`, `....` ] Requests a `Blocks` message detailing a number of blocks to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these blocks in a single message - you might have to re-request them.
 
 **Blocks**
-* `[0x16, [block_header, transaction_list, uncle_list], ... ]`
-* Specify (a) block(s) that the peer should know about. The items in the list (following the first item, `0x13`) are blocks in the format described in the main Ethereum specification.
+`[0x16, [block_header, transaction_list, uncle_list], ... ]` Specify (a) block(s) that the peer should know about. The items in the list (following the first item, `0x13`) are blocks in the format described in the main Ethereum specification.
 
 ### Example Packets
 
@@ -120,6 +114,8 @@ A Ping and the returned Pong.
 
 ### Session Management
 
-Upon connecting, all clients (i.e. both sides of the connection) must send a Hello message. Upon receiving the Hello message and verifying compatibility of the network and versions, a session is active and any other messages may be sent.
+Upon connecting, all clients (i.e. both sides of the connection) must send a `Hello` message. Upon receiving the `Hello` message and verifying compatibility of the network and versions, a session is active and any other P2P messages may be sent.
+
+For the Ethereum sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the ethereum session is active and any other messages may be sent.
 
 At any time, a Disconnect message may be sent.
