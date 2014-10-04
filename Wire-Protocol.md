@@ -48,16 +48,13 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
   * `0x10` Some other reason specific to a subprotocol.
 
 **Ping**
-* `[0x02]`
-* Requests an immediate reply of `Pong` from the peer.
+`[0x02]` Requests an immediate reply of `Pong` from the peer.
 
 **Pong**
-* `[0x03]`
-* Reply to peer's `Ping` packet.
+`[0x03]` Reply to peer's `Ping` packet.
 
 **GetPeers**
-* `[0x04]`
-* Request the peer to enumerate some known peers for us to connect to. This should include the peer itself.
+`[0x04]` Request the peer to enumerate some known peers for us to connect to. This should include the peer itself.
 
 **Peers**
 `[0x05, [IP1, Port1, Id1], [IP2, Port2, Id2], ... ]` Specifies a number of known peers.
