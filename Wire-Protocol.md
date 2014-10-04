@@ -38,11 +38,11 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 * `reason` is an optional integer specifying one of a number of reasons for disconnect:
   * `0x00` Disconnect requested;
   * `0x01` TCP sub-system error;
-  * `0x02` Bad protocol;
+  * `0x02` Breach of protocol, e.g. a malformed message, bad RLP, incorrect magic number &c.;
   * `0x03` Useless peer;
   * `0x04` Too many peers;
   * `0x05` Already connected;
-  * `0x06` Incompatible network protocols;
+  * `0x06` Incompatible P2P protocol version;
   * `0x07` Invalid node identity;
   * `0x08` Client quitting.
   * `0x10` Some other reason specific to a subprotocol.
