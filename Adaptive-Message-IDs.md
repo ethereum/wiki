@@ -21,6 +21,7 @@ Wire protocol Hello package changed to:
 
 ### Conversation overview
 
+```
 [23:11:29] gavofyork: for each shared sub protocol, in alphabetic order, you deploy the subprotocol's messages
 [23:11:40] gavofyork: (after the basic p2p messages)
 [23:12:42] gavofyork: so for two whisper-only peers, defined message types are Hello = 0x00, Disconnect, Ping, Pong, GetPeers, Peers = 0x05, WhisperMessage1 = 0x06, ...
@@ -59,4 +60,4 @@ Wire protocol Hello package changed to:
 [23:21:56] gavofyork: ok
 [23:22:11] Jeffrey Wilcke: right ok. i thought you meant alphabetical in the _messages_
 [23:22:19] Jeffrey Wilcke: ok makes sense
-
+```
