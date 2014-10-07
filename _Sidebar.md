@@ -20,6 +20,9 @@
 - [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
 
+### Proposals
+- [Adaptive Message IDs]
+- [IPv6]
 
 ###Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
