@@ -21,8 +21,8 @@
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
 
 ### Proposals
-- [Adaptive Message IDs]
-- [IPv6]
+- [Adaptive Message IDs](https://github.com/ethereum/wiki/wiki/Adaptive-Message-IDs)
+- [IPv6](https://github.com/ethereum/wiki/wiki/IPv6)
 
 ###Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
