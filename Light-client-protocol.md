@@ -80,16 +80,16 @@ Request for proof:
 
 Account:
 
-    [ 61, blknum, blk_header, addr, trienodes ]
+    [ 61, blk_header, addr, trienodes ]
 
 Storage entry:
 
-    [ 62, blknum, blk_header, addr, index, trienodes ]
+    [ 62, blk_header, addr, index, trienodes ]
 
 Zero-past-a-point:
 
-    [ 63, blknum, blk_header, txcount, trienodes]
+    [ 63, blk_header, txcount, trienodes]
 
 Trace:
 
-    [ 61, blknum, blk_header, txindex, trienodes ]
+    [ 64, blk_header, txindex, trienodes ]
