@@ -8,7 +8,7 @@ All sub-protocol message IDs begin at 0x10 and count only those messages in the 
 
 ### Needed Changes
 
-Wire protocol Hello package changed to (*NOTE PROTOCOL VERSION CHANGE TO 1*):
+Wire protocol Hello package changed to (*note protocol version has changed to 1*):
 
 **Hello**
 [`0x00`, `p2pVersion`: `P`, `clientId`: `B`, [[`cap1`: `B_3`, `capVersion1`: `P`], [`cap2`: `B_3`, `capVersion2`: `P`], ...], `listenPort`: `P`, `nodeId`: `B_64`] First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
