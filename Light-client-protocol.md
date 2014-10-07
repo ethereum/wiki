@@ -75,3 +75,21 @@ For simplicity, we will combine all of these nodes into one list. The process of
 Request for proof:
 
     [ 60, blknum, index ]
+
+### Self-contained Proof Formats
+
+Account:
+
+    [ 61, blknum, blk_header, addr, trienodes ]
+
+Storage entry:
+
+    [ 62, blknum, blk_header, addr, index, trienodes ]
+
+Zero-past-a-point:
+
+    [ 63, blknum, blk_header, txcount, trienodes]
+
+Trace:
+
+    [ 61, blknum, blk_header, txindex, trienodes ]
