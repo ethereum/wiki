@@ -23,6 +23,7 @@
 ### Proposals
 - [Adaptive Message IDs](https://github.com/ethereum/wiki/wiki/Adaptive-Message-IDs)
 - [IPv6](https://github.com/ethereum/wiki/wiki/IPv6)
+- [NewBlock Message](https://github.com/ethereum/wiki/wiki/NewBlock-Message)
 
 ###Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
