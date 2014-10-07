@@ -19,6 +19,8 @@ Wire protocol Hello package changed to:
 * `listenPort` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
 * `nodeId` is the Unique Identity of the node and specifies a 512-bit hash that identifies this node.
 
+All `eth` sub-protocol message ids are lowered by `0x10` and have a `+` prepended to them to denote that the given ID is offset by some dynamic amount.
+
 ### Conversation overview
 
 ```
