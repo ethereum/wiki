@@ -13,7 +13,7 @@ Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FA
 ## Downloads
 Currently stable clients are available for PoC5 (Proof of Concept #5):
 - [AlethZero](https://github.com/ethereum/cpp-ethereum/releases) (C++) 
-- [Ethereal](https://github.com/ethereum/go-ethereum/releases) (Go) 
+- [Mist](https://github.com/ethereum/go-ethereum/releases) (Go) 
 - [pyeth](https://github.com/ethereum/pyethereum/releases) (Python)
 
 Bleeding edge PoC6 code can be cloned from their git repositories:
