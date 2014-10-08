@@ -7,6 +7,7 @@
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
+- [Mutan](https://github.com/obscuren/mutan)
 
 ### The Clients
 - [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
