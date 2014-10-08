@@ -82,7 +82,7 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 [`0x11`] Request the peer to send all transactions currently in the queue. See Transactions.
 
 **Transactions**
-[`0x12`, [`nonce`: `P`, `receiving_address`: `B_20`, `value`: `P`, ... ], ... ]` Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
+[`0x12`, [`nonce`: `P`, `receiving_address`: `B_20`, `value`: `P`, ... ], ... ] Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
 
 **GetBlockHashes**
 [`0x13`, `hash` : `B_32`, `maxBlocks`: `P` ] Requests a `BlockHashes` message of at most `maxBlocks` entries, of block hashes from the blockchain, starting at the parent of block `hash`. Does not _require_ the peer to give `maxBlocks` hashes - they could give somewhat fewer.
