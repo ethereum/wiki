@@ -10,7 +10,7 @@
 
 ### The Clients
 - [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
-- [Ethereal (Go)](https://github.com/ethereum/wiki/wiki/Ethereal) 
+- [Mist (Go)](https://github.com/ethereum/wiki/wiki/Ethereal) 
 - [pyeth (Python)](https://github.com/ethereum/wiki/wiki/Pyeth) 
 
 ###Implementation
