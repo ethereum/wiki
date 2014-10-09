@@ -116,3 +116,9 @@ Upon connecting, all clients (i.e. both sides of the connection) must send a `He
 For the Ethereum sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the ethereum session is active and any other messages may be sent.
 
 At any time, a Disconnect message may be sent.
+
+### Upcoming changes (PoC7)
+https://github.com/ethereum/wiki/wiki/Light-client-protocol
+https://github.com/ethereum/wiki/wiki/NewBlock-Message
+https://github.com/ethereum/wiki/wiki/Adaptive-Message-IDs
+https://github.com/ethereum/wiki/wiki/IPv6
