@@ -118,7 +118,7 @@ For the Ethereum sub-protocol, upon an active session, a `Status` message must b
 At any time, a Disconnect message may be sent.
 
 ### Upcoming changes (PoC7)
-https://github.com/ethereum/wiki/wiki/Light-client-protocol
-https://github.com/ethereum/wiki/wiki/NewBlock-Message
-https://github.com/ethereum/wiki/wiki/Adaptive-Message-IDs
-https://github.com/ethereum/wiki/wiki/IPv6
+- https://github.com/ethereum/wiki/wiki/Light-client-protocol
+- https://github.com/ethereum/wiki/wiki/NewBlock-Message
+- https://github.com/ethereum/wiki/wiki/Adaptive-Message-IDs
+- https://github.com/ethereum/wiki/wiki/IPv6
