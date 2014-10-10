@@ -5,6 +5,10 @@ Answers to questions about #Ethereum on [Freenode IRC](https://freenode.net/)
 
 * [Ethereum](#ethereum)
   * [Where can I learn more about Ethereum?](#where-can-i-learn-more-about-ethereum)
+* [IRC](#irc)
+  * [How can I join the Ethereum IRC channels?](#how-can-i-join-the-ethereum-irc-channels)
+  * [Where can I find the Ethereum IRC logs?](#where-can-i-find-the-ethereum-irc-logs)
+  * [Where can I learn about the ZeroGox bot?](#where-can-i-learn-about-the-zerogox-bot)
 * [Clients](#clients)
   * [Where can I find official releases?](#where-can-i-find-official-releases)
   * [How to install development builds?](#how-to-install-development-builds)
@@ -56,6 +60,20 @@ Projects
 [WhitePDF]: https://www.ethereum.org/pdfs/EthereumWhitePaper.pdf
 [WhiteHTML]: https://github.com/ethereum/wiki/wiki/White-Paper
 [YellowPDF]: http://gavwood.com/paper.pdf
+
+## IRC
+
+### How can I join the Ethereum IRC channels?
+
++ [Chat with the ethereum dev community on IRC!](https://forum.ethereum.org/discussion/1495/chat-with-the-ethereum-dev-community-on-irc)
+
+### Where can I find the Ethereum IRC logs?
+
++ [The ZeroGox logs](https://zerogox.com/bot/log)
+
+### Where can I learn about the ZeroGox bot?
+
++ [The ZeroGox bot](https://zerogox.com/bot)
 
 ## Clients
 
