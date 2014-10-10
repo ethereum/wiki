@@ -1,5 +1,3 @@
-# Ethereum IRC FAQ
-
 Answers to questions about #Ethereum on [Freenode IRC](https://freenode.net/)
 
 <!-- Generated with marked-toc https://github.com/jonschlinkert/marked-toc -->
