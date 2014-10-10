@@ -23,3 +23,6 @@
 
 **Where is the Mining FAQ?**
 > [Currently on the forum](https://forum.ethereum.org/discussion/197/mining-faq-live-updates/p1)
+
+**What about an Ethereum IRC FAQ?**
+> [Yep, with plenty of questions and answers!](https://github.com/ethereum/wiki/wiki/Ethereum-IRC-FAQ)
