@@ -1,6 +1,6 @@
 # Welcome to the Ethereum Wiki
 
-This is the community maintained wiki covering all sorts of information on the next-generation peer-to-peer technology platform build by ÐΞV including Ethereum _the generalised blockchain for smart contract development_ and Whisper _the messaging platform_.
+This is the community maintained wiki covering all sorts of information on the next-generation peer-to-peer technology platform build by ÐΞV including Ethereum _the generalised blockchain for smart contract development_ and Whisper _the private low-level datagram communication platform_.
 
 Users signed in with Github can edit and add pages using the [browser](https://help.github.com/articles/editing-wiki-pages-via-the-online-interface) or [locally](https://help.github.com/articles/adding-and-editing-wiki-pages-locally).
 
