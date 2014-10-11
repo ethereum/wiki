@@ -1,19 +1,9 @@
-### Ethereum Basics
-- [Wiki Home](https://github.com/ethereum/wiki/wiki/)
+### Basics
+- [Home](https://github.com/ethereum/wiki/wiki/)
 - [Ethereum Whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper)
 - [Ethereum Yellow Paper](http://gavwood.com/Paper.pdf)
+- [Whisper Proposal](https://github.com/ethereum/wiki/wiki/Whisper)
 - [FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
-
-### Contract Development
-- [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
-- [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
-- [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
-- [Mutan](https://github.com/obscuren/mutan)
-
-### Ethereum Clients
-- [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
-- [Mist (Go)](https://github.com/ethereum/wiki/wiki/Ethereal) 
-- [pyeth (Python)](https://github.com/ethereum/wiki/wiki/Pyeth) 
 
 ### ÐΞV Technologies
 - [RLP](https://github.com/ethereum/wiki/wiki/RLP)
@@ -25,6 +15,17 @@
 - [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
 - [Solidity, Docs & ABI](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI)
+
+### Ethereum Clients
+- [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
+- [Mist (Go)](https://github.com/ethereum/wiki/wiki/Ethereal) 
+- [pyeth (Python)](https://github.com/ethereum/wiki/wiki/Pyeth) 
+
+### Contract Development
+- [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
+- [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
+- [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
+- [Mutan](https://github.com/obscuren/mutan)
 
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
