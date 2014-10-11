@@ -182,6 +182,7 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 
 + Serpent
   + [By Vitalik Buterin](https://github.com/ethereum/serpent/tree/master/examples) ([@vbuterin](https://github.com/vbuterin))
+  + [By EtherCasts](https://github.com/EtherCasts) ([@EtherCasts](https://github.com/EtherCasts))
   + [By Rob Myers](https://github.com/robmyers/artworld-ethereum) ([@robmyers](https://github.com/robmyers))
   + [By Tyler Florez](https://github.com/qualiabyte/ethereum-contracts) ([@qualiabyte](https://github.com/qualiabyte))
 + LLL
