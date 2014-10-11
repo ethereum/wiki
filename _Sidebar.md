@@ -14,10 +14,13 @@
 - [Mist (Go)](https://github.com/ethereum/wiki/wiki/Ethereal) 
 - [pyeth (Python)](https://github.com/ethereum/wiki/wiki/Pyeth) 
 
-###Implementation
+### ÐΞV Technologies
 - [RLP](https://github.com/ethereum/wiki/wiki/RLP)
 - [Patricia Tree](https://github.com/ethereum/wiki/wiki/Patricia-Tree)
-- [Wire protocol](https://github.com/ethereum/wiki/wiki/Wire-Protocol)
+- [Wire protocol](https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol)
+
+### Ethereum
+- [Wire protocol](https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol)
 - [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
 
@@ -26,7 +29,7 @@
 - [IPv6](https://github.com/ethereum/wiki/wiki/IPv6)
 - [NewBlock Message](https://github.com/ethereum/wiki/wiki/NewBlock-Message)
 
-###Misc
+### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
 - [Blockchain based Proof of Work](https://github.com/ethereum/wiki/wiki/Blockchain-based-Proof-of-Work)
 - [Glossary](https://github.com/ethereum/wiki/wiki/Glossary)
