@@ -77,8 +77,6 @@ Upon connecting, all clients (i.e. both sides of the connection) must send a `He
 
 At any time, a Disconnect message may be sent.
 
-### Upcoming changes (PoC7)
-- https://github.com/ethereum/wiki/wiki/Light-client-protocol
-- https://github.com/ethereum/wiki/wiki/NewBlock-Message
+### Changes (PoC-7)
 - https://github.com/ethereum/wiki/wiki/Adaptive-Message-IDs
 - https://github.com/ethereum/wiki/wiki/IPv6
