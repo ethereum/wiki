@@ -26,7 +26,7 @@
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
-- [PoC-7 JS API](https://github.com/ethereum/wiki/wiki/PoC-7-JS-API)
+- [PoC-7 JavaScript API](https://github.com/ethereum/wiki/wiki/PoC-7-JS-API)
 
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
