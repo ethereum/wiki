@@ -54,3 +54,6 @@ For the Ethereum sub-protocol, upon an active session, a `Status` message must b
 
 ### Changes (PoC-7)
 - [NewBlock Message](https://github.com/ethereum/wiki/wiki/NewBlock-Message)
+
+### Changed (PoC-6)
+- [Parallel Block Downloads](https://github.com/ethereum/wiki/wiki/Parallel-Block-Downloads)
