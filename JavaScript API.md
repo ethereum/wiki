@@ -1,6 +1,6 @@
-To make your ÐApp work with on Ethereum, you'll need to know about the Ethereum Javascript bindings, or, if you like, magic Javascript objects. These are still pretty simple for PoC-6, rest assured, they'll become nicer as time goes on. In the meantime, bear with us.
+To make your ÐApp work with on Ethereum, you'll need to know about the Ethereum Javascript bindings, or, if you like, magic Javascript objects.
 
-There is currently only one such object; the `eth` object.
+There is currently only one such object; the `eth` object, however over time we'll introduce other objects for each of the other ÐΞVp2p protocols.
 
 ### Parameters
 
