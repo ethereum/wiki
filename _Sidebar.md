@@ -9,7 +9,6 @@
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
-- [Solidity, Docs & ABI](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI)
 
 ### Ethereum Clients
 - [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
@@ -25,6 +24,7 @@
 - [Wire protocol](https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol)
 - [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
+- [Solidity, Docs & ABI](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI)
 
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
