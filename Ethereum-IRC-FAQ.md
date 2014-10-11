@@ -171,7 +171,8 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 
 ### How to test contracts?
 
-+ [pyethereum.tester](https://github.com/ethereum/pyethereum/blob/master/tests/test_contracts.py)
++ [EVM Contract Simulator](https://github.com/EtherCasts/evm-sim/) ([@EtherCasts](https://github.com/EtherCasts))
++ [Pyethereum Tester](https://github.com/ethereum/pyethereum/blob/master/tests/test_contracts.py) ([@ethereum](https://github.com/ethereum))
 
 ### How to deploy contracts automatically?
 
@@ -228,6 +229,7 @@ Community
 + [EPM](https://github.com/project-douglas/epm) ([@project-douglas](https://github.com/project-douglas))
 + [EPM Sublime Plugin](https://github.com/project-douglas/epm-sublime) ([@project-douglas](https://github.com/project-douglas))
 + [Ethos Browser](https://github.com/projectdnet/ethos) ([@projectdnet](https://github.com/projectdnet))
++ [EVM-Sim](https://github.com/EtherCasts/evm-sim/) ([@EtherCasts](https://github.com/EtherCasts))
 + [MintChalk](http://www.mintchalk.com/) ([@mintchalk](https://github.com/mintchalk))
 + [Poly-Eth](https://github.com/projectdnet/poly-eth) ([@projectdnet](https://github.com/projectdnet))
 
