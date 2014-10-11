@@ -43,8 +43,11 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
   * `0x04` Too many peers;
   * `0x05` Already connected;
   * `0x06` Incompatible P2P protocol version;
-  * `0x07` Invalid node identity;
-  * `0x08` Client quitting.
+  * `0x07` Null node identity received - this is automatically invalid;
+  * `0x08` Client quitting;
+  * `0x09` Unexpected identity (i.e. a different identity to a previous connection/what a trusted peer told us).
+  * `0x0a` Identity is the same as this node (i.e. connected to itself);
+  * `0x0b` Timeout on receiving a message (i.e. nothing received since sending last ping);
   * `0x10` Some other reason specific to a subprotocol.
 
 **Ping**
@@ -82,7 +85,7 @@ The protocol is split up in two parts, the **P2P** protocol and **ethereum** mes
 [`0x11`] Request the peer to send all transactions currently in the queue. See Transactions.
 
 **Transactions**
-[`0x12`, [`nonce`: `P`, `receiving_address`: `B_20`, `value`: `P`, ... ], ... ] Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
+[`0x12`, [`nonce`: `P`, `receivingAddress`: `B_20`, `value`: `P`, ... ], ... ] Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
 
 **GetBlockHashes**
 [`0x13`, `hash` : `B_32`, `maxBlocks`: `P` ] Requests a `BlockHashes` message of at most `maxBlocks` entries, of block hashes from the blockchain, starting at the parent of block `hash`. Does not _require_ the peer to give `maxBlocks` hashes - they could give somewhat fewer.
