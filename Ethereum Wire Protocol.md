@@ -39,7 +39,11 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 [+`0x05`: `P`, `hash_0`: `B_32`, `hash_1`: `B_32`, `....` ] Requests a `Blocks` message detailing a number of blocks to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these blocks in a single message - you might have to re-request them.
 
 **Blocks**
-[+`0x06`: `P`, [`blockHeader`, `transactionList`, `uncleList`], ... ] Specify (a) block(s) that the peer should know about. The items in the list (following the first item, `0x13`) are blocks in the format described in the main Ethereum specification.
+[`+0x06`, [`blockHeader`, `transactionList`, `uncleList`], ... ] Specify (a) block(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are blocks in the format described in the main Ethereum specification. This may validly contain no blocks if no blocks were able to be returned for the `GetBlocks` query.
+
+**NewBlock**
+[`+0x07`, [`blockHeader`, `transactionList`, `uncleList`], `totalDifficulty` ] Specify a single block that the peer should know about. The composite item in the list (following the message ID) is a block in the format described in the main Ethereum specification.
+- `totalDifficulty` is the total difficulty of the block (aka score).
 
 ### Session Management
 
