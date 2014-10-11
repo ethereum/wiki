@@ -20,3 +20,5 @@ Bleeding edge PoC-7 code can be cloned from the develop branch of their git repo
 - https://github.com/ethereum/cpp-ethereum
 - https://github.com/ethereum/go-ethereum
 - https://github.com/ethereum/pyethereum
+
+To see the state of the latest Ethereum builds, see the [build server](http://build.ethdev.com/console).
