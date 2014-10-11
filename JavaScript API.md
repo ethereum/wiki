@@ -152,6 +152,6 @@ eth.watch({altered: eth.secretToAddress(eth.key)}).changed(function() {
 </script>
 ```
 
-To test it, just put `<html><body>` before it and `</body></html>` after, then save the file. Load it in AlethZero PoC-6 and point the URL to file:///WHEREVER_YOU_SAVED_IT
+To test it, just put `<html><body>` before it and `</body></html>` after, then save the file. Load it in AlethZero and point the URL to file:///WHEREVER_YOU_SAVED_IT
 
 Job done. Now go create.
