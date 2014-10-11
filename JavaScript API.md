@@ -51,20 +51,52 @@ The block number you wish to query can be given either as an extra parameter (or
   * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
   * `_fn`, the callback function, called on completion of the message call. A single argument is passed equal to the output data of the message call.
 
-**The Blockchain**
+**The Blockchain** Three distinct methods are available for querying the blockchain and retrieving blocks, transactions and uncles.
 
 * `block(_number)` Returns the block with number `_number`. Return value is an object with the following keys:
-  * ...
-  * ...
+  * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
+  * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
+  * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
+  * `miner`: The address of the account that was rewarded for mining this block (né the coinbase address). A 20-byte address.
+  * `stateRoot`: The root of the state trie (a 32-byte hash).
+  * `transactionsRoot`: The root of the block's transactions trie (a 32-byte hash).
+  * `difficulty`: The PoW difficulty of this block (a big int).
+  * `number`: The number of this block (an integer).
+  * `minGasPrice`: The minimum price, in Wei, of one GAS, that the miner accepted for any transactions in this block (a big int).
+  * `gasLimit`: The gas limit of this block (an integer).
+  * `gasUsed`: The amount of gas used in this block (an integer).
+  * `timestamp`: The timestamp of this block (an integer).
+  * `extraData`: Any extra data this block contains (a byte array).
+  * `nonce`: The block's PoW nonce (a 32-byte hash).
+  * `children`: The hashes of any children this block has (an array of 32-byte hashes)
+  * `totalDifficulty`: The total difficulty of the entire chain up and including this block (a bigint).
+  * `bloom`: The bloom filter of this block (a 32-byte hash).
 * `block(_hash)` Returns the block with hash `_hash`. Return value is an object with the keys as for the previous call.
 * `transaction(_number, _i)` Returns the transaction number `_i` from block with number `_number`. Return value is an object with the following keys:
-  * `hash`: The hash of the transaction.
-  * `input`: The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation.
-  * ...
+  * `hash`: The hash of the transaction. A 32-byte hash.
+  * `input`: The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation. A byte array.
+  * `to`: The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction (a 20-byte address).
+  * `from`: The cryptographically verified address from which the transaction was sent (a 20-byte address).
+  * `gas`: The amount of GAS supplied for this transaction to happen (an integer).
+  * `gasPrice`: The price offered to the miner to purchase this amount of GAS, in Wei/GAS (a big int).
+  * `nonce`: The transaction nonce (an integer).
+  * `value`: The amount of ETH to be transferred to the recipient with the transaction (a big int).
 * `transaction(_hash, _i)` Returns the transaction number `_i` from block with hash `_hash`. Return value is an object with the keys as for the previous call.
 * `uncle(_number, _i)` Returns the uncle number `_i` from block with number `_number`. Return value is an object with the following keys:
-  * ...
-  * ...
+  * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
+  * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
+  * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
+  * `miner`: The address of the account that was rewarded for mining this block (né the coinbase address). A 20-byte address.
+  * `stateRoot`: The root of the state trie (a 32-byte hash).
+  * `transactionsRoot`: The root of the block's transactions trie (a 32-byte hash).
+  * `difficulty`: The PoW difficulty of this block (a big int).
+  * `number`: The number of this block (an integer).
+  * `minGasPrice`: The minimum price, in Wei, of one GAS, that the miner accepted for any transactions in this block (a big int).
+  * `gasLimit`: The gas limit of this block (an integer).
+  * `gasUsed`: The amount of gas used in this block (an integer).
+  * `timestamp`: The timestamp of this block (an integer).
+  * `extraData`: Any extra data this block contains (a byte array).
+  * `nonce`: The block's PoW nonce (a 32-byte hash).
 * `uncle(_hash, _i)` Returns the uncle number `_i` from block with hash `_hash`. Return value is an object with the keys as for the previous call.
 
 **Watches and Message Filtering** Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of.
