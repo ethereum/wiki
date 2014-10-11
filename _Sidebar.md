@@ -16,10 +16,10 @@
 
 ### ÐΞV Technologies
 - [RLP](https://github.com/ethereum/wiki/wiki/RLP)
-- [Patricia Tree](https://github.com/ethereum/wiki/wiki/Patricia-Tree)
 - [Wire protocol](https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol)
 
 ### Ethereum
+- [Patricia Tree](https://github.com/ethereum/wiki/wiki/Patricia-Tree)
 - [Wire protocol](https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol)
 - [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
