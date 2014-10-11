@@ -50,7 +50,7 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 For the Ethereum sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the ethereum session is active and any other messages may be sent.
 
 ### Upcoming changes
-- https://github.com/ethereum/wiki/wiki/Light-client-protocol
+- [Light Client Protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 
 ### Changes (PoC-7)
-- https://github.com/ethereum/wiki/wiki/NewBlock-Message
+- [NewBlock Message](https://github.com/ethereum/wiki/wiki/NewBlock-Message)
