@@ -78,5 +78,5 @@ Upon connecting, all clients (i.e. both sides of the connection) must send a `He
 At any time, a Disconnect message may be sent.
 
 ### Changes (PoC-7)
-- https://github.com/ethereum/wiki/wiki/Adaptive-Message-IDs
-- https://github.com/ethereum/wiki/wiki/IPv6
+- [Adaptive Message IDs](https://github.com/ethereum/wiki/wiki/Adaptive-Message-IDs)
+- [IPv6 Support](https://github.com/ethereum/wiki/wiki/IPv6)
