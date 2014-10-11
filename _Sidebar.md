@@ -21,11 +21,12 @@
 - [Mist (Go)](https://github.com/ethereum/wiki/wiki/Ethereal) 
 - [pyeth (Python)](https://github.com/ethereum/wiki/wiki/Pyeth) 
 
-### Contract Development
+### ÐApp Development
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
+- [PoC-7 JS API](https://github.com/ethereum/wiki/wiki/PoC-7-JS-API)
 
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
