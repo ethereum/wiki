@@ -12,13 +12,18 @@ Though TCP provides a connection-oriented medium, ÐΞVp2p nodes communicate in 
 
 There are a number of different types of payload that may be encoded within the RLP. This ''type'' is always determined by the first entry of the RLP, interpreted as an integer.
 
+ÐΞVp2p is designed to support arbitrary sub-protocols (aka _capabilities_) over the basic wire protocol. Each sub-protocol is given as much of the message-ID space as it needs (all such protocols must statically specify how many message IDs they require). On connection and reception of the `Hello` message, both peers have equivalent information about what subprotocols they share (including versions) and are able to form consensus over the composition of message ID space.
+
+Message IDs are assumed to be compact from ID 0x10 onwards (0x00-0x10 is reserved for ÐΞVp2p messages) and given to each shared (equal-version, equal name) sub-protocol in alphabetic order. Sub-protocols that are not shared are ignored.
+
 ### P2P
 
 **Hello**
-[`0x00`: `P`, `p2pVersion`: `P`, `clientId`: `B`, [`cap1`: `B_3`, `cap2`: `B_3`, ...], `listenPort`: `P`, `nodeId`: `B_64`] First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
-* `p2pVersion` Specifies the implemented version of the P2P protocol.
+[`0x00`: `P`, `p2pVersion`: `P`, `clientId`: `B`, [[`cap1`: `B_3`, `capVersion1`: `P`], [`cap2`: `B_3`, `capVersion2`: `P`], ...], `listenPort`: `P`, `nodeId`: `B_64`] First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
+* `p2pVersion` Specifies the implemented version of the P2P protocol. Now must be 1.
 * `clientId` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
-* `cap` Specifies a peer capability as a length-3 ASCII string. Current supported capabilities are `eth`, `shh`.
+* `cap` Specifies a peer capability name as a length-3 ASCII string. Current supported capabilities are `eth`, `shh`.
+* `capVersion` Specifies a peer capability version as a positive integer. Current supported versions are 34 for `eth`, and 1 for `shh`.
 * `listenPort` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
 * `nodeId` is the Unique Identity of the node and specifies a 512-bit hash that identifies this node.
 
