@@ -155,7 +155,7 @@ This would then be formally documented:
 ```
 contract GavCoin
 {
-  /// Send $((valueInmGAV / 1000).fixed(0,3)) GAV from the account of $(message.caller.address()), to an account accessible only by $(to.address()).
+  /// Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of `message.caller.address()`, to an account accessible only by `to.address()`.
   function send(address to, uint256 valueInmGAV) {
     if (balances[message.caller] >= valueInmGAV) {
       balances[to] += valueInmGAV;
@@ -163,7 +163,7 @@ contract GavCoin
     }
   }
   
-  /// $((balanceInmGAV / 1000).fixed(0,3)) GAV is the total funds available to $(who.address()).
+  /// `(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`.
   function balance(address who) constant returns (uint256 balanceInmGAV) {
     balanceInmGAV = balances[who];
   }
@@ -173,7 +173,7 @@ invariants:
   reduce(0, add, map(valueOf, balances)) == 100000000000;
 
 construction:
-  /// Endows $(message.caller.address()) with 1m GAV.
+  /// Endows `message.caller.address()` with 1m GAV.
   balances[message.caller] = 100000000000;
 
 state:
@@ -200,14 +200,14 @@ The documentation, would be extracted from the source code ready to sit in a (pr
 ```
 {
   "methods": {
-    "send": "Send $((valueInmGAV / 1000).fixed(0,3)) GAV to an account accessible only by $(to.address()).",
-    "balance": "$((balanceInmGAV / 1000).fixed(0,3)) GAV is the total funds available to $(who.address())."
+    "send": "Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of `message.caller.address()`, to an account accessible only by `to.address()`.",
+    "balance": "`(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`."
   },
   "invariants": [
     "The sum total amount of GAV in the system is 1 million."
   ],
   "construction": [
-    "Endows $(message.caller.address()) with 1m GAV."
+    "Endows `message.caller.address()` with 1m GAV."
   ]
 }
 
