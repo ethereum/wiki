@@ -23,11 +23,8 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 * `bestHash`: The hash of the best (i.e. highest TD) known block.
 * `genesisHash`: The hash of the Genesis block
 
-**GetTransactions**
-[`+0x01`: `P`] Request the peer to send all transactions currently in the queue. See Transactions.
-
 **Transactions**
-[`+0x02`: `P`, [`nonce`: `P`, `receivingAddress`: `B_20`, `value`: `P`, `...`], `...`] Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification.
+[`+0x02`: `P`, [`nonce`: `P`, `receivingAddress`: `B_20`, `value`: `P`, `...`], `...`] Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification. Nodes must not resend the same transaction to a peer in the same session. This packet must contain at least one (new) transaction.
 
 **GetBlockHashes**
 [`+0x03`: `P`, `hash` : `B_32`, `maxBlocks`: `P`] Requests a `BlockHashes` message of at most `maxBlocks` entries, of block hashes from the blockchain, starting at the parent of block `hash`. Does not _require_ the peer to give `maxBlocks` hashes - they could give somewhat fewer.
@@ -47,7 +44,9 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 
 ### Session Management
 
-For the Ethereum sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the ethereum session is active and any other messages may be sent.
+For the Ethereum sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the Ethereum session is active and any other messages may be sent.
+
+Transactions messages should be sent periodically as the node has new transactions to disseminate. A node should never send a transaction back to the peer that it can determine already knows of it (either because it was previously sent or because it was informed from this peer originally).
 
 ### Upcoming changes
 - [Light Client Protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
