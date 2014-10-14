@@ -44,9 +44,9 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 
 ### Session Management
 
-For the Ethereum sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the Ethereum session is active and any other messages may be sent.
+For the Ethereum sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the Ethereum session is active and any other messages may be sent. All transactions should initially be sent with one or more Transactions messages.
 
-Transactions messages should be sent periodically as the node has new transactions to disseminate. A node should never send a transaction back to the peer that it can determine already knows of it (either because it was previously sent or because it was informed from this peer originally).
+Transactions messages should also be sent periodically as the node has new transactions to disseminate. A node should never send a transaction back to the peer that it can determine already knows of it (either because it was previously sent or because it was informed from this peer originally).
 
 ### Upcoming changes
 - [Light Client Protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
