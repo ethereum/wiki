@@ -1,6 +1,6 @@
 ### Full-time Roles
 
-Ethereum has a number of full-time employee roles open. For C++ you'll be based in Kreuzberg, Berlin in our central office/hub/café location, for Go you'll work remotely for now. Roles include security, optimisation, networking and helping make reality our advanced integrated blockchain development environment. We are presently particularly interested in expanding our team for the latter; if you have good knowledge of the Qt5 platform including QtQuick & QML, then please get in touch with `jobs@ethdev.com`.
+Ethereum has a number of full-time employee roles open. For the Berlin team (concentrating mostly around C++/QML/Qt) you'll be based in Kreuzberg, Berlin in our central office/hub/café location, for Go you'll work remotely for now. Roles include security, optimisation, networking and helping make reality our advanced integrated blockchain development environment. We are presently particularly interested in expanding our team for the latter; if you have good knowledge of the Qt5 platform including QtQuick & QML, then please get in touch with `jobs@ethdev.com`.
 
 For more information on full time positions, see `TODO: Aeron`.
 
