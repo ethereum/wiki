@@ -159,3 +159,5 @@ Job done. Now go create.
 ### Upcoming Changes
 - Move Misc into dev.* object.
 - Add p2p.* and shh.* objects.
+- Proscribe particular bigint objects for numerical manipulation.
+- Integrate paperscript-style preprocessing to allow for operator overloading.
