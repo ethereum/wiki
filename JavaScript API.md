@@ -155,3 +155,7 @@ eth.watch({altered: eth.secretToAddress(eth.key)}).changed(function() {
 To test it, just put `<html><body>` before it and `</body></html>` after, then save the file. Load it in AlethZero and point the URL to file:///WHEREVER_YOU_SAVED_IT
 
 Job done. Now go create.
+
+### Upcoming Changes
+- Move Misc into dev.* object.
+- Add p2p.* and shh.* objects.
