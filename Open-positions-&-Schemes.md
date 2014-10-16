@@ -28,7 +28,7 @@ If you believe you have such a project and would like to come visit us for a whi
 
 Additionally, for interesting projects, we would like to extend financial support in the form of a small bursary. We consider all such projects, as with the Hub Invitation Scheme. Bursary amounts vary from the $1000s to the $10,000s, depending on the size, scope and outlook of the project.
 
-If you believe you have such a project and would like to come visit us for a while, let us know at `bursary@ethdev.com`!
+If you believe you have such a project let us know at `bursary@ethdev.com`, with a proposal for where you would like to take the project and estimates of any expenses that might be involved in taking it forward.
 
 ### FAQ
 
