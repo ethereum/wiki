@@ -2,7 +2,6 @@
 - [Home](https://github.com/ethereum/wiki/wiki/)
 - [Ethereum Whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper)
 - [Ethereum Yellow Paper](http://gavwood.com/Paper.pdf)
-- [Whisper Proposal](https://github.com/ethereum/wiki/wiki/Whisper)
 - [FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
 
 ### ÐΞV Technologies
@@ -22,6 +21,10 @@
 - [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
 - [Mist (Go)](https://github.com/ethereum/wiki/wiki/Ethereal) 
 - [pyeth (Python)](https://github.com/ethereum/wiki/wiki/Pyeth) 
+
+### Concerning Whisper
+- [Whisper Proposal](https://github.com/ethereum/wiki/wiki/Whisper)
+- [Whisper Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
 
 ### ÐApp Development
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
