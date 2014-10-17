@@ -27,7 +27,7 @@ broadcastWatch.arrived(function(m)
 
 ### Basic operation
 
-Post takes a JSON object containing four key parameters: 
+`post` takes a JSON object containing four key parameters: 
 
 ```
 shh.post({ "topic": t, "payload": p, "ttl": ttl, "priority": pri });
