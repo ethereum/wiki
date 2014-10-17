@@ -38,7 +38,7 @@ shh.post({ "topic": t, "payload": p, "ttl": ttl, "priority": pri });
 - `ttl` is a time for the message to live on the network, specified in seconds. This defaults to 60.
 - `priority` is the amount of priority you want the packet to have on the network. It is specified in milliseconds of processing time on your machine. This defaults to 50.
 
-Three other attributes optionally specify the addressing: recipient (`to`), clear-signature (`from`), and encrypted signature (`sign`). The latter is meaningless unless a recipient has been specified.
+Two other parameters optionally specify the addressing: recipient (`to`), sender (`from`). The latter is meaningless unless a recipient has been specified.
 
 ### Use cases
 - `shh.post({ "topic": t, "payload": p });` No signature, no encryption: Anonymous broadcast; a bit like an anonymous subject-filtered twitter feed.
