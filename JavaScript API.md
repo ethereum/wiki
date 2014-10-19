@@ -128,17 +128,21 @@ The block number you wish to query can be given either as an extra parameter (or
   * `messages()`: Returns the messages that fit `_filter`.
   * `uninstall()`: Uninstalls the watch. Should always be called once it is done with.
 
-**Misc**
+**Ethereum Misc** The `eth` object contain two additional methods for compilation and key management.
 
 * `secretToAddress(_a)`: Determines the address from the secret key `_a`.
 * `lll(_s)`: Compiles the LLL source code `_s` and returns the output data.
+
+
+**General DEV Misc** There is an additional `dev` object to for general data handling. It contains the following methods:
+
 * `sha3(_s)`: Returns the SHA3 of the given data.
 * `toAscii(_s)`: Returns an ASCII string made from the data `_s`.
 * `fromAscii(_s, _padding = 32)`: Returns data of the ASCII string `_s`, auto-padded to `_padding` bytes (default to 32) and left-aligned.
 * `toDecimal(_s)`: Returns the decimal string representing the data `_s` (when interpreted as a big-endian integer).
 * `toFixed(_s)`: Returns the floating-point number representing the data `_s` (when interpreted as a fixed-point value divided by 2^128).
 * `fromFixed(_s)`: Returns data representing the floating-point number `_s` (when interpreted as a fixed-point value divided by 2^128).
-* `offset(_s, _o)`: Returns data representing the data `_s` when offset by the integer `_o`.
+* `offset(_s, _o)`: Returns data representing the data `_s` when its numerical value is offset by the integer `_o`. e.g. `dev.offset("0x10", 10)` evaluates to `"0x1a"`.
 
 ## Example
 
@@ -147,7 +151,7 @@ A simple HTML snippet that will display the user's primary account balance of Et
 <div>You have <span id="ether">?</span>.</div>
 <script>
 eth.watch({altered: eth.secretToAddress(eth.key)}).changed(function() {
-    document.getElementById("ether").innerText = eth.toDecimal(eth.balanceAt(eth.secretToAddress(eth.key)))
+    document.getElementById("ether").innerText = dev.toDecimal(eth.balanceAt(eth.secretToAddress(eth.key)))
 });
 </script>
 ```
