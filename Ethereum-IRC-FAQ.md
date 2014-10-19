@@ -40,7 +40,7 @@ Answers to questions about Ethereum
 
 ### What is Ethereum?
 
-> Ethereum is an open source platform to build and distribute decentralized applications.  
+> Ethereum is an open source platform to build and distribute decentralized applications.
 > It's scheduled for release in the winter of 2014/2015.  
 >
 > For a quick overview, see:
