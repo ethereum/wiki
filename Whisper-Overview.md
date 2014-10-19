@@ -75,6 +75,14 @@ Topic is constructed from a number of components - this simply compresses (sha3 
 
 To filter on sender/recipient, they should be encoded within the topic by the sender.
 
+### Silent Operation
+
+In normal operation (and assuming a non-degenerate attack condition), there is a trade-off between true anonymity/plausible deniability over ones communications and efficiency of operation. The more one advertises to ones peers attempting to "fish" for useful messages and steer such message towards oneself, the more one reveals to ones peers.
+
+For a securely anonymous dynamic two-way conversation, this trade-off becomes problematic; significant topic-advertising would be necessary for the point-to-point conversation to happen with sensible latency and yet so little about the topic can be advertised to guide messages home without revealing substantial information should there be adversary peers around an endpoint. (If substantial numbers of adversary peers surround both endpoints, a tunnelling system similar to TOR must be used to guarantee security.)
+
+In this situation, dynamic topic generation would be used. This effectively turns the datagram-orientated channel into a connection-oriented channel. The endpoint to begin the conversation sends a point-to-point (i.e. signed and encrypted) conversation-begin message that contains a randomly chosen 256-bit topic seed. The seed is combined (by both endpoints) with a message nonce (beginning at 0 and incrementing over the course of the conversation) to provide a secure chain of single-use topics. It then generates a bloom filter using randomly selected bits from the new topic to match against and gives the filter to its peers; once a randomly selected minimum of messages fitting this filter have been collected (we assume one of these is the message we are interested in), we send our reply, deriving a new topic (incrementing the nonce), then advertise for that with yet another topic (another nonce increment) with another randomly selected group of bits.
+
 ### Wire Protocol
 
 Messages are formed by the RLP from a number of attributes:
