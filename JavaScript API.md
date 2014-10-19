@@ -33,8 +33,7 @@ In each case, they are interpreted as the number 4276803. To convert to or from 
 * `listening` Returns true if and only if the client is actively listening for network connections.
 * `mining` Returns true if and only if the client is actively mining new blocks.
 * `gasPrice` Returns the special 256-bit number equal to the hard-coded testnet price of gas.
-* `key` Returns the special key-pair object corresponding to the preferred account owned by the client.
-* `keys` Returns a list of the special key-pair objects corresponding to all accounts owned by the client.
+* `accounts` Returns the special key-pair list object corresponding to the address of each of the accounts owned by the client that this ÐApp has access to.
 * `peerCount` Returns the number of peers currently connected to the client.
 * `defaultBlock` The default block number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
 * `number` Returns the number of the most recent block.
@@ -52,7 +51,7 @@ The block number you wish to query can be given either as an extra parameter (or
 
 * `transact(_params, _fn)` Creates a new message-call transaction.
   * `_params`, an anonymous object specifying the parameters of the transaction.
-    * `from`, the secret-key for the sender;
+    * `from`, the address for the sending account;
     * `value`, the value transferred for the transaction (in Wei), also the endowment if it's a contract-creation transaction;
     * `endowment`, synonym for `value`;
     * `to`, the destination address of the message, left undefined for a contract-creation transaction;
@@ -144,7 +143,6 @@ The block number you wish to query can be given either as an extra parameter (or
 
 **Ethereum Misc** The `eth` object contain two additional methods for compilation and key management.
 
-* `secretToAddress(_a)`: Determines the address from the secret key `_a`.
 * `lll(_s)`: Compiles the LLL source code `_s` and returns the output data.
 
 ## Example
@@ -154,7 +152,7 @@ A simple HTML snippet that will display the user's primary account balance of Et
 <div>You have <span id="ether">?</span>.</div>
 <script>
 eth.watch({altered: eth.secretToAddress(eth.key)}).changed(function() {
-    document.getElementById("ether").innerText = dev.toDecimal(eth.balanceAt(eth.secretToAddress(eth.key)))
+    document.getElementById("ether").innerText = dev.toDecimal(eth.balanceAt(eth.accounts[0]))
 });
 </script>
 ```
