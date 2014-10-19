@@ -89,7 +89,7 @@ Messages are formed by the RLP from a number of attributes:
 ]
 ```
 
-The `sig` is a single 520-bit hash that forms the signature from the concatenation of the triplet `v` (8 bits), `r` and `s` (256 bits each). The reason for concatenating is to avoid passing composite types around for a single conceptual noun. 
+The `sig` is a single 520-bit hash that forms the signature from the concatenation of the triplet `v` (8 bits), `r` and `s` (256 bits each). The reason for concatenating is to avoid passing composite types around for a single conceptual noun and thus provide a cleaner upgrade path should the nature of the signature change. 
 
 Messages are forwarded favouring several attributes:
 - The magnitude of the hash of the `nonce ++ SHA3(packet without nonce)`, where `++` is the concatenation operator and each of the operands is a fixed-length 256-bit hash. When this hash is interpreted as a BE-encoded value: the smaller, the higher the priority.
