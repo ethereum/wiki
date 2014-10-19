@@ -1,14 +1,13 @@
-Answers to questions about #Ethereum on [Freenode IRC](https://freenode.net/)
+Answers to questions about Ethereum
 
 <!-- Generated with marked-toc https://github.com/jonschlinkert/marked-toc -->
 <!-- toc -->
 
 * [Ethereum](#ethereum)
+  * [What is Ethereum?](#what-is-ethereum)
   * [Where can I learn more about Ethereum?](#where-can-i-learn-more-about-ethereum)
-* [IRC](#irc)
-  * [How can I join the Ethereum IRC channels?](#how-can-i-join-the-ethereum-irc-channels)
-  * [Where can I find the Ethereum IRC logs?](#where-can-i-find-the-ethereum-irc-logs)
-  * [Where can I learn about the ZeroGox bot?](#where-can-i-learn-about-the-zerogox-bot)
+  * [Where can I find the main project repositories?](#where-can-i-find-the-main-project-repositories)
+  * [Where can I learn about the Ether sale and mining?](#where-can-i-learn-about-the-ether-sale-and-mining)
 * [Clients](#clients)
   * [Where can I find official releases?](#where-can-i-find-official-releases)
   * [How to install development builds?](#how-to-install-development-builds)
@@ -30,26 +29,42 @@ Answers to questions about #Ethereum on [Freenode IRC](https://freenode.net/)
   * [Where can I learn about ÐApp development?](#where-can-i-learn-about-Ðapp-development)
   * [Where can I find ÐApp development tools?](#where-can-i-find-Ðapp-development-tools)
   * [Where can I find example ÐApps?](#where-can-i-find-example-Ðapps)
+* [IRC](#irc)
+  * [How can I join the Ethereum IRC channels?](#how-can-i-join-the-ethereum-irc-channels)
+  * [Where can I find the Ethereum IRC logs?](#where-can-i-find-the-ethereum-irc-logs)
+  * [Where can I learn about the ZeroGox bot?](#where-can-i-learn-about-the-zerogox-bot)
 
 <!-- toc stop -->
 
 ## Ethereum
 
+### What is Ethereum?
+
+> Ethereum is an open source platform to build and distribute decentralized applications.  
+> It's scheduled for release in the winter of 2014/2015.  
+>
+> For a quick overview, see:
+> + [Introducing Ethereum](http://youtu.be/mRWNr3MA2jo)
+> + [Vitalik Buterin reveals Ethereum at Bitcoin Miami 2014](http://youtu.be/l9dpjN3Mwps)
+> + [Singularity 1 on 1: Ethereum is a Decentralized Consensus Platform](http://youtu.be/fbEtivJIfIU)
+> + [Our second Reddit AMA for community selected questions](http://www.reddit.com/r/IAmA/comments/2bjmgb/hi_we_are_the_ethereum_project_team_ask_us/)
+
 ### Where can I learn more about Ethereum?
 
-Sites
+- Main site: https://www.ethereum.org
+- Forums: https://forum.ethereum.org
+- Github: https://github.com/ethereum
+- Blog: https://blog.ethereum.org
+- Wiki: http://wiki.ethereum.org
+- Meetups: http://ethereum.meetup.com
+- Whitepaper: http://ethereum.org/ethereum.html
+- Yellow Paper: http://gavwood.com/paper.pdf
+- Facebook: https://www.facebook.com/ethereumproject
+- Youtube: http://www.youtube.com/ethereumproject
+- Google+: http://google.com/+EthereumOrgOfficial
+- IRC Freenode: #ethereum (http://bitly.com/IRC_ethereum for weblink)
 
-+ [Ethereum.org](https://ethereum.org)
-+ [Ethereum Forums](https://forum.ethereum.org)
-+ [Ethereum Wiki](https://github.com/ethereum/wiki/wiki)
-+ [Ethereum FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
-
-Papers
-
-+ [The White Paper][WhiteHTML] ([HTML][WhiteHTML], [PDF][WhitePDF])
-+ [The Yellow Paper][YellowPDF]
-
-Projects
+### Where can I find the main project repositories?
 
 + [cpp-ethereum](https://github.com/ethereum/cpp-ethereum/) ([@gavofyork](https://github.com/gavofyork), [@programmerTim](https://github.com/programmerTim), [@caktux](https://github.com/caktux))
 + [go-ethereum](https://github.com/ethereum/go-ethereum) ([@obscuren](https://github.com/obscuren), [@maran](https://github.com/maran))
@@ -57,23 +72,10 @@ Projects
 + [ethereumj](https://github.com/ethereum/ethereumj) ([@romanman](https://github.com/romanman), [@nicksavers](https://github.com/nicksavers))
 + [ethereumjs-lib](https://github.com/ethereum/ethereumjs-lib) ([@ethers](https://github.com/ethers), [@wanderer](https://github.com/wanderer))
 
-[WhitePDF]: https://www.ethereum.org/pdfs/EthereumWhitePaper.pdf
-[WhiteHTML]: https://github.com/ethereum/wiki/wiki/White-Paper
-[YellowPDF]: http://gavwood.com/paper.pdf
+### Where can I learn about the Ether sale and mining?
 
-## IRC
-
-### How can I join the Ethereum IRC channels?
-
-+ [Chat with the ethereum dev community on IRC!](https://forum.ethereum.org/discussion/1495/chat-with-the-ethereum-dev-community-on-irc)
-
-### Where can I find the Ethereum IRC logs?
-
-+ [The ZeroGox logs](https://zerogox.com/bot/log)
-
-### Where can I learn about the ZeroGox bot?
-
-+ [The ZeroGox bot](https://zerogox.com/bot)
++ [The Ether Sale FAQ](https://forum.ethereum.org/discussion/196/the-ether-sale-faq/p1)
++ [The Mining FAQ](https://forum.ethereum.org/discussion/197/mining-faq-live-updates/p1)
 
 ## Clients
 
@@ -247,3 +249,17 @@ Community
 + [CryptoCoinWatch](https://github.com/EtherCasts/cryptocoinwatch) ([@EtherCasts](https://github.com/EtherCasts))
 + [Occam's Run](https://github.com/d11e9/Occams-Run) ([@d11e9](https://github.com/d11e9))
 + [TrustDavis](https://github.com/EtherCasts/trustdavis) ([@EtherCasts](https://github.com/EtherCasts))
+
+## IRC
+
+### How can I join the Ethereum IRC channels?
+
++ [Chat with the ethereum dev community on IRC!](https://forum.ethereum.org/discussion/1495/chat-with-the-ethereum-dev-community-on-irc)
+
+### Where can I find the Ethereum IRC logs?
+
++ [The ZeroGox logs](https://zerogox.com/bot/log)
+
+### Where can I learn about the ZeroGox bot?
+
++ [The ZeroGox bot](https://zerogox.com/bot)
