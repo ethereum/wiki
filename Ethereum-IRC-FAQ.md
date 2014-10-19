@@ -90,6 +90,7 @@ Projects
 + Guides
   + [AlethZero super easy install guide for OSX](https://forum.ethereum.org/discussion/1388/alethzero-super-easy-install-guide-for-osx) ([@stephantual](https://github.com/stephantual))
   + [Go-Ethereum simple build guide for OSX](http://forum.ethereum.org/discussion/905/go-ethereum-cli-ethereal-simple-build-guide-for-osx-now-with-one-line-install) ([@stephantual](https://github.com/stephantual))
+  + [Building on Ubuntu](https://github.com/ethereum/cpp-ethereum/wiki/Building-on-Ubuntu#user-content-trusty-1404) ([@stephantual](https://github.com/stephantual))
 + Builds
   + [Ethdev Buildbot](http://build.ethdev.com/waterfall)
 
