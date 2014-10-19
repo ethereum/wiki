@@ -82,12 +82,14 @@ Messages are formed by the RLP from a number of attributes:
 [
   timestamp: u32,
   ttl: u32,
-  [v: u8, r: u256, s: u256],
+  sig: h520,
   topic: h256,
   payload: bytes,
   nonce: h256
 ]
 ```
+
+The `sig` is a single 520-bit hash that forms the signature from the concatenation of the triplet `v` (8 bits), `r` and `s` (256 bits each). The reason for concatenating is to avoid passing composite types around for a single conceptual noun. 
 
 Messages are forwarded favouring several attributes:
 - The magnitude of the hash (interpreted as a BE-encoded value): the smaller, the higher the priority.
