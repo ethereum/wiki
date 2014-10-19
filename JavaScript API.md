@@ -163,9 +163,11 @@ To test it, just put `<html><body>` before it and `</body></html>` after, then s
 
 Job done. Now go create.
 
+### Recent Changes
+- Moved "Misc" into dev.* object.
+
 ### Upcoming Changes
 - Remove all secret keys from the JS API.
-- Move Misc into dev.* object.
 - Add p2p.* and shh.* objects.
 - Proscribe particular bigint objects for numerical manipulation.
-- Integrate paperscript-style preprocessing to allow for operator overloading.
+- Integrate Paperscript-style preprocessing to allow for operator overloading.
