@@ -1,6 +1,6 @@
 To make your ÐApp work with on Ethereum, you'll need to know about the Ethereum Javascript bindings, or, if you like, magic Javascript objects.
 
-There is currently only one such object; the `eth` object, however over time we'll introduce other objects for each of the other ÐΞVp2p protocols.
+There are currently only three such objects; the `dev` object, containing data handling functions (commonly used for all other APIs), the `eth` object (for specifically Ethereum interaction) and the `shh` object for Whisper interaction, however over time we'll introduce other objects for each of the other ÐΞVp2p protocols.
 
 ### Parameters
 
@@ -10,6 +10,20 @@ Parameters are always data represented as hex, prefixed with an `0x`. There's au
 * `"4276803"`
 
 In each case, they are interpreted as the number 4276803. To convert to or from other datatypes, there are a number of conversion functions, detailed later.
+
+### dev
+
+**Data Handling**: The `dev` object can be used for general data handling. It contains the following methods:
+
+* `sha3(_s)`: Returns the SHA3 of the given data.
+* `sha3(_s1, _s2)`: Returns the SHA3 of the given data when concatenated.
+* `sha3(_s1, _s2, _s3)`: Returns the SHA3 of the given data when concatenated.
+* `toAscii(_s)`: Returns an ASCII string made from the data `_s`.
+* `fromAscii(_s, _padding = 32)`: Returns data of the ASCII string `_s`, auto-padded to `_padding` bytes (default to 32) and left-aligned.
+* `toDecimal(_s)`: Returns the decimal string representing the data `_s` (when interpreted as a big-endian integer).
+* `toFixed(_s)`: Returns the floating-point number representing the data `_s` (when interpreted as a fixed-point value divided by 2^128).
+* `fromFixed(_s)`: Returns data representing the floating-point number `_s` (when interpreted as a fixed-point value divided by 2^128).
+* `offset(_s, _o)`: Returns data representing the data `_s` when its numerical value is offset by the integer `_o`. e.g. `dev.offset("0x10", 10)` evaluates to `"0x1a"`.
 
 ### eth
 
@@ -132,17 +146,6 @@ The block number you wish to query can be given either as an extra parameter (or
 
 * `secretToAddress(_a)`: Determines the address from the secret key `_a`.
 * `lll(_s)`: Compiles the LLL source code `_s` and returns the output data.
-
-
-**General DEV Misc** There is an additional `dev` object to for general data handling. It contains the following methods:
-
-* `sha3(_s)`: Returns the SHA3 of the given data.
-* `toAscii(_s)`: Returns an ASCII string made from the data `_s`.
-* `fromAscii(_s, _padding = 32)`: Returns data of the ASCII string `_s`, auto-padded to `_padding` bytes (default to 32) and left-aligned.
-* `toDecimal(_s)`: Returns the decimal string representing the data `_s` (when interpreted as a big-endian integer).
-* `toFixed(_s)`: Returns the floating-point number representing the data `_s` (when interpreted as a fixed-point value divided by 2^128).
-* `fromFixed(_s)`: Returns data representing the floating-point number `_s` (when interpreted as a fixed-point value divided by 2^128).
-* `offset(_s, _o)`: Returns data representing the data `_s` when its numerical value is offset by the integer `_o`. e.g. `dev.offset("0x10", 10)` evaluates to `"0x1a"`.
 
 ## Example
 
