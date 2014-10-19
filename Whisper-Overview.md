@@ -92,7 +92,7 @@ Messages are formed by the RLP from a number of attributes:
 The `sig` is a single 520-bit hash that forms the signature from the concatenation of the triplet `v` (8 bits), `r` and `s` (256 bits each). The reason for concatenating is to avoid passing composite types around for a single conceptual noun. 
 
 Messages are forwarded favouring several attributes:
-- The magnitude of the hash (interpreted as a BE-encoded value): the smaller, the higher the priority.
+- The magnitude of the hash of the `nonce ++ SHA3(packet without nonce)`, where `++` is the concatenation operator and each of the operands is a fixed-length 256-bit hash. When this hash is interpreted as a BE-encoded value: the smaller, the higher the priority.
 - The TTL: the smaller, the higher the priority.
 - The size of the payload: the smaller, the higher the priority.
 - If the signature is clear, then according to the magnitude of the address (interpreted as a big-endian encoded value): the smaller, the higher the priority.
