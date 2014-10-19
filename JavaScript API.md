@@ -163,9 +163,9 @@ Job done. Now go create.
 
 ### Recent Changes
 - Moved "Misc" into dev.* object.
+- Removed all secret keys from the JS API.
 
 ### Upcoming Changes
-- Remove all secret keys from the JS API.
 - Add p2p.* and shh.* objects.
 - Proscribe particular bigint objects for numerical manipulation.
 - Integrate Paperscript-style preprocessing to allow for operator overloading.
