@@ -47,24 +47,7 @@ In each case, they are interpreted as the number 4276803. To convert to or from 
 
 The block number you wish to query can be given either as an extra parameter (or age if less than 1: you may use 0 to include pending transactions, use -1 to include only mined transactions &c.), or alternatively, you may use these without the extra parameter, in which case the state at the end of the most recently mined block will be used. This can be altered with the `defaultBlock` property.
 
-**Transactions**
-
-* `transact(_params, _fn)` Creates a new message-call transaction.
-  * `_params`, an anonymous object specifying the parameters of the transaction.
-    * `from`, the address for the sending account;
-    * `value`, the value transferred for the transaction (in Wei), also the endowment if it's a contract-creation transaction;
-    * `endowment`, synonym for `value`;
-    * `to`, the destination address of the message, left undefined for a contract-creation transaction;
-    * `data`, either a byte array or an array of values, to be 32-byte aligned, containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
-    * `code`, a synonym for `data`;
-    * `gas`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
-    * `gasPrice`, the price of gas for this transaction, defaults to the mean network gasPrice.
-  * `_fn`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
-* `call(_params, _fn)` Executes a new message-call immediately without creating a transaction on the block chain.
-  * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
-  * `_fn`, the callback function, called on completion of the message call. A single argument is passed equal to the output data of the message call.
-
-**The Blockchain** Three distinct methods are available for querying the blockchain and retrieving blocks, transactions and uncles.
+**Synchronous Blockchain Getters** Three distinct methods are available for querying the blockchain and retrieving blocks, transactions and uncles. For each such item, there is also an asynchronous method, taking an additional parameter of the callback function, itself taking a single parameter of the synchronous method's return value and of the same name but prefixed with get and recapitalised, e.g. `getBalanceAt(_a, _fn)`.
 
 * `block(_number)` Returns the block with number `_number`. Return value is an object with the following keys:
   * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
@@ -111,6 +94,22 @@ The block number you wish to query can be given either as an extra parameter (or
   * `extraData`: Any extra data this block contains (a byte array).
   * `nonce`: The block's PoW nonce (a 32-byte hash).
 * `uncle(_hash, _i)` Returns the uncle number `_i` from block with hash `_hash`. Return value is an object with the keys as for the previous call.
+**Transactions**
+
+* `transact(_params, _fn)` Creates a new message-call transaction.
+  * `_params`, an anonymous object specifying the parameters of the transaction.
+    * `from`, the address for the sending account;
+    * `value`, the value transferred for the transaction (in Wei), also the endowment if it's a contract-creation transaction;
+    * `endowment`, synonym for `value`;
+    * `to`, the destination address of the message, left undefined for a contract-creation transaction;
+    * `data`, either a byte array or an array of values, to be 32-byte aligned, containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
+    * `code`, a synonym for `data`;
+    * `gas`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
+    * `gasPrice`, the price of gas for this transaction, defaults to the mean network gasPrice.
+  * `_fn`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
+* `call(_params, _fn)` Executes a new message-call immediately without creating a transaction on the block chain.
+  * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
+  * `_fn`, the callback function, called on completion of the message call. A single argument is passed equal to the output data of the message call.
 
 **Watches and Message Filtering** Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of.
 
