@@ -141,7 +141,7 @@ The block number you wish to query can be given either as an extra parameter (or
   * `messages()`: Returns the messages that fit `_filter`.
   * `uninstall()`: Uninstalls the watch. Should always be called once it is done with.
 
-**Ethereum Misc** The `eth` object contain two additional methods for compilation and key management.
+**Ethereum Misc** The `eth` object contains an additional method for compilation. This has an asynchronous version in fitting with the getter methods, which is prefixed with do and takes an additional function which is called with the result. e.g. `doLll(_s, _f)`.
 
 * `lll(_s)`: Compiles the LLL source code `_s` and returns the output data.
 
