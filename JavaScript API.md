@@ -1,6 +1,6 @@
 To make your ÐApp work with on Ethereum, you'll need to know about the Ethereum Javascript bindings, or, if you like, magic Javascript objects.
 
-There are currently only three such objects; the `dev` object, containing data handling functions (commonly used for all other APIs), the `eth` object (for specifically Ethereum interaction) and the `shh` object for Whisper interaction, however over time we'll introduce other objects for each of the other ÐΞVp2p protocols.
+There is, at the global scope, one objects; the `web3` object, containing data handling functions (commonly used for all other APIs). This object also contains other subprotocol objects including the `eth` object - `web3.eth` (for specifically Ethereum interaction) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
 ### Parameters
 
@@ -13,7 +13,7 @@ In each case, they are interpreted as the number 4276803. To convert to or from 
 
 ### dev
 
-**Data Handling**: The `dev` object can be used for general data handling. It contains the following methods:
+**Data Handling**: The `web3` object can be used for general data handling. It contains the following methods:
 
 * `sha3(_s)`: Returns the SHA3 of the given data.
 * `sha3(_s1, _s2)`: Returns the SHA3 of the given data when concatenated.
@@ -164,8 +164,9 @@ Job done. Now go create.
 ### Recent Changes
 - Moved "Misc" into dev.* object.
 - Removed all secret keys from the JS API.
+- Altered naming to web3.
 
 ### Upcoming Changes
-- Add p2p.* and shh.* objects.
+- Add web3.p2p.* and web3.shh.* objects.
 - Proscribe particular bigint objects for numerical manipulation.
 - Integrate Paperscript-style preprocessing to allow for operator overloading.
