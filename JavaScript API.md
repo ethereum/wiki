@@ -47,7 +47,7 @@ In each case, they are interpreted as the number 4276803. To convert to or from 
 
 The block number you wish to query can be given either as an extra parameter (or age if less than 1: you may use 0 to include pending transactions, use -1 to include only mined transactions &c.), or alternatively, you may use these without the extra parameter, in which case the state at the end of the most recently mined block will be used. This can be altered with the `defaultBlock` property.
 
-**Synchronous Blockchain Getters** Three distinct methods are available for querying the blockchain and retrieving blocks, transactions and uncles. For each such item, there is also an asynchronous method, taking an additional parameter of the callback function, itself taking a single parameter of the synchronous method's return value and of the same name but prefixed with get and recapitalised, e.g. `getBalanceAt(_a, _fn)`.
+**Synchronous Blockchain Getters** Three distinct methods are available for querying the blockchain and retrieving blocks, transactions and uncles. For each such item, there is also an asynchronous method, taking an additional parameter of the callback function, itself taking a single parameter of the synchronous method's return value and of the same name but prefixed with get and recapitalised, e.g. `getBlock(_number)`.
 
 * `block(_number)` Returns the block with number `_number`. Return value is an object with the following keys:
   * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
