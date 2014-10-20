@@ -94,6 +94,7 @@ The block number you wish to query can be given either as an extra parameter (or
   * `extraData`: Any extra data this block contains (a byte array).
   * `nonce`: The block's PoW nonce (a 32-byte hash).
 * `uncle(_hash, _i)` Returns the uncle number `_i` from block with hash `_hash`. Return value is an object with the keys as for the previous call.
+
 **Transactions**
 
 * `transact(_params, _fn)` Creates a new message-call transaction.
