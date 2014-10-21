@@ -11,7 +11,7 @@ Parameters are always data represented as hex, prefixed with an `0x`. There's au
 
 In each case, they are interpreted as the number 4276803. To convert to or from other datatypes, there are a number of conversion functions, detailed later.
 
-### dev
+### web3
 
 **Data Handling**: The `web3` object can be used for general data handling. It contains the following methods:
 
