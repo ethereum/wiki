@@ -59,6 +59,16 @@ Message IDs are assumed to be compact from ID 0x10 onwards (0x00-0x10 is reserve
 * `port` is a 2-byte array that should be interpreted as a 16-bit big-endian integer.
 * `id` is the 512-bit hash that acts as the unique identifier of the node.
 
+### Node identity and reputation
+
+In a later version of this protocol, node ID will become the public key. Nodes will have to demonstrate ownership over their ID by interpreting a packet encrypted with their node ID (or perhaps signing a random nonce with their private key).
+
+A proof-of-work may be associated with the node ID through the big-endian magnitude of the public key. Nodes with a great proof-of-work (public key of lower magnitude) may be given preference since it is less likely that the node will alter its ID later or masquerade under multiple IDs.
+
+Nodes are free to store ratings for given IDs (how useful the node has been in the past) and give preference accordingly. Nodes may also track node IDs (and their provenance) in order to help determine potential man-in-the-middle attacks.
+
+Clients are free to mark down new nodes and use the node ID as a means of determining a node's reputation. In a future version of this wire protocol, n
+
 ### Example Packets
 
 `0x22400891000000088400000043414243`
