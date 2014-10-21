@@ -30,9 +30,9 @@ When a RPC call is done through the provided provider a JavaScript object will b
 
 ```javascript
 {
-    _id: <Integer>,
-    call: <String>,
-    args: [<Variadic1>, <Variadic2>, ...],
+    id: <Integer>,
+    method: <String>,
+    params: [<Variadic1>, <Variadic2>, ...],
 }
 ```
 
@@ -42,36 +42,36 @@ Example:
 getBlock( 10 )
 // Creates the following JSON RPC
 {
-    _id: 0,
-    call: "getBlock",
-    args: [10],
+    id: 0,
+    method: "getBlock",
+    params: [10],
 }
 
 ```
 
-The id represents the internal id thats's being used to identify the current RPC call. The `_id` plays a crucial role in creating response messages. When a response message to a call is made we use this same **id** in the return data. This is done so that ethereum.js knows exactly which return-callback to trigger (matching of ids with callbacks is all obfuscated in ethereum.js).
+The id represents the internal id thats's being used to identify the current RPC call. The `id` plays a crucial role in creating response messages. When a response message to a call is made we use this same **id** in the return data. This is done so that ethereum.js knows exactly which return-callback to trigger (matching of ids with callbacks is all obfuscated in ethereum.js).
 
 When a reponse is given on a particular call you'll have to supply it with a JavaScript object and serialise it to proper JSON:
 
 ```
 {
-    _id: <Integer>,
-    data: <Variadic>,
+    id: <Integer>,
+    results: <Variadic>,
 }
 ```
 
-The `_id` must match the `_id` that you received from the initial call, the `data` is user supplied data and contains arbritrary data.
+The `id` must match the `id` that you received from the initial call, the `data` is user supplied data and contains arbritrary data.
 
 ### Events
 
 For the Messaging API specified in the JavaScript API we use a very simple event mechanism. As stated above, when the `newFilter` RPC is done it's expected that you return a unique identifier for the filter. This identifier is used in all subsequent calls or as identifier in finding the JavaScript equivalent `Filter` object.
 
-When you want to trigger a filter's watches which has been created through `watch( ... )` you post a new message without `_id`. Instead you pack it with an `_event` field which contains the `messages` event as string. The `data` field is an array of _exactly_ two elements. The first being the filtered messages and the second being the filter id which was created through `newFilter` (`watch` creates an RPC with `newFilter`). Ethereum.js sorts out the rest.
+When you want to trigger a filter's watches which has been created through `watch( ... )` you post a new message without `id`. Instead you pack it with an `event` field which contains the `messages` event as string. The `results` field is an array of _exactly_ two elements. The first being the filtered messages and the second being the filter id which was created through `newFilter` (`watch` creates an RPC with `newFilter`). Ethereum.js sorts out the rest.
 
 ```javascript
 {
-    _event: "messages",
-    data: [[Message1, Message2, ...], filter_id]
+    event: "messages",
+    results: [[Message1, Message2, ...], filter_id]
 }
 ```
 
@@ -119,9 +119,9 @@ web3.eth.getBlock(1);
 import "encoding/json"
 
 struct msg struct {
-    Id   int           `json:"_id"`
-    Call string        `json:"call"`
-    Args []interface{} `json:"args"`
+    Id   int             `json:"id"`
+    Method string        `json:"method"`
+    Params []interface{} `json:"params"`
 }
 
 // Called when JavaScript `send`s something
@@ -139,8 +139,8 @@ func onMessage(data string) {
 
 func send(v interface{}, id int) {
     m := json.Marshal(map[string]interface{}{
-        _id: id,
-        data: v,
+        id: id,
+        results: v,
     })
     
     // Some method exposed by the `myapi` package.
