@@ -25,6 +25,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * `newFilter( parameters_or_type : Variadic )` **Note**: Registers a new filter. Expects a return call with an unique ID specifying the new filter. In any subsequent queries that reference this filter, this same ID is used to identify the filter on the remote backend. It's up to the implementors to implement this look-up method as they see fit on the remote backend (see [[events](#events)]).
 * `messages( id : Integer )`
 * `uninstallFilter( id : Integer )`
+* **optional** `changed( id : Integer )` Specificly for unidirectional implementations (e.g., TCP JSON RPC) which need a polling mechanism for filtered messages. `id` is the ID of the filter.
 
 When a RPC call is done through the provided provider a JavaScript object will be send along with it. The arguments provided to the function will match the array in the `args` field.
 
