@@ -8,9 +8,12 @@ Ethereum.js exports one single container; `web3` which contains the `eth` object
 
 The following RPC messages should be accepted by the RPC-backend:
 
-* `block( hash_or_number : Variadic )`
-* `transaction( hash_or_number : Variadic, nth : Integer )`
-* `uncle( hash_or_number : Variadic, nth : Integer )`
+* `blockByHash( hash : String )`
+* `blockByNumber( number : Integer )`
+* `transactionByHash( hash : String, nth : Integer )`
+* `transactionByNumber( number : Integer, nth : Integer )`
+* `uncleByHash( hash : String, nth : Integer )`
+* `uncleByNumber( number : Integer, nth : Integer )`
 * `transact( parameters : Object )`
 * **optional** `compile( code : String )`
 * `balanceAt( address : String )`
