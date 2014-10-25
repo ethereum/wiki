@@ -149,10 +149,10 @@ The block number you wish to query can be given either as an extra parameter (or
 
 A simple HTML snippet that will display the user's primary account balance of Ether:
 ```html
-<div>You have <span id="ether">?</span>.</div>
+<div>You have <span id="ether">?</span> Weis</div>
 <script>
-eth.watch({altered: eth.secretToAddress(eth.key)}).changed(function() {
-    document.getElementById("ether").innerText = dev.toDecimal(eth.balanceAt(eth.accounts[0]))
+web3.eth.watch({altered: web3.eth.accounts[0]}).changed(function() {
+    document.getElementById("ether").innerText = web3.toDecimal(web3.eth.balanceAt(web3.eth.accounts[0]))
 });
 </script>
 ```
