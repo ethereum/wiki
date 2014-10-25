@@ -24,6 +24,7 @@
 ### Concerning Whisper
 - [Whisper Proposal](https://github.com/ethereum/wiki/wiki/Whisper)
 - [Whisper Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
+- [Wire protocol](https://github.com/ethereum/wiki/wiki/Whisper-Wire-Protocol)
 
 ### ÐApp Development
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
