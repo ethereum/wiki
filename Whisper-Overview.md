@@ -1,27 +1,47 @@
 ```
+var shh = web3.shh;
 var appName = "My silly app!";
 var myName = "Gav Would";
+var myIdentity = shh.newIdentity();
 
-shh.post({ "from": eth.key, "topic": [ eth.fromAscii(appName) ], "payload": [ myName, eth.fromAscii("What is your name?") ], "ttl": 100, "priority": 1000 });
+shh.post({
+  "from": myIdentity,
+  "topic": [ web3.fromAscii(appName) ],
+  "payload": [ web3.fromAscii(myName), web3.fromAscii("What is your name?") ],
+  "ttl": 100,
+  "priority": 1000
+});
 
-var replyWatch = shh.watch({ "filter": [ eth.fromAscii(appName), eth.secretToAddress(eth.key) ] });
-// could be filter: [eth.fromAscii(appName), null] if we wanted to filter all such messages for this app, but we'd be unable to read the contents.
+var replyWatch = shh.watch({
+  "filter": [ web3.fromAscii(appName), myIdentity ],
+  "to": myIdentity
+});
+// could be "filter": [ web3.fromAscii(appName), null ] if we wanted to filter all such
+// messages for this app, but we'd be unable to read the contents.
 
 replyWatch.arrived(function(m)
 {
 	// new message m
-	console.log("Reply from " + eth.toAscii(m.payload) + " whose address is " + m.from;
+	console.log("Reply from " + web3.toAscii(m.payload) + " whose address is " + m.from;
 });
 
-var broadcastWatch = shh.watch({ "filter": [ eth.fromAscii(appName) ] });
+var broadcastWatch = shh.watch({ "filter": [ web3.fromAscii(appName) ] });
 broadcastWatch.arrived(function(m)
 {
-	if (m.from != eth.key)
-	{
-		// new message m: someone's asking for our name. Let's tell them.
-		console.log("Broadcast from " + eth.toAscii(m.payload).substr(0, 32) + "; replying to tell them our name.");
-		shh.post({ "from": eth.key, "to": m.from, "topic": [ eth.fromAscii(appName), m.from ], "payload": [ eth.fromAscii(myName) ], "ttl": 2, "priority": 500 });
-	}
+  if (m.from != myIdentity)
+  {
+    // new message m: someone's asking for our name. Let's tell them.
+    var broadcaster = web3.toAscii(m.payload).substr(0, 32);
+    console.log("Broadcast from " + broadcaster + "; replying to tell them our name.");
+    shh.post({
+      "from": eth.key,
+      "to": m.from,
+      "topic": [ eth.fromAscii(appName), m.from ],
+      "payload": [ eth.fromAscii(myName) ],
+      "ttl": 2,
+      "priority": 500
+    });
+  }
 });
 ```
 
@@ -30,21 +50,21 @@ broadcastWatch.arrived(function(m)
 `post` takes a JSON object containing four key parameters: 
 
 ```
-shh.post({ "topic": t, "payload": p, "ttl": ttl, "priority": pri });
+shh.post({ "topic": t, "payload": p, "ttl": ttl, "workToProve": work });
 ```
 
 - `topic`, provided as either a list of items which is, during the packet construction, ameliorated into a single 256-bit secure hash, or the hash directly using the standard form of a hex string;
 - `payload`, provided similarly to topic but left as an unformatted byte array provides the data to be sent.
-- `ttl` is a time for the message to live on the network, specified in seconds. This defaults to 60.
-- `priority` is the amount of priority you want the packet to have on the network. It is specified in milliseconds of processing time on your machine. This defaults to 50.
+- `ttl` is a time for the message to live on the network, specified in seconds. This defaults to 50.
+- `work` is the amount of priority you want the packet to have on the network. It is specified in milliseconds of processing time on your machine. This defaults to 50.
 
 Two other parameters optionally specify the addressing: recipient (`to`), sender (`from`). The latter is meaningless unless a recipient has been specified.
 
 ### Use cases
 - `shh.post({ "topic": t, "payload": p });` No signature, no encryption: Anonymous broadcast; a bit like an anonymous subject-filtered twitter feed.
-- `shh.post({ "from": eth.key, "topic": t, "payload": p });` Open signature, no encryption: Clear-signed broadcast; a bit like a normal twitter feed - anyone interested can see a particular identity is sending particular stuff out to no-one in particular.
+- `shh.post({ "from": myIdentity, "topic": t, "payload": p });` Open signature, no encryption: Clear-signed broadcast; a bit like a normal twitter feed - anyone interested can see a particular identity is sending particular stuff out to no-one in particular.
 - `shh.post({ "to": recipient, "topic": t, "payload": p });` No signature, encryption: Encrypted anonymous message; a bit like an anonymous drop-box - message is private to the owner of the dropbox. They can't tell from whom it is.
-- `shh.post({ "from": eth.key, "to": recipient, "topic": t, "payload": p });` Secret signature, encryption: Encrypted signed message; like a secure e-mail. One identity tells another something - nobody else can read it. The recipient alone knows it came from the sender.
+- `shh.post({ "from": myIdentity, "to": recipient, "topic": t, "payload": p });` Secret signature, encryption: Encrypted signed message; like a secure e-mail. One identity tells another something - nobody else can read it. The recipient alone knows it came from the sender.
 
 In addition to the basic use cases, there will also be support for secure multi-casting. For this, you set up a group with `shh.newGroup`:
 
@@ -61,13 +81,13 @@ shh.post({ "from": eth.key, "to": group, "topic": t, "payload": p });
 The `newGroup` actually does something like:
 
 ```
-var keypair = eth.newKeyPair();
-shh.post([ "from": eth.key, "to": recipient1, "topic": ["new_shared_key", recipient1], "payload": keypair.secret ]);
-shh.post([ "from": eth.key, "to": recipient2, "topic": ["new_shared_key", recipient2], "payload": keypair.secret ]);
+var group = shh.newIdentity();
+shh.post([ "from": myIdentity, "to": recipient1, "topic": [invSHA3(2^255), recipient1], "payload": secretFromPublic(group) ]);
+shh.post([ "from": myIdentity, "to": recipient2, "topic": [invSHA3(2^255), recipient2], "payload": secretFromPublic(group) ]);
 return keypair;
 ```
 
-Here, the `"new_shared_key"` topic is a sub-band topic (intercepted by the Whisper protocol layer) which takes the key and adds it to the key database. When a packet is addressed to `group`, it encrypts with group's public key. `group` is not generally used for signing.
+Here, the `invSHA3(2^255)` topic is a sub-band topic (intercepted by the Whisper protocol layer) which takes the key and adds it to the key database. When a packet is addressed to `group`, it encrypts with group's public key. `group` is not generally used for signing. `secretFromPublic` obviously isn't a public API and invSHA3 is only possible because we know each item of the topic is SHA3ed prior to amalgamation in the final topic.
 
 When signing a message (one with a `from` parameter), the message-hash is the hash of the clear-text (unencrypted) payload.
 
@@ -97,7 +117,7 @@ Messages are formed by the RLP from a number of attributes:
 ]
 ```
 
-The `sig` is a single 520-bit hash that forms the signature from the concatenation of the triplet `v` (8 bits), `r` and `s` (256 bits each). The reason for concatenating is to avoid passing composite types around for a single conceptual noun and thus provide a cleaner upgrade path should the nature of the signature change. 
+The `sig` is a single 520-bit hash that forms the signature from the concatenation of the triplet `r` and `s` (256 bits each) and `v` (8 bits). The reason for concatenating is to avoid passing composite types around for a single conceptual noun and thus provide a cleaner upgrade path should the nature of the signature change. 
 
 Messages are forwarded favouring several attributes:
 - The magnitude of the hash of the `nonce ++ SHA3(packet without nonce)`, where `++` is the concatenation operator and each of the operands is a fixed-length 256-bit hash. When this hash is interpreted as a BE-encoded value: the smaller, the higher the priority.
