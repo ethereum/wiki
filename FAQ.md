@@ -44,10 +44,10 @@ Answers to questions about Ethereum
 > It's scheduled for release in the winter of 2014/2015.  
 >
 > For a quick overview, see:
-> + [Introducing Ethereum](http://youtu.be/mRWNr3MA2jo)
-> + [Vitalik Buterin reveals Ethereum at Bitcoin Miami 2014](http://youtu.be/l9dpjN3Mwps)
-> + [Singularity 1 on 1: Ethereum is a Decentralized Consensus Platform](http://youtu.be/fbEtivJIfIU)
-> + [Our second Reddit AMA for community selected questions](http://www.reddit.com/r/IAmA/comments/2bjmgb/hi_we_are_the_ethereum_project_team_ask_us/)
+> + [Introducing Ethereum](http://youtu.be/mRWNr3MA2jo) (Video, 10min)
+> + [Vitalik Buterin reveals Ethereum at Bitcoin Miami 2014](http://youtu.be/l9dpjN3Mwps) (Video, 28min)
+> + [Singularity 1 on 1: Ethereum is a Decentralized Consensus Platform](http://youtu.be/fbEtivJIfIU) (Video, 69min)
+> + [Our second Reddit "Ask Me Anything" for community selected questions](http://www.reddit.com/r/IAmA/comments/2bjmgb/hi_we_are_the_ethereum_project_team_ask_us/)
 
 ### Where can I learn more about Ethereum?
 
@@ -138,7 +138,7 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
   + [Ethereum](https://www.youtube.com/user/ethereumproject/videos)
   + [EtherCasts](https://www.youtube.com/user/EtherCasts/videos)
 
-### Where can I learn Serpent?
+### Where can I learn Serpent, the Python-like language?
 
 + Specifications
   + [The Serpent Language](https://github.com/ethereum/wiki/wiki/Serpent)
@@ -149,7 +149,7 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 + Videos
   + [Learn Ethereum with Vitalik](https://www.youtube.com/watch?v=nXYDfLCLmMs)
 
-### Where can I learn LLL?
+### Where can I learn LLL, the Lisp-like language?
 
 + Specifications
   + [The LLL Language](https://github.com/ethereum/cpp-ethereum/wiki/LLL-PoC-6)
@@ -158,7 +158,7 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 + Videos
   + [Programming Society with Asm](https://www.youtube.com/watch?v=xO1AxsYAkU8)
 
-### Where can I learn Mutan?
+### Where can I learn Mutan, the C-like language?
 
 + Specifications
   + [The Mutan Language](https://github.com/ethereum/go-ethereum/wiki/Mutan-0.6)
@@ -167,7 +167,7 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 + Videos
   + [Writing Smart Contracts with Mutan and Go Ethereum](https://www.youtube.com/playlist?list=PLJqWcTqh_zKFQy2LlvkzHR2cEEMTvUWj8)
 
-### Where can I learn Solidity?
+### Where can I learn Solidity, the JavaScript-like language?
 
 + Specifications
   + [Solidity, Docs and ABI](https://github.com/ethereum/cpp-ethereum/wiki/Solidity%2C-Docs-and-ABI)
@@ -216,13 +216,12 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 
 Official
 
-+ [AlethZero GUI Client (C++)](https://github.com/ethereum/cpp-ethereum/wiki/Using-AlethZero)
-+ [Eth Client (C++)](https://github.com/ethereum/cpp-ethereum/wiki/Using-Ethereum-CLI-Client)
++ [AlethZero GUI client (C++)](https://github.com/ethereum/cpp-ethereum/wiki/Using-AlethZero)
++ [Eth command-line client (C++)](https://github.com/ethereum/cpp-ethereum/wiki/Using-Ethereum-CLI-Client)
 + [LLLC Compiler (C++)](https://github.com/ethereum/cpp-ethereum/blob/develop/lllc/main.cpp)
-+ [Ethereum Client (Go)](https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options)
++ [Ethereum command-line client (Go)](https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options)
 + [Mist Browser (Go)](https://github.com/ethereum/go-ethereum)
-+ [Pyeth (Python)](https://github.com/ethereum/pyethereum#interacting-with-the-network)
-+ [PyethClient (Python)](https://github.com/ethereum/pyethereum#running-the-client)
++ [Pyeth command-line client (Python)](https://github.com/ethereum/pyethereum#interacting-with-the-network)
 + [Serpent Compiler (Python)](https://github.com/ethereum/wiki/wiki/Serpent)
 
 Community
