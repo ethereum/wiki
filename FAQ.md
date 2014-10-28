@@ -210,7 +210,7 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 ### Where can I learn about ÐApp development?
 
 + [Your first dapp, under one hour](http://forum.ethereum.org/discussion/1402/how-to-get-started-your-first-dapp-under-one-hour) ([@stephantual](https://github.com/stephantual))
-+ [Sub currency to rainbow coin]([@KapplerKen](http://dappsforbeginners.wordpress.com/2014/10/14/sub-currency-to-rainbow-coin/))
++ [Sub currency to rainbow coin](http://dappsforbeginners.wordpress.com/2014/10/14/sub-currency-to-rainbow-coin/) (Ken Kappler)
 + [Writing Your Own Currency](http://hidskes.com/blog/2014/05/21/ethereum-dapp-development-for-web-developers/) ([@maran](https://github.com/maran))
 
 ### Where can I find ÐApp development tools?
