@@ -39,4 +39,6 @@ Successfully found pre-images are automatically re-inserted into DPA.
 
 ## Routing
 
+It is based on Kademlia's routing.
+
 _to be continued..._
