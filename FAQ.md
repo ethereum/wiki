@@ -204,12 +204,13 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 
 + [The PoC 6 API for C++](https://github.com/ethereum/cpp-ethereum/wiki/Client-Development-with-PoC-6)
 + [The PoC 5 API for Go](https://github.com/ethereum/go-ethereum/wiki/PoC-5-Public-Go-API)
-+ [The PoC 6 API for JavaScript](https://github.com/ethereum/cpp-ethereum/wiki/PoC-6-JS-API)
 + [The PoC 6 API for QML](https://github.com/ethereum/go-ethereum/wiki/QML-PoC6-API)
++ [The PoC 7 API for JavaScript](https://github.com/ethereum/wiki/wiki/JavaScript-API)
 
 ### Where can I learn about ÐApp development?
 
 + [Your first dapp, under one hour](http://forum.ethereum.org/discussion/1402/how-to-get-started-your-first-dapp-under-one-hour) ([@stephantual](https://github.com/stephantual))
++ [Sub currency to rainbow coin]([@KapplerKen](http://dappsforbeginners.wordpress.com/2014/10/14/sub-currency-to-rainbow-coin/))
 + [Writing Your Own Currency](http://hidskes.com/blog/2014/05/21/ethereum-dapp-development-for-web-developers/) ([@maran](https://github.com/maran))
 
 ### Where can I find ÐApp development tools?
