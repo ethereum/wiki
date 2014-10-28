@@ -14,5 +14,5 @@ This is a preliminary wire protocol for the Whisper subsystem. It will change.
 
 ### Session Management
 
-For the Whisper sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the Whisper session is active. The peer with the greatest Node Id should send a **Messages** message to being the message rally. From that point, peers take it in turns to send (possibly empty) Messages packets.
+For the Whisper sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the Whisper session is active. The peer with the greatest Node Id should send a **Messages** message to begin the message rally. From that point, peers take it in turns to send (possibly empty) Messages packets.
 
