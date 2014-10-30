@@ -85,11 +85,13 @@ A provider can be set to the `web3` stack using the `setProvider` method. A `Pro
 
 * `send( payload )` implements the sending mechanism. Payload is in unserialised format. How the data is send (and serialised) is up to the `Provider`'s implementation.
 * `onmessage` the `onmessage` is an attribute and will be set to a default handler. If the `Provider` requires a different receiving mechanism your `onmessage` implementation should take care of this (hint: `Object.defineAttribute`). The default handler, which gets set after called `setProvider`, takes care of deserialising the payload and the associated return-callbacks (or in case of an event the corresponding event callback).
+* `poll( payload, id )` **optional.** Should exists, if manual polling for watches is required (eg. HttpRpcProvider) . Is called with payload and id of watch.
 
 There are currently two default providers which you can use:
 
 * `WebSocketProvider` Generic WebSocket `new WebSocketProvider( "ws://host/eth" )`
 * `QtProvider` Generic Qt provider `new QtProvider()`
+* `HttpRpcProvider` Generic HttpRpcProvider `new HttpRpcProvider("http://localhost:8080")`
 
 These can be found in `web3.providers`.
 
