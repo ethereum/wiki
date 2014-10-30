@@ -32,6 +32,7 @@
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
+- [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/Generic-JSON-RPC)
 
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
