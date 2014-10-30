@@ -1,4 +1,4 @@
-In order to free ethereum implementation developers from the hassle of writing their own JavaScript implementation for browser-to-node communication there's now `ethereum.js`.
+In order to free ethereum implementation developers from the hassle of writing their own JavaScript implementation for browser-to-node communication there's now [ethereum.js](https://github.com/ethereum/ethereum.js).
 
 Ethereum.js provides a full communication bridge between your node (backend) and browser (frontend) given that you **tell** it how _speak_. Communication is done through a `Provider`.
 
