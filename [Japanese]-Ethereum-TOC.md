@@ -4,7 +4,7 @@
 
 [RLP](https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-RLP), Ethereumのデータエンコードに使用される再帰的リニアプレフィックス仕様
 
-[パトリシアツリー](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree) 別名Trieとしても知られるマークルパトリシアツリー仕様 Ethereumにおいてブロックチェインのステートのハッシュを記憶するために使用される構造
+[パトリシアツリー](https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-Patricia-Tree) 別名Trieとしても知られるマークルパトリシアツリー仕様 Ethereumにおいてブロックチェインのステートのハッシュを記憶するために使用される構造
 
 [ワイヤプロトコル](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Wire-Protocol) 仕様
 
