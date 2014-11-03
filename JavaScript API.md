@@ -13,7 +13,7 @@ In each case, they are interpreted as the number 4276803. To convert to or from 
 
 ### web3
 
-**Data Handling**: The `web3` object can be used for general data handling. It contains the following methods:
+**Data Handling**: The `web3` object can be used for general data handling. It contains the following synchronous methods:
 
 * `sha3(_s)`: Returns the SHA3 of the given data.
 * `sha3(_s1, _s2)`: Returns the SHA3 of the given data when concatenated.
