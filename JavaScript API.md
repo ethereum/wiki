@@ -27,7 +27,7 @@ In each case, they are interpreted as the number 4276803. To convert to or from 
 
 ### eth
 
-**Properties**: For each such item, there is also an asynchronous method, taking a parameter of the callback function, itself taking a single parameter of the property's return value and of the same name but prefixed with get and recapitalised, e.g. `getCoinbase(_fn)`.
+**Properties**: All properties getters are asynchronous methods, returning promise 
 
 * `coinbase` Returns the coinbase address of the client.
 * `listening` Returns true if and only if the client is actively listening for network connections.
@@ -38,7 +38,7 @@ In each case, they are interpreted as the number 4276803. To convert to or from 
 * `defaultBlock` The default block number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
 * `number` Returns the number of the most recent block.
 
-**Synchronous Getters**: For each such item, there is also an asynchronous method, taking an additional parameter of the callback function, itself taking a single parameter of the synchronous method's return value and of the same name but prefixed with get and recapitalised, e.g. `getBalanceAt(_a, _fn)`.
+**Methods**: For each such item, promise is returned. Promise is being resolved with single parameter, which is result of the call.
 
 * `balanceAt(_a)` Returns the balance of the account of address given by the address `_a`. For example, `eth.toDecimal(eth.balanceAt('0x1d916bed61249f6c12f3ca8b3f78b8f4cedbe24b'))` will return the balance (in Wei) for that account's address.
 * `stateAt(_a, _s)` Returns the value in storage at position given by the string `_s` of the account of address given by the address `_a`.
@@ -47,7 +47,7 @@ In each case, they are interpreted as the number 4276803. To convert to or from 
 
 The block number you wish to query can be given either as an extra parameter (or age if less than 1: you may use 0 to include pending transactions, use -1 to include only mined transactions &c.), or alternatively, you may use these without the extra parameter, in which case the state at the end of the most recently mined block will be used. This can be altered with the `defaultBlock` property.
 
-**Synchronous Blockchain Getters** Three distinct methods are available for querying the blockchain and retrieving blocks, transactions and uncles. For each such item, there is also an asynchronous method, taking an additional parameter of the callback function, itself taking a single parameter of the synchronous method's return value and of the same name but prefixed with get and recapitalised, e.g. `getBlock(_number)`.
+**Blockchain Getters** Three distinct methods are available for querying the blockchain and retrieving blocks, transactions and uncles. For each such item, promise is returned.
 
 * `block(_number)` Returns the block with number `_number`. Return value is an object with the following keys:
   * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
