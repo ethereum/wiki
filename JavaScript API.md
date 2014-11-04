@@ -114,31 +114,21 @@ The block number you wish to query can be given either as an extra parameter (or
 
 **Watches and Message Filtering** Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of.
 
-* `messages(_filter)`: Returns the list of messages in Ethereum matching the given `_filter`. The filter is an object including fields:
+* `logs(_filter)`: Returns the list of log entries in Ethereum matching the given `_filter`. The filter is an object including fields:
   * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
   * `latest`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
   * `max`: The maximum number of messages to return.
   * `skip`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
-  * `from`: Either an address or a list of addresses to restrict messages by requiring them to be made from a particular account.
-  * `to`: Either an address or a list of addresses to restrict messages by requiring them to be made to a particular account.
-  * `altered`: Either an address, or an address/location object, or a mixed list of such values, to restrict messages by requiring them to have made an alteration, respectively either to an account, a particular contract's storage location, or one of a number of these. An address/location object is an object that contains two fields:
-    * `id`: The address of the contract.
-    * `at`: The location of a point in contract's storage.
-  * Returns a list of past message objects; each includes the following fields:
-    * `from`: The sender address of the message.
-    * `to`: The recipient address of the message (or '' if it was a contract-creation message).
-    * `input`: The input data to the message (the initialisation code if it was a contract-creation message).
-    * `output`: The output data of the message (the body code if it was a contract-creation message).
-    * `value`: The value associated with the message (in Wei, the endowment if it was a contract-creation message). [ C++ : TODO ]
-    * `path`: The call-path of the message. The first entry is the transaction index into the block. The second, if there is one, is the index of the message within the transaction, and so on.
-    * `origin`: The original sender of the transaction.
-    * `timestamp`: The timestamp of the block in which the message takes place.
-    * `coinbase`: The coinbase of the block in which the message takes place.
-    * `block`: The hash of the block in which the message takes place.
-    * `number`: The number of the block in which the message takes place.
-* `watch(_filter)`: Creates a watch object to notify when the state changes in a particular way, given by `_filter`. Filter may be a message filter object, as defined above. It may also be either `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively. Returns a watch object with the following methods:
+  * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
+  * `to`: Either an address or a list of addresses to restrict log entries to those implicit entries made by simple messages transferring funds to one of a set of accounts.
+  * `topic`: A set of values which must each appear in the log entries.
+  * Returns a list of log entries; each includes the following fields:
+    * `address`: The address of the account whose execution of the message resulted in the log entry being made.
+    * `topics`: The topic(s) of the message.
+    * `data`: The associated data of the message.
+* `watch(_filter)`: Creates a watch object to notify when the state changes in a particular way, given by `_filter`. Filter may be a log filter object, as defined above. It may also be either `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively. Returns a watch object with the following methods:
   * `changed(_f)`: Installs a handler, `_f`, which is called when the state changes due to messages that fit `_filter`.
-  * `messages()`: Returns the messages that fit `_filter`.
+  * `logs()`: Returns the log entries that fit `_filter`.
   * `uninstall()`: Uninstalls the watch. Should always be called once it is done with.
 
 **Ethereum Misc** The `eth` object contains an additional method for compilation. This has an asynchronous version in fitting with the getter methods, which is prefixed with do and takes an additional function which is called with the result. e.g. `doLll(_s, _f)`.
