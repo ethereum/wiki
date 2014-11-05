@@ -176,7 +176,7 @@ Note that here we introduced several new features. Particularly:
 
 Another, similar, operation to `create` is `(inset 'filename')`, which simply puts code into a particular place without adding a separate contract.
 
-### Lesson 3: Storage data structures
+### Storage data structures
 
 In more complicated contracts, you will often want to store data structures in storage to represent certain objects. For example, you might have a decentralized exchange contract that stores the balances of users in multiple currencies, as well as open bid and ask orders where each order has a price and a quantity. For this, Serpent has a built-in mechanism for defining your own structures. For example, in such a decentralized exchange contract you might see:
 
@@ -232,14 +232,14 @@ And we can do arrays of tuples:
 
     data bodies[100](head(eyes[2], nose, mouth), arms[2](fingers[5], elbow), legs[2])
 
-    x = bodies[45].head.eyes[1]
-    y = bodies[x].arms[1].fingers[3]
+    x = self.bodies[45].head.eyes[1]
+    y = self.bodies[x].arms[1].fingers[3]
 
 Note that the following is unfortunately not legal:
 
     data body(head(eyes[2], nose, mouth), arms[2], legs[2])
 
-    x = body.head
+    x = self.body.head
     y = x.eyes[0]
 
 Accesses have to descend fully in a single statement. To see how this could be used in a simpler example, let's go back to our name registry, and upgrade it so that when a user registers a key they become the owner of that key, and the owner of a key has the ability to (1) transfer ownership, and (2) change the value. We'll remove the return values here for simplicity.
