@@ -13,17 +13,15 @@ The important differences between Serpent and Python are:
 * There is no way to take a Serpent array and access its length; this sometimes leads to inconveniences like needing to type `return([a,b,c], 3)` instead of Python's `return [a,b,c]`. Future versions may change this specifically in the case of array literals.
 * Serpent has no concept of strings (at this point)
 * Serpent has no list comprehensions (expressions like `[x**2 for x in my_list]`), dictionaries or most other advanced features
-* Serpent has no function definitions or classes. Future versions may add function definitions
-* Serpent has a concept of persistent storage variables
-* Serpent has an `extern` statement used to call functions from other contracts
+* Serpent has no concept of first-class functions. Contracts do have functions, and can call their own functions, but variables (except storage) do not persist across calls.
+* Serpent has a concept of persistent storage variables (see below)
+* Serpent has an `extern` statement used to call functions from other contracts (see below)
 
 ### Installation
 
 In order to install the Serpent python library and executable do:
 
-    pip install ethereum-serpent
-
-[Install the cpp-ethereum cli tools](https://github.com/ethereum/cpp-ethereum/wiki) to run the sc commands in the tutorial
+    sudo pip install ethereum-serpent
 
 If you want a library you can directly call from C++, instead do:
 
@@ -36,62 +34,76 @@ If you want a library you can directly call from C++, instead do:
 
 Now, let's write our first contract. Paste the following into a file called "mul2.se":
 
-    return(msg.data[0] * 2)
+    def double(x):
+         return(x * 2)
 
-This contract is a simple one line of code. The first thing to point out is that Serpent sees message data, memory and output in 32-byte chunks; `msg.data[0]` returns bytes 0-31 of the input, `msg.data[5]` returns bytes 160-191, etc, and `return(202020)` returns the value 202020 encoded in binary form padded to 32 bytes. From now on, these mechanics will be assumed; "the zeroth data field" will be synonymous with "bytes 0-31 of the input" and "returns three values a,b,c" will be synonymous with "returns 96 bytes consisting of the values a, b and c, each padded to 32 bytes".
-
-Note that the Serpent compiler (included in the [cpp-ethereum toolkit](https://github.com/ethereum/cpp-ethereum)) includes some tools to make this conversion convenient; `sc encode_datalist "1 2 3"` gives:
-
-    000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
-
-And `serpent decode_datalist 000..003` gives:
-
-    1 2 3
+This contract is a simple two lines of code, and defines a function. Functions can be called either by transactions or by other contracts, and are the way that Serpent contracts provide an "interface" to other contracts and to transactions; for example, a contract defining a currency might have functions `send(to, value)` and `check_balance(address)`. 
 
 Additionally, the Pyethereum testing environment that we will be using simply assumes that data input and output are in this format.
 
 Now, let's try actually compiling the code. Type:
 
     > serpent compile mul2.se
-    600e51600c6000396000f20060026000350260405460206040f2
+    602380600b600039602e5660003560001a600014156022576020600160203760026020510260405260206040f25b5b6000f2
 
 And there we go, that's the hexadecimal form of the code that you can put into transactions. Or, if you want to see opcodes:
 
     > serpent pretty_compile mul2.se
-    PUSH1 14 DUP PUSH1 12 PUSH1 0 CODECOPY PUSH1 0 RETURN STOP PUSH1 2 PUSH1 0 CALLDATALOAD MUL PUSH1 64 MSTORE PUSH1 32 PUSH1 64 RETURN
+    [PUSH1, 35, DUP1, PUSH1, 11, PUSH1, 0, CODECOPY, PUSH1, 46, JUMP, PUSH1, 0, CALLDATALOAD, PUSH1, 0, BYTE, PUSH1, 0, EQ, ISZERO, PUSH1, 34, JUMPI, PUSH1, 32, PUSH1, 1, PUSH1, 32, CALLDATACOPY, PUSH1, 2, PUSH1, 32, MLOAD, MUL, PUSH1, 64, MSTORE, PUSH1, 32, PUSH1, 64, RETURN, JUMPDEST, JUMPDEST, PUSH1, 0, RETURN]
 
 Alternatively, you can compile to LLL to get an intermediate representation:
 
     > serpent compile_to_lll mul2.se
-    (return 0 
+    (seq 
+      (return 0 
         (lll 
-            (seq 
-                (set '_temp4_1 (mul (calldataload 0) 2))
-                (return (ref '_temp4_1) 32)
+          (seq 
+            (def ('double 'x) 
+              (seq 
+                (set '_temp7_1 (mul (get 'x) 2))
+                (return (ref '_temp7_1) 32)
+              )
             )
-            0
+          )
+          0
         )
+      )
     )
 
-This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. In the innermost layer, we take bytes 0-31 from the input, multiply that value by two, and save it in a temp variable called `_temp4_1`. We then supply the memory address of that variable, and the length 32, to the `RETURN` opcode. Note that, when dealing with message and memory data, LLL deals not with 32-byte chunks but with bytes directly, so the conversion needs to introduce these more low-level mechanics. `msg.data[1]`, for examples, is translated into `(calldataload 32)`, and `msg.data[3]` into `(calldataload 96)`.
+This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. In the innermost layer, we set a variable `'_temp7_1` to equal twice the input, and then supply the memory address of that variable, and the length 32, to the `RETURN` opcode. The `def` mechanism itself is later translated into opcodes that actually unpack the bytes of the transaction data into the variables seen in the LLL.
 
 Now, what if you want to actually run the contract? That is where [pyethereum](https://github.com/ethereum/pyethereum) comes in. Open up a Python console in the same directory, and run:
 
     > from pyethereum import tester as t
     > s = t.state()
     > c = s.contract('mul2.se')
-    > s.send(t.k0, c, 0, [42])
+    > s.send(t.k0, c, 0, funid=0, abi=[42])
     [84]
-    > s.send(t.k0, c, 0, [303030])
+    > s.send(t.k0, c, 0, funid=0, abi=[303030])
     [606060]
 
-The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and sets `c` to its address. The fourth line sends a transaction from private key zero (the `tester` submodule includes ten pre-made key/address pairs at `k0`, `a0`, `k1`, `a1`, etc) to the address of the contract with 0 wei and with data input 42, and we see 84 predictably come out.
+The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and sets `c` to its address. The fourth line sends a transaction from private key zero (the `tester` submodule includes ten pre-made key/address pairs at `k0`, `a0`, `k1`, `a1`, etc) to the address of the contract with 0 wei, calling function 0 (ie. the first function in the contract) with data 42, and we see 84 predictably come out.
 
-And there you go.
+Note that if you want to send a transaction to such a contract in the testnet or livenet, you will need to package up the transaction data for "call function 0 with data 42". The command line instruction for this is:
 
-### Lesson 2: Name Registry
+    > serpent encode_abi 0 42
+    00000000000000000000000000000000000000000000000000000000000000002a
 
-Having a multiply-by-two function on the blockchain is kind of boring. So let's do something marginally more interesting: a name registry. To do this, however, we will need to use a more advanced Serpent feature: functions. Functions are the way that Serpent contracts provide an "interface" to other contracts and to transactions; here, we only need one function, a function to add a key with a value to the registry. If the key is not yet registered, then we will register it and return 1, otherwise we'll return 0. Let's try it out:
+The first byte (ie. two hex characters) always represents the function ID; for example, if we were calling the function with ID 9 in some contract instead, we would do:
+
+    > serpent encode_abi 9 42
+    09000000000000000000000000000000000000000000000000000000000000002a
+
+Then, after that, each argument is packed into 32 bytes. So if we wanted to encode two variables we would do:  
+
+    > serpent encode_abi 9 42 20125
+    09000000000000000000000000000000000000000000000000000000000000002a0000000000000000000000000000000000000000000000000000000000004e9d
+
+Note that there are advanced features in Serpent for making each argument take up less than 32 bytes, but we will ignore these for now.
+
+### Example: Name Registry
+
+Having a multiply-by-two function on the blockchain is kind of boring. So let's do something marginally more interesting: a name registry. The main function will be a `register(key, value)` operation which checks if a given key was already taken, and if is unoccupied then register it with the desired value and return 1; if the key is already occupied return 0. We will also add a second function to check the value associated with a particular key. Let's try it out:
 
     def register(key, value):
         # Key not yet claimed
@@ -99,9 +111,12 @@ Having a multiply-by-two function on the blockchain is kind of boring. So let's 
             self.storage[key] = value
             return(1)
         else:
-            return([0], 1)  # Key already claimed
+            return(0)  # Key already claimed
 
-Here, we see a few parts in action. First, we have the `msg.data` pseudo-array, which can be used to access message input data items. Then, we have `key` and `value`, which are variables that we set. The third line is a comment; it does not get compiled and only serves to remind you what the code does. Then, we have a standard if/else clause, which checks if `self.storage[key]` is zero (ie. unclaimed), and if it is then it sets `self.storage[key] = value` and returns 1. Otherwise, it returns zero (which we expressed as a literal array just to exhibit this other style of returning; it's more cumbersome but lets you do return multiple values). `self.storage` is also a pseudo-array, acting like an array but without any particular memory location.
+    def ask(key):
+        return(self.storage[key])
+
+Here, we see a few parts in action. First, we have the `key` and `value` variables that the function takes as arguments. The third line is a comment; it does not get compiled and only serves to remind you what the code does. Then, we have a standard if/else clause, which checks if `self.storage[key]` is zero (ie. unclaimed), and if it is then it sets `self.storage[key] = value` and returns 1. Otherwise, it returns zero (which we expressed as a literal array just to exhibit this other style of returning; it's more cumbersome but lets you do return multiple values). `self.storage` is also a pseudo-array, acting like an array but without any particular memory location.
 
 Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opcodes or EVM, and let's try it out in the pyethereum tester environment:
 
@@ -114,20 +129,15 @@ Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opc
     [0]
     > s.send(t.k2, c, 0, funid=0, abi=[0x6861727279, 65])
     [1]
+    > s.send(t.k3, c, 0, funid=1, abi=[0x6861727279])
+    [65]
 
-Note that because we are calling a function, we need to use the `funid` and `abi` keywords. `funid` is the index of the function; here, because the contract only has one function, `funid` is set to 0; if the contract had three functions, then calling the first function would require `funid=0`, the second would be `funid=1`, and the third `funid=2`. The `abi` parameter contains the transaction data variables. To create the hex for transaction data, we will use a slightly different function:
+`funid` is the index of the function, in the order in which it appears in the contract; here, 0 is for `register` and 1 is for `ask`. If we wanted to encode the transaction data for that first call, we would do: 
 
     > serpent encode_abi 0 0x67656f726765 45
     00000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d
 
-If we were calling the fifth function in some contract instead, and the arguments to the function were 10000 and 160, we would do:
-
-    > serpent encode_abi 4 10000 160
-    04000000000000000000000000000000000000000000000000000000000000271000000000000000000000000000000000000000000000000000000000000000a0
-
-Note how the function id gets mapped to the first byte of the transaction data, and the arguments get mapped to 32 byte chunks. There is a way to create Serpent functions that take arguments taking up less than 32 bytes, but we will ignore this for now as it is a relatively advanced feature.
-
-### Including files
+### Including files, and calling other contracts
 
 Once your projects become larger, you will not want to put everything into the same file; things become particularly inconvenient when one piece of code needs to create a contract. Fortunately, the process for splitting code into multiple files is quite simple. Make the following two files:
 
@@ -157,7 +167,7 @@ Note that here we introduced several new features. Particularly:
 * The `extern` keyword to declare a class of contract for which we know the names of the functions
 * The interface for calling other contracts
 
-`create` is self-explanatory; it creates a contract and returns the address to the contract. The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. From there, given any variable containing an address, you can do `x.double(arg1, as=mul2)` to call the address stored by that variable. The `as` keyword provides the class that we're using (to determine which function ID `double` corresponds to; there may be another class where `double` corresponds to 7), and the arguments are the values provided to the function. If you provide too few arguments, the rest are filled to zero, and if you provide too many the extra ones are ignored. Function calling also has some other optional arguments:
+`create` is self-explanatory; it creates a contract and returns the address to the contract. The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. From there, given any variable containing an address, you can do `x.double(arg1, as=mul2)` to call the address stored by that variable. The `as` keyword provides the class that we're using (to determine which function ID `double` corresponds to; there may be another class where `double` corresponds to 7). You do have the option of omitting the `as` keyword, but this comes at the peril of ambiguity if you are using two classes that have the same function name. The arguments are the values provided to the function. If you provide too few arguments, the rest are filled to zero, and if you provide too many the extra ones are ignored. Function calling also has some other optional arguments:
 
 * `gas=12414` - call the function with 12414 gas instead of the default (all gas)
 * `value=10^19` - send 10^19 wei (10 ether) along with the message
@@ -211,7 +221,7 @@ Then, we can do arrays, both finite and infinite:
     y = self.blaz[3**160]
     self.blah[125] = x + y
 
-And we can do tuples, where each element of the tuple is itself a valid data structure:
+Note that finite arrays are always preferred, because it will cost less gas to calculate the storage index associated with a finite array index lookup. And we can do tuples, where each element of the tuple is itself a valid data structure:
 
     data body(head(eyes[2], nose, mouth), arms[2], legs[2])
 
@@ -232,7 +242,27 @@ Note that the following is unfortunately not legal:
     x = body.head
     y = x.eyes[0]
 
-Accesses have to descend fully in a single statement.
+Accesses have to descend fully in a single statement. To see how this could be used in a simpler example, let's go back to our name registry, and upgrade it so that when a user registers a key they become the owner of that key, and the owner of a key has the ability to (1) transfer ownership, and (2) change the value. We'll remove the return values here for simplicity.
+
+    data registry[](owner, value)
+
+    def register(key):
+        # Key not yet claimed
+        if not self.registry[key].owner:
+            self.registry[key].owner = msg.sender
+
+    def transfer_ownership(key, new_owner):
+        if self.registry[key].owner == msg.sender:
+            self.registry[key].owner = new_owner
+
+    def set_value(key, new_value):
+        if self.registry[key].owner == msg.sender:
+            self.registry[key].value = new_value
+
+    def ask(key):
+        return([self.registry[key].owner, self.registry[key].value], 2)
+
+Note that in the last ask command, the function returns an array of 2 values. If you wanted to call the registry, you would have needed to do something like `o = registry.ask(key, outsz=2)` and you could have then used `o[0]` and `o[1]` to recover the owner and value. 
 
 ### Miscellaneous
 
@@ -261,3 +291,9 @@ Serpent also gives you access to many "special variables"; the full list is:
 * `block.difficulty` - current block difficulty
 * `block.number` - current block number
 * `block.gaslimit` - current block gaslimit
+
+There are also special commands for a few crypto operations; particularly:
+
+* `addr = ecrecover(h, v, r, s)` - determines the address that produced the elliptic curve signature `v, r, s` of the hash `h`
+* `x = sha256(a, 4)` - returns the sha256 hash of the 128 bytes consisting of the 4-item array starting from `a`
+* `x = ripemd160(a, 4)` - same as above but for ripemd160
