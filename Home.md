@@ -4,6 +4,15 @@ This is the community maintained wiki covering all sorts of information on the n
 
 Users signed in with Github can edit and add pages using the [browser](https://help.github.com/articles/editing-wiki-pages-via-the-online-interface) or [locally](https://help.github.com/articles/adding-and-editing-wiki-pages-locally).
 
+## Status 
+
+### Proof-Of-Concept 6 (stable)
+The latest stable (i.e. the clients are interoperable) release is PoC6. See below for releases.
+
+### Proof-Of-Concept 7 (in development)
+Currently in development, mainly data structure and Virtual Machine improvements. A reorganised opcode set will break old contracts though. A release of clients is scheduled for mid November.
+
+
 ## Getting started
 To get the basic concepts of Ethereum read the [ethereum whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper) or for a more formal review the [ethereum yellow paper](http://gavwood.com/Paper.pdf). See the [ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for quick start to developing smart contracts.
 
