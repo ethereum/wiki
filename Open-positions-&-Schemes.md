@@ -9,9 +9,8 @@ For more information on full time positions, see `TODO: Aeron`.
 If you have been working on an Ethereum/ÐΞV-related project, we would love to hear from you. In addition to helping wherever we can with fixes and advice, for promising non-profit, open-source projects where considerable effort has clearly been invested we would like to invite you to collaborate more closely at one of our holons/hubs. At present there are two operational hubs:
 
 - **ÐΞV Berlin** in Kreuzberg (Berlin), Germany;
+- **ÐΞV Amsterdam** near Museum Plein, Netherlands;
 - **Ethereum Suisse** in Zug (near Zurich), Switzerland.
-
-We hope Amsterdam will also be an option at some point in the future.
 
 Such an invitation will include travel costs, a small stipend for food costs during the time and shared accommodation. You will have full access to the hub resources during your stay and be free to work and relax around other members of the local ÐΞV & Ethereum communities.
 
