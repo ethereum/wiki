@@ -20,5 +20,17 @@ Envelopes are transmitted as RLP-encoded structures. The precise definition is g
 
 A message is formed as the concatenation of a single byte for flags (at present only a single flag is used), followed by any additional data (as stipulated by the flags) and finally the actual payload. This series of bytes is what forms the `data` item of the envelope, however, it may be encrypted. Notably, no explicit indication is given that the data field was encrypted; it is assumed any would-be readers know ahead of time through the choice of topic. Since the signature is a part of the message and not outside in the envelope, those unable to decrypt the message data are also unable to access any signature.
 
+- `flags`: 1 byte
+- (`signature`: 65 bytes)
+- `payload`: not fixed
+
+Bit 0 of the flags determines whether the signature exists. All other bits are not yet given a purpose and must be set to 0. A message is invalid if bit 0 is set but the total data is less than 66 bytes (since this wouldn't allow it to contain a signature).
+
+The signature is formed as the concatenation of the *r*, *s* and *v* parameters, in that order. `v` is non-normalised and should be either 27 or 28. `r` and `s` are both big-endian encoded, fixed-width 32-byte unsigned.
+
+The payload is otherwise unformatted binary data.
+
+
+
 
 
