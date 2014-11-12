@@ -199,18 +199,45 @@ The documentation, would be extracted from the source code ready to sit in a (pr
 
 ```
 {
+  "source": "...",
+  "language": "Solidity",
+  "languageVersion": 1,
   "methods": {
-    "send": "Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of `message.caller.address()`, to an account accessible only by `to.address()`.",
-    "balance": "`(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`."
+    "send": { "user": "Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of `message.caller.address()`, to an account accessible only by `to.address()`." },
+    "balance": { "user": "`(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`." }
   },
   "invariants": [
-    "The sum total amount of GAV in the system is 1 million."
+    { "user": "The sum total amount of GAV in the system is 1 million." }
   ],
   "construction": [
-    "Endows `message.caller.address()` with 1m GAV."
+    { "user": "Endows `message.caller.address()` with 1m GAV." }
   ]
 }
+```
 
+The full documentation format, that includes developer-specific documentation includes several more attributes:
+
+```
+{
+  "author": "Gav Wood",
+  "description": "Some description of this contract.",
+  "methods": {
+    "send": {
+      "title": "Send some GAV.",
+      "details": "..."
+    },
+    "balance": {
+      "title": "Send some GAV.",
+      "details": "..."
+    }
+  },
+  "invariants": [
+    { "title": "...", "details": "Markdown description of the first invariant." }
+  ],
+  "construction": {
+    "details": "Creates the contract with..."
+  }
+}
 ```
 
 This file would be hashed and distributed (either on a centralised website or, more preferably, through Swarm). It would be referenced by the Ethereum Singleton Trust contract in order to allow people or organisations that you know or trust to help inform you of its audit results and trustworth. Of course if you were a coder you could audit it manually (in this case it's pretty trivial) and determine how well the formal documentation matches the code, and also submit newer versions, perhaps in different languages that incorporate changes you feel are required to better descibe its actions & ramifications.
