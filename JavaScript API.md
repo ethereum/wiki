@@ -42,6 +42,7 @@ In each case, they are interpreted as the number 4276803. To convert to or from 
 
 * `balanceAt(_a)` Returns the balance of the account of address given by the address `_a`. For example, `eth.toDecimal(eth.balanceAt('0x1d916bed61249f6c12f3ca8b3f78b8f4cedbe24b'))` will return the balance (in Wei) for that account's address.
 * `stateAt(_a, _s)` Returns the value in storage at position given by the string `_s` of the account of address given by the address `_a`.
+* `storageAt(_a)` Dumps storage as json object.
 * `countAt(_a)` Returns the number of transactions send from the account of address given by `_a`.
 * `codeAt(_a)` Returns true if the account of address given by `_a` is a contract-account.
 
