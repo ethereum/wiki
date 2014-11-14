@@ -56,7 +56,7 @@ Envelopes are transmitted as RLP-encoded structures. The precise definition is g
 
 Here, `ttl` is given in seconds, `expiry` is the Unix time of the intended expiry date/time for the envelope. Following this point in time the envelope should no longer be transmitted (or stored, unless there is some extenuating circumstance). Prior to this point in time less the `ttl` (i.e. the implied insertion time), the envelope is considered utterly invalid and should be dropped immediately and the transmitting peer punished.
 
-`nonce` is an arbitrary value. We say the work proved through the value of the SHA3 of the concatenation of the nonce and the SHA3 of the packet without the nonce, each of the components as a fixed-length 256-bit hash. When this hash is interpreted as a BE-encoded value, the smaller it is, the higher the work proved. This is used later to judge a peer.
+`nonce` is an arbitrary value. We say the work proved through the value of the SHA3 of the concatenation of the nonce and the SHA3 of the RLP of the packet save the nonce (i.e. just a 4-item RLP list), each of the components as a fixed-length 256-bit hash. When this final hash is interpreted as a BE-encoded value, the smaller it is, the higher the work proved. This is used later to judge a peer.
 
 ### Topics
 
@@ -98,8 +98,12 @@ Nodes should retain a set of per-ÐApp topics it is interested in.
 
 To insert a message, little more is needed than to place the envelope containing it in the node's envelope set that it maintains; the node should, according to its normal heuristics retransmit the envelope in due course. Composing an envelope from a message is done though a few steps:
 
-- Set user-given attributes 
-- Set the expiry time as the present time plus the time-to-live.
+- Compose data through concatenating the relevant flag byte, a signature of the payload if necessary, and the user-given payload.
+- Encrypt the data if a access ("destination") identity's public key is given by the user.
+- Compose `topics` from the first 4 bytes of the SHA3 of each topic.
+- Set user-given attribute `ttl`.
+- Set the `expiry` as the present Unix time plus the time-to-live.
+- Set the nonce as that which provides the most work proved as per the previous definition, after some fixed amount of time or after the work-proved passes some watermark boundary; either should be given by the user.
 
 ### Topic Masking and Advertising
 
