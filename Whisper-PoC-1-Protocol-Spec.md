@@ -38,7 +38,7 @@ These settings can even be configured per-peer (most trusted/longer-lasting peer
 
 Through combining and reducing the Blooms/masks, weaker Nth-level information can be provided to peers about their peers' interests, forming a probabilistic topic-reception vortex around nodes, the "topic-space" gravity well getting weaker and less certain the farther away with the network hop distance from any interested peers.
 
-## Basic Protocol Format
+## Basic Protocol Elements
 
 ### Envelopes
 
