@@ -2,11 +2,13 @@ This page, in addition to the Whisper Wire Specification, details the full Whisp
 
 ### What it is
 
-Whisper combines aspects of both DHTs and datagram messaging systems (e.g. UDP). As such it may be likened and compared to both.
+Whisper combines aspects of both DHTs and datagram messaging systems (e.g. UDP). As such it may be likened and compared to both, not dissimilar to the matter/energy duality (apologies to physicists for the blatant abuse of a fundamental and beautiful natural principle).
 
 Whisper is a pure identity-based messaging system. Whisper provides a low-level (non-application-specific) but easily-accessible API without being based upon or prejudiced by the low-level hardware attributes and characteristics, particularly the notion of singular endpoints.
 
 Alternatively, Whisper may be likened to a DHT with a per-entry configurable TTL and conventions for the signing and encryption of values. In this sense, Whisper provides the ability to have multiply-indexable, non-unique entries (i.e. the same entry having multiple keys, some or all of which may be the same as other entries).
+
+As such, Whisper is not a typical communications system. It is not designed to replace or substitute TCP/IP, UDP, HTTP or any other traditional protocols. Whisper is a new protocol designed expressly for a new paradigm of application development. It is designed from the ground up for easy and efficient multi-casting and broadcasting. Similarly, low-level partially-asynchronous communications is an important goal. Spam-reduction or retarding is another goal. It is designed to be a building block in next generation ÐApps which requires large-scale many-to-many discovery and transmission with an absolute minimum of fuss and the expectation that one has a very reasonable assurance of complete privacy.
 
 ### Pitch-Black Darkness
 
@@ -20,7 +22,11 @@ A truly dark system is one utterly uncompromising in information leakage from me
 
 ### Routing and Lack Thereof
 
-Fundamentally, at least with the present state of computer science, all systems present a trade off between the efficiency of a deterministic (and thus supposedly optimal) routing and darkness (or, put another way, routing privacy). Whisper provides a user-configurable trade-off between ones routing privacy and ones routing efficiency.
+Fundamentally, at least with the present state of computer science, all systems present a trade off between the efficiency of a deterministic (and thus supposedly optimal) routing and darkness (or, put another way, routing privacy). One of Whisper's differences is in providing a user-configurable trade-off between ones routing privacy and ones routing efficiency.
+
+At its most dark, Whisper nodes are entirely reactive - they receive and record pieces of data and forward them trying to maximise the utility of information transmission to the peers. These pieces of information include what is known as a *topic*, which may be viewed both as a probcryptographic routing endpoint and/or a DHT multi-key.
+
+However, Whisper is also designed to be able to route probabilistically using two methods, both giving away minimal routing information and both being exceptionally resilient to statistical attacks from large-scale metadata collection.
 
 ### Envelopes
 
@@ -47,7 +53,6 @@ The signature is formed as the concatenation of the *r*, *s* and *v* parameters,
 The payload is otherwise unformatted binary data.
 
 In the Javascript API, the distinction between envelopes and messages is blurred. This is because DApps should know nothing about envelopes whose message cannot be inspected; the fact that nodes pass envelopes around regardless of their ability to decode the message (or indeed their interest in it at all) is an important component in Whisper's dark communications strategy.
-
 
 
 
