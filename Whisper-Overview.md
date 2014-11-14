@@ -1,3 +1,5 @@
+NOTE: this document is now outdated; it exists mainly for helping understand Whisper's origins and design decisions.
+
 ```
 var shh = web3.shh;
 var appName = "My silly app!";
