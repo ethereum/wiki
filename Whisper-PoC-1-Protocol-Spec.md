@@ -76,7 +76,7 @@ In the Javascript API, the distinction between envelopes and messages is blurred
 
 ### Basic Operation
 
-Nodes are expected to receive and send envelopes continuously. They should maintain a map of envelopes, indexed by expiry time, and prune accordingly. They should also efficiently deliver messages to the front-end API through maintaining mappings between topics and envelopes.
+Nodes are expected to receive and send envelopes continuously, as per the [protocol specification](https://github.com/ethereum/wiki/wiki/Whisper-Wire-Protocol). They should maintain a map of envelopes, indexed by expiry time, and prune accordingly. They should also efficiently deliver messages to the front-end API through maintaining mappings between topics and envelopes.
 
 When a node's envelope memory becomes exhausted, nodes may drop envelopes it considers unimportant or unlikely to please its peers. Nodes should always keep messages that its ÐApps have created. Though not in PoC-1, later editions of this protocol may allow ÐApps to mark messages as being "archived" and these should be stored and made available for additional time.
 
