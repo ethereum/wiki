@@ -104,7 +104,7 @@ The block number you wish to query can be given either as an extra parameter (or
     * `value`, the value transferred for the transaction (in Wei), also the endowment if it's a contract-creation transaction;
     * `endowment`, synonym for `value`;
     * `to`, the destination address of the message, left undefined for a contract-creation transaction;
-    * `data`, either a [byte array](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
+    * `data`, either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
     * `code`, a synonym for `data`;
     * `gas`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
     * `gasPrice`, the price of gas for this transaction, defaults to the mean network gasPrice.
