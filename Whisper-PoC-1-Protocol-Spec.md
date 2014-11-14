@@ -66,10 +66,10 @@ Notably, no explicit indication is given that the data field is encrypted; it is
 
 Bit 0 of the flags determines whether the signature exists. All other bits are not yet given a purpose and should be set randomly. A message is invalid if bit 0 is set but the total data is less than 66 bytes (since this wouldn't allow it to contain a signature).
 
-The signature is formed as the concatenation of the *r*, *s* and *v* parameters, in that order. `v` is non-normalised and should be either 27 or 28. `r` and `s` are both big-endian encoded, fixed-width 32-byte unsigned.
+Payloads, if encrypted, are encrypted using ECIES with the accessing-identity's SECP-256k1 public key. The signature, if provided, is the SHA3-256 hash of the unencrypted payload signed using ECDSA with the insertion-identity's secret key.
+
+The signature portion is formed as the concatenation of the *r*, *s* and *v* parameters of the SECP-256k1 ECDSA signature, in that order. `v` is non-normalised and should be either 27 or 28. `r` and `s` are both big-endian encoded, fixed-width 32-byte unsigned.
 
 The payload is otherwise unformatted binary data.
 
 In the Javascript API, the distinction between envelopes and messages is blurred. This is because DApps should know nothing about envelopes whose message cannot be inspected; the fact that nodes pass envelopes around regardless of their ability to decode the message (or indeed their interest in it at all) is an important component in Whisper's dark communications strategy.
-
-Payloads, if encrypted, are encrypted using ECIES with the accessing-identity's SECP-256k1 public key. The signature, if provided, is the SHA3-256 hash of the unencrypted payload signed using ECDSA with the insertion-identity's secret key.
