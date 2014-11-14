@@ -54,6 +54,10 @@ Envelopes are transmitted as RLP-encoded structures. The precise definition is g
 
 [`expiry`: `P`, `ttl`: `P`, [`topic0`: `B_4`, `topic1`: `B_4`, ...], `data`: `B`, `nonce`: `P`]
 
+Here, `ttl` is given in seconds, `expiry` is the Unix time of the intended expiry date/time for the envelope. Following this point in time the envelope should no longer be transmitted (or stored, unless there is some extenuating circumstance). Prior to this point in time less the `ttl` (i.e. the implied insertion time), the envelope is considered utterly invalid and should be dropped immediately and the transmitting peer punished.
+
+`nonce` is an arbitrary value. We say the work proved through the value of the SHA3 of the concatenation of the nonce and the SHA3 of the packet without the nonce, each of the components as a fixed-length 256-bit hash. When this hash is interpreted as a BE-encoded value, the smaller it is, the higher the work proved. This is used later to judge a peer.
+
 ### Topics
 
 Topics are cryptographically secure, probabilistic partial-classification of the message. Each topic in the set (order is unimportant) is determined as the first (left) 4 bytes of the SHA3-256 hash of some arbitrary data given by the original author of the message. These might e.g. correspond to twitter topics or an intended recipient's public key hashed with some session nonce or application-identity.
@@ -84,9 +88,18 @@ In the Javascript API, the distinction between envelopes and messages is blurred
 
 Nodes are expected to receive and send envelopes continuously, as per the [protocol specification](https://github.com/ethereum/wiki/wiki/Whisper-Wire-Protocol). They should maintain a map of envelopes, indexed by expiry time, and prune accordingly. They should also efficiently deliver messages to the front-end API through maintaining mappings between topics and envelopes.
 
-When a node's envelope memory becomes exhausted, nodes may drop envelopes it considers unimportant or unlikely to please its peers. Nodes should always keep messages that its ÐApps have created. Though not in PoC-1, later editions of this protocol may allow ÐApps to mark messages as being "archived" and these should be stored and made available for additional time.
+When a node's envelope memory becomes exhausted, a node may drop envelopes it considers unimportant or unlikely to please its peers. Nodes should consider peers good that pass them envelopes with low TTLs and high proofs-of-work. Nodes should consider peers bad that pass then expired envelopes or, worse, those that have an implied insertion time prior to the present.
+
+Nodes should always keep messages that its ÐApps have created. Though not in PoC-1, later editions of this protocol may allow ÐApps to mark messages as being "archived" and these should be stored and made available for additional time.
 
 Nodes should retain a set of per-ÐApp topics it is interested in.
+
+### Inserting (Authoring) Messages
+
+To insert a message, little more is needed than to place the envelope containing it in the node's envelope set that it maintains; the node should, according to its normal heuristics retransmit the envelope in due course. Composing an envelope from a message is done though a few steps:
+
+- Set user-given attributes 
+- Set the expiry time as the present time plus the time-to-live.
 
 ### Topic Masking and Advertising
 
