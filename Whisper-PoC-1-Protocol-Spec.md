@@ -24,7 +24,7 @@ A truly dark system is one utterly uncompromising in information leakage from me
 
 Fundamentally, at least with the present state of computer science, all systems present a trade off between the efficiency of a deterministic (and thus supposedly optimal) routing and darkness (or, put another way, routing privacy). One of Whisper's differences is in providing a user-configurable trade-off between ones routing privacy and ones routing efficiency.
 
-At its most dark, Whisper nodes are entirely reactive - they receive and record pieces of data and forward them trying to maximise the utility of information transmission to the peers. These pieces of information include what is known as a *topic*, which may be viewed both as a cryptographic routing endpoint and/or a DHT multi-key.
+At its most dark, Whisper nodes are entirely reactive - they receive and record pieces of data and forward them trying to maximise the utility of information transmission to the peers. These pieces of information include what is known as a *topic*, which may be viewed both as a secure-probabilistic routing endpoint and/or a DHT multi-key.
 
 However, Whisper is also designed to be able to route probabilistically using two methods, both giving away minimal routing information and both being exceptionally resilient to statistical attacks from large-scale metadata collection.
 
