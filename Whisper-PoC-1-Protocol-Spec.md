@@ -99,7 +99,7 @@ Nodes should retain a set of per-ÐApp topics it is interested in.
 To insert a message, little more is needed than to place the envelope containing it in the node's envelope set that it maintains; the node should, according to its normal heuristics retransmit the envelope in due course. Composing an envelope from a basic payload, possible identities for authoring and access, a number of topics, a time-to-live and some parameters concerning work-proving targets is done though a few steps:
 
 - Compose `data` through concatenating the relevant flag byte, a signature of the payload if the user specified a valid author identity, and the user-given payload.
-- Encrypt the data if a access ("destination") identity's public key is given by the user.
+- Encrypt the data if an access ("destination") identity's public key is given by the user.
 - Compose `topics` from the first 4 bytes of the SHA3 of each topic.
 - Set user-given attribute `ttl`.
 - Set the `expiry` as the present Unix time plus the time-to-live.
