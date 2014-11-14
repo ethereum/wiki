@@ -30,7 +30,9 @@ However, Whisper is also designed to be able to route probabilistically using tw
 
 The first builds on the functionality of the ÐΞV-p2p backend. This backend provides the ability of Whisper to rate peers and, over time, probabilistically alter (or *steer*) its set of peers to those which tend to deliver useful useful (on-topic, timely, required for ones ÐApps to function) information. Ultimately, as the network evolves and the peer-set is steered, the number of hops between this peer and any others that tend to be good conduits of useful information (be they the emitters or simply the well-positioned hubs) will tend to 0.
 
-The second is more dynamic.
+The second is more dynamic. Nodes are informed by their ÐApps over what sort of topics are useful. Nodes are then allowed to advertise to each peer describing these topics. Topics may be described, using masks or bloom filters, and thus in an incomplete manner, to reduce the amount of information given and make statistical attacks arbitrarily difficult to execute. The determination of the amount of information to give to peers is both determined through topic/traffic modelling (given the information coming from this peer and my models of information distribution made from total traffic, am I receiving the amount of useful valuable information that I would expect to receive? If so, narrowing it down with additional description in the bloom filter may be warranted) and through an explicit setting from the user.
+
+These settings can even be configured per-peer (most trusted/longer-lasting peers) may be afforded greater amounts of information, and per-ÐApp (those ÐApps that may be more sensitive could be afforded less advertising than others). We can also make use of proof-of-work algorithms to minimise the changes of both DoS attacks and 'everything-but' attacks (where a peer is flooded with almost-useful information prompting it to give away more about its true requirements than it would do otherwise).
 
 ### Envelopes
 
