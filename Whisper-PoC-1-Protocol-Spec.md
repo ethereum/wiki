@@ -96,14 +96,14 @@ Nodes should retain a set of per-ÐApp topics it is interested in.
 
 ### Inserting (Authoring) Messages
 
-To insert a message, little more is needed than to place the envelope containing it in the node's envelope set that it maintains; the node should, according to its normal heuristics retransmit the envelope in due course. Composing an envelope from a message is done though a few steps:
+To insert a message, little more is needed than to place the envelope containing it in the node's envelope set that it maintains; the node should, according to its normal heuristics retransmit the envelope in due course. Composing an envelope from a basic payload, possible identities for authoring and access, a number of topics, a time-to-live and some parameters concerning work-proving targets is done though a few steps:
 
-- Compose data through concatenating the relevant flag byte, a signature of the payload if necessary, and the user-given payload.
+- Compose `data` through concatenating the relevant flag byte, a signature of the payload if the user specified a valid author identity, and the user-given payload.
 - Encrypt the data if a access ("destination") identity's public key is given by the user.
 - Compose `topics` from the first 4 bytes of the SHA3 of each topic.
 - Set user-given attribute `ttl`.
 - Set the `expiry` as the present Unix time plus the time-to-live.
-- Set the nonce as that which provides the most work proved as per the previous definition, after some fixed amount of time or after the work-proved passes some watermark boundary; either should be given by the user.
+- Set the `nonce` as that which provides the most work proved as per the previous definition, after some fixed amount of time of cycling through candidates or after a candidate surpasses some boundary; either should be given by the user.
 
 ### Topic Masking and Advertising
 
