@@ -73,3 +73,19 @@ The signature portion is formed as the concatenation of the *r*, *s* and *v* par
 The payload is otherwise unformatted binary data.
 
 In the Javascript API, the distinction between envelopes and messages is blurred. This is because DApps should know nothing about envelopes whose message cannot be inspected; the fact that nodes pass envelopes around regardless of their ability to decode the message (or indeed their interest in it at all) is an important component in Whisper's dark communications strategy.
+
+### Basic Operation
+
+Nodes are expected to receive and send envelopes continuously. They should maintain a map of envelopes, indexed by expiry time, and prune accordingly. They should also efficiently deliver messages to the front-end API through maintaining mappings between topics and envelopes.
+
+When a node's envelope memory becomes exhausted, nodes may drop envelopes it considers unimportant or unlikely to please its peers. Nodes should always keep messages that its ÐApps have created. Though not in PoC-1, later editions of this protocol may allow ÐApps to mark messages as being "archived" and these should be stored and made available for additional time.
+
+Nodes should retain a set of per-ÐApp topics it is interested in.
+
+### Topic Masking and Advertising
+
+For PoC-1, there is no affordance in the protocol for advertising topics to peers. This will be introduced in PoC-2 through either the distribution of a Bloom filter or a mask to peers. This mechanism is not yet finalised.
+
+### Coming changes
+
+Also being considered for is support for plausible deniability through the use of session keys and a formalisation of the multicast mechanism.
