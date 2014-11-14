@@ -8,7 +8,7 @@ Whisper is a pure identity-based messaging system. Whisper provides a low-level 
 
 Alternatively, Whisper may be likened to a DHT with a per-entry configurable TTL and conventions for the signing and encryption of values. In this sense, Whisper provides the ability to have multiply-indexable, non-unique entries (i.e. the same entry having multiple keys, some or all of which may be the same as other entries).
 
-### Pitch-Block Darkness
+### Pitch-Black Darkness
 
 Whisper operates around the notion of being user-configurable with regard to how much information it leaks concerning the ÐApp content and ultimately, the user activities. To understand information leakage, it is important to distinguish between mere encryption and darkness. Many protocols, both those designed around p2p and more traditional client/server models provide a level of encryption. For some, like Tor, encryption forms an intrinsic part of the protocol and delivers its primary requirement. While decentralising and encrypting is a great start on building a truly egalitarian Web Three, it is not the end.
 
