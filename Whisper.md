@@ -20,7 +20,7 @@ In general, think transactions, but without the eventual archival, any necessity
   * Low-latency, 1-1 or 1-N signalling messages.
   * High latency, high TTL 1-* publication messages.
 
-Messages less than 64K bytes, typically not much larger than 1K.
+Messages less than 64K bytes, typically around 256 bytes.
 
 ### Existing solutions
 
