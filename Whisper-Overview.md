@@ -1,4 +1,4 @@
-NOTE: this document is now outdated; it exists mainly for helping understand Whisper's origins and design decisions.
+### Example ("Dream") API Usage
 
 ```
 var shh = web3.shh;
