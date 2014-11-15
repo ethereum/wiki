@@ -9,12 +9,11 @@ We can, however, imagine many more such types of decentralised communications sy
 libp2p (aka ÐΞVp2p) aims to provide a lightweight abstraction layer that provides these low-level algorithms, protocols and services in a transparent framework without predetermining the eventual transmission-use-cases of the protocols.
 
 Its specific aims are to provide a language-agnostic API and specification which is:
-- *Agnostic the p2p dataflow dynamics:* Pairwise addressing (ala Telehash), broadcast (ala Bitcoin), groupwise (some DHT designs & filesharing) are all reasonable. There may be others. It should provide only the network structure, not dictate usage over it.
-- *Secure, even against MitM attacks and clever DPI:* Encryption between physical peers is a given. Peer introduction can provide a good level of defence against systematic MitM attacks.
+- *Universal:* Pairwise addressing (ala Telehash), broadcast (ala Bitcoin), groupwise (some DHT designs & filesharing) are all reasonable. There may be others. It should provide only the network structure, not dictate usage over it.
 - *Ubiquitous:* The same peer-set/-network should be able to be used for all protocols.
-- *Protocol multiplexing:* The same peer-set/-network should be able to be used for all protocols.
-- *Efficient & Configurable:* Framing and prioritisation to guarantee QoS over each protocol. Kademlia-style network well-formedness guarantees a low maximum hope distance to any peer in the network and its group.
-- *Simple:* A minimal, developer-driven API gives future-proofing.
+- *Secure:* Encryption between physical peers is a given. Peer introduction can provide a good level of defence against systematic MitM attacks.
+- *Efficient:* Framing and prioritisation to guarantee QoS over each protocol. Multiplexing allows access to limited resources to be easily controlled between p2p protocols. Kademlia-style network well-formedness guarantees a low maximum hope distance to any peer in the network and its group.
+- *Simple:* A minimal, developer-driven API gives source-level future-proofing.
 
 Ultimately, additional secondary features will also be explored:
 - *DPI security:* Framing and bandwidth control can be used to control traffic shape.
