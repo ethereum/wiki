@@ -1,3 +1,5 @@
+**NOTE:** *This is a work-in-progress*
+
 For Ethereum to succeed, and for the ultimate goals of Ethereum to be achieved, Ethereum needs to employ a number of secure decentralised data systems. The generalised Turing-complete, extensible-state blockchain is one component in this, but for it to be leveraged to its full potential for building decentralised applications (ÐApps), a suite of additional data systems are necessary. Each decentralised-datasystem solves specific needs; in general it is difficult to predict what data systems will ultimately be required since the decentralised paradigm is not immediately comparable, like-for-like with traditional centralised architected systems.
 
 Three types of data systems in particular are required for many current massively multi-user applications (MMAs, aka generally Web-based applications but also mobile phone apps and e.g. MMORPGs). In addition to a transactional database ("Ethereum"), a publication and download system would be required in addition to a generalised low-level "bulletin-board" system for posting messages.
