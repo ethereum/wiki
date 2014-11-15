@@ -63,7 +63,7 @@ shh.post({ "topics": t, "payload": p, "ttl": ttl, "workToProve": work });
 Two other parameters optionally specify the addressing: recipient (`to`), sender (`from`). The latter is meaningless unless a recipient has been specified.
 
 ### Use cases
-- `shh.post({ "topicss": t, "payload": p });` No signature, no encryption: Anonymous broadcast; a bit like an anonymous subject-filtered twitter feed.
+- `shh.post({ "topics": t, "payload": p });` No signature, no encryption: Anonymous broadcast; a bit like an anonymous subject-filtered twitter feed.
 - `shh.post({ "from": myIdentity, "topics": t, "payload": p });` Open signature, no encryption: Clear-signed broadcast; a bit like a normal twitter feed - anyone interested can see a particular identity is sending particular stuff out to no-one in particular.
 - `shh.post({ "to": recipient, "topics": t, "payload": p });` No signature, encryption: Encrypted anonymous message; a bit like an anonymous drop-box - message is private to the owner of the dropbox. They can't tell from whom it is.
 - `shh.post({ "from": myIdentity, "to": recipient, "topics": t, "payload": p });` Secret signature, encryption: Encrypted signed message; like a secure e-mail. One identity tells another something - nobody else can read it. The recipient alone knows it came from the sender.
@@ -104,27 +104,3 @@ In normal operation (and assuming a non-degenerate attack condition), there is a
 For a securely anonymous dynamic two-way conversation, this trade-off becomes problematic; significant topic-advertising would be necessary for the point-to-point conversation to happen with sensible latency and yet so little about the topic can be advertised to guide messages home without revealing substantial information should there be adversary peers around an endpoint. (If substantial numbers of adversary peers surround both endpoints, a tunnelling system similar to TOR must be used to guarantee security.)
 
 In this situation, dynamic topic generation would be used. This effectively turns the datagram-orientated channel into a connection-oriented channel. The endpoint to begin the conversation sends a point-to-point (i.e. signed and encrypted) conversation-begin message that contains a randomly chosen 256-bit topic seed. The seed is combined (by both endpoints) with a message nonce (beginning at 0 and incrementing over the course of the conversation) to provide a secure chain of single-use topics. It then generates a bloom filter using randomly selected bits from the new topic to match against and gives the filter to its peers; once a randomly selected minimum of messages fitting this filter have been collected (we assume one of these is the message we are interested in), we send our reply, deriving a new topic (incrementing the nonce), then advertise for that with yet another topic (another nonce increment) with another randomly selected group of bits.
-
-### Wire Protocol
-
-Messages are formed by the RLP from a number of attributes:
-```
-[
-  timestamp: u32,
-  ttl: u32,
-  sig: h520,
-  topic: h256,
-  payload: bytes,
-  nonce: h256
-]
-```
-
-The `sig` is a single 520-bit hash that forms the signature from the concatenation of the triplet `r` and `s` (256 bits each) and `v` (8 bits). The reason for concatenating is to avoid passing composite types around for a single conceptual noun and thus provide a cleaner upgrade path should the nature of the signature change. 
-
-Messages are forwarded favouring several attributes:
-- The magnitude of the hash of the `nonce ++ SHA3(packet without nonce)`, where `++` is the concatenation operator and each of the operands is a fixed-length 256-bit hash. When this hash is interpreted as a BE-encoded value: the smaller, the higher the priority.
-- The TTL: the smaller, the higher the priority.
-- The size of the payload: the smaller, the higher the priority.
-- If the signature is clear, then according to the magnitude of the address (interpreted as a big-endian encoded value): the smaller, the higher the priority.
-
-Any messages that arrive with a `timestamp` after the present time are immediately discarded. Any messages whose `timestamp + ttl` is before the present time are also discarded.
