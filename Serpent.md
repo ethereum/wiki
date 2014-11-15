@@ -273,7 +273,7 @@ The three other useful features in the tester environment are:
 * Block access - you can dig around `s.block` to see block data (eg. `s.block.number`, `s.block.get_balance(addr)`, `s.block.get_storage_data(addr, index)`)
 * Snapshots - you can do `x = s.snapshot()` and `s.revert(x)`
 * Advancing blocks - you can do `s.mine(100)` and 100 blocks magically pass by with a 60-second interval between blocks. `s.mine(100, addr)` mines into a particular address.
-* Full block data dump - type `s.to_dict()`
+* Full block data dump - type `s.block.to_dict()`
 
 Serpent also gives you access to many "special variables"; the full list is:
 
