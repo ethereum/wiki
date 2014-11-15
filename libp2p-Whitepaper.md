@@ -19,5 +19,4 @@ Its specific aims are to provide a language-agnostic API and specification which
 
 Ultimately, additional secondary features will also be explored:
 - *DPI security:* Framing and bandwidth control can be used to control traffic shape.
-- *Agnosticism over the p2p transport-layer:* TCP/IP v4 and v6 are provided with initial protocol specifications. Others should be able to be added on at later dates without altering the API.
-
+- *Transport-layer Agnostic:* TCP/IP v4 and v6 are provided with initial protocol specifications. Others should be able to be added on at later dates without altering the API. Mesh networking devices should ultimately include this as a basic protocol, under even TCP/IP.
