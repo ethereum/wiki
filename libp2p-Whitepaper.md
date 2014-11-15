@@ -20,3 +20,15 @@ Its specific aims are to provide a language-agnostic API and specification which
 Ultimately, additional secondary features will also be explored:
 - *DPI security:* Framing and bandwidth control can be used to control traffic shape.
 - *Transport-layer Agnostic:* TCP/IP v4 and v6 are provided with initial protocol specifications. Others should be able to be added on at later dates without altering the API. Mesh networking devices could even ultimately implement this natively.
+
+### Basic Design
+
+- Peers can each be identified by a node-ID.
+- Provides ability *only* to communicate with peers.
+- Everything happens in datagrams.
+- Any number of datagram types can be registered - these are automatically negotiated at the handshake.
+- Peers can be requested via a libp2p physical endpoint.
+- Peers can be rated per-protocol.
+- Peer set is dynamic and "steered" by libp2p internally going from ratings.
+
+There is no preordained inter-node message routing system (this is left to a higher-level), and no preordained identity system.
