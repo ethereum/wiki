@@ -25,10 +25,11 @@ Ultimately, additional secondary features will also be explored:
 
 - Peers can each be identified by a node-ID.
 - Provides ability *only* to communicate with peers.
-- Everything happens in datagrams.
+- Everything happens in typed, ordered datagrams.
 - Any number of datagram types can be registered - these are automatically negotiated at the handshake.
 - Peers can be requested via a libp2p physical endpoint.
-- Peers can be rated per-protocol.
-- Peer set is dynamic and "steered" by libp2p internally going from ratings.
+- Peers can be rated per-protocol using a local metric.
+- Peer set is dynamic and "steered" by libp2p internally, going from ratings.
+- First packets are either DH key exchange or, if node known from peer introduction, PKI-encrypted session key, or if node known from previous session, new session key encrypted by old. Retry can be made after failed negotiation using prior knowledge, with the corresponding removal of any trust.
 
-There is no preordained inter-node message routing system (this is left to a higher-level), and no preordained identity system.
+There is no preordained inter-node message routing system (this is left to a higher-level), and no preordained high-level identity system (again, higher level).
