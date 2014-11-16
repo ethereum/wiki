@@ -31,5 +31,7 @@ Ultimately, additional secondary features will also be explored:
 - Peers can be rated per-protocol using a local metric.
 - Peer set is dynamic and "steered" by libp2p internally, going from ratings.
 - First packets are either DH key exchange or, if node known from peer introduction, PKI-encrypted session key, or if node known from previous session, new session key encrypted by old. Retry can be made after failed negotiation using prior knowledge, with the corresponding removal of any trust.
+- Peer-set is made up from multiple sub-protocol slots.
+- Each slot is given over to maximise rating for that particular sub-protocol.
 
 There is no preordained inter-node message routing system (this is left to a higher-level), and no preordained high-level identity system (again, higher level).
