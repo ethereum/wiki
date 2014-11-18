@@ -1,6 +1,6 @@
 ###Current Status 
 
-We are in the last days of preparing the POC-7 release. It scheduled to ship on 21th of November. Latest stable release is Po6, testnet is reachable here, chainexplorer here. Release of PoC8 is expected to be on christmas. Alpha releases are expected for mid January 2015. Release of the genesis is scheduled for March 2015.
+We are in the last days of preparing the POC-7 release. It is scheduled to ship on 21th of November. Latest stable release is Po6, testnet is reachable here, chain explorer here. Release of PoC8 is expected to be on christmas. Alpha releases are expected for mid January 2015. Release of the genesis is scheduled for March 2015.
 
 ### Protocol
 * Version update to eth:34
