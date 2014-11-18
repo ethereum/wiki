@@ -113,7 +113,7 @@ The block number you wish to query can be given either as an extra parameter (or
   * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
   * `_fn`, the callback function, called on completion of the message call. A single argument is passed equal to the output data of the message call.
 
-**Watches and Message Filtering** Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of.
+**Watches and Log Filtering** Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of.
 
 * `logs(_filter)`: Returns the list of log entries in Ethereum matching the given `_filter`. The filter is an object including fields:
   * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
@@ -121,7 +121,6 @@ The block number you wish to query can be given either as an extra parameter (or
   * `max`: The maximum number of messages to return.
   * `skip`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
   * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
-  * `to`: Either an address or a list of addresses to restrict log entries to those implicit entries made by simple messages transferring funds to one of a set of accounts.
   * `topic`: A set of values which must each appear in the log entries.
   * Returns a list of log entries; each includes the following fields:
     * `address`: The address of the account whose execution of the message resulted in the log entry being made.
