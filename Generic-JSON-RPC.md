@@ -24,7 +24,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * `coinbase`
 * `listening`
 * `mining`
-* `peerCount` ???
+* `peerCount`
 * `newFilter( parameters_or_type : Variadic )` **Note**: Registers a new filter. Expects a return call with an unique ID specifying the new filter. In any subsequent queries that reference this filter, this same ID is used to identify the filter on the remote backend. It's up to the implementors to implement this look-up method as they see fit on the remote backend (see [[events](#events)]).
 * `messages( id : Integer )`
 * `uninstallFilter( id : Integer )`
