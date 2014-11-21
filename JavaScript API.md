@@ -38,26 +38,26 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [serpent](#web3ethserpent) *(_object)*
     * [logs](#web3ethlogs) *(_object/_string)*
     * [watch](#web3ethwatch) *(_object/_string)*
-      * [arrived (_callback)](#eth_arrived)
-      * [changed (_callback)](#eth_changed)
-      * [logs (_callback)](#eth_logs)
-      * [uninstall (_callback)](#eth_uninstall)
-  * [db](#db)
-    * [put (_name, _key, _value)](#put)
-    * [putString (__name, _key, _value)](#putString)
-    * [get (_name, _key)](#get)
-    * [getString (_name, _key)](#getString)
+      * [arrived](#) *(_callback)*
+      * [changed](#) *(_callback)*
+      * [logs](#) *(_callback)*
+      * [uninstall](#) *(_callback)*
+  * [db](#web3db)
+    * [put](#web3dbput) *(_name, _key, _value)*
+    * [putString](#web3dbputstring) *(__name, _key, _value)*
+    * [get](#web3dbget) *(_name, _key)*
+    * [getString](#web3dbgetstring) *(_name, _key)*
   * [shh](#shh)
-    * [post (_object)](#post)
-    * [newIdentity ()](#newIdentity)
-    * [haveIdentity (_string)](#haveIdentity)
-    * [newGroup (_id, _who)](#newGroup)
-    * [addToGroup (_group, _who)](#addToGroup)
-    * [watch (_object/_string)](#shh_watch)
-      * [arrived (_callback)](#shh_arrived)
-      * [changed (_callback)](#shh_changed)
-      * [messages (_callback)](#shh_messages)
-      * [uninstall (_callback)](#shh_uninstall)
+    * [post](#web3shhpost) *(_object)*
+    * [newIdentity](#web3shhnewIdentity) *()*
+    * [haveIdentity](#web3shhhaveIdentity) *(_string)*
+    * [newGroup](#web3shhnewGroup) *(_id, _who)*
+    * [addToGroup](#addToGroup) *(_group, _who)*
+    * [watch](#shh_watch) *(_object/_string)*
+      * [arrived](#) *(_callback)*
+      * [changed](#) *(_callback)*
+      * [messages](#) *(_callback)*
+      * [uninstall](#) *(_callback)*
 
 # Parameters
 
