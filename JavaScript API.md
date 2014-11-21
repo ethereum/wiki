@@ -145,7 +145,7 @@ web3.eth.listening.then(function (result) {
 });
 ```
 
-#####mining
+#####web3.eth.mining
 Returns true if and only if the client is actively mining new blocks.
 ```javascript
 web3.eth.mining.then(function (result) {
@@ -154,7 +154,7 @@ web3.eth.mining.then(function (result) {
 });
 ```
 
-#####gasPrice
+#####web3.eth.gasPrice
 Returns the special 256-bit number equal to the hard-coded testnet price of gas.
 ```javascript
 web3.eth.gasPrice.then(function (result) {
@@ -163,10 +163,41 @@ web3.eth.gasPrice.then(function (result) {
 });
 ```
 
-* `accounts` Returns the special key-pair list object corresponding to the address of each of the accounts owned by the client that this ÐApp has access to.
-* `peerCount` Returns the number of peers currently connected to the client.
-* `defaultBlock` The default block number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
-* `number` Returns the number of the most recent block.
+#####web3.eth.accounts
+Returns the special key-pair list object corresponding to the address of each of the accounts owned by the client that this ÐApp has access to.
+```javascript
+web3.eth.accounts.then(function (result) {
+    var accounts = result;
+    console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
+});
+```
+
+#####web3.eth.peerCount
+Returns the number of peers currently connected to the client.
+```javascript
+web3.eth.peerCount.then(function (result) {
+    var peerCount = result;
+    console.log(peerCount); // 4
+});
+```
+
+#####web3.eth.defaultBlock
+The default block number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
+```javascript
+web3.eth.peerCount.then(function (result) {
+    var peerCount = result;
+    console.log(peerCount); // 4
+});
+```
+
+#####web3.eth.number
+Returns the number of the most recent block.
+```javascript
+web3.eth.number.then(function (result) {
+    var number = result;
+    console.log(number); // 2744
+});
+```
 
 **Methods**: For each such item, promise is returned. Promise is being resolved with single parameter, which is result of the call.
 
