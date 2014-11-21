@@ -1,8 +1,38 @@
+# Introduction
+
 To make your ÐApp work with on Ethereum, you'll need to know about the Ethereum Javascript bindings, or, if you like, magic Javascript objects. These bindings may be used with AlethZero, Mist and external browser. These bindings can be found at [ethereum.js](https://github.com/ethereum/ethereum.js) repository.
 
 There is, at the global scope, one objects; the `web3` object, containing data handling functions (commonly used for all other APIs). This object also contains other subprotocol objects including the `eth` object - `web3.eth` (for specifically Ethereum interaction) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
-### Parameters
+# API
+
+* [web3](#web3)
+  * [eth](#eth)
+    * [coinbase](#coinbase)
+    * [listening](#listening)
+    * [mining](#mining)
+    * [gasPrice](#gasPrice)
+    * [accounts](#accounts)
+    * [peerCount](#peerCount)
+    * [defaultBlock](#defaultBlock)
+    * [number](#number)
+    * [balanceAt (_address)](#balanceAt)
+    * [stateAt (_address, _storage)](#stateAt)
+    * [storageAt (_address)](#storageAt)
+    * [countAt (_address)](#countAt)
+    * [codeAt (_address)](#codeAt)
+    * [transact (_object)](#transact)
+    * [block (_hash/_number)](#block)
+    * [transaction (_object, _number)](#transaction)
+    * [uncle (_hash/number)](#uncle)
+    * [compilers ()](#compilers)
+    * [lll (_string)](#lll)
+    * [solidity (_object)](#solidity)
+    * [serpent (_object)](#serpent)
+  * [db](#db)
+  * [shh](#shh)
+
+# Parameters
 
 Parameters are always data represented as hex, prefixed with an `0x`. There's automatic conversion from decimal strings to the hex representation (interpreted as a big-endian as is standard for Ethereum). So, the following two forms are identically interpreted:
 
@@ -10,21 +40,6 @@ Parameters are always data represented as hex, prefixed with an `0x`. There's au
 * `"4276803"`
 
 In each case, they are interpreted as the number 4276803. To convert to or from other datatypes, there are a number of conversion functions, detailed later.
-
-### API
-
-* [web3](#web3)
-  * eth
-    * coinbase
-    * listening
-    * mining
-    * gasPrice
-    * accounts
-    * peerCount
-
-  * db
-  * shh
-
 
 ### web3
 
