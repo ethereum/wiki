@@ -68,6 +68,8 @@ Parameters are always data represented as hex, prefixed with an `0x`. There's au
 
 In each case, they are interpreted as the number 4276803. To convert to or from other datatypes, there are a number of conversion functions, detailed later.
 
+# Examples
+
 ##### web3
 The `web3` object can be used for general data handling.
 ```javascript
@@ -225,10 +227,24 @@ web3.eth.storageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (
     console.log(storage); // { "0x" : "0x03" }
 });
 ```
-* `countAt(_a)` Returns the number of transactions send from the account of address given by `_a`.
-* `codeAt(_a)` Returns true if the account of address given by `_a` is a contract-account.
 
-The block number you wish to query can be given either as an extra parameter (or age if less than 1: you may use 0 to include pending transactions, use -1 to include only mined transactions &c.), or alternatively, you may use these without the extra parameter, in which case the state at the end of the most recently mined block will be used. This can be altered with the `defaultBlock` property.
+#####web3.eth.countAt
+Returns the number of transactions send from the account of address given by `_a`.
+```javascript
+web3.eth.countAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (result) {
+    var number = result;
+    console.log(number); // 1
+});
+```
+
+#####web3.eth.codeAt
+Returns true if the account of address given by `_a` is a contract-account.
+```javascript
+web3.eth.codeAt("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8").then(function (result) {
+    var code = result;
+    console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
+});
+```
 
 **Blockchain Getters** Three distinct methods are available for querying the blockchain and retrieving blocks, transactions and uncles. For each such item, promise is returned.
 
