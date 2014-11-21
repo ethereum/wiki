@@ -61,15 +61,36 @@ Parameters are always data represented as hex, prefixed with an `0x`. There's au
 
 In each case, they are interpreted as the number 4276803. To convert to or from other datatypes, there are a number of conversion functions, detailed later.
 
-### web3
+##### web3
+The `web3` object can be used for general data handling.
+```javascript
+var web3 = require('web3')
+```
 
-**Data Handling**: The `web3` object can be used for general data handling. It contains the following synchronous methods:
+##### web3.sha3
+Returns the SHA3 of the given data.
+```javascript
+(_s), (_s1, _s2), (_s1, _s2, _s3)
+TODO
+```
 
-* `sha3(_s)`: Returns the SHA3 of the given data.
-* `sha3(_s1, _s2)`: Returns the SHA3 of the given data when concatenated.
-* `sha3(_s1, _s2, _s3)`: Returns the SHA3 of the given data when concatenated.
-* `toAscii(_s)`: Returns an ASCII string made from the data `_s`.
-* `fromAscii(_s, _padding = 32)`: Returns data of the ASCII string `_s`, auto-padded to `_padding` bytes (default to 32) and left-aligned.
+##### web3.toAscii
+Returns an ASCII string made from the data `_s`.
+```javascript
+var str = web3.toAscii("0x657468657265756d000000000000000000000000000000000000000000000000");
+console.log(str); // ethereum
+```
+
+
+##### web3.fromAscii
+Returns data of the ASCII string `_s`, auto-padded to `_padding` bytes (default to 32) and left-aligned.
+```javascript
+var str = web3.fromAscii('ethereum');
+var str2 = web3.fromAscii('ethereum', 32);
+console.log(str); // "0x657468657265756d000000000000000000000000000000000000000000000000"
+console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000000000000"
+```
+
 * `toDecimal(_s)`: Returns the decimal string representing the data `_s` (when interpreted as a big-endian integer).
 * `toFixed(_s)`: Returns the floating-point number representing the data `_s` (when interpreted as a fixed-point value divided by 2^128).
 * `fromFixed(_s)`: Returns data representing the floating-point number `_s` (when interpreted as a fixed-point value divided by 2^128).
