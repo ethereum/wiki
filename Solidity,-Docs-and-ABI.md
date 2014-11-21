@@ -65,7 +65,7 @@ The purpose of the ABI is twofold:
 
 ### ABI
 
-See [Ethereum Contract ABI].
+See [Ethereum Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI).
 
 ### Documentation
 
