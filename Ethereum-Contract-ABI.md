@@ -1,4 +1,10 @@
-### ABI specifics
+### Basic design
+
+We assume the ABI is strongly typed, known at compilation time and static. No introspection mechanism will be provided. We assert that all contracts will have the interface definitions of any contracts they call available at compile-time.
+
+This specification does not address contracts whose interface is dynamic or otherwise known only at run-time. Should these cases become important they can be adequately handled as facilities built within the Ethereum ecosystem.
+
+### Specifics
 
 The data input is encoded as:
 
