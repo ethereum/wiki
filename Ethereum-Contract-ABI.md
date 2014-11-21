@@ -9,12 +9,12 @@ This specification does not address contracts whose interface is dynamic or othe
 The data input is encoded as:
 
 * 1 byte *Method ID*; the 0-based index of the alphabetically ordered list of methods of the contract.
-* 2-byte Big Endian parameter count for each arbitrary-sized parameter.
+* X-byte Big Endian parameter count for each arbitrary-sized parameter.
 * Multiple N-byte *Parameter*; dependent on the specific parameter series.
 
 The data output is encoded in much the same way but without the Method ID.
 
-All variable-width parameters have their 2-byte item-count front-loaded in the data input.
+All variable-width parameters have their X-byte item-count front-loaded in the data input. When ORIGIN is equal to CALLER (i.e. for a straight transaction rather than a bare message call), X equals 2, otherwise X equals 32.
 
 Parameters are encoded as their full binary (and in the case of integral types, big-endian) representation. Integral types are allowed to be of arbitrary byte size up to 256-bits. Hash (or short unformatted data) types are again allowed to be of similar size. Bools are encoded as a simple byte. Enumerations are encoded as their shortest integral representation possible.
 
@@ -36,7 +36,7 @@ There are also several variable-length types:
 - `string`: dynamic sized string (up to 65536 bytes). Assumed to be UTF-8 encoded.
 - `<type>[]`: a variable-length array of the given fixed-length type.
 
-For these variable length (or specifically, variable-count) types, we concatenate them (2-bytes each) and place them at the beginning of the data input, directly after the *Method ID*.
+For these variable length (or specifically, variable-count) types, we concatenate them (X-bytes each) and place them at the beginning of the data input, directly after the *Method ID*.
 
 Thus for our `Foo` example if we wanted to call `baz` with the parameters 69 and true, we would pass 6 bytes total `0x010000004501`, which can be broken down into:
 
