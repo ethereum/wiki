@@ -30,7 +30,16 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [solidity (_object)](#solidity)
     * [serpent (_object)](#serpent)
   * [db](#db)
+    * [put (_name, _key, _value)](#put)
+    * [putString (__name, _key, _value)](#putString)
+    * [get (_name, _key)](#get)
+    * [getString (_name, _key)](#getString)
   * [shh](#shh)
+    * [post (_object)](#post)
+    * [newIdentity ()](#newIdentity)
+    * [haveIdentity (_string)](#haveIdentity)
+    * [newGroup (_id, _who)](#newGroup)
+    * [addToGroup (_group, _who)](#addToGroup)
 
 # Parameters
 
