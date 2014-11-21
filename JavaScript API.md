@@ -7,7 +7,13 @@ There is, at the global scope, one objects; the `web3` object, containing data h
 # API
 
 * [web3](#web3)
-  * [sha3](#web3.sha3) *(_s1, [_s2], [_s3])*
+  * [sha3](#web3sha3) *(_s1, [_s2], [_s3])*
+  * [toAscii](#web3toAscii) *(_s)*
+  * [fromAscii](#web3fromAscii) *(_s, [_padding])*
+  * [toDecimal](#web3toDecimal) *(_s)*
+  * [toFixed](#web3toFixed) *(_s)*
+  * [fromFixed](#web3fromFixed) *(_s)*
+  * [offset](#web3offset) *(_s, _o)*
   * [eth](#eth)
     * [coinbase](#coinbase)
     * [listening](#listening)
