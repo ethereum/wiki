@@ -320,7 +320,8 @@ Returns the uncle number `_i` from block with number `_number`. Return value is 
 // TODO (_number, _i), (_hash, _i)
 ```
 
-* `transact(_params, _fn)` Creates a new message-call transaction.
+#####web3.eth.transact
+Creates a new message-call transaction.
   * `_params`, an anonymous object specifying the parameters of the transaction.
     * `from`, the address for the sending account;
     * `value`, the value transferred for the transaction (in Wei), also the endowment if it's a contract-creation transaction;
@@ -331,9 +332,17 @@ Returns the uncle number `_i` from block with number `_number`. Return value is 
     * `gas`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
     * `gasPrice`, the price of gas for this transaction, defaults to the mean network gasPrice.
   * `_fn`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
-* `call(_params, _fn)` Executes a new message-call immediately without creating a transaction on the block chain.
+```javascript
+// TODO
+```
+
+#####web3.eth.call
+Executes a new message-call immediately without creating a transaction on the block chain.
   * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
   * `_fn`, the callback function, called on completion of the message call. A single argument is passed equal to the output data of the message call.
+```javascript
+// TODO
+```
 
 #####web3.eth.logs
 Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of. Returns the list of log entries in Ethereum matching the given `_filter`. The filter is an object including fields:
