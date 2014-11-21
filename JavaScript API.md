@@ -23,13 +23,13 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [peerCount](#web3ethpeerCount)
     * [defaultBlock](#web3ethdefaultBlock)
     * [number](#web3ethnumber)
-    * [balanceAt (_address)](#web3ethbalanceAt)
-    * [stateAt (_address, _storage)](#web3ethstateAt)
-    * [storageAt (_address)](#web3ethstorageAt)
-    * [countAt (_address)](#countAt)
-    * [codeAt (_address)](#codeAt)
-    * [transact (_object)](#transact)
-    * [block (_hash/_number)](#block)
+    * [balanceAt](#web3ethbalanceAt) *(_address)*
+    * [stateAt](#web3ethstateAt) *(_address, _storage)*
+    * [storageAt](#web3ethstorageAt) *(_address)*
+    * [countAt](#web3ethcountAt) *(_address)*
+    * [codeAt](#web3ethcodeAt) *(_address)*
+    * [transact](#web3ethtransact) *(_object)*
+    * [block](#web3ethblock) *(_hash/_number)*
     * [transaction (_object, _number)](#transaction)
     * [uncle (_hash/number)](#uncle)
     * [compilers ()](#compilers)
@@ -199,11 +199,32 @@ web3.eth.number.then(function (result) {
 });
 ```
 
-**Methods**: For each such item, promise is returned. Promise is being resolved with single parameter, which is result of the call.
+#####web3.eth.balanceAt(_a)
+Returns the balance of the account of address given by the address `_a`
+```javascript
+web3.eth.balanceAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (result) {
+    var balance = result;
+    console.log(balance); // "0x32884442997a37a000"
+});
+```
 
-* `balanceAt(_a)` Returns the balance of the account of address given by the address `_a`. For example, `eth.toDecimal(eth.balanceAt('0x1d916bed61249f6c12f3ca8b3f78b8f4cedbe24b'))` will return the balance (in Wei) for that account's address.
-* `stateAt(_a, _s)` Returns the value in storage at position given by the string `_s` of the account of address given by the address `_a`.
-* `storageAt(_a)` Dumps storage as json object.
+#####web3.eth.stateAt(_a, _s)
+Returns the value in storage at position given by the string `_s` of the account of address given by the address `_a`.
+```javascript
+web3.eth.stateAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0).then(function (result) {
+    var state = result;
+    console.log(state); // "0x03"
+});
+```
+
+#####web3.eth.storageAt(_a)
+Dumps storage as json object.
+```javascript
+web3.eth.storageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (result) {
+    var storage = result;
+    console.log(storage); // { "0x" : "0x03" }
+});
+```
 * `countAt(_a)` Returns the number of transactions send from the account of address given by `_a`.
 * `codeAt(_a)` Returns true if the account of address given by `_a` is a contract-account.
 
