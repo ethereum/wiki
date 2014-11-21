@@ -18,16 +18,16 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [coinbase](#web3ethcoinbase)
     * [listening](#web3ethlistening)
     * [mining](#web3ethmining)
-    * [gasPrice](#web3ethgasPrice)
+    * [gasPrice](#web3ethgasprice)
     * [accounts](#web3ethaccounts)
-    * [peerCount](#web3ethpeerCount)
-    * [defaultBlock](#web3ethdefaultBlock)
+    * [peerCount](#web3ethpeercount)
+    * [defaultBlock](#web3ethdefaultblock)
     * [number](#web3ethnumber)
-    * [balanceAt](#web3ethbalanceAt) *(_address)*
-    * [stateAt](#web3ethstateAt) *(_address, _storage)*
-    * [storageAt](#web3ethstorageAt) *(_address)*
-    * [countAt](#web3ethcountAt) *(_address)*
-    * [codeAt](#web3ethcodeAt) *(_address)*
+    * [balanceAt](#web3ethbalanceat) *(_address)*
+    * [stateAt](#web3ethstateat) *(_address, _storage)*
+    * [storageAt](#web3ethstorageat) *(_address)*
+    * [countAt](#web3ethcountat) *(_address)*
+    * [codeAt](#web3ethcodeat) *(_address)*
     * [transact](#web3ethtransact) *(_object)*
     * [block](#web3ethblock) *(_hash/_number)*
     * [transaction (_object, _number)](#transaction)
