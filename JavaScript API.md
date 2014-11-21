@@ -68,7 +68,7 @@ Parameters are always data represented as hex, prefixed with an `0x`. There's au
 
 In each case, they are interpreted as the number 4276803. To convert to or from other datatypes, there are a number of conversion functions, detailed later.
 
-# Examples
+# Usage
 
 ##### web3
 The `web3` object can be used for general data handling.
@@ -335,9 +335,8 @@ Returns the uncle number `_i` from block with number `_number`. Return value is 
   * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
   * `_fn`, the callback function, called on completion of the message call. A single argument is passed equal to the output data of the message call.
 
-**Watches and Log Filtering** Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of.
-
-* `logs(_filter)`: Returns the list of log entries in Ethereum matching the given `_filter`. The filter is an object including fields:
+#####web3.eth.logs
+Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of. Returns the list of log entries in Ethereum matching the given `_filter`. The filter is an object including fields:
   * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
   * `latest`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
   * `max`: The maximum number of messages to return.
@@ -352,15 +351,45 @@ Returns the uncle number `_i` from block with number `_number`. Return value is 
   * `changed(_f)`: Installs a handler, `_f`, which is called when the state changes due to messages that fit `_filter`.
   * `logs()`: Returns the log entries that fit `_filter`.
   * `uninstall()`: Uninstalls the watch. Should always be called once it is done with.
+```javascript
+// TODO (_filter)
+```
 
-**Ethereum Misc** The `eth` object contains an additional method for compilation. This has an asynchronous version in fitting with the getter methods, which is prefixed with do and takes an additional function which is called with the result. e.g. `doLll(_s, _f)`.
+#####web3.eth.compilers
+Returns an array of available compilers
+```javascript
+web3.eth.compilers().then(function (result) {
+    var number = result;
+    console.log(number); // ["lll", "solidity", "serpent"]
+});
+```
 
-* `lll(_s)`: Compiles the LLL source code `_s` and returns the output data.
+#####web3.eth.solidity
+Compiles the solidity source code `_s` and returns the output data.
+```javascript
+// TODO (_code)
+web3.eth.solidity("").then(function (result) {
+    var number = result;
+});
+```
 
-## Example
+#####web3.eth.lll
+Compiles the LLL source code `_s` and returns the output data.
+```javascript
+// TODO (_code)
+```
+
+#####web3.eth.serpent
+Compiles the serpent source code `_s` and returns the output data.
+```javascript
+// TODO (_code)
+```
+
+# Example
 
 A simple HTML snippet that will display the user's primary account balance of Ether:
 ```html
+<html><body>
 <div>You have <span id="ether">?</span> Weis</div>
 <script>
 web3.eth.watch({altered: web3.eth.coinbase}).changed(function() {
@@ -369,9 +398,10 @@ web3.eth.watch({altered: web3.eth.coinbase}).changed(function() {
     });
 });
 </script>
+</body></html>
 ```
 
-To test it, just put `<html><body>` before it and `</body></html>` after, then save the file. Load it in AlethZero and point the URL to file:///WHEREVER_YOU_SAVED_IT
+To test it, just put it in file and save. Load it in AlethZero and point the URL to file:///WHEREVER_YOU_SAVED_IT
 
 Job done. Now go create.
 
