@@ -199,7 +199,7 @@ web3.eth.number.then(function (result) {
 });
 ```
 
-#####web3.eth.balanceAt(_a)
+#####web3.eth.balanceAt
 Returns the balance of the account of address given by the address `_a`
 ```javascript
 web3.eth.balanceAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (result) {
@@ -208,7 +208,7 @@ web3.eth.balanceAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (
 });
 ```
 
-#####web3.eth.stateAt(_a, _s)
+#####web3.eth.stateAt
 Returns the value in storage at position given by the string `_s` of the account of address given by the address `_a`.
 ```javascript
 web3.eth.stateAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0).then(function (result) {
@@ -217,7 +217,7 @@ web3.eth.stateAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0).then(function 
 });
 ```
 
-#####web3.eth.storageAt(_a)
+#####web3.eth.storageAt
 Dumps storage as json object.
 ```javascript
 web3.eth.storageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (result) {
