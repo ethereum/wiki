@@ -30,14 +30,14 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [codeAt](#web3ethcodeat) *(_address)*
     * [transact](#web3ethtransact) *(_object)*
     * [block](#web3ethblock) *(_hash/_number)*
-    * [transaction (_object, _number)](#transaction)
-    * [uncle (_hash/number)](#uncle)
-    * [compilers ()](#compilers)
-    * [lll (_string)](#lll)
-    * [solidity (_object)](#solidity)
-    * [serpent (_object)](#serpent)
-    * [logs (_object/_string)](#logs)
-    * [watch (_object/_string)](#eth_watch)
+    * [transaction](#web3ethtransaction) *(_object, _number)*
+    * [uncle](#web3ethuncle) *(_hash/number)*
+    * [compilers](#web3ethcompilers) *()*
+    * [lll](#web3ethlll) *(_string)*
+    * [solidity](#web3ethsolidity) *(_object)*
+    * [serpent](#web3ethserpent) *(_object)*
+    * [logs](#web3ethlogs) *(_object/_string)*
+    * [watch](#web3ethwatch) *(_object/_string)*
       * [arrived (_callback)](#eth_arrived)
       * [changed (_callback)](#eth_changed)
       * [logs (_callback)](#eth_logs)
@@ -421,7 +421,9 @@ more examples can be found [here](https://github.com/ethereum/ethereum.js/tree/m
 - Removed all secret keys from the JS API.
 - Altered naming to web3.
 - Added web3.db and web3.ssh objects
+- Added usage examples to JavaScript-Api wiki page.
 
 ### Upcoming Changes
 - Proscribe particular bigint objects for numerical manipulation.
 - Integrate Paperscript-style preprocessing to allow for operator overloading.
+- Add more examples to ethereum.js
