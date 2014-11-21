@@ -70,8 +70,7 @@ var web3 = require('web3')
 ##### web3.sha3
 Returns the SHA3 of the given data.
 ```javascript
-(_s), (_s1, _s2), (_s1, _s2, _s3)
-TODO
+// TODO (_s), (_s1, _s2), (_s1, _s2, _s3)
 ```
 
 ##### web3.toAscii
@@ -91,10 +90,30 @@ console.log(str); // "0x657468657265756d0000000000000000000000000000000000000000
 console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000000000000"
 ```
 
-* `toDecimal(_s)`: Returns the decimal string representing the data `_s` (when interpreted as a big-endian integer).
-* `toFixed(_s)`: Returns the floating-point number representing the data `_s` (when interpreted as a fixed-point value divided by 2^128).
-* `fromFixed(_s)`: Returns data representing the floating-point number `_s` (when interpreted as a fixed-point value divided by 2^128).
-* `offset(_s, _o)`: Returns data representing the data `_s` when its numerical value is offset by the integer `_o`. e.g. `dev.offset("0x10", 10)` evaluates to `"0x1a"`.
+##### web3.toDecimal
+Returns the decimal string representing the data `_s` (when interpreted as a big-endian integer).
+```javascript
+var value = web3.toDecimal('0x15');
+console.log(value); // 21
+```
+
+##### web3.toFixed
+Returns the floating-point number representing the data `_s` (when interpreted as a fixed-point value divided by 2^128).
+```javascript
+// TODO (_s)
+```
+
+##### web3.fromFixed
+Returns data representing the floating-point number `_s` (when interpreted as a fixed-point value divided by 2^128).
+```javascript
+// TODO (_s)
+```
+
+##### web3.offset
+Returns data representing the data `_s` when its numerical value is offset by the integer `_o`. e.g. `dev.offset("0x10", 10)` evaluates to `"0x1a"`.
+```javascript
+// TODO (_s, _o)
+```
 
 ### eth
 
