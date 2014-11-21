@@ -14,7 +14,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
   * [toFixed](#web3tofixed) *(_s)*
   * [fromFixed](#web3fromfixed) *(_s)*
   * [offset](#web3offset) *(_s, _o)*
-  * [eth](#eth)
+  * [eth](#web3eth)
     * [coinbase](#web3ethcoinbase)
     * [listening](#web3ethlistening)
     * [mining](#web3ethmining)
