@@ -7,6 +7,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
 # API
 
 * [web3](#web3)
+  * [sha3](#web3.sha3) *(_s1, [_s2], [_s3])*
   * [eth](#eth)
     * [coinbase](#coinbase)
     * [listening](#listening)
