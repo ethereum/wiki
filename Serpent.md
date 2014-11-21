@@ -292,6 +292,12 @@ Serpent also gives you access to many "special variables"; the full list is:
 * `block.number` - current block number
 * `block.gaslimit` - current block gaslimit
 
+Serpent recognises the following "special functions":
+
+* `init` - executed upon contract creation
+* `shared` - executed before running `init` and user functions
+* `any` - executed before any user functions
+
 There are also special commands for a few crypto operations; particularly:
 
 * `addr = ecrecover(h, v, r, s)` - determines the address that produced the elliptic curve signature `v, r, s` of the hash `h`
