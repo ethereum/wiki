@@ -15,17 +15,17 @@ There is, at the global scope, one objects; the `web3` object, containing data h
   * [fromFixed](#web3fromfixed) *(_s)*
   * [offset](#web3offset) *(_s, _o)*
   * [eth](#eth)
-    * [coinbase](#coinbase)
-    * [listening](#listening)
-    * [mining](#mining)
-    * [gasPrice](#gasPrice)
-    * [accounts](#accounts)
-    * [peerCount](#peerCount)
-    * [defaultBlock](#defaultBlock)
-    * [number](#number)
-    * [balanceAt (_address)](#balanceAt)
-    * [stateAt (_address, _storage)](#stateAt)
-    * [storageAt (_address)](#storageAt)
+    * [coinbase](#web3ethcoinbase)
+    * [listening](#web3ethlistening)
+    * [mining](#web3ethmining)
+    * [gasPrice](#web3ethgasPrice)
+    * [accounts](#web3ethaccounts)
+    * [peerCount](#web3ethpeerCount)
+    * [defaultBlock](#web3ethdefaultBlock)
+    * [number](#web3ethnumber)
+    * [balanceAt (_address)](#web3ethbalanceAt)
+    * [stateAt (_address, _storage)](#web3ethstateAt)
+    * [storageAt (_address)](#web3ethstorageAt)
     * [countAt (_address)](#countAt)
     * [codeAt (_address)](#codeAt)
     * [transact (_object)](#transact)
@@ -122,14 +122,47 @@ Returns data representing the data `_s` when its numerical value is offset by th
 // TODO (_s, _o)
 ```
 
-### eth
+##### web3.eth
+```javascript
+var eth = web3.eth;
+```
 
-**Properties**: All properties getters are asynchronous methods, returning promise 
+#####web3.eth.coinbase
+Returns the coinbase address of the client.
+```javascript
+web3.eth.coinbase.then(function (result) {
+    var coinbase = result;
+    console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
+});
+```
 
-* `coinbase` Returns the coinbase address of the client.
-* `listening` Returns true if and only if the client is actively listening for network connections.
-* `mining` Returns true if and only if the client is actively mining new blocks.
-* `gasPrice` Returns the special 256-bit number equal to the hard-coded testnet price of gas.
+#####web3.eth.listening
+Returns true if and only if the client is actively listening for network connections.
+```javascript
+web3.eth.listening.then(function (result) {
+    var listening = result;
+    console.log(listening); // true of false
+});
+```
+
+#####mining
+Returns true if and only if the client is actively mining new blocks.
+```javascript
+web3.eth.mining.then(function (result) {
+    var mining = result;
+    console.log(mining); // true or false
+});
+```
+
+#####gasPrice
+Returns the special 256-bit number equal to the hard-coded testnet price of gas.
+```javascript
+web3.eth.gasPrice.then(function (result) {
+    var gasPrice = result;
+    console.log(gasPrice); // "0x09184e72a000"
+});
+```
+
 * `accounts` Returns the special key-pair list object corresponding to the address of each of the accounts owned by the client that this ÐApp has access to.
 * `peerCount` Returns the number of peers currently connected to the client.
 * `defaultBlock` The default block number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
