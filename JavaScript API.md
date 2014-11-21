@@ -246,9 +246,8 @@ web3.eth.codeAt("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8").then(function (res
 });
 ```
 
-**Blockchain Getters** Three distinct methods are available for querying the blockchain and retrieving blocks, transactions and uncles. For each such item, promise is returned.
-
-* `block(_number)` Returns the block with number `_number`. Return value is an object with the following keys:
+#####web3.eth.block
+Returns the block with number `_number`. Return value is an object with the following keys:
   * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
   * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
   * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
@@ -266,8 +265,29 @@ web3.eth.codeAt("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8").then(function (res
   * `children`: The hashes of any children this block has (an array of 32-byte hashes)
   * `totalDifficulty`: The total difficulty of the entire chain up and including this block (a bigint).
   * `bloom`: The bloom filter of this block (a 32-byte hash).
-* `block(_hash)` Returns the block with hash `_hash`. Return value is an object with the keys as for the previous call.
-* `transaction(_number, _i)` Returns the transaction number `_i` from block with number `_number`. Return value is an object with the following keys:
+```javascript
+web3.eth.block(3150).then(function (result) {
+    var info = result;
+    console.log(info);
+ /*{
+  "difficulty": "0x02a88f",
+  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "gasLimit": 125000,
+  "hash": "80452e84d0d0599d779a4e466d0b70d50ca316499a8489604d5b9df436ccfeee",
+  "minGasPrice": "0x09184e72a000",
+  "miner": "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+  "nonce": "0xed0c6a53777b15880fb359dfd9368d002c959243a19c35ca1ae2e97f9bf78a53",
+  "number": 3150,
+  "parentHash": "0xf9de6948d835ed5257229b5103f9421a7f70c3ccc65fd31c0db85324e05702f5",
+  "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+  "stateRoot": "0xd878fcee309af964e8e70c66ec25b1e7de9eca9c4f49e90efddeea8f77a37e43",
+  "timestamp": 1416585210,
+  "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+} */
+});
+```
+#####web3.eth.transaction
+Returns the transaction number `_i` from block with number `_number`. Return value is an object with the following keys:
   * `hash`: The hash of the transaction. A 32-byte hash.
   * `input`: The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation. A byte array.
   * `to`: The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction (a 20-byte address).
@@ -276,8 +296,12 @@ web3.eth.codeAt("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8").then(function (res
   * `gasPrice`: The price offered to the miner to purchase this amount of GAS, in Wei/GAS (a big int).
   * `nonce`: The transaction nonce (an integer).
   * `value`: The amount of ETH to be transferred to the recipient with the transaction (a big int).
-* `transaction(_hash, _i)` Returns the transaction number `_i` from block with hash `_hash`. Return value is an object with the keys as for the previous call.
-* `uncle(_number, _i)` Returns the uncle number `_i` from block with number `_number`. Return value is an object with the following keys:
+```javascript
+// TODO (_number, _i), (_hash, _i)
+```
+
+#####web3.eth.uncle
+Returns the uncle number `_i` from block with number `_number`. Return value is an object with the following keys:
   * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
   * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
   * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
@@ -292,9 +316,9 @@ web3.eth.codeAt("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8").then(function (res
   * `timestamp`: The timestamp of this block (an integer).
   * `extraData`: Any extra data this block contains (a byte array).
   * `nonce`: The block's PoW nonce (a 32-byte hash).
-* `uncle(_hash, _i)` Returns the uncle number `_i` from block with hash `_hash`. Return value is an object with the keys as for the previous call.
-
-**Transactions**
+```javascript
+// TODO (_number, _i), (_hash, _i)
+```
 
 * `transact(_params, _fn)` Creates a new message-call transaction.
   * `_params`, an anonymous object specifying the parameters of the transaction.
