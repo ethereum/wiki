@@ -29,6 +29,11 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [lll (_string)](#lll)
     * [solidity (_object)](#solidity)
     * [serpent (_object)](#serpent)
+    * [watch (_object/_string)](#eth_watch)
+      * [arrived (_callback)](#eth_arrived)
+      * [changed (_callback)](#eth_changed)
+      * [logs (_callback)](#eth_logs)
+      * [uninstall (_callback)](#eth_uninstall)
   * [db](#db)
     * [put (_name, _key, _value)](#put)
     * [putString (__name, _key, _value)](#putString)
@@ -40,6 +45,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [haveIdentity (_string)](#haveIdentity)
     * [newGroup (_id, _who)](#newGroup)
     * [addToGroup (_group, _who)](#addToGroup)
+    * [watch (_object/_string)](#shh_watch)
 
 # Parameters
 
