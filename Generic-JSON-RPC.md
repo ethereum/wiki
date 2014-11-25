@@ -9,43 +9,59 @@ Ethereum.js exports one single container; `web3` which contains the `eth` object
 The following RPC messages should be accepted by the RPC-backend:
 
 * `eth_accounts`
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id":1}' http://localhost:8080
-```
+  * request:
+  ```bash
+  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id":1}' http://localhost:8080
+  ```
+  * response:
+  ```json
+  {"id":1,"jsonrpc":"2.0","result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]}
+  ```
 * `eth_balanceAt( address : String )`
+  * request:
+  ```bash
+  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+  ```
+  * response:
+  ```json
+  {"id":1,"jsonrpc":"2.0","result":"0x0234c8a3397aab580000"}
+  ```
 
-request:
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
-```
-response:
-```json
-{"id":1,"jsonrpc":"2.0","result":"0x0234c8a3397aab580000"}
-```
+* `eth_blockByHash( hash : String )`
+  * request:
+  ```bash
+  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"],"id":1}' http://localhost:8080
+  ```
+  * response:
+  ```json
+  {"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
+  ```
 
-* `blockByHash( hash : String )`
-request:
+* `eth_blockByNumber( number : Integer )`
+  * request:
+  ```bash
+  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":[1231],"id":1}' http://localhost:8080
+  ```
+  * response:
+  ```json
+  {"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
+  ```
+* `eth_transactionByHash( hash : String, nth : Integer )`
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"],"id":1}' http://localhost:8080
+# TODO
 ```
-response:
-```json
-{"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
-```
-
-* `blockByNumber( number : Integer )`
-request:
+* `eth_transactionByNumber( number : Integer, nth : Integer )`
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":[1231],"id":1}' http://localhost:8080
+# TODO
 ```
-response:
-```json
-{"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
+* `eth_uncleByHash( hash : String, nth : Integer )`
+```bash
+# TODO
 ```
-* `transactionByHash( hash : String, nth : Integer )`
-* `transactionByNumber( number : Integer, nth : Integer )`
-* `uncleByHash( hash : String, nth : Integer )`
-* `uncleByNumber( number : Integer, nth : Integer )`
+* `eth_uncleByNumber( number : Integer, nth : Integer )`
+```bash
+# TODO
+```
 * `transact( parameters : Object )`
 * **optional** `compile( code : String )`
 * `countAt( address : String )`
