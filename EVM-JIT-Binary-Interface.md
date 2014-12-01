@@ -33,6 +33,22 @@ void evm_jit_get_return_data(evm_jit* _jit, char* _return_data_offset, size_t* _
 void evm_jit_destroy(evm_jit* _jit);
 ```
 
+# Return Code
+
+Informs user about contract exit status:
+
+Code| Exit Status
+----|-----
+0   | Stop
+1   | Return
+2   | Suicide
+101 | Bad Jump Destination
+102 | Out Of Gas
+103 | Stack Underflow
+104 | Bad Instruction
+
+
+
 # JIT Runtime Data
 
 A set of data possibly needed by running contract, sometimes by the compiler itself. 
@@ -56,4 +72,3 @@ GasLimit     | i256 | in     |
 CodeSize     | i256 | const  | 
 CallData     | byte*| in     |
 Code         | byte*| const  |
-ReturnCode   | i32  | out    | 
