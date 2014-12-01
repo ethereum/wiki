@@ -8,6 +8,13 @@ Ethereum.js exports one single container; `web3` which contains the `eth` object
 
 The following RPC messages should be accepted by the RPC-backend:
 
+* `eth_coinbase`
+* `eth_setCoinbase`
+* `eth_listening`
+* `eth_setListening`
+* `eth_mining`
+* `eth_setMining`
+* `eth_gasPrice`
 * `eth_accounts`
   * request:
   ```bash
@@ -17,6 +24,10 @@ The following RPC messages should be accepted by the RPC-backend:
   ```json
   {"id":1,"jsonrpc":"2.0","result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]}
   ```
+* `eth_peerCount`
+* `eth_defaultBlock`
+* `eth_setDefaultBlock`
+* `eth_number`
 * `eth_balanceAt( address : String )`
   * request:
   ```bash
@@ -26,7 +37,12 @@ The following RPC messages should be accepted by the RPC-backend:
   ```json
   {"id":1,"jsonrpc":"2.0","result":"0x0234c8a3397aab580000"}
   ```
-
+* `eth_stateAt`
+* `eth_storageAt`
+* `eth_countAt`
+* `eth_codeAt`
+* `eth_transact`
+* `eth_call`
 * `eth_blockByHash( hash : String )`
   * request:
   ```bash
@@ -62,16 +78,30 @@ The following RPC messages should be accepted by the RPC-backend:
 ```bash
 # TODO
 ```
+* `eth_compilers`
+* `eth_lll`
+* `eth_solidity`
+* `eth_serpent`
+* `eth_newFilter`
+* `eth_newFilterString`
+* `eth_uninstallFilter`
+* `eth_changed`
+* `eth_filterLogs`
+* `eth_logs`
+* `db_put`
+* `db_get`
+* `db_putString`
+* `db_getString`
+* `shh_post`
+* `shh_newIdeninty`
+* `shh_haveIdentity`
+* `shh_newGroup`
+* `shh_addToGroup`
+* `shh_newFilter`
+* `shh_uninstallFilter`
+* `shh_changed`
 * `transact( parameters : Object )`
-* **optional** `compile( code : String )`
-* `countAt( address : String )`
-* `codeAt( address : String )`
-* `stateAt( address : String, state_address : String )`
-* `call( parameters : Object )`
-* `coinbase`
-* `listening`
-* `mining`
-* `peerCount`
+###### old
 * `newFilter( parameters_or_type : Variadic )` **Note**: Registers a new filter. Expects a return call with an unique ID specifying the new filter. In any subsequent queries that reference this filter, this same ID is used to identify the filter on the remote backend. It's up to the implementors to implement this look-up method as they see fit on the remote backend (see [[events](#events)]).
 * `messages( id : Integer )`
 * `uninstallFilter( id : Integer )`
