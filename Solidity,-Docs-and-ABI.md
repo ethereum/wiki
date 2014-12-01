@@ -119,7 +119,8 @@ This would then be formally documented:
 ```
 contract GavCoin
 {
-  /// Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of `message.caller.address()`, to an account accessible only by `to.address()`.
+  /// Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of
+  /// `message.caller.address()`, to an account accessible only by `to.address()`.
   function send(address to, uint256 valueInmGAV) {
     if (balances[message.caller] >= valueInmGAV) {
       balances[to] += valueInmGAV;
