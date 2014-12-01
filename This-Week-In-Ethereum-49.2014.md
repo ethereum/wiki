@@ -5,10 +5,10 @@ We are in the last days of preparing the POC-7 release. It is scheduled to ship 
 ### Testnet
 - Bootstrapping node: poc-7.ethdev.com:30303
 - Chain explorer: [poc-7.ethdev.com](http://poc-7.ethdev.com) (is down)
-- Eth Protocol Version:35
+- Eth Protocol Version:45
 
 ### Protocol Updates
-* Eth Protocol Version update to eth:35
+* Eth Protocol Version update to eth:45
 * minGasPrice removed from header
 * tx gas costs to be dependent on data values
 * Additional price on instructions that require memcopies (*COPY)
@@ -42,9 +42,9 @@ See [poc-7 etherpad](https://ethereum.etherpad.mozilla.org/14) for details.
 * JIT Compiler: New [binary interface documentation](https://github.com/ethereum/wiki/wiki/EVM-JIT-Binary-Interface), new [repository](https://github.com/ethereum/evmjit), new Skype channel 'EVM JIT'
 
 
-##People: 
+##People
 
-## Ecosystem
+##Ecosystem
 
 ##In the Media
 
