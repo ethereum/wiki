@@ -117,10 +117,15 @@ This is basically saying that it can see no reason why `valueInmGAV` could be no
 This would then be formally documented:
 
 ```
+/// @title Some title here.
+/// @author Homer Simpson
 contract GavCoin
 {
-  /// Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of
+  /// @notice Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of
   /// `message.caller.address()`, to an account accessible only by `to.address()`.
+  /// @dev This is the developer documentation.
+  /// @param to The docs for the first param.
+  /// @param valueInmGav The docs for the second param.
   function send(address to, uint256 valueInmGAV) {
     if (balances[message.caller] >= valueInmGAV) {
       balances[to] += valueInmGAV;
@@ -128,17 +133,17 @@ contract GavCoin
     }
   }
   
-  /// `(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`.
+  /// @notice `(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`.
   function balance(address who) constant returns (uint256 balanceInmGAV) {
     balanceInmGAV = balances[who];
   }
 
 invariants:
-  /// The sum total amount of GAV in the system is 1 million.
+  /// @notice The sum total amount of GAV in the system is 1 million.
   reduce(0, add, map(valueOf, balances)) == 100000000000;
 
 construction:
-  /// Endows `message.caller.address()` with 1m GAV.
+  /// @notice Endows `message.caller.address()` with 1m GAV.
   balances[message.caller] = 100000000000;
 
 state:
@@ -168,14 +173,14 @@ The documentation, would be extracted from the source code ready to sit in a (pr
   "language": "Solidity",
   "languageVersion": 1,
   "methods": {
-    "send": { "user": "Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of `message.caller.address()`, to an account accessible only by `to.address()`." },
-    "balance": { "user": "`(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`." }
+    "send": { "notice": "Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of `message.caller.address()`, to an account accessible only by `to.address()`." },
+    "balance": { "notice": "`(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`." }
   },
   "invariants": [
-    { "user": "The sum total amount of GAV in the system is 1 million." }
+    { "notice": "The sum total amount of GAV in the system is 1 million." }
   ],
   "construction": [
-    { "user": "Endows `message.caller.address()` with 1m GAV." }
+    { "notice": "Endows `message.caller.address()` with 1m GAV." }
   ]
 }
 ```
