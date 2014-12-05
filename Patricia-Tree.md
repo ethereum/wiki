@@ -80,16 +80,16 @@ Examples:
 Merkle Patricia trees solve the inefficiency issue by adding some extra complexity to the data structure. A node in a Merkle Patricia tree is one of the following:
 
 1. NULL (represented as the empty string)
-2. A two-item array [ key, value ]
-3. A 17-item array [ v0 ... v15, vt ]
+2. A two-item array `[ key, v ]` (aka kv node)
+3. A 17-item array `[ v0 ... v15, vt ]` (aka diverge node)
 
-The idea is that in the event that there is a long path of nodes each with only one element, we shortcut the descent by setting up a [ key, value ] node, where the key gives the hexadecimal path to descend, in the compact encoding described above, and the value is just the hash of the node like in the standard radix tree. Also, we add another conceptual change: internal nodes can no longer have values, only leaves with no children of their own can; however, since to be fully generic we want the key/value store to be able to store keys like 'dog' and 'doge' at the same time, we simply add a terminator symbol (16) to the alphabet so there is never a value &quot;en-route&quot; to another value. Where a node is referenced inside a node, what is included is H(rlp.encode(x)) where H(x) = sha3(x) if len(x) >= 32 else x and rlp.encode is the [RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP) encoding function. Note that when updating a trie, you will need to store the key/value pair (sha3(x), x) in a persistent lookup table when you create a node with length >= 32, but if the node is shorter than that then you do not need to store anything when length < 32 for the obvious reason that the function f(x) = x is reversible.
+The idea is that in the event that there is a long path of nodes each with only one element, we shortcut the descent by setting up a kv node `[ key, value ]`, where the key gives the hexadecimal path to descend, in the compact encoding described above, and the value is just the hash of the node like in the standard radix tree. Also, we add another conceptual change: internal nodes can no longer have values, only leaves with no children of their own can; however, since to be fully generic we want the key/value store to be able to store keys like 'dog' and 'doge' at the same time, we simply add a terminator symbol (16) to the alphabet so there is never a value &quot;en-route&quot; to another value. Where a node is referenced inside a node, what is included is H(rlp.encode(x)) where H(x) = sha3(x) if len(x) >= 32 else x and rlp.encode is the [RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP) encoding function. Note that when updating a trie, you will need to store the key/value pair (sha3(x), x) in a persistent lookup table when you create a node with length >= 32, but if the node is shorter than that then you do not need to store anything when length < 32 for the obvious reason that the function f(x) = x is reversible.
 
-Here for a two-item array `[ key, v ]`, `v` can be a value or a subnode. 
+For a kv node, a two-item array `[ key, v ]`, `v` can be a value or a node. 
 * When `v` is a value, key must be the result of compact encoding a nibbles list **with** terminator.
-* When `v` is a subnode, key must be the result of compact encoding a nibbles list **without** terminator.
+* When `v` is a node, key must be the result of compact encoding a nibbles list **without** terminator.
 
-For a 17-item array [ v0 ... v15, vt ], each item in v0...v15 should always be a subnode or blank, and vt should always be a value or blank. So to store a value in one item of v0...v15, we should instead store a subnode (key, value), where key is the result of compact encoding an empty nibbles list **with** terminator.
+For a diverge node, a 17-item array `[ v0 ... v15, vt ]`, each item in v0...v15 should always be a node or blank, and vt should always be a value or blank. So to store a value in one item of v0...v15, we should instead store a kv node, where k is the result of compact encoding an empty nibbles list **with** terminator.
 
 Here is the extended code for getting a node in the Merkle Patricia tree:
 
