@@ -103,7 +103,7 @@ Where:
 * `medstate` is the state trie root after processing the transaction
 * `gas_used` is the amount of gas used after processing the transaction
 * `logs` is a list of items of the form `[address, [topic1, topic2...], data]` that are produced by the `LOG0` ... `LOG4` opcodes during the execution of the transaction (including by the main call and sub-calls). `address` is the address of the contract that produced the log, the topics are up to 4 32-byte values, and the data is an arbitrarily sized byte array.
-* `logbloom` is a bloom filter made up of the addresses and topics of all logs.
+* `logbloom` is a bloom filter made up of the addresses and topics of all logs in the transaction.
 
 There is also a bloom in the block header, which is the OR of all of the blooms for the transactions in the block. The purpose of this construction is to make the Ethereum protocol light-client friendly in as many ways as possible. In Ethereum, a light client can be viewed as a client that downloads block headers by default, and verifies only a small portion of what needs to be verified, using a DHT as a database for trie nodes in place of its local hard drive. Some use cases include:
 
