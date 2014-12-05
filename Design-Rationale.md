@@ -58,11 +58,11 @@ The Merkle Patricia tree/trie, previously envisioned by Alan Reiner and implemen
 1. Every unique set of key/value pairs maps uniquely to a root hash, and it is not possible to spoof membership of a key/value pair in a trie (unless an attacker has ~2^128 computing power)
 2. It is possible to change, add or delete key/value pairs in logarithmic time
 
-This gives us a way of providing an efficient, easily updateable, "fingerprint" of our entire state tree. The Ethereum MPT is formally described here: http://vitalik.ca/ethereum/patricia.html
+This gives us a way of providing an efficient, easily updateable, "fingerprint" of our entire state tree. The Ethereum MPT is formally described here: https://github.com/ethereum/wiki/wiki/Patricia-Tree
 
 Specific design decisions in the MPT include:
 
-1. **Having two classes of nodes**, key/value nodes and diverge nodes (see MPT spec for more details). The presence of key/value nodes increases efficiency because if a tree is sparse in a particular area the key/value node will serve as a "shortcut" removing the need to have a tree of depth 64.
+1. **Having two classes of nodes**, kv nodes and diverge nodes (see MPT spec for more details). The presence of kv nodes increases efficiency because if a tree is sparse in a particular area the kv node will serve as a "shortcut" removing the need to have a tree of depth 64.
 2. **Making diverge nodes hexary and not binary**: this was done to improve lookup efficiency. We now recognize that this choice was suboptimal, as the lookup efficiency of a hexary tree can be simulated in a binary paradigm by storing nodes batched. However, because the trie construction is so easy to implement incorrectly and end up with at the very least state root mismatches, we have decided to table such a reorganization until 1.1.
 3. **No distinction between empty value and non-membership**: this was done for simplicity, and because it works well with Ethereum's default that values that are unset (eg. balances) generally mean zero and the empty string is used to represent zero. However, we do note that it sacrifices some generality and is thus slightly suboptimal.
 4. **Distinction between terminating and non-terminating nodes**: technically, the "is this node terminating" flag is unnecessary, as all tries in Ethereum are used to store static key lengths, but we added it anyway to increase generality, hoping that the Ethereum MPT implementations will be used as-is by other cryptographic protocols.
