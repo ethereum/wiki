@@ -114,7 +114,7 @@ There is also a bloom in the block header, which is the OR of all of the blooms 
     * Process transaction `T[i]`
     * Check that the resulting state root is `R[i].medstate` and the gas_used is `R[i].gas_used`
     * Check that the set of logs and bloom produced matches `R[i].logs` and `R[i].logbloom`
-    * Checks that the bloom is a subset of the block header-level bloom (this detects block header-level blooms with false negatives); then pick a few random indices of the block header-level bloom where that bloom contains a 1 and ask other nodes for a transaction-level bloom that contains a 1 at that index, rejecting the block is no response is given (this detects block header-level blooms with false positives)
+    * Checks that the bloom is a subset of the block header-level bloom (this detects block header-level blooms with false negatives); then pick a few random indices of the block header-level bloom where that bloom contains a 1 and ask other nodes for a transaction-level bloom that contains a 1 at that index, rejecting the block if no response is given (this detects block header-level blooms with false positives)
 * Light clients want to "watch" for events that are logged. The protocol here is the following:
     * A light client gets all block headers, checks for block headers that contain bloom filters that match one of a desired list of addresses or topics that the light client is interested in
     * Upon finding a potentially matching block header, the light client downloads all transaction receipts, checks them for transactions whose bloom filters match
