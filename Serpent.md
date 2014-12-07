@@ -266,6 +266,8 @@ Note that in the last ask command, the function returns an array of 2 values. If
 
 ### Macros
 
+**WARNING: Relatively new/untested feature, here be ~~dragons~~ serpents**
+
 Macros allow you to create rewrite rules which provide additional expressivity to the language. For example, suppose that you wanted to create a command that would compute the median of three values. You could simply do:
 
     macro median($a, $b, $c):
@@ -278,20 +280,22 @@ Then, if you wanted to use it somewhere in your code, you just do:
 Or to take the max of an array:
 
     macro maxarray($a:$asz):
-        m = 0
-        i = 0
+        $m = 0
+        $i = 0
         while i < $asz:
-            m = max(m, $a[i])
-            i += 1
-        m
+            $m = max($m, $a[i])
+            $i += 1
+        $m
 
     x = maxarray([1, 9, 5, 6, 2, 4]:6)
 
 For a highly contrived example of just how powerful macros can be, see https://github.com/ethereum/serpent/blob/poc7/examples/peano.se
 
-Note that macros are not functions; they are copied into code every time they are used. Hence, if you have a long macro, you may instead with to make the macro call an actual function.
+Note that macros are not functions; they are copied into code every time they are used. Hence, if you have a long macro, you may instead with to make the macro call an actual function. Additionally, note that the dollar signs on variables are important; if you omit a dollar sign in the pattern $a then the macro will only match a variable actually called a. You can also create dollar sign variables that are in the substitution pattern, but not the search pattern; this will generate a variable with a random prefix each instance of the macro. You can also create new variables without a dollar sign inside a substitution pattern, but then the same variable will be shared across all instances of the pattern and with uses of that variable outside the pattern.
 
 ### Types
+
+**WARNING: Relatively new/untested feature, here be ~~dragons~~ serpents**
 
 An excellent compliment to macros is Serpent's ghetto type system, which can be combined with macros to produce quite interesting results. Let us simply show this with an example:
 
