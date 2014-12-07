@@ -264,6 +264,70 @@ Accesses have to descend fully in a single statement. To see how this could be u
 
 Note that in the last ask command, the function returns an array of 2 values. If you wanted to call the registry, you would have needed to do something like `o = registry.ask(key, outsz=2)` and you could have then used `o[0]` and `o[1]` to recover the owner and value. 
 
+### Macros
+
+Macros allow you to create rewrite rules which provide additional expressivity to the language. For example, suppose that you wanted to create a command that would compute the median of three values. You could simply do:
+
+    macro median($a, $b, $c):
+        min(min(smax($a, $b), max($a, $c)), max($b, $c))
+
+Then, if you wanted to use it somewhere in your code, you just do:
+
+    x = median(5, 9, 7)
+
+Or to take the max of an array:
+
+    macro maxarray($a:$asz):
+        m = 0
+        i = 0
+        while i < $asz:
+            m = max(m, $a[i])
+            i += 1
+        m
+
+    x = maxarray([1, 9, 5, 6, 2, 4]:6)
+
+For a highly contrived example of just how powerful macros can be, see https://github.com/ethereum/serpent/blob/poc7/examples/peano.se
+
+Note that macros are not functions; they are copied into code every time they are used. Hence, if you have a long macro, you may instead with to make the macro call an actual function.
+
+### Types
+
+An excellent compliment to macros is Serpent's ghetto type system, which can be combined with macros to produce quite interesting results. Let us simply show this with an example:
+
+    type float: [a, b, c]
+
+    macro float($x) + float($y):
+        float($x + $y)
+
+    macro float($x) - float($y):
+        float($x - $y)
+
+    macro float($x) * float($y):
+        float($x * $y / 2^32)
+
+    macro float($x) / float($y):
+        float($x * 2^32 / $y)
+
+    macro unfloat($x):
+        $x / 2^32
+
+    macro floatfy($x):
+        float($x * 2^32)
+
+    macro float($x) = float($y):
+        $x = $y
+
+    macro with(float($x), float($y), $z):
+        with($x, $y, $z)
+
+    a = floatfy(25)
+    b = a / floatfy(2)
+    c = b * b
+    return(unfloat(c))
+
+This returns 156, the integer portion of 12.5^2. A purely integer-based version of this code would have simply returned 144. An interesting use case would be rewriting the [elliptic curve signature pubkey recovery code](https://github.com/ethereum/serpent/blob/df0aa0e1285d7667d4a0cc81b1e11e0abb31fff3/examples/ecc/jacobian_add.se) using types in order to make the code neater by making all additions and multiplications implicitly modulo P, or using [long integer types](https://github.com/ethereum/serpent/blob/poc7/examples/long_integer_macros.se) to do RSA and other large-value-based cryptography in EVM code.
+
 ### Miscellaneous
 
 Additional Serpent coding examples can be found here: https://github.com/ethereum/serpent/tree/master/examples
