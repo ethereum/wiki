@@ -148,7 +148,7 @@ mul2.se:
 
 returnten.se:
 
-    extern mul2 = [double]
+    extern mul2: [double]
     
     MUL2 = create('mul2.se')
     return(MUL2.double(5, as=mul2))
