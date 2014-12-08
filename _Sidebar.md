@@ -1,6 +1,7 @@
 ### Basics
 - [Home](https://github.com/ethereum/wiki/wiki/)
 - [Ethereum Whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper)
+- [Design Rationale](https://github.com/ethereum/wiki/wiki/Design-Rationale)
 - [Ethereum Yellow Paper](http://gavwood.com/Paper.pdf)
 - [FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
 
