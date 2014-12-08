@@ -28,9 +28,9 @@ The code for the algorithm will be defined in Python below. `encode_int`, `canto
     P = (2**256 - 4294968273) ** 2
 
     def cantor_pair(x,y):
-        return ((x+y) * (x+y+1) / 2 + y) % P 
+        return ((x+y) * (x+y+1) / 2 + y) % P
 
-The Cantor pairing function provides a non-commutative, non-associative alternative to functions like OR and XOR, making it more difficult to perform graph-theoretic optimizations.
+The Cantor pairing function provides a non-commutative, non-associative alternative to functions like OR and XOR, making it more difficult to perform graph-theoretic optimizations. We also assume that `sha3` is a function that takes an integer and outputs an integer; if converting this reference code into an implementation use `from pyethereum import utils` followed by `def sha3(x): return utils.decode_int(utils.sha3(utils.encode_int(x)))`.
 
 ### Parameters
 
@@ -47,7 +47,7 @@ The parameters used for the algorithm are:
       "w": 2,                # Work factor for proof of work during nonce calculations
       "hw": 8,               # Work factor for proof of work during complex evaluation
       "is_serial": 0,        # Is hashimoto modified to be serial?
-      "P": (2**256 - 4294968273) ** 2  # Number to modulo everything by (determines
+      "P": (2**256 - 4294968273) ** 2, # Number to modulo everything by (determines
                                        # byte length and maybe some moduli are more secure than others)
     }   
 
@@ -103,5 +103,40 @@ The light client computing function for the DAG works as follows:
       return calc(pos)
 
 Essentially, it is simply a rewrite of the above algorithm that removes the loop of computing the values for the entire DAG and replaces the earlier node lookup with a recursive memoized call.
+
+For our dataset, we will use a collection of multiple DAGs produced by the above formula; the benefit of this is that it allows the DAGs to be replaced slowly over time without needing to incorporate a step where miners must suddenly recompute all of the data, leading to an abrupt temporary slowdown in chain processing at regular intervals and dramatically increasing centralization and thus 51% attack risks within those few minutes before all data is recomputed.
+
+The algorithm used to generate the actual set of DAGs used to compute the work for a block is as follows:
+
+    def get_daggerset(params, block):
+        if block.number == 0:
+            return [produce_dag(params, i) for i in range(params["numdags"])]
+        elif block.number % params["epochtime"]:
+            return get_daggerset(block.parent)
+        else:
+            o = get_daggerset(block.parent)
+            o[sha3(block.parent.nonce) % params["numdags"]] = \
+                produce_dag(params, sha3(block.parent.nonce))
+            return o
+
+Essentially, every time we hit a multiple of `epochtime`, we modify one DAG. We take the nonce of the parent block as a selector for which DAG to modify, and then also use it as a seed to determine the new DAG to replace it with. Light clients can keep up easily, as they need only keep track of the set of seeds corresponding to the DAGs. For this, we have:
+
+    def get_seedset(params, block):
+        if block.number == 0:
+            return range(params["numdags"])
+        elif block.number % params["epochtime"]:
+            return get_seedset(block.parent)
+        else:
+            o = get_seedset(block.parent)
+            o[sha3(block.parent.nonce) % params["numdags"]] = sha3(block.parent.nonce)
+            return o
+
+Repeatedly modifying the dataset is important; otherwise read-only memory with the data per-shipped in hardware becomes a powerful ASIC. The modification time should be sufficiently large that the DAG production requirement does not lead to centralization risk, but minimally small so that specialized "mining farm with built-in factory" operations that print out a new ROM every time the DAG changes do not become viable.
+
+**The goal with all of the above is to create a data set which is self-updating and light-client verifiable, without the light client verification algorithm opening up any new specialization vulnerabilities that are not present in the original Hashimoto.**
+
+### Hashimoto
+
+
 
 TODO: continue
