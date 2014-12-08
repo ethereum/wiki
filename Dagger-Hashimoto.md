@@ -43,10 +43,11 @@ The parameters used for the algorithm are:
       "diff": 2**14,         # Difficulty (adjusted during block exaluation)
       "epochtime": 1000,     # Length of an epoch in blocks (how often the dataset is updated)
       "k": 2,                # Number of parents of a node
-      "hk": 8,           # Number of parents during complex child evaluation
+      "hk": 8,               # Number of parents during complex child evaluation
       "w": 2,                # Work factor for proof of work during nonce calculations
       "hw": 8,               # Work factor for proof of work during complex evaluation
       "is_serial": 0,        # Is hashimoto modified to be serial?
+      "accesses": 40,        # Number of dataset accesses during hashimoto
       "P": (2**256 - 4294968273) ** 2, # Number to modulo everything by (determines
                                        # byte length and maybe some moduli are more secure than others)
     }   
@@ -73,7 +74,7 @@ def produce_dag(params, seed):
           w = params[“w” if x < params["h_threshold"] else “hw”]
           o.append(pow(x, w, P))  # use any "hash function" here
 
-Essentially, it starts off a graph as a single node, `sha3(seed) % P`, and from there starts sequentially adding on other nodes. When a new node is created, `sha3(seed) ** i % P`, where `i` is the index of the node being created and `P` is a large number (in our case slightly under 2^512), is used as a seed to randomly select some indices less than `i` (using `curpicker % i` above), and the values of the nodes at those indices are used in a calculation to generate a value `x`, which is then fed into a small proof of work function to ultimately generate the value of the graph at index `i`.
+Essentially, it starts off a graph as a single node, `sha3(seed) % P`, and from there starts sequentially adding on other nodes. When a new node is created, `sha3(seed) ** i % P` (where `i` is the index of the node being created and `P` is a large number, in our case slightly under 2^512) is used as a seed to randomly select some indices less than `i` (using `curpicker % i` above), and the values of the nodes at those indices are used in a calculation to generate a value `x`, which is then fed into a small proof of work function to ultimately generate the value of the graph at index `i`.
 
 The graph as a whole has `n` indices; for indices higher than `h_threshold`, we deliberately make the values harder to generate by (1) increasing the number of children, and (2) increasing the strength of the proof of work.
 
@@ -137,6 +138,96 @@ Repeatedly modifying the dataset is important; otherwise read-only memory with t
 
 ### Hashimoto
 
+The idea behind the original Hashimoto is to use the blockchain as a dataset, performing a computation which selects N indices from the blockchain, gathers the transactions at those indices, performs an XOR of this data, and returns the hash of the result. Thaddeus Dryja's original algorithm, translated to Python for consistency, is as follows:
 
+    def orig_hashimoto(prev_hash, merkle_root, list_of_transactions, nonce):
+        hash_output_A = sha256(prev_hash + merkle_root + nonce) 
+        txid_mix = 0
+        for i in range(64):
+            shifted_A = hash_output_A >> i 
+            transaction = shifted_A % len(list_of_transactions) 
+            txid_mix ^= list_of_transactions[transaction] << i 
+        return txid_max ^ (nonce << 192)
 
-TODO: continue
+(Reminding non-mathematicians that ^ in programming languages is, confusingly enough, XOR, not exponentiation)
+
+We modify the algorithm to use the Dagger dataset:
+
+    def hashimoto(daggerset, params, header, nonce):
+        rand = sha3(header+encode_int(nonce))
+        mix = 0
+        for i in range(params["accesses"]):
+            shifted_A = (rand ^ mix * params["is_serial"]) >> i
+            dag = daggerset[shifted_A % params["numdags"]]
+            mix ^= dag[(shifted_A // params["numdags"]) % params["n"]]
+        return mix ^ rand
+
+Note that we also add an `is_serial` parameter to offer the option of making the hashimoto computation non-parallelizable. Another possible modification is to use the Cantor pairing function in place of XOR, although we note that this heavily increases the computational load of the algorithm.
+
+Here is a light-client friendly version, using functions defined above:
+
+    def light_hashimoto(seedset, params, header, nonce):
+        rand = sha3(header+encode_int(nonce))
+        mix = 0
+        for i in range(40):
+            shifted_A = (rand ^ mix * params["is_serial"]) >> i
+            seed = seedset[shifted_A % params["numdags"]]
+            # can further optimize with cross-round memoization
+            mix ^= quick_calc(params, seed,
+                               (shifted_A // params["numdags"]) % params["n"])
+        return mix ^ rand
+
+To make the algorithm require blockchain storage, we simply add one additional round of access which uses the current state as a database. The reason why the original hashimoto does not suffice for light client friendliness is that the validation process would require 64 Merkle tree proofs, amounting to up to 50kb of data for each block - perhaps light enough for a smartphone, but not an internet-of-things device. Here, we intend to achieve simultaneous light client friendliness and blockchain storage requirement by pursuing the two goals separately - once with a Dagger-generated dataset, and the second time by making a single blockchain access.
+
+First, let's define the primitive; code described here should work as is with pyethereum.
+
+    def get_state(block, header, nonce):
+        # Generate a random position
+        pos = encode_int(sha3(header+encode_int(nonce)) % 2**160)
+        # Locate next address in state with index after that position
+        # If there is nothing, we set i to the maximum address
+        i = block.state.next(pos) or encode_int(2**160 - 1)
+        acct = block.state.get(i) or ''
+        # Generate another random position
+        pos2 = encode_int(sha3(header+encode_int(nonce+1)))
+        # Get a trie object for the account we already discovered
+        t = block.get_storage(acct.encode('hex'))
+        # Next key in state after the second position
+        j = t.next(pos2) or encode_int(2**256 - 1)
+        # Value at that key
+        val = block.state.get(j) or ''
+        return utils.decode_int(sha3(i + acct + j + val))
+
+Now, let us put it all together into the mining algo:
+
+    def mine(daggerset, params, block):
+        nonce = random.random(2**50)
+        while 1:
+            h1 = hashimoto(daggerset, params, 
+                           block.serialize_header_without_nonce(), nonce)
+            h2 = get_state(block, block.serialize_header_without_nonce(), nonce)
+            if ((h1 + h2) % 2**256) * params["diff"] < 2**256:
+                return nonce
+            nonce += 1
+
+And the verification algo:
+
+    def verify(daggerset, params, block, nonce):
+        h1 = hashimoto(daggerset, params, block, nonce)
+        h2 = get_state(block, block.serialize_header_without_nonce(), nonce)
+        return ((h1 + h2) % 2**256) * params["diff"] < 2**256
+
+Light-client friendly verification:
+
+def light_verify(seedset, params, header, nonce):
+      h1 = light_hashimoto(seedset, params, header, nonce)
+      h2 = get_state(block, block.serialize_header_without_nonce(), nonce)
+      return ((h1 + h2) % 2**256) * params["diff"] < 2**256
+
+Note that the light client verification algorithm requires "pre-seeding" the light-client's database with nodes from a Merkle tree proof of the block's validity.
+
+Special thanks to feedback from:
+
+* Tim Hughes
+* Matthew Wampler-Doty
+* Thaddeus Dryja
