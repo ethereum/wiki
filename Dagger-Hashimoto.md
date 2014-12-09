@@ -73,10 +73,10 @@ The Dagger graph building primitive is defined as follows:
              for j in range(params["k"]):
                  x = cantor_pair(x, o[curpicker % i], P)
                  curpicker >>= 10
-                 if pos >= params["h_threshold"]:
-                     for j in range(params["hk"]):
-                         x = cantor_pair(x, o[picker % params["h_threshold"]], P)
-                         curpicker >>= 10
+             if pos >= params["h_threshold"]:
+                 for j in range(params["hk"]):
+                     x = cantor_pair(x, o[picker % params["h_threshold"]], P)
+                     curpicker >>= 10
              w = params[“w” if x < params["h_threshold"] else “hw”]
              o.append(pow(x, w, P))  # use any "hash function" here
 
