@@ -27,7 +27,7 @@ The code for the algorithm will be defined in Python below. `encode_int`, `canto
 
     P = (2**256 - 4294968273) ** 2
 
-    def cantor_pair(x,y):
+    def cantor_pair(x,y,P):
         return ((x+y) * (x+y+1) / 2 + y) % P
 
 The Cantor pairing function provides a non-commutative, non-associative alternative to functions like OR and XOR, making it more difficult to perform graph-theoretic optimizations. We also assume that `sha3` is a function that takes an integer and outputs an integer; if converting this reference code into an implementation use:
