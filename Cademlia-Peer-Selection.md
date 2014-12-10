@@ -16,4 +16,4 @@ As a matter of implementation, it might be worth internally representing all 255
 
 A peer is added to the row to which it belongs according to the length of address prefix in common with this node. If that would increase the length of the row in question beyond _k_, the **worst** peer (according to some, not necessarily global, peer quality metric) is dropped from the row, except if it is the last row, in which case a new row _i_ + 1 is added and the elements in the old last row are split between the two rows according to the bit at the corresponding position. Note that the implementation suggestion in the previous section makes this distinction unnecessary on the implementation level.
 
-One condition for adding a peer is a signed "_lookup_" message containing the sender's peer address and network address, the addressee's peer address and a recent timestamp.
+One condition for adding a peer is a signed "_add_me_" message containing the sender's peer address and network address, the addressee's peer address and a recent timestamp.
