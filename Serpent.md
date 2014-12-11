@@ -214,8 +214,8 @@ The language for doing data structures is simple. First, we can do simple variab
 
 Then, we can do arrays, both finite and infinite:
 
-    data blah[1243]
-    data blaz[]
+    data blah = array(1243)
+    data blaz = array()
 
     x = self.blah[505]
     y = self.blaz[3**160]
