@@ -214,8 +214,8 @@ The language for doing data structures is simple. First, we can do simple variab
 
 Then, we can do arrays, both finite and infinite:
 
-    data blah = array(1243)
-    data blaz = array()
+    data blah[1243]
+    data blaz[]
 
     x = self.blah[505]
     y = self.blaz[3**160]
@@ -263,6 +263,19 @@ Accesses have to descend fully in a single statement. To see how this could be u
         return([self.registry[key].owner, self.registry[key].value], 2)
 
 Note that in the last ask command, the function returns an array of 2 values. If you wanted to call the registry, you would have needed to do something like `o = registry.ask(key, outsz=2)` and you could have then used `o[0]` and `o[1]` to recover the owner and value. 
+
+### Simple arrays in memory
+
+The syntax for arrays in memory are different: they can only be finite and cannot have tuples or more complicated structures.
+
+Example:
+
+    def bitwise_or(x, y):
+        blah = array([1243])
+        blah[567] = x
+        blah[568] = y
+        blah[569] = blah[567] | blah[568]
+        return(blah[569])
 
 ### Macros
 
