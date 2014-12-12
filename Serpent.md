@@ -384,3 +384,4 @@ There are also special commands for a few crypto operations; particularly:
 * `addr = ecrecover(h, v, r, s)` - determines the address that produced the elliptic curve signature `v, r, s` of the hash `h`
 * `x = sha256(a, 4)` - returns the sha256 hash of the 128 bytes consisting of the 4-item array starting from `a`
 * `x = ripemd160(a, 4)` - same as above but for ripemd160
+* To hash an arbitrary number of bytes, use chars syntax.  Example: `x = sha256([0xf1fc122bc7f5d74df2b9441a42a1469500000000000000000000000000000000], chars=16)` - returns the sha256 of the first 16 bytes.  Note: padding with trailing zeroes, otherwise the first 16 bytes will be zeroes, and the sha256 of it will be computed instead of the desired.
