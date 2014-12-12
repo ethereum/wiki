@@ -356,7 +356,9 @@ Past messages may be filtered and their attributes inspected, and future message
     * `address`: The address of the account whose execution of the message resulted in the log entry being made.
     * `topics`: The topic(s) of the message.
     * `data`: The associated data of the message.
-* `watch(_filter)`: Creates a watch object to notify when the state changes in a particular way, given by `_filter`. Filter may be a log filter object, as defined above. It may also be either `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively. Returns a watch object with the following methods:
+
+#####web3.eth.watch
+`web3.eth.watch(_filter)`: Creates a watch object to notify when the state changes in a particular way, given by `_filter`. Filter may be a log filter object, as defined above. It may also be either `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively. Returns a watch object with the following methods:
   * `changed(_f)`: Installs a handler, `_f`, which is called when the state changes due to messages that fit `_filter`.
   * `logs()`: Returns the log entries that fit `_filter`.
   * `uninstall()`: Uninstalls the watch. Should always be called once it is done with.
