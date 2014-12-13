@@ -391,3 +391,5 @@ There are also special commands for a few crypto operations; particularly:
 * If a function is not returning the result you expect, double-check that all variables are correct: there is no error/warning when using an undeclared variable.
 
 * `Invalid argument count or LLL function` usually means you just called foo() instead of `self.foo()`.
+
+* Sometimes you may be intending to use unsigned operators. eg div() and lt() instead of '/' and '<'.
