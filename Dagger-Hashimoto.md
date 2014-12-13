@@ -221,7 +221,7 @@ Now, let us put it all together into the mining algo:
             h1 = hashimoto(daggerset, params, 
                            block.serialize_header_without_nonce(), nonce)
             h2 = get_state(block, block.serialize_header_without_nonce(), nonce)
-            if ((h1 + h2) % 2**256) * params["diff"] < 2**256:
+            if sha3(h1 + h2) * params["diff"] < 2**256:
                 return nonce
             nonce += 1
 
@@ -230,16 +230,21 @@ And the verification algo:
     def verify(daggerset, params, block, nonce):
         h1 = hashimoto(daggerset, params, block, nonce)
         h2 = get_state(block, block.serialize_header_without_nonce(), nonce)
-        return ((h1 + h2) % 2**256) * params["diff"] < 2**256
+        return sha3(h1 + h2) * params["diff"] < 2**256
 
 Light-client friendly verification:
 
     def light_verify(seedset, params, header, nonce):
         h1 = light_hashimoto(seedset, params, header, nonce)
         h2 = get_state(block, block.serialize_header_without_nonce(), nonce)
-        return ((h1 + h2) % 2**256) * params["diff"] < 2**256
+        return sha3(h1 + h2) * params["diff"] < 2**256
 
-Note that the light client verification algorithm requires "pre-seeding" the light-client's database with nodes from a Merkle tree proof of the block's validity.
+Note that the light client verification algorithm requires "pre-seeding" the light-client's database with nodes from a Merkle tree proof of the block's validity. Also note that the SHA3 wrapper creates a "two-layered PoW" where the outer layer is very fast and "info-free" to verify (ie. you can verify the outer PoW by just computing SHA3; no need to know the daggerset state).
+
+Also, note that Dagger Hashimoto imposes additional requirements on the block header:
+
+* For two-layer verification to work, a block header must have both the nonce and the middle value pre-sha3
+* Somewhere, a block header must store the sha3 of the current seedset
 
 Special thanks to feedback from:
 
