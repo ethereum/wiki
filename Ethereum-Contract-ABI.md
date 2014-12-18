@@ -16,9 +16,9 @@ The data output is encoded in much the same way but without the Method ID.
 
 All variable-width parameters have their X-byte item-count front-loaded in the data input. When ORIGIN is equal to CALLER (i.e. for a straight transaction rather than a bare message call), X equals 2, otherwise X equals 32.
 
-Parameters are encoded as their full binary (and in the case of integral types, big-endian) representation. Integral types are allowed to be of arbitrary byte size up to 256-bits. Hash (or short unformatted data) types are again allowed to be of similar size. Bools are encoded as a simple byte. Enumerations are encoded as their shortest integral representation possible.
+Parameters are encoded as their full binary (and in the case of integral types, big-endian) representation. Integral types, are passed as a 256-bit representation, left-padded with zeroes. Semantically they are allowed to be of arbitrary byte size up to 256-bits. Hash (or short unformatted data) types are again allowed to be of similar size. Bools are encoded as a simple byte. Enumerations are encoded as their shortest integral representation possible.
 
-Strings may be either static (`string32`) or dynamic (`string`, `text`). In the static case, they are left-aligned within their container (making them compatible with C-style string manipulation functions). In the dynamic case, they are prefixed by one (`string`) or possibly two (`text`) bytes specifying the length. This (chosen over a zero-terminated strings) is to minimise gas used wile parsing the data input. There is no provision within the ABI for strings of greater than 65536 bytes. (To be honest, if you're wanting to communicate > 64K between contracts within such a storage-constrained environment like Ethereum 1.0, you should probably question your solution.)
+Strings may be either static (`string32`) or dynamic (`string`, `text`). In the static case, they are left-aligned within their container, and when passed, this container is always 32 bytes. This makes them compatible with C-style string manipulation functions. There is no provision within the ABI for strings of greater than 65536 bytes. (To be honest, if you're wanting to communicate > 64K between contracts within such a storage-constrained environment like Ethereum 1.0, you should probably question your solution.)
 
 We assume the following fixed-width types:
 - `uint<N>` binary type of `N` bits, `N <= 256`, `N > 0`, `N % 8 == 0`. e.g. `uint32`, `uint8`, uint256.
@@ -41,7 +41,7 @@ For these variable length (or specifically, variable-count) types, we concatenat
 Thus for our `Foo` example if we wanted to call `baz` with the parameters 69 and true, we would pass 6 bytes total `0x010000004501`, which can be broken down into:
 
 - `0x01`: the Method ID, (for `bar` it would be `0x00`, for `sam` 0x02).
-- `0x00000045`: the first parameter, a uint32 value `69`.
-- `0x01`: the second parameter - boolean `true`, encoded as a single byte.
+- `0x00000000000000000000000000000045`: the first parameter, a uint32 value `69`.
+- `0x00000000000000000000000000000001`: the second parameter - boolean `true`, encoded as a single byte.
 
-It returns a single `bool`. If, for example, it were to return `false`, its output would be the single byte array `0x00`, a single bool encoded as a byte.
+It returns a single `bool`. If, for example, it were to return `false`, its output would be the single byte array `0x00000000000000000000000000000000`, a single bool.
