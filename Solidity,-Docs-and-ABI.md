@@ -57,11 +57,7 @@ The above would result in three methods being exposed: `bar`, `baz` and `sam`, r
 ```
 
 
-In previous versions of the proof-of-concept series, these methods would have differentiated against through placing their zero-padded ASCII representation within the first 32 bytes of the message data; similarly, all fixed types would use a full 32-byte word, regardless of their intrinsic size.
-
-The purpose of the ABI is twofold:
-* to avoid such a large waste of data by efficiently encoding the method identification and parameters;
-* to provide a clear and formal means to specify the actions that a contract may do.
+In previous versions of the proof-of-concept series, only simple 32-byte values were supported; the ABI adds the ability to also have variably sized arguments.
 
 ### ABI
 
