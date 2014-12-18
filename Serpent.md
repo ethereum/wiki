@@ -271,7 +271,7 @@ The syntax for arrays in memory are different: they can only be finite and canno
 Example:
 
     def bitwise_or(x, y):
-        blah = array([1243])
+        blah = array(1243)
         blah[567] = x
         blah[568] = y
         blah[569] = blah[567] | blah[568]
