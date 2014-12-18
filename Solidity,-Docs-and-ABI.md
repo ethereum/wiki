@@ -216,10 +216,12 @@ This file would be hashed and distributed (either on a centralised website or, m
 
 So the ABI description file ("header file") for the contract would be trivially derivable from the contract source code. It would be distributed by the author for anyone who wanted to message or transact with it. It would contain only enough information to compose the input data for a transaction and to decode the output data. Here's how the GAVCoin example contract would look:
 
+TODO: include `const`ness in the JSON:
+
 ```
 [
-  { "name": "send", "input": [ { "name": "to", "type": "address" }, { "name": "valueInmGAV", "type": "uint256" } ], "output": [] },
-  { "name": "balance", "input": [ { "name": "who", "type": "address" } ], "output": [ { "name": "balanceInmGAV", "type": "uint256" } ] }
+  { "name": "send", "const": false, "input": [ { "name": "to", "type": "address" }, { "name": "valueInmGAV", "type": "uint256" } ], "output": [] },
+  { "name": "balance", "const": true, "input": [ { "name": "who", "type": "address" } ], "output": [ { "name": "balanceInmGAV", "type": "uint256" } ] }
 ]
 ```
 
