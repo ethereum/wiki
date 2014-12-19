@@ -31,9 +31,16 @@ Irrespectively whether or not the new preimage was stored locally, it is forward
 
 ### Retrieve
 
-This section describes the local query. The networked query is a simple local retrieval with no further action.
+Retrieval requests have the following parameters:
 
-If a node does not have the preimage of a queried hash value, it queries the good nodes it recursively searches for the node with the closest address, querying each node along the way. If even the closest node does not have the preimage, it is assumed not to be present in DPA. Whenever a node is found that has the preimage (after hashing and verification), the search is aborted and the preimage is returned.
+1. The hash of the queried pre-image
+1. Timeout value for routed retrieval, zero if not required
+
+If the node has the pre-image, it is returned. Otherwise, the following happens:
+
+1. The entire row in the Kademlia table corresponding to the queried hash is returned.
+1. If routing is deemed not worth the effort (timeout is too short), this fact is also communicated.
+1. Otherwise, the same query is recursively done and if it succeeds within the specified timeout, the result is sent to the querying node.
 
 Successfully found pre-images are automatically re-inserted into DPA.
 
