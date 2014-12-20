@@ -6,42 +6,55 @@ This specification does not address contracts whose interface is dynamic or othe
 
 ### Specifics
 
-The data input is encoded as:
+The first byte of the call data denotes the function to be called, it is the
+0-based index into the list of functions of the contract, sorted
+lexicographically by name (which are assumed to be UTF-8 encoded, compared in
+binary). Starting from the first byte, the encoded arguments follow. The return
+values are encoded in the same way, without the function index byte.
 
-* 1 byte *Method ID*; the 0-based index of the alphabetically ordered list of methods of the contract.
-* X-byte Big Endian parameter count for each arbitrary-sized parameter.
-* Multiple N-byte *Parameter*; dependent on the specific parameter series.
+Types can have a fixed size or their size can depend on the value. For all
+non-fixed-size types, in the order of their occurrence, the number of its
+elements (not the byte size) as a 32-byte big-endian number follows.
 
-The data output is encoded in much the same way but without the Method ID.
+After that, the arguments themselves are encoded.
 
-All variable-width parameters have their X-byte item-count front-loaded in the data input. When ORIGIN is equal to CALLER (i.e. for a straight transaction rather than a bare message call), X equals 2, otherwise X equals 32.
-
-Parameters are encoded as their full binary (and in the case of integral types, big-endian) representation. Integral types, are passed as a 256-bit representation, left-padded with zeroes. Semantically they are allowed to be of arbitrary byte size up to 256-bits. Hash (or short unformatted data) types are again allowed to be of similar size. Bools are encoded as a simple byte. Enumerations are encoded as their shortest integral representation possible.
-
-Strings may be either static (`string32`) or dynamic (`string`, `text`). In the static case, they are left-aligned within their container, and when passed, this container is always 32 bytes. This makes them compatible with C-style string manipulation functions. There is no provision within the ABI for strings of greater than 65536 bytes. (To be honest, if you're wanting to communicate > 64K between contracts within such a storage-constrained environment like Ethereum 1.0, you should probably question your solution.)
-
-We assume the following fixed-width types:
-- `uint<N>` binary type of `N` bits, `N <= 256`, `N > 0`, `N % 8 == 0`. e.g. `uint32`, `uint8`, uint256.
-- `int<N>`, `hash<N>`: equivalent to `uint<N>` except for the assumed interpretation and language typing.
-- `uint`: equivalent to `uint256` (same with `int` and `hash`).
+The following fixed-size elementary types exist:
+- `uint<N>`: unsigned integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`. e.g. `uint32`, `uint8`, `uint256`.
+- `int<N>`: two's complement signed integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`.
+- `hash<N>`: equivalent to `uint<N>` except for the assumed interpretation and language typing.
 - `address`: equivalent to `hash160`, except for the assumed interpretation and language typing.
-- `bool`: equivalent to `uint8`, except for the assumed interpretation and language typing.
-- `string<N>`: binary type of `N` bytes, `N > 0`. Assumed to be UTF-8 encoded, right-aligned, zero-passed data.
-- `real<N>x<M>`: fixed-point signed quantity of `N+M` bits, `N+M <= 256`, `N+M > 0`, `N % 8 == 0`, `M % 8 == 0`. Corresponds to the uint equivalent binary value divided by `2^M`.
+- `uint`, `int`, `hash`: equivalent to `uint256`, `int256`, `hash256`, respectively.
+- `bool`: equivalent to `uint8` restricted to the values 0 and 1
+- `real<N>x<M>`: fixed-point signed number of `N+M` bits, `0 < N + M <= 256`, `N % 8 == M % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
 - `ureal<N>x<M>`: unsigned variant of `real<N>x<M>`.
-- `real`: equivalent to `real128x128` (same with `ureal`).
+- `real`, `ureal`: equivalent to `real128x128`, `ureal128x128`
+- `string<N>`: binary type of `N` bytes, `N > 0`. Unicode strings are assumed to be UTF-8 encoded.
+
+They are all encoded in big-endian, padded to a multiple of 32 bytes. Signed
+types are padded with ones on the higher-order side, unsigned types with zeros.
+String types are padded with zeros on the lower-order side.  A `real<N>x<M>`
+number `x` is encoded as the uint/int number `x * 2^M`. The behaviour is
+unspecified for incorrect padding or values that are out of range.
+
+The following (fixed-size) array type exists:
 - `<type>[N]`: a fixed-length array of the given fixed-length type.
 
-There are also several variable-length types:
-- `string`: dynamic sized string (up to 65536 bytes). Assumed to be UTF-8 encoded.
+Each of its elements is encoded according to the above rules, which means that
+the type `uint8[10]` takes `32 * 10 = 320` bytes.
+
+The following non-fixed-size types exist: 
+- `string`: dynamic sized string. Unicode strings are assumed to be UTF-8 encoded.
 - `<type>[]`: a variable-length array of the given fixed-length type.
 
-For these variable length (or specifically, variable-count) types, we concatenate them (X-bytes each) and place them at the beginning of the data input, directly after the *Method ID*.
+The number of elements (number of bytes for string, number of elements for
+arrays) is given before any actual data (as described above). A `string` of
+length `N` is encoded the same way as `string<N>` and a `<type>[]` with exactly
+`N` elements is encoded the same way as `<type>[N]`.
 
 Thus for our `Foo` example if we wanted to call `baz` with the parameters 69 and true, we would pass 6 bytes total `0x010000004501`, which can be broken down into:
 
 - `0x01`: the Method ID, (for `bar` it would be `0x00`, for `sam` 0x02).
-- `0x00000000000000000000000000000045`: the first parameter, a uint32 value `69`.
-- `0x00000000000000000000000000000001`: the second parameter - boolean `true`, encoded as a single byte.
+- `0x00000000000000000000000000000045`: the first parameter, a uint32 value `69` padded to 32 bytes
+- `0x00000000000000000000000000000001`: the second parameter - boolean `true`, padded to 32 bytes
 
 It returns a single `bool`. If, for example, it were to return `false`, its output would be the single byte array `0x00000000000000000000000000000000`, a single bool.
