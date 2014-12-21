@@ -51,9 +51,9 @@ arrays) is given before any actual data (as described above). A `string` of
 length `N` is encoded the same way as `string<N>` and a `<type>[]` with exactly
 `N` elements is encoded the same way as `<type>[N]`.
 
-Thus for our `Foo` example if we wanted to call `baz` with the parameters 69 and true, we would pass 6 bytes total `0x010000004501`, which can be broken down into:
+Thus for our `Foo` example if we wanted to call `baz` with the parameters 69 and true, we would pass 65 bytes total, which can be broken down into:
 
-- `0x01`: the Method ID, (for `bar` it would be `0x00`, for `sam` 0x02).
+- `0x01`: the Method ID, (for `bar` it would be `0x00`, for `sam`, `0x02`).
 - `0x00000000000000000000000000000045`: the first parameter, a uint32 value `69` padded to 32 bytes
 - `0x00000000000000000000000000000001`: the second parameter - boolean `true`, padded to 32 bytes
 
