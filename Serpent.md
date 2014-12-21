@@ -10,7 +10,6 @@ The important differences between Serpent and Python are:
 
 * Python numbers have potentially unlimited size, Serpent numbers wrap around 2<sup>256</sup>. For example, in Serpent the expression `3^(2^254)` suprisingly evaluates to 1, even though in reality the actual integer is too large to be recorded in its entirety within the universe.
 * Serpent has no decimals.
-* There is no way to take a Serpent array and access its length; this sometimes leads to inconveniences like needing to type `return([a,b,c], 3)` instead of Python's `return [a,b,c]`. Future versions may change this specifically in the case of array literals.
 * Serpent has no concept of strings (at this point)
 * Serpent has no list comprehensions (expressions like `[x**2 for x in my_list]`), dictionaries or most other advanced features
 * Serpent has no concept of first-class functions. Contracts do have functions, and can call their own functions, but variables (except storage) do not persist across calls.
@@ -276,6 +275,48 @@ Example:
         blah[568] = y
         blah[569] = blah[567] | blah[568]
         return(blah[569])
+
+There are also two functions for dealing with arrays:
+
+    len(x)
+
+Returns the length of array x.
+
+    shrink_array(x, s)
+
+Shrink the length of array x to size s (useful just before passing the array as an argument to a function).
+
+### Arrays and Functions
+
+Functions can also take arrays as arguments, and return arrays.
+
+    def compose(inputs:a):
+        return(inputs[0] + inputs[1] * 10 + inputs[2] * 100)
+
+    def decompose(x):
+        return([x % 10, (x % 100) / 10, x / 100]:a)
+
+Putting the `:a` after a function argument means it is an array, and putting it inside a return statement returns the value as an array (just doing `return([x,y,z])` would return the integer which is the memory location of the array).
+
+If a contract calls itself, then it will autodetect which arguments should be arrays and parse them accordingly, so this works fine:
+
+    def compose(inputs:a, radix):
+        return(inputs[0] + inputs[1] * radix + inputs[1] * radix ** 2)
+
+    def main():
+        return self.compose([1,2,3,4,5], 100)
+
+However, if you want to call another contract that takes arrays as arguments, then you will need to put a "signature" into the extern declaration:
+
+    extern composer: [compose:ai, main]
+
+Here, `ai` means "an array followed by an integer".
+
+### Strings
+
+There are two types of strings in Serpent: short strings, eg. `"george"`, and long strings, eg. `text("afjqwhruqwhurhqkwrhguqwhrkuqwrkqwhwhrugquwrguwegtwetwet")`. Short strings, given simply in quotes as above, are treated as numbers; long strings, surrounded by the `text` keyword as above, are treated as array-like objects; you can do `getch(str, index)` and `setch(str, index)` to manipulate characters in strings (doing `str[0]` will treat the string as an array and try to fetch the first 32 characters as a number).
+
+To use strings as function arguments or outputs, use the `s` tag, much like you would use `a` for arrays. `len(s)` gives you the length of a string, and `shrink` works for strings the same way as for arrays too.
 
 ### Macros
 
