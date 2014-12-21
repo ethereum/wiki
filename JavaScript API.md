@@ -7,10 +7,11 @@ There is, at the global scope, one objects; the `web3` object, containing data h
 # API
 
 * [web3](#web3)
-  * [sha3](#web3sha3) *(_s1, [_s2], [_s3])*
+  * [sha3](#web3sha3) *(_s1)*
   * [toAscii](#web3toascii) *(_s)*
   * [fromAscii](#web3fromascii) *(_s, [_padding])*
   * [toDecimal](#web3todecimal) *(_s)*
+  * [fromDecimal](#web3fromdecimal) *(_s)*
   * [toFixed](#web3tofixed) *(_s)*
   * [fromFixed](#web3fromfixed) *(_s)*
   * [offset](#web3offset) *(_s, _o)*
@@ -79,7 +80,8 @@ var web3 = require('web3')
 ##### web3.sha3
 Returns the SHA3 of the given data.
 ```javascript
-// TODO (_s), (_s1, _s2), (_s1, _s2, _s3)
+var str = web3.fromAscii("Some ASCII string to be hashed");
+web3.sha3(str).then(function(hash){ console.log(hash + " is the hash."); });
 ```
 
 ##### web3.toAscii
@@ -103,7 +105,14 @@ console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000
 Returns the decimal string representing the data `_s` (when interpreted as a big-endian integer).
 ```javascript
 var value = web3.toDecimal('0x15');
-console.log(value); // 21
+console.log(value === "21"); // true
+```
+
+##### web3.fromDecimal
+Returns the hex data string representing (in big-endian format) the decimal integer `_s`.
+```javascript
+var value = web3.fromDecimal('21');
+console.log(value === "0x15"); // true
 ```
 
 ##### web3.toFixed
