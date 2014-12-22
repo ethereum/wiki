@@ -19,9 +19,10 @@ The difference between Dagger Hashimoto and Hashimoto is that, instead of using 
 The code for the algorithm will be defined in Python below. `encode_int`, `cantor_pair` and `P` represent the following algorithms and value:
 
     def encode_int(x):
+        "Encode an integer x as a string of 64 characters using a little-endian scheme"
         o = ''
         for _ in range(64):
-            o = chr(x % 256) + o
+            o += chr(x % 256)
             x //= 256 
         return o
 
