@@ -31,7 +31,7 @@ The code for the algorithm will be defined in Python below. `encode_int`, `nor` 
     P = (2**256 - 4294968273) ** 2
 
     def nor(x,y):
-        return (x or y) ^ (2**NUM_BITS - 1)
+        return (x | y) ^ (2**NUM_BITS - 1)
 
 The *nor* is a non-associative alternative to functions like OR and XOR, rendering [graph-reduction parallelization](https://en.wikipedia.org/wiki/Graph_reduction) impossible. We also assume that `sha3` is a function that takes an integer and outputs an integer; if converting this reference code into an implementation use:
 
