@@ -21,10 +21,10 @@ The code for the algorithm will be defined in Python below. `encode_int`, `nor` 
     NUM_BITS = 512
 
     def encode_int(x):
-        "Encode an integer x as a string of 64 characters using a little-endian scheme"
+        "Encode an integer x as a string of 64 characters using a big-endian scheme"
         o = ''
         for _ in range(NUM_BITS / 8):
-            o += chr(x % 256)
+            o = o + chr(x % 256)
             x //= 256 
         return o
 
