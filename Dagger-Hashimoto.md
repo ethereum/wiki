@@ -24,9 +24,17 @@ The code for the algorithm will be defined in Python below. `encode_int`, `nor` 
         "Encode an integer x as a string of 64 characters using a big-endian scheme"
         o = ''
         for _ in range(NUM_BITS / 8):
-            o = o + chr(x % 256)
-            x //= 256 
+            o = chr(x % 256) + o
+            x //= 256
         return o
+
+    def decode_int(s):
+        "Unencode an integer x from a string using a big-endian scheme"
+        x = 0
+        for c in s:
+            x *= 256
+            x += ord(c)
+        return x
 
     P = (2**256 - 4294968273) ** 2
 
@@ -37,7 +45,7 @@ The *nor* is a non-associative alternative to functions like OR and XOR, renderi
 
     from pyethereum import utils
     def sha3(x):
-        return utils.decode_int(utils.sha3(utils.encode_int(x)))
+        return decode_int(utils.sha3(encode_int(x)))
 
 ### Parameters
 
