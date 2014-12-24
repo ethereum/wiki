@@ -54,8 +54,8 @@ The parameters used for the algorithm are:
     params = {
       "numdags": 40,          # Number of dags in the dataset
       "n": 250000,            # Size of the dataset
-      “h_threshold”: 100000,  # Index threshold at which a complex child evaluation mode turns on
-      "diff": 2**14,          # Difficulty (adjusted during block exaluation)
+      "h_threshold": 100000,  # Index threshold at which a complex child evaluation mode turns on
+      "diff": 2**14,          # Difficulty (adjusted during block evaluation)
       "epochtime": 1000,      # Length of an epoch in blocks (how often the dataset is updated)
       "k": 2,                 # Number of parents of a node
       "hk": 8,                # Number of parents during complex child evaluation
@@ -74,7 +74,7 @@ The Dagger graph building primitive is defined as follows:
 
     def produce_dag(params, seed):
          P = params["P"]
-         o = [sha3(seed) % P]
+         o = [sha3(seed)]
          init = o[0]
          picker = o[0]
          for i in range(1, params["n"]):
@@ -82,16 +82,16 @@ The Dagger graph building primitive is defined as follows:
              picker = (picker * init) % P
              curpicker = picker
              for j in range(params["k"]):
-                 x = nor(x, o[curpicker % i])
-                 curpicker >>= 10
+                 x ^= o[curpicker % i]
+                 curpicker = x % curpicker
              if pos >= params["h_threshold"]:
                  for j in range(params["hk"]):
-                     x = nor(x, o[picker % params["h_threshold"]])
-                     curpicker >>= 10
-             w = params[“w” if x < params["h_threshold"] else “hw”]
+                     x = nor(x, o[curpicker % params["h_threshold"]])
+                     curpicker = x % curpicker
+             w = params["w" if x < params["h_threshold"] else "hw"]
              o.append(pow(x, w, P))  # use any "hash function" here
 
-Essentially, it starts off a graph as a single node, `sha3(seed) % P`, and from there starts sequentially adding on other nodes. When a new node is created, `sha3(seed) ** i % P` (where `i` is the index of the node being created and `P` is a large number, in our case slightly under 2**512) is used as a seed to randomly select some indices less than `i` (using `curpicker % i` above), and the values of the nodes at those indices are used in a calculation to generate a value `x`, which is then fed into a small proof of work function to ultimately generate the value of the graph at index `i`.
+Essentially, it starts off a graph as a single node, `sha3(seed)`, and from there starts sequentially adding on other nodes. When a new node is created, `sha3(seed) ** i % P` (where `i` is the index of the node being created and `P` is a large number, in our case slightly under 2**512) is used as a seed to randomly select some indices less than `i` (using `curpicker % i` above), and the values of the nodes at those indices are used in a calculation to generate a value `x`, which is then fed into a small proof of work function to ultimately generate the value of the graph at index `i`.
 
 The graph as a whole has `n` indices; for indices higher than `h_threshold`, we deliberately make the values harder to generate by (1) increasing the number of children, and (2) increasing the strength of the proof of work.
 
