@@ -16,7 +16,7 @@ Approaches that were tried between Dagger and Dagger Hashimoto but are currently
 
 The difference between Dagger Hashimoto and Hashimoto is that, instead of using the blockchain as a data source, Dagger Hashimoto uses a custom-generated 1 GB data set, which updates based on block data every N blocks. The data set is generated using the Dagger algorithm, allowing for the efficient calculation of a subset specific to every nonce for the light client verification algorithm. The difference between Dagger Hashimoto and Dagger is that, unlike in the original Dagger, the dataset used to query the block is semi-permanent, only being updated at occasional intervals (eg. once per week). This means that the portion of the effort that goes toward generating the dataset is close to zero, so Sergio Lerner's arguments regarding shared memory speedups become negligible.
 
-The code for the algorithm will be defined in Python below. `encode_int`, `nor` and `P` represent the following algorithms and value:
+The code for the algorithm will be defined in Python below. First, we give `encode_int` for marshaling unsigned ints of specified precision to strings. Its inverse is also given:
 
     NUM_BITS = 512
 
@@ -36,12 +36,7 @@ The code for the algorithm will be defined in Python below. `encode_int`, `nor` 
             x += ord(c)
         return x
 
-    P = (2**256 - 4294968273) ** 2
-
-    def nor(x,y):
-        return (x | y) ^ (2**NUM_BITS - 1)
-
-The *nor* is a non-associative alternative to functions like OR and XOR, rendering [graph-reduction parallelization](https://en.wikipedia.org/wiki/Graph_reduction) impossible. We also assume that `sha3` is a function that takes an integer and outputs an integer; if converting this reference code into an implementation use:
+We assume that `sha3` is a function that takes an integer and outputs an integer; if converting this reference code into an implementation use:
 
     from pyethereum import utils
     def sha3(x):
@@ -83,11 +78,11 @@ The Dagger graph building primitive is defined as follows:
              curpicker = picker
              for j in range(params["k"]):
                  x ^= o[curpicker % i]
-                 curpicker = x % curpicker
-             if pos >= params["h_threshold"]:
+                 curpicker >>= 10
+             if x >= params["h_threshold"]:
                  for j in range(params["hk"]):
-                     x = nor(x, o[curpicker % params["h_threshold"]])
-                     curpicker = x % curpicker
+                     x ^= o[curpicker % params["h_threshold"]]
+                     curpicker >>= 10
              w = params["w" if x < params["h_threshold"] else "hw"]
              o.append(pow(x, w, P))  # use any "hash function" here
 
@@ -194,7 +189,7 @@ Here is a light-client friendly version, using functions defined above:
             shifted_A = (rand ^ mix * params["is_serial"]) >> i
             seed = seedset[shifted_A % params["numdags"]]
             # can further optimize with cross-round memoization
-            mix = nor(mix, quick_calc(params, seed, (shifted_A // params["numdags"]) % params["n"]))
+            mix ^= quick_calc(params, seed, (shifted_A // params["numdags"]) % params["n"])
         return mix ^ rand
 
 To make the algorithm require blockchain storage, we simply add one additional round of access which uses the current state as a database. The reason why the original hashimoto does not suffice for light client friendliness is that the validation process would require 64 Merkle tree proofs, amounting to up to 50kb of data for each block - perhaps light enough for a smartphone, but not an internet-of-things device. Here, we intend to achieve simultaneous light client friendliness and blockchain storage requirement by pursuing the two goals separately - once with a Dagger-generated dataset, and the second time by making a single blockchain access.
