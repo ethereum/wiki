@@ -106,7 +106,7 @@ has a period of `P` provided:
  2. `a-1` is divisible by all of the prime factors of `P`
  3. `a-1` is divisible by 4 if `P` is divisible by 4
  
-See Knuth's *The Art of Computer Programming* (1997), Volume 2, §3.2.1 for a discussion of this.  Since we have chosen `P` to be prime, then (3) is always satisfied. Likewise, any $c\in[1,\texttt{P}-1]$ suffices (1).  Since our initial value `sha3(seed)+1` only has 256 bits, it is a satisfactory candidate for $c$.  On the other hand, choosing `a = P+1` then (2) is satisfied.
+See Knuth's *The Art of Computer Programming* (1997), Volume 2, §3.2.1 for a discussion of this.  Since we have chosen `P` to be prime, then (3) is always satisfied. Likewise, any `c ∈ [1,P-1]` suffices (1).  Since our initial value `sha3(seed)+1` only has 256 bits, it is a satisfactory candidate for `c`.  On the other hand, choosing `a = P+1` then (2) is satisfied.
 
 For the *i*th picker `pᵢ`, this particular linear congruential generator has a closed form, which recognizably involves the geometric series summation:
 
