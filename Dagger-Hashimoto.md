@@ -1,6 +1,6 @@
 Dagger Hashimoto is a proposed spec for the mining algorithm for Ethereum 1.0. Dagger Hashimoto aims to simultaneously satisfy three goals:
 
-1. **ASIC-resistance**: the benefit from creating specialized hardware for the algorithm should be as small as possible, ideally to the point that even in an economy where ASICs have been developed the speedup us sufficiently small that it is still marginally profitable for users on ordinary computers to mine with spare CPU power.
+1. **ASIC-resistance**: the benefit from creating specialized hardware for the algorithm should be as small as possible, ideally to the point that even in an economy where ASICs have been developed the speedup is sufficiently small that it is still marginally profitable for users on ordinary computers to mine with spare CPU power.
 2. **Light client verifiability**: a block should be relatively efficiently verifiable by a light client.
 3. **Full chain storage**: mining should require storage of the complete blockchain state (due to the irregular structure of the Ethereum state trie, we anticipate that some pruning will be possible, particularly of some often-used contracts, but we want to minimize this).
 
@@ -18,103 +18,144 @@ The difference between Dagger Hashimoto and Hashimoto is that, instead of using 
 
 The code for the algorithm will be defined in Python below. First, we give `encode_int` for marshaling unsigned ints of specified precision to strings. Its inverse is also given:
 
-    NUM_BITS = 512
+```python
+NUM_BITS = 512
 
-    def encode_int(x):
-        "Encode an integer x as a string of 64 characters using a big-endian scheme"
-        o = ''
-        for _ in range(NUM_BITS / 8):
-            o = chr(x % 256) + o
-            x //= 256
-        return o
+def encode_int(x):
+    "Encode an integer x as a string of 64 characters using a big-endian scheme"
+    o = ''
+    for _ in range(NUM_BITS / 8):
+        o = chr(x % 256) + o
+        x //= 256
+    return o
 
-    def decode_int(s):
-        "Unencode an integer x from a string using a big-endian scheme"
-        x = 0
-        for c in s:
-            x *= 256
-            x += ord(c)
-        return x
+def decode_int(s):
+    "Unencode an integer x from a string using a big-endian scheme"
+    x = 0
+    for c in s:
+        x *= 256
+        x += ord(c)
+    return x
+```
 
-We assume that `sha3` is a function that takes an integer and outputs an integer; if converting this reference code into an implementation use:
+We next assume that `sha3` is a function that takes an integer and outputs an integer; if converting this reference code into an implementation use:
 
-    from pyethereum import utils
-    def sha3(x):
-        return decode_int(utils.sha3(encode_int(x)))
+```python
+from pyethereum import utils
+def sha3(x):
+    return decode_int(utils.sha3(encode_int(x)))
+```
 
 ### Parameters
 
 The parameters used for the algorithm are:
 
-    params = {
-      "numdags": 40,          # Number of dags in the dataset
-      "n": 250000,            # Size of the dataset
-      "h_threshold": 100000,  # Index threshold at which a complex child evaluation mode turns on
-      "diff": 2**14,          # Difficulty (adjusted during block evaluation)
-      "epochtime": 1000,      # Length of an epoch in blocks (how often the dataset is updated)
-      "k": 2,                 # Number of parents of a node
-      "hk": 8,                # Number of parents during complex child evaluation
-      "w": 2,                 # Work factor for proof of work during nonce calculations
-      "hw": 8,                # Work factor for proof of work during complex evaluation
-      "is_serial": 0,         # Is hashimoto modified to be serial?
-      "accesses": 40,         # Number of dataset accesses during hashimoto
-      "P": (2**256 - 
-            4294968273) ** 2, # Number to modulo everything by (determines
-                              # byte length and maybe some moduli are more secure than others)
-    }   
+```python
+BIG_PRIME = 13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006083527
+params = {
+      "numdags": 40,               # Number of dags in the dataset
+      "n": 250000,                 # Size of the dataset
+      "diff": 2**14,               # Difficulty (adjusted during block evaluation)
+      "epochtime": 1000,           # Length of an epoch in blocks (how often the dataset is updated)
+      "k": 2,                      # Number of parents of a node
+      "w": 5,                      # Work factor for proof of work during nonce calculations
+      "is_serial": 0,              # Is hashimoto modified to be serial?
+      "accesses": 40,              # Number of dataset accesses during hashimoto
+      "P": BIG_PRIME,              # Number to modulo everything by
+      "P_plus_1": BIG_PRIME + 1    # P+1 convenience constant
+}
+```
+
+`P` in this case is a prime chosen such that `log₂(P)` is just slightly less than 512, which corresponds to the 512 bits we have been using to represent our numbers.
 
 ### Dagger graph building
 
-The Dagger graph building primitive is defined as follows:
+The dagger graph building primitive is defined as follows:
 
-    def produce_dag(params, seed):
-         P = params["P"]
-         o = [sha3(seed)]
-         init = o[0]
-         picker = o[0]
-         for i in range(1, params["n"]):
-             x = 0
-             picker = (picker * init) % P
-             curpicker = picker
-             for j in range(params["k"]):
-                 x ^= o[curpicker % i]
-                 curpicker >>= 10
-             if x >= params["h_threshold"]:
-                 for j in range(params["hk"]):
-                     x ^= o[curpicker % params["h_threshold"]]
-                     curpicker >>= 10
-             w = params["w" if x < params["h_threshold"] else "hw"]
-             o.append(pow(x, w, P))  # use any "hash function" here
+```python
+def produce_dag(params, seed):
+    P = params["P"]
+    P_plus_1 = params["P_plus_1"]
+    o = [sha3(seed)+1]
+    init = o[0]
+    picker = init
+    for i in range(1, params["n"]):
+        picker = (picker * P_plus_1 + init) % P
+        x = picker
+        curpicker = picker
+        for _ in range(params["k"]):
+            x ^= o[curpicker % i]
+            curpicker >>= 10
+            curpicker = x % curpicker if curpicker else 0
+        o.append(pow(x, params["w"], P))
+    return o
+```
 
-Essentially, it starts off a graph as a single node, `sha3(seed)`, and from there starts sequentially adding on other nodes. When a new node is created, `sha3(seed) ** i % P` (where `i` is the index of the node being created and `P` is a large number, in our case slightly under 2**512) is used as a seed to randomly select some indices less than `i` (using `curpicker % i` above), and the values of the nodes at those indices are used in a calculation to generate a value `x`, which is then fed into a small proof of work function to ultimately generate the value of the graph at index `i`.
+Essentially, it starts off a graph as a single node, `sha3(seed)+1`, and from there starts sequentially adding on other nodes. When a new node is created, a special *Linear Congruential Generator* (LCG) is of the form  used as a seed to randomly select some indices less than `i` (using `curpicker % i` above), and the values of the nodes at those indices are used in a calculation to generate a value `x`, which is then fed into a small proof of work function to ultimately generate the value of the graph at index `i`.
 
-The graph as a whole has `n` indices; for indices higher than `h_threshold`, we deliberately make the values harder to generate by (1) increasing the number of children, and (2) increasing the strength of the proof of work.
+Here is where our choice of `w` comes in to play.  We have the following observation from number theory:
 
-The intent of this construction is to construct a graph in such a way that each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and making a small amount of auxiliary computation. This subtree should be large enough so that it does not open up an efficient memory-free mining implementation, but small enough so that it is practical for a light client, and ideally even a protocol on the blockchain, to verify it. The `h_threshold` parameter is an adaptation of a mechanism found in the original Dagger; its purpose is to make generating the last "row" of the DAG artificially hard, so as to put a high cost premium on any strategies that store less than the entire dataset, thereby eliminating the potential for middle-of-the-road implementations that store some of the DAG and calculate the rest. The question of whether this increased complexity is best achieved through a higher number of parents or increased work is undecided; both options are left tunable as parameters (`hw` and `hk`).
+> Let `P` be a prime; `w` and `P-1` are relatively prime if and only if for all `a` and `b`:<center>`aʷ mod P ≡ bʷ mod P` if and only if `a mod P ≡ b mod P`</center>
+
+It is easy to check that  `gcd(5,P-1) = 1`, and since we chose `w = 5` we know the above applies. This allows us to reason that the function `f = lambda x: pow(x,w,P)` is a *permutation* on [0,2<sup>256</sup>].  Hence, as a hashing function we should expect very few collisions from it.
+
+A note regarding our choice of LCG: the *Hull-Dobell Theorem* guarantees that the recurrence
+<center><pre>X<sub>n+1</sub> = (a X<sub>n</sub> + c) mod P</pre></center>
+has a period of `P` provided:
+ 1. `c` and `P` are relatively prime
+ 2. `a-1` is divisible by all of the prime factors of `P`
+ 3. `a-1` is divisible by 4 if `P` is divisible by 4
+ 
+See Knuth's *The Art of Computer Programming* (1997), Volume 2, §3.2.1 for a discussion of this.  Since we have chosen `P` to be prime, then (3) is always satisfied. Likewise, any $c\in[1,\texttt{P}-1]$ suffices (1).  Since our initial value `sha3(seed)+1` only has 256 bits, it is a satisfactory candidate for $c$.  On the other hand, choosing `a = P+1` then (2) is satisfied.
+
+For the *i*th picker `pᵢ`, this particular linear congruential generator has a closed form, which recognizably involves the geometric series summation:
+
+<center><pre>pᵢ = [(sha3(seed) + 1) ⨉ ∑<sup>i</sup><sub>n=0</sub> (P+1)<sup>n</sup>] mod P</pre><center>
+
+The following algorithm computes `pᵢ` with reasonable efficiency; it takes `O(ln(i))` time (given constant time arithmetic calculations) with `O(1)` space:
+
+```python
+def quick_modular_geometric_series_sum(r, i, P):
+    a = 1
+    b = 0
+    while i != 0:
+        if (i % 2 == 0):
+            b = (b + a*pow(r, i, P)) % P
+            i = (i / 2) - 1
+        else:
+            i >>= 1
+        a = (a * (r + 1)) % P    
+        r = r * r % P
+    return (a + b) % P
+
+def quick_pick(init, i, params):
+    P = params["P"]
+    P_plus_1 = params["P_plus_1"]
+    return (init * quick_modular_geometric_series_sum(P_plus_1, i, P)) % P
+```
+
+The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary computation.  In particular, our choice of LCG allows us to compute the `i`th picker without computing all preceding pickers, in a fraction of the time. Combined with memoization, this allows for reasonable performance with little memory overhead.
 
 The light client computing function for the DAG works as follows:
 
-    def quick_calc(params, seed, pos):
-      P = params["p"]
-      init = sha3(seed)
-      known = {0: init}
-  
-      def calc(p):
-          if p not in known:
-              picker = pow(init, p, P)
-              x = 0
-              for j in range(params["k"]):
-                  x = nor(x, calc(picker % p))
-                  picker >>= 10
-              if pos >= params["h_threshold"]:
-                  for j in range(params["hk"]):
-                      x = nor(x, calc(picker % params["h_threshold"]))
-                      picker >>= 10
-              w = params["w" if x < params["h_threshold"] else "hw"]
-              known[p] = pow(x, w, P)
-          return known[p]
-  
-      return calc(pos)
+```python
+def quick_calc(params, seed, pos):
+    P = params["P"]
+    init = sha3(seed)+1
+    known = {0: init}
+    def calc(p):
+        if p not in known:
+            picker = quick_pick(init, p, params)
+            x = picker
+            for _ in range(params["k"]):
+                x ^= calc(picker % p)
+                picker >>= 10
+                picker = x % picker if picker else 0
+            known[p] = pow(x, params["w"], P)
+        return known[p]
+    x = calc(pos)
+    return x
+```
 
 Essentially, it is simply a rewrite of the above algorithm that removes the loop of computing the values for the entire DAG and replaces the earlier node lookup with a recursive memoized call.
 
