@@ -134,7 +134,7 @@ def quick_pick(init, i, params):
     return (init * quick_modular_geometric_series_sum(P_plus_1, i, P)) % P
 ```
 
-The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary computation.  In particular, our choice of LCG allows us to compute the `i`th picker without computing all preceding pickers, in a fraction of the time. Combined with memoization, this allows for reasonable performance with little memory overhead.
+The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary computation.  In particular, our choice of LCG allows us to compute the *i*th picker without computing all preceding pickers, in a fraction of the time. Combined with memoization, this allows for reasonable performance with little memory overhead.
 
 The light client computing function for the DAG works as follows:
 
