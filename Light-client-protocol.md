@@ -10,86 +10,25 @@ The size complexity of a Merkle proof scales linearly with the height of a tree;
 
 An SPV proof of a node in a Patricia tree simply consists of the complete subset of tree nodes that were processed in order to access it (or, more specifically, the tree nodes that needed to be looked up in a reverse-hash-lookup database). In a simple implementation of a Patricia tree, retrieving the value associated with a particular key requires descending the hash tree, constantly looking up nodes in the database by their hashes, until you eventually reach the final leaf node; a simple algorithm for producing an SPV proof is to simply run this naive algorithm, and record all of the database lookups that were made. SPV verification consists of running the naive lookup algorithm but pointing it to a custom database populated only with the nodes in the SPV proof; if there is a "node not found" error, then the proof is invalid. 
 
-#### Specifications
+## Principles
 
-Request for proof of account data (all data structures in RLP):
+In Ethereum, a light client can be viewed as a client that downloads block headers by default, and verifies only a small portion of what needs to be verified, using a distributed hash table as a database for trie nodes in place of its local hard drive. For a "partially light client", which processes everything but is constrained by hard drive space and so stores almost nothing, swapping out a database read with a DHT get request is by itself sufficient to meet the requirements. Indeed, all "full clients" except for archive nodes (intended to be run by businesses, block explorers, etc) will eventually be set up as "partially light clients" with respect to all history older than a few thousand blocks. However, what we are also interested in supporting is _fully_ light clients, which never even process most transactions. Formally, we can say that _all_ measures of a full light client are bounded by a sublinear function of the number of transactions in a block - in most cases, the protocols below work for a bound of O(log(n)), though one particular mechanism works only for ~O(sqrt(n)).
 
-    [ 30, address ]
+Some use cases for a fully light client, and how the light client meets those use cases, include:
 
-Request for proof of account state:
+* A light client wants to know the state of an account (nonce, balance, code or storage index) at a particular time. The light client can simply recursively download trie nodes from the state root until it gets to the desired value.
+* A light client wants to check that a transaction was confirmed. The light client can simply ask the network for the index and block number of that transaction, and recursively download transaction trie nodes to check for availability.
+* Light clients want to collectively validate a block. Each light client `C[i]` chooses one transaction index `i` with transaction `T[i]` (with corresponding receipt `R[i]`) and does the following:
+    * Initiate the state with state root `R[i-1].medstate` and `R[i-1].gas_used` (if `i = 0` use the parent endstate and 0 `gas_used`)
+    * Process transaction `T[i]`
+    * Check that the resulting state root is `R[i].medstate` and the gas_used is `R[i].gas_used`
+    * Check that the set of logs and bloom produced matches `R[i].logs` and `R[i].logbloom`
+    * Checks that the bloom is a subset of the block header-level bloom (this detects block header-level blooms with false negatives); then pick a few random indices of the block header-level bloom where that bloom contains a 1 and ask other nodes for a transaction-level bloom that contains a 1 at that index, rejecting the block if no response is given (this detects block header-level blooms with false positives)
+* Light clients want to "watch" for events that are logged. The protocol here is the following:
+    * A light client gets all block headers, checks for block headers that contain bloom filters that match one of a desired list of addresses or topics that the light client is interested in
+    * Upon finding a potentially matching block header, the light client downloads all transaction receipts, checks them for transactions whose bloom filters match
+    * Upon finding a potentially matching transaction, the light client checks its actual log RLP, and sees if it actually matches
 
-    [ 31, address, index ]
+The first three light client protocols require a logarithmic amount of data access and computation; the fourth requires ~O(sqrt(N)) since bloom filters are only a two-level structure, although this can be improved to O(log(N)) if the light client is willing to rely on multiple providers to point to "interesting" transaction indices and decommission providers if they are revealed to have missed a transaction. The first protocol is useful to simply check up on state, and the second in consumer-merchant scenarios to check that a transaction was validated. The third protocol allows Ethereum light clients to collectively validate blocks with a very low degree of trust. In Bitcoin, for example, a miner can create a block that gives the miner an excessive amount of transaction fees, and there would be no way for light nodes to detect this themselves, or upon seeing an honest full node detect it verify a proof of invalidity. In Ethereum, if a block is invalid, it must contain an invalid state transition at some index, and so a light client that happens to be verifying that index can see that something is wrong, either because the proof step does not check out, or because data is unavailable, and that client can then raise the alarm.
 
-Request for proof of transaction:
-
-    [ 32, blknum, index ]
-
-    [ 33, txhash ]
-
-To all of these requests, a parameter `blk_coarseness` can be appended (eg. `[31, address, index, blk_coarseness]`); this requests a proof including block headers up to the next block N such that `N mod blk_coarseness = 0`
-
-A simple proof:
-
-    [ 40, [ node1, node2, node3 ... ]]
-
-A proof with block headers:
-
-    [ 40, [node1, node2, node3 ... ], [header1, header2 ... ]]
-
-The purpose of the `blk_coarseness` parameter is to allow for "extra-light" nodes, which process all block headers but store only a few (eg. one block header per 16). Using exact powers of two for `blk_coarseness` is encouraged.
-
-### Transaction Tree Structural Invalidity
-
-There are two ways in which a transaction tree can be invalid:
-
-1. The tree may contain an badly formatted transaction at some index
-2. The tree may contain a transaction which is invalid because the state at the time does not have enough ether at the sender account
-3. The tree may contain a transaction at an index higher than at an index where the trie has no value
-
-Cases (1) and (2) will be dealt in a later section. However, case (3) does deserve specific attention.
-
-Request for proof of zero-past-a-point:
-
-    [ 50, blknum, index ]
-
-Request for proof of transaction at a particular index:
-
-    [ 51, blknum, index ]
-
-Responses are given in the same format as above. The proof of zero-past-a-point is a special kind of SPV proof, proving that there are no keys in the tree higher than some particular value. Each Patricia tree implementation should have a method for "find next key in the tree to the right of this key" (where the key provided may or may not itself be in the tree), and the way to verify the proof is to attempt to run this method with the provided index using only the Patricia tree nodes supplied in the proof, and see that there are no keys to be found.
-
-### Transaction Execution Challenge-Response
-
-Another function of the light client protocol is to verify the validity of transaction execution. The SPV proof here is very similar to any other SPV proof, except with a few small parts; a full proof-of-execution consists of the following:
-
-1. The subset of Patricia nodes used to prove the validity of the `[tx, medstate, gas]` tuple at index i
-2. The subset of Patricia nodes used to prove the validity of the `[tx, medstate, gas]` tuple at index i+1
-3. The subset of Patricia that at any point need to be accessed during the process of processing the state transition from index i to index i+1
-
-For simplicity, we will combine all of these nodes into one list. The process of verification will thus be accessing the `[tx, medstate, gas]` tuples at indices i and i+1, processing the state transition of the transaction at index i+1, and making sure that:
-
-1. The execution used only nodes in the proof
-2. The transaction is valid
-3. Execution actually results in the medstate and gas at index i+1.
-
-Request for proof:
-
-    [ 60, blknum, index ]
-
-### Self-contained Proof Formats
-
-Account:
-
-    [ 61, blk_header, addr, trienodes ]
-
-Storage entry:
-
-    [ 62, blk_header, addr, index, trienodes ]
-
-Zero-past-a-point:
-
-    [ 63, blk_header, txcount, trienodes]
-
-Trace:
-
-    [ 64, blk_header, txindex, trienodes ]
+The fourth protocol is useful in cases where a dapp wants to keep track of some kind of events that need to be efficiently verifiable, but which do not need to be part of the permanent state; an example is a decentralized exchange logging trades or a wallet logging transactions (note that the light client protocol will need to be augmented with header-level coinbase and uncle checks for this to work fully with mining accounts). In Bitcoin terminology, `LOG` can be viewed as a pure "proof of publication" opcode.
