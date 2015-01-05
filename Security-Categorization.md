@@ -67,7 +67,9 @@ The following properties are desired:
   * Transactions/messages that could be processed differently by different machines
   * Transactions/messages that have a much higher execution time / gas cost ratio than most others, opening the door to a denial-of-service attack
 
-### Wire protocol (https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol) 
+### Wire protocol 
+
+The wire protocol is described here: https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol
 
 The wire protocol should be secure against the following issues:
 
