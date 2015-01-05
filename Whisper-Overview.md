@@ -67,6 +67,7 @@ Two other parameters optionally specify the addressing: recipient (`to`), sender
 - `shh.post({ "from": myIdentity, "topics": t, "payload": p });` Open signature, no encryption: Clear-signed broadcast; a bit like a normal twitter feed - anyone interested can see a particular identity is sending particular stuff out to no-one in particular.
 - `shh.post({ "to": recipient, "topics": t, "payload": p });` No signature, encryption: Encrypted anonymous message; a bit like an anonymous drop-box - message is private to the owner of the dropbox. They can't tell from whom it is.
 - `shh.post({ "from": myIdentity, "to": recipient, "topics": t, "payload": p });` Secret signature, encryption: Encrypted signed message; like a secure e-mail. One identity tells another something - nobody else can read it. The recipient alone knows it came from the sender.
+- `shh.post({ "from": myIdentity, "to": recipient, "topics": t, "payload": p, "deniable": d });` Secret signature, encryption with optional plausible deniability. If boolean parameter `d` is **false**, it is equivalent to the previous call. If `d` is **true**, recipient cannot prove to any third party that the message originates from sender, though still can verify it for herself. This is achieved by the digital signature being calculated on the symmetric session encryption key instead of the message body.
 
 In addition to the basic use cases, there will also be support for secure multi-casting. For this, you set up a group with `shh.newGroup`:
 
