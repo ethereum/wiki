@@ -6,10 +6,8 @@ This specification does not address contracts whose interface is dynamic or othe
 
 ### Specifics
 
-The first byte of the call data denotes the function to be called, it is the
-0-based index into the list of functions of the contract, sorted
-lexicographically by name (which are assumed to be UTF-8 encoded, compared in
-binary). Starting from the first byte, the encoded arguments follow. The return
+The first four bytes of the call data denotes the function to be called, it is the
+last four bytes of the Keccak (SHA-3) hash of the signature of the function. The signature is defined as the canonical expression of the basic prototype. Starting from the fifth byte, the encoded arguments follow. The return
 values are encoded in the same way, without the function index byte.
 
 Types can have a fixed size or their size can depend on the value. For all
