@@ -298,7 +298,7 @@ Functions can also take arrays as arguments, and return arrays.
 
 Putting the `:a` after a function argument means it is an array, and putting it inside a return statement returns the value as an array (just doing `return([x,y,z])` would return the integer which is the memory location of the array).
 
-If a contract calls itself, then it will autodetect which arguments should be arrays and parse them accordingly, so this works fine:
+If a contract calls one of its functions, then it will autodetect which arguments should be arrays and parse them accordingly, so this works fine:
 
     def compose(inputs:a, radix):
         return(inputs[0] + inputs[1] * radix + inputs[1] * radix ** 2)
@@ -306,11 +306,11 @@ If a contract calls itself, then it will autodetect which arguments should be ar
     def main():
         return self.compose([1,2,3,4,5], 100)
 
-However, if you want to call another contract that takes arrays as arguments, then you will need to put a "signature" into the extern declaration:
+However, if a contract wants to call another contract that takes arrays as arguments, then you will need to put a "signature" into the extern declaration:
 
     extern composer: [compose:ai, main]
 
-Here, `ai` means "an array followed by an integer".
+Here, `ai` means "an array followed by an integer". You can do things like `iiaa`, meaning 2 integers followed by 2 arrays.
 
 ### Strings
 
