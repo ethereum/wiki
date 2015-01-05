@@ -42,6 +42,8 @@
     * All other execution is reverted
     * The current implementations add `0` onto the stack, but it does not matter, since with 0 gas remaining the parent execution will instaquit anyway
 * After a successful `CREATE` operation's sub-execution, if the operation returns `x`, `5 * len(x)` gas is subtracted from the remaining gas before the contract is created. If the remaining gas is less than `5 * len(x)`, then no gas is subtracted, the code of the created contract becomes the empty string, but this is not treated as an exceptional condition - no reverts happen.
+* If a contract tries to `CALL` or `CREATE` a contract with either (i) insufficient balance, or (ii) stack depth already at maximum (1024), the sub-execution and transfer do not occur at all, no gas gets consumed, and 0 is added to the stack.
+* Because of the depth limit, a contract may not be aware that a call that it is about to make is going to fail. Contract programmers should be very careful about this, and either use the 0 pushed to the stack to catch errors or use, eg, the identity contract to "test the waters" before making a substantial number of calls.
 
 ## Arithmetic
 
