@@ -434,3 +434,5 @@ There are also special commands for a few crypto operations; particularly:
 * `Invalid argument count or LLL function` usually means you just called foo() instead of `self.foo()`.
 
 * Sometimes you may be intending to use unsigned operators. eg div() and lt() instead of '/' and '<'.
+
+* To upgrade Serpent, may need to do combination of `pip uninstall ethereum-serpent` `pip install ethereum-serpent`, `make && make install`, `python setup.py install`.
