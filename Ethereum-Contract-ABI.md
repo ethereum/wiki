@@ -7,7 +7,7 @@ This specification does not address contracts whose interface is dynamic or othe
 ### Specifics
 
 The first four bytes of the call data denotes the function to be called, it is the
-first (left, high-order in big-endian) four bytes of the Keccak (SHA-3) hash of the signature of the function. The signature is defined as the canonical expression of the basic prototype. Starting from the fifth byte, the encoded arguments follow. The return values are encoded in the same way, without the function index byte.
+first (left, high-order in big-endian) four bytes of the Keccak (SHA-3) hash of the signature of the function. The signature is defined as the canonical expression of the basic prototype. Starting from the fifth byte, the encoded arguments follow. The return values are encoded in the same way, without the four bytes specifying the function.
 
 Types can have a fixed size or their size can depend on the value. For all
 non-fixed-size types, in the order of their occurrence, the number of its
@@ -90,7 +90,7 @@ If we wanted to call `sam` with the arguments `"dave"` and `[1,2,3]`, we would p
 - `0xe4ae26d6`: the Method ID. This is derived from the signature `sam(string,uint256[])`. Note that `uint` is substituted for its canonical representation `uint256`.
 - `0x00000000000000000000000000000004`: the size of the first dynamic parameter, measured as the string's length in bytes. In this case, 4.
 - `0x00000000000000000000000000000003`: the size of the second dynamic parameter, measured as the number of items in the array. In this case it has a size of 3 items.
-- `0x64617665000000000000000000000000`: the first parameter: the ASCII form of `"dave"`.
+- `0x64617665000000000000000000000000`: the first parameter: the UTF-8 (equal to ASCII in this case) encoding of `"dave"`.
 - `0x00000000000000000000000000000001`: the first entry of the second parameter.
 - `0x00000000000000000000000000000002`: the second entry of the second parameter.
 - `0x00000000000000000000000000000003`: the third entry of the second parameter.
