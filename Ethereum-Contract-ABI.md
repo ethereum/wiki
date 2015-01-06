@@ -46,7 +46,7 @@ The following non-fixed-size types exist:
 The number of elements (number of bytes for string, number of elements for
 arrays) is given before any actual data (as described above). A `string` of
 length `N` is encoded the same way as `string<N>` and a `<type>[]` with exactly
-`N` elements is encoded the same way as `<type>[N]`.
+`N` elements is encoded the same way as `<type>[N]`. This is encoded as a two-byte, big-endian integer, one for each dynamically sized parameter.
 
 ### Signature
 
@@ -90,12 +90,12 @@ If we wanted to call `sam` with the arguments `"dave"` and `[1,2,3]`, we would p
 - `0xe4ae26d6`: the Method ID. This is derived from the signature `sam(string,uint256[])`. Note that `uint` is substituted for its canonical representation `uint256`.
 - `0x0004`: the size of the first dynamic parameter, measured as the string's length in bytes. In this case, 4.
 - `0x0003`: the size of the second dynamic parameter, measured as the number of items in the array. In this case it has a size of 3 items.
-- `0x00000000000000000000000064617665`: the first parameter: the ASCII form of `"dave"`.
+- `0x64617665000000000000000000000000`: the first parameter: the ASCII form of `"dave"`.
 - `0x00000000000000000000000000000001`: the first entry of the second parameter.
 - `0x00000000000000000000000000000002`: the second entry of the second parameter.
 - `0x00000000000000000000000000000003`: the third entry of the second parameter.
 
 In total:
 ```
-0xe4ae26d60004000300000000000000000000000064617665000000000000000000000000000000010000000000000000000000000000000200000000000000000000000000000003
+0xe4ae26d60004000364617665000000000000000000000000000000000000000000000000000000010000000000000000000000000000000200000000000000000000000000000003
 ```
