@@ -86,7 +86,7 @@ In total:
 0x3e2798600000000000000002400000000000000000000000000000088000000000000000
 ```
 
-If we wanted to call `sam` with the arguments `"dave"` and `[1,2,3]`, we would pass 108 bytes total, broken down into:
+If we wanted to call `sam` with the arguments `"dave"` and `[1,2,3]`, we would pass 136 bytes total, broken down into:
 - `0xe4ae26d6`: the Method ID. This is derived from the signature `sam(string,uint256[])`. Note that `uint` is substituted for its canonical representation `uint256`.
 - `0x0004`: the size of the first dynamic parameter, measured as the string's length in bytes. In this case, 4.
 - `0x0003`: the size of the second dynamic parameter, measured as the number of items in the array. In this case it has a size of 3 items.
