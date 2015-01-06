@@ -7,8 +7,7 @@ This specification does not address contracts whose interface is dynamic or othe
 ### Specifics
 
 The first four bytes of the call data denotes the function to be called, it is the
-last four bytes of the Keccak (SHA-3) hash of the signature of the function. The signature is defined as the canonical expression of the basic prototype. Starting from the fifth byte, the encoded arguments follow. The return
-values are encoded in the same way, without the function index byte.
+first (left, high-order in big-endian) four bytes of the Keccak (SHA-3) hash of the signature of the function. The signature is defined as the canonical expression of the basic prototype. Starting from the fifth byte, the encoded arguments follow. The return values are encoded in the same way, without the function index byte.
 
 Types can have a fixed size or their size can depend on the value. For all
 non-fixed-size types, in the order of their occurrence, the number of its
@@ -49,53 +48,54 @@ arrays) is given before any actual data (as described above). A `string` of
 length `N` is encoded the same way as `string<N>` and a `<type>[]` with exactly
 `N` elements is encoded the same way as `<type>[N]`.
 
-Thus for our `Foo` example if we wanted to call `baz` with the parameters 69 and true, we would pass 65 bytes total, which can be broken down into:
+### Signature
 
-- `0x01`: the Method ID, (for `bar` it would be `0x00`, for `sam`, `0x02`).
-- `0x00000000000000000000000000000045`: the first parameter, a uint32 value `69` padded to 32 bytes
-- `0x00000000000000000000000000000001`: the second parameter - boolean `true`, padded to 32 bytes
-
-It returns a single `bool`. If, for example, it were to return `false`, its output would be the single byte array `0x00000000000000000000000000000000`, a single bool.
+The function signature is simply the function name with the parenthesised list of parameter types. Parameter types are split by a single comma - no spaces are used.
 
 ### Examples
 
-Method ID 2, no arguments:
+Given the contract:
 
-    02
+```
+contract Foo {
+  function bar(real[2] xy) {}
+  function baz(uint32 x, bool y) returns (bool r) { r = x > 32 || y; }
+  function sam(string name, uint[] data) {}
+}
+```
 
-Method ID 0, arguments [3, 5, 7]:
+Thus for our `Foo` example if we wanted to call `baz` with the parameters `69` and `true`, we would pass 68 bytes total, which can be broken down into:
 
-    00
-    0000000000000000000000000000000000000000000000000000000000000003
-    0000000000000000000000000000000000000000000000000000000000000005
-    0000000000000000000000000000000000000000000000000000000000000007
+- `0xf7183750`: the Method ID. This is derived as the first 4 bytes of the Keccak hash of the ASCII form of the signature `baz(uint32,bool)`.
+- `0x00000000000000000000000000000045`: the first parameter, a uint32 value `69` padded to 32 bytes
+- `0x00000000000000000000000000000001`: the second parameter - boolean `true`, padded to 32 bytes
 
-Method ID 9, arguments [4, 3**160, -9]:
+In total:
+```
+0xf71837500000000000000000000000000000004500000000000000000000000000000001
+```
+It returns a single `bool`. If, for example, it were to return `false`, its output would be the single byte array `0x00000000000000000000000000000000`, a single bool.
 
-    09
-    0000000000000000000000000000000000000000000000000000000000000004
-    304d37f120d696c834550e63d9bb9c14b4f9165c9ede434e4644e3998d6db881
-    fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7
+If we wanted to call `bar` with the argument `[2.125, 8.5]`, we would pass 68 bytes total, broken down into:
+- `0x3e279860`: the Method ID. This is derived from the signature `bar(real128x128[2])`. Note that `real` is substituted for its canonical representation `real128x128`.
+- `0x00000000000000024000000000000000`: the first part of the first parameter, a read128x128 value `2.125`.
+- `0x00000000000000088000000000000000`: the first part of the first parameter, a read128x128 value `8.5`.
 
-Method ID 5, arguments ["george"]:
+In total:
+```
+0x3e2798600000000000000002400000000000000000000000000000088000000000000000
+```
 
-    05
-    0000000000000000000000000000000000000000000000000000000000000006
-    67656f726765
+If we wanted to call `sam` with the arguments `"dave"` and `[1,2,3]`, we would pass 108 bytes total, broken down into:
+- `0xe4ae26d6`: the Method ID. This is derived from the signature `sam(string,uint256[])`. Note that `uint` is substituted for its canonical representation `uint256`.
+- `0x0004`: the size of the first dynamic parameter, measured as the string's length in bytes. In this case, 4.
+- `0x0003`: the size of the second dynamic parameter, measured as the number of items in the array. In this case it has a size of 3 items.
+- `0x64617665`: the first parameter: the ASCII form of `"dave"`.
+- `0x00000000000000088000000000000001`: the first entry of the second parameter.
+- `0x00000000000000088000000000000002`: the second entry of the second parameter.
+- `0x00000000000000088000000000000003`: the third entry of the second parameter.
 
-Method ID 5, arguments [1, -1, "george"]:
-
-    05
-    0000000000000000000000000000000000000000000000000000000000000006
-    0000000000000000000000000000000000000000000000000000000000000001
-    ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-    67656f726765
-
-Method ID 3, arguments [[1,2,3], 4, "george"]:
-
-    03
-    0000000000000000000000000000000000000000000000000000000000000003
-    0000000000000000000000000000000000000000000000000000000000000006
-    0000000000000000000000000000000000000000000000000000000000000004
-    000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
-    67656f726765
+In total:
+```
+0xe4ae26d60004000364617665000000000000000880000000000000010000000000000008800000000000000200000000000000088000000000000003
+```
