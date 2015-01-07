@@ -151,5 +151,19 @@ In Ethereum, lo stato è costituito da oggetti chiamati "accounts", in cui ogni 
 
 "Ether" è l'interno e principale crypto-carburante di Ethereum, e viene usato per pagare le commissioni di transazione. In generale, esistono due tipi di account: **accounts posseduti dall'esterno**, controllati da chiavi privati, e **gli accounts contratto**, controllati dal loro codice di contratto. Un account posseduto dall'esterno non ha codice, e si possono mandare messaggi esterni dall'account posseduto esternamente creando e firmando una transazione; in un account contratto, ogni volta che questo riceve un messaggio il suo codice si attiva, permettendo a questo di leggere e scrivere verso uno storage interno e spedire altri messaggi o creare contratti a sua volta.
 
-Si noti che i "contratti" in Ethereum non dovrebbero essere visti come qualcosa che dovrebbe essere "riempita" o "complilata con"; piuttosto, essi sono più come "agenti autonomi" che vivono all'interno dell'ambiente di esecuzione di Ethereum, che eseguono sempre uno pezzo specifico di codice che viene "colpito" da un messaggio o da una transazione, e avendo il controllo diretto sul proprio conto di ether e sulla propria chiave/valore di store al fine di tenere traccia delle variabili persistenti
-.
+Si noti che i "contratti" in Ethereum non dovrebbero essere visti come qualcosa che dovrebbe essere "riempita" o "complilata con"; piuttosto, essi sono più come "agenti autonomi" che vivono all'interno dell'ambiente di esecuzione di Ethereum, che eseguono sempre uno pezzo specifico di codice che viene "colpito" da un messaggio o da una transazione, e avendo il controllo diretto sul proprio conto di ether e sulla propria chiave/valore di store al fine di tenere traccia delle variabili persistenti.
+
+### Messaggi e Transazioni
+
+Il termine "transazione" è utilizzato in Ethereum per riferirsi al pacchetto di dati firmati che contengono un messaggio da inviare da un account posseduto dall'esterno. Le Transazioni contengono:
+
+* Il destinatario del messaggio
+* Una firma che identifica il mittente
+* L'ammontare di ether da trasferire al destinatario 
+* Un campo dati opzionale
+* Un valore`STARTGAS`, che rappresenta il massimo numero di steps computazionali che l'esecuzione della transazione può impiegare
+* Un valore`GASPRICE`, che rappresenta la commissione che il mittente paga per lo step computazionale
+
+i primi tre sono campi standard previsti in qualsiasi criptovaluta. Il campo dati non ha nessuna funzione da default, ma la virtual machine ha un codice operativo con cui un contratto può accedere ai dati; come caso di esempio, se un contratto sta funzionando come un servizio di registrazione di dominio basato sulla blockchain, allora può desiderare di interpretare i dati che vengono passati ad esso come contenenti due "campi ", il primo campo essendo un dominio da registrare ed il secondo essendo l'indirizzo IP da registrare. Il contratto dovrebbe leggere questi valori dai dati del messaggi e collocarli appropriatamente nello storage.
+
+I campi `STARTGAS` e`GASPRICE` sono cruciali per il modello di servizio anti-denial di Ethereum. Al fine di prevenire loops, accidentali o ostili, infiniti o altro spreco computazionale di codice, ad ogni transazione è richiesto di impostare un limite per l'uso di steps computazionali di codice di esecuzione. L'unità fondamentale di computazione è il "gas"; di solito, uno step computazionale costa 1 gas, ma alcune operazioni richiedono più unità di gas perchè esse sono computazionalmente più complesse, o richiedono un numero più elevato di dati che devono essere conservati come una parte dello stato. C'è anche una commissione di gas per ogni byte nei dati della transazione. L'obiettivo del sistema di commissione è quello di richiedere ad un aggressore di pagare proporzionalmente per ogni risorsa che essi consumano, includendo la computazione, larghezza di banda, e storage; quindi, qualsiasi transazione che comporta che il network consumi una quantità più grande di qualsiasi di queste risorse deve avere una commissione gas grosso modo proporzionale alla grandezza dell'incremento.
