@@ -26,6 +26,7 @@ Docs for parameters
 
 Which in json would result in something like this:
 
+```
 {
   "source": "...",
 "author": "Gav Wood",
@@ -47,3 +48,4 @@ Which in json would result in something like this:
 "details": "Creates the contract with..."
   ]
 }
+```
