@@ -139,3 +139,17 @@ Quindi, esistono tre approcci per costruire applicazioni avanzate sull'apice del
 ## Ethereum
 
 Lo scopo di Ethereum è quello di creare un protocollo alternativo per la costruzione di applicazioni decentralizzate, fornendo un set differente di scambi che noi crediamo saranno molto utili per una larga classe di applicazioni decentralizzate, con particolare enfasi sulle situazioni dove sono importanti un rapido tempo di sviluppo, sicurezza per applicazioni raramente utilizzate, e l'abilità di differenti applicazioni di interagire molto efficacemente. Ethereum permette questo costruendo quello che è essenzialmente il definitivo protocollo astratto fondante: una blockchain con un linguaggio di programmazione Turing-complete costruito al suo interno, che permette ad ognuno di scrivere smart contracts e applicazioni decentralizzate dove creare le proprie regole arbitrarie per la proprietà, i formati delle transazioni e le funzioni di transizione di stato. Una scarna versione di Namecoin può essere scritta in due linee di codice, e gli altri protocolli come le criptomonete e i sistemi di reputazione possono essere costruiti al di sotto delle venti linee. Gli smart contracts, i "boxes" crittografici che contengono valore possono essere sbloccati solo se si verificano certe condizioni, possono essere anche costruiti sull'apice di della pittaforma, con degli strumenti molto più efficaci di quelli offerti dallo scripting del Bitcioin grazie agli strumenti offerti dalla completezza del linguaggio di Turing, consapevolezza del valore, consapevolezza della blockchain e dello stato.
+
+### Ethereum Accounts
+
+In Ethereum, lo stato è costituito da oggetti chiamati "accounts", in cui ogni account ha un indirizzo di 20-byte e le transizioni di stato sono trasferimenti diretti del valore e dell'informazione tra gli accounts. Un account Ethereum account contiene quattro campi:
+
+* Il **nonce**, un contatore utilizzato per assicurarsi che ogni transazione può essere elaborata una sola volta
+* Il conto corrente dell'account **bilancio ether**
+* Il **contract code** dell'account, se presente
+* Lo **storage** dell'account (vuoto da default)
+
+"Ether" è l'interno e principale crypto-carburante di Ethereum, e viene usato per pagare le commissioni di transazione. In generale, esistono due tipi di account: **accounts posseduti dall'esterno**, controllati da chiavi privati, e **gli accounts contratto**, controllati dal loro codice di contratto. Un account posseduto dall'esterno non ha codice, e si possono mandare messaggi esterni dall'account posseduto esternamente creando e firmando una transazione; in un account contratto, ogni volta che questo riceve un messaggio il suo codice si attiva, permettendo a questo di leggere e scrivere verso uno storage interno e spedire altri messaggi o creare contratti a sua volta.
+
+Si noti che i "contratti" in Ethereum non dovrebbero essere visti come qualcosa che dovrebbe essere "riempita" o "complilata con"; piuttosto, essi sono più come "agenti autonomi" che vivono all'interno dell'ambiente di esecuzione di Ethereum, che eseguono sempre uno pezzo specifico di codice che viene "colpito" da un messaggio o da una transazione, e avendo il controllo diretto sul proprio conto di ether e sulla propria chiave/valore di store al fine di tenere traccia delle variabili persistenti
+.
