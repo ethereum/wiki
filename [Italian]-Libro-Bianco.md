@@ -167,3 +167,17 @@ Il termine "transazione" è utilizzato in Ethereum per riferirsi al pacchetto di
 i primi tre sono campi standard previsti in qualsiasi criptovaluta. Il campo dati non ha nessuna funzione da default, ma la virtual machine ha un codice operativo con cui un contratto può accedere ai dati; come caso di esempio, se un contratto sta funzionando come un servizio di registrazione di dominio basato sulla blockchain, allora può desiderare di interpretare i dati che vengono passati ad esso come contenenti due "campi ", il primo campo essendo un dominio da registrare ed il secondo essendo l'indirizzo IP da registrare. Il contratto dovrebbe leggere questi valori dai dati del messaggi e collocarli appropriatamente nello storage.
 
 I campi `STARTGAS` e`GASPRICE` sono cruciali per il modello di servizio anti-denial di Ethereum. Al fine di prevenire loops, accidentali o ostili, infiniti o altro spreco computazionale di codice, ad ogni transazione è richiesto di impostare un limite per l'uso di steps computazionali di codice di esecuzione. L'unità fondamentale di computazione è il "gas"; di solito, uno step computazionale costa 1 gas, ma alcune operazioni richiedono più unità di gas perchè esse sono computazionalmente più complesse, o richiedono un numero più elevato di dati che devono essere conservati come una parte dello stato. C'è anche una commissione di gas per ogni byte nei dati della transazione. L'obiettivo del sistema di commissione è quello di richiedere ad un aggressore di pagare proporzionalmente per ogni risorsa che essi consumano, includendo la computazione, larghezza di banda, e storage; quindi, qualsiasi transazione che comporta che il network consumi una quantità più grande di qualsiasi di queste risorse deve avere una commissione gas grosso modo proporzionale alla grandezza dell'incremento.
+
+### Messaggi
+
+I contratti hanno l'abilità di inviare "messaggi" ad altri contratti. I messaggi sono oggetti virtuali che non vengono mai serializzati ed esistono solo nell'ambiente di esecuzione di Ethereum. Un messaggio contiene:
+
+* Il mittente del messaggio (implicito)
+* Il destinatario del messaggio
+* L'ammontare di ether da inviare attraverso il messaggio
+* Un campo dati opzionale
+* Un valore `STARTGAS` 
+
+Essenzialmente, un messaggio è come una transazione, eccetto che esso viene prodotto da un contratto e non da un attore esterno. Un messaggio è prodotto quando un contratto che sta eseguendo il codice fa effettua una operazione `CALL`, che produce ed esegue un messaggio. Come una transazione, un messaggio comporta che l'account del destinario esegue il proprio codice. Quindi, i contratti possono avere relazioni con altri contratti esattamente alla stessa modo che avviene con degli attori esterni.
+
+Si noti che la quantità di gas allowance che serve ad una transazione o ad un contratto si applica alla totalità del gas consumato da quella transazione e da tutte le sub-esecuzioni. Per esempio, se un attore esterno A trasmette una transazione a B con 1000 gas, e B consuma 600 gas prima di inviare il messaggio a C, e l'esecuzione interna di C consuma 300 gas prima di ritornare, poi B può spendere altri 100 gas prima di rimanere a corto di gas.
