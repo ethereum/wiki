@@ -1,4 +1,4 @@
-*NOTE: This is intended largely as a vague overview and a historical reference. For specific details, see [Ethereum Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI) and [Ethereum Natural Specification Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format).*
+*NOTE: This is intended largely as a vague overview and a historical reference. For specific details and the latest specification, see [Ethereum Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI) and [Ethereum Natural Specification Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format).*
 
 An ABI is intended to serve as the de facto method for encoding & decoding data into & out of transactions.
 
