@@ -27,8 +27,9 @@ The following fixed-size elementary types exist:
 - `real`, `ureal`: equivalent to `real128x128`, `ureal128x128`
 - `string<N>`: binary type of `N` bytes, `N > 0`. Unicode strings are assumed to be UTF-8 encoded.
 
-They are all encoded in big-endian, padded to a multiple of 32 bytes. Signed
-types are padded with ones on the higher-order side, unsigned types with zeros.
+They are all encoded in big-endian, padded to a multiple of 32 bytes. Negative values
+(for signed types) are padded with ones on the higher-oder side, non-negative values
+and unsigned types with zeros.
 String types are padded with zeros on the lower-order side.  A `real<N>x<M>`
 number `x` is encoded as the uint/int number `x * 2^M`. The behaviour is
 unspecified for incorrect padding or values that are out of range.
