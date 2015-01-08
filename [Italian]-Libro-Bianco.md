@@ -181,3 +181,34 @@ I contratti hanno l'abilità di inviare "messaggi" ad altri contratti. I messagg
 Essenzialmente, un messaggio è come una transazione, eccetto che esso viene prodotto da un contratto e non da un attore esterno. Un messaggio è prodotto quando un contratto che sta eseguendo il codice fa effettua una operazione `CALL`, che produce ed esegue un messaggio. Come una transazione, un messaggio comporta che l'account del destinario esegue il proprio codice. Quindi, i contratti possono avere relazioni con altri contratti esattamente alla stesso modo che avviene con degli attori esterni.
 
 Si noti che la quantità di gas che serve ad una transazione o ad un contratto si applica alla totalità del gas consumato da quella transazione e da tutte le sub-esecuzioni. Per esempio, se un attore esterno A trasmette una transazione a B con 1000 gas, e B consuma 600 gas prima di inviare il messaggio a C, e l'esecuzione interna di C consuma 300 gas prima di ritornare, poi B può spendere altri 100 gas prima di rimanere a corto di gas.
+
+### La Funzione di Transizione di Stato di Ethereum
+
+![ethertransition.png](http://vitalik.ca/files/ethertransition.png?1)
+
+La funzione di transizione di stato di Ethereum, `APPLY(S,TX) -> S'` può essere definita come segue:
+
+1. Controlla se la transazione è ben impostata (ie. ha il giusto numero di valori), la firma è valida, e il nonce corrispode a quello dell'account del mittente. In caso contrario, si ha un errore.
+2. Calcola la commissione di transazione come `STARTGAS * GASPRICE`, e determina l'indirizzo del mittente dalla firma. Sottrae la commissione dal bilancio dell'account del mittente e incrementa il nonce del mittente. Se non c'è un bilancio sufficiente da spendere, si ha un errore.
+3. Inizializza `GAS = STARTGAS`, e toglie una certa quantità di gas per byte per pagare i byte nella transazione.
+4. Trasferisce il valore della transazione dall'account del mittente all'account del destinatario. Se l'account del destrinario non esiste ancora, lo crea. Se l'account del ricevente è un contratto, esegue il codice del contratto sia per il completamento o fino a quando l'esecuzione finisce il gas.
+5. Se il valore di trasferimento fallisce perché il mittente non ha abbastanza soldi, il il code di esecuzione finisce il gass, ripristina tutti i cambiamenti di stato, tranne il pagamento delle commissione , e aggiunge le commissioni sul conto del minatore .
+6. Altrimenti, risarcisce al mittente le commissioni per il gas rimanente, ed invia le commissioni pagate per il gas e consumate al miner.
+
+Per esempio, si supponga che il codice del contratto è:
+
+    se !self.storage[calldataload(0)]:
+        self.storage[calldataload(0)] = calldataload(32)
+
+Si noti che in realtà il codice del contratto è scritto in un codice EVM di basso livello; questo esempio è scritto in Serpent, che, per essere chiari, è uno dei nostri linguaggi di alto livello, può essere compilato fino al codice EVM. Si supponga che lo storage del contratto sia inizialmente vuoto, e la transazione è inviata con un valore di 10 ether, 2000 gas, al prezzo di 0.001 ether gas, e 64 bytes di dati, con bytes 0-31 che rappresentano il numero `2` e i bytes 32-63 che rappresentano la stringa `CHARLIE`. Il processo per la funzione di transizione di stato è in questo caso come segue:
+
+1. Controlla che la transizione è valida è ben impostata.
+2. Controlla che il mittente abbia almeno 2000 * 0.001 = 2 ether. If it is, quindi sottrae 2 ether dall'account del mittente.
+3. Inizializza gas = 2000; assumendo che la transazione è lunga 170 bytes e la commissione di byte è 5, sottrae 850 così che c'è 1150 gas che rimane.
+3. Sottrae altri 10 ether dall'account del mittente, e li aggiunge all'account del contratto.
+4. Esegue il codice. In questo caso, questo è semplice: esso controlla che lo storage del contratto all'indice `2` sia usato, prende nota che non lo è, e così imposta lo storage all' index `2` al valore `CHARLIE`. Si supponga che questo impieghi 187 gas, così l'ammontare rimante di gasi sia 1150 - 187 = 963
+5. Aggiunge 963 * 0.001 = 0.963 di nuovo sul conto del mittente, e ritorna lo stato risultante.
+
+Se non ci fosse alcun contratto alla fine di ricezione della transazione, quindi il totale della commissione di transazione sarebbe semplicemente uguale al `GASPRICE` provvisto moltiplicato per la lunghezza della transazione in bytes, ed i dati inviati per mezzo della transazione sarebbero irrilevanti.
+
+Note that messages work equivalently to transactions in terms of reverts: if a message execution runs out of gas, then that message's execution, and all other executions triggered by that execution, revert, but parent executions do not need to revert. This means that it is "safe" for a contract to call another contract, as if A calls B with G gas then A's execution is guaranteed to lose at most G gas. Finally, note that there is an opcode, `CREATE`, that creates a contract; its execution mechanics are generally similar to `CALL`, with the exception that the output of the execution determines the code of a newly created contract.
