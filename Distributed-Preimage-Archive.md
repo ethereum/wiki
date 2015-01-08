@@ -46,6 +46,10 @@ If the node has the pre-image, it is returned. Otherwise, the following happens:
 
 Successfully found pre-images are automatically re-inserted into DPA.
 
+A default time estimate for retrieval is calculated in proportion to the expected hop-distance from the node closest to the queried preimage. If this time is outside of the timeout parameter in the request, the request is not routed.
+
+Each node in the row corresponding to the queried preimage is sequentially queried with a timeout value set to the maximum of the above estimate and the total timeout divided by the number of nodes in the row. If the preimage is found or the time elapsed is in excess of the received timeout value, processing of the query is aborted with timeout.
+
 ## Routing
 
 It is based on Kademlia's routing. [details](https://github.com/ethereum/wiki/wiki/Cademlia-Peer-Selection)
