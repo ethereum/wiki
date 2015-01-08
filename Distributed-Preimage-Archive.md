@@ -27,7 +27,7 @@ Locally, in addition to the above, nodes also provide the service of retrieving 
 
 When receiving a preimage that is not already present in its local storage, the node stores it locally, unless its storage is full AND the preimage is farther than the most distant preimage object in its storage. If it is full, but there are stored preimage objects that are farther away than the received one, the farthest stored object is discarded before a repeated attempt at inserting the object.
 
-Irrespectively whether or not the new preimage was stored locally, it is forwarded two good nodes in the routing table that are closest to its hash value, if they are (strictly) closer than the forwarding node itself.
+Irrespectively whether or not the new preimage was stored locally, it is forwarded to at least two good nodes in the routing table that are closest to its hash value, if they are (strictly) closer than the forwarding node itself.
 
 ### Retrieve
 
