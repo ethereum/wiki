@@ -25,9 +25,11 @@ Locally, in addition to the above, nodes also provide the service of retrieving 
 
 ### Insert
 
-When receiving a preimage that is not already present in its local storage, the node stores it locally, unless its storage is full AND the preimage is farther than the most distant preimage object in its storage. If it is full, but there are stored preimage objects that are farther away than the received one, the farthest stored object is discarded before a repeated attempt at inserting the object.
+When receiving a preimage that is not already present in its local storage, the node stores it locally. If the storage allocated by the node for the archive is full, the object accessed the longest time ago is discarded. Note that this policy implicitly results in storing the objects closer to the node's address, as those are the ones which are most likely to get queried from this particular node, due to the lookup strategy detailed below.
 
-Irrespectively whether or not the new preimage was stored locally, it is forwarded to at least two good nodes in the routing table that are closest to its hash value, if they are (strictly) closer than the forwarding node itself.
+After storing the preimage, the insert request is also forwarded to all the nodes in the corresponding row of the routing table.
+
+In order to keep stored data sufficiently redundant, preimages, especially those with hashes in the node's proximity, need to be re-broadcast, albeit with a very low frequency.
 
 ### Retrieve
 
