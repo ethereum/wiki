@@ -326,6 +326,8 @@ Thus, given that `P` is prime and `w` is relatively prime to `P-1`, we have that
 
 In the special case that `P` is a safe prime as we have selected, then `P-1` only has factors 1, 2, `(P-1)/2` and `P-1`.  Since `P` > 7, we know that 3 is relatively prime to `P-1`, hence `w=3` satisfies the above proposition.
 
+-----------------------------------
+
 Special thanks to feedback from:
 
 * Tim Hughes
