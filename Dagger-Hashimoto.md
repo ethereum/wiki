@@ -147,6 +147,9 @@ In a full client, a [*double buffer*](https://en.wikipedia.org/wiki/Multiple_buf
 The algorithm used to generate the actual set of DAGs used to compute the work for a block is as follows:
 
 ```python
+def hash_to_int(h):
+    return int(h.encode('hex'),16)
+
 def get_prevhash_num(n):
     "Takes an integer representing a block number and returns a 256 bit number representing the previous hash"
     from pyethereum.blocks import GENESIS_PREVHASH 
@@ -155,22 +158,22 @@ def get_prevhash_num(n):
         return hash_to_int(GENESIS_PREVHASH)
     else:
         prevhash = chain_manager.index.get_block_by_number(n - 1)
-        return decode_int(prevhash)
+        return hash_to_int(prevhash)
 
 def get_daggerset(params, block):
-    back_buffer_block_number = block.number - (block.number % params["epochtime"])
-    back_buffer_prevhash_num = get_prevhash_num(back_buffer_block_number)
-    front_buffer_block_number = back_buffer_block_number - params["epochtime"]
-    front_buffer_prevhash_num = get_prevhash_num(front_buffer_block_number)
-    if back_buffer_block_number <= 0:
+    back_number = block.number - (block.number % params["epochtime"])
+    back_hash = get_prevhash_num(back_number)
+    front_number = back_number - params["epochtime"]
+    front_hash = get_prevhash_num(front_number)
+    if front_number <= 0:
         # No back buffer is possible, just make front buffer
-        return {"front": {"dag": produce_dag(params, front_buffer_prevhash_num), 
+        return {"front": {"dag": produce_dag(params, front_hash), 
                           "block_number": 0}}
     else:
-        return {"front": {"dag": preoduce_dag(params, front_buffer_prevhash_num),
-                          "block_number": front_buffer_block_number},
-                "back": {"dag": preoduce_dag(params, back_buffer_prevhash_num),
-                         "block_number": back_buffer_block_number}}
+        return {"front": {"dag": preoduce_dag(params, front_hash),
+                          "block_number": front_number},
+                "back": {"dag": preoduce_dag(params, back_hash),
+                         "block_number": back_number}}
 ```
 
 ## Hashimoto
