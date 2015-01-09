@@ -198,8 +198,8 @@ To address this issue, the DAG is *aliased* into 64 bit chunks as shown above.
 def hashimoto(dag64, params, header, nonce):
     m = params["n"] * NUM_BITS // 64
     mix = nonce
-    for _ in range(i,params["accesses"]):
-        mix ^= dag64[x % m]
+    for _ in range(params["accesses"]):
+        mix ^= dag64[mix % m]
     return sha3(mix + nonce)
 ```
 
@@ -216,7 +216,7 @@ def quick_hashimoto(seed, params, header, nonce):
 def quick_hashimoto_cached(cache, params, header, nonce):
     m = params["n"] * NUM_BITS // 64
     mix = nonce
-    for _ in range(params["trials"]):
+    for _ in range(params["accesses"]):
         p, r = divmod(mix % m, NUM_BITS // 64)
         mix ^= chunks64(quick_calc_cached(cache, params, p))[r]
     return sha3(mix+nonce)
