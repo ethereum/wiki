@@ -1,3 +1,5 @@
+## Introduction
+
 Dagger Hashimoto is a proposed spec for the mining algorithm for Ethereum 1.0. Dagger Hashimoto aims to simultaneously satisfy three goals:
 
 1. **ASIC-resistance**: the benefit from creating specialized hardware for the algorithm should be as small as possible, ideally to the point that even in an economy where ASICs have been developed the speedup is sufficiently small that it is still marginally profitable for users on ordinary computers to mine with spare CPU power.
@@ -56,14 +58,14 @@ The parameters used for the algorithm are:
 SAFE_PRIME_512 = 2**512 - 38117     # Largest Safe Prime less than 2**512
 
 params = {
-      "n": 1000000000 * 8 / NUM_BITS,  # Size of the dataset 1 Gigabyte
-      "cache_size": 2500,              # Size of the light client's cache
-      "diff": 2**14,                   # Difficulty (adjusted during block evaluation)
-      "epochtime": 1000,               # Length of an epoch in blocks (how often the dataset is updated)
-      "k": 2,                          # Number of parents of a node
-      "w": 3,                          # Used for modular exponentiation hashing
-      "accesses": 100,                 # Number of dataset accesses during hashimoto
-      "P": SAFE_PRIME_512              # Safe Prime for hashing and random number generation
+      "n": 1000000000 * 8 // NUM_BITS,  # Size of the dataset (1 Gigabyte)
+      "cache_size": 2500,               # Size of the light client's cache
+      "diff": 2**14,                    # Difficulty (adjusted during block evaluation)
+      "epochtime": 1000,                # Length of an epoch in blocks (how often the dataset is updated)
+      "k": 1,                           # Number of parents of a node
+      "w": 3,                           # Used for modular exponentiation hashing
+      "accesses": 100,                  # Number of dataset accesses during hashimoto
+      "P": SAFE_PRIME_512               # Safe Prime for hashing and random number generation
 }
 ```
 
@@ -89,109 +91,140 @@ def produce_dag(params, seed):
 
 Essentially, it starts off a graph as a single node, `sha3(seed)`, and from there starts sequentially adding on other nodes based on random previous nodes. When a new node is created, a modular power of the seed is computed to randomly select some indices less than `i` (using `x % i` above), and the values of the nodes at those indices are used in a calculation to generate a new a value for `x`, which is then fed into a small proof of work function (based on XOR) to ultimately generate the value of the graph at index `i`.  The rationale behind this particular design is to force sequential access of the DAG; the next value of the DAG that will be accessed cannot be determined until the current value is known.  Finally, modular exponentiation is used to further hash the result.
 
-Since it is inconvenient to mine using arbitrary precision arithmetic, the results are aliased to 64 bit numbers.
+Since it is inconvenient to mine using arbitrary precision arithmetic, the results are aliased to 64 bit numbers. While this is natural to do in C, it is less natural in python.  Below we show demonstrate how to similate aliasing the DAG can into little endian 64 bit blocks:
+
+```python
+def chunks64(n):
+    "Represent a NUM_BITS number as 64 bit chunks, little endian"
+    i = NUM_BITS
+    o = []
+    while i > 0:
+        o.append(n & (2**64 - 1))
+        n >>= 64
+        i -= 64
+    return o
+
+def produce_dag64(params, seed):
+    return [c for n in produce_dag(params, seed)
+              for c in chunks64(n)]
+```
 
 This algorithm relies on several results from number theory.  See the appendix below for a discussion.
 
-----------------------------
-The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary computation.  In particular, our choice of LCG allows us to compute the *i*th picker without computing all preceding pickers, in a fraction of the time. Combined with memoization, this allows for reasonable performance with little memory overhead.
+## Light Client Evaluation
+
+The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary memory.
+
+The number of edges each node in the DAG has follows a power law, and is proportional to the index in the array.  Hence, a light client needs fewer nodes with lower indexes values in order to gain most of the performance of the full implementation.
 
 The light client computing function for the DAG works as follows:
 
 ```python
-def quick_calc(params, seed, pos):
-    P = params["P"]
-    init = sha3(seed)+1
-    known = {0: init}
-    def calc(p):
-        if p not in known:
-            picker = quick_pick(init, p, params)
-            x = picker
-            for _ in range(params["k"]):
-                x ^= calc(picker % p)
-                picker >>= 10
-                picker = x % picker if picker else 0
-            known[p] = pow(x, params["w"], P)
-        return known[p]
-    x = calc(pos)
-    return x
+def quick_calc(params, seed, p):
+    from copy import deepcopy
+    cache_params = deepcopy(params)
+    cache_params["n"] = params["cache_size"]
+    cache = produce_dag(cache_params, seed)
+    return quick_calc_cached(cache, params, p)
+
+def quick_calc_cached(cache, params, p):
+    P = params["P"]    
+    if p < len(cache):
+        return cache[p]
+    else:
+        x = pow(cache[0], p + 1, P)
+        for _ in range(params["k"]):
+            x ^= quick_calc_cached(cache, params, x % p)
+        return pow(x, params["w"], P)
 ```
 
-Essentially, it is simply a rewrite of the above algorithm that removes the loop of computing the values for the entire DAG and replaces the earlier node lookup with a recursive memoized call.
+Essentially, it is simply a rewrite of the above algorithm that removes the loop of computing the values for the entire DAG and replaces the earlier node lookup with a recursive call or a cache lookup.
 
-For our dataset, we will use a collection of multiple DAGs produced by the above formula; the benefit of this is that it allows the DAGs to be replaced slowly over time without needing to incorporate a step where miners must suddenly recompute all of the data, leading to an abrupt temporary slowdown in chain processing at regular intervals and dramatically increasing centralization and thus 51% attack risks within those few minutes before all data is recomputed.
+## Double Buffer of DAGs
+
+In a full client, a [*double buffer*](https://en.wikipedia.org/wiki/Multiple_buffering) of 2 DAGs produced by the above formula is used.  The idea is that DAGs are produced every `epochtime` number of blocks according to the params above.  The client does not use the latest DAG produced, but the previous one. The benefit of this is that it allows the DAGs to be replaced over time without needing to incorporate a step where miners must suddenly recompute all of the data. Otherwise, there is the potential for an abrupt temporary slowdown in chain processing at regular intervals and dramatically increasing centralization and thus 51% attack risks within those few minutes before all data is recomputed.
 
 The algorithm used to generate the actual set of DAGs used to compute the work for a block is as follows:
 
-    def get_daggerset(params, block):
-        if block.number == 0:
-            return [produce_dag(params, i) for i in range(params["numdags"])]
-        elif block.number % params["epochtime"]:
-            return get_daggerset(block.parent)
-        else:
-            o = get_daggerset(block.parent)
-            o[sha3(block.parent.nonce) % params["numdags"]] = \
-                produce_dag(params, sha3(block.parent.nonce))
-            return o
+```python
+def get_prevhash_num(n):
+    "Takes an integer representing a block number and returns a 256 bit number representing the previous hash"
+    from pyethereum.blocks import GENESIS_PREVHASH 
+    from pyethreum import chain_manager
+    if num <= 0:
+        return hash_to_int(GENESIS_PREVHASH)
+    else:
+        prevhash = chain_manager.index.get_block_by_number(n - 1)
+        return decode_int(prevhash)
 
-The above code contains no caching or memoization that would obviously speed up the runtime from `O(n)` to `O(1)`; in a live implementation keeping track of daggersets for efficient access is the correct approach and is easy to do.
+def get_daggerset(params, block):
+    back_buffer_block_number = block.number - (block.number % params["epochtime"])
+    back_buffer_prevhash_num = get_prevhash_num(back_buffer_block_number)
+    front_buffer_block_number = back_buffer_block_number - params["epochtime"]
+    front_buffer_prevhash_num = get_prevhash_num(front_buffer_block_number)
+    if back_buffer_block_number <= 0:
+        # No back buffer is possible, just make front buffer
+        return {"front": {"dag": produce_dag(params, front_buffer_prevhash_num), 
+                          "block_number": 0}}
+    else:
+        return {"front": {"dag": preoduce_dag(params, front_buffer_prevhash_num),
+                          "block_number": front_buffer_block_number},
+                "back": {"dag": preoduce_dag(params, back_buffer_prevhash_num),
+                         "block_number": back_buffer_block_number}}
+```
 
-Essentially, every time we hit a multiple of `epochtime`, we modify one DAG. We take the nonce of the parent block as a selector for which DAG to modify, and then also use it as a seed to determine the new DAG to replace it with. Light clients can keep up easily, as they need only keep track of the set of seeds corresponding to the DAGs. For this, we have:
-
-    def get_seedset(params, block):
-        if block.number == 0:
-            return range(params["numdags"])
-        elif block.number % params["epochtime"]:
-            return get_seedset(block.parent)
-        else:
-            o = get_seedset(block.parent)
-            o[sha3(block.parent.nonce) % params["numdags"]] = \
-                sha3(block.parent.nonce)
-            return o
-
-Repeatedly modifying the dataset is important; otherwise read-only memory with the data per-shipped in hardware becomes a powerful ASIC. The modification time should be sufficiently large that the DAG production requirement does not lead to centralization risk, but minimally small so that specialized "mining farm with built-in factory" operations that print out a new ROM every time the DAG changes do not become viable.
-
-**The goal with all of the above is to create a data set which is self-updating and light-client verifiable, without the light client verification algorithm opening up any new specialization vulnerabilities that are not present in the original Hashimoto.**
-
-### Hashimoto
+## Hashimoto
 
 The idea behind the original Hashimoto is to use the blockchain as a dataset, performing a computation which selects N indices from the blockchain, gathers the transactions at those indices, performs an XOR of this data, and returns the hash of the result. Thaddeus Dryja's original algorithm, translated to Python for consistency, is as follows:
 
-    def orig_hashimoto(prev_hash, merkle_root, list_of_transactions, nonce):
-        hash_output_A = sha256(prev_hash + merkle_root + nonce) 
-        txid_mix = 0
-        for i in range(64):
-            shifted_A = hash_output_A >> i 
-            transaction = shifted_A % len(list_of_transactions) 
-            txid_mix ^= list_of_transactions[transaction] << i 
-        return txid_max ^ (nonce << 192)
+```python
+def orig_hashimoto(prev_hash, merkle_root, list_of_transactions, nonce):
+    hash_output_A = sha256(prev_hash + merkle_root + nonce) 
+    txid_mix = 0
+    for i in range(64):
+        shifted_A = hash_output_A >> i 
+        transaction = shifted_A % len(list_of_transactions) 
+        txid_mix ^= list_of_transactions[transaction] << i 
+    return txid_max ^ (nonce << 192)
+```
 
-(Reminding non-mathematicians that ^ in programming languages is, confusingly enough, XOR, not exponentiation)
+Unfortunately, while Hashimoto is considered RAM hard, it is not *bandwidth* limited.
 
-We modify the algorithm to use the Dagger dataset:
+An issue with Hashimoto is that it uses 256-bit arithmetic, which has considerable computational overhead.
 
-    def hashimoto(daggerset, params, header, nonce):
-        rand = sha3(header+encode_int(nonce))
-        mix = 0
-        for i in range(params["accesses"]):
-            shifted_A = (rand ^ mix * params["is_serial"]) >> i
-            dag = daggerset[shifted_A % params["numdags"]]
-            mix ^= dag[(shifted_A // params["numdags"]) % params["n"]]
-        return mix ^ rand
+To address this issue, the DAG is *aliased* into 64 bit chunks as shown above.
 
-Note that we also add an `is_serial` parameter to offer the option of making the hashimoto computation non-parallelizable; if activated, this works by adding the current "mix" from earlier indices into the calculation of which later indices to use.
+```python
+def hashimoto(dag64, params, header, nonce):
+    m = params["n"] * NUM_BITS // 64
+    mix = nonce
+    for _ in range(i,params["accesses"]):
+        mix ^= dag64[x % m]
+    return sha3(mix + nonce)
+```
 
-Here is a light-client friendly version, using functions defined above:
+Here is the light-client version:
 
-    def light_hashimoto(seedset, params, header, nonce):
-        rand = sha3(header+encode_int(nonce))
-        mix = 0
-        for i in range(40):
-            shifted_A = (rand ^ mix * params["is_serial"]) >> i
-            seed = seedset[shifted_A % params["numdags"]]
-            # can further optimize with cross-round memoization
-            mix ^= quick_calc(params, seed, (shifted_A // params["numdags"]) % params["n"])
-        return mix ^ rand
+```python
+def quick_hashimoto(seed, params, header, nonce):
+    from copy import deepcopy
+    cache_params = deepcopy(params)
+    cache_params["n"] = params["cache_size"]
+    cache = produce_dag(cache_params, seed)
+    return quick_hashimoto_cached(cache, params, header, nonce)
+
+def quick_hashimoto_cached(cache, params, header, nonce):
+    m = params["n"] * NUM_BITS // 64
+    mix = nonce
+    for _ in range(params["trials"]):
+        p, r = divmod(mix % m, NUM_BITS // 64)
+        mix ^= chunks64(quick_calc_cached(cache, params, p))[r]
+    return sha3(mix+nonce)
+```
+
+----------------------------------------
+
+**TODO: Edit me**
 
 To make the algorithm require blockchain storage, we simply add one additional round of access which uses the current state as a database. The reason why the original hashimoto does not suffice for light client friendliness is that the validation process would require 64 Merkle tree proofs, amounting to up to 50kb of data for each block - perhaps light enough for a smartphone, but not an internet-of-things device. Here, we intend to achieve simultaneous light client friendliness and blockchain storage requirement by pursuing the two goals separately - once with a Dagger-generated dataset, and the second time by making a single blockchain access.
 
