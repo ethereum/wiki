@@ -54,15 +54,14 @@ The parameters used for the algorithm are:
 SAFE_PRIME_512 = 2**512 - 38117     # Largest Safe Prime less than 2**512
 
 params = {
-      "n": 250000,                  # Size of the dataset
-      "cache_size": 2500,           # Size of the light client's cache
-      "diff": 2**14,                # Difficulty (adjusted during block evaluation)
-      "epochtime": 1000,            # Length of an epoch in blocks (how often the dataset is updated)
-      "k": 2,                       # Number of parents of a node
-      "w": 3,                       # Used for modular exponentation hashing
-      "accesses": 40,               # Number of dataset accesses during hashimoto
-      "trials": 3,                  # Number of times to access blocks in hashimoto
-      "P": SAFE_PRIME_512           # Safe Prime for hashing and random number generation
+      "n": 1000000000 * 8 / NUM_BITS,  # Size of the dataset 1 Gigabyte
+      "cache_size": 2500,              # Size of the light client's cache
+      "diff": 2**14,                   # Difficulty (adjusted during block evaluation)
+      "epochtime": 1000,               # Length of an epoch in blocks (how often the dataset is updated)
+      "k": 2,                          # Number of parents of a node
+      "w": 3,                          # Used for modular exponentiation hashing
+      "accesses": 100,                 # Number of dataset accesses during hashimoto
+      "P": SAFE_PRIME_512              # Safe Prime for hashing and random number generation
 }
 ```
 
@@ -75,65 +74,24 @@ The dagger graph building primitive is defined as follows:
 ```python
 def produce_dag(params, seed):
     P = params["P"]
-    P_plus_1 = params["P_plus_1"]
-    o = [sha3(seed)+1]
-    init = o[0]
-    picker = init
+    a = sha3(seed) + 2
+    picker = init = pow(sha3(seed) + 2, params["w"], P)
+    o = [init]
     for i in range(1, params["n"]):
-        picker = (picker * P_plus_1 + init) % P
-        x = picker
-        curpicker = picker
+        x = picker = (picker * init) % P
         for _ in range(params["k"]):
-            x ^= o[curpicker % i]
-            curpicker >>= 10
-            curpicker = x % curpicker if curpicker else 0
+            x ^= o[x % i]
         o.append(pow(x, params["w"], P))
     return o
 ```
 
-Essentially, it starts off a graph as a single node, `sha3(seed)+1`, and from there starts sequentially adding on other nodes. When a new node is created, a special *Linear Congruential Generator* (LCG) is of the form  used as a seed to randomly select some indices less than `i` (using `curpicker % i` above), and the values of the nodes at those indices are used in a calculation to generate a value `x`, which is then fed into a small proof of work function to ultimately generate the value of the graph at index `i`.
+Essentially, it starts off a graph as a single node, `sha3(seed)`, and from there starts sequentially adding on other nodes based on random previous nodes. When a new node is created, a modular power of the seed is computed to randomly select some indices less than `i` (using `x % i` above), and the values of the nodes at those indices are used in a calculation to generate a new a value for `x`, which is then fed into a small proof of work function (based on XOR) to ultimately generate the value of the graph at index `i`.  The rationale behind this particular design is to force sequential access of the DAG; the next value of the DAG that will be accessed cannot be determined until the current value is known.  Finally, modular exponentiation is used to further hash the result.
 
-Here is where our choice of `w` comes in to play.  We have the following observation from number theory:
+Since it is inconvenient to mine using arbitrary precision arithmetic, the results are aliased to 64 bit numbers.
 
-> Let `P` be a prime; `w` and `P-1` are relatively prime if and only if for all `a` and `b`:<center>`aʷ mod P ≡ bʷ mod P` if and only if `a mod P ≡ b mod P`</center>
+This algorithm relies on several results from number theory.  See the appendix below for a discussion.
 
-It is easy to check that  `gcd(5,P-1) = 1`, and since we chose `w = 5` we know the above applies. This allows us to reason that the function `f = lambda x: pow(x,w,P)` is a *permutation* on [0,2<sup>256</sup>].  Hence, as a hashing function we should expect very few collisions from it.
-
-A note regarding our choice of LCG: the *Hull-Dobell Theorem* guarantees that the recurrence
-<center><pre>X<sub>n+1</sub> = (a X<sub>n</sub> + c) mod P</pre></center>
-has a period of `P` provided:
- 1. `c` and `P` are relatively prime
- 2. `a-1` is divisible by all of the prime factors of `P`
- 3. `a-1` is divisible by 4 if `P` is divisible by 4
- 
-See Knuth's *The Art of Computer Programming* (1997), Volume 2, §3.2.1 for a discussion of this.  Since we have chosen `P` to be prime, then (3) is always satisfied. Likewise, any `c ∈ [1,P-1]` suffices (1).  Since our initial value `sha3(seed)+1` only has 256 bits, it is a satisfactory candidate for `c`.  On the other hand, choosing `a = P+1` then (2) is satisfied.
-
-For the *i*th picker `pᵢ`, this particular linear congruential generator has a closed form, which recognizably involves the geometric series summation:
-
-<center><pre>pᵢ = [(sha3(seed) + 1) ⨉ ∑<sup>i</sup><sub>n=0</sub> (P+1)<sup>n</sup>] mod P</pre><center>
-
-The following algorithm computes `pᵢ` with reasonable efficiency; it takes `O(ln(i))` time (given constant time arithmetic calculations) with `O(1)` space:
-
-```python
-def quick_modular_geometric_series_sum(r, i, P):
-    a = 1
-    b = 0
-    while i != 0:
-        if (i % 2 == 0):
-            b = (b + a*pow(r, i, P)) % P
-            i = (i / 2) - 1
-        else:
-            i >>= 1
-        a = (a * (r + 1)) % P    
-        r = r * r % P
-    return (a + b) % P
-
-def quick_pick(init, i, params):
-    P = params["P"]
-    P_plus_1 = params["P_plus_1"]
-    return (init * quick_modular_geometric_series_sum(P_plus_1, i, P)) % P
-```
-
+----------------------------
 The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary computation.  In particular, our choice of LCG allows us to compute the *i*th picker without computing all preceding pickers, in a fraction of the time. Combined with memoization, this allows for reasonable performance with little memory overhead.
 
 The light client computing function for the DAG works as follows:
@@ -291,6 +249,48 @@ Also, note that Dagger Hashimoto imposes additional requirements on the block he
 
 * For two-layer verification to work, a block header must have both the nonce and the middle value pre-sha3
 * Somewhere, a block header must store the sha3 of the current seedset
+
+# Appendix
+
+As noted above, the RNG used for DAG generation relies on some results from number theory. First, we provide assurance that the Lehmer RNG that is the basis for the `picker` variable has a wide period.  Second, we show that `pow(x,3,P)` will not map `x` to `1` or `P-1` provided `x ∈ [2,P-2]` to start.  Finally, we show that `pow(x,3,P)` has a low collision rate when treated as a hashing function.
+
+## Lehmer Random Number Generator
+
+While the `produce_dag` function does not need to produce unbiased random numbers, a potential threat is that `seed**i % P` only takes on a handful of values. This could provide an advantage to miners recognizing the pattern over those that do not.
+
+To avoid this, a result from number theory is appealed to. A [*Safe Prime*](https://en.wikipedia.org/wiki/Safe_prime) is defined to be a prime `P` such that `(P-1)/2` is also prime.  The *order* of a member `x` of the [multiplicative group](https://en.wikipedia.org/wiki/Multiplicative_group_of_integers_modulo_n) `ℤ/nℤ` is defined to be the minimal `m` such that <center><pre>xᵐ mod P ≡ 1</pre></center>
+Given these definitions, we have:
+
+> Observation 1. Let `x` be a member of the multiplicative group `ℤ/Pℤ` for a safe prime `P`.  If `x mod P ≠ 1 mod P` and `x mod P ≠ P-1 mod P`, then the order of `x` is either `P-1` or `(P-1)/2`.
+
+*Proof*.  Since `P` is a safe prime, then by [Lagrange's Theorem][Lagrange] we have that the order of `x` is either `1`, `2`, `(P-1)/2`, or `P-1`.
+
+The order of `x` cannot be `1`, since by Fermat's Little Theorem we have:
+<center><pre>x<sup>P-1</sup> mod P ≡ 1</pre></center>
+Hence `x` must be a multiplicative identity of `ℤ/nℤ`, which is unique.  Since we assumed that `x ≠ 1` by assumption, this is not possible.
+
+The order of `x` cannot be `2` unless `x = P-1`, since this would violate that `P` is prime.
+<div align="right">◻</div>
+
+From the above proposition, we can recognize that iterating `(picker * init) % P` will have a cycle length of at least `(P-1)/2`.  This is because we selected `P` to be a safe prime approximately equal to be a higher power of two, and `init` is in the interval `[2,2**256+1]`.  Given the magnitude fo `P`, we should never expect a cycle from modular exponentiation.
+
+When we are assigning the first cell in the DAG (the variable labeled `init`), we compute `pow(sha3(seed) + 2, 3, P)`.  At first glance, this does not guarantee that the result is neither `1` nor `P-1`.  However, since `P-1` is a safe prime, we have the following additional assuance, which is a corollary of Observation 1:
+
+> Observation 2. Let `x` be a member of the multiplicative group `ℤ/Pℤ` for a safe prime `P`, and let `w` be a natural number. If `x mod P ≠ 1 mod P` and `x mod P ≠ P-1 mod P`, as well as `w mod P ≠ P-1 mod P` and `w mod P ≠ 0 mod P`, then `xʷ mod P ≠ 1 mod P` and `xʷ mod P ≠ P-1 mod P`
+
+[Lagrange]: https://en.wikipedia.org/wiki/Lagrange%27s_theorem_(group_theory)
+
+## Modular Exponentiation as a Hash Function
+
+For certain values of `P` and `w`, the function `pow(x, w, P)` may have many collisions.  For instance, `pow(x,9,19)` only takes on values `{1,18}`. 
+
+Given that `P` is prime, then an appropriate `w` for a modular exponentation hashing function can be chosen using the following result:
+
+> Observation 3. Let `P` be a prime; `w` and `P-1` are relatively prime if and only if for all `a` and `b` in `ℤ/Pℤ`:<center>`aʷ mod P ≡ bʷ mod P` if and only if `a mod P ≡ b mod P`</center>
+
+Thus, given that `P` is prime and `w` is relatively prime to `P-1`, we have that `|{pow(x, w, P) : x ∈ ℤ}| = P`, implying that the hashing function has the minimal collision rate possible.
+
+In the special case that `P` is a safe prime as we have selected, then `P-1` only has factors 1, 2, `(P-1)/2` and `P-1`.  Since `P` > 7, we know that 3 is relatively prime to `P-1`, hence `w=3` satisfies the above proposition.
 
 Special thanks to feedback from:
 
