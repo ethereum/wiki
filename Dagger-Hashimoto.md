@@ -51,18 +51,18 @@ def sha3(x):
 The parameters used for the algorithm are:
 
 ```python
-BIG_PRIME = 13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006083527
+SAFE_PRIME_512 = 2**512 - 38117     # Largest Safe Prime less than 2**512
+
 params = {
-      "numdags": 40,               # Number of dags in the dataset
-      "n": 250000,                 # Size of the dataset
-      "diff": 2**14,               # Difficulty (adjusted during block evaluation)
-      "epochtime": 1000,           # Length of an epoch in blocks (how often the dataset is updated)
-      "k": 2,                      # Number of parents of a node
-      "w": 5,                      # Work factor for proof of work during nonce calculations
-      "is_serial": 0,              # Is hashimoto modified to be serial?
-      "accesses": 40,              # Number of dataset accesses during hashimoto
-      "P": BIG_PRIME,              # Number to modulo everything by
-      "P_plus_1": BIG_PRIME + 1    # P+1 convenience constant
+      "n": 250000,                  # Size of the dataset
+      "cache_size": 2500,           # Size of the light client's cache
+      "diff": 2**14,                # Difficulty (adjusted during block evaluation)
+      "epochtime": 1000,            # Length of an epoch in blocks (how often the dataset is updated)
+      "k": 2,                       # Number of parents of a node
+      "w": 3,                       # Used for modular exponentation hashing
+      "accesses": 40,               # Number of dataset accesses during hashimoto
+      "trials": 3,                  # Number of times to access blocks in hashimoto
+      "P": SAFE_PRIME_512           # Safe Prime for hashing and random number generation
 }
 ```
 
