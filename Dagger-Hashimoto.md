@@ -147,24 +147,20 @@ In a full client, a [*double buffer*](https://en.wikipedia.org/wiki/Multiple_buf
 The algorithm used to generate the actual set of DAGs used to compute the work for a block is as follows:
 
 ```python
-def hash_to_int(h):
-    return int(h.encode('hex'),16)
-
-def get_prevhash_num(n):
-    "Takes an integer representing a block number and returns a 256 bit number representing the previous hash"
+def get_prevhash(n):
     from pyethereum.blocks import GENESIS_PREVHASH 
     from pyethreum import chain_manager
     if num <= 0:
         return hash_to_int(GENESIS_PREVHASH)
     else:
         prevhash = chain_manager.index.get_block_by_number(n - 1)
-        return hash_to_int(prevhash)
+        return decode_int(prevhash)
 
 def get_daggerset(params, block):
     back_number = block.number - (block.number % params["epochtime"])
-    back_hash = get_prevhash_num(back_number)
+    back_hash = get_prevhash(back_number)
     front_number = back_number - params["epochtime"]
-    front_hash = get_prevhash_num(front_number)
+    front_hash = get_prevhash(front_number)
     if front_number <= 0:
         # No back buffer is possible, just make front buffer
         return {"front": {"dag": produce_dag(params, front_hash), 
