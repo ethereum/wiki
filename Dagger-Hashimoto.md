@@ -61,11 +61,13 @@ The parameters used for the algorithm are:
 SAFE_PRIME_512 = 2**512 - 38117     # Largest Safe Prime less than 2**512
 
 params = {
-      "n": 1073741824 * 8 // NUM_BITS,  # Size of the dataset (1 Gigabyte); MUST BE MULTIPLE OF 65536
-      "n_inc": 1,                       # Oncrement in value of n per period
-      "cache_size": 2500,               # Size of the light client's cache
+      "n": 2147483648 * 8 // NUM_BITS,  # Size of the dataset (2 Gigabytes); MUST BE MULTIPLE OF 65536
+      "n_inc": 65536,                   # Increment in value of n per period; MUST BE MULTIPLE OF 65536
+                                        # with epochtime=20000 gives 882 MB growth per year
+      "cache_size": 2500,               # Size of the light client's cache (can be chosen by light
+                                        # client; not part of the algo spec)
       "diff": 2**14,                    # Difficulty (adjusted during block evaluation)
-      "epochtime": 1000,                # Length of an epoch in blocks (how often the dataset is updated)
+      "epochtime": 100000,              # Length of an epoch in blocks (how often the dataset is updated)
       "k": 1,                           # Number of parents of a node
       "w": 15,                          # Used for modular exponentiation hashing
       "accesses": 100,                  # Number of dataset accesses during hashimoto
@@ -73,7 +75,7 @@ params = {
 }
 ```
 
-`P` in this case is a prime chosen such that `log₂(P)` is just slightly less than 512, which corresponds to the 512 bits we have been using to represent our numbers.
+`P` in this case is a prime chosen such that `log₂(P)` is just slightly less than 512, which corresponds to the 512 bits we have been using to represent our numbers. Note that only the latter half of the DAG actually needs to be stored, so the de-facto RAM requirement starts off at 1 GB and grows by 441 MB per year.
 
 ### Dagger graph building
 
@@ -98,9 +100,7 @@ This algorithm relies on several results from number theory.  See the appendix b
 
 ## Light Client Evaluation
 
-The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary memory. Note that with k=1, the subtree is only a line. 
-
-The number of edges each node in the DAG has follows a power law, and is proportional to the index in the array.  Hence, a light client needs fewer nodes with lower indexes values in order to gain most of the performance of the full implementation.
+The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary memory. Note that with k=1, the subtree is only a chain of values going up to the first element in the DAG. 
 
 The light client computing function for the DAG works as follows:
 
@@ -109,13 +109,17 @@ def quick_calc(params, seed, p):
     cache = {}
 
     def quick_calc_cached(p):
-        if p == 0:
-            return pow(sha3(seed), params["w"], P)
+        if p in cache:
+            pass
+        elif p == 0:
+            cache[p] = pow(sha3(seed), params["w"], P)
         else:
             x = pow(sha3(seed), (p + 1) * params["w"], P)
             for _ in range(params["k"]):
                 x ^= quick_calc_cached(x % p)
-            return pow(x, params["w"], P)
+            cache[p] = pow(x, params["w"], P)
+        return cache[p]
+
     return quick_calc_cached(p)
 ```
 
