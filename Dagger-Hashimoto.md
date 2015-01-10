@@ -242,8 +242,7 @@ def light_verify(params, header, nonce):
 Also, note that Dagger Hashimoto imposes additional requirements on the block header:
 
 * For two-layer verification to work, a block header must have both the nonce and the middle value pre-sha3
-****I DON'T KNOW IF THIS IS STILL TRUE****
-* Somewhere, a block header must store the sha3 of the current seedset
+* Somewhere, a block header must store the sha3 of the current seedset ****I DON'T KNOW IF THIS IS STILL TRUE****
 
 # Appendix
 
