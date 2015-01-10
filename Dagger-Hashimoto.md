@@ -45,7 +45,7 @@ def decode_int(s):
     return x
 ```
 
-We next assume that `sha3` is a function that takes an integer and outputs an integer; if converting this reference code into an implementation use:
+We next assume that `sha3` is a function that takes an integer and outputs an integer, and `dbl_sha3` is a double-sha3 function; if converting this reference code into an implementation use:
 
 ```python
 from pyethereum import utils
@@ -53,6 +53,11 @@ def sha3(x):
     if isinstance(x, (int, long)):
         x = encode_int(x)
     return decode_int(utils.sha3(x))
+
+def dbl_sha3(x):
+    if isinstance(x, (int, long)):
+        x = encode_int(x)
+    return decode_int(utils.sha3(utils.sha3(x)))    
 ```
 
 ### Parameters
@@ -192,10 +197,10 @@ def hashimoto(dag, dagsize, params, header, nonce):
     mix = sha3(encode_int(nonce) + header)
     for _ in range(params["accesses"]):
         mix ^= dag[m + (mix % 2**64) % m]
-    return sha3(sha3(mix))
+    return dbl_sha3(mix)
 ```
 
-Here is the light-client version:
+The use of double sha3 allows for a form of zero-data, near-instant pre-verification, verifying only that a correct intermediate value was provided. This outer layer of PoW is highly ASIC-friendly and fairly weak, but exists to make DDoS even more difficult since that small amount of work must be done in order to produce a block that will not be rejected immediately. Here is the light-client version:
 
 ```python
 def quick_hashimoto(seed, dagsize, params, header, nonce):
@@ -203,7 +208,7 @@ def quick_hashimoto(seed, dagsize, params, header, nonce):
     mix = sha3(nonce + header)
     for _ in range(params["accesses"]):
         mix ^= quick_calc(params, seed, m + (mix % 2**64) % m)
-    return sha3(sha3(mix))
+    return dbl_sha3(mix)
 ```
 
 ## Mining and Verifying
@@ -316,7 +321,7 @@ In the special case that `P` is a safe prime as we have selected, then `P-1` onl
         mix = sha3(encode_int(nonce) + header)
         for _ in range(params["accesses"]):
             mix ^= quick_calc_cached(cache, params, m + (mix & mask) % m)
-        return sha3(sha3(mix))
+        return dbl_sha3(mix)
 
 
 -----------------------------------
