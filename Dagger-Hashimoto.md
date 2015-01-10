@@ -183,7 +183,7 @@ def hashimoto(dag, params, header, nonce):
     mix = sha3(nonce + header)
     for _ in range(params["accesses"]):
         mix ^= dag[(mix & mask) % m]
-    return sha3(mix + nonce)
+    return sha3(mix)
 ```
 
 Here is the light-client version:
@@ -202,7 +202,7 @@ def quick_hashimoto_cached(cache, params, header, nonce):
     mix = sha3(nonce + header)
     for _ in range(params["accesses"]):
         mix ^= quick_calc_cached(cache, params, (mix & mask) % m)
-    return sha3(mix+nonce)
+    return sha3(mix)
 ```
 
 ## Mining &amp; Verifying
