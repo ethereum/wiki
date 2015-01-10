@@ -68,7 +68,7 @@ The parameters used for the algorithm are:
 SAFE_PRIME_512 = 2**512 - 38117     # Largest Safe Prime less than 2**512
 
 params = {
-      "n": 2147483648 * 8 // NUM_BITS,  # Size of the dataset (2 Gigabytes); MUST BE MULTIPLE OF 65536
+      "n": 4000055296 * 8 // NUM_BITS,  # Size of the dataset (4 Gigabytes); MUST BE MULTIPLE OF 65536
       "n_inc": 65536,                   # Increment in value of n per period; MUST BE MULTIPLE OF 65536
                                         # with epochtime=20000 gives 882 MB growth per year
       "cache_size": 2500,               # Size of the light client's cache (can be chosen by light
@@ -77,7 +77,7 @@ params = {
       "epochtime": 100000,              # Length of an epoch in blocks (how often the dataset is updated)
       "k": 1,                           # Number of parents of a node
       "w": 15,                          # Used for modular exponentiation hashing
-      "accesses": 100,                  # Number of dataset accesses during hashimoto
+      "accesses": 200,                  # Number of dataset accesses during hashimoto
       "P": SAFE_PRIME_512               # Safe Prime for hashing and random number generation
 }
 ```
