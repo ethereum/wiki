@@ -290,7 +290,7 @@ In the special case that `P` is a safe prime as we have selected, then `P-1` onl
 ## More Efficient Cache-based Evaluation Algos
 
     def quick_calc(params, seed, p):
-        cache = produce_dag(cache_params, seed, params["cache_size"])
+        cache = produce_dag(params, seed, params["cache_size"])
         return quick_calc_cached(cache, params, p)
 
     def quick_calc_cached(cache, params, p):
@@ -304,7 +304,7 @@ In the special case that `P` is a safe prime as we have selected, then `P-1` onl
             return pow(x, params["w"], P)
 
     def quick_hashimoto(seed, dagsize, params, header, nonce):
-        cache = produce_dag(cache_params, seed, params["cache_size"])
+        cache = produce_dag(params, seed, params["cache_size"])
         return quick_hashimoto_cached(cache, dagsize, params, header, nonce)
 
     def quick_hashimoto_cached(cache, dagsize, params, header, nonce):
