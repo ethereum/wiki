@@ -1,10 +1,13 @@
 ## Introduction
 
-Dagger Hashimoto is a proposed spec for the mining algorithm for Ethereum 1.0. Dagger Hashimoto aims to simultaneously satisfy three goals:
+Dagger Hashimoto is a proposed spec for the mining algorithm for Ethereum 1.0. Dagger Hashimoto aims to simultaneously satisfy two goals:
 
 1. **ASIC-resistance**: the benefit from creating specialized hardware for the algorithm should be as small as possible, ideally to the point that even in an economy where ASICs have been developed the speedup is sufficiently small that it is still marginally profitable for users on ordinary computers to mine with spare CPU power.
 2. **Light client verifiability**: a block should be relatively efficiently verifiable by a light client.
-3. **Full chain storage**: mining should require storage of the complete blockchain state (due to the irregular structure of the Ethereum state trie, we anticipate that some pruning will be possible, particularly of some often-used contracts, but we want to minimize this).
+
+With an additional modification, we also specify how to fulfill a third goal if desired, but at the cost of additional complexity:
+
+**Full chain storage**: mining should require storage of the complete blockchain state (due to the irregular structure of the Ethereum state trie, we anticipate that some pruning will be possible, particularly of some often-used contracts, but we want to minimize this).
 
 Dagger Hashimoto builds on two key pieces of previous work:
 
@@ -58,12 +61,13 @@ The parameters used for the algorithm are:
 SAFE_PRIME_512 = 2**512 - 38117     # Largest Safe Prime less than 2**512
 
 params = {
-      "n": 1000000000 * 8 // NUM_BITS,  # Size of the dataset (1 Gigabyte)
-      "cache_size": 1,                  # Size of the light client's cache
+      "n": 1073741824 * 8 // NUM_BITS,  # Size of the dataset (1 Gigabyte); MUST BE MULTIPLE OF 65536
+      "n_inc": 1,                       # Oncrement in value of n per period
+      "cache_size": 2500,               # Size of the light client's cache
       "diff": 2**14,                    # Difficulty (adjusted during block evaluation)
       "epochtime": 1000,                # Length of an epoch in blocks (how often the dataset is updated)
       "k": 1,                           # Number of parents of a node
-      "w": 3,                           # Used for modular exponentiation hashing
+      "w": 15,                          # Used for modular exponentiation hashing
       "accesses": 100,                  # Number of dataset accesses during hashimoto
       "P": SAFE_PRIME_512               # Safe Prime for hashing and random number generation
 }
@@ -76,11 +80,11 @@ params = {
 The dagger graph building primitive is defined as follows:
 
 ```python
-def produce_dag(params, seed):
+def produce_dag(params, seed, length):
     P = params["P"]
-    picker = init = pow(sha3(seed) + 2, params["w"], P)
+    picker = init = pow(sha3(seed), params["w"], P)
     o = [init]
-    for i in range(1, params["n"]):
+    for i in range(1, length):
         x = picker = (picker * init) % P
         for _ in range(params["k"]):
             x ^= o[x % i]
@@ -88,13 +92,13 @@ def produce_dag(params, seed):
     return o
 ```
 
-Essentially, it starts off a graph as a single node, `sha3(seed) + 2`, and from there starts sequentially adding on other nodes based on random previous nodes. When a new node is created, a modular power of the seed is computed to randomly select some indices less than `i` (using `x % i` above), and the values of the nodes at those indices are used in a calculation to generate a new a value for `x`, which is then fed into a small proof of work function (based on XOR) to ultimately generate the value of the graph at index `i`.  The rationale behind this particular design is to force sequential access of the DAG; the next value of the DAG that will be accessed cannot be determined until the current value is known.  Finally, modular exponentiation is used to further hash the result.
+Essentially, it starts off a graph as a single node, `sha3(seed)`, and from there starts sequentially adding on other nodes based on random previous nodes. When a new node is created, a modular power of the seed is computed to randomly select some indices less than `i` (using `x % i` above), and the values of the nodes at those indices are used in a calculation to generate a new a value for `x`, which is then fed into a small proof of work function (based on XOR) to ultimately generate the value of the graph at index `i`.  The rationale behind this particular design is to force sequential access of the DAG; the next value of the DAG that will be accessed cannot be determined until the current value is known.  Finally, modular exponentiation is used to further hash the result.
 
 This algorithm relies on several results from number theory.  See the appendix below for a discussion.
 
 ## Light Client Evaluation
 
-The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary memory.
+The intent of the above graph construction is to allow each individual node in the graph can be reconstructed by computing a subtree of only a small number of nodes, and requiring only a small amount of auxiliary memory. Note that with k=1, the subtree is only a line. 
 
 The number of edges each node in the DAG has follows a power law, and is proportional to the index in the array.  Hence, a light client needs fewer nodes with lower indexes values in order to gain most of the performance of the full implementation.
 
@@ -102,24 +106,20 @@ The light client computing function for the DAG works as follows:
 
 ```python
 def quick_calc(params, seed, p):
-    from copy import deepcopy
-    cache_params = deepcopy(params)
-    cache_params["n"] = params["cache_size"]
-    cache = produce_dag(cache_params, seed)
-    return quick_calc_cached(cache, params, p)
+    cache = {}
 
-def quick_calc_cached(cache, params, p):
-    P = params["P"]    
-    if p < len(cache):
-        return cache[p]
-    else:
-        x = pow(cache[0], p + 1, P)
-        for _ in range(params["k"]):
-            x ^= quick_calc_cached(cache, params, x % p)
-        return pow(x, params["w"], P)
+    def quick_calc_cached(p):
+        if p == 0:
+            return pow(sha3(seed), params["w"], P)
+        else:
+            x = pow(sha3(seed), (p + 1) * params["w"], P)
+            for _ in range(params["k"]):
+                x ^= quick_calc_cached(x % p)
+            return pow(x, params["w"], P)
+    return quick_calc_cached(p)
 ```
 
-Essentially, it is simply a rewrite of the above algorithm that removes the loop of computing the values for the entire DAG and replaces the earlier node lookup with a recursive call or a cache lookup.
+Essentially, it is simply a rewrite of the above algorithm that removes the loop of computing the values for the entire DAG and replaces the earlier node lookup with a recursive call or a cache lookup. Note that for `k=1` the cache is unnecessary, although a further optimization actually precomputes the first few thousand values of the DAG and keeps that as a static cache for computations; see the appendix for a code implementation of this.
 
 ## Double Buffer of DAGs
 
@@ -145,16 +145,20 @@ def get_seedset(params, block):
     seedset["front_hash"] = get_prevhash(seedset["front_number"])
     return seedset
 
+def get_dagsize(params, block):
+    return params["n"] + (block.number // params["epochtime"]) * params["n_inc"]
+
 def get_daggerset(params, block):
+    dagsz = get_dagsize(params, block)
     seedset = get_seedset(params, block)
     if seedset["front_hash"] <= 0:
         # No back buffer is possible, just make front buffer
-        return {"front": {"dag": produce_dag(params, seedset["front_hash"]), 
+        return {"front": {"dag": produce_dag(params, seedset["front_hash"], dagsz), 
                           "block_number": 0}}
     else:
-        return {"front": {"dag": preoduce_dag(params, seedset["front_hash"]),
+        return {"front": {"dag": produce_dag(params, seedset["front_hash"], dagsz),
                           "block_number": seedset["front_number"]},
-                "back": {"dag": preoduce_dag(params, seedset["back_hash"]),
+                "back": {"dag": produce_dag(params, seedset["back_hash"], dagsz),
                          "block_number": seedset["back_number"]}}
 ```
 
@@ -176,44 +180,36 @@ def orig_hashimoto(prev_hash, merkle_root, list_of_transactions, nonce):
 Unfortunately, while Hashimoto is considered RAM hard, it relies on 256-bit arithmetic, which has considerable computational overhead. To address this issue, dagger hashimoto only uses the least significant 64 bits when indexing its dataset.
 
 ```python
-def hashimoto(dag, params, header, nonce):
-    m = params["n"]
-    mask = 2**64 - 1
+def hashimoto(dag, dagsize, params, header, nonce):
+    m = dagsize / 2
     mix = sha3(nonce + header)
     for _ in range(params["accesses"]):
-        mix ^= dag[(mix & mask) % m]
-    return sha3(mix)
+        mix ^= dag[m + (mix % 2**64) % m]
+    return sha3(sha3(mix))
 ```
 
 Here is the light-client version:
 
 ```python
-def quick_hashimoto(seed, params, header, nonce):
-    from copy import deepcopy
-    cache_params = deepcopy(params)
-    cache_params["n"] = params["cache_size"]
-    cache = produce_dag(cache_params, seed)
-    return quick_hashimoto_cached(cache, params, header, nonce)
-
-def quick_hashimoto_cached(cache, params, header, nonce):
-    m = params["n"]
-    mask = 2**64 - 1
+def quick_hashimoto(seed, dagsize, params, header, nonce):
+    m = dagsize // 2
     mix = sha3(nonce + header)
     for _ in range(params["accesses"]):
-        mix ^= quick_calc_cached(cache, params, (mix & mask) % m)
-    return sha3(mix)
+        mix ^= quick_calc(params, seed, m + (mix % 2**64) % m)
+    return sha3(sha3(mix))
 ```
 
-## Mining &amp; Verifying
+## Mining and Verifying
 
 Now, let us put it all together into the mining algo:
 
 ```python
 def mine(daggerset, params, block):
     from random import randint
-    nonce = randint(0,2**64)
+    nonce = randint(0, 2**64)
     while 1:
-        result = hashimoto(daggerset, params, decode_int(block.prevhash), nonce)
+        result = hashimoto(daggerset, get_dagsize(params, block),
+                           params, decode_int(block.prevhash), nonce)
         if result * params["diff"] < 2**256:
             break
         nonce += 1
@@ -225,7 +221,8 @@ def mine(daggerset, params, block):
 Here is the verification algorithm:
 ```python
 def verify(daggerset, params, block, nonce):
-    result = hashimoto(daggerset, params, decode_int(block.prevhash), nonce)
+    result = hashimoto(daggerset, get_dagsize(params, block),
+                       params, decode_int(block.prevhash), nonce)
     return result * params["diff"] < 2**256
 ```
 
@@ -234,15 +231,15 @@ Light-client friendly verification:
 ```python
 def light_verify(params, header, nonce):
     seedset = get_seedset(params, block)
-    result = quick_hashimoto(seedset["front_hash"], params, 
-                             decode_int(block.prevhash), nonce)
+    result = quick_hashimoto(seedset["front_hash"], get_dagsize(params, block),
+                             params, decode_int(block.prevhash), nonce)
     return result * params["diff"] < 2**256
 ```
 
 Also, note that Dagger Hashimoto imposes additional requirements on the block header:
 
 * For two-layer verification to work, a block header must have both the nonce and the middle value pre-sha3
-* Somewhere, a block header must store the sha3 of the current seedset ****I DON'T KNOW IF THIS IS STILL TRUE****
+* Somewhere, a block header must store the sha3 of the current seedset
 
 # Appendix
 
@@ -285,6 +282,35 @@ Given that `P` is prime, then an appropriate `w` for a modular exponentation has
 Thus, given that `P` is prime and `w` is relatively prime to `P-1`, we have that `|{pow(x, w, P) : x ∈ ℤ}| = P`, implying that the hashing function has the minimal collision rate possible.
 
 In the special case that `P` is a safe prime as we have selected, then `P-1` only has factors 1, 2, `(P-1)/2` and `P-1`.  Since `P` > 7, we know that 3 is relatively prime to `P-1`, hence `w=3` satisfies the above proposition.
+
+## More Efficient Cache-based Evaluation Algos
+
+    def quick_calc(params, seed, p):
+        cache = produce_dag(cache_params, seed, params["cache_size"])
+        return quick_calc_cached(cache, params, p)
+
+    def quick_calc_cached(cache, params, p):
+        P = params["P"]
+        if p < len(cache):
+            return cache[p]
+        else:
+            x = pow(cache[0], p + 1, P)
+            for _ in range(params["k"]):
+                x ^= quick_calc_cached(cache, params, x % p)
+            return pow(x, params["w"], P)
+
+    def quick_hashimoto(seed, dagsize, params, header, nonce):
+        cache = produce_dag(cache_params, seed, params["cache_size"])
+        return quick_hashimoto_cached(cache, dagsize, params, header, nonce)
+
+    def quick_hashimoto_cached(cache, dagsize, params, header, nonce):
+        m = dagsize // 2
+        mask = 2**64 - 1
+        mix = sha3(nonce + header)
+        for _ in range(params["accesses"]):
+            mix ^= quick_calc_cached(cache, params, m + (mix & mask) % m)
+        return sha3(sha3(mix))
+
 
 -----------------------------------
 
