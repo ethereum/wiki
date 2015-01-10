@@ -211,13 +211,14 @@ Now, let us put it all together into the mining algo:
 
 ```python
 def mine(daggerset, params, block):
-    nonce = random.random(2**64)
+    from random import randint
+    nonce = randint(0,2**64)
     while 1:
         result = hashimoto(daggerset, params, decode_int(block.prevhash), nonce)
         if result * params["diff"] < 2**256:
             break
         nonce += 1
-        if nonce > 2**64:
+        if nonce >= 2**64:
             nonce = 0 
     return nonce
 ```
