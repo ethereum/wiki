@@ -59,7 +59,7 @@ SAFE_PRIME_512 = 2**512 - 38117     # Largest Safe Prime less than 2**512
 
 params = {
       "n": 1000000000 * 8 // NUM_BITS,  # Size of the dataset (1 Gigabyte)
-      "cache_size": 2500,               # Size of the light client's cache
+      "cache_size": 1,                  # Size of the light client's cache
       "diff": 2**14,                    # Difficulty (adjusted during block evaluation)
       "epochtime": 1000,                # Length of an epoch in blocks (how often the dataset is updated)
       "k": 1,                           # Number of parents of a node
@@ -90,24 +90,6 @@ def produce_dag(params, seed):
 ```
 
 Essentially, it starts off a graph as a single node, `sha3(seed)`, and from there starts sequentially adding on other nodes based on random previous nodes. When a new node is created, a modular power of the seed is computed to randomly select some indices less than `i` (using `x % i` above), and the values of the nodes at those indices are used in a calculation to generate a new a value for `x`, which is then fed into a small proof of work function (based on XOR) to ultimately generate the value of the graph at index `i`.  The rationale behind this particular design is to force sequential access of the DAG; the next value of the DAG that will be accessed cannot be determined until the current value is known.  Finally, modular exponentiation is used to further hash the result.
-
-Since it is inconvenient to mine using arbitrary precision arithmetic, the results are aliased to 64 bit numbers. While this is natural to do in C, it is less natural in python.  Below we show demonstrate how to similate aliasing the DAG can into little endian 64 bit blocks:
-
-```python
-def chunks64(n):
-    "Represent a NUM_BITS number as 64 bit chunks, little endian"
-    i = NUM_BITS
-    o = []
-    while i > 0:
-        o.append(n & (2**64 - 1))
-        n >>= 64
-        i -= 64
-    return o
-
-def produce_dag64(params, seed):
-    return [c for n in produce_dag(params, seed)
-              for c in chunks64(n)]
-```
 
 This algorithm relies on several results from number theory.  See the appendix below for a discussion.
 
@@ -156,20 +138,25 @@ def get_prevhash(n):
         prevhash = chain_manager.index.get_block_by_number(n - 1)
         return decode_int(prevhash)
 
+def get_seedset(params, block):
+    seedset = {}
+    seedset["back_number"] = block.number - (block.number % params["epochtime"])
+    seedset["back_hash"] = get_prevhash(seedset["back_number"])
+    seedset["front_number"] = max(seedset["back_number"] - params["epochtime"], 0)
+    seedset["front_hash"] = get_prevhash(seedset["front_number"])
+    return seedset
+
 def get_daggerset(params, block):
-    back_number = block.number - (block.number % params["epochtime"])
-    back_hash = get_prevhash(back_number)
-    front_number = back_number - params["epochtime"]
-    front_hash = get_prevhash(front_number)
-    if front_number <= 0:
+    seedset = get_seedset(params, block)
+    if seedset["front_hash"] <= 0:
         # No back buffer is possible, just make front buffer
-        return {"front": {"dag": produce_dag(params, front_hash), 
+        return {"front": {"dag": produce_dag(params, seedset["front_hash"]), 
                           "block_number": 0}}
     else:
-        return {"front": {"dag": preoduce_dag(params, front_hash),
-                          "block_number": front_number},
-                "back": {"dag": preoduce_dag(params, back_hash),
-                         "block_number": back_number}}
+        return {"front": {"dag": preoduce_dag(params, seedset["front_hash"]),
+                          "block_number": seedset["front_number"]},
+                "back": {"dag": preoduce_dag(params, seedset["back_hash"]),
+                         "block_number": seedset["back_number"]}}
 ```
 
 ## Hashimoto
@@ -187,18 +174,15 @@ def orig_hashimoto(prev_hash, merkle_root, list_of_transactions, nonce):
     return txid_max ^ (nonce << 192)
 ```
 
-Unfortunately, while Hashimoto is considered RAM hard, it is not *bandwidth* limited.
-
-An issue with Hashimoto is that it uses 256-bit arithmetic, which has considerable computational overhead.
-
-To address this issue, the DAG is *aliased* into 64 bit chunks as shown above.
+Unfortunately, while Hashimoto is considered RAM hard, it relies on 256-bit arithmetic, which has considerable computational overhead. To address this issue, dagger hashimoto only uses the least significant 64 bits when indexing its dataset.
 
 ```python
-def hashimoto(dag64, params, header, nonce):
-    m = params["n"] * NUM_BITS // 64
-    mix = nonce
+def hashimoto(dag, params, header, nonce):
+    m = params["n"]
+    mask = 2**64 - 1
+    mix = sha3(nonce + header)
     for _ in range(params["accesses"]):
-        mix ^= dag64[mix % m]
+        mix ^= dag[(mix & mask) % m]
     return sha3(mix + nonce)
 ```
 
@@ -213,75 +197,52 @@ def quick_hashimoto(seed, params, header, nonce):
     return quick_hashimoto_cached(cache, params, header, nonce)
 
 def quick_hashimoto_cached(cache, params, header, nonce):
-    m = params["n"] * NUM_BITS // 64
-    mix = nonce
+    m = params["n"]
+    mask = 2**64 - 1
+    mix = sha3(nonce + header)
     for _ in range(params["accesses"]):
-        p, r = divmod(mix % m, NUM_BITS // 64)
-        mix ^= chunks64(quick_calc_cached(cache, params, p))[r]
+        mix ^= quick_calc_cached(cache, params, (mix & mask) % m)
     return sha3(mix+nonce)
 ```
 
-----------------------------------------
-
-**TODO: Edit me**
-
-To make the algorithm require blockchain storage, we simply add one additional round of access which uses the current state as a database. The reason why the original hashimoto does not suffice for light client friendliness is that the validation process would require 64 Merkle tree proofs, amounting to up to 50kb of data for each block - perhaps light enough for a smartphone, but not an internet-of-things device. Here, we intend to achieve simultaneous light client friendliness and blockchain storage requirement by pursuing the two goals separately - once with a Dagger-generated dataset, and the second time by making a single blockchain access.
-
-First, let's define the primitive; code described here should work as is with pyethereum.
-
-    def get_state(block, header, nonce):
-        # Generate a random position
-        pos = encode_int(sha3(header+encode_int(nonce)) % 2**160)
-
-        # Locate next address in state with index after that position
-        # and get the account binary data from that address.
-        # If there is nothing, we set i to the maximum address
-        i = block.state.next(pos) or encode_int(2**160 - 1)
-        acct = block.state.get(i) or ''
-
-        # Generate another random position
-        pos2 = encode_int(sha3(header+encode_int(nonce+1)))
-
-        # Get a trie object for the account we already discovered
-        t = block.get_storage(acct.encode('hex'))
-
-        # Next key and value in state after the second position
-        j = t.next(pos2) or encode_int(2**256 - 1)
-        val = block.state.get(j) or ''
-
-        return utils.decode_int(sha3(i + acct + j + val))
+## Mining &amp; Verifying
 
 Now, let us put it all together into the mining algo:
 
-    def mine(daggerset, params, block):
-        nonce = random.random(2**50)
-        while 1:
-            h1 = hashimoto(daggerset, params, 
-                           block.serialize_header_without_nonce(), nonce)
-            h2 = get_state(block, block.serialize_header_without_nonce(), nonce)
-            if sha3(h1 + h2) * params["diff"] < 2**256:
-                return nonce
-            nonce += 1
+```python
+def mine(daggerset, params, block):
+    nonce = random.random(2**64)
+    while 1:
+        result = hashimoto(daggerset, params, decode_int(block.prevhash), nonce)
+        if result * params["diff"] < 2**256:
+            break
+        nonce += 1
+        if nonce > 2**64:
+            nonce = 0 
+    return nonce
+```
 
-And the verification algo:
-
-    def verify(daggerset, params, block, nonce):
-        h1 = hashimoto(daggerset, params, block, nonce)
-        h2 = get_state(block, block.serialize_header_without_nonce(), nonce)
-        return sha3(h1 + h2) * params["diff"] < 2**256
+Here is the verification algorithm:
+```python
+def verify(daggerset, params, block, nonce):
+    result = hashimoto(daggerset, params, decode_int(block.prevhash), nonce)
+    return result * params["diff"] < 2**256
+```
 
 Light-client friendly verification:
 
-    def light_verify(seedset, params, header, nonce):
-        h1 = light_hashimoto(seedset, params, header, nonce)
-        h2 = get_state(block, block.serialize_header_without_nonce(), nonce)
-        return sha3(h1 + h2) * params["diff"] < 2**256
-
-Note that the light client verification algorithm requires "pre-seeding" the light-client's database with nodes from a Merkle tree proof of the block's validity. Also note that the SHA3 wrapper creates a "two-layered PoW" where the outer layer is very fast and "info-free" to verify (ie. you can verify the outer PoW by just computing SHA3; no need to know the daggerset state).
+```python
+def light_verify(params, header, nonce):
+    seedset = get_seedset(params, block)
+    result = quick_hashimoto(seedset["front_hash"], params, 
+                             decode_int(block.prevhash), nonce)
+    return result * params["diff"] < 2**256
+```
 
 Also, note that Dagger Hashimoto imposes additional requirements on the block header:
 
 * For two-layer verification to work, a block header must have both the nonce and the middle value pre-sha3
+****I DON'T KNOW IF THIS IS STILL TRUE****
 * Somewhere, a block header must store the sha3 of the current seedset
 
 # Appendix
