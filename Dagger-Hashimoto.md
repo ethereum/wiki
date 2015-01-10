@@ -50,7 +50,9 @@ We next assume that `sha3` is a function that takes an integer and outputs an in
 ```python
 from pyethereum import utils
 def sha3(x):
-    return decode_int(utils.sha3(encode_int(x)))
+    if isinstance(x, (int, long)):
+        x = encode_int(x)
+    return decode_int(utils.sha3(x))
 ```
 
 ### Parameters
@@ -106,18 +108,19 @@ The light client computing function for the DAG works as follows:
 
 ```python
 def quick_calc(params, seed, p):
+    w, P = params["w"], params["P"]
     cache = {}
 
     def quick_calc_cached(p):
         if p in cache:
             pass
         elif p == 0:
-            cache[p] = pow(sha3(seed), params["w"], P)
+            cache[p] = pow(sha3(seed), w, P)
         else:
-            x = pow(sha3(seed), (p + 1) * params["w"], P)
+            x = pow(sha3(seed), (p + 1) * w, P)
             for _ in range(params["k"]):
                 x ^= quick_calc_cached(x % p)
-            cache[p] = pow(x, params["w"], P)
+            cache[p] = pow(x, w, P)
         return cache[p]
 
     return quick_calc_cached(p)
@@ -186,7 +189,7 @@ Unfortunately, while Hashimoto is considered RAM hard, it relies on 256-bit arit
 ```python
 def hashimoto(dag, dagsize, params, header, nonce):
     m = dagsize / 2
-    mix = sha3(nonce + header)
+    mix = sha3(encode_int(nonce) + header)
     for _ in range(params["accesses"]):
         mix ^= dag[m + (mix % 2**64) % m]
     return sha3(sha3(mix))
@@ -310,7 +313,7 @@ In the special case that `P` is a safe prime as we have selected, then `P-1` onl
     def quick_hashimoto_cached(cache, dagsize, params, header, nonce):
         m = dagsize // 2
         mask = 2**64 - 1
-        mix = sha3(nonce + header)
+        mix = sha3(encode_int(nonce) + header)
         for _ in range(params["accesses"]):
             mix ^= quick_calc_cached(cache, params, m + (mix & mask) % m)
         return sha3(sha3(mix))
