@@ -78,7 +78,6 @@ The dagger graph building primitive is defined as follows:
 ```python
 def produce_dag(params, seed):
     P = params["P"]
-    a = sha3(seed) + 2
     picker = init = pow(sha3(seed) + 2, params["w"], P)
     o = [init]
     for i in range(1, params["n"]):
@@ -89,7 +88,7 @@ def produce_dag(params, seed):
     return o
 ```
 
-Essentially, it starts off a graph as a single node, `sha3(seed)`, and from there starts sequentially adding on other nodes based on random previous nodes. When a new node is created, a modular power of the seed is computed to randomly select some indices less than `i` (using `x % i` above), and the values of the nodes at those indices are used in a calculation to generate a new a value for `x`, which is then fed into a small proof of work function (based on XOR) to ultimately generate the value of the graph at index `i`.  The rationale behind this particular design is to force sequential access of the DAG; the next value of the DAG that will be accessed cannot be determined until the current value is known.  Finally, modular exponentiation is used to further hash the result.
+Essentially, it starts off a graph as a single node, `sha3(seed) + 2`, and from there starts sequentially adding on other nodes based on random previous nodes. When a new node is created, a modular power of the seed is computed to randomly select some indices less than `i` (using `x % i` above), and the values of the nodes at those indices are used in a calculation to generate a new a value for `x`, which is then fed into a small proof of work function (based on XOR) to ultimately generate the value of the graph at index `i`.  The rationale behind this particular design is to force sequential access of the DAG; the next value of the DAG that will be accessed cannot be determined until the current value is known.  Finally, modular exponentiation is used to further hash the result.
 
 This algorithm relies on several results from number theory.  See the appendix below for a discussion.
 
