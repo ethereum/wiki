@@ -1,7 +1,7 @@
 Peer-to-peer communications between nodes running Ethereum clients run using the underlying [ÐΞVp2p Wire Protocol](https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol).
 
 ### Basic Chain Syncing
-- Two peers connect & say Hello and send their Status message. Status includes the TD & hash of their best block.
+- Two peers connect & say Hello and send their Status message. Status includes the Total Difficulty(TD) & hash of their best block.
 - The client with the worst TD asks peer for full chain of just block hashes.
 - Chain of hashes is stored in space shared by all peer connections, and used as a "work pool".
 - While there are hashes in the chain of hashes that we don't have in our chain:
