@@ -76,7 +76,7 @@ params = {
       "diff": 2**14,                    # Difficulty (adjusted during block evaluation)
       "epochtime": 100000,              # Length of an epoch in blocks (how often the dataset is updated)
       "k": 1,                           # Number of parents of a node
-      "w": 15,                          # Used for modular exponentiation hashing
+      "w": w,                          # Used for modular exponentiation hashing
       "accesses": 200,                  # Number of dataset accesses during hashimoto
       "P": SAFE_PRIME_512               # Safe Prime for hashing and random number generation
 }
