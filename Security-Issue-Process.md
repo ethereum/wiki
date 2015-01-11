@@ -1,0 +1,1 @@
+Draft of steps that should be taken when finding a security issue in Ethereum. Security issue is defined as falling within [https://github.com/ethereum/wiki/wiki/Security-Categorization](https://github.com/ethereum/wiki/wiki/Security-Categorization). 
