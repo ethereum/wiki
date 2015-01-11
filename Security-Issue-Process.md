@@ -1,6 +1,6 @@
 Draft of steps that should be taken when finding a security issue in Ethereum. Security issue is defined as a problem in scope of [Security-Categorization](https://github.com/ethereum/wiki/wiki/Security-Categorization).
 
-This list is inspired by [OWASP Risk Rating](https://www.owasp.org/index.php/OWASP_Risk_Rating_Methodology)
+Partly inspired by [OWASP Risk Rating](https://www.owasp.org/index.php/OWASP_Risk_Rating_Methodology)
 
 ### Documentation
 
@@ -25,7 +25,19 @@ This list is inspired by [OWASP Risk Rating](https://www.owasp.org/index.php/OWA
 ### Technical description
 
 * Protocol version.
-* Client version(s). Does it affect a single or multiple implementations?
+* Client version(s). Single or multiple implementations?
+* OS / external library version(s).
 * Link to relevant source code.
 * How to fix.
 * How to test.
+
+### Ownership / Responsibility
+
+* Who is assigned to fix the issue?
+* Who will test / review a fix?
+* Who takes responsibility for preparing new builds of client software?
+
+### Disclosure
+
+* Who takes on to disclose the issue?
+* Communication channels (mail lists, twitter, github).
