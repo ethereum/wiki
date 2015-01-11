@@ -75,20 +75,18 @@ Now, what if you want to actually run the contract? That is where [pyethereum](h
 
     > from pyethereum import tester as t
     > s = t.state()
-    > c = s.contract('mul2.se')
-    > s.send(t.k0, c, 0, funid=0, abi=[42])
+    > c = s.abi_contract('mul2.se')
+    > c.double(42)
     [84]
-    > s.send(t.k0, c, 0, funid=0, abi=[303030])
-    [606060]
 
-The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and sets `c` to its address. The fourth line sends a transaction from private key zero (the `tester` submodule includes ten pre-made key/address pairs at `k0`, `a0`, `k1`, `a1`, etc) to the address of the contract with 0 wei, calling function 0 (ie. the first function in the contract) with data 42, and we see 84 predictably come out.
+The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `c.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
 
 Note that if you want to send a transaction to such a contract in the testnet or livenet, you will need to package up the transaction data for "call function 0 with data 42". The command line instruction for this is:
 
     > serpent encode_abi 0 42
     00000000000000000000000000000000000000000000000000000000000000002a
 
-The first byte (ie. two hex characters) always represents the function ID; for example, if we were calling the function with ID 9 in some contract instead, we would do:
+The first byte (ie. two hex characters) always represents the function ID; the ID of a function is the position of the function in the contract code, ie. the first function (not including init/any/shared) has ID 0, the second function has ID 1, etc. For example, if we were calling the function with ID 9 in some contract instead, we would do:
 
     > serpent encode_abi 9 42
     09000000000000000000000000000000000000000000000000000000000000002a
@@ -121,14 +119,14 @@ Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opc
 
     > from pyethereum import tester as t
     > s = t.state()
-    > c = s.contract('namecoin.se')
-    > s.send(t.k0, c, 0, funid=0, abi=[0x67656f726765, 45])
+    > c = s.abi_contract('namecoin.se')
+    > c.register(0x67656f726765, 45)
     [1]
-    > s.send(t.k1, c, 0, funid=0, abi=[0x67656f726765, 20])
+    > c.register(0x67656f726765, 20)
     [0]
-    > s.send(t.k2, c, 0, funid=0, abi=[0x6861727279, 65])
+    > c.register(0x6861727279, 65)
     [1]
-    > s.send(t.k3, c, 0, funid=1, abi=[0x6861727279])
+    > c.ask(0x6861727279)
     [65]
 
 `funid` is the index of the function, in the order in which it appears in the contract; here, 0 is for `register` and 1 is for `ask`. If we wanted to encode the transaction data for that first call, we would do: 
@@ -156,8 +154,8 @@ And open Python:
 
     > from pyethereum import tester as t
     > s = t.state()
-    > c = s.contract('returnten.se')
-    > s.send(t.k0, c, 0, [])
+    > c = s.abi_contract('returnten.se')
+    > c.returnten()
     [10]
 
 Note that here we introduced several new features. Particularly:
