@@ -6,12 +6,11 @@ Users signed in with Github can edit and add pages using the [browser](https://h
 
 ## Status 
 
-### Proof-Of-Concept 6 (stable)
-The latest stable (i.e. the clients are interoperable) release is PoC6. See below for releases. You can browse the chain using the poc6 [block explorer](http://poc-6.ethdev.com/).
+### Proof-Of-Concept 7 (stable)
+The latest stable (i.e. the clients are interoperable) release is PoC7. See below for releases. You can browse the chain using the poc7 [block explorer](http://poc-7.ethdev.com/).
 
-### Proof-Of-Concept 7 (in development)
-Currently in development, mainly data structure and Virtual Machine improvements. A reorganised opcode set will break old contracts though. A release of clients is scheduled for mid November [temp block explorer](http://www.ethergit.com).
-
+### Proof-Of-Concept 8 (in development)
+Currently in development, mainly the new p2p networking changes and peer selection. 
 
 ## Getting started
 To get the basic concepts of Ethereum read the [ethereum whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper) and the [design rationale](https://github.com/ethereum/wiki/wiki/Design-Rationale) or for a more formal review the [ethereum yellow paper](http://gavwood.com/Paper.pdf). See the [ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for quick start to developing smart contracts.
