@@ -32,6 +32,8 @@
 
 ### ÐApp Development
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
+- [Solidity Tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial)
+- [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
