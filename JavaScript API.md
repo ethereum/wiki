@@ -62,12 +62,12 @@ There is, at the global scope, one objects; the `web3` object, containing data h
 
 # Parameters
 
-Parameters are always data represented as hex, prefixed with an `0x`. There's automatic conversion from decimal strings to the hex representation (interpreted as a big-endian as is standard for Ethereum). So, the following two forms are identically interpreted:
+The canonical form of almost all parameters in this API is data represented as hex, prefixed with an `0x`. There's automatic conversion from decimal strings to the hex representation (interpreted as a big-endian as is standard for Ethereum). So, the following two forms are identically interpreted:
 
 * `"0x414243"`
 * `"4276803"`
 
-In each case, they are interpreted as the number 4276803. To convert to or from other datatypes, there are a number of conversion functions, detailed later.
+In each case, they are interpreted as the number 4276803. To convert to or from other datatypes, such as strings and integers, there are a number of conversion functions, detailed later.
 
 # Usage
 
