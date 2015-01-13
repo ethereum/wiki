@@ -1,7 +1,7 @@
 Solidity is probably the first example of a Contract-Oriented Language, a slight reworking of the well-established group of Object-Oriented Languages. Here's an example of Solidity:
 
 ```
-contract PriceFeed extends owned, mortal, costs, named("GoldFeed")
+contract PriceFeed is owned, mortal, costs, named("GoldFeed")
 {
    function updateInfo(uint newInfo) onlyowner {
       info = newInfo;
@@ -33,7 +33,7 @@ It is expected that each method, together with the contract itself, will be docu
 For GavCoin, a meta coin that that is sub-divisible down to 1,000, and includes two functions `balance` and `send`, we might see the basic, undocumented contract as:
 
 ```
-contract GavCoin
+contract GavCoin is named("GavCoin")
 {
   function GavCoin() {
     balances[transaction.sender] = 100000000000;
@@ -76,7 +76,7 @@ This would then be formally documented:
 ```
 /// @title Some title here.
 /// @author Homer Simpson
-contract GavCoin
+contract GavCoin is named("GavCoin")
 {
   /// @notice Endows `message.caller.address()` with 1m GAV.
   function GavCoin() {
