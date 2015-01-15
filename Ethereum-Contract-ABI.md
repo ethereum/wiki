@@ -45,8 +45,8 @@ The following non-fixed-size types exist:
 - `<type>[]`: a variable-length array of the given fixed-length type.
 
 The number of elements (number of bytes for string, number of elements for
-arrays) is given before any actual data (as described above). A `string` of
-length `N` is encoded the same way as `string<N>` and a `<type>[]` with exactly
+arrays) is given before any actual data (as described above) as a 256 bit big endian integer.
+A `string` of length `N` is encoded the same way as `string<N>` and a `<type>[]` with exactly
 `N` elements is encoded the same way as `<type>[N]`.
 
 ### Signature
