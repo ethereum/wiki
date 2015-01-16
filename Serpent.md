@@ -433,6 +433,6 @@ There are also special commands for a few crypto operations; particularly:
 
 * Sometimes you may be intending to use unsigned operators. eg div() and lt() instead of '/' and '<'.
 
-* To upgrade Serpent, may need to do combination of `pip uninstall ethereum-serpent` `pip install ethereum-serpent`, `make && make install`, `python setup.py install`.
+* To upgrade Serpent, you may need to do `pip uninstall ethereum-serpent` and `python setup.py install`.  (Avoid `pip install ethereum-serpent` since it will get from pypi which is probably old.)
 
 * When calling abi_contract(), if you get this type of error `Exception: Error (file "main", line 1, char 5): Invalid object member (ie. a foo.bar not mapped to anything)` make sure you are specifying correct path to the file you are compiling.
