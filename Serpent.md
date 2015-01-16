@@ -10,7 +10,6 @@ The important differences between Serpent and Python are:
 
 * Python numbers have potentially unlimited size, Serpent numbers wrap around 2<sup>256</sup>. For example, in Serpent the expression `3^(2^254)` suprisingly evaluates to 1, even though in reality the actual integer is too large to be recorded in its entirety within the universe.
 * Serpent has no decimals.
-* Serpent has no concept of strings (at this point)
 * Serpent has no list comprehensions (expressions like `[x**2 for x in my_list]`), dictionaries or most other advanced features
 * Serpent has no concept of first-class functions. Contracts do have functions, and can call their own functions, but variables (except storage) do not persist across calls.
 * Serpent has a concept of persistent storage variables (see below)
