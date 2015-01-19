@@ -435,3 +435,5 @@ There are also special commands for a few crypto operations; particularly:
 * To upgrade Serpent, you may need to do `pip uninstall ethereum-serpent` and `python setup.py install`.  (Avoid `pip install ethereum-serpent` since it will get from pypi which is probably old.)
 
 * When calling abi_contract(), if you get this type of error `Exception: Error (file "main", line 1, char 5): Invalid object member (ie. a foo.bar not mapped to anything)` make sure you are specifying correct path to the file you are compiling.
+
+* If you get a core dump when calling abi_contract(), check that you do not have functions with the same name.
