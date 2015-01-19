@@ -43,3 +43,42 @@ contract IsAnAddress {
 
 [PT](https://www.pivotaltracker.com/story/show/85006670) The latest version of the ABI specification
 requires arguments to be padded to multiples of 32 bytes. This is not a language feature that can be demonstrated as code examples. Please see the automated tests `SolidityEndToEndTests::packing_unpacking_types` and `SolidityEndToEndTests::packing_signed_types`.
+
+## Specify value and gas for function calls
+
+[PT](https://www.pivotaltracker.com/story/show/84983014) External functions have member functions "gas" and "value" that allow to change the default amount of gas (all) and wei (0) sent to the called contract. "new expressions" also have the value member.
+
+```
+contract Helper {
+  function getBalance() returns (uint bal) { return this.balance; }
+}
+contract Main {
+  Helper helper;
+  function Main() { helper = new Helper.value(20)(); }
+  /// @notice Send `val` Wei to `helper` and return its new balance.
+  function sendValue(uint val) returns (uint balanceOfHelper) {
+    return helper.getBalance.value(val)();
+  }
+}
+```
+
+## delete for structs
+
+[PT](https://www.pivotaltracker.com/story/show/82574620) `delete` clears all members of a struct.
+
+```
+contract Contract {
+  struct Data {
+    uint deadline;
+    uint amount;
+  }
+  Data data;
+  function set(uint id, uint deadline, uint amount) {
+    data.deadline = deadline;
+    data.amount = amount;
+  }
+  function clear(uint id) { delete data; }
+}
+```
+
+Note that, unfortunately, this only works directly on structs for now, so I would propose to not announce "delete" as a feature yet.
