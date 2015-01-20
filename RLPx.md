@@ -29,12 +29,14 @@ https://github.com/ethereum/wiki/wiki/libp2p-Whitepaper
 
 # Network Formation
 ### Objectives
+A kademlia-like protocol is implemented in order to fascilitate a well-formed network. We define a well-formed network as a network wherein:
 * nodes can resolve the endpoint information of other nodes via node ids
 * new nodes can reliably find nodes to connect to
 * nodes have sufficient network topology information to uniformly connect to other nodes
-* nodes can resolve other nodes in 6 hops
+* nodes can resolve other nodes in log(n) hops, where log(n) ~ 6
+* node identifiers are random
 
-A kademlia-like protocol is implemented in order to fascilitate a well-formed network. Major differences are that packets are signed, node ids are 512-bit public keys, and DHT features are not implemented.
+Significant differences between kademlia and RLPx are that packets are signed, node ids are 512-bit public keys, and DHT features are not implemented.
 
 # Transport
 ### Objectives
