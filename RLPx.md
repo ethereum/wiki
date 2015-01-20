@@ -36,7 +36,7 @@ RLPx provides a well-formed p2p network and robust transport which is encrypted 
 The MAC for message headers is truncated to the cipher block size (128-bits).
 
 ##### Eavesdroppers
-Through node discovery, eavesdroppers can know where endpoints exist and via IP headers know which endpoints are connected. However, as a majority of connections will be setup for the purposes of maintaining a well-formed network, and because communication is encrypted, it will not be possible for an adversary to determine the purpose of a connection. Participation or compromise of an endpoint's host would be required to eavesdrop.
+Through node discovery, eavesdroppers can know where endpoints exist and via IP headers know which endpoints are connected. However, as a majority of connections will be setup for the purpose of maintaining a well-formed network, and because communication is encrypted, it will not be possible for an adversary to determine the purpose of a connection. Participation or compromise of an endpoint's host would be required to eavesdrop.
 
 ##### Node discovery packet signature
 Using deterministic ecdsa instead of non-deterministic for signatures may yield better security than MCD.
