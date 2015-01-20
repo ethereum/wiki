@@ -1,9 +1,9 @@
     Draft specification
 
 # Introduction
-RLPx is a general-purpose transport protocol for applications to utilize a p2p network. Version 0.1 is geared towards building a robust transport, well-formed network, and software interface in order to provide infrastructure which meets the requirements of distributed or decentralized applications such as Ethereum. Encryption is employed to provide better privacy and integrity than would be provided by a cleartext implementation.
+RLPx is a network layer which provides a general-purpose transport and interface for applications to communicate via a p2p network. Version 0.1 is geared towards building a robust transport, well-formed network, and software interface in order to provide infrastructure which meets the requirements of distributed or decentralized applications such as Ethereum. Encryption is employed to provide better privacy and integrity than would be provided by a cleartext implementation.
 
-As-is, RLPx features do not extend beyond what is necessary for node discovery, multiplexing, and encryption. Some examples are routing, flow direction, prioritization, and multicast. Complex schemes can be negotiated and implemented via sub-prototocols. The initial version of RLPX will have artificial flow control and concurrency constraints which will later become dynamic parameters with recommended defaults based on the host-network environment (cpu, network interface, memory, operating system, etc.).
+RLPx 0.1 features do not extend beyond what is necessary for node discovery and robustness. Some examples are routing, flow direction, prioritization, and multicast. Complex schemes may be negotiated and implemented via protocols.
 
 RLPx underpins the DEVp2p interface which is briefly covered here and will be expanded upon in a separate specification.  
 https://github.com/ethereum/wiki/wiki/ÐΞVp2p-Wire-Protocol  
