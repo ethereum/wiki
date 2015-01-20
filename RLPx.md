@@ -39,7 +39,7 @@ The MAC for message headers is truncated to the cipher block size (128-bits).
 Through node discovery, eavesdroppers can know where endpoints exist and via IP headers know which endpoints are connected. However, as a majority of connections will be setup for the purpose of maintaining a well-formed network, and because communication is encrypted, it will not be possible for an adversary to determine the purpose of a connection. Participation or compromise of an endpoint's host would be required to eavesdrop.
 
 ##### Node discovery packet signature
-Using deterministic ecdsa instead of non-deterministic for signatures may yield better security than MCD.
+Using deterministic ecdsa instead of non-deterministic for signatures may yield better security than MAC.
 
 ##### Node discovery registration, resolution, and neighbors packet
 Node endpoints and public keys are shared via data structures which are not signed by the originating party. Node table updates must only be performed after a node's new information is verified or there is a risk that a node can poison another node's table with invalid entries. Ideally, an originator-recipient signature scheme is employed.
@@ -111,9 +111,9 @@ Other connection strategies which can be manually implemented by a protocol; a p
 
 Packet Encapsulation:
 
-    mcd || signature || packet-type || packet-data
-		mcd: sha3(pubkey || packet-type || packet-data)
-		signature: sign(privkey, mcd)
+    mac || signature || packet-type || packet-data
+		mac: sha3(pubkey || packet-type || packet-data)
+		signature: sign(privkey, mac)
 		packet-type: single byte < 2**7
     	packet-data: RLP encoded list. Packet properties are serialized in the order in which they're defined. See packet-data below.
 
