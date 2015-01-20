@@ -7,15 +7,13 @@ RLPx underpins the DEVp2p interface:
 https://github.com/ethereum/wiki/wiki/ÐΞVp2p-Wire-Protocol  
 https://github.com/ethereum/wiki/wiki/libp2p-Whitepaper
 
-# Overview
-RLPx provides a well-formed p2p network and robust transport which is encrypted and carries multiple peer-to-peer protocols. This is facilitated via the following features:
-
-* Support for multiple protocols [poc-0]
+# Features
+* Multiple protocols [poc-0]
 * Encrypted handshake [poc-1]
 * Encrypted transport [poc-0,1]
 * Dynamically framed transport [poc-3]
 * Fair queuing [poc-3]
-* Node Discovery [poc-0]
+* Node Discovery and Network Formation [poc-0]
 * Peer Preference Strategies [poc-0]
 * Peer Reputation [poc-3]
 
