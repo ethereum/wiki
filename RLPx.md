@@ -8,14 +8,14 @@ https://github.com/ethereum/wiki/wiki/ÐΞVp2p-Wire-Protocol
 https://github.com/ethereum/wiki/wiki/libp2p-Whitepaper
 
 # Features
+* Node Discovery and Network Formation
+* Peer Preference Strategies
+* Peer Reputation
 * Multiple protocols
 * Encrypted handshake
 * Encrypted transport
 * Dynamically framed transport
 * Fair queuing
-* Node Discovery and Network Formation
-* Peer Preference Strategies
-* Peer Reputation
 
 # Security
 ### Objectives
