@@ -1,4 +1,4 @@
-    Draft specification.
+    Draft specification
 
 # Introduction
 RLPx is intended to be general-purpose and easy to use for an application to utilize a p2p network. Version 0.1 is geared towards building a robust transport, well-formed network, and software interface in order to provide infrastructure which meets the requirements of distributed or decentralized applications such as Ethereum. Encryption is employed to provide better privacy and integrity than would be provided by a cleartext implementation.
