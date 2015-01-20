@@ -75,9 +75,9 @@ A kademlia-like protocol is implemented in order to fascilitate a well-formed ne
 * encrypted
 * flow control, simple quality of service
 
-In order to protect against network disruption, eavesdropping, and spoofing, encryption is used in order to give authenticity and confidentiality to network communication. This is particularly important for a well-formed network where nodes make long-term decisions about other nodes which yield non-local effects. Whether for privacy or robustness, encryption is vital.
+Authenticated encryption is employed in order to provide confidentiality and protect against network disruption. This is particularly important for a well-formed network where nodes make long-term decisions about other nodes which yield non-local effects.
 
-The throughput guarantees provided by RLPx are that each protocol is allotted the same amount of bandwidth. This is achieved by framing packets.
+Throughput guarantees, such that each protocol is allotted the same amount of bandwidth, are achieved by packet framing.
 
 # Implementation Overview
 Packets are dynamically framed, prefixed with an RLP encoded header, encrypted, and authenticated. Multiplexing is achieved via the frame header which specifies the destination protocol of a packet.
