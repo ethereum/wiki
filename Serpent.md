@@ -315,6 +315,20 @@ There are two types of strings in Serpent: short strings, eg. `"george"`, and lo
 
 To use strings as function arguments or outputs, use the `s` tag, much like you would use `a` for arrays. `len(s)` gives you the length of a string, and `shrink` works for strings the same way as for arrays too.
 
+Here is an example of returning/retrieving a string:
+```
+data str
+
+def t2():
+    self.str = text("01")
+    log(data=self.str)
+    return(self.str, chars=2)
+
+def runThis():
+    s = self.t2(outsz=2)
+    log(data=s)
+```
+
 ### Macros
 
 **WARNING: Relatively new/untested feature, here be ~~dragons~~ serpents**
