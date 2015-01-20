@@ -49,7 +49,7 @@ Throughput guarantees, such that each protocol is allotted the same amount of ba
 # Implementation Overview
 Packets are dynamically framed, prefixed with an RLP encoded header, encrypted, and authenticated. Multiplexing is achieved via the frame header which specifies the destination protocol of a packet.
 
-An RLPx is composed of:
+An RLPx implementation is composed of:
 * Node Discovery & Peer Preference
 * Encrypted Handshake
 * Framing
