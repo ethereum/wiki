@@ -27,40 +27,6 @@ https://github.com/ethereum/wiki/wiki/libp2p-Whitepaper
 * encrypted transport
 * robust protocol advertisement and versioning
 
-**Known Issues & Concerns**
-##### Truncated header MAC
-The MAC for message headers is truncated to the cipher block size (128-bits).
-
-##### Eavesdroppers
-Through node discovery, eavesdroppers can know where endpoints exist and via IP headers know which endpoints are connected. However, as a majority of connections will be setup for the purpose of maintaining a well-formed network, and because communication is encrypted, it will not be possible for an adversary to determine the purpose of a connection. Participation or compromise of an endpoint's host would be required to eavesdrop.
-
-##### Node discovery packet signature
-Using deterministic ecdsa instead of non-deterministic for signatures may yield better security than MAC.
-
-##### Node discovery registration, resolution, and neighbors packet
-Node endpoints and public keys are shared via data structures which are not signed by the originating party. Node table updates must only be performed after a node's new information is verified or there is a risk that a node can poison another node's table with invalid entries. Ideally, an originator-recipient signature scheme is employed.
-
-##### FindNode packet
-Ideally the values returned by FindNode should be checked such that the results are reasonable given the average distance of known nodes to the target vs the average distance of nodes returned in Neighbors packet. 
-
-##### Node Connection Strategy
-"Random" strategy needs to be further defined.
-
-##### Keccak
-Keccak is a new hasing algorithm which hasn't been adopted by protocols with widespread use such as TLS and SSH. Given that Ethereum's initial p2p protocols aren't intended to carry secrets and that Ethereum relies on sha3 for transactions, RLPx is a good candidate for Keccak. More importantly, Keccak's support of arbitrary output length and preimage resistance may prove useful for a protocol which multiplexes variable bit-rate messages. In it's current form we are utilizing SHA3-256 (Keccak) as the hashing function. Under consideration is using SHA3-512 with 128-bit output in order to provide 
-
-##### ECIES
-There are several variants of ECIES, of which, some modes are malleable and must not be used. This specification relies on the implementation of ECIES as defined by Shoup.
-
-##### ECRECOVER
-RLPx relies on the ECRECOVER operation which is also relied upon for ethereum transactions. Along with Keccak and ECIES, ECRECOVER is a fairly recent cryptographic function.
-
-##### Encrypted Handshake
-It is unlikely that the encrypted handshake is optimal.
-
-##### Encrypted Node Discovery Packets
-UDP packets should be encrypted to prevent eavesdroppers from observing node discovery activity.
-
 # Well-formed Network
 ### Objectives
 * nodes can resolve the endpoint information of other nodes via node ids
