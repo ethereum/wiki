@@ -17,7 +17,8 @@ https://github.com/ethereum/wiki/wiki/libp2p-Whitepaper
 * Dynamically framed transport
 * Fair queuing
 
-# Security
+# Security Overview
+**Objectives**
 * nodes have access to a uniform network topology
 * peers can uniformly connect to network
 * protocols sharing a connection are provided uniform bandwidth
@@ -26,7 +27,7 @@ https://github.com/ethereum/wiki/wiki/libp2p-Whitepaper
 * encrypted transport
 * robust protocol advertisement and versioning
 
-## Security concerns, implications, known risks
+**Known Issues & Concerns**
 ##### Truncated header MAC
 The MAC for message headers is truncated to the cipher block size (128-bits).
 
