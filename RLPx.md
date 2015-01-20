@@ -27,11 +27,12 @@ https://github.com/ethereum/wiki/wiki/libp2p-Whitepaper
 * encrypted transport
 * robust protocol advertisement and versioning
 
-# Well-formed Network
+# Network Formation
 ### Objectives
 * nodes can resolve the endpoint information of other nodes via node ids
 * new nodes can reliably find nodes to connect to
 * nodes have sufficient network topology information to uniformly connect to other nodes
+* nodes can resolve other nodes in 6 hops
 
 A kademlia-like protocol is implemented in order to fascilitate a well-formed network. Major differences are that packets are signed, node ids are 512-bit public keys, and DHT features are not implemented.
 
