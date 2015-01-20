@@ -18,7 +18,6 @@ https://github.com/ethereum/wiki/wiki/libp2p-Whitepaper
 * Fair queuing
 
 # Security
-### Objectives
 * nodes have access to a uniform network topology
 * peers can uniformly connect to network
 * protocols sharing a connection are provided uniform bandwidth
