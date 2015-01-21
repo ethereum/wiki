@@ -49,7 +49,7 @@ First, we define the parameters:
         "hash_bytes": 64              # hash length in bytes
     }
 
-### Cache generation
+### Cache Generation
 
 Now, we specify the function for producing a cache:
 
