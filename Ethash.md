@@ -51,7 +51,7 @@ First, we define the parameters:
 
 ### Cache generation
 
-Now, we specify the function for producing a cache.  This is a modification of Sergio Demian Lerner's *RandMemoHash* algorithm from [*Strict Memory Hard Hashing Functions* (2014)](http://www.hashcash.org/papers/memohash.pdf):
+Now, we specify the function for producing a cache:
 
 ```python
 def mkcache(params, seed):
@@ -73,7 +73,7 @@ def mkcache(params, seed):
 
 [Sergio2014]: http://www.hashcash.org/papers/memohash.pdf
 
-The cache production process involves first sequentially filling up 32 MB of memory, then performing two passes of [randmemohash](http://www.hashcash.org/papers/memohash.pdf).
+The cache production process involves first sequentially filling up 32 MB of memory, then performing two passes of Sergio Demian Lerner's *RandMemoHash* algorithm from [*Strict Memory Hard Hashing Functions* (2014)](http://www.hashcash.org/papers/memohash.pdf).
 
 ### Pseudo Random Number Generation
 
@@ -113,7 +113,7 @@ def rng_quick(seed, i):
     return (o1,o2)
 ```
 
-When choosing a safe prime *p* for our random number generator, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since that determines their cycle length of the random number generators.  The multiplicative order of 3 in ℤ/(4294963786) is 2147481892, and the order of 3 in ℤ/(4294961842) is 2147480920; hence their combined period (computed using their *least common multiple*) is given by 1152919097278875160 or roughly 2<sup>60</sup>. Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
+When choosing a safe prime *p* for our random number generator, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since this determines the cycle length of the corresponding random number generator.  The multiplicative order of 3 in ℤ/(4294963786) is 2147481892, and the multiplicative order of 3 in ℤ/(4294961842) is 2147480920; hence their combined period (computed using their *least common multiple*) is given by 1152919097278875160 or roughly 2<sup>60</sup>. Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
 
 This particular pseudo random number generator may exhibit bias when taking its output modulo a value which is not a prime, so we will choose our memory sizes in terms of primes in order to remove any bias.
 
