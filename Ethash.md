@@ -5,10 +5,10 @@ The specification for the algorithm is written in python to give a balance betwe
 ```python
 import sha3
 from pyethereum.utils import encode_int, zpad
-    
+
+# Decode a string of (unsigned) chars as an int
+# Assumes little endian bit ordering (same as Intel architectures)
 def decode_int(s):
-   """Decode a string of (unsigned) chars as an int
-      Assumes little endian bit ordering (same as Intel hardware)"""
    return int(s[::-1].encode('hex'), 16)
 
 # sha3 hash function, outputs 64 bytes
