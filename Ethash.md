@@ -82,7 +82,7 @@ Now, we specify some auxiliary methods for running a variant of the [Blum Blum S
 ```python
 # two safe primes approximately equal to 2**32
 P1 = 4294963787
-P2 = 4294961843
+P2 = 4294967087
 
 # Clamp a value to between the specified minimum and maximum
 def clamp(minimum, x, maximum):
@@ -113,7 +113,7 @@ def rng_quick(seed, i):
     return (o1,o2)
 ```
 
-When choosing a safe prime *p* for our random number generator, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since this determines the cycle length of the corresponding random number generator.  The multiplicative order of 3 in ℤ/(4294963786) is 2147481892, and the multiplicative order of 3 in ℤ/(4294961842) is 2147480920; hence their combined period (computed using their *least common multiple*) is given by 1152919097278875160 or roughly 2<sup>60</sup>. Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
+When choosing a safe prime *p* for our random number generator, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since this determines the cycle length of the corresponding random number generator.  The multiplicative order of 3 in ℤ/(4294963786) is 2147481892, and the multiplicative order of 3 in ℤ/(4294967086) is 1073741771; hence their combined period (computed using their *least common multiple*) is given by 2305841009906510732 or roughly 2<sup>61</sup>. Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
 
 This particular pseudo random number generator may exhibit bias when taking its output modulo a value which is not a prime, so we will choose our memory sizes in terms of primes in order to remove any bias.
 
