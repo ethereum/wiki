@@ -25,7 +25,7 @@ The following fixed-size elementary types exist:
 - `real<N>x<M>`: fixed-point signed number of `N+M` bits, `0 < N + M <= 256`, `N % 8 == M % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
 - `ureal<N>x<M>`: unsigned variant of `real<N>x<M>`.
 - `real`, `ureal`: equivalent to `real128x128`, `ureal128x128`
-- `string<N>`: binary type of `N` bytes, `N > 0`. Unicode strings are assumed to be UTF-8 encoded.
+- `string<N>`: binary type of `N` bytes, `N >= 0`. Unicode strings are assumed to be UTF-8 encoded.
 
 They are all encoded in big-endian, padded to a multiple of 32 bytes. Negative values
 (for signed types) are padded with ones on the higher-oder side, non-negative values
