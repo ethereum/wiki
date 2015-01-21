@@ -44,8 +44,7 @@ First, we define the parameters:
         "cache_rounds": 2,            # number of processing rounds in cache production
         "mix_bytes": 4096,            # width of mix
         "accesses": 64,               # number of accesses in hashimoto loop
-        "hash": sha3_512              # hash function
-        "hash_bytes": 64,             # hash length in bytes
+        "hash_bytes": 64              # hash length in bytes
     }
 
 ### Cache generation
