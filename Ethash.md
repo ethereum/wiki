@@ -8,7 +8,7 @@ from pyethereum.utils import encode_int, zpad
     
 def decode_int(s):
    """Decode a string of (unsigned) chars as an int
-      Assumes little endian bit ordering"""
+      Assumes little endian bit ordering (same as Intel hardware)"""
    return int(s[::-1].encode('hex'), 16)
 
 # sha3 hash function, outputs 64 bytes
@@ -51,7 +51,7 @@ First, we define the parameters:
 
 ### Cache generation
 
-Now, we specify the function for producing a cache.  This is inspired by Sergio Demian Lerner's *RandMemoHash* algorithm ([2014] [Lerner2014]):
+Now, we specify the function for producing a cache.  This is a modification of Sergio Demian Lerner's *RandMemoHash* algorithm from [*Strict Memory Hard Hashing Functions* (2014)](http://www.hashcash.org/papers/memohash.pdf):
 
 ```python
 def mkcache(params, seed):
@@ -79,34 +79,43 @@ The cache production process involves first sequentially filling up 32 MB of mem
 
 Now, we specify some auxiliary methods for running a variant of the [Blum Blum Shub](https://en.wikipedia.org/wiki/Blum_Blum_Shub) pseudorandom number generator on a 32-bit prime modulus; this is a very quick way of generating pseudorandom data. We use two BBS generators with different periods in parallel, providing 64 bits of entropy:
 
-    # The two highest safe primes below 2**32
-    P1 = 4294967087
-    P2 = 4294965887
-    
-    # Initializes the RNG state from a seed
-    def rng_init(seed):
-        n1 = (seed % 2**64) // 2**32
-        n2 = seed % 2**32
-        return (max(2, min(P1 - 2, n1)), max(2, min(P2 - 2, n2)))
-    
-    # Computes one step
-    def rng_step(r):
-        o1 = (r[0] * r[0] * r[0]) % P1
-        o2 = (r[1] * r[1] * r[1]) % P2
-        return (o1, o2)
-    
-    # Provides an output value from an RNG state
-    def rng_output(r):
-        return (r[0] ^ (r[1] // 2)) * 2**32 + (r[0] ^ r[1])
-    
-    # Quickly computes i steps (in log i time) and provides
-    # the output
-    def rng_quick(seed, i):
-        n1, n2 = rng_init(n)
-        o1 = pow(n1, pow(3, i, P1-1), P1)
-        o2 = pow(n2, pow(3, i, P2-1), P2)
+```python
+# two safe primes approximately equal to 2**32
+P1 = 4294963787
+P2 = 4294961843
 
-The two period lengths are coprime, and so the total period length is close to 2**64. Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` for any particular input.
+# Clamp a value to between the specified minimum and maximum
+def clamp(minimum, x, maximum):
+    return max(minimum, min(maximum, x))
+    
+# Initializes the RNG state from a seed
+def rng_init(seed):
+    n1 = (seed % 2**64) // 2**32
+    n2 = seed % 2**32
+    return (clamp(2, n1, P1 - 2), clamp(2, n2, P1 - 2))
+    
+# Computes one step
+def rng_step(r):
+    o1 = (r[0] * r[0] * r[0]) % P1
+    o2 = (r[1] * r[1] * r[1]) % P2
+    return (o1, o2)
+    
+# Provides an output value from an RNG state
+def rng_output(r):
+    a,b = r
+    return a << 32 | a ^ b 
+    
+# Quickly computes i steps of the BBS generator
+def rng_quick(seed, i):
+    n1, n2 = rng_init(n)
+    o1 = pow(n1, pow(3, i, P1-1), P1)
+    o2 = pow(n2, pow(3, i, P2-1), P2)
+    return (o1,o2)
+```
+
+When choosing a safe prime *p*, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since that determines their cycle length of the random number generators.  The multiplicative order of 3 in ℤ/(4294963786) is 2147481892, and the order of 3 in ℤ/(4294961842) is 2147480920; hence their combined period (using their least common multiple) is given 1152919097278875160 or roughly 2<sup>60</sup>. Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
+
+This particular pseudo random number generator may exhibit bias when taking its output modulo a value which is not a prime, so we will choose our memory sizes in terms of primes in order to remove any bias.
 
 ### Full dataset calculation
 
