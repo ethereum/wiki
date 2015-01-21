@@ -1,6 +1,6 @@
 ### Example ("Dream") API Usage
 
-```
+```js
 var shh = web3.shh;
 var appName = "My silly app!";
 var myName = "Gav Would";
@@ -51,7 +51,7 @@ broadcastWatch.arrived(function(m)
 
 `post` takes a JSON object containing four key parameters: 
 
-```
+```js
 shh.post({ "topics": t, "payload": p, "ttl": ttl, "workToProve": work });
 ```
 
