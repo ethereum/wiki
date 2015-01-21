@@ -51,7 +51,7 @@ First, we define the parameters:
 
 ### Cache generation
 
-Now, we specify the function for producing a cache.  This is inspired by Sergio Demian Lerner's *RandMemoHash* algorithm ([2014][Lerner2014]):
+Now, we specify the function for producing a cache.  This is inspired by Sergio Demian Lerner's *RandMemoHash* algorithm ([2014] [Lerner2014]):
 
 ```python
 def mkcache(params, seed):
