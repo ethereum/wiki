@@ -2,14 +2,20 @@ Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version o
 
 The specification for the algorithm is written in python to give a balance between clarity and exactness. If you are interested in actually running the spec as code, then you can; you simply need to install the `python_sha3` and `pyethereum` libraries, and add the following lines to your top of the file:
 
-    import sha3
-    from pyethereum.utils import encode_int, zpad
-    from pyethereum.utils import big_endian_to_int as decode_int
-    # sha3 hash function, outputs 64 bytes
-    def sha3_512(x):
-        return sha3.sha3_512(x).digest()
-    def sha3_256(x):
-        return sha3.sha3_256(x).digest()
+```python
+import sha3
+from pyethereum.utils import encode_int, zpad
+    
+def decode_int(s):
+   return int(s[::-1].encode('hex'), 16)
+
+# sha3 hash function, outputs 64 bytes
+def sha3_512(x):
+    return sha3.sha3_512(x).digest()
+
+def sha3_256(x):
+    return sha3.sha3_256(x).digest()
+```
 
 ### Goals
 
