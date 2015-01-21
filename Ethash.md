@@ -7,6 +7,8 @@ import sha3
 from pyethereum.utils import encode_int, zpad
     
 def decode_int(s):
+   """Decode a string of (unsigned) chars as an int
+      Assumes little endian bit ordering"""
    return int(s[::-1].encode('hex'), 16)
 
 # sha3 hash function, outputs 64 bytes
@@ -49,28 +51,31 @@ First, we define the parameters:
 
 ### Cache generation
 
-Now, we specify the function for producing a cache:
+Now, we specify the function for producing a cache.  This is inspired by Sergio Demian Lerner's *RandMemoHash* algorithm ([2014][Lerner2014]):
 
-    def mkcache(params, seed):
-        n = params["cache_bytes"] / params["hash_bytes"]
+```python
+def mkcache(params, seed):
+    n = params["cache_bytes"] / params["hash_bytes"]
 
-        # Sequentially produce the initial dataset
-        o = [sha3_512(seed)]
-        for i in range(1, n):
-            o.append(sha3_512(o[-1]))
+    # Sequentially produce the initial dataset
+    o = [sha3_512(seed)]
+    for i in range(1, n):
+        o.append(sha3_512(o[-1]))
 
-        # Low-round version of randmemohash
-        for _ in range(params["cache_rounds"]):
-            for i in range(n):
-                v = (decode_int(o[i]) % 2**64) % n
-                o[i] = sha3_512(o[(i-1+n)%n] + o[v])
+    for _ in range(params["cache_rounds"]):
+        for i in range(n):
+            v = (decode_int(o[i]) % 2**64) % n
+            o[i] = sha3_512(o[(i-1+n)%n] + o[v])
 
-        # Output integers so we can more easily xor
-        return [decode_int(v) for v in o]
+    # Output integers so we can more easily xor
+    return [decode_int(v) for v in o]
+```
+
+[Sergio2014]: http://www.hashcash.org/papers/memohash.pdf
 
 The cache production process involves first sequentially filling up 32 MB of memory, then performing two passes of [randmemohash](http://www.hashcash.org/papers/memohash.pdf).
 
-### RNG
+### Pseudo Random Number Generation
 
 Now, we specify some auxiliary methods for running a variant of the [Blum Blum Shub](https://en.wikipedia.org/wiki/Blum_Blum_Shub) pseudorandom number generator on a 32-bit prime modulus; this is a very quick way of generating pseudorandom data. We use two BBS generators with different periods in parallel, providing 64 bits of entropy:
 
@@ -82,7 +87,7 @@ Now, we specify some auxiliary methods for running a variant of the [Blum Blum S
     def rng_init(seed):
         n1 = (seed % 2**64) // 2**32
         n2 = seed % 2**32
-        return (max(2, min(P1, n1)), max(2, min(P2, n2)))
+        return (max(2, min(P1 - 2, n1)), max(2, min(P2 - 2, n2)))
     
     # Computes one step
     def rng_step(r):
