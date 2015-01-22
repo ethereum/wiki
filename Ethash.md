@@ -50,7 +50,7 @@ params = {
     "dag_bytes_init": 1073741824, # bytes in dag
     "dag_bytes_growth": 131072,   # growth per epoch (~345 MB per year)
     "epoch_length": 1000,         # blocks per epoch
-    "k": 64,                      # number of parents of each dag element
+    "dag_parents": 64,            # number of parents of each dag element
     "cache_rounds": 2,            # number of processing rounds in cache production
     "mix_bytes": 4096,            # width of mix
     "accesses": 32,               # number of accesses in hashimoto loop
@@ -136,7 +136,7 @@ def calc_dag_item(params, cache, i):
     rand_seed = clamp(2, decode_int(cache[0][:4]), P1 - 2)
     rand = clamp(2, quick_bbs(rand_seed, i, P1), P2 - 2)
     mix = cache[i % n]
-    for j in range(params["k"]):
+    for j in range(params["dag_parents"]):
         mix_value = decode_int(mix[(j*4)%L: (j*4+3)%L])
         mix = fnv(mix, cache[(rand ^ mix_value) % n])
         rand = step_bbs(rand, P2)
