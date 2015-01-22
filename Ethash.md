@@ -166,7 +166,7 @@ def hashimoto(params, cache, header, nonce, dagsize):
     return sha3_256(s+sha3_256(s + ''.join(mix)))
 ```
 
-Essentially, we maintain a "mix" 4096 bytes wide, and repeatedly sequentially fetch 4096 bytes from the full dataset and use the `fnv` function to combine it with the mix. 4096 bytes of sequential access are used so that each round of the algorithm always fetches a full page from RAM, minimizing transaction lookup buffer misses which ASICs would theoretically be able to avoid.
+Essentially, we maintain a "mix" 4096 bytes wide, and repeatedly sequentially fetch 4096 bytes from the full dataset and use the `fnv` function to combine it with the mix. 4096 bytes of sequential access are used so that each round of the algorithm always fetches a full page from RAM, minimizing translation lookaside buffer misses which ASICs would theoretically be able to avoid.
 
 If the output of this algorithm is below the desired target, then the nonce is valid. Note that the double application of sha3_256 ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.
 
