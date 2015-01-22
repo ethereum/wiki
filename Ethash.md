@@ -145,12 +145,12 @@ def calc_dag_item(params, cache, i):
 
 Essentially, we use our RNG to generate a seed for the specific item, and use that as the seed for another RNG which picks 64 indices from the cache. We initialize a mix to equal the 512-bit big-endian representation of the index (the purpose of this is to make sure all of the entropy from the index, and not just the first 32 bytes as does the RNG, in computing the final DAG value), and then repeatedly run through random parts of the cache and use our aggregation function to combine the data together.
 
-### Main loop
+### Main Loop
 
 Now, we specify the main "hashimoto"-like loop, where we aggregate data from the full dataset in order to produce our final value for a particular header and nonce:
 
 ```python
-def hashimoto(params, cache, header, nonce, dagsize):
+def hashimoto(params, header, nonce, dagsize, dag_lookup):
     L = params["mix_bytes"]
     w = params["mix_bytes"] / params["hash_bytes"]
     n = dagsize / params["hash_bytes"]
@@ -161,14 +161,34 @@ def hashimoto(params, cache, header, nonce, dagsize):
         mix_value = decode_int(mix[0][(i*4) % L: (i*4+3) % L])
         p = (rand ^ mix_value) % (n // w) * w
         for j in range(w):
-            mix[j] = fnv(mix[j], calc_dag_item(params, cache, p + j))
+            mix[j] = fnv(mix[j], dag_lookup(p + j))
         rand = step_bbs(rand, P2)
     return sha3_256(s+sha3_256(s + ''.join(mix)))
+
+def hashimoto_light(params, cache, header, nonce, dagsize):
+    return hashimoto(params, header, nonce, dagsize, lambda x: calc_dag_item(params, cache, x))
+
+def hashimoto_full(params, dag, header, nonce):
+    return hashimoto(params, cache, header, nonce, len(dag), lambda x: dag[x])
 ```
 
 Essentially, we maintain a "mix" 4096 bytes wide, and repeatedly sequentially fetch 4096 bytes from the full dataset and use the `fnv` function to combine it with the mix. 4096 bytes of sequential access are used so that each round of the algorithm always fetches a full page from RAM, minimizing translation lookaside buffer misses which ASICs would theoretically be able to avoid.
 
-If the output of this algorithm is below the desired target, then the nonce is valid. Note that the double application of sha3_256 ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.
+If the output of this algorithm is below the desired target, then the nonce is valid. Note that the double application of `sha3_256` ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.  It also serves to provide statistical assurance that the result is an unbiased, 256 bit number.
+
+### Mining
+
+The mining algorithm is defined as follows:
+
+```python
+def mine(params, dag, header, difficulty):
+    from random import randint
+    nonce = randint(0,2**64)
+    while decode_int(hashimoto_full(params, dag, header, nonce)) < difficulty:
+        nonce += 1
+        nonce %= 2**64
+    return nonce
+```
 
 ### Defining the seed
 
