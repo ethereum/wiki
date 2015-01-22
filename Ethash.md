@@ -40,6 +40,8 @@ The general route that the algorithm takes is as follows:
 3. From the seed and cache, there exists a function `calc_dag_item(seed, cache, i)` which calculates the value of any element in a larger 1 GB dataset. The function for computing each element involves many elements in the cache.
 4. The actual algorithm is a loop that involves combining together many items from the DAG and taking a hash of the output. Each individual read from the DAG is 4KB wide in order to fetch a full page from memory.
 
+The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it.
+
 First, we define the parameters:
 
 ```python
@@ -79,11 +81,11 @@ def mkcache(params, seed):
 
 [Sergio2014]: http://www.hashcash.org/papers/memohash.pdf
 
-The cache production process involves first sequentially filling up 32 MB of memory, then performing two passes of Sergio Demian Lerner's *RandMemoHash* algorithm from [*Strict Memory Hard Hashing Functions* (2014)](http://www.hashcash.org/papers/memohash.pdf).
+The cache production process involves first sequentially filling up 32 MB of memory, then performing two passes of Sergio Demian Lerner's *RandMemoHash* algorithm from [*Strict Memory Hard Hashing Functions* (2014)](http://www.hashcash.org/papers/memohash.pdf). The output is a set of 524288 64-byte values.
 
 ### Pseudo Random Number Generation
 
-Now, we specify some auxiliary methods for running a variant of the [Blum Blum Shub](https://en.wikipedia.org/wiki/Blum_Blum_Shub) pseudorandom number generator on a 32-bit prime modulus; this is a very quick way of generating pseudorandom data. We use two BBS generators with different periods in parallel, providing 64 bits of entropy:
+Now, we specify some auxiliary methods for running a variant of the [Blum Blum Shub](https://en.wikipedia.org/wiki/Blum_Blum_Shub) pseudorandom number generator on a 32-bit prime modulus; this is a very quick way of generating pseudorandom data.
 
 ```python
 # two safe primes approximately equal to 2**32
@@ -125,7 +127,7 @@ def fnv(a, b):
 
 ### Full dataset calculation
 
-Each item in the full dataset is computed as follows:
+Each 64-byte item in the full 1 GB dataset is computed as follows:
 
 ```python
 def calc_dag_item(params, cache, i):
@@ -164,7 +166,9 @@ def hashimoto(params, cache, header, nonce, dagsize):
     return sha3_256(s+sha3_256(s + ''.join(mix)))
 ```
 
-If the output of this is below the desired target, then the nonce is valid. Note that the double application of sha3_256 ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.
+Essentially, we maintain a "mix" 4096 bytes wide, and repeatedly sequentially fetch 4096 bytes from the full dataset and use the `fnv` function to combine it with the mix. 4096 bytes of sequential access are used so that each round of the algorithm always fetches a full page from RAM, minimizing transaction lookup buffer misses which ASICs would theoretically be able to avoid.
+
+If the output of this algorithm is below the desired target, then the nonce is valid. Note that the double application of sha3_256 ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.
 
 ### Defining the seed
 
@@ -184,6 +188,8 @@ In order to compute the seed for a given block, we use the following algorithm:
      else:
          return get_seedset(params, block.parent)
 ```
+
+Note the this function outputs two seeds. During even-numbered epochs, the PoW uses the first seed, and during odd-numbered epochs the PoW uses the second seed; this allows a miner to rebuild one DAG while simultaneously still using the other DAG, ensuring a smooth transition as the dataset gets updated.
 
 In order to compute the size of the dataset at a given block number, we use the following function:
 
@@ -205,4 +211,4 @@ Where isprime is of course:
       return True
 ```
 
-For an optimization, one can add the line `if pow(2, n, n) != 2: return False` as an initial check, or use the Sieve of Erasthothenes to precompute the list of primes that the dataset will increase to all at once.
+For an optimization, one can add the line `if pow(2, n, n) != 2: return False` as an initial check, or use the Sieve of Erasthothenes to precompute the list of primes that the dataset will increase to all at once. Essentially, we are keeping the size of the dataset to always be equal to the highest prime below a linearly growing function, so on average in the long term the dataset will grow roughly linearly.
