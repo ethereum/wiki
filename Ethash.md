@@ -4,12 +4,16 @@ The specification for the algorithm is written in python to give a balance betwe
 
 ```python
 import sha3
-from pyethereum.utils import encode_int, zpad
 
-# Decode a string of (unsigned) chars as an int
 # Assumes little endian bit ordering (same as Intel architectures)
 def decode_int(s):
    return int(s[::-1].encode('hex'), 16)
+
+def encode_int(s):
+   return ("0x" % s).decode('hex')
+
+def zpad(s, length):
+   return '\x00' * max(0, length - len(s)) + s
 
 # sha3 hash function, outputs 64 bytes
 def sha3_512(x):
@@ -112,7 +116,7 @@ def fnv(a, b):
     for pos in range(0, len(a), 4):
         v1 = decode_int(a[pos:pos+4])
         v2 = decode_int(b[pos:pos+4])
-        o += encode_int((v1 * FNV_PRIME ^ y2) % 2**32)
+        o += encode_int((v1 * FNV_PRIME ^ v2) % 2**32)
     return o
 ```
 
@@ -137,20 +141,22 @@ Essentially, we use our RNG to generate a seed for the specific item, and use th
 
 Now, we specify the main "hashimoto"-like loop, where we aggregate data from the full dataset in order to produce our final value for a particular header and nonce:
 
-    def hashimoto(params, seed, cache, header, nonce, dagsize):
-        L = params["mix_bytes"]
-        w = params["mix_bytes"] / params["hash_bytes"]
-        n = dagsize / params["hash_bytes"]
-        s = sha3_512(header + nonce)
-        o = [s for _ in range(w)]
-        rand = clamp(2, decode_int(s[-4:]), P2 - 2)
-        for i in range(params["accesses"]):
-            mix_value = decode_int(mix[(i*4)%L: (i*4+3)%L])
-            p = (rand ^ mix_value) % (n // w) * w
-            for j in range(w):
-                o[j] = fnv(o[j], calc_dag_item(params, seed, cache, p + j))
-            rand = bbs_step(rand, P2)
-        return sha3_256(s+sha3_256(s + ''.join(o)))
+```python
+def hashimoto(params, seed, cache, header, nonce, dagsize):
+    L = params["mix_bytes"]
+    w = params["mix_bytes"] / params["hash_bytes"]
+    n = dagsize / params["hash_bytes"]
+    s = sha3_512(header + nonce)
+    mix = [s for _ in range(w)]
+    rand = clamp(2, decode_int(s[-4:]), P2 - 2)
+    for i in range(params["accesses"]):
+        mix_value = decode_int(mix[(i*4) % L: (i*4+3) % L])
+        p = (rand ^ mix_value) % (n // w) * w
+        for j in range(w):
+            mix[j] = fnv(mix[j], calc_dag_item(params, seed, cache, p + j))
+        rand = step_bbs(rand, P2)
+    return sha3_256(s+sha3_256(s + ''.join(mix)))
+```
 
 If the output of this is below the desired target, then the nonce is valid. Note that the double application of sha3_256 ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.
 
