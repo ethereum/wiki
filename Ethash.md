@@ -11,7 +11,7 @@ def decode_int(s):
 
 def encode_int(s):
    a = "%x" % s
-   return '' if s == 0 else ('0' * (len(a) % 2) + a).decode('hex')
+   return '' if s == 0 else ('0' * (len(a) % 2) + a).decode('hex')[::-1]
 
 def zpad(s, length):
    return '\x00' * max(0, length - len(s)) + s
