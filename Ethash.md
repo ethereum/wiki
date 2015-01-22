@@ -7,10 +7,11 @@ import sha3
 
 # Assumes little endian bit ordering (same as Intel architectures)
 def decode_int(s):
-   return int(s[::-1].encode('hex'), 16)
+   return int(s[::-1].encode('hex'), 16) if s else 0
 
 def encode_int(s):
-   return ("0x" % s).decode('hex')
+   a = "%x" % s
+   return '' if s == 0 else ('0' * (len(a) % 2) + a).decode('hex')
 
 def zpad(s, length):
    return '\x00' * max(0, length - len(s)) + s
@@ -127,7 +128,8 @@ Each item in the full dataset is computed as follows:
     def calc_dag_item(params, cache, i):
         n = params["cache_bytes"] / params["hash_bytes"]
         L = params["hash_bytes"]
-        rand = clamp(2, quick_bbs(clamp(2, decode_int(cache[0][:4]), P1 - 2), i), P2 - 2)
+        rand_seed = clamp(2, decode_int(cache[0][:4]), P1 - 2)
+        rand = clamp(2, quick_bbs(rand_seed, i, P1), P2 - 2)
         mix = zpad(encode_int(i), params["hash_bytes"])
         for i in range(params["k"]):
             mix_value = decode_int(mix[(i*4)%L: (i*4+3)%L])
@@ -142,7 +144,7 @@ Essentially, we use our RNG to generate a seed for the specific item, and use th
 Now, we specify the main "hashimoto"-like loop, where we aggregate data from the full dataset in order to produce our final value for a particular header and nonce:
 
 ```python
-def hashimoto(params, seed, cache, header, nonce, dagsize):
+def hashimoto(params, cache, header, nonce, dagsize):
     L = params["mix_bytes"]
     w = params["mix_bytes"] / params["hash_bytes"]
     n = dagsize / params["hash_bytes"]
@@ -150,10 +152,10 @@ def hashimoto(params, seed, cache, header, nonce, dagsize):
     mix = [s for _ in range(w)]
     rand = clamp(2, decode_int(s[-4:]), P2 - 2)
     for i in range(params["accesses"]):
-        mix_value = decode_int(mix[(i*4) % L: (i*4+3) % L])
+        mix_value = decode_int(mix[0][(i*4) % L: (i*4+3) % L])
         p = (rand ^ mix_value) % (n // w) * w
         for j in range(w):
-            mix[j] = fnv(mix[j], calc_dag_item(params, seed, cache, p + j))
+            mix[j] = fnv(mix[j], calc_dag_item(params, cache, p + j))
         rand = step_bbs(rand, P2)
     return sha3_256(s+sha3_256(s + ''.join(mix)))
 ```
