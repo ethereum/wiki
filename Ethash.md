@@ -56,16 +56,18 @@ Now, we specify the function for producing a cache:
 ```python
 def mkcache(params, seed):
     n = params["cache_bytes"] / params["hash_bytes"]
+
+    # Sequentially produce the initial dataset
     o = [sha3_512(seed)]
-    for _ in range(1, n):
+    for i in range(1, n):
         o.append(sha3_512(o[-1]))
+
     for _ in range(params["cache_rounds"]):
         for i in range(n):
             v = (decode_int(o[i]) % 2**64) % n
-            o[i] = sha3_512(o[i-1] + o[v])
+            o[i] = sha3_512(o[(i-1+n)%n] + o[v])
 
-    # Output integers so we can more easily xor
-    return [decode_int(v) for v in o]
+    return o
 ```
 
 [Sergio2014]: http://www.hashcash.org/papers/memohash.pdf
@@ -84,104 +86,105 @@ P2 = 4294963787
 # Clamp a value to between the specified minimum and maximum
 def clamp(minimum, x, maximum):
     return max(minimum, min(maximum, x))
+
+# Many steps of the BBS RNG in logtime
+def quick_bbs(seed, i, P):
+    return pow(seed, pow(3, i, P-1), P)
     
-# Initializes the RNG state from a seed
-def rng_init(seed):
-    n1 = (seed % 2**64) // 2**32
-    n2 = seed % 2**32
-    return (clamp(2, n1, P1 - 2), clamp(2, n2, P2 - 2))
-    
-# Computes one step
-def rng_step(r):
-    o1 = (r[0] * r[0] * r[0]) % P1
-    o2 = (r[1] * r[1] * r[1]) % P2
-    return (o1, o2)
-    
-# Provides an output value from an RNG state
-def rng_output(r):
-    a,b = r
-    return a << 32 | a ^ b 
-    
-# Quickly computes i steps of the BBS generator
-def rng_quick(seed, i):
-    n1, n2 = rng_init(n)
-    o1 = pow(n1, pow(3, i, P1-1), P1)
-    o2 = pow(n2, pow(3, i, P2-1), P2)
-    return (o1,o2)
+# One step of the BBS RNG
+def step_bbs(n, P):
+    return (n * n * n) % P
 ```
 
 When choosing a safe prime *p* for our random number generator, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since this determines the cycle length of the corresponding random number generator.  The multiplicative order of 3 in ℤ/(4294967086) is 1073741771, and the multiplicative order of 3 in ℤ/(4294963786) is 2147481892; hence their combined period (computed using the *least common multiple* of their two periods) is 2305841009906510732 or roughly 2<sup>61</sup>. Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
 
 This particular pseudo random number generator may exhibit bias when taking its output modulo a value which is not a prime, so we will choose our memory sizes in terms of primes in order to remove any bias.
 
+### Data aggregation function
+
+We use an algorithm inspired by the [FNV hash](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function) in order to combine large blocks of data together. This is essentially meant to be a non-associative substitute for XOR.
+
+```python
+FNV_PRIME = 0x01000193
+
+def fnv(a, b):
+    o = ''
+    for pos in range(0, len(a), 4):
+        v1 = decode_int(a[pos:pos+4])
+        v2 = decode_int(b[pos:pos+4])
+        o += encode_int((v1 * FNV_PRIME ^ y2) % 2**32)
+    return o
+```
+
 ### Full dataset calculation
 
 Each item in the full dataset is computed as follows:
 
-    def calc_dag_item(params, seed, cache, i):
+    def calc_dag_item(params, cache, i):
         n = params["cache_bytes"] / params["hash_bytes"]
-        rand = rng_init(rng_quick(decode_int(seed) % 2**32), i) + (2**32 + 1))
-        o = 0
+        L = params["hash_bytes"]
+        rand = clamp(2, quick_bbs(clamp(2, decode_int(cache[0][:4]), P1 - 2), i), P2 - 2)
+        mix = zpad(encode_int(i), params["hash_bytes"])
         for i in range(params["k"]):
-            o ^= cache[rng_output(rand) % n]
-            rand = rng_step(rand)
-        return o
+            mix_value = decode_int(mix[(i*4)%L: (i*4+3)%L])
+            mix = fnv(mix, cache[(rand ^ mix_value) % n])
+            rand = step_bbs(rand, P2)
+        return mix
 
-Essentially, we use our RNG to generate a seed for the specific item, and use that (plus 2**32 + 1 in order to throw off commutativity) as the seed for another RNG which picks 64 indices from the cache. Note that if we want to compute the dataset in series, as a miner would do, we can replace the `rng_quick` with a round of `rng_step` per nonce.
+Essentially, we use our RNG to generate a seed for the specific item, and use that as the seed for another RNG which picks 64 indices from the cache. We initialize a mix to equal the 512-bit big-endian representation of the index (the purpose of this is to make sure all of the entropy from the index, and not just the first 32 bytes as does the RNG, in computing the final DAG value), and then repeatedly run through random parts of the cache and use our aggregation function to combine the data together.
 
 ### Main loop
 
 Now, we specify the main "hashimoto"-like loop, where we aggregate data from the full dataset in order to produce our final value for a particular header and nonce:
 
-    def hashimoto(params, seed, cache, header, nonce, sz):
+    def hashimoto(params, seed, cache, header, nonce, dagsize):
+        L = params["mix_bytes"]
         w = params["mix_bytes"] / params["hash_bytes"]
-        n = sz / params["hash_bytes"]
-        o = [0 for _ in range(w)]
+        n = dagsize / params["hash_bytes"]
         s = sha3_512(header + nonce)
-        rand = rng_init(decode_int(s))
+        o = [s for _ in range(w)]
+        rand = clamp(2, decode_int(s[-4:]), P2 - 2)
         for i in range(params["accesses"]):
-            p = rng_out(rand) % (n // w) * w
+            mix_value = decode_int(mix[(i*4)%L: (i*4+3)%L])
+            p = (rand ^ mix_value) % (n // w) * w
             for j in range(w):
-                o[j] ^= calc_dag_item(params, seed, cache, p + j)
-            rand = rng_step(rand)
-        acc = s + ''.join([zpad(encode_int(x), 64) for x in o])
-        return sha3_256(s+sha3_256(acc))
+                o[j] = fnv(o[j], calc_dag_item(params, seed, cache, p + j))
+            rand = bbs_step(rand, P2)
+        return sha3_256(s+sha3_256(s + ''.join(o)))
 
 If the output of this is below the desired target, then the nonce is valid. Note that the double application of sha3_256 ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.
 
 ### Defining the seed
 
-In order to get the 
-
-    def get_prevhash(n):
-        from pyethereum.blocks import GENESIS_PREVHASH 
-        from pyethreum import chain_manager
-        if num <= 0:
-            return hash_to_int(GENESIS_PREVHASH)
-        else:
-            prevhash = chain_manager.index.get_block_by_number(n - 1)
-            return decode_int(prevhash)
+In order to compute the seed for a given block, we use the following algorithm:
 
     def get_seedset(params, block):
-        seedset = {}
-        seedset["back_number"] = block.number - (block.number % params["epochtime"])
-        seedset["back_hash"] = get_prevhash(seedset["back_number"])
-        seedset["front_number"] = max(seedset["back_number"] - params["epochtime"], 0)
-        seedset["front_hash"] = get_prevhash(seedset["front_number"])
-        return seedset
+        if block.number == 0:
+            return ('\x42' * 32, '\x43' * 32)
+        elif (block.number % params["epoch_length"] == 0):
+            x, y = get_seedset(params, block.parent)
+            if (block.number // params["epoch_length"]) % 2:
+                y = sha3_256(y + block.prevhash)
+            else:
+                x = sha3_256(x + block.prevhash)
+            return (x, y)
+        else:
+            return get_seedset(params, block.parent)
 
-    def get_dagsize(params, block):
-        return params["n"] + (block.number // params["epochtime"]) * params["n_inc"]
+In order to compute the size of the dataset at a given block number, we use the following function:
 
-    def get_daggerset(params, block):
-        dagsz = get_dagsize(params, block)
-    seedset = get_seedset(params, block)
-    if seedset["front_hash"] <= 0:
-        # No back buffer is possible, just make front buffer
-        return {"front": {"dag": produce_dag(params, seedset["front_hash"], dagsz), 
-                          "block_number": 0}}
-    else:
-        return {"front": {"dag": produce_dag(params, seedset["front_hash"], dagsz),
-                          "block_number": seedset["front_number"]},
-                "back": {"dag": produce_dag(params, seedset["back_hash"], dagsz),
-                         "block_number": seedset["back_number"]}}
+    def get_datasize(params, block):
+        sz = params["dag_bytes_init"] + params["dag_bytes_growth"] * (block.number // params["epoch_length"])
+        while not isprime(sz // params["mix_bytes"]):
+            sz -= params["mix_bytes"]
+        return sz
+
+Where isprime is of course:
+
+     def isprime(n):
+          for i in range(2, int(n ** 0.5 + 1)):
+              if n % i == 0:
+                  return False
+          return True
+
+For an optimization, one can add the line `if pow(2, n, n) != 2: return False` as an initial check, or use the Sieve of Erasthothenes to precompute the list of primes that the dataset will increase to all at once.
