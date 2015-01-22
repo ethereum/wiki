@@ -42,17 +42,19 @@ The general route that the algorithm takes is as follows:
 
 First, we define the parameters:
 
-    params = {
-        "cache_bytes": 33554432,      # bytes in cache
-        "dag_bytes_init": 1073741824, # bytes in dag
-        "dag_bytes_growth": 131072,   # growth per epoch (~345 MB per year)
-        "epoch_length": 1000,         # blocks per epoch
-        "k": 64,                      # number of parents of each dag element
-        "cache_rounds": 2,            # number of processing rounds in cache production
-        "mix_bytes": 4096,            # width of mix
-        "accesses": 64,               # number of accesses in hashimoto loop
-        "hash_bytes": 64              # hash length in bytes
-    }
+```python
+params = {
+    "cache_bytes": 33554432,      # bytes in cache
+    "dag_bytes_init": 1073741824, # bytes in dag
+    "dag_bytes_growth": 131072,   # growth per epoch (~345 MB per year)
+    "epoch_length": 1000,         # blocks per epoch
+    "k": 64,                      # number of parents of each dag element
+    "cache_rounds": 2,            # number of processing rounds in cache production
+    "mix_bytes": 4096,            # width of mix
+    "accesses": 64,               # number of accesses in hashimoto loop
+    "hash_bytes": 64              # hash length in bytes
+}
+```
 
 ### Cache Generation
 
@@ -125,17 +127,19 @@ def fnv(a, b):
 
 Each item in the full dataset is computed as follows:
 
-    def calc_dag_item(params, cache, i):
-        n = params["cache_bytes"] / params["hash_bytes"]
-        L = params["hash_bytes"]
-        rand_seed = clamp(2, decode_int(cache[0][:4]), P1 - 2)
-        rand = clamp(2, quick_bbs(rand_seed, i, P1), P2 - 2)
-        mix = zpad(encode_int(i), params["hash_bytes"])
-        for i in range(params["k"]):
-            mix_value = decode_int(mix[(i*4)%L: (i*4+3)%L])
-            mix = fnv(mix, cache[(rand ^ mix_value) % n])
-            rand = step_bbs(rand, P2)
-        return mix
+```python
+def calc_dag_item(params, cache, i):
+    n = params["cache_bytes"] / params["hash_bytes"]
+    L = params["hash_bytes"]
+    rand_seed = clamp(2, decode_int(cache[0][:4]), P1 - 2)
+    rand = clamp(2, quick_bbs(rand_seed, i, P1), P2 - 2)
+    mix = zpad(encode_int(i), params["hash_bytes"])
+    for i in range(params["k"]):
+        mix_value = decode_int(mix[(i*4)%L: (i*4+3)%L])
+        mix = fnv(mix, cache[(rand ^ mix_value) % n])
+        rand = step_bbs(rand, P2)
+    return mix
+```
 
 Essentially, we use our RNG to generate a seed for the specific item, and use that as the seed for another RNG which picks 64 indices from the cache. We initialize a mix to equal the 512-bit big-endian representation of the index (the purpose of this is to make sure all of the entropy from the index, and not just the first 32 bytes as does the RNG, in computing the final DAG value), and then repeatedly run through random parts of the cache and use our aggregation function to combine the data together.
 
@@ -166,33 +170,39 @@ If the output of this is below the desired target, then the nonce is valid. Note
 
 In order to compute the seed for a given block, we use the following algorithm:
 
-    def get_seedset(params, block):
-        if block.number == 0:
-            return ('\x42' * 32, '\x43' * 32)
-        elif (block.number % params["epoch_length"] == 0):
-            x, y = get_seedset(params, block.parent)
-            if (block.number // params["epoch_length"]) % 2:
-                y = sha3_256(y + block.prevhash)
-            else:
-                x = sha3_256(x + block.prevhash)
-            return (x, y)
-        else:
-            return get_seedset(params, block.parent)
+```python
+ def get_seedset(params, block):
+     if block.number == 0:
+         return ('\x42' * 32, '\x43' * 32)
+     elif (block.number % params["epoch_length"] == 0):
+         x, y = get_seedset(params, block.parent)
+         if (block.number // params["epoch_length"]) % 2:
+             y = sha3_256(y + block.prevhash)
+         else:
+             x = sha3_256(x + block.prevhash)
+         return (x, y)
+     else:
+         return get_seedset(params, block.parent)
+```
 
 In order to compute the size of the dataset at a given block number, we use the following function:
 
-    def get_datasize(params, block):
-        sz = params["dag_bytes_init"] + params["dag_bytes_growth"] * (block.number // params["epoch_length"])
-        while not isprime(sz // params["mix_bytes"]):
-            sz -= params["mix_bytes"]
-        return sz
+```python
+def get_datasize(params, block):
+    sz = params["dag_bytes_init"] + params["dag_bytes_growth"] * (block.number // params["epoch_length"])
+    while not isprime(sz // params["mix_bytes"]):
+        sz -= params["mix_bytes"]
+    return sz
+```
 
 Where isprime is of course:
 
-     def isprime(n):
-          for i in range(2, int(n ** 0.5 + 1)):
-              if n % i == 0:
-                  return False
-          return True
+```python
+ def isprime(n):
+      for i in range(2, int(n ** 0.5 + 1)):
+          if n % i == 0:
+              return False
+      return True
+```
 
 For an optimization, one can add the line `if pow(2, n, n) != 2: return False` as an initial check, or use the Sieve of Erasthothenes to precompute the list of primes that the dataset will increase to all at once.
