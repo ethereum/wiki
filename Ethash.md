@@ -56,16 +56,13 @@ Now, we specify the function for producing a cache:
 ```python
 def mkcache(params, seed):
     n = params["cache_bytes"] / params["hash_bytes"]
-
-    # Sequentially produce the initial dataset
     o = [sha3_512(seed)]
-    for i in range(1, n):
+    for _ in range(1, n):
         o.append(sha3_512(o[-1]))
-
     for _ in range(params["cache_rounds"]):
         for i in range(n):
             v = (decode_int(o[i]) % 2**64) % n
-            o[i] = sha3_512(o[(i-1+n)%n] + o[v])
+            o[i] = sha3_512(o[i-1] + o[v])
 
     # Output integers so we can more easily xor
     return [decode_int(v) for v in o]
