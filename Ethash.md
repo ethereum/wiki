@@ -135,9 +135,9 @@ def calc_dag_item(params, cache, i):
     L = params["hash_bytes"]
     rand_seed = clamp(2, decode_int(cache[0][:4]), P1 - 2)
     rand = clamp(2, quick_bbs(rand_seed, i, P1), P2 - 2)
-    mix = zpad(encode_int(i), params["hash_bytes"])
-    for i in range(params["k"]):
-        mix_value = decode_int(mix[(i*4)%L: (i*4+3)%L])
+    mix = cache[i % n]
+    for j in range(params["k"]):
+        mix_value = decode_int(mix[(j*4)%L: (j*4+3)%L])
         mix = fnv(mix, cache[(rand ^ mix_value) % n])
         rand = step_bbs(rand, P2)
     return mix
