@@ -121,7 +121,7 @@ def fnv(a, b):
     for pos in range(0, len(a), 4):
         v1 = decode_int(a[pos:pos+4])
         v2 = decode_int(b[pos:pos+4])
-        o += encode_int((v1 * FNV_PRIME ^ v2) % 2**32)
+        o += zpad(encode_int((v1 * FNV_PRIME ^ v2) % 2**32), 4)
     return o
 ```
 
