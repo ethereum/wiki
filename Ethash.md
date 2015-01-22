@@ -14,7 +14,7 @@ def encode_int(s):
    return '' if s == 0 else ('0' * (len(a) % 2) + a).decode('hex')[::-1]
 
 def zpad(s, length):
-   return '\x00' * max(0, length - len(s)) + s
+   return s + '\x00' * max(0, length - len(s))
 
 # sha3 hash function, outputs 64 bytes
 def sha3_512(x):
