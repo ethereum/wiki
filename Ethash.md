@@ -53,7 +53,7 @@ params = {
     "k": 64,                      # number of parents of each dag element
     "cache_rounds": 2,            # number of processing rounds in cache production
     "mix_bytes": 4096,            # width of mix
-    "accesses": 64,               # number of accesses in hashimoto loop
+    "accesses": 32,               # number of accesses in hashimoto loop
     "hash_bytes": 64              # hash length in bytes
 }
 ```
