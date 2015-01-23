@@ -256,7 +256,7 @@ Accesses have to descend fully in a single statement. To see how this could be u
             self.registry[key].value = new_value
 
     def ask(key):
-        return([self.registry[key].owner, self.registry[key].value], 2)
+        return([self.registry[key].owner, self.registry[key].value], items=2)
 
 Note that in the last ask command, the function returns an array of 2 values. If you wanted to call the registry, you would have needed to do something like `o = registry.ask(key, outsz=2)` and you could have then used `o[0]` and `o[1]` to recover the owner and value. 
 
@@ -287,17 +287,17 @@ Shrink the length of array x to size s (useful just before passing the array as 
 
 Functions can also take arrays as arguments, and return arrays.
 
-    def compose(inputs:a):
+    def compose(inputs:arr):
         return(inputs[0] + inputs[1] * 10 + inputs[2] * 100)
 
     def decompose(x):
-        return([x % 10, (x % 100) / 10, x / 100]:a)
+        return([x % 10, (x % 100) / 10, x / 100]:arr)
 
-Putting the `:a` after a function argument means it is an array, and putting it inside a return statement returns the value as an array (just doing `return([x,y,z])` would return the integer which is the memory location of the array).
+Putting the `:arr` after a function argument means it is an array, and putting it inside a return statement returns the value as an array (just doing `return([x,y,z])` would return the integer which is the memory location of the array).
 
 If a contract calls one of its functions, then it will autodetect which arguments should be arrays and parse them accordingly, so this works fine:
 
-    def compose(inputs:a, radix):
+    def compose(inputs:arr, radix):
         return(inputs[0] + inputs[1] * radix + inputs[1] * radix ** 2)
 
     def main():
@@ -307,7 +307,7 @@ However, if a contract wants to call another contract that takes arrays as argum
 
     extern composer: [compose:ai, main]
 
-Here, `ai` means "an array followed by an integer". You can do things like `iiaa`, meaning 2 integers followed by 2 arrays.
+Here, `ai` means "an array followed by an integer". You can do things like `iiaa`, meaning 2 integers followed by 2 arrays or `iss` meaning an integer followed by 2 strings.
 
 ### Strings
 
@@ -434,8 +434,8 @@ Serpent recognises the following "special functions":
 There are also special commands for a few crypto operations; particularly:
 
 * `addr = ecrecover(h, v, r, s)` - determines the address that produced the elliptic curve signature `v, r, s` of the hash `h`
-* `x = sha256(a, 4)` - returns the sha256 hash of the 128 bytes consisting of the 4-item array starting from `a`
-* `x = ripemd160(a, 4)` - same as above but for ripemd160
+* `x = sha256(a, items=4)` - returns the sha256 hash of the 128 bytes consisting of the 4-item array starting from `a`
+* `x = ripemd160(a, items=4)` - same as above but for ripemd160
 * To hash an arbitrary number of bytes, use chars syntax.  Example: `x = sha256([0xf1fc122bc7f5d74df2b9441a42a1469500000000000000000000000000000000], chars=16)` - returns the sha256 of the first 16 bytes.  Note: padding with trailing zeroes, otherwise the first 16 bytes will be zeroes, and the sha256 of it will be computed instead of the desired.
 
 ### Tips
