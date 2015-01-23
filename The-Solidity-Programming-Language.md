@@ -1,0 +1,1 @@
+Look here for a commented example: https://github.com/ethereum/dapp-bin/blob/master/wallet/wallet.sol
