@@ -14,7 +14,7 @@ No language would be complete without a Hello World program. Unfortunately, bein
 
 ```
 contract HelloWorld {
-  Event Print(string);
+  event Print(string);
   function() { Print("Hello, World!"); }
 }
 ```
