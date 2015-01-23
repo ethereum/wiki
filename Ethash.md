@@ -105,7 +105,7 @@ def step_bbs(n, P):
     return (n * n * n) % P
 ```
 
-When choosing a safe prime *p* for our random number generator, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since this determines the cycle length of the corresponding random number generator.  The multiplicative order of 3 in ℤ/(4294967086) is 1073741771, and the multiplicative order of 3 in ℤ/(4294963786) is 2147481892; hence their combined period (computed using the *least common multiple* of their two periods) is 2305841009906510732 or roughly 2<sup>61</sup>. Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
+When choosing a safe prime *p* for our random number generator, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since this determines the cycle length of the corresponding random number generator.  The multiplicative order of 3 in ℤ/(4294967086) is 1073741771. Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
 
 This particular pseudo random number generator may exhibit bias when taking its output modulo a value which is not a prime, so we will choose our memory sizes in terms of primes in order to remove any bias.
 
