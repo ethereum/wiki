@@ -54,7 +54,7 @@ contract Simple {
 }
 ```
 
-Unlike in Javascript, all variables must be declared prior to use and typed. However, for convenience, `var` is provided as a way to automatically determine the type.
+Unlike in Javascript, all variables must be declared prior to use and typed. However, for convenience, `var` is provided as a way to automatically determine the type through the expression it is initialised to. In this case, the type is `uint`, but more on the types later.
 
 ## Simple Types
 
@@ -73,7 +73,41 @@ In addition to these, there is the intrinsic `address` type used for identifying
 
 Most of the time, we'll tend to use `uint` and `hash`; the former if we intend to do arithmetic, the latter when we need to identify or refer to pieces of data, events, &c.
 
+So to declare a variable it is very similar to the C-like languages: we simply place the type, followed by the variable name and finish the expression with a `;`. For example to declare a uint named `x` we'd write:
+
+```
+uint x;
+```
+
+If we then wanted to assign `69` to it, we'd use the assignment operator, `=` (not forgetting to place the trailing `;`:
+
+```
+uint x;
+x = 69;
+```
+
+There is a shorthand to declaring and assigning; those two statements may be collapsed over the `x` into:
+
+```
+uint x = 69;
+```
+
+In this situation, where we are simulataneously declaring and initialising the variable, we are able to substitute the type with the keyword `var`. If we do this, the type will be determined through the type of the expression we are assigning:
+
+```
+var x = 69;
+```
+
+If we were to assign a decimal, `var` would become equivalent to a real:
+
+```
+var x = 69;		// here, "var" is equivalent to "uint".
+var y = 69.42;	// here, "var" is equivalent to "real".
+```
+
 ## Literals
+
+
 
 ## Parameters and Returns
 
