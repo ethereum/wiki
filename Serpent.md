@@ -356,7 +356,7 @@ Or to take the max of an array:
 
 For a highly contrived example of just how powerful macros can be, see https://github.com/ethereum/serpent/blob/poc7/examples/peano.se
 
-Note that macros are not functions; they are copied into code every time they are used. Hence, if you have a long macro, you may instead with to make the macro call an actual function. Additionally, note that the dollar signs on variables are important; if you omit a dollar sign in the pattern $a then the macro will only match a variable actually called a. You can also create dollar sign variables that are in the substitution pattern, but not the search pattern; this will generate a variable with a random prefix each instance of the macro. You can also create new variables without a dollar sign inside a substitution pattern, but then the same variable will be shared across all instances of the pattern and with uses of that variable outside the pattern.
+Note that macros are not functions; they are copied into code every time they are used. Hence, if you have a long macro, you may instead want to make the macro call an actual function. Additionally, note that the dollar signs on variables are important; if you omit a dollar sign in the pattern $a then the macro will only match a variable actually called a. You can also create dollar sign variables that are in the substitution pattern, but not the search pattern; this will generate a variable with a random prefix each instance of the macro. You can also create new variables without a dollar sign inside a substitution pattern, but then the same variable will be shared across all instances of the pattern and with uses of that variable outside the pattern.
 
 ### Types
 
