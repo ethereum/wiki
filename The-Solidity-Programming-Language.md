@@ -1,8 +1,8 @@
 # Foreword
 
-Solidity is perhaps the first example of a contract-oriented programming language. While closely related to object-oriented languages, this is a language designed specifically to help express agreements that must encode ideas and relationships relevant to Real Life, or some formal model thereof. As such we see notions such as ownership, identity, protections and restrictions forming a core part of the vocabulary and idiomatic grammar.
+Solidity is roughly speaking, an object-oriented language designed for writing contracts in Ethereum. Contracts are (typically) small programs which govern the behaviour of accounts within the Ethereum state. These programs operate within the context of the Ethereum environment. Such accounts are able to pass messages between themselves as well as doing practically Turing complete computation.
 
-Solidity is designed with a specific operating environment, or more formally, state-transitioning machine, in mind, specifically that in which the Ethereum Virtual Machine runs and which is encoded by the Ethereum world state. I generally refer to this as the Ethereum State Platform, or Ethereum Environment.
+Solidity is perhaps the first example of a *contract-oriented* programming language; a slight tweak on the notion of object-orientation. While closely related to object-oriented languages, this is a language designed specifically to help express agreements that must encode ideas and relationships relevant to Real Life, or some formal model thereof. As such we see notions such as ownership, identity, protections and restrictions forming a core part of the vocabulary and idiomatic grammar.
 
 We see language grammar actually tieing in with many of the aspects of this: the `event` primitives along with the `indexed` keyword explicitly address the logging environment which Ethereum provides. The variadic return values mimic the fact that output data of Ethereum's calling mechanism is, like the input data, an arbitrary byte array.
 
@@ -10,11 +10,11 @@ We see language grammar actually tieing in with many of the aspects of this: the
 
 ## Hello, World!
 
-No language would be complete without a Hello World program. Unfortunately, being based around the Ethereum State Platform, Solidity has no obvious way of outputting a string. The closest we can do is to use a log event:
+No language would be complete without a Hello World program. Operating within the Ethereum environment, Solidity has no obvious way of "outputting" a string. The closest we can do is to use a log event to place a string into the blockchain:
 
 ```
 contract HelloWorld {
-  event Print(string);
+  event Print(string out);
   function() { Print("Hello, World!"); }
 }
 ```
@@ -107,7 +107,33 @@ var y = 69.42;	// here, "var" is equivalent to "real".
 
 ## Literals
 
+Solidity includes four of types of literals; these are used for expressing specific, well-known values.
 
+# Integers
+
+Integer literals are formed from a sequence of numbers in the range 0-9. They are interpreted as decimals. Examples include `69` and `01000000`.
+
+# Hashes
+
+Hash literals are formed from the characters `0x` followed directly by a sequence of pairs of hexadecimal numbers, in the range 0-9 and a-f (not case sensitive). They are interpreted as hexadecimal-encoded bytes. Examples include:
+
+```
+hash h = 0x0123456789abcdef0123456789abcdef;
+```
+
+In terms of literals, addresses are treated similar to hashes:
+
+```
+address a = 0x0123456789abcdef0123;
+```
+
+# Strings
+
+String literals are formed by a sequence of arbitrary characters contained between quote characters (`"`). They are generally interpreted as zero-terminated ASCII encoded text, similar to C. The terminating zero need not be supplied. An examples would be: `"Hello, World!"`.
+
+# Reals
+
+Reals are formed similar to integers except that they include a decimal point and at least one number on either side of it. An example would be: `3.14159265` and `42.000001`.
 
 ## Parameters and Returns
 
@@ -145,7 +171,7 @@ On-hand, we also have the Keccak, aka SHA-3 function. So,
 
 ### Fields
 
-Contracts may have data menver
+Contracts may have data members. 
 
 ### Constant
 
@@ -160,6 +186,10 @@ Contracts may have data menver
 # More Complex Typing
 
 ## Contracts & Forward Declarations
+
+### External Calls
+
+### Limiting Gas and Passing Value
 
 ## Arrays
 
