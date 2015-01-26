@@ -82,6 +82,7 @@ Returns the SHA3 of the given data.
 ```javascript
 var str = web3.fromAscii("Some ASCII string to be hashed");
 console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
+
 var hash = web3.sha3(str);
 console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
 ```
@@ -98,8 +99,9 @@ console.log(str); // ethereum
 Returns data of the ASCII string `_s`, auto-padded to `_padding` bytes (default to 32) and left-aligned.
 ```javascript
 var str = web3.fromAscii('ethereum');
-var str2 = web3.fromAscii('ethereum', 32);
 console.log(str); // "0x657468657265756d000000000000000000000000000000000000000000000000"
+
+var str2 = web3.fromAscii('ethereum', 32);
 console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000000000000"
 ```
 
@@ -227,10 +229,8 @@ console.log(number); // 1
 #####web3.eth.codeAt
 Returns true if the account of address given by `_a` is a contract-account.
 ```javascript
-web3.eth.codeAt("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8").then(function (result) {
-    var code = result;
-    console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
-});
+var code = web3.eth.codeAt("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
+console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 ```
 
 #####web3.eth.block
@@ -253,9 +253,8 @@ Returns the block with number `_number`. Return value is an object with the foll
   * `totalDifficulty`: The total difficulty of the entire chain up and including this block (a bigint).
   * `bloom`: The bloom filter of this block (a 32-byte hash).
 ```javascript
-web3.eth.block(3150).then(function (result) {
-    var info = result;
-    console.log(info);
+var info = web3.eth.block(3150);
+console.log(info);
  /*{
   "difficulty": "0x02a88f",
   "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -271,7 +270,6 @@ web3.eth.block(3150).then(function (result) {
   "timestamp": 1416585210,
   "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
 } */
-});
 ```
 #####web3.eth.transaction
 Returns the transaction number `_i` from block with number `_number`. Return value is an object with the following keys:
@@ -357,19 +355,15 @@ Past messages may be filtered and their attributes inspected, and future message
 #####web3.eth.compilers
 Returns an array of available compilers
 ```javascript
-web3.eth.compilers().then(function (result) {
-    var number = result;
-    console.log(number); // ["lll", "solidity", "serpent"]
-});
+var number = web3.eth.compilers();
+console.log(number); // ["lll", "solidity", "serpent"]
 ```
 
 #####web3.eth.solidity
 Compiles the solidity source code `_s` and returns the output data.
 ```javascript
 // TODO (_code)
-web3.eth.solidity("").then(function (result) {
-    var number = result;
-});
+var number = web3.eth.solidity("");
 ```
 
 #####web3.eth.lll
