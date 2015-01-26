@@ -81,7 +81,9 @@ var web3 = require('web3')
 Returns the SHA3 of the given data.
 ```javascript
 var str = web3.fromAscii("Some ASCII string to be hashed");
-web3.sha3(str).then(function(hash){ console.log(hash + " is the hash."); });
+console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
+var hash = web3.sha3(str);
+console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
 ```
 
 ##### web3.toAscii
@@ -141,109 +143,85 @@ var eth = web3.eth;
 #####web3.eth.coinbase
 Returns the coinbase address of the client.
 ```javascript
-web3.eth.coinbase.then(function (result) {
-    var coinbase = result;
-    console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
-});
+var coinbase = web3.eth.coinbase;
+console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
 ```
 
 #####web3.eth.listening
 Returns true if and only if the client is actively listening for network connections.
 ```javascript
-web3.eth.listening.then(function (result) {
-    var listening = result;
-    console.log(listening); // true of false
-});
+var listening = web3.eth.listening;
+console.log(listening); // true of false
 ```
 
 #####web3.eth.mining
 Returns true if and only if the client is actively mining new blocks.
 ```javascript
-web3.eth.mining.then(function (result) {
-    var mining = result;
-    console.log(mining); // true or false
-});
+var mining = web3.eth.mining;
+console.log(mining); // true or false
 ```
 
 #####web3.eth.gasPrice
 Returns the special 256-bit number equal to the hard-coded testnet price of gas.
 ```javascript
-web3.eth.gasPrice.then(function (result) {
-    var gasPrice = result;
-    console.log(gasPrice); // "0x09184e72a000"
-});
+var gasPrice = web3.eth.gasPrice;
+console.log(gasPrice); // "0x09184e72a000"
 ```
 
 #####web3.eth.accounts
 Returns the special key-pair list object corresponding to the address of each of the accounts owned by the client that this ÐApp has access to.
 ```javascript
-web3.eth.accounts.then(function (result) {
-    var accounts = result;
-    console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
-});
+var accounts = web3.eth.accounts;
+console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
 ```
 
 #####web3.eth.peerCount
 Returns the number of peers currently connected to the client.
 ```javascript
-web3.eth.peerCount.then(function (result) {
-    var peerCount = result;
-    console.log(peerCount); // 4
-});
+var peerCount = web3.eth.peerCount;
+console.log(peerCount); // 4
 ```
 
 #####web3.eth.defaultBlock
 The default block number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
 ```javascript
-web3.eth.peerCount.then(function (result) {
-    var peerCount = result;
-    console.log(peerCount); // 4
-});
+var defaultBlock = web3.eth.defaultBlock;
+console.log(defaultBlock); // -1
 ```
 
 #####web3.eth.number
 Returns the number of the most recent block.
 ```javascript
-web3.eth.number.then(function (result) {
-    var number = result;
-    console.log(number); // 2744
-});
+var number = web3.eth.number;
+console.log(number); // 2744
 ```
 
 #####web3.eth.balanceAt
 Returns the balance of the account of address given by the address `_a`
 ```javascript
-web3.eth.balanceAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (result) {
-    var balance = result;
-    console.log(balance); // "0x32884442997a37a000"
-});
+var balance = web3.eth.balanceAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
+console.log(balance); // "0x32884442997a37a000"
 ```
 
 #####web3.eth.stateAt
 Returns the value in storage at position given by the string `_s` of the account of address given by the address `_a`.
 ```javascript
-web3.eth.stateAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0).then(function (result) {
-    var state = result;
-    console.log(state); // "0x03"
-});
+var state = web3.eth.stateAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
+console.log(state); // "0x03"
 ```
 
 #####web3.eth.storageAt
 Dumps storage as json object.
 ```javascript
-web3.eth.storageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (result) {
-    var storage = result;
-    console.log(storage); // { "0x" : "0x03" }
-});
+var storage = web3.eth.storageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
+console.log(storage); // { "0x" : "0x03" }
 ```
 
 #####web3.eth.countAt
 Returns the number of transactions send from the account of address given by `_a`.
 ```javascript
-web3.eth.countAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1").then(function (result) {
-    var number = result;
-    console.log(number); // 1
-});
+var number = web3.eth.countAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
+console.log(number); // 1
 ```
 
 #####web3.eth.codeAt
