@@ -1,6 +1,6 @@
 This is a list to explain and demonstrate new Solidity features as soon as they are completed.
 
-## Conversion between `string` and `hash` types.
+## Conversion between String and Hash types.
 
 [PT](https://www.pivotaltracker.com/story/show/85907772) The explicit conversion between `string` and `hash` types of equal size is now allowed. Example:
 
