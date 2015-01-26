@@ -1,5 +1,17 @@
 This is a list to explain and demonstrate new Solidity features as soon as they are completed.
 
+## Conversion between `string` and `hash` types.
+
+[PT](https://www.pivotaltracker.com/story/show/85907772) The explicit conversion between `string` and `hash` types of equal size is now allowed. Example:
+
+```
+contract Test {
+  function hashToString(hash h) returns (string32 s) {
+    return string32(h);
+  }
+}
+```
+
 ## Special Type Treatment for Integer Literals
 
 [PT](https://www.pivotaltracker.com/story/show/83393282) Expressions only involving integer literals are now essentially treated as "big integers" (i.e. they do not overflow) until they are actually used with a non-literal. The type of the expression is only determined at that point as the smallest integer type that can contain the resulting value. Example:
