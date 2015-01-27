@@ -147,3 +147,18 @@ hash b;
 }
 ```
 
+would result in the JSON:
+
+```
+[{
+"type":"event",
+"inputs": [{"name":"a","type":"uint256","indexed":true}],
+"name":"Event"
+}, {
+"type":"function",
+"inputs": [{"name":"a","type":"uint256"}],
+"name":"foo",
+"outputs": []
+}]
+```
+
