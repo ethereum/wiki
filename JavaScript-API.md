@@ -378,8 +378,14 @@ console.log(number); // ["lll", "solidity", "serpent"]
 #####web3.eth.solidity
 Compiles the solidity source code `_s` and returns the output data.
 ```javascript
-// TODO (_code)
-var number = web3.eth.solidity("");
+var source = "" + 
+    "contract test {\n" +
+    "   function multiply(uint a) returns(uint d) {\n" +
+    "       return a * 7;\n" +
+    "   }\n" +
+    "}\n";
+var code = web3.eth.solidity(source);
+console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
 ```
 
 #####web3.eth.lll
