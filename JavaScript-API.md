@@ -43,7 +43,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
       * [changed](#) *(_callback)*
       * [logs](#) *(_callback)*
       * [uninstall](#) *(_callback)*
-    * [contract](#web3contract) *(_address, _abi)*
+    * [contract](#web3ethcontract) *(_address, _abi)*
   * [db](#web3db)
     * [put](#web3dbput) *(_name, _key, _value)*
     * [putString](#web3dbputstring) *(__name, _key, _value)*
