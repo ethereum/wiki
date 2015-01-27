@@ -63,7 +63,14 @@ The following RPC messages should be accepted by the RPC-backend:
   {"id":72,"jsonrpc":"2.0","result":true}
   ```
 * `eth_gasPrice`
-
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}"'
+  ```
+  * response:
+  ```json
+  {"id":73,"jsonrpc":"2.0","result":"0x09184e72a000"}
+  ```
 * `eth_accounts`
   * request:
   ```bash
@@ -74,6 +81,14 @@ The following RPC messages should be accepted by the RPC-backend:
   {"id":1,"jsonrpc":"2.0","result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]}
   ```
 * `eth_peerCount`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id":74}"' http://localhost:8080
+  ```
+  * response:
+  ```json
+  {"id":74,"jsonrpc":"2.0","result":0}
+  ```
 * `eth_defaultBlock`
 * `eth_setDefaultBlock`
 * `eth_number`
