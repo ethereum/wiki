@@ -48,11 +48,11 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [getString](#web3dbgetstring) *(_name, _key)*
   * [shh](#shh)
     * [post](#web3shhpost) *(_object)*
-    * [newIdentity](#web3shhnewIdentity) *()*
-    * [haveIdentity](#web3shhhaveIdentity) *(_string)*
-    * [newGroup](#web3shhnewGroup) *(_id, _who)*
-    * [addToGroup](#addToGroup) *(_group, _who)*
-    * [watch](#shh_watch) *(_object/_string)*
+    * [newIdentity](#web3shhnewidentity) *()*
+    * [haveIdentity](#web3shhhaveidentity) *(_string)*
+    * [newGroup](#web3shhnewgroup) *(_id, _who)*
+    * [addToGroup](#web3shhaddtogroup) *(_group, _who)*
+    * [watch](#web3shhwatch) *(_object/_string)*
       * [arrived](#) *(_callback)*
       * [changed](#) *(_callback)*
       * [messages](#) *(_callback)*
