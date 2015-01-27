@@ -230,7 +230,7 @@ contract test {
 }
 ```
 
-For example in the abovecontract if you tried to call test's `data()` method then you would obtain the result 42.
+For example in the above contract if you tried to call test's `data()` method then you would obtain the result 42.
 
 ```
 contract test {
