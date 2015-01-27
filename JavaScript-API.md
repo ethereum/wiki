@@ -419,15 +419,3 @@ To test it, just put it in file and save. Load it in AlethZero and point the URL
 Job done. Now go create.
 
 more examples can be found [here](https://github.com/ethereum/ethereum.js/tree/master/example)
-
-### Recent Changes
-- Moved "Misc" into web3.* object.
-- Removed all secret keys from the JS API.
-- Altered naming to web3.
-- Added web3.db and web3.ssh objects
-- Added usage examples to JavaScript-Api wiki page.
-
-### Upcoming Changes
-- Proscribe particular bigint objects for numerical manipulation.
-- Integrate Paperscript-style preprocessing to allow for operator overloading.
-- Add more examples to ethereum.js
