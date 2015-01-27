@@ -98,7 +98,8 @@ Note that, unfortunately, this only works directly on structs for now, so I woul
 
 ## Contract Inheritance
 
-[PT](https://www.pivotaltracker.com/story/show/84976094) Contracts can inherit from each other.
+[PT1](https://www.pivotaltracker.com/story/show/84976094) 
+[PT2](https://www.pivotaltracker.com/story/show/86666936) Contracts can inherit from each other.
 
 ```
 contract owned {
@@ -119,7 +120,7 @@ contract NameReg { function register(string32 name) {} function unregister() {} 
 // Multiple inheritance is possible. Note that "owned" is also a base class of
 // "mortal", yet there is only a single instance of "owned" (as for virtual
 // inheritance in C++).
-contract named is mortal, owned {
+contract named is owned, mortal {
     function named(string32 name) {
         address ConfigAddress = 0xd5f9d8d94886e70b06e474c3fb14fd43e2f23970;
         NameReg(Config(ConfigAddress).lookup(1)).register(name);
@@ -138,7 +139,7 @@ contract named is mortal, owned {
 }
 
 // If a constructor takes an argument, it needs to be provided in the header.
-contract PriceFeed is named("GoldFeed"), mortal, owned {
+contract PriceFeed is owned, mortal, named("GoldFeed") {
    function updateInfo(uint newInfo) {
       if (msg.sender == owner) info = newInfo;
    }
