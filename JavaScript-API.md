@@ -400,6 +400,56 @@ Compiles the serpent source code `_s` and returns the output data.
 // TODO (_code)
 ```
 
+#####web3.db.put
+```javascript
+// TODO (_code)
+```
+
+#####web3.db.putString
+```javascript
+// TODO (_code)
+```
+
+#####web3.db.get
+```javascript
+// TODO (_code)
+```
+
+#####web3.db.getString
+```javascript
+// TODO (_code)
+```
+
+#####web3.shh.post
+```javascript
+// TODO (_code)
+```
+
+#####web3.shh.newIdentity
+```javascript
+// TODO (_code)
+```
+
+#####web3.shh.haveIdentity
+```javascript
+// TODO (_code)
+```
+
+#####web3.shh.newGroup
+```javascript
+// TODO (_code)
+```
+
+#####web3.shh.addToGroup
+```javascript
+// TODO (_code)
+```
+
+#####web3.shh.watch
+```javascript
+// TODO (_code)
+```
+
 # Example
 
 A simple HTML snippet that will display the user's primary account balance of Ether:
