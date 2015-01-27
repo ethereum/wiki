@@ -9,12 +9,61 @@ Ethereum.js exports one single container; `web3` which contains the `eth` object
 The following RPC messages should be accepted by the RPC-backend:
 
 * `eth_coinbase`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":64}"'
+  ```
+  * response:
+  ```json
+  {"id":64,"jsonrpc":"2.0","result":"0x407d73d8a49eeb85d32cf465507dd71d507100c1"}
+  ```
 * `eth_setCoinbase`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setCoinbase","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":66}"'
+  ```
+  * response:
+  ```json
+  {"id":66,"jsonrpc":"2.0","result":true}
+  ```
 * `eth_listening`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_listening","params":[],"id":67}"'
+  ```
+  * response:
+  ```json
+  {"id":67,"jsonrpc":"2.0","result":true}
+  ```
 * `eth_setListening`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setListening","params":[false],"id":68}"'
+  ```
+  * response:
+  ```json
+  {"id":68,"jsonrpc":"2.0","result":true}
+  ```
 * `eth_mining`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}"'
+  ```
+  * response:
+  ```json
+  {"id":71,"jsonrpc":"2.0","result":true}
+  ```
 * `eth_setMining`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setMining","params":[false],"id":72}"'
+  ```
+  * response:
+  ```json
+  {"id":72,"jsonrpc":"2.0","result":true}
+  ```
 * `eth_gasPrice`
+
 * `eth_accounts`
   * request:
   ```bash
