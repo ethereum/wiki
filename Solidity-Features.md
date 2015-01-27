@@ -6,7 +6,7 @@ This is a list to explain and demonstrate new Solidity features as soon as they 
 
 ```
 contract Test {
-  function hashToString(hash h, string20 s) returns (string32 res_s, hash160 res_h) {
+  function hashToString(hash h160, string20 s) returns (string32 res_s, hash160 res_h) {
     ret_s string32(h);
     ret_h hash160(s);
   }
