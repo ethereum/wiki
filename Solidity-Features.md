@@ -200,3 +200,21 @@ contract Test {
   }
 }
 ```
+
+## Access to super
+
+In the following contract, the function `kill` is overridden by sibling classes. Due to the fact that the sibling classes do not know of each other, they can only call `mortal.kill()` with the effect that one of the overrides is completely bypassed. A reasonable implementation would call the kill functions in all classes in the inheritance hierarchy. 
+```
+contract mortal is owned { function kill() { suicide(msg.caller); } }
+contract named is mortal { function kill() { namereg.unregister(); mortal.kill(): }
+contract tokenStorage is mortal { function kill() { returnAllTokens(); mortal.kill(); }
+contract MyContract is named, tokenStorage {}
+```
+
+The `super` keyword solves this. Its type is the type of the current contract if it were empty, i.e. it contains all members of the current class' bases. Access to a member of super invokes the usual virtual member lookup, but it ends just above the current class. Using this keyword, the following works as expected:
+```
+contract mortal { function kill() { suicide(msg.caller); } }
+contract named is mortal { function kill() { namereg.unregister(); super.kill(): }
+contract tokenStorage is mortal { function kill() { returnAllTokens(); super.kill(); }
+contract MyContract is named, tokenStorage {}
+```
