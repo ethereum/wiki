@@ -443,12 +443,18 @@ console.log(value); // "5"
 
 #####web3.shh.newIdentity
 ```javascript
-// TODO (_code)
+var identity = web3.shh.newIdentity();
+console.log(identity); // "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
 ```
 
 #####web3.shh.haveIdentity
 ```javascript
-// TODO (_code)
+var identity = web3.shh.newIdentity();
+var result = web3.shh.haveIdentity(identity);
+console.log(result); // true
+
+var result2 = web3.shh.haveIdentity(identity + "0");
+console.log(result2); // false
 ```
 
 #####web3.shh.newGroup
