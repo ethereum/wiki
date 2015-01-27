@@ -141,7 +141,9 @@ For example,
 
 ```
 contract Test {
+function Test(){ b = 0x12345678901234567890123456789012; }
 event Event(uint indexed a, hash b)
+event Event2(uint indexed a, hash b)
 function foo(uint a) { Event(a, b); }
 hash b;
 }
@@ -152,8 +154,12 @@ would result in the JSON:
 ```
 [{
 "type":"event",
-"inputs": [{"name":"a","type":"uint256","indexed":true}],
+"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
 "name":"Event"
+}, {
+"type":"event",
+"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
+"name":"Event2"
 }, {
 "type":"function",
 "inputs": [{"name":"a","type":"uint256"}],
@@ -162,3 +168,43 @@ would result in the JSON:
 }]
 ```
 
+# Example Javascript Usage
+
+```
+var Test = eth.contractFromAbi(
+[{
+"type":"event",
+"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
+"name":"Event"
+}, {
+"type":"event",
+"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
+"name":"Event2"
+}, {
+"type":"function",
+"inputs": [{"name":"a","type":"uint256"}],
+"name":"foo",
+"outputs": []
+}]);
+var theTest = Test(addrTest);
+
+// examples of usage:
+// every log entry ("event") coming from theTest (i.e. Event & Event2):
+var f0 = eth.filter(theTest);
+// just log entries ("events") of type "Event" coming from theTest:
+var f1 = eth.filter(theTest.Event);
+// just log entries ("events") of type "Event" and "Event2" coming from theTest:
+var f2 = eth.filter([theTest.Event, theTest.Event2]);
+// just log entries ("events") of type "Event" coming from theTest with indexed parameter 'a' equal to 69:
+var f3 = eth.filter(theTest.Event, {'a': 69});
+// just log entries ("events") of type "Event" coming from theTest with indexed parameter 'a' equal to 69 or 42:
+var f4 = eth.filter(theTest.Event, {'a': [69, 42]});
+
+var trigger;
+f4.changed(trigger);
+
+// call foo to make an Event:
+theTest.foo(69);
+
+// would call trigger like:
+//trigger(theTest.Event, {'a': 69, 'b': '0x12345678901234567890123456789012'});
