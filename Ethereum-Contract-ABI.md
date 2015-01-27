@@ -1,3 +1,5 @@
+# Functions
+
 ### Basic design
 
 We assume the ABI is strongly typed, known at compilation time and static. No introspection mechanism will be provided. We assert that all contracts will have the interface definitions of any contracts they call available at compile-time.
@@ -100,3 +102,48 @@ In total:
 ```
 0xe4ae26d6000000000000000000000000000000040000000000000000000000000000000364617665000000000000000000000000000000000000000000000000000000010000000000000000000000000000000200000000000000000000000000000003
 ```
+
+
+# Events
+
+Events are an abstraction of the Ethereum logging/event-watching protocol. Log entries provide the contract's address, a series of up to four topics and some arbitrary length binary data. Events leverage the existing function ABI in order to interpret this (together with an interface spec) as a properly typed structure.
+
+Given an event name and series of event parameters, we split them into two sub-series: those which are indexed and those which are not. Those which are indexed, which may number up to 3, are used alongside the Keccak hash of the event signature to form the topics of the log entry. Those which as not indexed form the byte array of the event.
+
+In effect, a log entry using this ABI is described as:
+
+- `address`: the address of the contract (intrinsically provided by Ethereum);
+- `topics[0]`: `keccak(EVENT_NAME+"("+EVENT_ARGS.map(canonical_type_of).join(",")+")")` (`canonical_type_of` is a function that simply returns the canonical type of a given argument, e.g. for `uint indexed foo`, it would return `uint256`);
+- `topics[n]`: `EVENT_INDEXED_ARGS[n - 1]` (`EVENT_INDEXED_ARGS` is the series of EVENT_ARGS that are indexed);
+- `data`: `abi_serialise(EVENT_NON_INDEXED_ARGS)` (`EVENT_NON_INDEXED_ARGS` is the series of EVENT_ARGS that are not indexed, `abi_serialise` is the ABI serialisation function used for returning a series of typed values from a function, as described above).
+
+# JSON
+
+The JSON format for a contract's interface is given by an array of function and/or event descriptions. A function description is a JSON object with the fields:
+
+- `type`: always `"function"` (the default, and so may be omitted);
+- `name`: the name of the function;
+- `inputs`: an array of objects, each of which contains:
+* `name`: the name of the parameter;
+* `type`: the canonical type of the parameter.
+- `outputs`: an array of objects similar to `inputs`.
+
+An event description is a JSON object with fairly similar fields:
+
+- `type`: always `"event"`
+- `name`: the name of the function;
+- `inputs`: an array of objects, each of which contains:
+* `name`: the name of the parameter;
+* `type`: the canonical type of the parameter.
+* `indexed`: `true` if the field is part of the log's data segment, `false` if it one of the log's topics.
+
+For example, 
+
+```
+contract Test {
+event Event(uint indexed a, hash b)
+function foo(uint a) { Event(a, b); }
+hash b;
+}
+```
+
