@@ -228,3 +228,11 @@ There is also a special type
 ### named
 
 ### daylimit
+
+# Solidity 2.0
+
+## Invariants
+
+## Pre- & Post-conditions
+
+## The dynamic Keyword
