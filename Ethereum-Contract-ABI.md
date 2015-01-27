@@ -193,12 +193,18 @@ var theTest = Test(addrTest);
 var f0 = eth.filter(theTest);
 // just log entries ("events") of type "Event" coming from theTest:
 var f1 = eth.filter(theTest.Event);
+// also written as
+var f1 = theTest.Event.filter();
 // just log entries ("events") of type "Event" and "Event2" coming from theTest:
 var f2 = eth.filter([theTest.Event, theTest.Event2]);
 // just log entries ("events") of type "Event" coming from theTest with indexed parameter 'a' equal to 69:
 var f3 = eth.filter(theTest.Event, {'a': 69});
+// also written as
+var f3 = theTest.Event.filter({'a': 69});
 // just log entries ("events") of type "Event" coming from theTest with indexed parameter 'a' equal to 69 or 42:
 var f4 = eth.filter(theTest.Event, {'a': [69, 42]});
+// also written as
+var f4 = theTest.Event.filter({'a': [69, 42]});
 
 var trigger;
 f4.changed(trigger);
