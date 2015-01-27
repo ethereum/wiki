@@ -1,18 +1,5 @@
 This is a list to explain and demonstrate new Solidity features as soon as they are completed.
 
-## Conversion between String and Hash types.
-
-[PT](https://www.pivotaltracker.com/story/show/85907772) The explicit conversion between `string` and `hash` types of equal size is now allowed. Example:
-
-```
-contract Test {
-  function convert(hash160 h, string20 s) returns (string20 res_s, hash160 res_h) {
-    res_s = string20(h);
-    res_h = hash160(s);
-  }
-}
-```
-
 ## Special Type Treatment for Integer Literals
 
 [PT](https://www.pivotaltracker.com/story/show/83393282) Expressions only involving integer literals are now essentially treated as "big integers" (i.e. they do not overflow) until they are actually used with a non-literal. The type of the expression is only determined at that point as the smallest integer type that can contain the resulting value. Example:
@@ -199,3 +186,17 @@ Arbitrary expressions are allowed for modifier arguments and in this context,
 all symbols visible from the function are visible in the modifier. Symbols
 introduced in the modifier are not visible in the function (as they might
 change by overriding).
+
+
+## Conversion between String and Hash types.
+
+[PT](https://www.pivotaltracker.com/story/show/85907772) The explicit conversion between `string` and `hash` types of equal size is now allowed. Example:
+
+```
+contract Test {
+  function convert(hash160 h, string20 s) returns (string20 res_s, hash160 res_h) {
+    res_s = string20(h);
+    res_h = hash160(s);
+  }
+}
+```
