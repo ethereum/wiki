@@ -402,22 +402,38 @@ Compiles the serpent source code `_s` and returns the output data.
 
 #####web3.db.put
 ```javascript
-// TODO (_code)
+var result = web3.db.put('test', 'key', "5");
+console.log(result); // true
+
+var value = web3.db.get('test', 'key');
+console.log(value); // "0x05"
 ```
 
 #####web3.db.putString
 ```javascript
-// TODO (_code)
+var result = web3.db.putString('test', 'key', "5")
+console.log(result); // true
+
+var value = web3.db.get('test', 'key');
+console.log(value); // "5"
 ```
 
 #####web3.db.get
 ```javascript
-// TODO (_code)
+var result = web3.db.put('test', 'key', "5");
+console.log(result); // true
+
+var value = web3.db.get('test', 'key');
+console.log(value); // "0x05"
 ```
 
 #####web3.db.getString
 ```javascript
-// TODO (_code)
+var result = web3.db.putString('test', 'key', "5")
+console.log(result); // true
+
+var value = web3.db.get('test', 'key');
+console.log(value); // "5"
 ```
 
 #####web3.shh.post
