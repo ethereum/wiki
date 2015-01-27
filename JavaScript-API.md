@@ -12,9 +12,6 @@ There is, at the global scope, one objects; the `web3` object, containing data h
   * [fromAscii](#web3fromascii) *(_s, [_padding])*
   * [toDecimal](#web3todecimal) *(_s)*
   * [fromDecimal](#web3fromdecimal) *(_s)*
-  * [toFixed](#web3tofixed) *(_s)*
-  * [fromFixed](#web3fromfixed) *(_s)*
-  * [offset](#web3offset) *(_s, _o)*
   * [eth](#web3eth)
     * [coinbase](#web3ethcoinbase)
     * [listening](#web3ethlistening)
