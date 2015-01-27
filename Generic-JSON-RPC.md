@@ -235,7 +235,7 @@ The `id` must match the `id` that you received from the initial call, the `data`
 
 For the Messaging API specified in the JavaScript API we use a very simple event mechanism. As stated above, when the `newFilter` RPC is done it's expected that you return a unique identifier for the filter. This identifier is used in all subsequent calls or as identifier in finding the JavaScript equivalent `Filter` object.
 
-When you want to trigger a filter's watches which has been created through `watch( ... )` you post a new message without `id`. Instead you pack it with an `event` field which contains the `messages` event as string. The `results` field is an array of _exactly_ two elements. The first being the filtered messages and the second being the filter id which was created through `newFilter` (`watch` creates an RPC with `newFilter`). Ethereum.js sorts out the rest.
+When you want to trigger a filter's watches which has been created through `watch( ... )` you post a new message without `id`. Instead you pack it with an `event` field which contains the `messages` event as string. The `results` field is an array of _exactly_ two elements. The first being the filtered messages and the second being the filter id which was created through `newFilter` (`watch` creates an RPC with `newFilter`). [ethereum.js](https://github.com/ethereum/ethereum.js) sorts out the rest.
 
 ```javascript
 {
@@ -244,79 +244,4 @@ When you want to trigger a filter's watches which has been created through `watc
 }
 ```
 
-### Providers
-
-A provider can be set to the `web3` stack using the `setProvider` method. A `Provider` is an interface that handles the communication between `ethereum.js` and the ethereum node. It's absolutely crucial that a provider exposes two methods:
-
-* `send( payload )` implements the sending mechanism. Payload is in unserialised format. How the data is send (and serialised) is up to the `Provider`'s implementation.
-* `onmessage` the `onmessage` is an attribute and will be set to a default handler. If the `Provider` requires a different receiving mechanism your `onmessage` implementation should take care of this (hint: `Object.defineAttribute`). The default handler, which gets set after called `setProvider`, takes care of deserialising the payload and the associated return-callbacks (or in case of an event the corresponding event callback).
-* `poll( payload, id )` **optional.** Should exists, if manual polling for watches is required (eg. HttpRpcProvider) . Is called with payload and id of watch.
-
-There are currently two default providers which you can use:
-
-* `WebSocketProvider` Generic WebSocket `new WebSocketProvider( "ws://host/eth" )`
-* `QtProvider` Generic Qt provider `new QtProvider()`
-* `HttpRpcProvider` Generic HttpRpcProvider `new HttpRpcProvider("http://localhost:8080")`
-
-These can be found in `web3.providers`.
-
-### Example
-
-An example implementation using Qt's `navigator.qt.postMessage` and `onmessage` and a Go backend
-
-#### Ethereum.js backend
-
-```javascript
-// New web3 provider
-var QtProvider = function() {};
-QtProvider.prototype.send = function(payload) {
-    navigator.qt.postData(JSON.stringify(payload));
-}`
-Object.defineProperty(QtProvider.prototype, "onmessage", {
-    set: function(handler) {
-        navigator.qt.onmessage = handler;
-    },
-});
-// Set new provider
-web3.setProvider(new QtProvider());
-
-// Fetch a block
-web3.eth.getBlock(1);
-```
-
-#### Node Backend (Go)
-
-```go
-import "encoding/json"
-
-struct msg struct {
-    Id   int             `json:"id"`
-    Method string        `json:"method"`
-    Params []interface{} `json:"params"`
-}
-
-// Called when JavaScript `send`s something
-func onMessage(data string) {
-    var mMsg msg
-    json.Unmarshal([]byte(data), &mMsg)
-    
-    switch mMsg.Call {
-        case "getBlock":
-            // handle block and return data
-            ret := handleBlock(mMsg.Args...)
-            send(ret, mMsg.Id)
-    }
-}
-
-func send(v interface{}, id int) {
-    m := json.Marshal(map[string]interface{}{
-        id: id,
-        results: v,
-    })
-    
-    // Some method exposed by the `myapi` package.
-    myapi.PostData(string(m))
-}
-```
-
-Questions? @jeff
+Questions? @marek
