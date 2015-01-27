@@ -43,6 +43,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
       * [changed](#) *(_callback)*
       * [logs](#) *(_callback)*
       * [uninstall](#) *(_callback)*
+    * [contract](#web3contract) *(_address, _abi)*
   * [db](#web3db)
     * [put](#web3dbput) *(_name, _key, _value)*
     * [putString](#web3dbputstring) *(__name, _key, _value)*
@@ -350,6 +351,24 @@ Past messages may be filtered and their attributes inspected, and future message
   * `uninstall()`: Uninstalls the watch. Should always be called once it is done with.
 ```javascript
 // TODO (_filter)
+```
+
+#####web3.eth.contract
+This method should be called when we want to call / transact some solidity method from javascript. It returns an object which has the same methods available as solidity contract description.
+
+usage example:
+```javascript
+var abi = [{
+     name: 'myMethod',
+     inputs: [{ name: 'a', type: 'string' }],
+     outputs: [{name: 'd', type: 'string' }]
+}];  // contract abi
+
+var myContract = web3.eth.contract('0x0123123121', abi); // creation of contract object
+
+myContract.myMethod('this is test string param for call'); // myMethod call (implicit, default)
+myContract.call().myMethod('this is test string param for call'); // myMethod call (explicit)
+myContract.transact().myMethod('this is test string param for transact'); // myMethod transact
 ```
 
 #####web3.eth.compilers
