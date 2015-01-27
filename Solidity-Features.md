@@ -188,7 +188,7 @@ introduced in the modifier are not visible in the function (as they might
 change by overriding).
 
 
-## Conversion between String and Hash types.
+## Conversion between String and Hash types
 
 [PT](https://www.pivotaltracker.com/story/show/85907772) The explicit conversion between `string` and `hash` types of equal size is now allowed. Example:
 
