@@ -90,8 +90,32 @@ The following RPC messages should be accepted by the RPC-backend:
   {"id":74,"jsonrpc":"2.0","result":0}
   ```
 * `eth_defaultBlock`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"id":77}"' http://localhost:8080
+  ```
+  * response:
+  ```json
+  {"id":77,"jsonrpc":"2.0","result":-1}
+  ```
 * `eth_setDefaultBlock`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setDefaultBlock","params":[1],"id":80}"' http://localhost:8080
+  ```
+  * response:
+  ```json
+  {"id":80,"jsonrpc":"2.0","result":true}
+  ```
 * `eth_number`
+  * request:
+  ```bash
+  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83}"' http://localhost:8080
+  ```
+  * response:
+  ```json
+  {"id":83,"jsonrpc":"2.0","result":1207}
+  ```
 * `eth_balanceAt( address : String )`
   * request:
   ```bash
