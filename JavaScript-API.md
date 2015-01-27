@@ -27,6 +27,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [countAt](#web3ethcountat) *(_address)*
     * [codeAt](#web3ethcodeat) *(_address)*
     * [transact](#web3ethtransact) *(_object)*
+    * [call](#web3ethcall) *(_object)*
     * [block](#web3ethblock) *(_hash/_number)*
     * [transaction](#web3ethtransaction) *(_object, _number)*
     * [uncle](#web3ethuncle) *(_hash/number)*
@@ -322,9 +323,13 @@ Creates a new message-call transaction.
 #####web3.eth.call
 Executes a new message-call immediately without creating a transaction on the block chain.
   * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
-  * `_fn`, the callback function, called on completion of the message call. A single argument is passed equal to the output data of the message call.
 ```javascript
-// TODO
+var options = {
+    to: "0xc4abd0339eb8d57087278718986382264244252f", 
+    data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
+};
+var result = web3.eth.call(options);
+console.log(result); // "0x0000000000000000000000000000000000000000000000000000000000000015"
 ```
 
 #####web3.eth.logs
