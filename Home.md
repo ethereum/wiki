@@ -19,12 +19,12 @@ To get the basic concepts of Ethereum read the [ethereum whitepaper](https://git
 Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FAQ](https://github.com/ethereum/wiki/wiki/FAQ). There is a [another wiki](https://github.com/ethereum/cpp-ethereum/wiki) for information relevant to the C++ implementation.
 
 ## Downloads
-Currently stable clients are available for PoC-6 (Proof of Concept #6):
-- [AlethZero, eth and neth](https://github.com/ethereum/cpp-ethereum/releases) (C++)
+Currently stable clients are available for PoC-7 (Proof of Concept VII):
+- [AlethZero, eth and neth](https://github.com/ethereum/cpp-ethereum/wiki) (C++)
 - [Mist](https://github.com/ethereum/go-ethereum/releases) (Go) 
 - [pyeth](https://github.com/ethereum/pyethereum/releases) (Python)
 
-Bleeding edge PoC-7 code can be cloned from the develop branch of their git repositories:
+Bleeding edge PoC-8 code can be cloned from the develop branch of their git repositories:
 - https://github.com/ethereum/cpp-ethereum
 - https://github.com/ethereum/go-ethereum
 - https://github.com/ethereum/pyethereum
