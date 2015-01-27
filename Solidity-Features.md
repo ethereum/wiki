@@ -223,7 +223,7 @@ contract MyContract is named, tokenStorage {}
 
 ```
 contract test {
-    test() {
+    function test() {
         data = 42;
     }
     uint256 data;
@@ -234,7 +234,7 @@ For example in the above contract if you tried to call test's `data()` method th
 
 ```
 contract test {
-    test() {
+    function test() {
         data = 42;
     }
 private:
