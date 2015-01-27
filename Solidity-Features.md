@@ -218,3 +218,27 @@ contract named is mortal { function kill() { /*namereg.unregister();*/ super.kil
 contract tokenStorage is mortal { function kill() { /*returnAllTokens();*/ super.kill(); } }
 contract MyContract is named, tokenStorage {}
 ```
+## State Variable Accessors
+[PT](https://www.pivotaltracker.com/story/show/86308642) Public state variables now have accessors created for them. Basically any `public` state variable can be accessed by calling a function with the same name as the variable.
+
+```
+contract test {
+    test() {
+        data = 42;
+    }
+    uint256 data;
+}
+```
+
+For example in the abovecontract if you tried to call test's `data()` method then you would obtain the result 42.
+
+```
+contract test {
+    test() {
+        data = 42;
+    }
+private:
+    uint256 data;
+}
+```
+On the other hand on the above contract there is no accessor generated since the state variable is private.
