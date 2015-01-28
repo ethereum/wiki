@@ -262,4 +262,4 @@ i.e. at present you can only ask for each of a number of given topic values to b
 
 we need to be able to provide one of a number of topic values, and, each of these options for each topic index:
 
-- `topics: [[69, 42], null /* anything */, "Gav"]` should match against logs with 3 topics `[42, 69, "Gav"]`, `[42, 70, "Gav"]` but **not** against `["Gav", 69, 42]`.
+- `topics: [[69, 42], [] /* anything */, "Gav"]` should match against logs with 3 topics `[42, 69, "Gav"]`, `[42, 70, "Gav"]` but **not** against `["Gav", 69, 42]`.
