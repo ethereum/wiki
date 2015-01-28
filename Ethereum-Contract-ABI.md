@@ -224,8 +224,8 @@ theTest.foo(69);
 Implementation:
 
 ```
-// e.g. f3 would be similar to:
-web3.eth.filter({'max': 100, 'address': theTest.address, 'topic': [69]});
+// e.g. f4 would be similar to:
+web3.eth.filter({'max': 100, 'address': theTest.address, 'topics': [ [69, 42] ]});
 // except that the resultant data would need to be converted from the basic log entry format like:
 {
   'address': theTest.address,
@@ -239,8 +239,12 @@ web3.eth.filter({'max': 100, 'address': theTest.address, 'topic': [69]});
   n // from the 'number'
 ```
 
-TODO: 
-- Internal LogFilter & log-entry matching mechanism needs to support matching multiple values (OR semantics) *per* topic index (at present it will only match topics with AND semantics and set-inclusion, not per-index).
+* NOTE1: `eth.watch(...).logs()` should work similarly, though renamed to `.events()`.
+* NOTE2: `eth.logs()` should work similarly, though renamed to `.events()`.
+
+### JUST DONE! [develop branch]
+ 
+- Internal LogFilter, log-entry matching mechanism and eth_installFilter needs to support matching multiple values (OR semantics) *per* topic index (at present it will only match topics with AND semantics and set-inclusion, not per-index).
 
 i.e. at present you can only ask for each of a number of given topic values to be matched throughout each topic:
 
