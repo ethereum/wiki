@@ -239,8 +239,17 @@ web3.eth.filter({'max': 100, 'address': theTest.address, 'topics': [ [69, 42] ]}
   n // from the 'number'
 ```
 
-* NOTE1: `eth.watch(...).logs()` should work similarly, though renamed to `.events()`.
-* NOTE2: `eth.logs()` should work similarly, though renamed to `.events()`.
+* NOTE1: `eth.watch(...).logs()` and `eth.logs()` should work similarly, though renamed to `.events()`. They should return arrays of objects with data similar to the trigger's params, e.g.:
+```
+[ {
+  'event': Test.Event,
+  'args': {'a': 69, 'b': '0x12345678901234567890123456789012'},
+  'number': n
+  },
+  { ...
+  } ...
+]
+```
 
 ### JUST DONE! [develop branch]
 **NOTE: THIS IS OLD - IGNORE IT unless reading for historical purposes**
