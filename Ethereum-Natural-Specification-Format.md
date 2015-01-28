@@ -89,8 +89,8 @@ The above documentation will produce the following user documentation json file 
   "language": "Solidity",
   "languageVersion": 1,
   "methods": {
-    "send": { "notice": "Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of `message.caller.address()`, to an account accessible only by `to.address()`." },
-    "balance": { "notice": "`(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`." }
+    "send(address,uint256)": { "notice": "Send `(valueInmGAV / 1000).fixed(0,3)` GAV from the account of `message.caller.address()`, to an account accessible only by `to.address()`." },
+    "balance(address)": { "notice": "`(balanceInmGAV / 1000).fixed(0,3)` GAV is the total funds available to `who.address()`." }
   },
   "invariants": [
     { "notice": "The sum total amount of GAV in the system is 1 million." }
@@ -101,6 +101,7 @@ The above documentation will produce the following user documentation json file 
 }
 ```
 
+Note that the key by which to find the methods is the function's canonical signature as defined in the [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#signature) and not simply the function's name.
 
 ## Developer Documentation
 
@@ -111,7 +112,7 @@ Apart from the user documentation file, a developer documentation json file shou
   "author": "Homer Simpson",
   "title": "This is the contract title.",
   "methods": {
-    "send": {
+    "send(uint256)": {
       "details": "This should be the documentation of the function for the developer docs"
     },
     "balance": {
