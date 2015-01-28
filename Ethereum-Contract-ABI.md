@@ -194,17 +194,21 @@ var f0 = eth.filter(theTest);
 // just log entries ("events") of type "Event" coming from theTest:
 var f1 = eth.filter(theTest.Event);
 // also written as
-var f1 = theTest.Event.filter();
+var f1 = theTest.Event();
 // just log entries ("events") of type "Event" and "Event2" coming from theTest:
 var f2 = eth.filter([theTest.Event, theTest.Event2]);
 // just log entries ("events") of type "Event" coming from theTest with indexed parameter 'a' equal to 69:
 var f3 = eth.filter(theTest.Event, {'a': 69});
 // also written as
-var f3 = theTest.Event.filter({'a': 69});
+var f3 = theTest.Event({'a': 69});
 // just log entries ("events") of type "Event" coming from theTest with indexed parameter 'a' equal to 69 or 42:
 var f4 = eth.filter(theTest.Event, {'a': [69, 42]});
 // also written as
-var f4 = theTest.Event.filter({'a': [69, 42]});
+var f4 = theTest.Event({'a': [69, 42]});
+
+// options may also be supplied as a second parameter with `earliest`, `latest`, `offset` and `max`, as defined for `eth.watch`.
+var options = { 'max': 100 };
+var f4 = theTest.Event({'a': [69, 42]}, options);
 
 var trigger;
 f4.changed(trigger);
@@ -213,4 +217,35 @@ f4.changed(trigger);
 theTest.foo(69);
 
 // would call trigger like:
-//trigger(theTest.Event, {'a': 69, 'b': '0x12345678901234567890123456789012'});
+//trigger(theTest.Event, {'a': 69, 'b': '0x12345678901234567890123456789012'}, n);
+// where n is the block number that the event triggered in.
+```
+
+Implementation:
+
+```
+// e.g. f3 would be similar to:
+web3.eth.filter({'max': 100, 'address': theTest.address, 'topic': [69]});
+// except that the resultant data would need to be converted from the basic log entry format like:
+{
+  'address': theTest.address,
+  'topics': [web3.sha3("Event(uint256,hash256)"), 0x00...0045 /* 69 in hex format */],
+  'data': '0x12345678901234567890123456789012',
+  'number': n
+}
+// into data good for the trigger, specifically the three fields:
+  Test.Event // derivable from the first topic
+  {'a': 69, 'b': '0x12345678901234567890123456789012'} // derivable from the 'indexed' bool in the interface, the later 'topics' and the 'data'
+  n // from the 'number'
+```
+
+TODO: 
+- Internal LogFilter & log-entry matching mechanism needs to support matching multiple values (OR semantics) *per* topic index (at present it will only match topics with AND semantics and set-inclusion, not per-index).
+
+i.e. at present you can only ask for each of a number of given topic values to be matched throughout each topic:
+
+- `topics: [69, 42, "Gav"]` would match against logs with 3 topics `[42, 69, "Gav"]`, `["Gav", 69, 42]` but **not** against logs with topics `[42, 70, "Gav"]`.
+
+we need to be able to provide one of a number of topic values, and, each of these options for each topic index:
+
+- `topics: [[69, 42], null /* anything */, "Gav"]` should match against logs with 3 topics `[42, 69, "Gav"]`, `[42, 70, "Gav"]` but **not** against `["Gav", 69, 42]`.
