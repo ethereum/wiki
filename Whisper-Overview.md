@@ -18,7 +18,7 @@ var replyWatch = shh.watch({
   "topic": [ web3.fromAscii(appName), myIdentity ],
   "to": myIdentity
 });
-// could be "filter": [ web3.fromAscii(appName), null ] if we wanted to filter all such
+// could be "topic": [ web3.fromAscii(appName), null ] if we wanted to filter all such
 // messages for this app, but we'd be unable to read the contents.
 
 replyWatch.arrived(function(m)
@@ -27,7 +27,7 @@ replyWatch.arrived(function(m)
 	console.log("Reply from " + web3.toAscii(m.payload) + " whose address is " + m.from;
 });
 
-var broadcastWatch = shh.watch({ "filter": [ web3.fromAscii(appName) ] });
+var broadcastWatch = shh.watch({ "topic": [ web3.fromAscii(appName) ] });
 broadcastWatch.arrived(function(m)
 {
   if (m.from != myIdentity)
