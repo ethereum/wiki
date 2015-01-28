@@ -8,14 +8,14 @@ var myIdentity = shh.newIdentity();
 
 shh.post({
   "from": myIdentity,
-  "topics": [ web3.fromAscii(appName) ],
+  "topic": [ web3.fromAscii(appName) ],
   "payload": [ web3.fromAscii(myName), web3.fromAscii("What is your name?") ],
   "ttl": 100,
   "priority": 1000
 });
 
 var replyWatch = shh.watch({
-  "filter": [ web3.fromAscii(appName), myIdentity ],
+  "topic": [ web3.fromAscii(appName), myIdentity ],
   "to": myIdentity
 });
 // could be "filter": [ web3.fromAscii(appName), null ] if we wanted to filter all such
@@ -52,10 +52,10 @@ broadcastWatch.arrived(function(m)
 `post` takes a JSON object containing four key parameters: 
 
 ```js
-shh.post({ "topics": t, "payload": p, "ttl": ttl, "workToProve": work });
+shh.post({ "topic": t, "payload": p, "ttl": ttl, "workToProve": work });
 ```
 
-- `topics`, provided as either a list of, or a single, arbitrary data items that are used to encode the abstract topic of this message, later used to filter messages for those that are of interest;
+- `topic`, provided as either a list of, or a single, arbitrary data items that are used to encode the abstract topic of this message, later used to filter messages for those that are of interest;
 - `payload`, provided similarly to topic but left as an unformatted byte array provides the data to be sent.
 - `ttl` is a time for the message to live on the network, specified in seconds. This defaults to 50.
 - `work` is the amount of priority you want the packet to have on the network. It is specified in milliseconds of processing time on your machine. This defaults to 50.
@@ -63,11 +63,11 @@ shh.post({ "topics": t, "payload": p, "ttl": ttl, "workToProve": work });
 Two other parameters optionally specify the addressing: recipient (`to`), sender (`from`). The latter is meaningless unless a recipient has been specified.
 
 ### Use cases
-- `shh.post({ "topics": t, "payload": p });` No signature, no encryption: Anonymous broadcast; a bit like an anonymous subject-filtered twitter feed.
-- `shh.post({ "from": myIdentity, "topics": t, "payload": p });` Open signature, no encryption: Clear-signed broadcast; a bit like a normal twitter feed - anyone interested can see a particular identity is sending particular stuff out to no-one in particular.
-- `shh.post({ "to": recipient, "topics": t, "payload": p });` No signature, encryption: Encrypted anonymous message; a bit like an anonymous drop-box - message is private to the owner of the dropbox. They can't tell from whom it is.
-- `shh.post({ "from": myIdentity, "to": recipient, "topics": t, "payload": p });` Secret signature, encryption: Encrypted signed message; like a secure e-mail. One identity tells another something - nobody else can read it. The recipient alone knows it came from the sender.
-- `shh.post({ "from": myIdentity, "to": recipient, "topics": t, "payload": p, "deniable": d });` Secret signature, encryption with optional plausible deniability. If boolean parameter `d` is **false**, it is equivalent to the previous call. If `d` is **true**, recipient cannot prove to any third party that the message originates from sender, though still can verify it for herself. This is achieved by the digital signature being calculated on the symmetric session encryption key instead of the message body.
+- `shh.post({ "topic": t, "payload": p });` No signature, no encryption: Anonymous broadcast; a bit like an anonymous subject-filtered twitter feed.
+- `shh.post({ "from": myIdentity, "topic": t, "payload": p });` Open signature, no encryption: Clear-signed broadcast; a bit like a normal twitter feed - anyone interested can see a particular identity is sending particular stuff out to no-one in particular.
+- `shh.post({ "to": recipient, "topic": t, "payload": p });` No signature, encryption: Encrypted anonymous message; a bit like an anonymous drop-box - message is private to the owner of the dropbox. They can't tell from whom it is.
+- `shh.post({ "from": myIdentity, "to": recipient, "topic": t, "payload": p });` Secret signature, encryption: Encrypted signed message; like a secure e-mail. One identity tells another something - nobody else can read it. The recipient alone knows it came from the sender.
+- `shh.post({ "from": myIdentity, "to": recipient, "topic": t, "payload": p, "deniable": d });` Secret signature, encryption with optional plausible deniability. If boolean parameter `d` is **false**, it is equivalent to the previous call. If `d` is **true**, recipient cannot prove to any third party that the message originates from sender, though still can verify it for herself. This is achieved by the digital signature being calculated on the symmetric session encryption key instead of the message body.
 
 In addition to the basic use cases, there will also be support for secure multi-casting. For this, you set up a group with `shh.newGroup`:
 
@@ -78,15 +78,15 @@ var group = shh.newGroup(eth.key, [ recipient1, recipient2 ]);
 Then can use this as a recipient as you would normally:
 
 ```
-shh.post({ "from": eth.key, "to": group, "topics": t, "payload": p });
+shh.post({ "from": eth.key, "to": group, "topic": t, "payload": p });
 ```
 
 The `newGroup` actually does something like:
 
 ```
 var group = shh.newIdentity();
-shh.post([ "from": myIdentity, "to": recipient1, "topics": [invSHA3(2^255), recipient1], "payload": secretFromPublic(group) ]);
-shh.post([ "from": myIdentity, "to": recipient2, "topics": [invSHA3(2^255), recipient2], "payload": secretFromPublic(group) ]);
+shh.post([ "from": myIdentity, "to": recipient1, "topic": [invSHA3(2^255), recipient1], "payload": secretFromPublic(group) ]);
+shh.post([ "from": myIdentity, "to": recipient2, "topic": [invSHA3(2^255), recipient2], "payload": secretFromPublic(group) ]);
 return keypair;
 ```
 
