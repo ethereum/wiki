@@ -156,6 +156,37 @@ there is: `if`, `else`, `while`, `for`, `break`, `continue`, `return`. Note that
 is no type conversion from non-boolean to boolean types as there is in C and
 JavaScript, so `if (1) { ... }` is _not_ valid Solidity.
 
+## Function Calls
+
+Functions of the current contract can be called directly, also recursively, as seen in
+this nonsensical example:
+
+```
+contract c {
+  function g(uint a) returns (uint ret) { return f(); }
+  function f() returns (uint ret) { return g(7) + f(); }
+}
+```
+
+The expression `this.g(8);` is also a valid function call, but this time, the function
+will be called via a message call and not directly via jumps. When calling functions
+of other contracts, the amount of Wei sent with the call and the gas can be specified:
+```
+contract InfoFeed {
+  function info() returns (uint ret) { return 42; }
+}
+contract Consumer {
+  InfoFeed feed;
+  function setFeed(address addr) { feed = InfoFeed(addr); }
+  function callFeed() { feed.info.value(10).gas(800)(); }
+}
+```
+Note that the expression `InfoFeed(addr)` performs an explicit type conversion stating
+that "we know that the type of the contract at the given address is `InfoFeed`" and
+this does not execute a constructor. Be careful in that `feed.info.value(10).gas(800)`
+only (locally) set the value and amount of gas sent with the function call and only the
+parentheses at the end perform the actual call.
+
 ## Special Variables and Functions
 
 There are special variables and functions which always exist in the global
@@ -167,7 +198,7 @@ namespace.
  - `block.difficulty` (`uint`): current block difficulty
  - `block.gaslimit` (`uint`): current block gaslimit
  - `block.number` (`uint`): current block number
- - `block.prevhash` (`hash`): previous block hash
+ - `block.blockhash` (`function(uint) returns (hash)`): hash of the given block
  - `block.timestamp` (`uint`): current block timestamp
  - `msg.gas` (`uint`): remaining gas
  - `msg.sender` (`address`): sender of the message (current call)
@@ -327,6 +358,161 @@ contract TokenCreator {
 A Solidity contract expects constructor arguments after the end of the contract data itself.
 This means that you pass the arguments to a contract by putting them after the
 compiled bytes as returned by the compiler in the usual ABI format.
+
+## Contract Inheritance
+
+Solidity supports multiple inheritance by copying code including polymorphism.
+Details are given in the following example.
+
+```
+contract owned {
+    function owned() { owner = msg.sender; }
+    address owner;
+}
+
+// Use "is" to derive from another contract. Derived contracts can access all members
+// including private functions and storage variables.
+contract mortal is owned {
+    function kill() { if (msg.sender == owner) suicide(owner); }
+}
+
+// These are only provided to make the interface known to the compiler.
+contract Config { function lookup(uint id) returns (address adr) {} }
+contract NameReg { function register(string32 name) {} function unregister() {} }
+
+// Multiple inheritance is possible. Note that "owned" is also a base class of
+// "mortal", yet there is only a single instance of "owned" (as for virtual
+// inheritance in C++).
+contract named is mortal, owned {
+    function named(string32 name) {
+        address ConfigAddress = 0xd5f9d8d94886e70b06e474c3fb14fd43e2f23970;
+        NameReg(Config(ConfigAddress).lookup(1)).register(name);
+    }
+
+// Functions can be overridden, both local and message-based function calls take
+// these overrides into account.
+    function kill() {
+        if (msg.sender == owner) {
+            address ConfigAddress = 0xd5f9d8d94886e70b06e474c3fb14fd43e2f23970;
+            NameReg(Config(ConfigAddress).lookup(1)).unregister();
+// It is still possible to call a specific overridden function. 
+            mortal.kill();
+        }
+    }
+}
+
+// If a constructor takes an argument, it needs to be provided in the header.
+contract PriceFeed is named("GoldFeed"), mortal, owned {
+   function updateInfo(uint newInfo) {
+      if (msg.sender == owner) info = newInfo;
+   }
+
+   function get() constant returns(uint r) { return info; }
+
+   uint info;
+}
+```
+
+Note that above, we call `mortal.kill()` to "forward" the destruction request. The way this is done
+is problematic, as seen in the following example:
+```
+contract mortal is owned {
+    function kill() { if (msg.sender == owner) suicide(owner); }
+}
+contract Base1 is mortal {
+    function kill() { /* do cleanup 1 */ mortal.kill(); }
+}
+contract Base2 is mortal {
+    function kill() { /* do cleanup 2 */ mortal.kill(); }
+}
+contract Final is Base1, Base2 {
+}
+```
+
+A call to `Final.kill()` will call `Base2.kill` as the most derived override, but this
+function will bypass `Base1.kill`, basically because it does not even know about `Base1`.
+The way around this is to use `super`:
+```
+contract mortal is owned {
+    function kill() { if (msg.sender == owner) suicide(owner); }
+}
+contract Base1 is mortal {
+    function kill() { /* do cleanup 1 */ super.kill(); }
+}
+contract Base2 is mortal {
+    function kill() { /* do cleanup 2 */ super.kill(); }
+}
+contract Final is Base1, Base2 {
+}
+```
+
+If `Base1` calls a function of `super`, it does not simply call this function on one of its
+base contracts, it rather calls this function on the next base contract in the final
+inheritance graph, so it will call `Base2.kill()`. Note that the actual function that
+is called when using super is not known in the context of the class where it is used,
+although its type is known. This is similar for ordinary virtual method lookup.
+
+## Function Modifiers
+
+Modifiers can be used to easily change the behaviour of functions, for example to automatically check a condition prior to executing the function. They are inheritable properties of contracts and may be overridden by derived contracts.
+
+```
+contract owned {
+  function owned() { owner = msg.sender; }
+  address owner;
+
+  // This contract only defines a modifier but does not use it - it will
+  // be used in derived contracts.
+  // The function body is inserted where the special symbol "_" in the
+  // definition of a modifier appears.
+  modifier onlyowner { if (msg.sender == owner) _ }
+}
+contract mortal is owned {
+  // This contract inherits the "onlyowner"-modifier from "owned" and
+  // applies it to the "kill"-function, which causes that calls to "kill"
+  // only have an effect if they are made by the stored owner.
+  function kill() onlyowner {
+    suicide(owner);
+  }
+}
+contract priced {
+  // Modifiers can receive arguments:
+  modifier costs(uint price) { if (msg.value >= price) _ }
+}
+contract Register is priced, owned {
+  mapping (address => bool) registeredAddresses;
+  uint price;
+  function Register(uint initialPrice) { price = initialPrice; }
+  function register() costs(price) {
+    registeredAddresses[msg.sender] = true;
+  }
+  function changePrice(uint _price) onlyowner {
+    price = _price;
+  }
+}
+```
+
+Multiple modifiers can be applied to a function by specifying them in a whitespace-separated list and will be evaluated in order. Explicit returns from a modifier or function body immediately leave the whole function, while control flow reaching the end of a function or modifier body continues after the "_" in the preceding modifier. Arbitrary expressions are allowed for modifier arguments and in this context, all symbols visible from the function are visible in the modifier. Symbols introduced in the modifier are not visible in the function (as they might change by overriding).
+
+## Layout of Storage
+
+Variables of finite size (everything except mapping types) are laid out contiguously in storage
+starting from position `0`. Due to their unpredictable size, mapping types use a `sha3`
+computation to find the position of the value in the following way: The mapping itself
+occupies an (unfilled) slot in storage at some position `p` according to the above rule (or by
+recursively applying this rule for mappings to mappings). The value corresponding to key
+`k` is located at `sha3(k . p)` where `.` is concatenation. If the value is again a
+non-elementary type, the positions are found by adding an offset of `sha3(k . p)`.
+
+So for the following contract snippet:
+```
+contract c {
+struct S { uint a; uint b; }
+uint x;
+mapping(uint => mapping(uint => S)) data;
+}
+```
+The position of `data[4][9].b` is at `sha3(uint256(9) . sha3(uint256(4) . uint(256(1))) + 1`.
 
 ## Esoteric Features
 
