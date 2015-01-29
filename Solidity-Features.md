@@ -245,7 +245,7 @@ On the other hand on the above contract there is no accessor generated since the
 
 ## Events
 
-[PT](https://www.pivotaltracker.com/story/show/86896642) Events allow the convenient usage of the EVM logging facilities. Events are inheritable members of contracts. When they are called, they issue
+[PT](https://www.pivotaltracker.com/story/show/86896642) Events allow the convenient usage of the EVM logging facilities. Events are inheritable members of contracts. When they are called, they cause
 the arguments to be stored in the transaction's log. Up to three parameters can receive the
 attribute `indexed` which will cause the respective arguments to be treated as log topics instead
 of data. The hash of the signature of the event is always one of the topics. All non-indexed
