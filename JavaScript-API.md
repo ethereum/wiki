@@ -447,7 +447,19 @@ console.log(value); // "5"
 
 #####web3.shh.post
 ```javascript
-// TODO (_code)
+var identity = web3.shh.newIdentity();
+var topic = 'example';
+var payload = 'hello whisper world!';
+
+var message = {
+  from: identity,
+  topic: [web3.fromAscii(topic)],
+  payload: web3.fromAscii(payload),
+  ttl: 100,
+  priority: 100
+};
+
+web3.shh.post(message);
 ```
 
 #####web3.shh.newIdentity
