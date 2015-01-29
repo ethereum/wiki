@@ -352,7 +352,11 @@ Past messages may be filtered and their attributes inspected, and future message
   * `logs()`: Returns all of the log entries that fit `_filter`.
   * `uninstall()`: Uninstalls the watch. Should always be called once it is done with.
 ```javascript
-// TODO (_filter)
+var watch = web3.eth.watch('pending');
+
+watch.changed(function (log) {
+  console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
+});
 ```
 
 #####web3.eth.contract
