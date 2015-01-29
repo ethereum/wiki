@@ -510,8 +510,8 @@ watch.arrived(function(res) {
   "topics":["0x6578616d"],
   "ttl":100,
   "workProved":0
-} 
-*/
+  } 
+  */
 });
 ```
 
