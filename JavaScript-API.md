@@ -459,6 +459,8 @@ Compiles the serpent source code `_s` and returns the output data.
 ```
 
 #####web3.db.put
+This method should be called, when we want to store number in local leveldb database.
+First param is db name, second is the key, and third is the value.
 ```javascript
 var result = web3.db.put('test', 'key', "5");
 console.log(result); // true
@@ -468,6 +470,8 @@ console.log(value); // "0x05"
 ```
 
 #####web3.db.putString
+This method should be called, when we want to store string in local leveldb database.
+First param is db name, second is the key, and third is the string value.
 ```javascript
 var result = web3.db.putString('test', 'key', "5")
 console.log(result); // true
@@ -477,6 +481,8 @@ console.log(value); // "5"
 ```
 
 #####web3.db.get
+This method should be called, when we want to get number value from local leveldb database.
+First param is db name and second is the key of value.
 ```javascript
 var result = web3.db.put('test', 'key', "5");
 console.log(result); // true
@@ -486,6 +492,8 @@ console.log(value); // "0x05"
 ```
 
 #####web3.db.getString
+This method should be called, when we want to get string value from local leveldb database.
+First param is db name and second is the key of string value.
 ```javascript
 var result = web3.db.putString('test', 'key', "5")
 console.log(result); // true
