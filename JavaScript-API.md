@@ -281,7 +281,24 @@ Returns the transaction number `_i` from block with number `_number`. Return val
   * `nonce`: The transaction nonce (an integer).
   * `value`: The amount of ETH to be transferred to the recipient with the transaction (a big int).
 ```javascript
-// TODO (_number, _i), (_hash, _i)
+var blockNumber = 668;
+var indexOfTransaction = 0
+
+var transaction = web3.eth.transaction(blockNumber, indexOfTransaction);
+console.log(transaction);
+/*
+{
+"from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+"gas":520464,
+"gasPrice":"0x09184e72a000",
+"hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
+"input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
+"nonce":"0x",
+"to":"0x0000000000000000000000000000000000000000",
+"value":"0x"
+}
+*/
+
 ```
 
 #####web3.eth.uncle
