@@ -354,7 +354,19 @@ Creates a new message-call transaction.
     * `gasPrice`, the price of gas for this transaction, defaults to the mean network gasPrice.
   * `_fn`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
 ```javascript
-// TODO
+
+// solidity source code
+var source = "" + 
+"contract test {\n" +
+"   function multiply(uint a) returns(uint d) {\n" +
+"       return a * 7;\n" +
+"   }\n" +
+"}\n";
+
+var compiled = web3.eth.solidity(source);
+
+var address = web3.eth.transact({code: compiled});
+console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 ```
 
 #####web3.eth.call
