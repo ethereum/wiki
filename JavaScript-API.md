@@ -503,6 +503,13 @@ console.log(value); // "5"
 ```
 
 #####web3.shh.post
+This method should be called, when we want to post whisper message. `_message` object may have following fields:
+  * `from`: identity of sender
+  * `to`: identity of receiver
+  * `payload`: message payload
+  * `ttl`: time to live
+  * `workToProve`: TODO
+  * `topic`: string or array of strings, with message topics
 ```javascript
 var identity = web3.shh.newIdentity();
 var topic = 'example';
