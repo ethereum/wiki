@@ -648,112 +648,108 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"db_getString","params":["test",
 ##### `shh_post`
 * request:
 ```bash
+"0x68656c6c6f20776f726c64"
+curl -X POST --data '"{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf","topic":"0x68656c6c6f20776f726c64","payload":"0x68656c6c6f20776f726c64","ttl":100,"priority":100}],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": true
+}
 ```
 ##### `shh_newIdeninty`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"ssh_newIdentity","params":[],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":"0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
+}
 ```
 ##### `shh_haveIdentity`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": true
+}
 ```
 ##### `shh_newGroup`
 * request:
 ```bash
+// TODO: not implemented yet
 ```
 * response:
 ```json
+// TODO: not implemented yet
 ```
 ##### `shh_addToGroup`
 * request:
 ```bash
+// TODO: not implemented yet
 ```
 * response:
 ```json
+// TODO: not implemented yet
 ```
 ##### `shh_newFilter`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic":"0x68656c6c6f20776f726c64"}],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": 7
+}
 ```
 ##### `shh_uninstallFilter`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": 7
+}
 ```
 ##### `shh_changed`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7],"id":73}"'
 ```
 * response:
 ```json
-```
-
-###### old
-* `newFilter( parameters_or_type : Variadic )` **Note**: Registers a new filter. Expects a return call with an unique ID specifying the new filter. In any subsequent queries that reference this filter, this same ID is used to identify the filter on the remote backend. It's up to the implementors to implement this look-up method as they see fit on the remote backend (see [[events](#events)]).
-* `messages( id : Integer )`
-* `uninstallFilter( id : Integer )`
-* **optional** `changed( id : Integer )` Specificly for unidirectional implementations (e.g., TCP JSON RPC) which need a polling mechanism for filtered messages. `id` is the ID of the filter.
-
-When a RPC call is done through the provided provider a JavaScript object will be send along with it. The arguments provided to the function will match the array in the `args` field.
-
-```javascript
 {
-    id: <Integer>,
-    method: <String>,
-    params: [<Variadic1>, <Variadic2>, ...],
-}
-```
-
-Example:
-
-```javascript
-getBlock( 10 )
-// Creates the following JSON RPC
-{
-    id: 0,
-    method: "getBlock",
-    params: [10],
-}
-
-```
-
-The id represents the internal id thats's being used to identify the current RPC call. The `id` plays a crucial role in creating response messages. When a response message to a call is made we use this same **id** in the return data. This is done so that ethereum.js knows exactly which return-callback to trigger (matching of ids with callbacks is all obfuscated in ethereum.js).
-
-When a reponse is given on a particular call you'll have to supply it with a JavaScript object and serialise it to proper JSON:
-
-```
-{
-    id: <Integer>,
-    results: <Variadic>,
-}
-```
-
-The `id` must match the `id` that you received from the initial call, the `data` is user supplied data and contains arbritrary data.
-
-### Events
-
-For the Messaging API specified in the JavaScript API we use a very simple event mechanism. As stated above, when the `newFilter` RPC is done it's expected that you return a unique identifier for the filter. This identifier is used in all subsequent calls or as identifier in finding the JavaScript equivalent `Filter` object.
-
-When you want to trigger a filter's watches which has been created through `watch( ... )` you post a new message without `id`. Instead you pack it with an `event` field which contains the `messages` event as string. The `results` field is an array of _exactly_ two elements. The first being the filtered messages and the second being the filter id which was created through `newFilter` (`watch` creates an RPC with `newFilter`). [ethereum.js](https://github.com/ethereum/ethereum.js) sorts out the rest.
-
-```javascript
-{
-    event: "messages",
-    results: [[Message1, Message2, ...], filter_id]
+"id":1,
+"jsonrpc":"2.0",
+"result": [{
+  "expiry":1422565026,
+  "from":"0x3ec052fc3376f8a218b24b652803a5892038c39419a9a44923a61b113b7785d16ed1572df628859af3504670e4df31dcd8b3ee9a2110fd710c948690f0557394",
+  "hash":"0x33eb2da77bf3527e28f8bf493650b1879b08c4f2a362beae4ba2f71bafcd91f9",
+  "payload":"0x7b2274797065223a226d657373616765222c2263686174223a2265537668624d763939784c345442537741222c2274696d657374616d70223a7b222464617465223a313432323536343932363533377d2c22746f706963223a22222c2266726f6d223a7b226964656e74697479223a2230783365633035326663333337366638613231386232346236353238303361353839323033386333393431396139613434393233613631623131336237373835643136656431353732646636323838353961663335303436373065346466333164636438623365653961323131306664373130633934383639306630353537333934222c226e616d65223a22416365746f7465227d2c226d657373616765223a2273617361222c226964223a227a465232614e68594a666f4d4c62707333227d",
+  "sent":1422564926,
+  "to":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "topics":["0x6578616d"],
+  "ttl":100,
+  "workProved":0
+  }]
 }
 ```
 
