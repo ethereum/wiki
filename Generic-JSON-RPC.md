@@ -596,30 +596,54 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":
 ##### `db_put`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"db_put","params":["test","key","5"],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": true
+}
 ```
 ##### `db_get`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"db_get","params":["test","key"],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": "0x05"
+}
 ```
 ##### `db_putString`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"db_putString","params":["test","key","5"],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": true
+}
 ```
 ##### `db_getString`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"db_getString","params":["test","key","5"],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": "5"
+}
 ```
 ##### `shh_post`
 * request:
