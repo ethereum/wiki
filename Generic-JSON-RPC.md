@@ -99,87 +99,87 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setListening","params":[fal
 ```json
 {"id":68,"jsonrpc":"2.0","result":true}
 ```
-* `eth_mining`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}"'
-  ```
-  * response:
-  ```json
-  {"id":71,"jsonrpc":"2.0","result":true}
-  ```
-* `eth_setMining`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setMining","params":[false],"id":72}"'
-  ```
-  * response:
-  ```json
-  {"id":72,"jsonrpc":"2.0","result":true}
-  ```
-* `eth_gasPrice`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}"'
-  ```
-  * response:
-  ```json
-  {"id":73,"jsonrpc":"2.0","result":"0x09184e72a000"}
-  ```
-* `eth_accounts`
-  * request:
-  ```bash
-  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id":1}' http://localhost:8080
-  ```
-  * response:
-  ```json
-  {"id":1,"jsonrpc":"2.0","result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]}
-  ```
-* `eth_peerCount`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id":74}"' http://localhost:8080
-  ```
-  * response:
-  ```json
-  {"id":74,"jsonrpc":"2.0","result":0}
-  ```
-* `eth_defaultBlock`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"id":77}"' http://localhost:8080
-  ```
-  * response:
-  ```json
-  {"id":77,"jsonrpc":"2.0","result":-1}
-  ```
-* `eth_setDefaultBlock`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setDefaultBlock","params":[1],"id":80}"' http://localhost:8080
-  ```
-  * response:
-  ```json
-  {"id":80,"jsonrpc":"2.0","result":true}
-  ```
-* `eth_number`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83}"' http://localhost:8080
-  ```
-  * response:
-  ```json
-  {"id":83,"jsonrpc":"2.0","result":1207}
-  ```
-* `eth_balanceAt( address : String )`
-  * request:
-  ```bash
-  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
-  ```
-  * response:
-  ```json
-  {"id":1,"jsonrpc":"2.0","result":"0x0234c8a3397aab580000"}
-  ```
+##### `eth_mining`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}"'
+```
+* response:
+```json
+{"id":71,"jsonrpc":"2.0","result":true}
+```
+##### `eth_setMining`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setMining","params":[false],"id":72}"'
+```
+* response:
+```json
+{"id":72,"jsonrpc":"2.0","result":true}
+```
+##### `eth_gasPrice`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}"'
+```
+* response:
+```json
+{"id":73,"jsonrpc":"2.0","result":"0x09184e72a000"}
+```
+##### `eth_accounts`
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id":1}' http://localhost:8080
+```
+* response:
+```json
+{"id":1,"jsonrpc":"2.0","result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]}
+```
+##### `eth_peerCount`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id":74}"' http://localhost:8080
+```
+* response:
+```json
+{"id":74,"jsonrpc":"2.0","result":0}
+```
+##### `eth_defaultBlock`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"id":77}"' http://localhost:8080
+```
+* response:
+```json
+{"id":77,"jsonrpc":"2.0","result":-1}
+```
+##### `eth_setDefaultBlock`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setDefaultBlock","params":[1],"id":80}"' http://localhost:8080
+```
+* response:
+```json
+{"id":80,"jsonrpc":"2.0","result":true}
+```
+##### `eth_number`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83}"' http://localhost:8080
+```
+* response:
+```json
+{"id":83,"jsonrpc":"2.0","result":1207}
+```
+##### `eth_balanceAt`
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+```
+* response:
+```json
+{"id":1,"jsonrpc":"2.0","result":"0x0234c8a3397aab580000"}
+```
 * `eth_stateAt`
 * `eth_storageAt`
 * `eth_countAt`
