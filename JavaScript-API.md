@@ -48,7 +48,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [putString](#web3dbputstring) *(__name, _key, _value)*
     * [get](#web3dbget) *(_name, _key)*
     * [getString](#web3dbgetstring) *(_name, _key)*
-  * [shh](#shh)
+  * [shh](#web3shh)
     * [post](#web3shhpost) *(_object)*
     * [newIdentity](#web3shhnewidentity) *()*
     * [haveIdentity](#web3shhhaveidentity) *(_string)*
@@ -489,6 +489,12 @@ console.log(result); // true
 
 var value = web3.db.get('test', 'key');
 console.log(value); // "5"
+```
+
+#####web3.shh
+[Whisper  Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
+```javascript
+var shh = web3.shh;
 ```
 
 #####web3.shh.post
