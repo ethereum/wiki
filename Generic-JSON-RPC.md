@@ -381,58 +381,142 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":[123
 ##### `eth_transactionByHash`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByHash","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, 0],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": {
+  "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+  "gas":520464,
+  "gasPrice":"0x09184e72a000",
+  "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
+  "input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
+  "nonce":"0x",
+  "to":"0x0000000000000000000000000000000000000000",
+  "value":"0x"
+  }
+}
 ```
 ##### `eth_transactionByNumber`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByNumber","params":[668, 0],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": {
+  "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+  "gas":520464,
+  "gasPrice":"0x09184e72a000",
+  "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
+  "input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
+  "nonce":"0x",
+  "to":"0x0000000000000000000000000000000000000000",
+  "value":"0x"
+  }
+}
 ```
 ##### `eth_uncleByHash`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", 0],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": {
+  "difficulty":"0x",
+  "extraData":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "gasLimit":0,
+  "hash":"0000000000000000000000000000000000000000000000000000000000000000",
+  "miner":"0x0000000000000000000000000000000000000000",
+  "nonce":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "number":0,
+  "parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "sha3Uncles":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "stateRoot":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "timestamp":-1,
+  "transactionsRoot":"0x0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}
 ```
 ##### `eth_uncleByNumber`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleByNumber","params":[500, 0],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": {
+  "difficulty":"0x",
+  "extraData":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "gasLimit":0,
+  "hash":"0000000000000000000000000000000000000000000000000000000000000000",
+  "miner":"0x0000000000000000000000000000000000000000",
+  "nonce":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "number":0,
+  "parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "sha3Uncles":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "stateRoot":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "timestamp":-1,
+  "transactionsRoot":"0x0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}
 ```
 ##### `eth_compilers`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compilers","params":[],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":["lll", "solidity", "serpent"]
+}
 ```
 ##### `eth_lll`
 * request:
 ```bash
+// TODO
 ```
 * response:
 ```json
+// TODO
 ```
 ##### `eth_solidity`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_solidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
+}
 ```
 ##### `eth_serpent`
 * request:
 ```bash
+// TODO
 ```
 * response:
 ```json
+// TODO
 ```
 ##### `eth_newFilter`
 * request:
