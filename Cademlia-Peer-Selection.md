@@ -6,9 +6,9 @@ The distance between two addresses is the MSB first numerical value of their XOR
 
 # Peer table format
 
-The peer table consists of rows, initially only one, at most 255 (typically much less). Each row contains at most _k_ peeers (data structures containing information about said peer such as their peer address, network address, a timestamp, signature by the peer and possibly various other meta-data), where _k_ is a parameter (not necessarily global) with typical values betwen 5 and 20.
+The peer table consists of rows, initially only one, at most 255 (typically much less). Each row contains at most _k_ peers (data structures containing information about said peer such as their peer address, network address, a timestamp, signature by the peer and possibly various other meta-data), where _k_ is a parameter (not necessarily global) with typical values betwen 5 and 20.
 
-This parameter, _k_, determines the redundancy of the network: the peer selection algorithm described in this page aims to maintain exactly _k_ peers in each row. If several different protocols requiring routing are used on the network, each protocol _p_ can specify its own redundancy requirement _kp_, in which case the corresponding _kp_ number of peers supporting that protocol are maintained. Participants must specify what protocols they support.
+This parameter, _k_, determines the redundancy of the network: the peer selection algorithm described in this page aims to maintain exactly _k_ peers in each row. If several different protocols requiring routing are used on the network, each protocol _p_ can specify its own redundancy requirement _k_<sub>_p_<\sub>, in which case the corresponding _k_<sub>_p_<\sub> number of peers supporting that protocol are maintained. Participants must specify what protocols they support.
 
 Row numbering starts with 0. Each row number _i_ contains peers whose address matches the first _i_ bits of this node's address. With the exception of the last row, the address bit following the first _i_ bits must be different.
 
@@ -22,7 +22,7 @@ One sufficient condition for adding a peer is a signed "_add_me_" message contai
 
 # Lookup
 
-A lookup request contains a peer address (which might or might not be valid, it does not matter). The response is the peer list from the full row corresponding to the requested address (information about at most _k_ peers, or _kp_ peers for the protocol _p_ in use).
+A lookup request contains a peer address (which might or might not be valid, it does not matter). The response is the peer list from the full row corresponding to the requested address (information about at most _k_ peers, or _k_<sub>_p_<\sub> peers for the protocol _p_ in use).
 
 For brevity, it might be worth treating _add_me_ requests for nodes that are not already in the peer table as self-lookups and respond accordingly.
 
