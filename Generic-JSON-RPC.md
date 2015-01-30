@@ -62,7 +62,7 @@ The following RPC messages should be accepted by the RPC-backend:
 ##### `web3_sha3`
 * request:
 ```bash
-curl -X POST --data '"{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c6f20776f726c64"],"id":64}"'
+curl -X POST --data '"{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c6f20776f726c64"],"id":64}"' http://localhost:8080
 ```
 * response:
 ```json
