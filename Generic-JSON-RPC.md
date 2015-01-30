@@ -39,6 +39,24 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_lll](#eth_lll)
 * [eth_solidity](#eth_solidity)
 * [eth_serpent](#eth_serpent)
+* [eth_newFilter](#eth_newfilter)
+* [eth_newFilterString](#eth_newfilterstring)
+* [eth_uninstallFilter](#eth_uninstallfilter)
+* [eth_changed](#eth_changed)
+* [eth_filterLogs](#eth_filterlogs)
+* [eth_logs](#eth_logs)
+* [db_put](#db_put)
+* [db_get](#db_get)
+* [db_putString](#db_putstring)
+* [db_getString](#db_getstring)
+* [shh_post](#shh_post)
+* [shh_newIdentity](#shh_newidentity)
+* [shh_haveIdentity](#shh_haveidentity)
+* [shh_newGroup](#shh_newgroup)
+* [shh_addToGroup](#shh_addtogroup)
+* [shh_newFilter](#shh_newfilter]
+* [shh_uninstallFilter](#shh_uninstallfilter)
+* [shh_changed](#shh_changed)
 
 
 
