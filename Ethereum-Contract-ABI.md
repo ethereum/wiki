@@ -59,7 +59,7 @@ The function signature is simply the function name with the parenthesised list o
 
 Given the contract:
 
-```
+```js
 contract Foo {
   function bar(real[2] xy) {}
   function baz(uint32 x, bool y) returns (bool r) { r = x > 32 || y; }
@@ -139,7 +139,7 @@ An event description is a JSON object with fairly similar fields:
 
 For example, 
 
-```
+```js
 contract Test {
 function Test(){ b = 0x12345678901234567890123456789012; }
 event Event(uint indexed a, hash b)
@@ -151,7 +151,7 @@ hash b;
 
 would result in the JSON:
 
-```
+```js
 [{
 "type":"event",
 "inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
@@ -170,7 +170,7 @@ would result in the JSON:
 
 # Example Javascript Usage
 
-```
+```js
 var Test = eth.contractFromAbi(
 [{
 "type":"event",
@@ -223,7 +223,7 @@ theTest.foo(69);
 
 Implementation:
 
-```
+```js
 // e.g. f4 would be similar to:
 web3.eth.filter({'max': 100, 'address': theTest.address, 'topics': [ [69, 42] ]});
 // except that the resultant data would need to be converted from the basic log entry format like:
@@ -240,7 +240,7 @@ web3.eth.filter({'max': 100, 'address': theTest.address, 'topics': [ [69, 42] ]}
 ```
 
 * NOTE1: `eth.watch(...).logs()` and `eth.logs()` should work similarly, though renamed to `.events()`. They should return arrays of objects with data similar to the trigger's params, e.g.:
-```
+```js
 [ {
   'event': Test.Event,
   'args': {'a': 69, 'b': '0x12345678901234567890123456789012'},
