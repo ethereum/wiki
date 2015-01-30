@@ -8,6 +8,21 @@ Ethereum.js exports one single container; `web3` which contains the `eth` object
 
 The following RPC messages should be accepted by the RPC-backend:
 
+* [web3_sha3](#web3_sha3)
+* [eth_coinbase](#eth_coinbase)
+* [eth_setCoinbase](#eth_setCoinbase)
+* [eth_listening](#eth_listening)
+* [eth_setListening](#eth_setListening)
+* [eth_mining](#eth_mining)
+* [eth_setMining](#eth_setMining)
+* [eth_gasPrice](#eth_gasPrice)
+* [eth_accounts](#eth_accounts)
+* [eth_peerCount](#eth_peerCount)
+* [eth_defaultBlock](#eth_defaultBlock)
+* [eth_setDefaultBlock](#eth_setDefaultBlock)
+* [eth_number](#eth_number)
+
+
 * `eth_coinbase`
   * request:
   ```bash
