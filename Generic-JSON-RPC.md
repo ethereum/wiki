@@ -521,6 +521,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_solidity","params":["contrac
 ##### `eth_newFilter`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic":"0x12341234"}],"id":73}"'
 ```
 * response:
 ```json
@@ -528,37 +529,63 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_solidity","params":["contrac
 ##### `eth_newFilterString`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_newFilterString","params":["pending"],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": 1
+}
 ```
 ##### `eth_uninstallFilter`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":[0],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": true
+}
 ```
 ##### `eth_changed`
 * request:
 ```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":73}"'
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": [{
+  "address":"0x0000000000000000000000000000000000000000",
+  "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "number":0
+  }]
+}
 ```
 ##### `eth_filterLogs`
 * request:
 ```bash
+// TODO
 ```
 * response:
 ```json
+// TODO
 ```
 ##### `eth_logs`
 * request:
 ```bash
+// TODO
 ```
 * response:
 ```json
+// TODO
 ```
 ##### `db_put`
 * request:
