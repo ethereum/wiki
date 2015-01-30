@@ -40,6 +40,9 @@
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
 - [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/Generic-JSON-RPC)
 
+### Mining
+- [Mining Howto](https://github.com/ethereum/wiki/wiki/Mining-Howto)
+
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
 - [Blockchain based Proof of Work](https://github.com/ethereum/wiki/wiki/Blockchain-based-Proof-of-Work)
