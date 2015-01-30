@@ -68,7 +68,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":
 ```
 * response:
 ```json
-{"id":64,"jsonrpc":"2.0","result":"0x407d73d8a49eeb85d32cf465507dd71d507100c1"}
+{
+"id":64,
+"jsonrpc":"2.0",
+"result":"0x407d73d8a49eeb85d32cf465507dd71d507100c1"
+}
 ```
 
 ##### `eth_setCoinbase`
@@ -78,7 +82,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setCoinbase","params":["0x4
 ```
 * response:
 ```json
-{"id":66,"jsonrpc":"2.0","result":true}
+{
+"id":66,
+"jsonrpc":"2.0",
+"result":true
+}
 ```
 
 ##### `eth_listening`
@@ -88,7 +96,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_listening","params":[],"id"
 ```
 * response:
 ```json
-{"id":67,"jsonrpc":"2.0","result":true}
+{
+"id":67,
+"jsonrpc":"2.0",
+"result":true
+}
 ```
 ##### `eth_setListening`
 * request:
@@ -97,7 +109,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setListening","params":[fal
 ```
 * response:
 ```json
-{"id":68,"jsonrpc":"2.0","result":true}
+{
+"id":68,
+"jsonrpc":"2.0",
+"result":true
+}
 ```
 ##### `eth_mining`
 * request:
@@ -106,7 +122,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71
 ```
 * response:
 ```json
-{"id":71,"jsonrpc":"2.0","result":true}
+{
+"id":71,
+"jsonrpc":"2.0",
+"result":true
+}
 ```
 ##### `eth_setMining`
 * request:
@@ -115,7 +135,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setMining","params":[false]
 ```
 * response:
 ```json
-{"id":72,"jsonrpc":"2.0","result":true}
+{
+"id":72,
+"jsonrpc":"2.0",
+"result":true
+}
 ```
 ##### `eth_gasPrice`
 * request:
@@ -124,7 +148,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":
 ```
 * response:
 ```json
-{"id":73,"jsonrpc":"2.0","result":"0x09184e72a000"}
+{
+"id":73,
+"jsonrpc":"2.0",
+"result":"0x09184e72a000"
+}
 ```
 ##### `eth_accounts`
 * request:
@@ -133,7 +161,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id"
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
+}
 ```
 ##### `eth_peerCount`
 * request:
@@ -142,7 +174,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id"
 ```
 * response:
 ```json
-{"id":74,"jsonrpc":"2.0","result":0}
+{
+"id":74,
+"jsonrpc":"2.0",
+"result":0
+}
 ```
 ##### `eth_defaultBlock`
 * request:
@@ -151,7 +187,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"
 ```
 * response:
 ```json
-{"id":77,"jsonrpc":"2.0","result":-1}
+{
+"id":77,
+"jsonrpc":"2.0",
+"result":-1
+}
 ```
 ##### `eth_setDefaultBlock`
 * request:
@@ -160,7 +200,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setDefaultBlock","params":[
 ```
 * response:
 ```json
-{"id":80,"jsonrpc":"2.0","result":true}
+{
+"id":80,
+"jsonrpc":"2.0",
+"result":true
+}
 ```
 ##### `eth_number`
 * request:
@@ -169,7 +213,11 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83
 ```
 * response:
 ```json
-{"id":83,"jsonrpc":"2.0","result":1207}
+{
+"id":83,
+"jsonrpc":"2.0",
+"result":1207
+}
 ```
 ##### `eth_balanceAt`
 * request:
@@ -178,7 +226,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":"0x0234c8a3397aab580000"}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":"0x0234c8a3397aab580000"
+}
 ```
 ##### `eth_stateAt`
 * request:
@@ -187,7 +239,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_stateAt","params":["0x407d73
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":"0x03"}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":"0x03"
+}
 ```
 ##### `eth_storageAt`
 * request:
@@ -196,7 +252,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_storageAt","params":["0x407d
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":{"0x":"0x03"}}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":{"0x":"0x03"}
+}
 ```
 ##### `eth_countAt`
 * request:
@@ -205,7 +265,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0x407d73
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":1}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":1
+}
 ```
 ##### `eth_codeAt`
 * request:
@@ -214,7 +278,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0xd5677c
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":"0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":"0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
+}
 ```
 ##### `eth_transact`
 * request:
@@ -223,7 +291,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transact","params":[{code:"0
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":"0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":"0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+}
 ```
 ##### `eth_call`
 * request:
@@ -232,7 +304,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{"to":"0xc4a
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":"0x0000000000000000000000000000000000000000000000000000000000000015"}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":"0x0000000000000000000000000000000000000000000000000000000000000015"
+}
 ```
 ##### `eth_flush`
 * request:
@@ -248,7 +324,25 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["ee67
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": {
+  "difficulty":"0x0327c5", 
+  "extraData":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "gasLimit":300018,
+  "hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
+  "minGasPrice":"0x09184e72a000",
+  "miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d",
+  "nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f",
+  "number":1231,
+  "parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099",
+  "sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+  "stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db",
+  "timestamp":1416509555,
+  "transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+  }
+}
 ```
 
 ##### `eth_blockByNumber`
@@ -258,7 +352,25 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":[123
 ```
 * response:
 ```json
-{"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":{
+  "difficulty":"0x0327c5",
+  "extraData":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "gasLimit":300018,
+  "hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
+  "minGasPrice":"0x09184e72a000",
+  "miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d",
+  "nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f",
+  "number":1231,
+  "parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099",
+  "sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+  "stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db",
+  "timestamp":1416509555,
+  "transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+  }
+}
 ```
 ##### `eth_transactionByHash`
 * request:
