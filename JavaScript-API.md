@@ -118,24 +118,6 @@ var value = web3.fromDecimal('21');
 console.log(value === "0x15"); // true
 ```
 
-##### web3.toFixed
-Returns the floating-point number representing the data `_s` (when interpreted as a fixed-point value divided by 2^128).
-```javascript
-// TODO (_s)
-```
-
-##### web3.fromFixed
-Returns data representing the floating-point number `_s` (when interpreted as a fixed-point value divided by 2^128).
-```javascript
-// TODO (_s)
-```
-
-##### web3.offset
-Returns data representing the data `_s` when its numerical value is offset by the integer `_o`. e.g. `dev.offset("0x10", 10)` evaluates to `"0x1a"`.
-```javascript
-// TODO (_s, _o)
-```
-
 ##### web3.eth
 ```javascript
 var eth = web3.eth;
