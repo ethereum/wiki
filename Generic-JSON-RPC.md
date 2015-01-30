@@ -59,7 +59,13 @@ The following RPC messages should be accepted by the RPC-backend:
 * [shh_changed](#shh_changed)
 
 
-
+##### `web3_sha3`
+* request:
+```bash
+```
+* response:
+```json
+```
 
 ##### `eth_coinbase`
 * request:
