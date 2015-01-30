@@ -635,7 +635,7 @@ curl -X POST --data '"{"jsonrpc":"2.0","method":"db_putString","params":["test",
 ##### `db_getString`
 * request:
 ```bash
-curl -X POST --data '"{"jsonrpc":"2.0","method":"db_getString","params":["test","key","5"],"id":73}"'
+curl -X POST --data '"{"jsonrpc":"2.0","method":"db_getString","params":["test","key"],"id":73}"'
 ```
 * response:
 ```json
