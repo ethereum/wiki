@@ -180,70 +180,63 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d
 ```json
 {"id":1,"jsonrpc":"2.0","result":"0x0234c8a3397aab580000"}
 ```
-* `eth_stateAt`
-* `eth_storageAt`
-* `eth_countAt`
-* `eth_codeAt`
-* `eth_transact`
-* `eth_call`
-* `eth_blockByHash( hash : String )`
-  * request:
-  ```bash
-  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"],"id":1}' http://localhost:8080
-  ```
-  * response:
-  ```json
-  {"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
-  ```
+##### `eth_stateAt`
+* request: 
+* response:
+##### `eth_storageAt`
+* request:
+* response:
+##### `eth_countAt`
+##### `eth_codeAt`
+##### `eth_transact`
+##### `eth_call`
+##### `eth_flush`
+##### `eth_blockByHash`
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"],"id":1}' http://localhost:8080
+```
+* response:
+```json
+{"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
+```
 
-* `eth_blockByNumber( number : Integer )`
-  * request:
-  ```bash
-  curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":[1231],"id":1}' http://localhost:8080
-  ```
-  * response:
-  ```json
-  {"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
-  ```
-* `eth_transactionByHash( hash : String, nth : Integer )`
+##### `eth_blockByNumber`
+* request:
 ```bash
-# TODO
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":[1231],"id":1}' http://localhost:8080
 ```
-* `eth_transactionByNumber( number : Integer, nth : Integer )`
-```bash
-# TODO
+* response:
+```json
+{"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
 ```
-* `eth_uncleByHash( hash : String, nth : Integer )`
-```bash
-# TODO
-```
-* `eth_uncleByNumber( number : Integer, nth : Integer )`
-```bash
-# TODO
-```
-* `eth_compilers`
-* `eth_lll`
-* `eth_solidity`
-* `eth_serpent`
-* `eth_newFilter`
-* `eth_newFilterString`
-* `eth_uninstallFilter`
-* `eth_changed`
-* `eth_filterLogs`
-* `eth_logs`
-* `db_put`
-* `db_get`
-* `db_putString`
-* `db_getString`
-* `shh_post`
-* `shh_newIdeninty`
-* `shh_haveIdentity`
-* `shh_newGroup`
-* `shh_addToGroup`
-* `shh_newFilter`
-* `shh_uninstallFilter`
-* `shh_changed`
-* `transact( parameters : Object )`
+##### `eth_transactionByHash`
+##### `eth_transactionByNumber`
+##### `eth_uncleByHash`
+##### `eth_uncleByNumber`
+##### `eth_compilers`
+##### `eth_lll`
+##### `eth_solidity`
+##### `eth_serpent`
+##### `eth_newFilter`
+##### `eth_newFilterString`
+##### `eth_uninstallFilter`
+##### `eth_changed`
+##### `eth_filterLogs`
+##### `eth_logs`
+##### `db_put`
+##### `db_get`
+##### `db_putString`
+##### `db_getString`
+##### `shh_post`
+##### `shh_newIdeninty`
+##### `shh_haveIdentity`
+##### `shh_newGroup`
+##### `shh_addToGroup`
+##### `shh_newFilter`
+##### `shh_uninstallFilter`
+##### `shh_changed`
+
 ###### old
 * `newFilter( parameters_or_type : Variadic )` **Note**: Registers a new filter. Expects a return call with an unique ID specifying the new filter. In any subsequent queries that reference this filter, this same ID is used to identify the filter on the remote backend. It's up to the implementors to implement this look-up method as they see fit on the remote backend (see [[events](#events)]).
 * `messages( id : Integer )`
