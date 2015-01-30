@@ -181,16 +181,54 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d
 {"id":1,"jsonrpc":"2.0","result":"0x0234c8a3397aab580000"}
 ```
 ##### `eth_stateAt`
-* request: 
+* request:
+```bash
+```
 * response:
+```json
+```
 ##### `eth_storageAt`
 * request:
+```bash
+```
 * response:
+```json
+```
 ##### `eth_countAt`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_codeAt`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_transact`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_call`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_flush`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_blockByHash`
 * request:
 ```bash
@@ -211,31 +249,187 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":[123
 {"id":1,"jsonrpc":"2.0","result":{"difficulty":"0x0327c5","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000","gasLimit":300018,"hash":"ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331","minGasPrice":"0x09184e72a000","miner":"0x82022c34d173cf3b83c6e4553d627276fff6b66d","nonce":"0xc2adfa12f40d142eb585b0b7892cd0841cf30dd18cb88940a5323df767f0db2f","number":1231,"parentHash":"0xaa322b7bd7418b4328f0c7b350359a86d6b9b698ef584937447743b082eed099","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","stateRoot":"0x86df58f157e5ff5b77a6b1cddb43a2616acbaa7907087e0effb339e14c23a5db","timestamp":1416509555,"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
 ```
 ##### `eth_transactionByHash`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_transactionByNumber`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_uncleByHash`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_uncleByNumber`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_compilers`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_lll`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_solidity`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_serpent`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_newFilter`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_newFilterString`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_uninstallFilter`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_changed`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_filterLogs`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `eth_logs`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `db_put`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `db_get`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `db_putString`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `db_getString`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `shh_post`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `shh_newIdeninty`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `shh_haveIdentity`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `shh_newGroup`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `shh_addToGroup`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `shh_newFilter`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `shh_uninstallFilter`
+* request:
+```bash
+```
+* response:
+```json
+```
 ##### `shh_changed`
+* request:
+```bash
+```
+* response:
+```json
+```
 
 ###### old
 * `newFilter( parameters_or_type : Variadic )` **Note**: Registers a new filter. Expects a return call with an unique ID specifying the new filter. In any subsequent queries that reference this filter, this same ID is used to identify the filter on the remote backend. It's up to the implementors to implement this look-up method as they see fit on the remote backend (see [[events](#events)]).
