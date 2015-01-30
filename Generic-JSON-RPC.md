@@ -21,7 +21,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_defaultBlock](#eth_defaultblock)
 * [eth_setDefaultBlock](#eth_setdefaultblock)
 * [eth_number](#eth_number)
-* [eth_balanceAt)(#eth_balanceat)
+* [eth_balanceAt](#eth_balanceat)
 * [eth_stateAt](#eth_stateat)
 * [eth_storageAt](#eth_storageat)
 * [eth_countAt](#eth_countat)
