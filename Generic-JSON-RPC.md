@@ -183,44 +183,56 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d
 ##### `eth_stateAt`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_stateAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{"id":1,"jsonrpc":"2.0","result":"0x03"}
 ```
 ##### `eth_storageAt`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_storageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{"id":1,"jsonrpc":"2.0","result":{"0x":"0x03"}}
 ```
 ##### `eth_countAt`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{"id":1,"jsonrpc":"2.0","result":1}
 ```
 ##### `eth_codeAt`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8"],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{"id":1,"jsonrpc":"2.0","result":"0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"}
 ```
 ##### `eth_transact`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transact","params":[{code:"0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"}],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{"id":1,"jsonrpc":"2.0","result":"0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"}
 ```
 ##### `eth_call`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{"to":"0xc4abd0339eb8d57087278718986382264244252f","data":"0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"}],"id":1}' http://localhost:8080
 ```
 * response:
 ```json
+{"id":1,"jsonrpc":"2.0","result":"0x0000000000000000000000000000000000000000000000000000000000000015"}
 ```
 ##### `eth_flush`
 * request:
