@@ -54,49 +54,51 @@ The following RPC messages should be accepted by the RPC-backend:
 * [shh_haveIdentity](#shh_haveidentity)
 * [shh_newGroup](#shh_newgroup)
 * [shh_addToGroup](#shh_addtogroup)
-* [shh_newFilter](#shh_newfilter]
+* [shh_newFilter](#shh_newfilter)
 * [shh_uninstallFilter](#shh_uninstallfilter)
 * [shh_changed](#shh_changed)
 
 
 
 
-* `eth_coinbase`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":64}"'
-  ```
-  * response:
-  ```json
-  {"id":64,"jsonrpc":"2.0","result":"0x407d73d8a49eeb85d32cf465507dd71d507100c1"}
-  ```
-* `eth_setCoinbase`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setCoinbase","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":66}"'
-  ```
-  * response:
-  ```json
-  {"id":66,"jsonrpc":"2.0","result":true}
-  ```
-* `eth_listening`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_listening","params":[],"id":67}"'
-  ```
-  * response:
-  ```json
-  {"id":67,"jsonrpc":"2.0","result":true}
-  ```
-* `eth_setListening`
-  * request:
-  ```bash
-  curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setListening","params":[false],"id":68}"'
-  ```
-  * response:
-  ```json
-  {"id":68,"jsonrpc":"2.0","result":true}
-  ```
+##### `eth_coinbase`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":64}"'
+```
+* response:
+```json
+{"id":64,"jsonrpc":"2.0","result":"0x407d73d8a49eeb85d32cf465507dd71d507100c1"}
+```
+
+##### `eth_setCoinbase`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setCoinbase","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":66}"'
+```
+* response:
+```json
+{"id":66,"jsonrpc":"2.0","result":true}
+```
+
+##### `eth_listening`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_listening","params":[],"id":67}"'
+```
+* response:
+```json
+{"id":67,"jsonrpc":"2.0","result":true}
+```
+##### `eth_setListening`
+* request:
+```bash
+curl -X POST --data '"{"jsonrpc":"2.0","method":"eth_setListening","params":[false],"id":68}"'
+```
+* response:
+```json
+{"id":68,"jsonrpc":"2.0","result":true}
+```
 * `eth_mining`
   * request:
   ```bash
