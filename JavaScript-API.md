@@ -42,6 +42,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
       * [logs](#) *(_callback)*
       * [uninstall](#) *(_callback)*
     * [contract](#web3ethcontract) *(_address, _abi)*
+    * [flush](#web3ethflush)
   * [db](#web3db)
     * [put](#web3dbput) *(_name, _key, _value)*
     * [putString](#web3dbputstring) *(__name, _key, _value)*
@@ -406,6 +407,12 @@ var myContract = web3.eth.contract('0x0123123121', abi); // creation of contract
 myContract.myMethod('this is test string param for call'); // myMethod call (implicit, default)
 myContract.call().myMethod('this is test string param for call'); // myMethod call (explicit)
 myContract.transact().myMethod('this is test string param for transact'); // myMethod transact
+```
+
+#####web3.eth.flush
+
+```javascript
+// TODO:
 ```
 
 #####web3.eth.compilers
