@@ -2,7 +2,9 @@ In order to free ethereum implementation developers from the hassle of writing t
 
 Ethereum.js provides a full communication bridge between your node (backend) and browser (frontend) given that you **tell** it how _speak_. Communication is done through a `Provider`.
 
-Ethereum.js exports one single container; `web3` which contains the `eth` object as well as a few helper methods (see [[JavaScript-API]] for more details).
+Ethereum.js exports one single container; `web3` which contains the `eth`,`db` and `ssh` object as well as a few helper methods (see [[JavaScript-API]] for more details).
+
+If you have [cpp-ethereum](https://github.com/ethereum/cpp-ethereum), you can start JSONRPC server by typing `eth -j -b`, where `-j` is responsible for starting http server && `-b` for connecting to the default Ethereum peerserver.
 
 ### JSON RPC
 
