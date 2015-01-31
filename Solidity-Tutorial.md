@@ -452,6 +452,26 @@ inheritance graph, so it will call `Base2.kill()`. Note that the actual function
 is called when using super is not known in the context of the class where it is used,
 although its type is known. This is similar for ordinary virtual method lookup.
 
+## Fallback Functions
+
+A contract can have exactly one unnamed
+function. This function cannot have arguments and is executed on a call to the contract if
+none of the other functions matches the given function identifier (or if no data was supplied at all).
+
+```
+contract Test {
+  function() { x = 1; }
+  uint x;
+}
+
+contract Caller {
+  function callTest(address testAddress) {
+    Test(testAddress).send(0);
+    // results in Test(testAddress).x becoming == 1.
+  }
+}
+```
+
 ## Function Modifiers
 
 Modifiers can be used to easily change the behaviour of functions, for example to automatically check a condition prior to executing the function. They are inheritable properties of contracts and may be overridden by derived contracts.
