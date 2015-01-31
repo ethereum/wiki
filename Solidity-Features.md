@@ -261,3 +261,23 @@ contract ClientReceipt {
 Here, the call to `Deposit` will behave identical to
 `log3(msg.value, 0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20, hash(msg.sender), _id);`. Note that the large hex number is equal to the sha3-hash of "Deposit(address,hash256,uint256)", the event's
 signature.
+
+## Fallback Functions
+
+[PT](https://www.pivotaltracker.com/story/show/87035858) A contract can have exactly one unnamed
+function. This function cannot have arguments and is executed on a call to the contract if
+none of the other functions matches the given function identifier (or if no data was supplied at all).
+
+```
+contract Test {
+  function() { x = 1; }
+  uint x;
+}
+
+contract Caller {
+  function callTest(address testAddress) {
+    Test(testAddress).send(0);
+    // results in Test(testAddress).x becoming == 1.
+  }
+}
+```
