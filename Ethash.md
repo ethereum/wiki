@@ -213,17 +213,25 @@ In order to compute the seed for a given block, we use the following algorithm:
 
 Note the this function outputs two seeds. During even-numbered epochs, the PoW uses the first seed, and during odd-numbered epochs the PoW uses the second seed; this allows a miner to rebuild one DAG while simultaneously still using the other DAG, ensuring a smooth transition as the dataset gets updated.
 
-In order to compute the size of the dataset at a given block number, we use the following function:
+In order to compute the size of the dataset and the cache at a given block number, we use the following function:
 
 ```python
 def get_datasize(params, block):
-    sz = params["dag_bytes_init"] + params["dag_bytes_growth"] * (block.number // params["epoch_length"])
-    while not isprime(sz // params["mix_bytes"]):
-        sz -= params["mix_bytes"]
-    return sz
+    datasize_in_bytes = params["dag_bytes_init"] + \
+                        params["dag_bytes_growth"] * (block.number // params["epoch_length"])
+    while not isprime(datasize_in_bytes // params["mix_bytes"]):
+        datasize_in_bytes -= params["mix_bytes"]
+    return datasize_in_bytes
+
+def get_cachesize(params, block):
+    datasize_in_bytes = get_datasize(params, block) * params["mix_bytes"]
+    cachesize_in_bytes = (datasize_in_bytes // 32)
+    while not isprime(cachesize_in_bytes // params["hash_bytes"]):
+        cachesize_in_bytes -= params["hash_bytes"]
+    return cachesize_in_bytes
 ```
 
-Where isprime is of course:
+Where `isprime` is of course:
 
 ```python
  def isprime(n):
