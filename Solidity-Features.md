@@ -313,3 +313,15 @@ generates the JSON interface
 ```
 and the Solidity interface
 `contract c{event ev(uint256 indexed a,uint256 b);}`.
+
+## Visibility Specifiers
+
+[PT](https://www.pivotaltracker.com/story/show/86635568) Functions and storage variables can be specified as being `public`, `protected` or `private`, where the default for functions is `public` `protected` for storage variables. Public functions are part of the external interface and can be called externally, while for storage variables, an automatic accessor function is generated. Non-public functions are only visible inside a contract and its derived contracts (there is no distinction between `protected` and `private` for now).
+
+```
+contract c {
+  function f(uint a) private returns (uint b) { return a + 1; }
+  uint public data;
+}
+```
+External functions can call `c.data()` to retrieve the value of `data` in storage, but are not able to call `f`.
