@@ -11,13 +11,12 @@ The purpose of this document is to attempt to create a taxonomy of key security 
 
 ### Proof of Work
 
-The working spec description of Dagger Hashimoto is available at  [https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto](https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto)
+The working spec description of Dagger Hashimoto is available at  [https://github.com/ethereum/wiki/wiki/Ethash](https://github.com/ethereum/wiki/wiki/Ethash)
 
 The algorithm is intended to have the following key properties:
 
 * ASIC resistance (ie. lowest possible ASIC speedup coefficient)
 * Light-client verifiability, in <1s on Python or Javascript on a desktop or C++ on a Raspberry Pi
-* Full-blockchain dependency
 
 And should not have any of the following flaws:
 
@@ -69,8 +68,7 @@ The following properties are desired:
 
 ### Wire protocol 
 
-RLPx wire protocol (mux): https://github.com/ethereum/devp2p/blob/master/rlpx.md
-Inner wire protocol is described here: https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol
+The wire protocol is described here: https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol
 
 The wire protocol should be secure against the following issues:
 
