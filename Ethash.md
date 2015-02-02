@@ -224,7 +224,7 @@ def get_datasize(params, block):
     return datasize_in_bytes
 
 def get_cachesize(params, block):
-    datasize_in_bytes = get_datasize(params, block) * params["mix_bytes"]
+    datasize_in_bytes = get_datasize(params, block)
     cachesize_in_bytes = (datasize_in_bytes // 32)
     while not isprime(cachesize_in_bytes // params["hash_bytes"]):
         cachesize_in_bytes -= params["hash_bytes"]
