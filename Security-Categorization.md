@@ -69,7 +69,8 @@ The following properties are desired:
 
 ### Wire protocol 
 
-The wire protocol is described here: https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol
+RLPx wire protocol (mux): https://github.com/ethereum/devp2p/blob/master/rlpx.md
+Inner wire protocol is described here: https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol
 
 The wire protocol should be secure against the following issues:
 
