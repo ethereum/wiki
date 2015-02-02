@@ -41,34 +41,54 @@ Additionally, the Pyethereum testing environment that we will be using simply as
 
 Now, let's try actually compiling the code. Type:
 
-    > serpent compile mul2.se
-    602380600b600039602e5660003560001a600014156022576020600160203760026020510260405260206040f25b5b6000f2
+```
+> serpent compile mul2.se
+604380600b600039604e567c01000000000000000000000000000000000000000000000000000000006000350463eee9720681141560415760043560405260026040510260605260206060f35b505b6000f3
+```
 
 And there we go, that's the hexadecimal form of the code that you can put into transactions. Or, if you want to see opcodes:
 
     > serpent pretty_compile mul2.se
-    [PUSH1, 35, DUP1, PUSH1, 11, PUSH1, 0, CODECOPY, PUSH1, 46, JUMP, PUSH1, 0, CALLDATALOAD, PUSH1, 0, BYTE, PUSH1, 0, EQ, ISZERO, PUSH1, 34, JUMPI, PUSH1, 32, PUSH1, 1, PUSH1, 32, CALLDATACOPY, PUSH1, 2, PUSH1, 32, MLOAD, MUL, PUSH1, 64, MSTORE, PUSH1, 32, PUSH1, 64, RETURN, JUMPDEST, JUMPDEST, PUSH1, 0, RETURN]
+    [PUSH1, 67, DUP1, PUSH1, 11, PUSH1, 0, CODECOPY, PUSH1, 78, JUMP, PUSH29, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, PUSH1, 0, CALLDATALOAD, DIV, PUSH4, 238, 233, 114, 6, DUP2, EQ, ISZERO, PUSH1, 65, JUMPI, PUSH1, 4, CALLDATALOAD, PUSH1, 64, MSTORE, PUSH1, 2, PUSH1, 64, MLOAD, MUL, PUSH1, 96, MSTORE, PUSH1, 32, PUSH1, 96, RETURN, JUMPDEST, POP, JUMPDEST, PUSH1, 0, RETURN]
 
 Alternatively, you can compile to LLL to get an intermediate representation:
 
-    > serpent compile_to_lll mul2.se
-    (seq 
-      (return 0 
-        (lll 
+```
+> serpent compile_to_lll mul2.se
+(return 0 
+  (lll 
+    (with '__funid 
+      (div (calldataload 0) 
+        26959946667150639794667015087019630673637144422540572481103610249216
+      )
+      (unless (iszero (eq (get '__funid) 4008276486)) 
+        (seq 
+          (set 'x (calldataload 4))
           (seq 
-            (def ('double 'x) 
-              (seq 
-                (set '_temp7_1 (mul (get 'x) 2))
-                (return (ref '_temp7_1) 32)
-              )
-            )
+            (set '_temp_521 (mul (get 'x) 2))
+            (return (ref '_temp_521) 32)
           )
-          0
         )
       )
     )
+    0
+  )
+)
+```
 
-This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. In the innermost layer, we set a variable `'_temp7_1` to equal twice the input, and then supply the memory address of that variable, and the length 32, to the `RETURN` opcode. The `def` mechanism itself is later translated into opcodes that actually unpack the bytes of the transaction data into the variables seen in the LLL.
+This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. Inside of the LLL, we have a wrapper whose purpose it is to grab the first four bytes of the contract data, (that's the `(div (calldataload 0) 26959946667150639794667015087019630673637144422540572481103610249216)`; we grab four bytes by grabbing the first 32 bytes and dividing it by 2^224) to get the function ID that is being called, and then inside of that we have a series of functions (in this case only one function) that checks the function ID provided against all function IDs supported by the contract. If the function ID is 4008276486, then it sets a variable `'x` to the message data bytes 4-35 (that's `(calldataload 4)`), sets a temporary variable to equal to `2 * x`, and returns the 32 byte memory slice that contains that variable.
+
+The function ID is calculated by computing a hash based on the function name and arguments and taking the first four bytes. In this case we have a function named "double" with a single integer as an argument; on the command line we can do:
+
+    > serpent get_prefix double i
+    4008276486
+
+Note that you can have multiple functions with the same name, if they take different combinations of inputs. For instance, a hypothetical function double that takes three integers as input (and, say, returns an array consisting of 2x each one) would have a different prefix:
+
+    > serpent get_prefix double iii
+    1142360101
+
+The letter `i` is meant for integers, and for fixed-length (up to 32 byte) strings (which are treated the same as integers in Serpent and EVM). Use the letter `s` for variable-length string arguments, and `a` for arrays; more on these later.
 
 Now, what if you want to actually run the contract? That is where [pyethereum](https://github.com/ethereum/pyethereum) comes in. Open up a Python console in the same directory, and run:
 
@@ -80,22 +100,10 @@ Now, what if you want to actually run the contract? That is where [pyethereum](h
 
 The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `c.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
 
-Note that if you want to send a transaction to such a contract in the testnet or livenet, you will need to package up the transaction data for "call function 0 with data 42". The command line instruction for this is:
+Note that if you want to send a transaction to such a contract in the testnet or livenet, you will need to package up the transaction data for "call function double with an integer as an input with data 42". The command line instruction for this is:
 
-    > serpent encode_abi 0 42
-    00000000000000000000000000000000000000000000000000000000000000002a
-
-The first byte (ie. two hex characters) always represents the function ID; the ID of a function is the position of the function in the contract code, ie. the first function (not including init/any/shared) has ID 0, the second function has ID 1, etc. For example, if we were calling the function with ID 9 in some contract instead, we would do:
-
-    > serpent encode_abi 9 42
-    09000000000000000000000000000000000000000000000000000000000000002a
-
-Then, after that, each argument is packed into 32 bytes. So if we wanted to encode two variables we would do:  
-
-    > serpent encode_abi 9 42 20125
-    09000000000000000000000000000000000000000000000000000000000000002a0000000000000000000000000000000000000000000000000000000000004e9d
-
-Note that there are advanced features in Serpent for making each argument take up less than 32 bytes, but we will ignore these for now.
+    > serpent encode_abi double i 42
+    eee97206000000000000000000000000000000000000000000000000000000000000002a
 
 ### Example: Name Registry
 
@@ -130,8 +138,10 @@ Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opc
 
 `funid` is the index of the function, in the order in which it appears in the contract; here, 0 is for `register` and 1 is for `ask`. If we wanted to encode the transaction data for that first call, we would do: 
 
-    > serpent encode_abi 0 0x67656f726765 45
-    00000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d
+```
+> serpent encode_abi register ii 0x67656f726765 45
+d66d6c10000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d
+```
 
 ### Including files, and calling other contracts
 
@@ -280,9 +290,9 @@ There are also two functions for dealing with arrays:
 
 Returns the length of array x.
 
-    shrink_array(x, s)
+    slice(x, start, end)
 
-Shrink the length of array x to size s (useful just before passing the array as an argument to a function).
+Takes a slice of x starting with position start and ending with position end (note that we require `end >= start`; otherwise the result will almost certainly result in an error)
 
 ### Arrays and Functions
 
@@ -308,7 +318,10 @@ However, if a contract wants to call another contract that takes arrays as argum
 
     extern composer: [compose:ai, main]
 
-Here, `ai` means "an array followed by an integer". You can do things like `iiaa`, meaning 2 integers followed by 2 arrays or `iss` meaning an integer followed by 2 strings.
+Here, `ai` means "an array followed by an integer". You can do things like `iiaa`, meaning 2 integers followed by 2 arrays or `iss` meaning an integer followed by 2 strings. If a colon is not provided, as in `main` in this example, that means that the function takes no arguments. If you want to determine the signature to use from a given file, you can do:
+
+    > serpent mk_signature compose_test.se
+    extern compose_test: [compose:ai, main]
 
 ### Strings
 
