@@ -34,3 +34,5 @@ This is the interface our _application_ has for the contract. Using the textbox 
 ## Authentication
 
 At this final stage is where natspec actually comes into place. Each and every transaction has an authentication stage. The natspec documentation is what is provided to the user in order to notify him of the transaction and query whether or not to go ahead with it.
+
+As you can see from the picture below even if a contract's transaction does not have any specific documentation we will still get a generic popup message asking us whether or not we want to authenticate the transaction.
