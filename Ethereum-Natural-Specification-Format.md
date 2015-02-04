@@ -1,4 +1,4 @@
-Solidity contracts can have a special form of comments that form the basis of the Ethereum Natural Specification Format. 
+Solidity contracts can have a special form of comments that form the basis of the Ethereum Natural Specification Format. For a usage example please check [here](https://github.com/ethereum/wiki/wiki/Natspec-Example/).
 
 # Documentation Example
 
@@ -127,3 +127,7 @@ Apart from the user documentation file, a developer documentation json file shou
   }
 }
 ```
+
+## Example usage
+
+There is a detailed example of using the Natspec feature with the cpp client [here](https://github.com/ethereum/wiki/wiki/Natspec-Example/).
