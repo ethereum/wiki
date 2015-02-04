@@ -47,6 +47,8 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_changed](#eth_changed)
 * [eth_filterLogs](#eth_filterlogs)
 * [eth_logs](#eth_logs)
+* [eth_getWork](#eth_getWork)
+* [eth_submitWork](#eth_submitWork)
 * [db_put](#db_put)
 * [db_get](#db_get)
 * [db_putString](#db_putstring)
@@ -594,6 +596,32 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":7
 * response:
 ```json
 // TODO
+```
+##### `eth_getWork`
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getWork","params":[],"id":73}' http://localhost:8080
+```
+* response:
+```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": "0x1234567890abcdef1234567890abcdef"
+}
+```
+##### `eth_submitWork`
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":["0x1234567890abcdef1234567890abcdef"],"id":73}' http://localhost:8080
+```
+* response:
+```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": 1
+}
 ```
 ##### `db_put`
 * request:
