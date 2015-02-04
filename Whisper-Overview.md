@@ -24,7 +24,7 @@ var replyWatch = shh.watch({
 replyWatch.arrived(function(m)
 {
 	// new message m
-	console.log("Reply from " + web3.toAscii(m.payload) + " whose address is " + m.from;
+	console.log("Reply from " + web3.toAscii(m.payload) + " whose address is " + m.from);
 });
 
 var broadcastWatch = shh.watch({ "topic": [ web3.fromAscii(appName) ] });
