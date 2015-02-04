@@ -17,7 +17,7 @@ contract test {
 }
 ```
 
-![Creating natspec in AZ](../images/natspec1.png)
+![Creating natspec in AZ](images/natspec1.png)
 
 Then press the `Execute` button in order to generate the contract creation transaction. We can do that from the JSON Api too but we are using AlethZero in order to create the natspec documentation from the contract. Pressing the execute button will create a local database entry (LevelDB) of a mapping of the contract's hash to the natspec documentation.
 
