@@ -201,17 +201,17 @@ In order to compute the seed for a given block, we use the following algorithm:
      if block.number == 0:
          return ('\x42' * 32, '\x43' * 32)
      elif (block.number % params["epoch_length"] == 0):
-         x, y = get_seedset(params, block.parent)
+         front_buffer_seed, back_buffer_seed = get_seedset(params, block.parent)
          if (block.number // params["epoch_length"]) % 2:
-             y = sha3_256(y + block.prevhash)
+             back_buffer_seed = sha3_256(back_buffer_seed + block.prevhash)
          else:
-             x = sha3_256(x + block.prevhash)
-         return (x, y)
+             front_buffer_seed = sha3_256(front_buffer_seed + block.prevhash)
+         return (front_buffer_seed, back_buffer_seed)
      else:
          return get_seedset(params, block.parent)
 ```
 
-Note the this function outputs two seeds. During even-numbered epochs, the PoW uses the first seed, and during odd-numbered epochs the PoW uses the second seed; this allows a miner to rebuild one DAG while simultaneously still using the other DAG, ensuring a smooth transition as the dataset gets updated.
+This function outputs two seeds, for using a *double buffer* (similar to the pattern used in computer graphics, see [wikipedia](https://en.wikipedia.org/wiki/Multiple_buffering#Double_buffering_in_computer_graphics)). During even-numbered epochs, the PoW uses a DAG based on the `front_buffer_seed`, and during odd-numbered epochs the PoW uses the `back_buffer_seed`; this allows a miner to rebuild one DAG while simultaneously still using the other DAG, ensuring a smooth transition as the dataset gets updated.
 
 In order to compute the size of the dataset and the cache at a given block number, we use the following function:
 
