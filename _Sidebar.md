@@ -39,7 +39,7 @@
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
-- [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/Generic-JSON-RPC)
+- [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/JSON-RPC)
 
 ### Mining
 - [Mining Howto](https://github.com/ethereum/wiki/wiki/Mining-Howto)
