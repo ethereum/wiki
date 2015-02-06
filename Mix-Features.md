@@ -4,7 +4,7 @@ Hit `File`->`New Project`.
 
 Type contract:
 
-```
+```javascript
 contract Test {
 }
 ```
@@ -15,7 +15,7 @@ Hit `Deploy`->`Deploy 'Default'` to deploy contract.
 
 Then for index.html:
 
-```
+```html
 <html>
 <head>
 <script>
