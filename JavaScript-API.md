@@ -136,6 +136,7 @@ web3.reset();
 ```
 
 ##### web3.eth
+Should be called to get web3.eth object.
 ```javascript
 var eth = web3.eth;
 ```
