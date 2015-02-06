@@ -411,12 +411,19 @@ watch.changed(function (log) {
 #####web3.eth.contract
 This method should be called when we want to call / transact some solidity method from javascript. It returns an object which has the same methods available as solidity contract description.
 
+You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
+
 usage example:
 ```javascript
 var abi = [{
      name: 'myMethod',
+     type: 'function',
      inputs: [{ name: 'a', type: 'string' }],
      outputs: [{name: 'd', type: 'string' }]
+}, {
+     name: 'myEvent',
+     type: 'event',
+     inputs: [{name: 'a', type: 'int', indexed: true},{name: 'b', type: 'bool', indexed: false]
 }];  // contract abi
 
 var myContract = web3.eth.contract('0x0123123121', abi); // creation of contract object
@@ -424,6 +431,19 @@ var myContract = web3.eth.contract('0x0123123121', abi); // creation of contract
 myContract.myMethod('this is test string param for call'); // myMethod call (implicit, default)
 myContract.call().myMethod('this is test string param for call'); // myMethod call (explicit)
 myContract.transact().myMethod('this is test string param for transact'); // myMethod transact
+
+var watch = myContract.myEvent({a: 5});
+watch.changed(function (result) {
+    console.log(result);
+    /*
+    {
+        address: '0x0123123121',
+        topics: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
+        data: "0x0000000000000000000000000000000000000000000000000000000000000001",
+        number: 2
+    }
+    */
+});
 ```
 
 #####web3.eth.flush
