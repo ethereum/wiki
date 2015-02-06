@@ -68,8 +68,8 @@ contains some properties which allow access to the world outside of the contract
 The function `queryBalance` is declared `constant` and thus is not allowed to
 modify the state of the contract (note that this is not yet enforced, though).
 In Solidity, return "parameters" are named and essentially create a local
-variable. So to return the balance, we could also just use `bal =
-balance[addr];` without any return statement.
+variable. So to return the balance, we could also just use `balance =
+balances[addr];` without any return statement.
 
 ## Comments
 
