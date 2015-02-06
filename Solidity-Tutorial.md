@@ -452,6 +452,19 @@ inheritance graph, so it will call `Base2.kill()`. Note that the actual function
 is called when using super is not known in the context of the class where it is used,
 although its type is known. This is similar for ordinary virtual method lookup.
 
+## Visibility Specifiers
+
+Functions and storage variables can be specified as being `public`, `protected` or `private`, where the default for functions is `public` and `protected` for storage variables. Public functions are part of the external interface and can be called externally, while for storage variables, an automatic accessor function is generated. Non-public functions are only visible inside a contract and its derived contracts (there is no distinction between protected and private for now).
+
+```
+contract c {
+  function f(uint a) private returns (uint b) { return a + 1; }
+  uint public data;
+}
+```
+
+External contracts can call `c.data()` to retrieve the value of data in storage, but are not able to call `f`.
+
 ## Fallback Functions
 
 A contract can have exactly one unnamed
