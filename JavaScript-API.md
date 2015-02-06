@@ -12,6 +12,8 @@ There is, at the global scope, one objects; the `web3` object, containing data h
   * [fromAscii](#web3fromascii) *(_s, [_padding])*
   * [toDecimal](#web3todecimal) *(_s)*
   * [fromDecimal](#web3fromdecimal) *(_s)*
+  * [setProvider](#web3setprovider)
+  * [reset](#web3reset)
   * [eth](#web3eth)
     * [coinbase](#web3ethcoinbase)
     * [listening](#web3ethlistening)
@@ -117,6 +119,20 @@ Returns the hex data string representing (in big-endian format) the decimal inte
 ```javascript
 var value = web3.fromDecimal('21');
 console.log(value === "0x15"); // true
+```
+
+##### web3.setProvider
+Should be called to set provider.
+```javascript
+web3.setProvider(new web3.providers.HttpSyncProvider());
+// or
+web3.setProvider(new web3.providers.QtSyncProvider());
+```
+
+##### web3.reset
+Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
+```javascript
+web3.reset();
 ```
 
 ##### web3.eth
