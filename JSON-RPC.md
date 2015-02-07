@@ -607,9 +607,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getWork","params":[],"id":73
 {
 "id":1,
 "jsonrpc":"2.0",
-"result": "0x1234567890abcdef1234567890abcdef"
+"result": ["0x1234567890abcdef1234567890abcdef", "0xd1ffic017i0000000000000000000000"]
 }
 ```
+
+The hash first of the two result values is the header hash without the nonce (the first part of the proof-of-work pair), the second of the two result values is the difficulty required to solve.
+
 ##### `eth_submitWork`
 * request:
 ```bash
@@ -623,6 +626,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":["0x123
 "result": 1
 }
 ```
+
+Used for submitting a solution to the proof-of-work.
+
 ##### `db_put`
 * request:
 ```bash
