@@ -623,11 +623,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":["0x123
 {
 "id":1,
 "jsonrpc":"2.0",
-"result": 1
+"result": true
 }
 ```
 
-Used for submitting a solution to the proof-of-work.
+Used for submitting a solution to the proof-of-work. The return value is true iff the submission is valid.
 
 ##### `db_put`
 * request:
