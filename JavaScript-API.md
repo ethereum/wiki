@@ -628,6 +628,7 @@ A simple HTML snippet that will display the user's primary account balance of Et
 web3.eth.watch('pending').changed(function() {
     var balance = web3.eth.balanceAt(web3.eth.coinbase);
     document.getElementById("ether").innerText = web3.toDecimal(balance);
+  });
 </script>
 </body></html>
 ```
