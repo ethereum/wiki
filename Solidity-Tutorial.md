@@ -465,6 +465,19 @@ contract c {
 
 External contracts can call `c.data()` to retrieve the value of data in storage, but are not able to call `f`.
 
+## Accessor Functions
+
+The compiler automatically creates accessor functions for all public state variables. The contract given below will have a function called `data` that does not take any arguments and returns a uint, the value of the state variable `data`.
+
+```
+contract test {
+    function test() {
+        data = 42;
+    }
+    uint public data;
+}
+```
+
 ## Fallback Functions
 
 A contract can have exactly one unnamed
