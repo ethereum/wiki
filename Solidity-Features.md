@@ -343,3 +343,19 @@ contract c {
   uint256 val4; 
 }
 ```
+
+## SHA3 with arbitrary arguments
+[PT](https://www.pivotaltracker.com/story/show/86896766). Sha3 can now take an arbitrary number and type of arguments.
+```
+contract c {
+  function c()
+  {
+      val2 = 123;
+      val1 = sha3("foo"); // sha3(0x666f6f)
+      val3 = sha3(val2, "bar", 1031); //sha3(0x7b626172407)
+  }
+  uint256 val1; 
+  uint16 val2;
+  uint256 val3;
+}
+```
