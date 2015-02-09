@@ -37,10 +37,10 @@ Ethash is intended to satisfy the following goals:
 
 The general route that the algorithm takes is as follows:
 
-1. There exists a `seed` which can be computed for each block by scanning through the block headers up until that point.
-2. From the seed, one can compute a 32 MB pseudorandom `cache`
-3. From the seed and cache, there exists a function `calc_dag_item(seed, cache, i)` which calculates the value of any element in a larger 1 GB dataset. The function for computing each element involves many elements in the cache. Miners are meant to store the 1 GB dataset in memory.
-4. The actual algorithm is a loop that involves combining together many items from the DAG and taking a hash of the output. Each individual read from the DAG is 4KB wide in order to fetch a full page from memory.
+1. There exists a **seed** which can be computed for each block by scanning through the block headers up until that point.
+2. From the seed, one can compute a **32 MB pseudorandom cache**. Light clients store the cache.
+3. From the cache, we can generate a **1 GB dataset** ("the DAG"), with the property that each item in the dataset depends on only a small number of items from the cache. Full clients and miners store the DAG.
+4. Mining involves grabbing random slices of the DAG and hashing them together. Verification can be done with low memory by using the cache to regenerate the specific pieces of the DAG that you need, so you only need to store the cache.
 
 The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it. The dataset also grows over time; it starts off at 1 GB and grows by about 345 MB per year.
 
