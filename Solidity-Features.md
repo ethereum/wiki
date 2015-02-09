@@ -345,7 +345,7 @@ contract c {
 ```
 
 ## SHA3 with arbitrary arguments
-[PT](https://www.pivotaltracker.com/story/show/86896766). Sha3 can now take an arbitrary number and type of arguments.
+[PT](https://www.pivotaltracker.com/story/show/86896766). `sha3()` can now take an arbitrary number and type of arguments.
 ```
 contract c {
   function c()
