@@ -478,6 +478,26 @@ contract test {
 }
 ```
 
+The next example is a bit more complex:
+
+```
+contract complex {
+  struct Data { uint a; string3 b; mapping(uint => uint) map; }
+  mapping(uint => mapping(bool => Data)) data;
+}
+```
+
+It will generate a function of the following form:
+```
+function data(uint arg1, bool arg2) returns (uint a, string3 b)
+{
+  a = data[arg1][arg2].a;
+  b = data[arg1][arg2].b;
+}
+```
+
+Note that the mapping in the struct is omitted because there is no good way to provide the key for the mapping.
+
 ## Fallback Functions
 
 A contract can have exactly one unnamed
