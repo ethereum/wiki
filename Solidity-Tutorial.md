@@ -483,7 +483,7 @@ The next example is a bit more complex:
 ```
 contract complex {
   struct Data { uint a; string3 b; mapping(uint => uint) map; }
-  mapping(uint => mapping(bool => Data)) data;
+  mapping(uint => mapping(bool => Data)) public data;
 }
 ```
 
