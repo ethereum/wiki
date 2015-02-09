@@ -148,6 +148,10 @@ var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;
 ```
 Here, `x` will have the value `0` and thus the type `uint8`.
 
+## Ether Units
+
+A literal number can take a postfix of `wei`, `finney`, `szabo` or `ether` to convert between the subdenominations of ether. Numbers without a postfix are assumed to be "wei", e.g. `2 ether == 2000 finney` evaluates to `true`.
+
 ## Control Structures
 
 Most of the control structures from C/JavaScript are available in Solidity
