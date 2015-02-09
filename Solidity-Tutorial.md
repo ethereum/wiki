@@ -191,6 +191,16 @@ this does not execute a constructor. Be careful in that `feed.info.value(10).gas
 only (locally) set the value and amount of gas sent with the function call and only the
 parentheses at the end perform the actual call.
 
+Function call arguments can also be given by name, in any order:
+```
+contract c {
+function f(uint key, uint value) { ... }
+function g() {
+  f({value: 2, key: 3});
+}
+}
+```
+
 ## Special Variables and Functions
 
 There are special variables and functions which always exist in the global
