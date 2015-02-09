@@ -359,3 +359,13 @@ contract c {
   uint256 val3;
 }
 ```
+
+## Optional Parameter Names
+[PT](https://www.pivotaltracker.com/story/show/85594334). The names for function parameters and return parameters are now optional.
+```
+contract test {
+  function func(uint k, uint) returns(uint){
+    return k;
+  }
+}
+```
