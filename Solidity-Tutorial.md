@@ -585,7 +585,7 @@ arguments will be stored in the data part of the log. Example:
 contract ClientReceipt {
   event Deposit(address indexed _from, hash indexed _id, uint _value);
   function deposit(hash _id) {
-    Deposit(msg.sender, _id, msg.value)
+    Deposit(msg.sender, _id, msg.value);
   }
 }
 ```
