@@ -51,3 +51,29 @@ The HTML view will update to:
 number: 2
 ```
 
+# Parameters in Contract Constructor
+
+Write a Contract containing parameters in the constructor:
+
+```javascript
+contract Test {
+       uint mem;
+       Test(uint _a, uint _b) { mem = _a; }
+       get() returns (uint)
+       {
+         return mem
+       }
+}
+```
+
+Press `F7` => `Edit State`
+The transaction named 'Constructor' should appear in the transaction lists.
+
+Press 'Edit' (on 'Constructor')
+This modal dialog should allow users to fill in input parameters (_a and _b).
+
+Press `+` to add a new transaction. Select the function `get' and save.
+
+Press `F5` (or run the current editing state if this is not the default state).
+
+Verify that the return value of `get` is displayed and is this is the good one => in the transaction log (column `returned`).
