@@ -369,3 +369,13 @@ contract test {
   }
 }
 ```
+
+## Generic call Method
+[PT](https://www.pivotaltracker.com/story/show/86084248) Address types (and contracts by inheritance) have a method `call` that can receive an arbitrary number of arguments of arbitrary types (which can be serialized in memory) and will invoke a message call on that address while the arguments are ABI-serialized. If the first type has a memory-length of exactly four bytes, it is not padded to 32 bytes, so it is possible to specify a function signature.
+```
+contract test {
+  function f(address addr, uint a) {
+    addr.call(string4(string32(sha3("fun(uint256)"))), a);
+  }
+}
+```
