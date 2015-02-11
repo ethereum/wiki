@@ -228,7 +228,7 @@ namespace.
  - `ecrecover(hash, hash8, hash, hash) returns (address)`: recover public key from elliptic curve signature
 
 In the above, "tightly packed" means that the arguments are concatenated without padding, i.e.
-`sha3("abc", "d") == sha3("abcd") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`. If padding is needed, explicit type conversions can be used.
+`sha3("ab", "c") == sha3("abc") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`. If padding is needed, explicit type conversions can be used.
 
 ### Contract Related
 
