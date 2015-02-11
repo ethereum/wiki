@@ -222,10 +222,13 @@ namespace.
 
 ### Cryptographic Functions
 
- - `sha3(hash) returns (hash)`: compute the SHA3 hash of 256 bits of data
- - `sha256(hash) returns (hash)`: compute the SHA256 hash of 256 bits of data
- - `ripemd160(hash) returns (hash160)`: compute RIPEMD of 256 bits of data
+ - `sha3(...) returns (hash)`: compute the SHA3 hash of the (tightly packed) arguments
+ - `sha256(...) returns (hash)`: compute the SHA256 hash of the (tightly packed) arguments
+ - `ripemd160(...) returns (hash160)`: compute RIPEMD of 256 the (tightly packed) arguments
  - `ecrecover(hash, hash8, hash, hash) returns (address)`: recover public key from elliptic curve signature
+
+In the above, "tightly packed" means that the arguments are concatenated without padding, i.e.
+`sha3("abc", "d") == sha3("abcd") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`. If padding is needed, explicit type conversions can be used.
 
 ### Contract Related
 
