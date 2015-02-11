@@ -200,6 +200,14 @@ function g() {
 }
 }
 ```
+The names for function parameters and return parameters are optional.
+```
+contract test {
+  function func(uint k, uint) returns(uint){
+    return k;
+  }
+}
+```
 
 ## Special Variables and Functions
 
