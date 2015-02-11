@@ -247,12 +247,13 @@ address x = 0x123;
 if (x.balance < 10 && address(this).balance >= 10) x.send(10);
 ```
 
-Furthermore, to interface with contracts that do not adhere to the ABI (like the NameReg contract),
-the functions `callstring32` and `callstring32string32` are provided which take one or two arguments of type string32 (they might change in the future):
+Furthermore, to interface with contracts that do not adhere to the ABI (like the classic NameReg contract),
+the function `call` is provided which takes an arbitrary number of arguments of any type. These arguments are ABI-serialized (i.e. also padded to 32 bytes). One exception is the case where the first argument is encoded to exactly four bytes. In this case, it is not padded to allow the use of function signatures here.
 
 ```
 address nameReg = 0x72ba7d8e73fe8eb666ea66babc8116a41bfb10e2;
-nameReg.callstring32string32("register", "MyName");
+nameReg.call("register", "MyName");
+nameReg.call(string4(string32(sha3("fun(uint256)"))), a);
 ```
 
 Note that contracts inherit all members of address, so it is possible to query the balance of the
