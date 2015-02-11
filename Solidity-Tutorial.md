@@ -592,7 +592,7 @@ Multiple modifiers can be applied to a function by specifying them in a whitespa
 
 ## Events
 
-[PT](https://www.pivotaltracker.com/story/show/86896642) Events allow the convenient usage of the EVM logging facilities. Events are inheritable members of contracts. When they are called, they cause
+Events allow the convenient usage of the EVM logging facilities. Events are inheritable members of contracts. When they are called, they cause
 the arguments to be stored in the transaction's log. Up to three parameters can receive the
 attribute `indexed` which will cause the respective arguments to be treated as log topics instead
 of data. The hash of the signature of the event is always one of the topics. All non-indexed
@@ -606,7 +606,7 @@ contract ClientReceipt {
 }
 ```
 Here, the call to `Deposit` will behave identical to
-`log3(msg.value, 0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20, hash(msg.sender), _id);`. Note that the large hex number is equal to the sha3-hash of "Deposit(address,hash256,uint256)", the event's
+`log3(msg.value, 0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20, sha3(msg.sender), _id);`. Note that the large hex number is equal to the sha3-hash of "Deposit(address,hash256,uint256)", the event's
 signature.
 
 ## Layout of Storage
