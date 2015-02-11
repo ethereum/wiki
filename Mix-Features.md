@@ -61,7 +61,7 @@ contract Test {
        Test(uint _a, uint _b) { mem = _a; }
        get() returns (uint)
        {
-         return mem
+         return mem;
        }
 }
 ```
