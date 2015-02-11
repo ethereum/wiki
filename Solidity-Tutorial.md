@@ -397,7 +397,7 @@ contract NameReg { function register(string32 name) {} function unregister() {} 
 // Multiple inheritance is possible. Note that "owned" is also a base class of
 // "mortal", yet there is only a single instance of "owned" (as for virtual
 // inheritance in C++).
-contract named is mortal, owned {
+contract named is owned, mortal {
     function named(string32 name) {
         address ConfigAddress = 0xd5f9d8d94886e70b06e474c3fb14fd43e2f23970;
         NameReg(Config(ConfigAddress).lookup(1)).register(name);
@@ -416,7 +416,7 @@ contract named is mortal, owned {
 }
 
 // If a constructor takes an argument, it needs to be provided in the header.
-contract PriceFeed is named("GoldFeed"), mortal, owned {
+contract PriceFeed is owned, mortal, named("GoldFeed") {
    function updateInfo(uint newInfo) {
       if (msg.sender == owner) info = newInfo;
    }
@@ -465,6 +465,18 @@ base contracts, it rather calls this function on the next base contract in the f
 inheritance graph, so it will call `Base2.kill()`. Note that the actual function that
 is called when using super is not known in the context of the class where it is used,
 although its type is known. This is similar for ordinary virtual method lookup.
+
+### Multiple Inheritance and Linearization
+
+Languages that allow multiple inheritance have to deal with several problems, one of them being the [Diamond Problem](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem). Solidity follows the path of Python and uses "[C3 Linearization](https://en.wikipedia.org/wiki/C3_linearization)" to force a specific order in the DAG of base classes. This results in the desirable property of monotonicity but disallows some inheritance graphs. Especially, the order in which the base classes are given in the `is` directive is important. In the following code, Solidity will give the error "Linearization of inheritance graph impossible".
+```
+contract X {}
+contract A is X {}
+contract C is A, X {}
+```
+The reason for this is that `C` requests `X` to override `A` (by specifying `A, X` in this order), but `A` itself requests to override `X`, which is a contradiction that cannot be resolved.
+
+A simple rule to remember is to specify the base classes in the order from "most base-like" to "most derived".
 
 ## Visibility Specifiers
 
