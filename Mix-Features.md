@@ -69,10 +69,10 @@ contract Test {
 Press `F7` => `Edit State`
 The transaction named 'Constructor' should appear in the transaction lists.
 
-Press 'Edit' (on 'Constructor')
+Press `Edit` (on `Constructor`)
 This modal dialog should allow users to fill in input parameters (_a and _b).
 
-Press `+` to add a new transaction. Select the function `get' and save.
+Press `+` to add a new transaction. Select the function `get` and save.
 
 Press `F5` (or run the current editing state if this is not the default state).
 
