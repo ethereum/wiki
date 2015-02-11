@@ -2,39 +2,6 @@
 
 Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version of Dagger-Hashimoto, although it can no longer appropriately be called that since many of the original features of both algorithms have been drastically changed in the last month of research and development. See [https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto](https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto) for the original version.
 
-The specification for the algorithm is written in python to give a balance between clarity and exactness. If you are interested in actually running the spec as code, then you can; you simply need to install the `python_sha3` and `pyethereum` libraries, and add the following lines to your top of the file:
-
-```python
-import sha3
-
-# Assumes little endian bit ordering (same as Intel architectures)
-def decode_int(s):
-   return int(s[::-1].encode('hex'), 16) if s else 0
-
-def encode_int(s):
-   a = "%x" % s
-   return '' if s == 0 else ('0' * (len(a) % 2) + a).decode('hex')[::-1]
-
-def zpad(s, length):
-   return s + '\x00' * max(0, length - len(s))
-
-# sha3 hash function, outputs 64 bytes
-def sha3_512(x):
-    return sha3.sha3_512(x).digest()
-
-def sha3_256(x):
-    return sha3.sha3_256(x).digest()
-```
-
-### Goals
-
-Ethash is intended to satisfy the following goals:
-
-1. **IO saturation**: the algorithm should consume nearly the entire available memory access bandwidth (this is a strategy toward achieving ASIC resistance)
-2. **Light client verifiability**: a light client should be able to verify a round of mining in under 0.01 seconds on a desktop in C, and under 1 second in Python or Javascript, with at most 32 MB of memory
-3. **Light client slowdown**: the process of running the algorithm with a light client should be much slower than the process with a full client, to the point that the light client algorithm is not an economically viable route toward making an ASIC implementation.
-4. **Light client fast startup**: a light client should be able to become fully operational and able to verify blocks within 40 seconds in Python or Javascript.
-
 The general route that the algorithm takes is as follows:
 
 1. There exists a **seed** which can be computed for each block by scanning through the block headers up until that point.
@@ -44,6 +11,10 @@ The general route that the algorithm takes is as follows:
 
 The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it. The dataset also grows over time; it starts off at 1 GB and grows by about 345 MB per year.
 
+The specification for the algorithm is written in python to give a balance between clarity and exactness. If you are interested in actually running the spec as code, then you can; simply prepend the code given at the start of the appendix.
+
+See [https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale](https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale) for design rationale considerations for this algorithm.
+
 ### Definitions
 
 We employ the following definitions:
@@ -51,6 +22,8 @@ We employ the following definitions:
 ```
 DAG_BYTES_INIT=1073741824  # bytes in dag at genesis
 DAG_BYTES_GROWTH=131072    # growth per epoch (~345 MB per year)
+CACHE_BYTES_INIT=33554432  # bytes in cache at genesis
+CACHE_BYTES_GROWTH=4096    # growth per epoch (~11 MB per year)
 EPOCH_LENGTH=1000          # blocks per epoch
 MIX_BYTES=4096             # width of mix
 HASH_BYTES=64              # hash length in bytes
@@ -60,17 +33,18 @@ ACCESSES=32               # number of accesses in hashimoto loop
 ```
 
 ### Parameters
+
 The parameters for Ethash's cache and DAG depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we use the following function:
 
 ```python
 def get_datasize(block):
-    datasize_in_bytes = DAGSIZE_BYTES_INIT + DAGSIZE_BYTES_GROWTH * (block.number // EPOCH_LENGTH)
+    datasize_in_bytes = DAG_BYTES_INIT + DAG_BYTES_GROWTH * (block.number // EPOCH_LENGTH)
     while not isprime(datasize_in_bytes // MIX_BYTES):
         datasize_in_bytes -= MIX_BYTES
     return datasize_in_bytes
 
 def get_cachesize(block):
-    datasize_in_bytes = (DAG_BYTES_INIT + DAG_BYTES_GROWTH * (block.number // EPOCH_LENGTH)) // 32
+    datasize_in_bytes = CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * (block.number // EPOCH_LENGTH)
     while not isprime(cachesize_in_bytes // HASH_BYTES):
         cachesize_in_bytes -= HASH_BYTES
     return cachesize_in_bytes
@@ -145,16 +119,6 @@ def quick_bbs(seed, i, P):
 def step_bbs(n, P):
     return (n * n * n) % P
 ```
-
-When choosing a safe prime *p* for our random number generator, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since this determines the cycle length of the corresponding random number generator.
-
-The multiplicative order of 3 in ℤ/(4294967086) is 1073741771.
-
-The multiplicative order of 3 in ℤ/(4294963786) is 2147481893.
-
-Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
-
-This particular pseudo-random number generator may exhibit bias when taking its output modulo a value which is not a prime, which is why we have forced the size of the DAG and the cache to be products of a prime and sizes of memory chunks.
 
 ### Data aggregation function
 
@@ -264,6 +228,30 @@ In order to compute the seed for a given block, we use the following algorithm:
 This function outputs two seeds, for using a *double buffer* (similar to the pattern used in computer graphics, see [wikipedia](https://en.wikipedia.org/wiki/Multiple_buffering#Double_buffering_in_computer_graphics)). During even-numbered epochs, the PoW uses a DAG based on the `front_buffer_seed`, and during odd-numbered epochs the PoW uses the `back_buffer_seed`; this allows a miner to rebuild one DAG while simultaneously still using the other DAG, ensuring a smooth transition as the dataset gets updated.
 
 ### Appendix
+
+The following code should be prepended if you are interested in running the above python spec as code.
+
+```python
+import sha3
+
+# Assumes little endian bit ordering (same as Intel architectures)
+def decode_int(s):
+   return int(s[::-1].encode('hex'), 16) if s else 0
+
+def encode_int(s):
+   a = "%x" % s
+   return '' if s == 0 else ('0' * (len(a) % 2) + a).decode('hex')[::-1]
+
+def zpad(s, length):
+   return s + '\x00' * max(0, length - len(s))
+
+# sha3 hash function, outputs 64 bytes
+def sha3_512(x):
+    return sha3.sha3_512(x).digest()
+
+def sha3_256(x):
+    return sha3.sha3_256(x).digest()
+```
 
 The following lookup tables provide approximately 7 years of tabulated DAG and cache sizes.  They were generated with the following *Mathematica* functions:
 
