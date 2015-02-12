@@ -309,9 +309,9 @@ Il contratto potrebbe avere quindi clausole per ognuna di queste. Esso potrebbe 
 
 Un modello alternativo per una società decentralizzata, dove qualsiasi account può avere zero o più azioni, e dove due terzi delle azioni sono necessarie per prendere una decisione. Un'intelaiatura completa potrebbe coinvolgere la funzionalità della gestione degli asset, l'abilità di fare un'offerta per comprare o vendere le azioni, e l'abilità di accettare offerte (preferibilmente con un meccanismo di matching dell'ordine all'interno del contratto). La delega potrebbe anche esiste come una Democrazia di tipo liquido, estendendo il concetto della "board of directors".
 
-### Further Applications
+### Ulteriori Applicazioni
 
-**1. Savings wallets**. Suppose that Alice wants to keep her funds safe, but is worried that she will lose or someone will hack her private key. She puts ether into a contract with Bob, a bank, as follows:
+**1. Portafogli di risparmio**. Si supponga che Alice vuole tenere al sicuro i suoi fondi, ma è preoccupata circa il fatto che lei li perderà o qualcuno eseguirà un hack della sua chiave privata. Lei attraverso ether stipula un contratto con Bob, una banca, come segues:
 
 * Alice alone can withdraw a maximum of 1% of the funds per day.
 * Bob alone can withdraw a maximum of 1% of the funds per day, but Alice has the ability to make a transaction with her key shutting off this ability.
