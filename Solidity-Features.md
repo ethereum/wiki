@@ -379,3 +379,25 @@ contract test {
   }
 }
 ```
+
+## Byte arrays
+[PT](https://www.pivotaltracker.com/story/show/87037182) Basic support for variable-length byte arrays. This includes
+ - `bytes` type for storage variables
+ - `msg.data` is of `bytes` type and contains the calldata
+ - functions taking arbitrary parameters (`call`, `sha3`, ...) can be called with `bytes` arguments.
+ - copying between `msg.data` and `bytes` storage variables
+
+What is not possible yet:
+ - function parameters of `bytes` type
+ - local variables of `bytes` type
+ - index or slice access
+
+```
+contract c {
+  bytes data;
+  function() { data = msg.data; }
+  function forward(address addr) { addr.call(data); }
+  function getLength() returns (uint) { return addr.length; }
+  function clear() { delete data; }
+}
+```
