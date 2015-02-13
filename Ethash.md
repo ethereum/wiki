@@ -9,7 +9,7 @@ The general route that the algorithm takes is as follows:
 3. From the cache, we can generate a **1 GB dataset** ("the DAG"), with the property that each item in the dataset depends on only a small number of items from the cache. Full clients and miners store the DAG.
 4. Mining involves grabbing random slices of the DAG and hashing them together. Verification can be done with low memory by using the cache to regenerate the specific pieces of the DAG that you need, so you only need to store the cache.
 
-The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it. The dataset also grows over time; it starts off at 1 GB and grows by about 345 MB per year.
+The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it. The dataset also grows over time; it starts off at 1 GB and grows by about 345 MB per GB per year.
 
 The specification for the algorithm is written in python to give a balance between clarity and exactness. If you are interested in actually running the spec as code, then you can; simply prepend the code given at the start of the appendix.
 
