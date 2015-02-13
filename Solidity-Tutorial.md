@@ -222,6 +222,7 @@ namespace.
  - `block.number` (`uint`): current block number
  - `block.blockhash` (`function(uint) returns (hash)`): hash of the given block
  - `block.timestamp` (`uint`): current block timestamp
+ - `msg.data` (`bytes`): complete calldata
  - `msg.gas` (`uint`): remaining gas
  - `msg.sender` (`address`): sender of the message (current call)
  - `msg.value` (`uint`): number of wei sent with the message
