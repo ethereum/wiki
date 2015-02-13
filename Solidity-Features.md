@@ -401,3 +401,21 @@ contract c {
   function clear() { delete data; }
 }
 ```
+
+## Enums
+[PT](https://www.pivotaltracker.com/story/show/86670106) Solidity now supports enums. Enums are explicitly convertible to all integer types but implicit conversion is not allowed.
+
+```
+contract test {
+	enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill };
+	function test()
+	{
+	    choices = ActionChoices.GoStraight;
+	}
+	function getChoice() returns (uint d)
+	{
+	    d = uint256(choices);
+	}
+	ActionChoices choices;
+	}
+```
