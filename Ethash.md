@@ -34,30 +34,26 @@ ACCESSES=32               # number of accesses in hashimoto loop
 
 ### Parameters
 
-The parameters for Ethash's cache and DAG depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we use the following function:
+The parameters for Ethash's cache and DAG depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we use the following functions:
 
 ```python
 def get_datasize(block):
     datasize_in_bytes = DAG_BYTES_INIT + DAG_BYTES_GROWTH * (block.number // EPOCH_LENGTH)
-    while not isprime(datasize_in_bytes // MIX_BYTES):
+    while not _isprime(datasize_in_bytes // MIX_BYTES):
         datasize_in_bytes -= MIX_BYTES
     return datasize_in_bytes
 
 def get_cachesize(block):
-    datasize_in_bytes = CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * (block.number // EPOCH_LENGTH)
-    while not isprime(cachesize_in_bytes // HASH_BYTES):
+    cachesize_in_bytes = CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * (block.number // EPOCH_LENGTH)
+    while not _isprime(cachesize_in_bytes // HASH_BYTES):
         cachesize_in_bytes -= HASH_BYTES
     return cachesize_in_bytes
-```
 
-Where `isprime` is given by:
-
-```python
- def isprime(n):
-      for i in range(2, int(n ** 0.5 + 1)):
-          if n % i == 0:
-              return False
-      return True
+def _isprime(n):
+    for i in range(2, int(n ** 0.5 + 1)):
+        if n % i == 0:
+            return False
+    return True
 ```
 
 Essentially, we are keeping the size of the dataset to always be equal to the highest prime below a linearly growing function, so on average in the long term the dataset will grow roughly linearly.  Tabulated version of ``get_datasize` and `get_cachesize` have been provided in the appendix.
