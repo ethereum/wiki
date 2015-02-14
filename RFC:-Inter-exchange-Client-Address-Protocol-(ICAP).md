@@ -22,7 +22,7 @@ Introduce a new IBAN country code: *XE*, formulated as the Ethereum *E* prefixed
 
 The BBAN for this code will comprise three fields:
 
-- Asset identifier, 3-character alphanumeric (< 16-bit)
+- Asset identifier, 3-character alphanumeric (< 16-bit);
 - Institution identifier, 4-character alphanumeric (< 21-bit);
 - Institution client identifier, 9-character alphanumeric (< 47-bit);
 
@@ -36,17 +36,43 @@ Split into:
 
 - `XE` The country code for Ethereum;
 - `66` The checksum;
-- `ETH` The asset identifier within the client account - in this case, "ETH" is the only valid asset identifier, since Ethereum's base registry contract supports only this asset.
-- `XREG` The institution code for the account - in this case, Ethereum's base registry system;
-- `GAVOFYORK` The client identifier within the institution - in this case, whatever primary address is associated with the name "GAVOFYORK" in Ethereum's base registry contract;
+- `ETH` The asset identifier within the client account - in this case, "ETH" is the only valid asset identifier, since Ethereum's base registry contract supports only this asset;
+- `XREG` The institution code for the account - in this case, Ethereum's base registry contract;
+- `GAVOFYORK` The client identifier within the institution - in this case, a direct payment with no additional data to whatever primary address is associated with the name "GAVOFYORK" in Ethereum's base registry contract;
 
-## Notes
+### Notes
 
-Institution identifiers beginning with X are reserved as special institutions for the given country code.
+Institution codes beginning with `X` are reserved for system use.
 
 ## Implementation
 
-Within Ethereum, i.e. as long as the 
+The mechanism for asset transfer over two routing protocols are specified, both of which are specific to the Ethereum domain (country-code of `XE`). One is for currency transfers directly to clients with the system address found through a Registry-lookup system of the client-ID, denoted by asset class `ETH`, whereas the other is for transfers to an intermediary with associated data to specify client, denoted by asset class `XET`.
+
+### ETH
+
+Within the ETH asset code of Ethereum's country-code (XE), i.e. as long as the code begins with `XE**ETH` (where `**` is the valid checksum), then we can define the required transaction to be the deposit address given by a call to the *registry contract* denoted by the institution code. For institutions not beginning with `X`, this corresponds to the primary address associated with the *Ethereum standard name*:
+
+[institution code] `/` [client identifier]
+
+The *Ethereum standard name* is simply the normal hierarchical lookup mechanism, as specified in the Ethereum standard interfaces document.
+
+We define a *registry contract* as a contract fulfilling the Registry interface as specified in the Ethereum standard interfaces document.
+
+**TODO**: JS code for specifying the transfer.
+
+### XET
+
+For the `XET` asset code within the Ethereum country code (i.e. while the code begins XE**XET), then we can derive the transaction that must be made through a lookup to the Ethereum `iban` registry contract. For a given institution, this contract specifies two values: the deposit call signature hash and the institution's Ethereum address.
+
+At present, only a single such deposit call is defined, which is:
+
+```
+function deposit(uint64 clientAccount)
+```
+
+whose signature hash is `0x13765838`. The transaction to transfer the assets should be formed as an ether-laden call to the institution's Ethereum address using the `deposit` method as specified above, with the client account determined through the value of the big-endian, base-36 interpretation of the alpha-numeric *Institution client identifier*, literally using the value of the characters `0` to `9`, then evaluating 'A' (or 'a') as 10, 'B' (or 'b') as 11 and so forth.
+
+**TODO**: JS code for specifying the transfer.
 
 ## Other forms
 
