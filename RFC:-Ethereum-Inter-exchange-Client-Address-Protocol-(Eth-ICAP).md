@@ -4,4 +4,4 @@ Transferring funds between third-party accounts, especially those of exchanges, 
 
 ### IBAN
 
-For a good overview of the IBAN system, please see [IBAN](https://en.wikipedia.org/wiki/International_Bank_Account_Number).
+For a good overview of the IBAN system, please see [Wikipedia's IBAN article](https://en.wikipedia.org/wiki/International_Bank_Account_Number).
