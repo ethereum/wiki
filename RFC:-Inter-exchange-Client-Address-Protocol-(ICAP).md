@@ -22,27 +22,31 @@ Introduce a new IBAN country code: *XE*, formulated as the Ethereum *E* prefixed
 
 The BBAN for this code will comprise three fields:
 
+- Asset identifier, 3-character alphanumeric (< 16-bit)
 - Institution identifier, 4-character alphanumeric (< 21-bit);
 - Institution client identifier, 9-character alphanumeric (< 47-bit);
-- Asset identifier, 3-character alphanumeric (< 16-bit)
 
 Including the four initial characters, this leads to a final client-account address length of 20 characters, of the form:
 
 ```
-XE66XREGGAVOFYORKETH
+XE66ETHXREGGAVOFYORK
 ```
 
 Split into:
 
 - `XE` The country code for Ethereum;
 - `66` The checksum;
+- `ETH` The asset identifier within the client account - in this case, "ETH" is the only valid asset identifier, since Ethereum's base registry contract supports only this asset.
 - `XREG` The institution code for the account - in this case, Ethereum's base registry system;
 - `GAVOFYORK` The client identifier within the institution - in this case, whatever primary address is associated with the name "GAVOFYORK" in Ethereum's base registry contract;
-- `ETH` The asset identifier within the client account - in this case, "ETH" is the only valid asset identifier, since Ethereum's base registry contract supports only this asset.
 
 ## Notes
 
 Institution identifiers beginning with X are reserved as special institutions for the given country code.
+
+## Implementation
+
+Within Ethereum, i.e. as long as the 
 
 ## Other forms
 
@@ -51,11 +55,11 @@ Institution identifiers beginning with X are reserved as special institutions fo
 General URIs can be formed though the URI scheme name `iban`, followed by the colon character `:`, followed by the 20-character alphanumeric identifier, thus for the example above, we would use:
 
 ```
-iban:XE66XREGGAVOFYORKETH
+iban:XE66ETHXREGGAVOFYORK
 ```
 
 ### QR Code
 
-A QR code may be generated directly from the URI using standard QR encodings. For example, the example above `iban:XE66XREGGAVOFYORKETH` would have the corresponding QR code:
+A QR code may be generated directly from the URI using standard QR encodings. For example, the example above `iban:XE66ETHXREGGAVOFYORK` would have the corresponding QR code:
 
-![QR code for iban:XE66XREGGAVOFYORKETH](http://opensecrecy.com/qr-XE66XREGGAVOFYORKETH.gif)
+![QR code for iban:XE66ETHXREGGAVOFYORK](http://opensecrecy.com/qr-XE66ETHXREGGAVOFYORK.gif)
