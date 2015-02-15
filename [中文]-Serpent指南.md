@@ -17,7 +17,7 @@ Serpent与Python之间的主要区别有:
 
 ### 安装
 
-我们可以通过pip来安装Serpent的python库和可执行文件:
+我们可以通过pip来安装Serpent的python库和可执行文件 (注：译者使用的Python版本为2.7):
 
     sudo pip install ethereum-serpent
 
@@ -91,3 +91,22 @@ Additionally, the Pyethereum testing environment that we will be using simply as
     1142360101
 
 字母`i`代表整型或者定长字符串（32字节，在Serpern和EVM中与整型等价）参数，字母`s`代表变长字符串参数，而字母`a`代表数组参数。后文会对此做更详细的介绍。
+
+那么如何运行这份合约呢？这时候我们需要使用[pyethereum](https://github.com/ethereum/pyethereum)。先通过pip(环境是python 2.7)安装pyethereum:
+
+    > sudo pip install pyethereum
+
+在合约代码所在目录中打开Python控制台，输入：
+
+    > from pyethereum import tester as t
+    > s = t.state()
+    > c = s.abi_contract('mul2.se')
+    > c.double(42)
+    [84]
+
+第二行创建了一个初始化的状态(类似于创世块, genesis block)。第三行创建了一个Python对象，代表mul2.se这个合约。你可以用`c.address`来查看这份合约存放的地址。第四行调用这个合约，传入参数42,然后我们看到这份合约返回给我们结果84。
+
+如果要在testnet或者livenet上调用这样一份合约，你需要打包一个包含类似”以整型参数42作为输入调用函数double“这样信息的交易发送给这份合约。命令如下：
+
+    > serpent encode_abi double i 42
+    eee97206000000000000000000000000000000000000000000000000000000000000002a
