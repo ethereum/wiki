@@ -14,3 +14,16 @@ Serpent与Python之间的主要区别有:
 * Serpent没有first-class函数的概念。虽然合约中可以定义函数, 合约也可以调用这些函数，但是在两次函数调用之间变量(除了持久变量)是会丢失的。???
 * Serpent有一个被称作”持久变量“(persistent storage variables)的概念。
 * 在Serpent中可以使用`extern`语句来调用其他合约中定义的函数。
+
+### 安装
+
+我们可以通过pip来安装Serpent的python库和可执行文件:
+
+    sudo pip install ethereum-serpent
+
+如果想要一个在C++中可以直接调用的库，可以自行编译Serpent:
+
+    git clone http://github.com/ethereum/serpent
+    cd serpent
+    make
+    sudo make install
