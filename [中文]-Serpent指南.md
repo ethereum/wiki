@@ -110,3 +110,41 @@ Additionally, the Pyethereum testing environment that we will be using simply as
 
     > serpent encode_abi double i 42
     eee97206000000000000000000000000000000000000000000000000000000000000002a
+
+### 另一个实例：名称注册表 (Name Registry)
+
+读者一定觉得在区块链上跑一个”乘以2“的函数略显无聊吧... 接下来让我们来实现一个更有趣的合约：名称注册表。这个合约的主要接口是一个`register(key, value)`函数。通过这个接口可以检查给定的key是否已经被使用/注册了；如果没有，则将这个键值注册为给定的value然后返回1；如果已经被使用则直接返回0。这个合约还提供另外一个接口用来获取指定key对应的value。下面就是合约代码：
+
+    def register(key, value):
+        # Key not yet claimed
+        if not self.storage[key]:
+            self.storage[key] = value
+            return(1)
+        else:
+            return(0)  # Key already claimed
+
+    def ask(key):
+        return(self.storage[key])
+
+这份合约首先定义了`register`函数，这个函数接受`key`和`value`变量作为参数。第二行是注释，以`#`开头，注释会被编译器忽略，仅仅用来帮助程序员更好的理解程序。然后是一个标准的if/else条件语句：先检查`self.storage[key]`是否为0(即表明这个key没有被使用)，如果是0则执行赋值`self.storage[key] = value`然后返回1,否则直接返回0（实际上这里返回的是一个数组字面量，所以在Serpent里面可以一次返回多个值）。`self.storage`是一个伪数组，有和数组类似的行为但是实际上没有一块内存与之对应。
+
+让我们把这段代码放入一个名为"namecoin.se"的文件，然后在pyethereum中试试：
+
+    > from pyethereum import tester as t
+    > s = t.state()
+    > c = s.abi_contract('namecoin.se')
+    > c.register(0x67656f726765, 45)
+    [1]
+    > c.register(0x67656f726765, 20)
+    [0]
+    > c.register(0x6861727279, 65)
+    [1]
+    > c.ask(0x6861727279)
+    [65]
+
+`funid`是函数的索引，按照函数在合约代码中的字面顺序递增。这里0代表`register`，1代表`ask`。如果我们想要把上面的第一次调用写成交易的形式：
+
+```
+> serpent encode_abi register ii 0x67656f726765 45
+d66d6c10000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d
+```
