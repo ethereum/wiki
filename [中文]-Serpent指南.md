@@ -126,7 +126,7 @@ Additionally, the Pyethereum testing environment that we will be using simply as
     def ask(key):
         return(self.storage[key])
 
-这份合约首先定义了`register`函数，这个函数接受`key`和`value`变量作为参数。第二行是注释，以`#`开头，注释会被编译器忽略，仅仅用来帮助程序员更好的理解程序。然后是一个标准的if/else条件语句：先检查`self.storage[key]`是否为0(即表明这个key没有被使用)，如果是0则执行赋值`self.storage[key] = value`然后返回1,否则直接返回0（实际上这里返回的是一个数组字面量，所以在Serpent里面可以一次返回多个值）。`self.storage`是一个伪数组，有和数组类似的行为但是实际上没有一块内存与之对应。
+这份合约首先定义了`register`函数，这个函数接受`key`和`value`变量作为参数。第二行是注释，以`#`开头，注释会被编译器忽略，仅仅用来帮助程序员更好的理解程序。然后是一个标准的if/else条件语句：先检查`self.storage[key]`是否为0(即表明这个key没有被使用)，如果是0则执行赋值`self.storage[key] = value`然后返回1,否则直接返回0。`self.storage`是一个伪数组，有和数组类似的行为但是实际上没有一块内存与之对应。
 
 让我们把这段代码放入一个名为"namecoin.se"的文件，然后在pyethereum中试试：
 
