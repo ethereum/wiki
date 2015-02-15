@@ -120,7 +120,7 @@ Having a multiply-by-two function on the blockchain is kind of boring. So let's 
     def ask(key):
         return(self.storage[key])
 
-Here, we see a few parts in action. First, we have the `key` and `value` variables that the function takes as arguments. The third line is a comment; it does not get compiled and only serves to remind you what the code does. Then, we have a standard if/else clause, which checks if `self.storage[key]` is zero (ie. unclaimed), and if it is then it sets `self.storage[key] = value` and returns 1. Otherwise, it returns zero (which we expressed as a literal array just to exhibit this other style of returning; it's more cumbersome but lets you do return multiple values). `self.storage` is also a pseudo-array, acting like an array but without any particular memory location.
+Here, we see a few parts in action. First, we have the `key` and `value` variables that the function takes as arguments. The third line is a comment; it does not get compiled and only serves to remind you what the code does. Then, we have a standard if/else clause, which checks if `self.storage[key]` is zero (ie. unclaimed), and if it is then it sets `self.storage[key] = value` and returns 1. Otherwise, it returns zero. `self.storage` is also a pseudo-array, acting like an array but without any particular memory location.
 
 Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opcodes or EVM, and let's try it out in the pyethereum tester environment:
 
