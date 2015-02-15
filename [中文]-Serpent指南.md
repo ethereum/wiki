@@ -27,3 +27,55 @@ Serpent与Python之间的主要区别有:
     cd serpent
     make
     sudo make install
+
+### 指南
+
+现在开始编写我们的第一个合约吧！
+
+首先创建一个叫做"mul2.se"的文件，内容如下:
+
+    def double(x):
+         return(x * 2)
+
+这是一个非常简单的只有两行代码的合约，它定义了一个函数。一份Serpent合约通过函数向其他合约或者交易(transaction)提供”接口“(interface)，合约定义的函数即可以被交易也可以被其他合约调用。例如一份定义货币的合约可能会定义类似`send(to,value`和`check_balance(address)`的函数。
+
+Additionally, the Pyethereum testing environment that we will be using simply assumes that data input and output are in this format.
+
+现在让我们来编译这份代码。在命令行中输入:
+
+```
+> serpent compile mul2.se
+604380600b600039604e567c01000000000000000000000000000000000000000000000000000000006000350463eee9720681141560415760043560405260026040510260605260206060f35b505b6000f3
+```
+
+执行成功后就得到了一串可以放入交易执行的16进制编码的字符串。如果你想要的是机器指令(opcodes)，可以使用`pretty_compile`来编译：
+
+    > serpent pretty_compile mul2.se
+    [PUSH1, 67, DUP1, PUSH1, 11, PUSH1, 0, CODECOPY, PUSH1, 78, JUMP, PUSH29, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, PUSH1, 0, CALLDATALOAD, DIV, PUSH4, 238, 233, 114, 6, DUP2, EQ, ISZERO, PUSH1, 65, JUMPI, PUSH1, 4, CALLDATALOAD, PUSH1, 64, MSTORE, PUSH1, 2, PUSH1, 64, MLOAD, MUL, PUSH1, 96, MSTORE, PUSH1, 32, PUSH1, 96, RETURN, JUMPDEST, POP, JUMPDEST, PUSH1, 0, RETURN]
+
+使用`compile_to_lll`可以查看LLL形式的中间编译结果：
+
+```
+> serpent compile_to_lll mul2.se
+(return 0 
+  (lll 
+    (with '__funid 
+      (div (calldataload 0) 
+        26959946667150639794667015087019630673637144422540572481103610249216
+      )
+      (unless (iszero (eq (get '__funid) 4008276486)) 
+        (seq 
+          (set 'x (calldataload 4))
+          (seq 
+            (set '_temp_521 (mul (get 'x) 2))
+            (return (ref '_temp_521) 32)
+          )
+        )
+      )
+    )
+    0
+  )
+)
+```
+
+让我们来理解一下上面编译结果的含义。与大多数合约一样，代码最外一层的目的仅仅是在合约初始化阶段将合约内部的代码复制并作为运算结果返回。初始化阶段返回的代码将会在每次调用合约的时候被执行。因此在EVM (Ethereum Virtual Machine)执行的代码中你可以看到`CODECOPY`指令, 在LLL表达式中对应的则是`lll`元操作。在`lll`元操作内部，首先是一段获取保存在合约数据头四个字节的函数ID(function ID)的代码（也就是`(div (calldataload 0) 26959946667150639794667015087019630673637144422540572481103610249216)`这一段，我们通过先读入32个字节，再将其除以2^224得到头四个字节）。再往下，则会将获得的函数ID与该合约支持的所有函数ID逐一比较。在我们的例子中，如果函数ID是4008276486，则会将消息数据中的4到35字节的数据赋值给一个名为`'x`的变量（对应的代码是`(calldataload 4)`），然后将`2 * x`的结果赋值给一个临时变量`'_temp_521`，最后将这个临时变量对应的内存地址中存放的32字节长的数据作为结果返回。
