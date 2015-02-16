@@ -111,9 +111,9 @@ Additionally, the Pyethereum testing environment that we will be using simply as
     > serpent encode_abi double i 42
     eee97206000000000000000000000000000000000000000000000000000000000000002a
 
-### 另一个实例：名称注册表 (Name Registry)
+### 另一个实例：名称注册合约 (Name Registry)
 
-读者一定觉得在区块链上跑一个”乘以2“的函数略显无聊吧... 接下来让我们来实现一个更有趣的合约：名称注册表。这个合约的主要接口是一个`register(key, value)`函数。通过这个接口可以检查给定的key是否已经被使用/注册了；如果没有，则将这个键值注册为给定的value然后返回1；如果已经被使用则直接返回0。这个合约还提供另外一个接口用来获取指定key对应的value。下面就是合约代码：
+读者一定觉得在区块链上跑一个”乘以2“的函数略显无聊吧... 接下来让我们来实现一个更有趣的合约：名称注册。这个合约的主要接口是一个`register(key, value)`函数。通过这个接口可以检查给定的key是否已经被使用/注册了；如果没有，则将这个key注册为指定的键值然后返回1；如果已经被使用则直接返回0。这个合约还提供另外一个接口用来获取指定key对应的键值。下面就是合约代码：
 
     def register(key, value):
         # Key not yet claimed
@@ -188,3 +188,97 @@ returnten.se:
 * `outsz=7` - Serpent在默认情况下取运算结果的头32字节作为函数返回值，通过`outsz`可以要求函数通过数组返回更多的值。??? 例如执行`y = x.fun(arg1, outsz=7)`之后你可以通过`y[0]`, `y[1]`等等操作返回值。
 
 和`create`类似的一个操作是`inset('filename')`，它的作用是用文件中的代码替换调用的那一行，而不是创建一个合约。
+
+### 持久化保存结构化数据
+
+（注：原文用词是data structure，直译应为数据结构，但例子中定义的更像是数据而不是数据结构，因此翻译为结构化数据。???）
+
+在更复杂的场景中，我们经常需要将结构化数据持久的保存。例如一份去中心话的交易所合约，既需要保存用户各种资金的余额，也需要保存待成交的包含了价格和数量信息的买单和卖单。因此Serpent内建支持自定义数据结构。以去中心化交易所合约为例，其中可能需要定义这样的结构化数据：
+
+    data user_balances[][]
+    data orders[](buys[](user, price, quantity), sells[](user, price, quantity))
+
+接下来可以使用这些定义好的数据：
+
+    def fill_buy_order(currency, order_id):
+        # Available amount buyer is willing to buy
+        q = self.orders[currency].buys[order_id].quantity
+        # My balance in the currency
+        bal = self.user_balances[msg.sender][currency]
+        # The buyer
+        buyer = self.orders[currency].buys[order_id].user
+        if q > 0:
+            # The amount we can actually trade
+            amount = min(q, bal)
+            # Trade the currency against the base currency
+            self.user_balances[msg.sender][currency] -= amount
+            self.user_balances[buyer][currency] += amount
+            self.user_balances[msg.sender][0] += amount * self.orders[currency].buys[order_id].price
+            self.user_balances[buyer][0] -= amount * self.orders[currency].buys[order_id].price
+            # Reduce the remaining quantity on the order
+            self.orders[currency].buys[order_id].quantity -= amount
+
+请注意我们是如何先在顶部定义结构化数据，然后在合约中使用它们的。对这些结构化数据的读和写都会被转化成在持久化存储上的读写，因此这些结构化数据是持久保存的。
+
+定义结构化数据的语法很简单。首先可以定义最简单的变量：???
+
+    data blah
+
+    x = self.blah
+    self.blah = x + 1
+
+还可以定义定长数组和不定长数组：???
+
+    data blah[1243]
+    data blaz[]
+
+    x = self.blah[505]
+    y = self.blaz[3**160]
+    self.blah[125] = x + y
+
+我们应该优先考虑使用定长数组，因为在计算数组元素(array index)对应的存储位置(storage index)的时候，定长数组消耗的gas更少。
+
+也可以定义元组(tuple)，元组的元素也可以是结构化数据：
+
+    data body(head(eyes[2], nose, mouth), arms[2], legs[2])
+
+    x = self.body.head.nose
+    y = self.body.arms[1]
+
+然后是元组数组(array of tuples)：
+
+    data bodies[100](head(eyes[2], nose, mouth), arms[2](fingers[5], elbow), legs[2])
+
+    x = self.bodies[45].head.eyes[1]
+    y = self.bodies[x].arms[1].fingers[3]
+
+注意下面这样的写法是不行的：
+
+    data body(head(eyes[2], nose, mouth), arms[2], legs[2])
+
+    x = self.body.head
+    y = x.eyes[0]
+
+也就是说对结构化数据内部元素的存取必须在一行语句中完成。
+
+还是以名称注册表（name registry）为例，让我们来看看具体如何使用结构化数据。我们要实现一个增强版的名称注册表，当用户注册key成功时他会成为key的所有者，key的所有者可以 (1) 转移所有权，以及(2) 改变key对应的键值(value)。为了简洁函数不再返回1或者0。
+
+    data registry[](owner, value)
+
+    def register(key):
+        # Key not yet claimed
+        if not self.registry[key].owner:
+            self.registry[key].owner = msg.sender
+
+    def transfer_ownership(key, new_owner):
+        if self.registry[key].owner == msg.sender:
+            self.registry[key].owner = new_owner
+
+    def set_value(key, new_value):
+        if self.registry[key].owner == msg.sender:
+            self.registry[key].value = new_value
+
+    def ask(key):
+        return([self.registry[key].owner, self.registry[key].value], items=2)
+
+最后定义的ask函数返回一个长度为2的数组。通过调用ask函数，例如`o = registry.ask(key, outsz=2)`，我们可以通过返回值`o[1]`和`o[1]`获取key对应的所有者和键值。
