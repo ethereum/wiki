@@ -348,9 +348,15 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{"to":"0xc4a
 ##### `eth_flush`
 * request:
 ```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_flush","params":[],"id":64}' http://localhost:8080
 ```
 * response:
 ```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":true
+}
 ```
 ##### `eth_blockByHash`
 * request:
