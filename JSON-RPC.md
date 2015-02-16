@@ -22,7 +22,7 @@ You can start it by running `eth` application with `-j` option:
 
 You can also specify JSON-RPC port (default is 8080):
 ```bash
--j --json-rpc-port 8079
+./eth -j --json-rpc-port 8079
 ```
 
 ### JSON-RPC methods
