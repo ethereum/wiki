@@ -25,6 +25,16 @@ You can also specify JSON-RPC port (default is 8080):
 ./eth -j --json-rpc-port 8079
 ```
 
+### JSON-RPC support
+
+| | cpp-ethereum | go-ethereum |
+|-------|:------------:|:-----------:|
+| JSON-RPC 1.0 | &#x2713; | |
+| JSON-RPC 2.0 | &#x2713; | &#x2713; |
+| Batch requests | &#x2713; | | 
+| HTTP | &#x2713; | &#x2713; |
+
+
 ### JSON-RPC methods
 
 The following RPC messages should be accepted by the RPC-backend:
