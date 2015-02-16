@@ -345,9 +345,9 @@ Ethereum implementa una versione semplificata del GHOST che va in profondità ne
 
 * Il blocco A deve specificare un genitore, e specificare 0 o più zii
 * Uno zio, incluso nel blocco B, deve avere le seguenti proprietà:
-  * Deve essere un figlio diretto della kth generazione antenata di B, dove 2 <= k <= 7.
+  * Deve essere un figlio diretto della k generazione antenata di B, dove 2 <= k <= 7.
   * Esso non può essere un antenato di B
-  * Uno zio deve essere un valido header del bloccor, ma non necessita di essere verificato in precedenza o perfino un blocco valido
+  * Uno zio deve essere un valido header del blocco, ma non necessita di essere verificato in precedenza o perfino un blocco valido
   * Uno zio deve essere diverso da tutti gli zii inclusi nei blocchi precedenti e da tutti gli altri zii inclusi nello stesso blocco (inclusione non doppia)
 * Per ogni zio U nel blocco B, il miner di B riceve un addizionale 3.125% aggiunto al premio della propria coinbase e il miner di U riceve il 93.75% come premio standard della coinbase.
 
