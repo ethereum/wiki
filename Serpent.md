@@ -136,7 +136,7 @@ Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opc
     > c.ask(0x6861727279)
     [65]
 
-`funid` is the index of the function, in the order in which it appears in the contract; here, 0 is for `register` and 1 is for `ask`. If we wanted to encode the transaction data for that first call, we would do: 
+If we wanted to encode the transaction data for that first call, we would do: 
 
 ```
 > serpent encode_abi register ii 0x67656f726765 45
