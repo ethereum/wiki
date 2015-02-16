@@ -352,3 +352,31 @@ Ethereum implementa una versione semplificata del GHOST che va in profondità ne
 * Per ogni zio U nel blocco B, il miner di B riceve un addizionale 3.125% aggiunto al premio della propria coinbase e il miner di U riceve il 93.75% come premio standard della coinbase.
 
 Questa versione limitata di GHOST, con gli "zii" che possono essere inclusi fino a 7 generazioni, è stata impiegata per due ragioni. La prima, un GHOST illimitato potrebbe includere troppe complicazioni nel computo di quali "zii", per un certo blocco, siano validi. Il secondo, un GHOST illimitato, con il compromesso raggiunto in Ethereum, elimina l'incentivo per un miner di effettuare operazioni di mining su una "chain" di un attaccante, ma, al contrario, di effettuarle sulla "chain" principale. 
+
+### Fees
+
+Because every transaction published into the blockchain imposes on the network the cost of needing to download and verify it, there is a need for some regulatory mechanism, typically involving transaction fees, to prevent abuse. The default approach, used in Bitcoin, is to have purely voluntary fees, relying on miners to act as the gatekeepers and set dynamic minimums. This approach has been received very favorably in the Bitcoin community particularly because it is "market-based", allowing supply and demand between miners and transaction senders determine the price. The problem with this line of reasoning is, however, that transaction processing is not a market; although it is intuitively attractive to construe transaction processing as a service that the miner is offering to the sender, in reality every transaction that a miner includes will need to be processed by every node in the network, so the vast majority of the cost of transaction processing is borne by third parties and not the miner that is making the decision of whether or not to include it. Hence, tragedy-of-the-commons problems are very likely to occur.
+
+However, as it turns out this flaw in the market-based mechanism, when given a particular inaccurate simplifying assumption, magically cancels itself out. The argument is as follows. Suppose that:
+
+1. A transaction leads to `k` operations, offering the reward `kR` to any miner that includes it where `R` is set by the sender and `k` and `R` are (roughly) visible to the miner beforehand.
+2. An operation has a processing cost of `C` to any node (ie. all nodes have equal efficiency)
+3. There are `N` mining nodes, each with exactly equal processing power (ie. `1/N` of total)
+4. No non-mining full nodes exist.
+
+A miner would be willing to process a transaction if the expected reward is greater than the cost. Thus, the expected reward is `kR/N` since the miner has a `1/N` chance of processing the next block, and the processing cost for the miner is simply `kC`. Hence, miners will include transactions where `kR/N > kC`, or `R > NC`. Note that `R` is the per-operation fee provided by the sender, and is thus a lower bound on the benefit that the sender derives from the transaction, and `NC` is the cost to the entire network together of processing an operation. Hence, miners have the incentive to include only those transactions for which the total utilitarian benefit exceeds the cost.
+
+However, there are several important deviations from those assumptions in reality:
+
+1. The miner does pay a higher cost to process the transaction than the other verifying nodes, since the extra verification time delays block propagation and thus increases the chance the block will become a stale.
+2. There do exist nonmining full nodes.
+3. The mining power distribution may end up radically inegalitarian in practice.
+4. Speculators, political enemies and crazies whose utility function includes causing harm to the network do exist, and they can cleverly set up contracts where their cost is much lower than the cost paid by other verifying nodes.
+
+(1) provides a tendency for the miner to include fewer transactions, and (2) increases `NC`; hence, these two effects at least partially cancel each other out. (3) and (4) are the major issue; to solve them we simply institute a floating cap: no block can have more operations than `BLK_LIMIT_FACTOR` times the long-term exponential moving average. Specifically:
+
+    blk.oplimit = floor((blk.parent.oplimit * (EMAFACTOR - 1) + floor(parent.opcount * BLK_LIMIT_FACTOR)) / EMA_FACTOR)
+
+`BLK_LIMIT_FACTOR` and `EMA_FACTOR` are constants that will be set to 65536 and 1.5 for the time being, but will likely be changed after further analysis.
+
+There is another factor disincentivizing large block sizes in Bitcoin: blocks that are large will take longer to propagate, and thus have a higher probability of becoming stales. In Ethereum, highly gas-consuming blocks can also take longer to propagate both because they are physically larger and because they take longer to process the transaction state transitions to validate. This delay disincentive is a significant consideration in Bitcoin, but less so in Ethereum because of the GHOST protocol; hence, relying on regulated block limits provides a more stable baseline.
