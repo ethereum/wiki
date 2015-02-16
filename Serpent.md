@@ -350,7 +350,7 @@ def runThis():
 Macros allow you to create rewrite rules which provide additional expressivity to the language. For example, suppose that you wanted to create a command that would compute the median of three values. You could simply do:
 
     macro median($a, $b, $c):
-        min(min(smax($a, $b), max($a, $c)), max($b, $c))
+        min(min(max($a, $b), max($a, $c)), max($b, $c))
 
 Then, if you wanted to use it somewhere in your code, you just do:
 
