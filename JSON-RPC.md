@@ -80,7 +80,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [shh_newFilter](#shh_newfilter)
 * [shh_uninstallFilter](#shh_uninstallfilter)
 * [shh_changed](#shh_changed)
-* [shh_getMessages](#ssh_getmessages)
+* [shh_getMessages](#shh_getmessages)
 
 
 ##### `web3_sha3`
