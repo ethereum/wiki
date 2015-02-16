@@ -67,7 +67,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_filterLogs](#eth_filterlogs)
 * [eth_logs](#eth_logs)
 * [eth_getWork](#eth_getWork)
-* [eth_submitWork](#eth_submitWork)
+* [eth_submitWork](#eth_submitwork)
 * [db_put](#db_put)
 * [db_get](#db_get)
 * [db_putString](#db_putstring)
@@ -80,7 +80,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [shh_newFilter](#shh_newfilter)
 * [shh_uninstallFilter](#shh_uninstallfilter)
 * [shh_changed](#shh_changed)
-* [shh_getMessages](#ssh_getMessages)
+* [shh_getMessages](#ssh_getmessages)
 
 
 ##### `web3_sha3`
