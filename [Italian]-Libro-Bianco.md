@@ -366,12 +366,12 @@ Tuttavia, come si scopre questo difetto nel meccanismo di mercato, quando viene 
 
 Un miner potrebbe desiderare di processare una transazione nella prospettiva che il possibile premio sia superiore al costo. Quindi, la ricompensa prevista è `kR/N` visto che il miner ha `1/N` chance di processare il blocco successivo, ed il costo di processamento per il miner è semplicemente `kC`. Quindi, i miners includeranno le transazioni dove `kR/N > kC`, e il costo di processamento o `R > NC`. Si noti che `R` è la commissione dovuta dal mittente ad ogni operazione, ed è perciò inferiore della soglia minina di vantaggio che il mittente ha dall'operazione, e `NC` è tutto il costo dell'intero network per il processamento di un operazione. Quindi, i miners hanno l'incentivo di includere solo quelle transazioni per cui il vantaggio complessivo è maggiore del costo.
 
-However, there are several important deviations from those assumptions in reality:
+Tuttavia, in realtà, ci sono importanti deroghe da questi presupposti:
 
-1. The miner does pay a higher cost to process the transaction than the other verifying nodes, since the extra verification time delays block propagation and thus increases the chance the block will become a stale.
-2. There do exist nonmining full nodes.
-3. The mining power distribution may end up radically inegalitarian in practice.
-4. Speculators, political enemies and crazies whose utility function includes causing harm to the network do exist, and they can cleverly set up contracts where their cost is much lower than the cost paid by other verifying nodes.
+1. Il miner paga un costo più alto per processare la transazione rispetto ad un altro che verifica i nodi, visto che il tempo di verifica in più ritarda la propagazione del blocco e quindi aumenta la chance che il blocco diventi latente.
+2. Esistono nodi pieni che non processano operazioni di mining.
+3. La distribuzione del potere di mining potrebbe generare in concreto una ineguaglianza.
+4. Gli speculatori, i nemici politici e i pazzi che and crazies whose utility function includes causing harm to the network do exist, and they can cleverly set up contracts where their cost is much lower than the cost paid by other verifying nodes.
 
 (1) provides a tendency for the miner to include fewer transactions, and (2) increases `NC`; hence, these two effects at least partially cancel each other out. (3) and (4) are the major issue; to solve them we simply institute a floating cap: no block can have more operations than `BLK_LIMIT_FACTOR` times the long-term exponential moving average. Specifically:
 
