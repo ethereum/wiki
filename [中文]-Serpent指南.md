@@ -282,3 +282,53 @@ returnten.se:
         return([self.registry[key].owner, self.registry[key].value], items=2)
 
 最后定义的ask函数返回一个长度为2的数组。通过调用ask函数，例如`o = registry.ask(key, outsz=2)`，我们可以通过返回值`o[1]`和`o[1]`获取key对应的所有者和键值。
+
+### 内存中的数组
+
+使用内存中的数组有一套不同的语法。内存数组只能是定长数组，也不能有元组(tuple)或者更复杂的数组元素。例如：
+
+    def bitwise_or(x, y):
+        blah = array(1243)
+        blah[567] = x
+        blah[568] = y
+        blah[569] = blah[567] | blah[568]
+        return(blah[569])
+
+Serpent还定义了两个常用的数组操作：
+
+    len(x)
+
+用于查询数组的长度。
+
+    slice(x, start, end)
+
+用于截取从start开始到end结束范围内数组元素，注意end必须大于等于start，否则执行是会出错。
+
+### 数组与函数
+
+函数可以接受数组作为参数，也可以返回一个数组：
+
+    def compose(inputs:arr):
+        return(inputs[0] + inputs[1] * 10 + inputs[2] * 100)
+
+    def decompose(x):
+        return([x % 10, (x % 100) / 10, x / 100]:arr)
+
+在参数定义后面加`:arr`表示这个参数是一个数组；而在返回值后面加`:arr`表示返回一个数组（如果不加`:arr`只写`return([x,y,z])`，函数的返回值将会是这个数组的内存地址）。
+
+当合约调用自己定义的函数的时候，数组参数会被自动识别出来正确处理，例如：
+
+    def compose(inputs:arr, radix):
+        return(inputs[0] + inputs[1] * radix + inputs[1] * radix ** 2)
+
+    def main():
+        return self.compose([1,2,3,4,5], 100)
+
+但是当合约需要调用另一份接受数组参数的合约时，你需要通过`extern`声明这一点，加入数组签名到函数签名中：
+
+    extern composer: [compose:ai, main]
+
+这里`ai`的意思是“一个数组参数后面跟着一个整型参数”。同理，如果签名是`iiaa`，则代表“两个整型参数后面跟着两个数组参数”，而`iss`表示“一个整型参数，后面是两个字符串做参数”。如果函数名后面没有跟冒号(:)，如本例中`main` 所示，则表示这个函数不接受参数。如果你想知道一个文件中定义了哪些函数签名，执行下面的命令即可：
+
+    > serpent mk_signature compose_test.se
+    extern compose_test: [compose:ai, main]
