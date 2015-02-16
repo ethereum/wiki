@@ -1,12 +1,31 @@
-In order to free ethereum implementation developers from the hassle of writing their own JavaScript implementation for browser-to-node communication there's now [ethereum.js](https://github.com/ethereum/ethereum.js).
+### Overview
 
-Ethereum.js provides a full communication bridge between your node (backend) and browser (frontend) given that you **tell** it how _speak_. Communication is done through a `Provider`.
+[JSON](http://json.org/) is a lightweight data-interchange format. It can represent numbers, strings, ordered sequences of values, and collections of name/value pairs.
 
-Ethereum.js exports one single container; `web3` which contains the `eth`,`db` and `ssh` object as well as a few helper methods (see [[JavaScript-API]] for more details).
+[JSON-RPC](http://www.jsonrpc.org/specification) is a stateless, light-weight remote procedure call (RPC) protocol. Primarily this specification defines several data structures and the rules around their processing. It is transport agnostic in that the concepts can be used within the same process, over sockets, over http, or in many various message passing environments. It uses JSON ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt)) as data format.
 
-If you have [cpp-ethereum](https://github.com/ethereum/cpp-ethereum), you can start JSONRPC server by typing `eth -j -b`, where `-j` is responsible for starting http server && `-b` for connecting to the default Ethereum peerserver.
+Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ethereum](https://github.com/ethereum/go-ethereum) provides json-rpc communication only over http.
 
-### JSON RPC
+In order to free ethereum implementation developers from the hassle of writing their own JavaScript implementation for browser-to-node communication there's now [ethereum.js](https://github.com/ethereum/ethereum.js). Ethereum.js provides a full communication bridge between your node (backend) and browser (frontend) given that you **tell** it how _speak_. Communication is done through a `Provider`.
+
+### JSON-RPC Endpoint
+
+Default json-rpc endpoint for cpp-ethereum is:
+```
+http://localhost:8080/
+```
+
+You can start it by running `eth` application with `-j` option:
+```bash
+./eth -j
+```
+
+You can also specify JSON-RPC port (default is 8080):
+```bash
+-j --json-rpc-port 8079
+```
+
+### JSON-RPC methods
 
 The following RPC messages should be accepted by the RPC-backend:
 
