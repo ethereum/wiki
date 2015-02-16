@@ -332,3 +332,55 @@ Serpent还定义了两个常用的数组操作：
 
     > serpent mk_signature compose_test.se
     extern compose_test: [compose:ai, main]
+
+### 字符串
+
+Serpent中有两种字符串：短字符串(short strings)，例如`"george"`，以及长字符串(long strings)，例如`text("afjqwhruqwhurhqkwrhguqwhrkuqwrkqwhwhrugquwrguwegtwetwet")`.用双引号括起来的短字符串和数字类型是等价的；用`text`关键字定义的长字符串则是类似与数组的对象。我们可以使用`getch(str, index)`和`setch(str, index)`方法来操作字符串中的字符。`str[0]`这样的写法则会将字符串当作数组处理，将字符当作数字返回。
+
+将字符串用作函数参数或者返回值时，需要在函数签名中使用字符串标记`s`，类似使用`a`来标记数组。使用`len(s)`方法可以得到字符串的长度，and `shrink` works for strings the same way as for arrays too. ???
+
+下面是一个用字符串做参数和返回值的例子：
+
+```
+data str
+
+def t2():
+    self.str = text("01")
+    log(data=self.str)
+    return(self.str, chars=2)
+
+def runThis():
+    s = self.t2(outsz=2)
+    log(data=s)
+```
+
+### 宏 (Macros)
+
+c or lisp ???
+
+**警告：这是新加入的未经测试的特性，大蛇出没注意！**
+
+通过宏我们可以创造重写规则，极大的增强程序的表达能力。例如，假设我们想写一条计算三个数字的中位数的命令：
+
+    macro median($a, $b, $c):
+        min(min(max($a, $b), max($a, $c)), max($b, $c))
+
+Then, if you wanted to use it somewhere in your code, you just do:
+
+    x = median(5, 9, 7)
+
+Or to take the max of an array:
+
+    macro maxarray($a:$asz):
+        $m = 0
+        $i = 0
+        while i < $asz:
+            $m = max($m, $a[i])
+            $i += 1
+        $m
+
+    x = maxarray([1, 9, 5, 6, 2, 4]:6)
+
+For a highly contrived example of just how powerful macros can be, see https://github.com/ethereum/serpent/blob/poc7/examples/peano.se
+
+Note that macros are not functions; they are copied into code every time they are used. Hence, if you have a long macro, you may instead want to make the macro call an actual function. Additionally, note that the dollar signs on variables are important; if you omit a dollar sign in the pattern $a then the macro will only match a variable actually called a. You can also create dollar sign variables that are in the substitution pattern, but not the search pattern; this will generate a variable with a random prefix each instance of the macro. You can also create new variables without a dollar sign inside a substitution pattern, but then the same variable will be shared across all instances of the pattern and with uses of that variable outside the pattern.
