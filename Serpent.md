@@ -290,7 +290,7 @@ There are also two functions for dealing with arrays:
 
 Returns the length of array x.
 
-    slice(x, start, end)
+    slice(x, items=start, items=end)
 
 Takes a slice of x starting with position start and ending with position end (note that we require `end >= start`; otherwise the result will almost certainly result in an error)
 
