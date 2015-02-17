@@ -11,7 +11,7 @@ Serpent与Python之间的主要区别有:
 * Python中的数字类型没有大小限制，Serpent的数字类型则会在2<sup>256</sup>溢出。例如，在Serpent中计算`3^(2^254)`的结果是1,虽然事实上这是一个天文数字。
 * Serpent没有Decimal类型。
 * Serpent没有list comprehensions (例如`[x**2 for x in my_list]`这样的表达式),字典(Hash/Map)，和其它一些高级特性。
-* Serpent没有first-class函数的概念。虽然合约中可以定义函数, 合约也可以调用这些函数，但是在两次函数调用之间变量(除了持久变量)是会丢失的。???
+* Serpent没有first-class函数的概念。虽然合约中可以定义函数, 合约也可以调用这些函数，但是在两次函数调用之间变量(除了持久变量)是会丢失的。
 * Serpent有一个被称作”持久变量“(persistent storage variables)的概念。
 * 在Serpent中可以使用`extern`语句来调用其他合约中定义的函数。
 
