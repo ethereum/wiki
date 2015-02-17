@@ -21,6 +21,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [gasPrice](#web3ethgasprice)
     * [accounts](#web3ethaccounts)
     * [register](#web3ethregister)
+    * [unregister](#web3ethunregister)
     * [peerCount](#web3ethpeercount)
     * [defaultBlock](#web3ethdefaultblock)
     * [number](#web3ethnumber)
@@ -177,10 +178,16 @@ var accounts = web3.eth.accounts;
 console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
 ```
 
-###web3.eth.register
+#####web3.eth.register
 Registers the given address to be included in `web3.eth.accounts`. This allows non-private-key owned accounts to be associated as an owned account (e.g., contract wallets).
 ```javascript
 web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
+```
+
+#####web3.eth.unregister
+Unregisters the given address
+```javascript
+web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
 
 #####web3.eth.peerCount
