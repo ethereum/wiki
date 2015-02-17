@@ -170,7 +170,7 @@ console.log(gasPrice); // "0x09184e72a000"
 ```
 
 #####web3.eth.accounts
-Returns the special key-pair list object corresponding to the address of each of the accounts owned by the client that this ÐApp has access to.
+Eeturns list of the addresses owned by client
 ```javascript
 var accounts = web3.eth.accounts;
 console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
@@ -226,7 +226,7 @@ console.log(number); // 1
 ```
 
 #####web3.eth.codeAt
-Returns true if the account of address given by `_a` is a contract-account.
+Returns code at given address.
 ```javascript
 var code = web3.eth.codeAt("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
 console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
