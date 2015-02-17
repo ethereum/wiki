@@ -93,7 +93,9 @@ The following RPC messages should be accepted by the RPC-backend:
 * [shh_getMessages](#shh_getmessages)
 
 
-##### `web3_sha3`
+#### `web3_sha3`
+*returns SHA3 of the given data*
+
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c6f20776f726c64"],"id":64}' http://localhost:8080
@@ -107,7 +109,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 }
 ```
 
-##### `eth_coinbase`
+#### `eth_coinbase`
+*returns client coinbase address*
+
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":64}' http://localhost:8080
@@ -121,7 +125,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":6
 }
 ```
 
-##### `eth_setCoinbase`
+#### `eth_setCoinbase`
+*sets new address of coinbase*
+
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setCoinbase","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":66}' http://localhost:8080
@@ -135,7 +141,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setCoinbase","params":["0x40
 }
 ```
 
-##### `eth_listening`
+#### `eth_listening`
+*returns true if client is actively listening for network connections*
+
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_listening","params":[],"id":67}' http://localhost:8080
@@ -148,7 +156,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_listening","params":[],"id":
 "result":true
 }
 ```
-##### `eth_setListening`
+#### `eth_setListening`
+*sets client should be actively listening for network connections*
+
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setListening","params":[false],"id":68}' http://localhost:8080
@@ -161,7 +171,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setListening","params":[fals
 "result":true
 }
 ```
-##### `eth_mining`
+#### `eth_mining`
+*returns true if client is actively mining new blocks*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}' http://localhost:8080
@@ -174,7 +185,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}
 "result":true
 }
 ```
-##### `eth_setMining`
+#### `eth_setMining`
+*sets if client should be actively mining new blocks* 
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setMining","params":[false],"id":72}' http://localhost:8080
@@ -187,7 +199,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setMining","params":[false],
 "result":true
 }
 ```
-##### `eth_gasPrice`
+#### `eth_gasPrice`
+*returns special 256-bit number equal to hard-coded testnet price of gas*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}' http://localhost:8080
@@ -200,7 +213,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":7
 "result":"0x09184e72a000"
 }
 ```
-##### `eth_accounts`
+#### `eth_accounts`
+*returns list of the addresses owned by client*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id":1}' http://localhost:8080
@@ -213,7 +227,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id"
 "result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
 }
 ```
-##### `eth_peerCount`
+#### `eth_peerCount`
+*returns number of peers currenly connected to the client*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id":74}' http://localhost:8080
@@ -226,7 +241,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id":
 "result":0
 }
 ```
-##### `eth_defaultBlock`
+#### `eth_defaultBlock`
+*returns default number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"id":77}' http://localhost:8080
