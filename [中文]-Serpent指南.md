@@ -354,22 +354,22 @@ def runThis():
     log(data=s)
 ```
 
-### 宏 (Macros)
+### Macros (宏)
 
 c or lisp ???
 
 **警告：这是新加入的未经测试的特性，大蛇出没注意！**
 
-通过宏我们可以创造重写规则，极大的增强程序的表达能力。例如，假设我们想写一条计算三个数字的中位数的命令：
+通过macro我们可以创造重写规则，极大的增强程序的表达能力。例如，假设我们想写一条计算三个数字的中位数的命令：
 
     macro median($a, $b, $c):
         min(min(max($a, $b), max($a, $c)), max($b, $c))
 
-Then, if you wanted to use it somewhere in your code, you just do:
+现在我们可以使用这个新定义的macro：
 
     x = median(5, 9, 7)
 
-Or to take the max of an array:
+接下来看另一个例子，一个查找数组中最大元素的macro:
 
     macro maxarray($a:$asz):
         $m = 0
@@ -381,6 +381,8 @@ Or to take the max of an array:
 
     x = maxarray([1, 9, 5, 6, 2, 4]:6)
 
-For a highly contrived example of just how powerful macros can be, see https://github.com/ethereum/serpent/blob/poc7/examples/peano.se
+点击下面的链接可以看到更多展示macros牛逼用法的例子：
 
-Note that macros are not functions; they are copied into code every time they are used. Hence, if you have a long macro, you may instead want to make the macro call an actual function. Additionally, note that the dollar signs on variables are important; if you omit a dollar sign in the pattern $a then the macro will only match a variable actually called a. You can also create dollar sign variables that are in the substitution pattern, but not the search pattern; this will generate a variable with a random prefix each instance of the macro. You can also create new variables without a dollar sign inside a substitution pattern, but then the same variable will be shared across all instances of the pattern and with uses of that variable outside the pattern.
+https://github.com/ethereum/serpent/blob/poc7/examples/peano.se
+
+这里要提醒读者注意的是：macros不是函数(functions)。每次调用macro的时候，macro的定义都会被文本复制到调用的地方（宏展开）。因此当macro的定义变得很长时，请考虑定义一个函数替代它。还要注意的是占位符前面的$符号非常重要：如果$a前少了$符号，实际上是在使用名字为a的变量。我们也可以在替换模式(substitution pattern)而不是搜索模式(search pattern)中使用$占位符，这样在每一次宏展开时会产生一个名字为随机前缀的变量。在替换模式中也可以使用普通变量(变量名前面没有$)，结果就是所有宏展开使用的是同一个变量，而且该变量可能在宏展开之外的地方也会用到。
