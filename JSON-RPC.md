@@ -56,6 +56,10 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_stateAt](#eth_stateat)
 * [eth_storageAt](#eth_storageat)
 * [eth_countAt](#eth_countat)
+* [eth_transactionCountByHash](#eth_transactioncountbyhash)
+* [eth_transactionCountByNumber](#eth_transactioncountbynumber)
+* [eth_uncleCountByHash](#eth_unclecountbyhash)
+* [eth_uncleCountByNumber](#eth_unclecountbynumber)
 * [eth_codeAt](#eth_codeat)
 * [eth_transact](#eth_transact)
 * [eth_call](#eth_call)
@@ -337,6 +341,62 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0x407d73
 "id":1,
 "jsonrpc":"2.0",
 "result":1
+}
+```
+#### `eth_transactionCountByHash`
+*returns the number of transactions in block of given hash*
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+```
+* response:
+```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":1
+}
+```
+#### `eth_transactionCountByNumber`
+*returns the number of transactions in block of given number*
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByNumber","params":[232],"id":1}' http://localhost:8080
+```
+* response:
+```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":5
+}
+```
+#### `eth_uncleCountByHash`
+*returns the number of uncles for block of given hash*
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+```
+* response:
+```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":1
+}
+```
+#### `eth_uncleCountByNumber`
+*returns the number of uncles for block of given number*
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByNumber","params":[1232],"id":1}' http://localhost:8080
+```
+* response:
+```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":0
 }
 ```
 #### `eth_codeAt`
