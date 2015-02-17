@@ -20,6 +20,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [mining](#web3ethmining)
     * [gasPrice](#web3ethgasprice)
     * [accounts](#web3ethaccounts)
+    * [register](#web3ethregister)
     * [peerCount](#web3ethpeercount)
     * [defaultBlock](#web3ethdefaultblock)
     * [number](#web3ethnumber)
