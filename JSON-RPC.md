@@ -599,7 +599,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_solidity","params":["contrac
 ```json
 // TODO
 ```
-##### `eth_newFilter`
+#### `eth_newFilter`
+*creates watch object to notify, when state changes in particular way, defined by filter. Returns new filter id.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic":"0x12341234"}],"id":73}' http://localhost:8080
@@ -607,7 +608,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic
 * response:
 ```json
 ```
-##### `eth_newFilterString`
+#### `eth_newFilterString`
+*creates watch object to notify, when state changes in particular way, defined by filter. Returns new filter id.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilterString","params":["pending"],"id":73}' http://localhost:8080
@@ -620,7 +622,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilterString","params":["
 "result": 1
 }
 ```
-##### `eth_uninstallFilter`
+#### `eth_uninstallFilter`
+*uninstalls watch with given id. Should always be called when watch is no longer needed.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":[0],"id":73}' http://localhost:8080
@@ -633,7 +636,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":[0
 "result": true
 }
 ```
-##### `eth_changed`
+#### `eth_changed`
+*polling method, which returns array of logs which occurred since last poll*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":73}' http://localhost:8080
@@ -650,7 +654,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":7
   }]
 }
 ```
-##### `eth_filterLogs`
+#### `eth_filterLogs`
+*returns all logs matching filter with given id*
 * request:
 ```bash
 // TODO
@@ -659,7 +664,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":7
 ```json
 // TODO
 ```
-##### `eth_logs`
+#### `eth_logs`
+*returns all logs matching filter object*
 * request:
 ```bash
 // TODO
