@@ -466,3 +466,17 @@ Serpent支持以下特别函数(special functions)：
 * `x = sha256(a, items=4)` - 返回数组a中头4个元素构成的128字节的SHA256 hash。
 * `x = ripemd160(a, items=4)` - same as above but for ripemd160
 * 使用字符语法(chars syntax)可以计算任意数量字节的hash。例如：`x = sha256([0xf1fc122bc7f5d74df2b9441a42a1469500000000000000000000000000000000], chars=16)` - 返回的是头16个字节的hash。注意最后用0对齐，否则头16个字节会是0（因为一个word是32字节）,计算的是16个0字节的hash。
+
+### 小提示
+
+* 如果函数的返回值和你预计的不同，仔细检查所有的变量名 - 使用没有声明过的变量是不会产生错误信息的。
+
+* `Invalid argument count or LLL function`通常表示你将`self.foo()`写成了`foo()`。
+
+* 有时你需要的是无符号运算符，例如div()和lt()而不是'/'和'<'。
+
+* 升级Serpent的时候，需要先`pip uninstall ethereum-serpent`然后`python setup.py install`。避免使用`pip install ethereum-serpent`，因为pypi上的包八成已经过时了。
+
+* 在调用abi_contract()时如果你遇到`Exception: Error (file "main", line 1, char 5): Invalid object member (ie. a foo.bar not mapped to anything)`这样的错误，确认你要编译的文件所在路径写对了。
+
+* 如果在调用abi_contract()的时候遇到core dump，确认你没有定义同名函数。
