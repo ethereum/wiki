@@ -658,23 +658,40 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":7
 *returns all logs matching filter with given id*
 * request:
 ```bash
-// TODO
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_filterLogs","params":[0],"id":74}' http://localhost:8080
 ```
 * response:
 ```json
-// TODO
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": [{
+  "address":"0x0000000000000000000000000000000000000000",
+  "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "number":0
+  }]
+}
 ```
 #### `eth_logs`
 *returns all logs matching filter object*
 * request:
 ```bash
-// TODO
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_logs","params":[{"topic":"0x12341234"}],"id":74}' http://localhost:8080
 ```
 * response:
 ```json
-// TODO
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": [{
+  "address":"0x0000000000000000000000000000000000000000",
+  "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "number":0
+  }]
+}
 ```
-##### `eth_getWork`
+#### `eth_getWork`
+*returns the hash of current block and difficulty to be met.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getWork","params":[],"id":73}' http://localhost:8080
@@ -690,7 +707,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getWork","params":[],"id":73
 
 The hash first of the two result values is the header hash without the nonce (the first part of the proof-of-work pair), the second of the two result values is the difficulty required to solve.
 
-##### `eth_submitWork`
+#### `eth_submitWork`
+*Used for submitting a solution to the proof-of-work. The return value is true if the submission is valid.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":["0x1234567890abcdef1234567890abcdef"],"id":73}' http://localhost:8080
@@ -704,9 +722,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":["0x123
 }
 ```
 
-Used for submitting a solution to the proof-of-work. The return value is true iff the submission is valid.
-
-##### `db_put`
+#### `db_put`
+*stores number in local database. First param is database name["test"], second is key["key"], third is value["5"]*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["test","key","5"],"id":73}' http://localhost:8080
@@ -719,7 +736,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["test","key","
 "result": true
 }
 ```
-##### `db_get`
+#### `db_get`
+*returns number from local database. First param is database name["test"], second is key["key"]*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["test","key"],"id":73}' http://localhost:8080
@@ -732,7 +750,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["test","key"],
 "result": "0x05"
 }
 ```
-##### `db_putString`
+#### `db_putString`
+*stores string in local database. First param is database name["test"], second is key["key"], third is value["5"]*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["test","key","5"],"id":73}' http://localhost:8080
@@ -745,7 +764,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["test","
 "result": true
 }
 ```
-##### `db_getString`
+#### `db_getString`
+*returns string from local database. First param is database name["test"], second is key["key"].*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["test","key"],"id":73}' http://localhost:8080
@@ -758,7 +778,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["test","
 "result": "5"
 }
 ```
-##### `shh_post`
+#### `shh_post`
+*sends whisper message*
 * request:
 ```bash
 "0x68656c6c6f20776f726c64"
@@ -772,7 +793,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":
 "result": true
 }
 ```
-##### `shh_newIdeninty`
+#### `shh_newIdeninty`
+*creates new whisper identity*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_newIdentity","params":[],"id":73}' http://localhost:8080
@@ -785,7 +807,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_newIdentity","params":[],"id
 "result":"0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
 }
 ```
-##### `shh_haveIdentity`
+#### `shh_haveIdentity`
+*returns true if client has given identity*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"],"id":73}' http://localhost:8080
@@ -798,7 +821,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc
 "result": true
 }
 ```
-##### `shh_newGroup`
+#### `shh_newGroup`
 * request:
 ```bash
 // TODO: not implemented yet
@@ -807,7 +830,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc
 ```json
 // TODO: not implemented yet
 ```
-##### `shh_addToGroup`
+#### `shh_addToGroup`
 * request:
 ```bash
 // TODO: not implemented yet
@@ -816,7 +839,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc
 ```json
 // TODO: not implemented yet
 ```
-##### `shh_newFilter`
+#### `shh_newFilter`
+*creates watch object to notify, when client receives whisper message matching particular format, defined by filter. Returns new filter id.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic":"0x68656c6c6f20776f726c64"}],"id":73}' http://localhost:8080
@@ -829,7 +853,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic
 "result": 7
 }
 ```
-##### `shh_uninstallFilter`
+#### `shh_uninstallFilter`
+*uninstalls watch with given id. Should always be called when watch is no longer needed.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7],"id":73}' http://localhost:8080
@@ -842,7 +867,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7
 "result": 7
 }
 ```
-##### `shh_changed`
+#### `shh_changed`
+*polling method, which returns array of messages which are received since last poll*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7],"id":73}' http://localhost:8080
@@ -866,7 +892,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7
 }
 ```
 
-##### `shh_getMessages`
+#### `shh_getMessages`
+*returns array of whisper messages received by filter with given id.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getMessages","params":[7],"id":73}' http://localhost:8080
