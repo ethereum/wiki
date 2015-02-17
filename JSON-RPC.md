@@ -255,7 +255,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"i
 "result":-1
 }
 ```
-##### `eth_setDefaultBlock`
+#### `eth_setDefaultBlock`
+*sets default/number age to use when querying state.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setDefaultBlock","params":[1],"id":80}' http://localhost:8080
@@ -268,7 +269,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setDefaultBlock","params":[1
 "result":true
 }
 ```
-##### `eth_number`
+#### `eth_number`
+*returns the number of most recent block*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83}' http://localhost:8080
@@ -281,7 +283,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83}
 "result":1207
 }
 ```
-##### `eth_balanceAt`
+#### `eth_balanceAt`
+*returns the balance of the account of given address*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
@@ -294,7 +297,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d
 "result":"0x0234c8a3397aab580000"
 }
 ```
-##### `eth_stateAt`
+#### `eth_stateAt`
+*returns the value in storage at position[0] given by string of the account given by address["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_stateAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0],"id":1}' http://localhost:8080
@@ -307,7 +311,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_stateAt","params":["0x407d73
 "result":"0x03"
 }
 ```
-##### `eth_storageAt`
+#### `eth_storageAt`
+*returns storage dumped to json*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_storageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
@@ -320,7 +325,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_storageAt","params":["0x407d
 "result":{"0x":"0x03"}
 }
 ```
-##### `eth_countAt`
+#### `eth_countAt`
+*returns the number of transactions send from account of given address*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
