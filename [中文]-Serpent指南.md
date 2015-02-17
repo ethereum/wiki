@@ -386,3 +386,83 @@ c or lisp ???
 https://github.com/ethereum/serpent/blob/poc7/examples/peano.se
 
 这里要提醒读者注意的是：macros不是函数(functions)。每次调用macro的时候，macro的定义都会被文本复制到调用的地方（宏展开）。因此当macro的定义变得很长时，请考虑定义一个函数替代它。还要注意的是占位符前面的$符号非常重要：如果$a前少了$符号，实际上是在使用名字为a的变量。我们也可以在替换模式(substitution pattern)而不是搜索模式(search pattern)中使用$占位符，这样在每一次宏展开时会产生一个名字为随机前缀的变量。在替换模式中也可以使用普通变量(变量名前面没有$)，结果就是所有宏展开使用的是同一个变量，而且该变量可能在宏展开之外的地方也会用到。
+
+### 类型
+
+**警告：这是新加入的未经测试的特性，大蛇出没注意！**
+
+Serpent中的穷人版类型系统是体现macros威力的绝佳例子，和macros一起使用时能产生非常有趣的结果。直接上例子：
+
+    type float: [a, b, c]
+
+    macro float($x) + float($y):
+        float($x + $y)
+
+    macro float($x) - float($y):
+        float($x - $y)
+
+    macro float($x) * float($y):
+        float($x * $y / 2^32)
+
+    macro float($x) / float($y):
+        float($x * 2^32 / $y)
+
+    macro unfloat($x):
+        $x / 2^32
+
+    macro floatfy($x):
+        float($x * 2^32)
+
+    macro float($x) = float($y):
+        $x = $y
+
+    macro with(float($x), float($y), $z):
+        with($x, $y, $z)
+
+    a = floatfy(25)
+    b = a / floatfy(2)
+    c = b * b
+    return(unfloat(c))
+
+这段代码的返回值是156,即12.5^2的整数部分。如果只用整型计算，结果将是144。这个技巧可以用来重写[椭圆曲线签名的公钥复原代码](https://github.com/ethereum/serpent/blob/df0aa0e1285d7667d4a0cc81b1e11e0abb31fff3/examples/ecc/jacobian_add.se)，类型系统可以让里面的加法和乘法隐式的做模运算(modulo P)，从而是代码更精巧；我们也可以利用[长整形](https://github.com/ethereum/serpent/blob/poc7/examples/long_integer_macros.se)来处理RSA以及其他基于大数的加密算法中的计算。
+
+### 其他
+
+更多的Serpent代码示例请参阅：https://github.com/ethereum/serpent/tree/master/examples
+
+pyethereum tester的一些有用技巧：
+
+* 区块数据 - 你可以通过`s.block`查看区块数据。例如，`s.block.number`, `s.block.get_balance(addr)`, `s.block.get_storage_data(addr, index)`等等。
+* 快照 - 通过`x = s.snapshot()`和`s.revert(x)`可以创建和恢复快照。
+* 挖矿 - 调用`s.mine(100)`会挖出100个块，块之间间隔60秒。通过`s.mine(100, addr)`可以指定获得挖矿收益的地址。
+* Dump所有区块数据 - `s.block.to_dict()`
+
+Serpent还提供了许多特别变量(special variables)，以下是完整列表：
+
+* `tx.origin` - 交易的发送者
+* `tx.gas` - 剩余gas
+* `tx.gasprice` - 交易包含的gasprice(油价)
+* `msg.sender` - 消息的发送者
+* `msg.value` - 通过消息转移的wei(以太坊中最小的价值单位）的数量
+* `self` - 合约自身的地址
+* `self.balance` - 合约自身的余额（拥有多少wei）
+* `x.balance` (对于任意的x） - x的账户余额
+* `block.coinbase` - 挖出当前块的矿工的收益地址(coinbase)
+* `block.timestamp` - 当前块的时间戳
+* `block.prevhash` - 前一个块的hash
+* `block.difficulty` - 当前的挖矿难度
+* `block.number` - 当前块的编号
+* `block.gaslimit` - 当前块的可用gas上限
+
+Serpent支持以下特别函数(special functions)：
+
+* `init` - 在创建合约时执行
+* `shared` - 在执行`init`和用户函数之前执行
+* `any` - 在用户函数之前执行
+
+此外还提供了几个加密操作：
+
+* `addr = ecrecover(h, v, r, s)` - determines the address that produced the elliptic curve signature `v, r, s` of the hash `h`
+* `x = sha256(a, items=4)` - 返回数组a中头4个元素构成的128字节的SHA256 hash。
+* `x = ripemd160(a, items=4)` - same as above but for ripemd160
+* 使用字符语法(chars syntax)可以计算任意数量字节的hash。例如：`x = sha256([0xf1fc122bc7f5d74df2b9441a42a1469500000000000000000000000000000000], chars=16)` - 返回的是头16个字节的hash。注意最后用0对齐，否则头16个字节会是0（因为一个word是32字节）,计算的是16个0字节的hash。
