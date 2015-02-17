@@ -170,10 +170,16 @@ console.log(gasPrice); // "0x09184e72a000"
 ```
 
 #####web3.eth.accounts
-Eeturns list of the addresses owned by client
+Returns list of the addresses owned by client
 ```javascript
 var accounts = web3.eth.accounts;
 console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
+```
+
+###web3.eth.register
+Registers the given address to be included in `web3.eth.accounts`. This allows non-private-key owned accounts to be associated as an owned account (e.g., contract wallets).
+```javascript
+web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
 
 #####web3.eth.peerCount
