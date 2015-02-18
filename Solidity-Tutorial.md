@@ -493,16 +493,25 @@ A simple rule to remember is to specify the base classes in the order from "most
 
 ## Visibility Specifiers
 
-Functions and storage variables can be specified as being `public`, `protected` or `private`, where the default for functions is `public` and `protected` for storage variables. Public functions are part of the external interface and can be called externally, while for storage variables, an automatic accessor function is generated. Non-public functions are only visible inside a contract and its derived contracts (there is no distinction between protected and private for now).
+Functions and storage variables can be specified as being `public`, `inherited` or `private`, where the default for functions is `public` and `inherited` for storage variables. In addition, functions can also be specified as `external`.
+
+External: External functions are part of the contract interface and they can be called from other contracts and via transactions. An external function `f` cannot be called internally (i.e. `f()` does not work, but `this.f()` works). Furthermore, all function parameters are immutable.
+
+Public: Public functions are part of the contract interface and can be either called internally or via messages. For public storage variables, an automatic accessor function (see below) is generated.
+
+Inherited: Those functions and storage variables can only be accessed internally.
+
+Private: Private functions and storage variables are only visible for the contract they are defined in and not in derived contracts.
 
 ```
 contract c {
   function f(uint a) private returns (uint b) { return a + 1; }
+  function setData(uint a) inherited { data = a; }
   uint public data;
 }
 ```
 
-External contracts can call `c.data()` to retrieve the value of data in storage, but are not able to call `f`.
+Other contracts can call `c.data()` to retrieve the value of data in storage, but are not able to call `f`. Contracts derived from `c` can call `setData` to alter the value of `data` (but only in their own storage).
 
 ## Accessor Functions
 
