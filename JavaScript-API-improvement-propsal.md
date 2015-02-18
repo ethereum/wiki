@@ -13,33 +13,33 @@
     * [mining](#web3ethmining) -> boolean
     * [gasPrice](#web3ethgasprice) -> number
     * [accounts](#web3ethaccounts) -> array
-    * [register](#web3ethregister) *(hexString)*
-    * [unregister](#web3ethunregister) *(hexString)*
+    * [register(hexString)](#web3ethregister)
+    * [unRegister(hexString)](#web3ethunregister) // PREVIOUS: unregister()
     * [peerCount](#web3ethpeercount) -> number
     * [defaultBlock](#web3ethdefaultblock) -> ?
     * [blockNumber](#web3ethnumber) -> number // PREVIOUS: number()
-    * [getBalance](#web3ethbalanceat) *(address)* -> number (BigNumber?) // PREVIOUS: balanceAt()
-    * [getState](#web3ethstateat) *(address, storage)* // PREVIOUS: stateAt()
-    * [getStorage](#web3ethstorageat) *(address)* // PREVIOUS: storageAt()
-    * [getTransactionCount](#web3ethcountat) *(address)* // PREVIOUS: countAt()
-    * [getCode](#web3ethcodeat) *(address)* // PREVIOUS: countAt()
-    * [send or still transact?](#web3ethtransact) *(object)*  // PREVIOUS: transact() 
-    * [call](#web3ethcall) *(object)*
-    * [getBlock](#web3ethblock) *(hash/number)*  // PREVIOUS: block() 
-    * [getTransaction](#web3ethtransaction) *(_object, _number)*  // PREVIOUS: transaction() 
-    * [uncle](#web3ethuncle) *(hash/number)*  // PREVIOUS: uncle()
-    * [getCompilers](#web3ethcompilers) *()*  // PREVIOUS: compilers()
-    * [compiler.lll](#web3ethlll) *(string)*  // PREVIOUS: lll()
-    * [compiler.solidity](#web3ethsolidity) *(object)*  // PREVIOUS: lll()
-    * [compiler.serpent](#web3ethserpent) *(object)*  // PREVIOUS: lll()
-    * Replace with filter.previous(): [filter](#web3ethlogs) *(object/string)* // PREVIOUS: logs()
-    * [filter](#web3ethwatch) *(object/string)*
-      * [arrived](#) *(callback)* ??
-      * [watch](#) *(callback)* // PREVIOUS: changed()
-      * [stopWatching](#) *(callback)* // PREVIOUS: uninstall()
-      * [previous](#) *(callback)*  // PREVIOUS: logs()
-    * [contract](#web3ethcontract) *(address, abi)*
-    * [flush](#web3ethflush)
+    * [getBalance(address)](#web3ethbalanceat) -> number (BigNumber?) // PREVIOUS: balanceAt()
+    * [getState(address, storage)](#web3ethstateat) // PREVIOUS: stateAt()
+    * [getStorage(address)](#web3ethstorageat) // PREVIOUS: storageAt()
+    * [getTransactionCount(address)](#web3ethcountat) // PREVIOUS: countAt()
+    * [getCode(address)](#web3ethcodeat) // PREVIOUS: countAt()
+    * [send(object) or still transact?](#web3ethtransact)  // PREVIOUS: transact() 
+    * [call(object)](#web3ethcall)
+    * [getBlock(hash/number)](#web3ethblock)  // PREVIOUS: block() 
+    * [getTransaction(object, number)](#web3ethtransaction)  // PREVIOUS: transaction() 
+    * [uncle(hash/number)](#web3ethuncle)  // PREVIOUS: uncle()
+    * [getCompilers()](#web3ethcompilers)  // PREVIOUS: compilers()
+    * [compile.lll(string)](#web3ethlll)  // PREVIOUS: lll()
+    * [compile.solidity(object)](#web3ethsolidity)  // PREVIOUS: solidity()
+    * [compile.serpent(object)](#web3ethserpent)  // PREVIOUS: serpent()
+    * [Replaced with filter.previous()](#web3ethlogs) *(object/string)* // PREVIOUS: logs()
+    * [filter(object/string)](#web3ethwatch)
+      * [arrived(callback)](#) ??
+      * [watch(callback)](#) // PREVIOUS: changed()
+      * [stopWatching(callback)](#) // PREVIOUS: uninstall()
+      * [pastItems(callback)](#)  // existingItems? lastItems? PREVIOUS: logs()
+    * [contract(address, abi)](#web3ethcontract)
+    * [flush()](#web3ethflush)
   * [db](#web3db)
     * [put](#web3dbput) *(_name, _key, _value)*
     * [putString](#web3dbputstring) *(__name, _key, _value)*
@@ -51,8 +51,8 @@
     * [hasIdentity](#web3shhhaveidentity) *(_string)*  // PREVIOUS: haveIdentity()
     * [newGroup](#web3shhnewgroup) *(_id, _who)*
     * [addToGroup](#web3shhaddtogroup) *(_group, _who)*
-    * [watch](#web3shhwatch) *(_object/_string)* // TODO: SAME as in eth??
-      * [arrived](#) *(_callback)*
-      * [changed](#) *(_callback)*
-      * [messages](#) *(_callback)*
-      * [uninstall](#) *(_callback)*
+    * [filter(object/string)](#web3shhwatch)
+      * [arrived(callback)](#) ??
+      * [watch(callback)](#) // PREVIOUS: changed()
+      * [stopWatching(callback)](#) // PREVIOUS: uninstall()
+      * [pastItems(callback)](#)  // existingItems? lastItems? PREVIOUS: logs()
