@@ -25,12 +25,17 @@ In terms of JSON-RPC, there must be an alteration to `eth_accounts`: rather than
 
 There are also two additional calls in the JSON-RPC; one for polling the status of whether any transactions are waiting to be signed by our callback that we registered as the second argument of `registerProxyTransactor`, and one for letting the core know that our ethereum.js object is capable of proxying transactions sent from the addresses passed as the first argument of `registerProxyTransactor`.
 
-The first is `eth_registerAddressHandler`; it takes one argument which is an array of addresses. Any otherwise unsignable transactions whose from address is included in this array should be routed to this ethereum.js object through the polling RPC function `eth_checkProxyTransactions`.
+The first is `eth_registerAddressHandler`; it takes one argument which is an array of addresses and returns an integer identifier. Any otherwise unsignable transactions whose from address is included in this array should be, at some time later, returned to this session as a result of polling the RPC function `eth_checkProxyTransactions`.
 
-`eth_checkProxyTransactions` takes no arguments but returns an array of transactions, each of the form that are passed to `web3.eth.transact`.
+`eth_checkProxyTransactions` takes one argument - the previous integer identifier and returns an array of transactions, each of the form that are passed to `web3.eth.transact`.
+
+### Core
+
+Cores must maintain queues of proxy transactions together with sets of addresses, one each per ethereum.js `web3.eth` object (identified through the integer returned to `eth_registerAddressHandler` and provided by `eth_checkProxyTransactions`). These transactions are to be returned to the session via `eth_checkProxyTransactions`. They are to be filled whenever an `eth_transact` is called (from any session) with a `from` address that is contained in the corresponding set of proxyable addresses.
+
 
 ### Notes
 
-If it's called twice, all previous state associated with it is replaced. If two ethereum.js objects both try to handle the same address, the first one wins and the second silently fails.
+If it's called twice, all previous state associated with it is replaced. If two ethereum.js `web3.eth` objects both try to handle the same address, the first one wins and the second silently fails.
 
 
