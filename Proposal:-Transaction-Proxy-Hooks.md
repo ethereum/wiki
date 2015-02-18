@@ -42,4 +42,8 @@ Cores must maintain queues of proxy transactions together with sets of addresses
 
 If it's called twice, all previous state associated with it is replaced. If two ethereum.js `web3.eth` objects both try to handle the same address, the first one wins and the second silently fails.
 
+NatSpec messages should be shown for all transactions, ideally only a single ultimate user action required for any given high-level transaction. E.g.:
 
+Send 56 ether to `Dave - 0x56789123` from account `Gav's Bank Account - 0x12345678`.
+
+Wallet ÐApp handling account `Gav's Bank Account - 0x12345678` requests authorisation to conduct the above through: Message from `Gav - 0x34343455` to `Gav's Bank Account - 0x12123456` to: Send 56 ether to `Dave - 0x56789123`.
