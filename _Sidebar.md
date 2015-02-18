@@ -19,6 +19,7 @@
 - [NatSpec Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format)
 - [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
 - [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
+- [Block Protocol 2.0](https://github.com/ethereum/wiki/wiki/Block-Protocol-2.0)
 
 ### Ethereum Clients
 - [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
