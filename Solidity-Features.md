@@ -422,13 +422,13 @@ contract test {
 
 ## Visibility Specifiers
 
-[PT](https://www.pivotaltracker.com/story/show/86487946) The visibility of a function can be specified by giving at most one of the specifiers `external`, `public`, `protected` or `private`, where `public` is the default. "External" functions can only be called via message-calls, i.e. from other contracts or from the same contract using `this.function()` (note that this also prevents calls to overwritten functions in base classes). Furthermore, parameters of "external" functions are immutable. "Public" functions can be called from other contracts and from the same contract using stack-based calls. "Protected" and "private" functions can only be called via stack-based calls, while "protected" functions are only visible in the contract itself and its derived contracts and "private" functions are not even visible in derived contracts.
+[PT](https://www.pivotaltracker.com/story/show/86487946) The visibility of a function can be specified by giving at most one of the specifiers `external`, `public`, `inheritable` or `private`, where `public` is the default. "External" functions can only be called via message-calls, i.e. from other contracts or from the same contract using `this.function()` (note that this also prevents calls to overwritten functions in base classes). Furthermore, parameters of "external" functions are immutable. "Public" functions can be called from other contracts and from the same contract using stack-based calls. "Inheritable" and "private" functions can only be called via stack-based calls, while "inheritable" functions are only visible in the contract itself and its derived contracts and "private" functions are not even visible in derived contracts.
 
 ```
 contract Base {
   function exte() external { }
   function publ() public /* can be omitted */ { }
-  function prot() protected { priv(); }
+  function inhe() inheritable { priv(); }
   function priv() private { }
 }
 contract Derived is Base {
@@ -437,8 +437,8 @@ contract Derived is Base {
     // impossible: exte();
     this.publ();
     publ();
-    // impossible: this.prot();
-    prot();
+    // impossible: this.inhe();
+    inhe();
     // impossible: this.priv();
     // impossible: priv();
   }
