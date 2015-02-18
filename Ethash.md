@@ -1,4 +1,4 @@
-**This spec is REVISION 12. Whenever you substantively (ie. not clarifications) update the algorithm, please update the revision number in this sentence. Also, in all implementations please include a spec revision number**
+**This spec is REVISION 13. Whenever you substantively (ie. not clarifications) update the algorithm, please update the revision number in this sentence. Also, in all implementations please include a spec revision number**
 
 Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version of Dagger-Hashimoto, although it can no longer appropriately be called that since many of the original features of both algorithms have been drastically changed in the last month of research and development. See [https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto](https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto) for the original version.
 
@@ -25,11 +25,11 @@ DAG_BYTES_GROWTH=131072    # growth per epoch (~345 MB per year)
 CACHE_BYTES_INIT=33554432  # bytes in cache at genesis
 CACHE_BYTES_GROWTH=4096    # growth per epoch (~11 MB per year)
 EPOCH_LENGTH=1000          # blocks per epoch
-MIX_BYTES=4096             # width of mix
+MIX_BYTES=128              # width of mix
 HASH_BYTES=64              # hash length in bytes
-DAG_PARENTS=64             # number of parents of each dag element
-CACHE_ROUNDS=2             # number of processing rounds in cache production
-ACCESSES=32               # number of accesses in hashimoto loop
+DAG_PARENTS=256            # number of parents of each dag element
+CACHE_ROUNDS=3             # number of processing rounds in cache production
+ACCESSES=128               # number of accesses in hashimoto loop
 ```
 
 ### Parameters
@@ -85,7 +85,7 @@ def mkcache(params, seed):
     for _ in range(CACHE_ROUNDS):
         for i in range(n):
             v = (decode_int(o[i]) % 2**64) % n
-            o[i] = sha3_512(o[(i-1+n)%n] + o[v])
+            o[i] = sha3_512(xor(o[(i-1+n)%n], o[v]))
 
     return o
 ```
@@ -175,7 +175,7 @@ def hashimoto(params, header, nonce, dagsize, dag_lookup):
         for j in range(w):
             mix[j] = fnv(mix[j], dag_lookup(p + j))
         rand = step_bbs(rand, P2)
-    return sha3_256(s+sha3_256(s + ''.join(mix)))
+    return sha3_256(s+sha3_256(''.join(mix)))
 
 def hashimoto_light(params, cache, header, nonce):
     return hashimoto(params, header, nonce, params["full_size"], lambda x: calc_dag_item(params, cache, x))
@@ -247,6 +247,9 @@ def sha3_512(x):
 
 def sha3_256(x):
     return sha3.sha3_256(x).digest()
+
+def xor(a, b):
+    reuturn ''.join([chr(ord(x) ^ ord(y)) for x, y in zip(a, b)])
 ```
 
 The following lookup tables provide approximately 7 years of tabulated DAG and cache sizes.  They were generated with the following *Mathematica* functions:
