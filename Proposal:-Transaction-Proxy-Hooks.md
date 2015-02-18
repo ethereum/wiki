@@ -45,6 +45,6 @@ If it's called twice, all previous state associated with it is replaced. If two 
 NatSpec messages should be shown for all transactions, ideally only a single ultimate user action required for any given high-level transaction. E.g.:
 
 - Send 56 ether to `Dave - 0x56789123` from account `Gav's Bank Account - 0x12345678`.
-- Wallet ÐApp handling account `Gav's Bank Account - 0x12345678` requests authorisation to conduct the above through: Message from `Gav - 0x34343455` to `Gav's Bank Account - 0x12123456` to: Send 56 ether to `Dave - 0x56789123`.
+- Wallet ÐApp handling account `Gav's Bank Account - 0x12345678` requests authorisation to conduct the above through: Message from `Gav - 0x34343455` to `Gav's Bank Account - 0x12345678` to: Send 56 ether to `Dave - 0x56789123`.
 
 The first NatSpec line just corresponds to the first bare and impossible-to-sign transaction from a contract. The second is the actual transaction that will be signed, stating that Gav (the account for which we have a secret key, would sign a transaction instructing the wallet to send the funds.
