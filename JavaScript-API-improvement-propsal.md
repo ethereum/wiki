@@ -1,5 +1,11 @@
 
+The changes should be backwards compatible for a while, and we throw a warning stating thats it deprecated. Simple map. The return values of the funcitons don't change for now. (community wish)
+
 * [web3](#web3)
+  * [version](#) (community wish)
+     * [network](#) -> string e.g. '0.0.1' (the node version)
+     * [client](#) -> string e.g. '0.0.1' (the ethereum.js version)
+  * [port](#) -> number e.g. 8080 (community wish)
   * [sha3](#web3sha3) *(s1)*
   * [toAscii](#web3toascii) *(hexString)*
   * [fromAscii](#web3fromascii) *(string, [padding])*
