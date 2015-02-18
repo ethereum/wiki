@@ -16,29 +16,29 @@
     * [register](#web3ethregister) *(hexString)*
     * [unregister](#web3ethunregister) *(hexString)*
     * [peerCount](#web3ethpeercount) -> number
-    * [defaultBlock](#web3ethdefaultblock) function
-    * [number](#web3ethnumber)
-    * [balanceAt](#web3ethbalanceat) *(_address)*
-    * [stateAt](#web3ethstateat) *(_address, _storage)*
-    * [storageAt](#web3ethstorageat) *(_address)*
-    * [countAt](#web3ethcountat) *(_address)*
-    * [codeAt](#web3ethcodeat) *(_address)*
-    * [transact](#web3ethtransact) *(_object)*
-    * [call](#web3ethcall) *(_object)*
-    * [block](#web3ethblock) *(_hash/_number)*
-    * [transaction](#web3ethtransaction) *(_object, _number)*
-    * [uncle](#web3ethuncle) *(_hash/number)*
-    * [compilers](#web3ethcompilers) *()*
-    * [lll](#web3ethlll) *(_string)*
-    * [solidity](#web3ethsolidity) *(_object)*
-    * [serpent](#web3ethserpent) *(_object)*
-    * [logs](#web3ethlogs) *(_object/_string)*
-    * [watch](#web3ethwatch) *(_object/_string)*
-      * [arrived](#) *(_callback)*
-      * [changed](#) *(_callback)*
-      * [logs](#) *(_callback)*
-      * [uninstall](#) *(_callback)*
-    * [contract](#web3ethcontract) *(_address, _abi)*
+    * [defaultBlock](#web3ethdefaultblock) -> ?
+    * [blockNumber](#web3ethnumber) -> number // PREVIOUS: number()
+    * [getBalance](#web3ethbalanceat) *(address)* -> number (BigNumber?) // PREVIOUS: balanceAt()
+    * [getState](#web3ethstateat) *(address, storage)* // PREVIOUS: stateAt()
+    * [getStorage](#web3ethstorageat) *(address)* // PREVIOUS: storageAt()
+    * [getTransactionCount](#web3ethcountat) *(address)* // PREVIOUS: countAt()
+    * [getCode](#web3ethcodeat) *(address)* // PREVIOUS: countAt()
+    * [send or still transact?](#web3ethtransact) *(object)*  // PREVIOUS: transact() 
+    * [call](#web3ethcall) *(object)*
+    * [getBlock](#web3ethblock) *(hash/number)*  // PREVIOUS: block() 
+    * [getTransaction](#web3ethtransaction) *(_object, _number)*  // PREVIOUS: transaction() 
+    * [uncle](#web3ethuncle) *(hash/number)*  // PREVIOUS: uncle()
+    * [getCompilers](#web3ethcompilers) *()*  // PREVIOUS: compilers()
+    * [compiler.lll](#web3ethlll) *(string)*  // PREVIOUS: lll()
+    * [compiler.solidity](#web3ethsolidity) *(object)*  // PREVIOUS: lll()
+    * [compiler.serpent](#web3ethserpent) *(object)*  // PREVIOUS: lll()
+    * Replace with filter.previous(): [filter](#web3ethlogs) *(object/string)* // PREVIOUS: logs()
+    * [filter](#web3ethwatch) *(object/string)*
+      * [arrived](#) *(callback)* ??
+      * [watch](#) *(callback)* // PREVIOUS: changed()
+      * [stopWatching](#) *(callback)* // PREVIOUS: uninstall()
+      * [previous](#) *(callback)*  // PREVIOUS: logs()
+    * [contract](#web3ethcontract) *(address, abi)*
     * [flush](#web3ethflush)
   * [db](#web3db)
     * [put](#web3dbput) *(_name, _key, _value)*
@@ -48,10 +48,10 @@
   * [shh](#web3shh)
     * [post](#web3shhpost) *(_object)*
     * [newIdentity](#web3shhnewidentity) *()*
-    * [haveIdentity](#web3shhhaveidentity) *(_string)*
+    * [hasIdentity](#web3shhhaveidentity) *(_string)*  // PREVIOUS: haveIdentity()
     * [newGroup](#web3shhnewgroup) *(_id, _who)*
     * [addToGroup](#web3shhaddtogroup) *(_group, _who)*
-    * [watch](#web3shhwatch) *(_object/_string)*
+    * [watch](#web3shhwatch) *(_object/_string)* // TODO: SAME as above
       * [arrived](#) *(_callback)*
       * [changed](#) *(_callback)*
       * [messages](#) *(_callback)*
