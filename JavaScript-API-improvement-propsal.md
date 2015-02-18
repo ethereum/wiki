@@ -51,7 +51,7 @@
     * [hasIdentity](#web3shhhaveidentity) *(_string)*  // PREVIOUS: haveIdentity()
     * [newGroup](#web3shhnewgroup) *(_id, _who)*
     * [addToGroup](#web3shhaddtogroup) *(_group, _who)*
-    * [watch](#web3shhwatch) *(_object/_string)* // TODO: SAME as above
+    * [watch](#web3shhwatch) *(_object/_string)* // TODO: SAME as in eth??
       * [arrived](#) *(_callback)*
       * [changed](#) *(_callback)*
       * [messages](#) *(_callback)*
