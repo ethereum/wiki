@@ -1,10 +1,7 @@
 
 The changes should be backwards compatible for a while, and we throw a warning stating thats it deprecated. Simple map. The return values of the funcitons don't change for now. (community wish)
 
-TODO: Decide
-- All returned numbers should be typed dynamically either to JS integers or BigNumbers, depending on their value.
-- All returned numbers should be typed statically either to JS integers or BigNumbers, depending on their practical maximum value.
-- All returned numbers should be BigNumbers. 
+All returned numbers should be typed statically either to JS integers or BigNumbers, depending on their practical maximum value. This should be annotated whenever a number is returned.
 
 * [web3](#web3)
   * [version](#) (community wish)
