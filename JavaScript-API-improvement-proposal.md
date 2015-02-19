@@ -38,6 +38,7 @@ All returned numbers should be typed statically either to JS integers or BigNumb
     * [getBlock(hash/number)](#web3ethblock) -> headerObject // PREVIOUS: block() 
     * [getTransaction(object, number)](#web3ethtransaction) -> transactionObject  // PREVIOUS: transaction() 
     * [getUncle(hash/number)](#web3ethuncle) -> headerObject // PREVIOUS: uncle()
+    * [getBlockUncleCount(hash/number)](#web3ethuncleCountcall) -> Integer // PREVIOUS: uncleCount()
     * [getCompilers()](#web3ethcompilers) -> array of strings // PREVIOUS: compilers()
     * [compile.lll(string)](#web3ethlll) -> hexString // PREVIOUS: lll()
     * [compile.solidity(string)](#web3ethsolidity) -> hexString // PREVIOUS: solidity()
