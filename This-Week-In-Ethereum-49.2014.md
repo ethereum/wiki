@@ -46,9 +46,9 @@ See [poc-7 etherpad](https://ethereum.etherpad.mozilla.org/14) for details.
 
 ##Ecosystem
 
-##In the Media
 
-##Upcoming Events
+
+
 
 ##Clients/Protocol 
 
@@ -68,15 +68,21 @@ See [poc-7 etherpad](https://ethereum.etherpad.mozilla.org/14) for details.
 
 ###Dev P2P - Felix Lange
 
+
+##Languages
+
+###Solidity - Christian Reitwiessner
+
+###Serpent - Vitalik Buterin
+
+
+##Release
+
 ###System testing project - Sven Ehlert
 
 ###Testing - Christophe Jentzsch
 
 ###Build System - Caktux
-
-###Solidity - Christian Reitwiessner
-
-###Serpent - Vitalik Buterin
 
 ###Audit - Jutta
 
@@ -89,5 +95,13 @@ See [poc-7 etherpad](https://ethereum.etherpad.mozilla.org/14) for details.
 
 
 ##Communications 
+
 ###Meetups - Texture
-###Comms - George
+
+###Upcoming Events - Texture
+
+###Comms - George Hallam
+
+###Ether Academy Website - Ken Kappler
+
+###In the Media - George Hallam
