@@ -55,7 +55,9 @@ TODO: Decide
       * [watch(callback)](#) // PREVIOUS: changed() arrived()
       * [stopWatching(callback)](#) // PREVIOUS: uninstall()
       * [get()](#)  // returns []; existingItems? lastItems? PREVIOUS: logs()
-    * [contract(address, abi)](#web3ethcontract)
+    * [contract(abi)](#web3ethcontract) // PREVIOUS: contractFromAbi
+      * contains much, including a function taking an address to give you the contract instance.
+    * DEPRECATED [contractInstance(abi, address)](#web3ethcontract) // PREVIOUS: contractFromAbi, parameters exchanged.
     * [flush()](#web3ethflush)
   * [db](#web3db)
     * [put](#web3dbput) *(_name, _key, _value)*
