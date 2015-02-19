@@ -45,11 +45,16 @@ TODO: Decide
     * [compile.solidity(object)](#web3ethsolidity)  // PREVIOUS: solidity()
     * [compile.serpent(object)](#web3ethserpent)  // PREVIOUS: serpent()
     * Replaced with filter.pastItems() *(object/string)* // PREVIOUS: logs()
-    * [filter(object/string)](#web3ethwatch)
-      * [arrived(callback)](#) ??
-      * [watch(callback)](#) // PREVIOUS: changed()
+    * [watch(string)](#web3ethwatch)
+    * [filter(object)](#web3ethlogs) // object is a log filter 
+    * [filter(object (, options) )](#web3ethlogs) // object is a contract object
+    * [filter(object (, indexed_event_arguments (, options)) )](#web3ethlogs) // object is an event object belonging to a specific contract object
+    * [filter(array (, options) )](#web3ethlogs) // array is an array of events object belonging to specific contract objects
+      * `options` is a object containing one or more of `earliest`, `latest`, `offset` and `max`, as before.
+      * `indexed_event_arguments` is an object with keys of one or more indexed arguments to the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
+      * [watch(callback)](#) // PREVIOUS: changed() arrived()
       * [stopWatching(callback)](#) // PREVIOUS: uninstall()
-      * [pastItems(callback)](#)  // existingItems? lastItems? PREVIOUS: logs()
+      * [get()](#)  // returns []; existingItems? lastItems? PREVIOUS: logs()
     * [contract(address, abi)](#web3ethcontract)
     * [flush()](#web3ethflush)
   * [db](#web3db)
