@@ -39,10 +39,10 @@ All returned numbers should be typed statically either to JS integers or BigNumb
     * [getUncle(hash/number)](#web3ethuncle)  // PREVIOUS: uncle()
     * [getCompilers()](#web3ethcompilers)  // PREVIOUS: compilers()
     * [compile.lll(string)](#web3ethlll)  // PREVIOUS: lll()
-    * [compile.solidity(object)](#web3ethsolidity)  // PREVIOUS: solidity()
-    * [compile.serpent(object)](#web3ethserpent)  // PREVIOUS: serpent()
-    * Replaced with filter.pastItems() *(object/string)* // PREVIOUS: logs()
-    * [watch(string)](#web3ethwatch)
+    * [compile.solidity(string)](#web3ethsolidity)  // PREVIOUS: solidity()
+    * [compile.serpent(string)](#web3ethserpent)  // PREVIOUS: serpent()
+    * Replaced with filter(...).get() *(object/string)* // PREVIOUS: logs()
+    * [filter(string)](#web3ethwatch)
     * [filter(object)](#web3ethlogs) // object is a log filter 
     * [filter(object (, options) )](#web3ethlogs) // object is a contract object
     * [filter(object (, indexed_event_arguments (, options)) )](#web3ethlogs) // object is an event object belonging to a specific contract object
@@ -54,7 +54,7 @@ All returned numbers should be typed statically either to JS integers or BigNumb
       * [get()](#)  // returns []; existingItems? lastItems? PREVIOUS: logs()
     * [contract(abi)](#web3ethcontract) // PREVIOUS: contractFromAbi
       * contains much, including a function taking an address to give you the contract instance.
-    * DEPRECATED [contractInstance(abi, address)](#web3ethcontract) // PREVIOUS: contractFromAbi, parameters exchanged.
+    * DEPRECATED [contractInstance(abi, address)](#web3ethcontract) // PREVIOUS: contract, parameters exchanged.
     * [flush()](#web3ethflush)
   * [db](#web3db)
     * [put](#web3dbput) *(_name, _key, _value)*
