@@ -33,7 +33,7 @@ The changes should be backwards compatible for a while, and we throw a warning s
     * [call(object)](#web3ethcall)
     * [getBlock(hash/number)](#web3ethblock)  // PREVIOUS: block() 
     * [getTransaction(object, number)](#web3ethtransaction)  // PREVIOUS: transaction() 
-    * [uncle(hash/number)](#web3ethuncle)  // PREVIOUS: uncle()
+    * [getUncle(hash/number)](#web3ethuncle)  // PREVIOUS: uncle()
     * [getCompilers()](#web3ethcompilers)  // PREVIOUS: compilers()
     * [compile.lll(string)](#web3ethlll)  // PREVIOUS: lll()
     * [compile.solidity(object)](#web3ethsolidity)  // PREVIOUS: solidity()
