@@ -31,7 +31,8 @@ All returned numbers should be typed statically either to JS integers or BigNumb
     * [getState(address, storage)](#web3ethstateat) -> hexString // PREVIOUS: stateAt()
     * [getStorage(address)](#web3ethstorageat) -> hexString // PREVIOUS: storageAt()
     * [getTransactionCount(address)](#web3ethcountat) -> Integer // PREVIOUS: countAt()
-    * [getCode(address)](#web3ethcodeat) -> hexString// PREVIOUS: countAt()
+    * [getBlockTransactionCount(hash/number)](#web3ethtransactionCountcall) -> Integer // PREVIOUS: transactionCount()
+    * [getCode(address)](#web3ethcodeat) -> hexString// PREVIOUS: codeAt()
     * [sendTransaction(object)](#web3ethtransact)  // PREVIOUS: transact() 
     * [call(object)](#web3ethcall) -> hexString
     * [getBlock(hash/number)](#web3ethblock) -> headerObject // PREVIOUS: block() 
