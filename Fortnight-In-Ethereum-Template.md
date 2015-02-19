@@ -1,3 +1,6 @@
+This document exists to collate information once a fortnight (biweekly) from the various different aspects/projects taking place in Ethereum which will allow everyone to better understand what everyone else is working on.
+
+
 ###Current Status of the project
 
 We are in the last days of preparing the POC-7 release. It is scheduled to ship on St Nicholas' Day. Work on PoC8 is starting next week and it's expected to arrive on Christmas.
@@ -55,6 +58,11 @@ What are the next steps?
 ###Vapor - Martin Becze
 
 
+##Leadership
+
+###Foundation - Joseph Lubin
+
+
 ##Communications 
 
 ###Meetups - Texture
@@ -66,7 +74,6 @@ What are the next steps?
 ###Ether Academy Website - Ken Kappler
 
 ###In the Media - George Hallam
-
 
 
 
