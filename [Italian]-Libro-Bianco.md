@@ -402,30 +402,30 @@ L'alternativa alla completezza di Turing è l'incompletezza di Turing, dove `JUM
 
 Adesso, si invii una transazione ad A. Quindi, in 51 transazioni, noi abbiamo un contratto che impiega 2<sup>50</sup> steps computazionali. I Miners potrebbero tentare di scoprire, prima del tempo, tali bombe logiche,  mantenendo un valore accanto ad ogni contratto, specificando il numero massimo di steps computazionali che esso può impiegare, e calcolando questo per i contratti che chiamano altri contatti in maniera ricorsiva, ma questo potrebbe richiedere ai miners di proibire i contratti che creano altri contratti (visto che la creazione e l'esecuzione di tutti i 26 contratti di cui sopra potrebbe essere facilmente convogliata in un contratto singolo). Un altro punto problematico è che il campo dell'indirizzo di un messaggio è una variabile, così in generale potrebbe non essere perfino possibile dire quali altri contratti, un certo contratto, avrà chiamato anzitempo. Quindi, complessivamente, noi giungiamo ad una sorprendente conclusione: la completezza di Turing è sorprendentemente facile da gestire, e l'assenza di questa è allo stesso modo difficile da amministrare a meno che siano assegnati gli stessi identici controlli - ma in questo caso perché non permettere al protocollo di essere Turing-complete?
 
-### Currency And Issuance
+### Valuta ed Emissione
 
-The Ethereum network includes its own built-in currency, ether, which serves the dual purpose of providing a primary liquidity layer to allow for efficient exchange between various types of digital assets and, more importantly, of providing a mechanism for paying transaction fees. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate in Bitcoin), the denominations will be pre-labelled:
+Il network di Ethereum include una valuta costruita al suo interno, ether, che ha il duplice scopo di fornire uno strato di primario di liquidità per permettere un exchange efficiente tra due tipi di assets digitali e, principalmente, di fornire un meccanismo per pagare le commissioni di transazione. Per comodità e per evitare possibili futuri frantendimenti (si veda il presente dibattito mBTC/uBTC/satoshi in Bitcoin), le denominazioni vengono assegnate prima:
 
 * 1: wei
 * 10<sup>12</sup>: szabo
 * 10<sup>15</sup>: finney
 * 10<sup>18</sup>: ether
 
-This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi". In the near future, we expect "ether" to be used for ordinary transactions, "finney" for microtransactions and "szabo" and "wei" for technical discussions around fees and protocol implementation; the remaining denominations may become useful later and should not be included in clients at this point.
+Ciò dovrebbe essere considerato come un'analogia con il concetto di "dollari" e "centesimi" o "BTC" e "satoshi". Nel futuro prossimo, ci aspettiamo che "ether" sia impiegato per le transazioni ordinarie, "finney" per le microtransazioni e "szabo" e "wei" per discussioni tecniche riguardo l'implementazione del protocollo; le rimanenti denominazioni potrebbe diventare utili più avanti e non dovrebbero essere, al momento, incluse nei clients.
 
-The issuance model will be as follows:
+Il modello di emissione sarà come segue:
 
-* Ether will be released in a currency sale at the price of 1000-2000 ether per BTC, a mechanism intended to fund the Ethereum organization and pay for development that has been used with success by other platforms such as Mastercoin and NXT. Earlier buyers will benefit from larger discounts. The BTC received from the sale will be used entrirely to pay salaries and bounties to developers and invested into various for-profit and non-profit projects in the Ethereum and cryptocurrency ecosystem.
-* 0.099x the total amount sold (60102216 ETH) will be allocated to the organization to compensate early contributors and pay ETH-denominated expenses before the genesis block.
-* 0.099x the total amount sold will be maintained as a long-term reserve.
-* 0.26x the total amount sold will be allocated to miners per year forever after that point.
+* Ether sarà rilasciato in una vendita di moneta al prezzo di 1000-2000 ether per BTC, un meccanismo che intende finanziare l'organizzazione Ethereum  e pagare per lo sviluppo come è successo in altre piattaforme come Mastercoin e NXT. I primi compratori beneficeranno di grandi sconti. I BTC raccolti dalla vendita saranno interamente usati per pagari i salari per i premi agli  sviluppatori e investiti per vari progetti profit e non profit in Ethereum e nell'ecosistema delle criptomonete.
+* 0.099x del totale dell'ammontare venduto (60102216 ETH) sarà allocato all'organizzazione per compensare i primi contributori e pagare le spese denominate in ETH prima del blocco di genesi.
+* 0.099x del totale dell'ammontare venduto sarà conservato come una riserva a lungo termine.
+* 0.26x del totale dell'ammontare venduto sarà conferito ai miners ogni anno dopo questo momento.
 
-| Group  | At launch | After 1 year | After 5 years
+| Group  | Al lancio | Dopo 1 anno | Dopo 5 anni
 | ------------- | ------------- |-------------| ----------- |
-| Currency units  | 1.198X | 1.458X  |  2.498X |
-| Purchasers  | 83.5% | 68.6%  | 40.0% |
-| Reserve spent pre-sale | 8.26% | 6.79% | 3.96% |
-| Reserve used post-sale | 8.26% | 6.79% | 3.96% |
+| Unità di moneta  | 1.198X | 1.458X  |  2.498X |
+| Compratori  | 83.5% | 68.6%  | 40.0% |
+| Riserva spesa prima della vendita | 8.26% | 6.79% | 3.96% |
+| Riserva usata dopo la vendita  8.26% | 6.79% | 3.96% |
 | Miners | 0% | 17.8% | 52.0% |
 
 **Long-Term Supply Growth Rate (percent)**
