@@ -2,6 +2,78 @@
 
 We are in the last days of preparing the POC-7 release. It is scheduled to ship on St Nicholas' Day. Work on PoC8 is starting next week and it's expected to arrive on Christmas.
 
+
+
+##Clients/Protocol 
+
+###CPP - Gavin Wood
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
+###Go/Mist - Jeffrey Wilcke
+
+###Node.
+
+###Pythereum - Heiko
+
+###Mix - Arkadiy Paronyan
+
+###Swarm - Daniel Nagy
+
+###Whisper - Gavin Wood
+
+###Yellow Paper (recent changes) - Gav Wood
+
+###Dev P2P - Felix Lange
+
+
+##Languages
+
+###Solidity - Christian Reitwiessner
+
+###Serpent - Vitalik Buterin
+
+
+##Release
+
+###System testing project - Sven Ehlert
+
+###Testing - Christophe Jentzsch
+
+###Build System - Caktux
+
+###Audit - Jutta
+
+###Dapps - Fabian/AVSA
+
+###ET Hash - Matthew
+
+###Vapour - Martin Becze
+
+
+##Communications 
+
+###Meetups - Texture
+
+###Upcoming Events - Texture
+
+###Comms - George Hallam
+
+###Ether Academy Website - Ken Kappler
+
+###In the Media - George Hallam
+
+
+
+
+
+
+(Legacy)
+
 ### Testnet
 - Bootstrapping node: poc-7.ethdev.com:30303
 - Chain explorer: [poc-7.ethdev.com](http://poc-7.ethdev.com) (is down)
@@ -46,62 +118,3 @@ See [poc-7 etherpad](https://ethereum.etherpad.mozilla.org/14) for details.
 
 ##Ecosystem
 
-
-
-
-
-##Clients/Protocol 
-
-###CPP - Gavin Wood
-
-###Go/Mist - Jeffrey Wilcke
-
-###Pythereum - Heiko
-
-###Mix - Arkadiy Paronyan
-
-###Swarm - Daniel Nagy
-
-###Whisper - Gavin Wood
-
-###Yellow Paper (recent changes) - Gav Wood
-
-###Dev P2P - Felix Lange
-
-
-##Languages
-
-###Solidity - Christian Reitwiessner
-
-###Serpent - Vitalik Buterin
-
-
-##Release
-
-###System testing project - Sven Ehlert
-
-###Testing - Christophe Jentzsch
-
-###Build System - Caktux
-
-###Audit - Jutta
-
-###Dapps - Fabian/AVSA
-
-
-
-###ET Hash - Matthew
-###Vapour - Martin Becze
-
-
-##Communications 
-
-###Meetups - Texture
-
-###Upcoming Events - Texture
-
-###Comms - George Hallam
-
-###Ether Academy Website - Ken Kappler
-
-###In the Media - George Hallam
