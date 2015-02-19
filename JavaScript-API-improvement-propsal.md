@@ -14,7 +14,7 @@ The changes should be backwards compatible for a while, and we throw a warning s
   * [setProvider](#web3setprovider) *(providor)*
   * [reset](#web3reset)
   * [eth](#web3eth)
-    * [coinbase](#web3ethcoinbase) -> number (BigNumber?)
+    * [coinbase](#web3ethcoinbase) -> hexString
     * [listening](#web3ethlistening) -> boolean
     * [mining](#web3ethmining) -> boolean
     * [gasPrice](#web3ethgasprice) -> number
