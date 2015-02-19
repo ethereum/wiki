@@ -38,7 +38,7 @@ The changes should be backwards compatible for a while, and we throw a warning s
     * [compile.lll(string)](#web3ethlll)  // PREVIOUS: lll()
     * [compile.solidity(object)](#web3ethsolidity)  // PREVIOUS: solidity()
     * [compile.serpent(object)](#web3ethserpent)  // PREVIOUS: serpent()
-    * [Replaced with filter.previous()](#web3ethlogs) *(object/string)* // PREVIOUS: logs()
+    * Replaced with filter.pastItems() *(object/string)* // PREVIOUS: logs()
     * [filter(object/string)](#web3ethwatch)
       * [arrived(callback)](#) ??
       * [watch(callback)](#) // PREVIOUS: changed()
