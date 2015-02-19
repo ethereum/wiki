@@ -50,21 +50,33 @@ See [poc-7 etherpad](https://ethereum.etherpad.mozilla.org/14) for details.
 
 ##Upcoming Events
 
-### Meetups
+###Clients/Protocol 
 
 ##CPP - Gavin Wood
 
-Mix - Arkadiy Paronyan
-Mist - Jeff
-Swarm - Daniel
-Whisper - Gav
-Yellow Paper - Gav
-Dev P2P - Felix
-System testing project - Sven
-Testing - Christophe 
-Solidity - Christian
-Serpent - Vitalik
-Pythereum - Heiko
+##Go/Mist - Jeffrey Wilcke
+
+##Pythereum - Heiko
+
+##Mix - Arkadiy Paronyan
+
+##Swarm - Daniel Nagy
+
+##Whisper - Gavin Wood
+
+##Yellow Paper (recent changes) - Gav Wood
+
+##Dev P2P - Felix Lange
+
+##System testing project - Sven Ehlert
+
+##Testing - Christophe Jentzsch
+
+
+##Solidity - Christian Reitwiessner
+
+Serpent - Vitalik Buterin
+
 Audit - Jutta
 Dapps - Fabian/AVSA
 Comms - George
