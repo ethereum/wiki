@@ -425,14 +425,14 @@ Il modello di emissione sarà come segue:
 | Unità di moneta  | 1.198X | 1.458X  |  2.498X |
 | Compratori  | 83.5% | 68.6%  | 40.0% |
 | Riserva spesa prima della vendita | 8.26% | 6.79% | 3.96% |
-| Riserva usata dopo la vendita  8.26% | 6.79% | 3.96% |
+| Riserva usata dopo la vendita | 8.26% | 6.79% | 3.96% |
 | Miners | 0% | 17.8% | 52.0% |
 
-**Long-Term Supply Growth Rate (percent)**
+**Tasso di Crescita a Lungo-Termine (in percentuale)**
 
 ![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
 
-_Despite the linear currency issuance, just like with Bitcoin over time the supply growth rate nevertheless tends to zero_
+_Tuttavia, nonostante l'emissione di valuta lineare, il tasso di crescita dell'offerta, proprio come avviene nel Bitcoin, tende a zero_
 
 The two main choices in the above model are (1) the existence and size of an endowment pool, and (2) the existence of a permanently growing linear supply, as opposed to a capped supply as in Bitcoin. The justification of the endowment pool is as follows. If the endowment pool did not exist, and the linear issuance reduced to 0.217x to provide the same inflation rate, then the total quantity of ether would be 16.5% less and so each unit would be 19.8% more valuable. Hence, in the equilibrium 19.8% more ether would be purchased in the sale, so each unit would once again be exactly as valuable as before. The organization would also then have 1.198x as much BTC, which can be considered to be split into two slices: the original BTC, and the additional 0.198x. Hence, this situation is _exactly equivalent_ to the endowment, but with one important difference: the organization holds purely BTC, and so is not incentivized to support the value of the ether unit.
 
