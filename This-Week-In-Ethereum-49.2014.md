@@ -1,4 +1,4 @@
-###Current Status 
+###Current Status of the project
 
 We are in the last days of preparing the POC-7 release. It is scheduled to ship on St Nicholas' Day. Work on PoC8 is starting next week and it's expected to arrive on Christmas.
 
@@ -16,7 +16,7 @@ What are the next steps?
 
 ###Go/Mist - Jeffrey Wilcke
 
-###Node.
+###Node Ethereum - Martin Becze
 
 ###Pythereum - Heiko
 
@@ -26,7 +26,7 @@ What are the next steps?
 
 ###Whisper - Gavin Wood
 
-###Yellow Paper (recent changes) - Gav Wood
+###Yellow Paper (recent changes) - Gavin Wood
 
 ###Dev P2P - Felix Lange
 
@@ -52,7 +52,7 @@ What are the next steps?
 
 ###ET Hash - Matthew
 
-###Vapour - Martin Becze
+###Vapor - Martin Becze
 
 
 ##Communications 
@@ -72,7 +72,8 @@ What are the next steps?
 
 
 
-(Legacy)
+
+##(Legacy)
 
 ### Testnet
 - Bootstrapping node: poc-7.ethdev.com:30303
