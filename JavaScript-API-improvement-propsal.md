@@ -29,7 +29,7 @@ The changes should be backwards compatible for a while, and we throw a warning s
     * [getStorage(address)](#web3ethstorageat) // PREVIOUS: storageAt()
     * [getTransactionCount(address)](#web3ethcountat) // PREVIOUS: countAt()
     * [getCode(address)](#web3ethcodeat) // PREVIOUS: countAt()
-    * [send(object) or still transact?](#web3ethtransact)  // PREVIOUS: transact() 
+    * [sendTransaction(object)](#web3ethtransact)  // PREVIOUS: transact() 
     * [call(object)](#web3ethcall)
     * [getBlock(hash/number)](#web3ethblock)  // PREVIOUS: block() 
     * [getTransaction(object, number)](#web3ethtransaction)  // PREVIOUS: transaction() 
