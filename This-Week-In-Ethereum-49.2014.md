@@ -51,3 +51,24 @@ See [poc-7 etherpad](https://ethereum.etherpad.mozilla.org/14) for details.
 ##Upcoming Events
 
 ### Meetups
+
+##CPP - Gavin Wood
+
+Mix - Arkadiy Paronyan
+Mist - Jeff
+Swarm - Daniel
+Whisper - Gav
+Yellow Paper - Gav
+Dev P2P - Felix
+System testing project - Sven
+Testing - Christophe 
+Solidity - Christian
+Serpent - Vitalik
+Pythereum - Heiko
+Audit - Jutta
+Dapps - Fabian/AVSA
+Comms - George
+ET Hash - Matthew
+Vapour - Martin Becze
+Build System - Caktux
+Meetups - Texture
