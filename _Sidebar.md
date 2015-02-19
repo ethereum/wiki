@@ -23,6 +23,7 @@
 - [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
 - [Exchange Integration](https://github.com/ethereum/wiki/wiki/Exchange-Integration)
 - [Mining Howto](https://github.com/ethereum/wiki/wiki/Mining-Howto)
+- [Licencing](https://github.com/ethereum/wiki/wiki/Licencing)
 
 ### Ethereum Clients
 - [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
