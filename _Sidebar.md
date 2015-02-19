@@ -18,7 +18,11 @@
 - [Solidity, Docs & ABI](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI)
 - [NatSpec Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format)
 - [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
+
+### Third-party Development
 - [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
+- [Exchange Integration](https://github.com/ethereum/wiki/wiki/Exchange-Integration)
+- [Mining Howto](https://github.com/ethereum/wiki/wiki/Mining-Howto)
 
 ### Ethereum Clients
 - [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
@@ -41,9 +45,6 @@
 - [Mutan](https://github.com/obscuren/mutan)
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
 - [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/JSON-RPC)
-
-### Mining
-- [Mining Howto](https://github.com/ethereum/wiki/wiki/Mining-Howto)
 
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
