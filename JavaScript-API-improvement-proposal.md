@@ -10,49 +10,50 @@ All returned numbers should be typed statically either to JS integers or BigNumb
      * [client](#) -> string e.g. 'AlethZero/1.0.0' (the client ID)
   * [port](#) -> number e.g. 8080 (community wish)
   * [sha3](#web3sha3) *(s1)*
-  * [toAscii](#web3toascii) *(hexString)*
-  * [fromAscii](#web3fromascii) *(string, [padding])*
-  * [toDecimal](#web3todecimal) *(hexString)*
-  * [fromDecimal](#web3fromdecimal) *(number)*
+  * [toAscii](#web3toascii) *(hexString)*, returns textString
+  * [fromAscii](#web3fromascii) *(textString, [padding])*, returns hexString
+  * [toDecimal](#web3todecimal) *(hexString)*, returns decimalString
+  * [fromDecimal](#web3fromdecimal) *(decimalString)*, returns hexString
   * [setProvider](#web3setprovider) *(provider)*
   * [reset](#web3reset)
   * [eth](#web3eth)
     * [coinbase](#web3ethcoinbase) -> hexString
     * [listening](#web3ethlistening) -> boolean
     * [mining](#web3ethmining) -> boolean
-    * [gasPrice](#web3ethgasprice) -> number
-    * [accounts](#web3ethaccounts) -> array
+    * [gasPrice](#web3ethgasprice) -> BigNumber
+    * [accounts](#web3ethaccounts) -> array of hexStrings
     * [register(hexString)](#web3ethregister)
     * [unRegister(hexString)](#web3ethunregister) // PREVIOUS: unregister()
-    * [peerCount](#web3ethpeercount) -> number
-    * [defaultBlock](#web3ethdefaultblock) -> ?
-    * [blockNumber](#web3ethnumber) -> number // PREVIOUS: number()
-    * [getBalance(address)](#web3ethbalanceat) -> number // PREVIOUS: balanceAt()
-    * [getState(address, storage)](#web3ethstateat) // PREVIOUS: stateAt()
-    * [getStorage(address)](#web3ethstorageat) // PREVIOUS: storageAt()
-    * [getTransactionCount(address)](#web3ethcountat) // PREVIOUS: countAt()
-    * [getCode(address)](#web3ethcodeat) // PREVIOUS: countAt()
+    * [peerCount](#web3ethpeercount) -> Integer
+    * [defaultBlock](#web3ethdefaultblock) -> Integer
+    * [blockNumber](#web3ethnumber) -> Integer // PREVIOUS: number()
+    * [getBalance(address)](#web3ethbalanceat) -> BigNumber // PREVIOUS: balanceAt()
+    * [getState(address, storage)](#web3ethstateat) -> hexString // PREVIOUS: stateAt()
+    * [getStorage(address)](#web3ethstorageat) -> hexString // PREVIOUS: storageAt()
+    * [getTransactionCount(address)](#web3ethcountat) -> Integer // PREVIOUS: countAt()
+    * [getCode(address)](#web3ethcodeat) -> hexString// PREVIOUS: countAt()
     * [sendTransaction(object)](#web3ethtransact)  // PREVIOUS: transact() 
-    * [call(object)](#web3ethcall)
-    * [getBlock(hash/number)](#web3ethblock)  // PREVIOUS: block() 
-    * [getTransaction(object, number)](#web3ethtransaction)  // PREVIOUS: transaction() 
-    * [getUncle(hash/number)](#web3ethuncle)  // PREVIOUS: uncle()
-    * [getCompilers()](#web3ethcompilers)  // PREVIOUS: compilers()
-    * [compile.lll(string)](#web3ethlll)  // PREVIOUS: lll()
-    * [compile.solidity(string)](#web3ethsolidity)  // PREVIOUS: solidity()
-    * [compile.serpent(string)](#web3ethserpent)  // PREVIOUS: serpent()
+    * [call(object)](#web3ethcall) -> hexString
+    * [getBlock(hash/number)](#web3ethblock) -> headerObject // PREVIOUS: block() 
+    * [getTransaction(object, number)](#web3ethtransaction) -> transactionObject  // PREVIOUS: transaction() 
+    * [getUncle(hash/number)](#web3ethuncle) -> headerObject // PREVIOUS: uncle()
+    * [getCompilers()](#web3ethcompilers) -> array of strings // PREVIOUS: compilers()
+    * [compile.lll(string)](#web3ethlll) -> hexString // PREVIOUS: lll()
+    * [compile.solidity(string)](#web3ethsolidity) -> hexString // PREVIOUS: solidity()
+    * [compile.serpent(string)](#web3ethserpent) -> hexString // PREVIOUS: serpent()
     * Replaced with filter(...).get() *(object/string)* // PREVIOUS: logs()
-    * [filter(string)](#web3ethwatch)
-    * [filter(object)](#web3ethlogs) // object is a log filter 
-    * [filter(object (, options) )](#web3ethlogs) // object is a contract object
-    * [filter(object (, indexed_event_arguments (, options)) )](#web3ethlogs) // object is an event object belonging to a specific contract object
-    * [filter(array (, options) )](#web3ethlogs) // array is an array of events object belonging to specific contract objects
+    * [filter(string)](#web3ethwatch) -> filterObject
+    * [filter(object)](#web3ethlogs) -> filterObject // object is a log filter 
+    * [filter(object (, options) )](#web3ethlogs) -> filterObject // object is a contract object
+    * [filter(object (, indexed_event_arguments (, options)) )](#web3ethlogs) -> filterObject // object is an event object belonging to a specific contract object
+    * [filter(array (, options) )](#web3ethlogs) -> filterObject // array is an array of events object belonging to specific contract objects
       * `options` is a object containing one or more of `earliest`, `latest`, `offset` and `max`, as before.
       * `indexed_event_arguments` is an object with keys of one or more indexed arguments to the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
-      * [watch(callback)](#) // PREVIOUS: changed() arrived()
-      * [stopWatching(callback)](#) // PREVIOUS: uninstall()
-      * [get()](#)  // returns []; existingItems? lastItems? PREVIOUS: logs()
-    * [contract(abi)](#web3ethcontract) // PREVIOUS: contractFromAbi
+      * filterObject contains:
+        - [watch(callback)](#) // PREVIOUS: changed() arrived()
+        - [stopWatching(callback)](#) // PREVIOUS: uninstall()
+        - [get()](#)  // returns []; existingItems? lastItems? PREVIOUS: logs()
+    * [contract(abi)](#web3ethcontract) -> contractPrototypeObject // PREVIOUS: contractFromAbi
       * contains much, including a function taking an address to give you the contract instance.
     * DEPRECATED [contractInstance(abi, address)](#web3ethcontract) // PREVIOUS: contract, parameters exchanged.
     * [flush()](#web3ethflush)
