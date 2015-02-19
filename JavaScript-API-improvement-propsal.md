@@ -1,17 +1,23 @@
 
 The changes should be backwards compatible for a while, and we throw a warning stating thats it deprecated. Simple map. The return values of the funcitons don't change for now. (community wish)
 
+TODO: Decide
+- All returned numbers should be typed dynamically either to JS integers or BigNumbers, depending on their value.
+- All returned numbers should be typed statically either to JS integers or BigNumbers, depending on their practical maximum value.
+- All returned numbers should be BigNumbers. 
+
 * [web3](#web3)
   * [version](#) (community wish)
      * [network](#) -> string e.g. '0.0.1' (the node version)
-     * [client](#) -> string e.g. '0.0.1' (the ethereum.js version)
+     * [api](#) -> string e.g. '0.0.1' (the ethereum.js version)
+     * [client](#) -> string e.g. 'AlethZero/1.0.0' (the client ID)
   * [port](#) -> number e.g. 8080 (community wish)
   * [sha3](#web3sha3) *(s1)*
   * [toAscii](#web3toascii) *(hexString)*
   * [fromAscii](#web3fromascii) *(string, [padding])*
   * [toDecimal](#web3todecimal) *(hexString)*
   * [fromDecimal](#web3fromdecimal) *(number)*
-  * [setProvider](#web3setprovider) *(providor)*
+  * [setProvider](#web3setprovider) *(provider)*
   * [reset](#web3reset)
   * [eth](#web3eth)
     * [coinbase](#web3ethcoinbase) -> hexString
@@ -24,7 +30,7 @@ The changes should be backwards compatible for a while, and we throw a warning s
     * [peerCount](#web3ethpeercount) -> number
     * [defaultBlock](#web3ethdefaultblock) -> ?
     * [blockNumber](#web3ethnumber) -> number // PREVIOUS: number()
-    * [getBalance(address)](#web3ethbalanceat) -> number (BigNumber?) // PREVIOUS: balanceAt()
+    * [getBalance(address)](#web3ethbalanceat) -> number // PREVIOUS: balanceAt()
     * [getState(address, storage)](#web3ethstateat) // PREVIOUS: stateAt()
     * [getStorage(address)](#web3ethstorageat) // PREVIOUS: storageAt()
     * [getTransactionCount(address)](#web3ethcountat) // PREVIOUS: countAt()
