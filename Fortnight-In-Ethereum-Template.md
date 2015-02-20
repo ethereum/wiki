@@ -16,7 +16,7 @@ Nearing release.
 _What progress has been made in the last two weeks?_	
 Two weeks closer to release.
 
-_What are the next steps?_ 
+_What are the next steps?_
 Further preparation for release.
 
 ###Go/Mist - Jeffrey Wilcke
