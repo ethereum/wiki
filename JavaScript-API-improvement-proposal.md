@@ -12,8 +12,11 @@ All returned numbers should be typed statically either to JS integers or BigNumb
   * [sha3](#web3sha3) *(s1)*
   * [toAscii](#web3toascii) *(hexString)*, returns textString
   * [fromAscii](#web3fromascii) *(textString, [padding])*, returns hexString
-  * [toDecimal](#web3todecimal) *(hexString)*, returns decimalString
-  * [fromDecimal](#web3fromdecimal) *(decimalString)*, returns hexString
+  * [toDecimal](#web3todecimal) *(hexString)*, returns number
+  * [fromDecimal](#web3fromdecimal) *(number)*, returns hexString
+  * [fromWei](#web3fromwei) *(number, unit)*, returns number|BigNumber (depending on the input)
+  * [toWei](#web3fromdecimal) *(number, unit)*, returns number|BigNumber (depending on the input)
+  * [isAddress](#web3fromdecimal) *(hexString)*, returns boolean
   * [setProvider](#web3setprovider) *(provider)*
   * [reset](#web3reset)
   * [eth](#web3eth)
