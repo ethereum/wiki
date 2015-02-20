@@ -3,8 +3,7 @@ This document exists to collate information once a fortnight (biweekly) from the
 
 ###Current Status of the project
 
-We are in the last days of preparing the POC-7 release. It is scheduled to ship on St Nicholas' Day. Work on PoC8 is starting next week and it's expected to arrive on Christmas.
-
+What is the overall current of status of the Ethereum project? What is the next goal?
 
 
 ##Clients/Protocol 
@@ -19,41 +18,137 @@ What are the next steps?
 
 ###Go/Mist - Jeffrey Wilcke
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
 ###Node Ethereum - Martin Becze
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ###Pythereum - Heiko
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
 ###Mix - Arkadiy Paronyan
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ###Swarm - Daniel Nagy
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
 ###Whisper - Gavin Wood
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ###Yellow Paper (recent changes) - Gavin Wood
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
 ###Dev P2P - Felix Lange
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 
 ##Languages
 
 ###Solidity - Christian Reitwiessner
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
 ###Serpent - Vitalik Buterin
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 
 ##Release
 
 ###System testing project - Sven Ehlert
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
 ###Testing - Christophe Jentzsch
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ###Build System - Caktux
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
 ###Audit - Jutta
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ###Dapps - Fabian/AVSA
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
 ###ET Hash - Matthew
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ###Vapor - Martin Becze
 
@@ -67,14 +162,43 @@ What are the next steps?
 
 ###Meetups - Texture
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
 ###Upcoming Events - Texture
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ###Comms - George Hallam
 
-###Ether Academy Website - Ken Kappler
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
+
+###Ether Academy Website/Ethdev Website - Ken Kappler
+
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ###In the Media - George Hallam
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 
 
