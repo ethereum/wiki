@@ -152,11 +152,21 @@ What are the next steps?
 
 ###Vapor - Martin Becze
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ##Leadership
 
 ###Foundation - Joseph Lubin
 
+What's the current status of what you're working on? 	
+
+What progress has been made in the last two weeks?	
+
+What are the next steps? 
 
 ##Communications 
 
