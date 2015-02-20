@@ -13,7 +13,7 @@ What is the overall current of status of the Ethereum project? What is the next 
 _What's the current status of what you're working on?_	
 Nearing release.
 
-_What progress has been made in the last two weeks?_
+_What progress has been made in the last two weeks?_  
 Two weeks closer to release.
 
 _What are the next steps?_  
@@ -25,7 +25,7 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ###Node Ethereum - Martin Becze
 
@@ -43,7 +43,7 @@ _What progress has been made in the last two weeks?_
 * * simplified browser shims
 * * Cleaned up Docs
 
-_What are the next steps?_ 
+_What are the next steps?_  
 * RLPx
 * * added encryption
 * More RPC tests
@@ -53,7 +53,7 @@ _What are the next steps?_
 _Status_
 PV 52 (currently no interop w/ cpp/go)
 
-_What's the current status of what you're working on?_ 
+_What's the current status of what you're working on?_  
 We are currently in a major cleanup and refactoring phase with the goals to:
 
 * replace threading by an event loop architecture
@@ -69,10 +69,10 @@ _What progress has been made in the last two weeks?_
 
 * restructured vm tests
 
-_What are the next steps?_ 
+_What are the next steps?_  
 refactoring sprint to restore interop based on the new architecture
 
-_Other news?_
+_Other news?_  
 Jannik is doing a two month internship in the Berlin office and helps to clean up and document the code.
 
 ###Mix - Arkadiy Paronyan
@@ -81,7 +81,7 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_ 
+_What are the next steps?_  
 
 ###Swarm - Daniel Nagy
 
@@ -89,7 +89,7 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_ 
+_What are the next steps?_  
 
 ###Whisper - Gavin Wood
 
@@ -97,15 +97,15 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ###Yellow Paper (recent changes) - Gavin Wood
 
-_What's the current status of what you're working on?_ 	
+_What's the current status of what you're working on?_ 	 
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ###Dev P2P - Felix Lange
 
@@ -113,7 +113,7 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 
 ##Languages
@@ -126,7 +126,7 @@ Solidity is now able to compile the multisig wallet contract (preliminary versio
 _What progress has been made in the last two weeks?_	
 In the last two weeks, we completed enums, visibility specifiers, accessors and a first byte array type. Especially the "external" visibility specifier and the byte array made it possible to "store" call data for later use and implement the forwarding feature of the multisig wallet.
 
-_What are the next steps?_
+_What are the next steps?_  
 The next big features are array types and debugging support. In general, we will probably focus less on generic language features and more on usability.
 
 ###Serpent - Vitalik Buterin
@@ -135,7 +135,7 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_ 
+_What are the next steps?_  
 
 
 ##Release
@@ -162,7 +162,7 @@ _What progress has been made in the last two weeks?_
 * added  go client
 * first working scenarios (start/connect clients)
 
-_What are the next steps?_
+_What are the next steps?_  
 * More Basic Scenarios
 * * Chain consensus scenario with mining clients
 * * TX propagation scenario
@@ -180,16 +180,16 @@ After the creation of the tools for the block tests, I am now actually writing d
 _What progress has been made in the last two weeks?_	
 Beside the creation of some transaction tests, Block tests have been added (https://github.com/ethereum/tests/wiki/Block-Tests).   
 
-_What are the next steps?_
+_What are the next steps?_  
 I will add Blockchain tests, which probably will be the last type of tests. With this we have VM tests, state tests, transaction tests, block tests and blockchain tests. This will be sufficient to test almost eveything written in the YP.
 
 ###Build System - Caktux
 
-_What's the current status of what you're working on?_ 	
+_What's the current status of what you're working on?_ 	 
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_ 
+_What are the next steps?_  
 
 ###Audit - Jutta
 
@@ -197,7 +197,7 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ###Dapps - Fabian/AVSA
 
@@ -205,31 +205,31 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ###ET Hash - Matthew
 
-_What's the current status of what you're working on?_
+_What's the current status of what you're working on?_  
 
-_What progress has been made in the last two weeks?_	
+_What progress has been made in the last two weeks?_	 
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ###Vapor - Aaron Davis (Kumavis)
 
-_What is it?_
+_What is it?_  
 Dapp runtime environment + contract browser webapp
 think MIST built on node-ethereum
 
-_What's the current status of what you're working on?_	
+_What's the current status of what you're working on?_	 
 Early stages. Currently working on basic PoC.
 
-_What progress has been made in the last two weeks?_
+_What progress has been made in the last two weeks?_  
 Decided on tools and created multi-target build system.
 Started RPC communication with node-ethereum.
 Initial wireframes and logos generated by designer (Jef Cavens)
 
-_What are the next steps?_
+_What are the next steps?_  
 Finish basic identity management and wallet view.
 Package node-ethereum with native builds.
 Build Dapp runtime environment.
@@ -242,17 +242,17 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ##Communications 
 
 ###Meetups - Texture
 
-_What's the current status of what you're working on?_	
+_What's the current status of what you're working on?_	 
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ###Upcoming Events - Texture
 
@@ -260,18 +260,18 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ###Comms - George Hallam
 
 _What's the current status of what you're working on?_	
 Currently the comms team is working on the new Ethereum website (which is our main focus until complete in the next week or so). We're also continuing maintain the various social media outlets Ethereum utilises to update and interface with the community to reach out to various companies, journalists etc to spread the word of Ethereum. Ken Kappler continues to write various tutorials (which will continue to be released as we reach stability) and content for the future Ethereum Academy website. Unfortunately Stephan Tual has been taken ill and will be unavailable for a week or so :( (get well soon!) 
 
-_What progress has been made in the last two weeks?_
+_What progress has been made in the last two weeks?_  
 Having completed the bounty website just before, Ian and Konstantine are nearing completion of the Ethereum.org website with content now being provided by myself, Gavin and Vitalik. 
 In the last two weeks we have also been working on reaching out to various exchanges and possible parters for Ethereum as we move forward to the genesis release.	
 
-_What are the next steps?_
+_What are the next steps?_  
 Release the website! Continue reaching out to various entites that could potentially align themselves with Ethereum. We also have raw video footage that will be processed once Ian is free for doing the website design.
 
 ###Ether Academy Website/Ethdev Website - Ken Kappler
@@ -280,17 +280,17 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 
-_What are the next steps?_
+_What are the next steps?_  
 
 ###In the Media - George Hallam
 
-_What's the current status of what you're working on?_
+_What's the current status of what you're working on?_  
 Putting together various responses for journalists (spectator, coin telegraph etc) that have been in contact. Working with companies using ethereum for joint press releases/coverage.	
 
-_What progress has been made in the last two weeks?_
+_What progress has been made in the last two weeks?_  
 We had a great article in Vice/Motherboard... (motherboard.vice.com/read/smart-contracts-sound-boring-but-theyre-more-disruptive-than-bitcoin
 
-_What are the next steps?_
+_What are the next steps?_  
 ojn
 
 
