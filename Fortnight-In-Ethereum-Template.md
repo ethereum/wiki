@@ -13,10 +13,10 @@ What is the overall current of status of the Ethereum project? What is the next 
 _What's the current status of what you're working on?_	
 Nearing release.
 
-_What progress has been made in the last two weeks?_	
+_What progress has been made in the last two weeks?_
 Two weeks closer to release.
 
-_What are the next steps?_
+_What are the next steps?_  
 Further preparation for release.
 
 ###Go/Mist - Jeffrey Wilcke
