@@ -7,7 +7,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
 # API
 
 This API is deprecated and will be replaced with new the proposal: https://github.com/ethereum/wiki/wiki/JavaScript-API-improvement-proposal
-most new functions are already available in the current etheruem.js develop barnch. Old funcitons will still be usable, but will show a deprecated warning. Please stay tuned as we update the documantation.
+most new functions are already available in the current etheruem.js develop barnch. Old funcitons will still be usable, but will show a deprecated warning. Please stay tuned as we update the documentation.
 
 * [web3](#web3)
   * [sha3](#web3sha3) *(_s1)*
