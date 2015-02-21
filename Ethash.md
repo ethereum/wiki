@@ -61,10 +61,10 @@ Essentially, we are keeping the size of the dataset to always be equal to the hi
 We can now get the parameters:
 
 ```python
-def get_params(block_number):
+def get_params(block):
     params = {
-        "full_size": get_datasize(block_number),      # bytes in DAG
-        "cache_size": get_cachesize(block_number)      # bytes in cache        
+        "full_size": get_datasize(block),      # bytes in DAG
+        "cache_size": get_cachesize(block)      # bytes in cache        
     }
     return params
 ```
@@ -249,7 +249,7 @@ def sha3_256(x):
     return sha3.sha3_256(x).digest()
 
 def xor(a, b):
-    reuturn ''.join([chr(ord(x) ^ ord(y)) for x, y in zip(a, b)])
+    return ''.join([chr(ord(x) ^ ord(y)) for x, y in zip(a, b)])
 ```
 
 The following lookup tables provide approximately 7 years of tabulated DAG and cache sizes.  They were generated with the following *Mathematica* functions:
