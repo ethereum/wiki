@@ -157,7 +157,7 @@ def hashimoto_light(params, cache, header, nonce):
     return hashimoto(params, header, nonce, params["full_size"], lambda x: calc_dag_item(params, cache, x))
 
 def hashimoto_full(params, dag, header, nonce):
-    return hashimoto(params, cache, header, nonce, len(dag), lambda x: dag[x])
+    return hashimoto(params, header, nonce, len(dag), lambda x: dag[x])
 ```
 
 Essentially, we maintain a "mix" 128 bytes wide, and repeatedly sequentially fetch 128 bytes from the full dataset and use the `fnv` function to combine it with the mix. 128 bytes of sequential access are used so that each round of the algorithm always fetches a full page from RAM, minimizing translation lookaside buffer misses which ASICs would theoretically be able to avoid.
@@ -217,7 +217,7 @@ def encode_int(s):
 def zpad(s, length):
    return s + '\x00' * max(0, length - len(s))
 
-def hash_words(h, v):
+def hash_words(h, x):
     if isinstance(x, list):
         x = ''.join([zpad(encode_int(a), WORD_BYTES) for a in x])
     y = h(x)
@@ -225,17 +225,17 @@ def hash_words(h, v):
 
 # sha3 hash function, outputs 64 bytes
 def sha3_512(x):
-    hash_words(lambda v: sha3.sha3_512(v).digest(), x)
+    return hash_words(lambda v: sha3.sha3_512(v).digest(), x)
 
 def sha3_256(x):
-    hash_words(lambda v: sha3.sha3_256(v).digest(), x)
+    return hash_words(lambda v: sha3.sha3_256(v).digest(), x)
 
 def xor(a, b):
     return a ^ b
 
 test_params = {
-    "cache_size": 524288,
-    "full_size": 33554432
+    "cache_size": CACHE_BYTES_INIT,
+    "full_size": DAG_BYTES_INIT
 }
 ```
 
