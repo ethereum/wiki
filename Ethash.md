@@ -232,6 +232,11 @@ def sha3_256(x):
 
 def xor(a, b):
     return a ^ b
+
+test_params = {
+    "cache_size": 524288,
+    "full_size": 33554432
+}
 ```
 
 The following lookup tables provide approximately 7 years of tabulated DAG and cache sizes.  They were generated with the following *Mathematica* functions:
