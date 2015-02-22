@@ -90,7 +90,7 @@ def mkcache(params, seed):
     for _ in range(CACHE_ROUNDS):
         for i in range(n):
             v = o[i][0] % n
-            o[i] = sha3_512(xor(o[(i-1+n)%n], o[v]))
+            o[i] = sha3_512(map(xor, o[(i-1+n)%n], o[v]))
 
     return o
 ```
@@ -231,7 +231,7 @@ def sha3_256(x):
     hash_words(lambda v: sha3.sha3_256(v).digest(), x)
 
 def xor(a, b):
-    return ''.join([chr(ord(x) ^ ord(y)) for x, y in zip(a, b)])
+    return a ^ b
 ```
 
 The following lookup tables provide approximately 7 years of tabulated DAG and cache sizes.  They were generated with the following *Mathematica* functions:
