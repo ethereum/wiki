@@ -5,24 +5,6 @@ Ethash is intended to satisfy the following goals:
 3. **Light client slowdown**: the process of running the algorithm with a light client should be much slower than the process with a full client, to the point that the light client algorithm is not an economically viable route toward making an ASIC implementation.
 4. **Light client fast startup**: a light client should be able to become fully operational and able to verify blocks within 40 seconds in Python or Javascript.
 
-### BBS random number generation
-
-Our modified version of Blum Blum Shub was chosen to be used as a random number generator because of several properties:
-
-* It is simple to implement and simple to compute
-* There is a shortcut method for computing any step of the BBS immediately (`quick_bbs(seed, i, P) = seed ** (3 ** i % (P-1)) % P`)
-* It has a mathematically provable period length
-
-When choosing a safe prime *p* for our random number generator, we wish to find ones where the [multiplicative order](http://en.wikipedia.org/wiki/Multiplicative_order) of 3 in ℤ/(*p* - 1) is *high*, since this determines the cycle length of the corresponding random number generator.
-
-The multiplicative order of 3 in ℤ/(4294967086) is 1073741771.
-
-The multiplicative order of 3 in ℤ/(4294963786) is 2147481893.
-
-Note that cryptographic security is NOT required of the RNG here; we only need it to provide values which are roughly even across the entire output space `[0 ... 2**32 - 1]` and can be relied on to pass the [Diehard Tests](http://en.wikipedia.org/wiki/Diehard_tests).
-
-This particular pseudo-random number generator may exhibit bias when taking its output modulo a value which is not a prime, which is why we have forced the size of the DAG and the cache to be products of a prime and sizes of memory chunks.
-
 ### FNV
 
 FNV was used to provide a data aggregation function which is (i) non-associative, and (ii) easy to compute. A commutative and associative alternative to FNV would be XOR.
