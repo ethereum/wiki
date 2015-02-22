@@ -1,4 +1,6 @@
-**This spec is REVISION 13. Whenever you substantively (ie. not clarifications) update the algorithm, please update the revision number in this sentence. Also, in all implementations please include a spec revision number**
+**This spec is REVISION 14. Whenever you substantively (ie. not clarifications) update the algorithm, please update the revision number in this sentence. Also, in all implementations please include a spec revision number**
+
+Latest change: FNV removed.
 
 Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version of Dagger-Hashimoto, although it can no longer appropriately be called that since many of the original features of both algorithms have been drastically changed in the last month of research and development. See [https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto](https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto) for the original version.
 
@@ -20,6 +22,7 @@ See [https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale](https://gith
 We employ the following definitions:
 
 ```
+WORD_BYTES=4               # bytes in word
 DAG_BYTES_INIT=1073741824  # bytes in dag at genesis
 DAG_BYTES_GROWTH=131072    # growth per epoch (~345 MB per year)
 CACHE_BYTES_INIT=33554432  # bytes in cache at genesis
@@ -58,6 +61,8 @@ def _isprime(n):
 
 Essentially, we are keeping the size of the dataset to always be equal to the highest prime below a linearly growing function, so on average in the long term the dataset will grow roughly linearly.  Tabulated version of ``get_datasize` and `get_cachesize` have been provided in the appendix.
 
+`sha3_256` and `sha3_512` are assumed to accept word arrays or strings as input and output a word array. Many operations inside of the ethash spec operate on word arrays.
+
 We can now get the parameters:
 
 ```python
@@ -94,42 +99,15 @@ def mkcache(params, seed):
 
 The cache production process involves first sequentially filling up 32 MB of memory, then performing two passes of Sergio Demian Lerner's *RandMemoHash* algorithm from [*Strict Memory Hard Hashing Functions* (2014)](http://www.hashcash.org/papers/memohash.pdf). The output is a set of 524288 64-byte values.
 
-### Pseudo Random Number Generation
-
-Now, we specify some auxiliary methods for running a generalized [Blum Blum Shub](https://en.wikipedia.org/wiki/Blum_Blum_Shub) pseudorandom number generator on a 32-bit prime modulus; this is a very quick way of generating pseudorandom data.
-
-```python
-# two safe primes approximately equal to 2**32
-P1 = 4294967087
-P2 = 4294963787
-
-# Clamp a value to between the specified minimum and maximum
-def clamp(minimum, x, maximum):
-    return max(minimum, min(maximum, x))
-
-# Many steps of the BBS RNG in logtime
-def quick_bbs(seed, i, P):
-    return pow(seed, pow(3, i, P-1), P)
-
-# One step of the BBS RNG
-def step_bbs(n, P):
-    return (n * n * n) % P
-```
-
 ### Data aggregation function
 
-We use an algorithm inspired by the [FNV hash](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function) in order to combine large blocks of data together. This is essentially meant to be a non-associative substitute for XOR.
+We use an algorithm inspired by the [FNV hash](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function) in some cases as a non-associative substitute for XOR.
 
 ```python
 FNV_PRIME = 0x01000193
 
-def fnv(a, b):
-    o = ''
-    for pos in range(0, len(a), 4):
-        v1 = decode_int(a[pos:pos+4])
-        v2 = decode_int(b[pos:pos+4])
-        o += zpad(encode_int((v1 * FNV_PRIME ^ v2) % 2**32), 4)
-    return o
+def fnv(v1, v2):
+    return (v1 * FNV_PRIME ^ v2) % 2**32
 ```
 
 ### Full dataset calculation
@@ -139,14 +117,14 @@ Each 64-byte item in the full 1 GB dataset is computed as follows:
 ```python
 def calc_dag_item(params, cache, i):
     n = params["cache_size"] // HASH_BYTES
-    rand_seed = clamp(2, decode_int(cache[0][:4]), P1 - 2)
-    rand = clamp(2, quick_bbs(rand_seed, i, P1), P2 - 2)
-    mix = cache[i % n]
+    r = HASH_BYTES // WORD_BYTES
+    mix = copy.copy(cache[i % n])
+    mix[0] ^= i
+    mix = sha3_512(mix)
     for j in range(DAG_PARENTS):
-        mix_value = decode_int(mix[(j*4)%HASH_BYTES: (j*4+3)%HASH_BYTES])
-        mix = fnv(mix, cache[(rand ^ mix_value) % n])
-        rand = step_bbs(rand, P2)
-    return mix
+        cache_index = fnv(i ^ j, mix[j % r])
+        mix = map(fnv, mix, cache[cache_index % n])
+    return sha3_512(mix)
 ```
 
 Essentially, we use our RNG to generate a seed for the specific item, and use that as the seed for another RNG which picks 64 indices from the cache. We initialize a mix to equal the 512-bit big-endian representation of the index (the purpose of this is to make sure all of the entropy from the index, and not just the first 32 bytes as does the RNG, in computing the final DAG value), and then repeatedly run through random parts of the cache and use our aggregation function to combine the data together.
@@ -166,15 +144,13 @@ Now, we specify the main "hashimoto"-like loop, where we aggregate data from the
 def hashimoto(params, header, nonce, dagsize, dag_lookup):
     w = MIX_BYTES / HASH_BYTES
     n = dagsize / HASH_BYTES
+    r = MIX_BYTES / WORD_BYTES
     s = sha3_512(header + nonce)
     mix = [s for _ in range(w)]
-    rand = clamp(2, decode_int(s[-4:]), P2 - 2)
     for i in range(ACCESSES):
-        mix_value = decode_int(mix[0][(i*4) % MIX_BYTES: (i*4+3) % MIX_BYTES])
-        p = (rand ^ mix_value) % (n // w) * w
+        p = fnv(i ^ s[0], mix[i % r]) % (n // w) * w
         for j in range(w):
-            mix[j] = fnv(mix[j], dag_lookup(p + j))
-        rand = step_bbs(rand, P2)
+            mix[j] = map(fnv, mix[j], dag_lookup(p + j))
     return sha3_256(s+sha3_256(''.join(mix)))
 
 def hashimoto_light(params, cache, header, nonce):
