@@ -89,7 +89,7 @@ def mkcache(params, seed):
 
     for _ in range(CACHE_ROUNDS):
         for i in range(n):
-            v = (decode_int(o[i]) % 2**64) % n
+            v = o[i][0] % n
             o[i] = sha3_512(xor(o[(i-1+n)%n], o[v]))
 
     return o
@@ -160,7 +160,7 @@ def hashimoto_full(params, dag, header, nonce):
     return hashimoto(params, cache, header, nonce, len(dag), lambda x: dag[x])
 ```
 
-Essentially, we maintain a "mix" 4096 bytes wide, and repeatedly sequentially fetch 4096 bytes from the full dataset and use the `fnv` function to combine it with the mix. 4096 bytes of sequential access are used so that each round of the algorithm always fetches a full page from RAM, minimizing translation lookaside buffer misses which ASICs would theoretically be able to avoid.
+Essentially, we maintain a "mix" 128 bytes wide, and repeatedly sequentially fetch 128 bytes from the full dataset and use the `fnv` function to combine it with the mix. 128 bytes of sequential access are used so that each round of the algorithm always fetches a full page from RAM, minimizing translation lookaside buffer misses which ASICs would theoretically be able to avoid.
 
 If the output of this algorithm is below the desired target, then the nonce is valid. Note that the double application of `sha3_256` ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.  It also serves to provide statistical assurance that the result is an unbiased, 256 bit number.
 
@@ -217,12 +217,18 @@ def encode_int(s):
 def zpad(s, length):
    return s + '\x00' * max(0, length - len(s))
 
+def hash_words(h, v):
+    if isinstance(x, list):
+        x = ''.join([zpad(encode_int(a), WORD_BYTES) for a in x])
+    y = h(x)
+    return [decode_int(y[i:i+WORD_BYTES]) for i in range(0, HASH_BYTES, WORD_BYTES)]
+
 # sha3 hash function, outputs 64 bytes
 def sha3_512(x):
-    return sha3.sha3_512(x).digest()
+    hash_words(lambda v: sha3.sha3_512(v).digest(), x)
 
 def sha3_256(x):
-    return sha3.sha3_256(x).digest()
+    hash_words(lambda v: sha3.sha3_256(v).digest(), x)
 
 def xor(a, b):
     return ''.join([chr(ord(x) ^ ord(y)) for x, y in zip(a, b)])
