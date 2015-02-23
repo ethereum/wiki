@@ -142,16 +142,19 @@ Now, we specify the main "hashimoto"-like loop, where we aggregate data from the
 
 ```python
 def hashimoto(params, header, nonce, dagsize, dag_lookup):
-    w = MIX_BYTES / HASH_BYTES
     n = dagsize / HASH_BYTES
-    r = MIX_BYTES / WORD_BYTES
+    w = MIX_BYTES / WORD_BYTES
     s = sha3_512(header + nonce)
-    mix = [s for _ in range(w)]
+    mix = []
+    for _ in range(MIX_BYTES / HASH_BYTES):
+        mix.extend(s)
     for i in range(ACCESSES):
-        p = fnv(i ^ s[0], mix[i % r]) % (n // w) * w
-        for j in range(w):
-            mix[j] = map(fnv, mix[j], dag_lookup(p + j))
-    return sha3_256(s+sha3_256(''.join(mix)))
+        p = fnv(i ^ s[0], mix[i % w]) % (n // w) * w
+        newdata = []
+        for j in range(MIX_BYTES / HASH_BYTES):
+            newdata.extend(dag_lookup(p + j))
+        mix = map(fnv, mix, newdata)
+    return sha3_256(s+sha3_256(mix))
 
 def hashimoto_light(params, cache, header, nonce):
     return hashimoto(params, header, nonce, params["full_size"], lambda x: calc_dag_item(params, cache, x))
@@ -204,7 +207,7 @@ This function outputs two seeds, for using a *double buffer* (similar to the pat
 The following code should be prepended if you are interested in running the above python spec as code.
 
 ```python
-import sha3
+import sha3, copy
 
 # Assumes little endian bit ordering (same as Intel architectures)
 def decode_int(s):
@@ -217,25 +220,25 @@ def encode_int(s):
 def zpad(s, length):
    return s + '\x00' * max(0, length - len(s))
 
-def hash_words(h, x):
+def hash_words(h, sz, x):
     if isinstance(x, list):
         x = ''.join([zpad(encode_int(a), WORD_BYTES) for a in x])
     y = h(x)
-    return [decode_int(y[i:i+WORD_BYTES]) for i in range(0, HASH_BYTES, WORD_BYTES)]
+    return [decode_int(y[i:i+WORD_BYTES]) for i in range(0, sz, WORD_BYTES)]
 
 # sha3 hash function, outputs 64 bytes
 def sha3_512(x):
-    return hash_words(lambda v: sha3.sha3_512(v).digest(), x)
+    return hash_words(lambda v: sha3.sha3_512(v).digest(), 64, x)
 
 def sha3_256(x):
-    return hash_words(lambda v: sha3.sha3_256(v).digest(), x)
+    return hash_words(lambda v: sha3.sha3_256(v).digest(), 32, x)
 
 def xor(a, b):
     return a ^ b
 
 test_params = {
-    "cache_size": CACHE_BYTES_INIT,
-    "full_size": DAG_BYTES_INIT
+    "cache_size": CACHE_BYTES_INIT // 100,
+    "full_size": DAG_BYTES_INIT // 100
 }
 ```
 
