@@ -32,23 +32,23 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [unRegister(hexString)](#web3ethunregister)
     * [peerCount](#web3ethpeercount) -> Integer
     * [defaultBlock](#web3ethdefaultblock) -> Integer
-    * [blockNumber](#web3ethnumber) -> Integer
-    * [getBalance(address)](#web3ethbalanceat) -> BigNumber
-    * [getState(address, storage)](#web3ethstateat) -> hexString
-    * [getStorage(address)](#web3ethstorageat) -> hexString
-    * [getTransactionCount(address)](#web3ethcountat) -> Integer
-    * [getBlockTransactionCount(hash/number)](#web3ethtransactionCountcall) -> Integer
-    * [getCode(address)](#web3ethcodeat) -> hexString
-    * [sendTransaction(object)](#web3ethtransact)
+    * [blockNumber](#web3ethblocknumber) -> Integer
+    * [getBalance(address)](#web3ethgetbalance) -> BigNumber
+    * [getState(address, storage)](#web3ethgetstate) -> hexString
+    * [getStorage(address)](#web3ethgetstorage) -> hexString
+    * [getTransactionCount(address)](#web3ethgettransactioncount) -> Integer
+    * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount) -> Integer
+    * [getCode(address)](#web3ethgetcode) -> hexString
+    * [sendTransaction(object)](#web3ethsendtransaction)
     * [call(object)](#web3ethcall) -> hexString
-    * [getBlock(hash/number)](#web3ethblock) -> headerObject
-    * [getTransaction(object, number)](#web3ethtransaction) -> transactionObject
-    * [getUncle(hash/number)](#web3ethuncle) -> headerObject
-    * [getBlockUncleCount(hash/number)](#web3ethuncleCountcall) -> Integer
-    * [getCompilers()](#web3ethcompilers) -> array of strings
-    * [compile.lll(string)](#web3ethlll) -> hexString
-    * [compile.solidity(string)](#web3ethsolidity) -> hexString
-    * [compile.serpent(string)](#web3ethserpent) -> hexString
+    * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
+    * [getTransaction(object, number)](#web3ethgettransaction) -> transactionObject
+    * [getUncle(hash/number)](#web3ethgetuncle) -> headerObject
+    * [getBlockUncleCount(hash/number)](#web3ethgetblockunclecount) -> Integer
+    * [getCompilers()](#web3ethgetcompilers) -> array of strings
+    * [compile.lll(string)](#web3ethcompilelll) -> hexString
+    * [compile.solidity(string)](#web3ethcompilesolidity) -> hexString
+    * [compile.serpent(string)](#web3ethcompileserpent) -> hexString
     * [logs](#web3ethlogs) *(_object/_string)*
     * [watch](#web3ethwatch) *(_object/_string)* // will change to `filter`
       * [arrived](#) *(_callback)*
@@ -183,6 +183,8 @@ var value = web3.fromWei('21000000000000', 'finney');
 console.log(value === "0.021"); // true
 ```
 
+***
+
 ##### web3.toWei
 
     web3.toWei([String,BigNumber] number, [String] unit)
@@ -207,6 +209,8 @@ var value = web3.toWei('1', 'ether');
 console.log(value === "1000000000000000000"); // true
 ```
 
+***
+
 ##### web3.setProvider
 
     web3.setProvider(providor)
@@ -218,6 +222,8 @@ web3.setProvider(new web3.providers.HttpSyncProvider());
 web3.setProvider(new web3.providers.QtSyncProvider());
 ```
 
+***
+
 ##### web3.reset
 
     web3.reset()
@@ -227,11 +233,15 @@ Should be called to reset state of web3. Resets everything except manager. Unins
 web3.reset();
 ```
 
+***
+
 ##### web3.eth
 Should be called to get web3.eth object.
 ```javascript
 var eth = web3.eth;
 ```
+
+***
 
 ##### web3.eth.coinbase
 
@@ -243,6 +253,8 @@ var coinbase = web3.eth.coinbase;
 console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
 ```
 
+***
+
 ##### web3.eth.listening
 
     web3.eth.listening
@@ -252,6 +264,8 @@ Returns `true` if and only if the client is actively listening for network conne
 var listening = web3.eth.listening;
 console.log(listening); // true of false
 ```
+
+***
 
 ##### web3.eth.mining
 
@@ -263,6 +277,8 @@ var mining = web3.eth.mining;
 console.log(mining); // true or false
 ```
 
+***
+
 ##### web3.eth.gasPrice
 
     web3.eth.gasPrice
@@ -272,6 +288,8 @@ Returns the special 256-bit number equal to the hard-coded testnet price of gas 
 var gasPrice = web3.eth.gasPrice;
 console.log(gasPrice); // "10000000000000"
 ```
+
+***
 
 ##### web3.eth.accounts
 
@@ -283,6 +301,8 @@ var accounts = web3.eth.accounts;
 console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
 ```
 
+***
+
 ##### web3.eth.register
 
     web3.eth.register(addressHexString)
@@ -291,6 +311,8 @@ Registers the given address to be included in `web3.eth.accounts`. This allows n
 ```javascript
 web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
+
+***
 
 ##### web3.eth.unRegister
 
@@ -301,6 +323,8 @@ Unregisters the given address
 web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
 
+***
+
 ##### web3.eth.peerCount
 
     web3.eth.peerCount
@@ -310,6 +334,8 @@ Returns the number of peers currently connected to the client.
 var peerCount = web3.eth.peerCount;
 console.log(peerCount); // 4
 ```
+
+***
 
 ##### web3.eth.defaultBlock
 
@@ -324,6 +350,8 @@ console.log(defaultBlock); // -1
 web3.eth.defaultBlock = 0;
 ```
 
+***
+
 ##### web3.eth.blockNumber
 
     web3.eth.blockNumber
@@ -333,6 +361,8 @@ Returns the number of the most recent block.
 var number = web3.eth.blockNumber;
 console.log(number); // 2744
 ```
+
+***
 
 ##### web3.eth.getBalance
 
@@ -344,6 +374,8 @@ var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(balance); // "0x32884442997a37a000"
 ```
 
+***
+
 ##### web3.eth.getState
 
     web3.eth.getState(addressHexString, position)
@@ -353,6 +385,8 @@ Returns the value in storage at position `position` of the account by the given 
 var state = web3.eth.getState("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
 console.log(state); // "0x03"
 ```
+
+***
 
 ##### web3.eth.getStorage
 
@@ -364,22 +398,38 @@ var storage = web3.eth.getStorage("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(storage); // { "0x" : "0x03" }
 ```
 
-#####web3.eth.countAt
-Returns the number of transactions send from the account of address given by `_a`.
+***
+
+##### web3.eth.getTransactionCount
+
+    web3.eth.getTransactionCount(addressHexString)
+
+Returns the number of transactions send from the account of address given by `addressHexString`.
 ```javascript
-var number = web3.eth.countAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
+var number = web3.eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(number); // 1
 ```
 
-#####web3.eth.codeAt
-Returns code at given address.
+***
+
+##### web3.eth.getCode
+
+    web3.eth.getCode(addressHexString)
+
+Returns code at given address `addressHexString`.
 ```javascript
-var code = web3.eth.codeAt("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
+var code = web3.eth.getCode("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
 console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 ```
 
-#####web3.eth.block
-Returns the block with number `_number`. Return value is an object with the following keys:
+***
+
+##### web3.eth.getBlock
+
+     web3.eth.getBlock([string, number]hasHexStringOrBlockNumber)
+
+Returns the block with number `hasHexStringOrBlockNumber`. Return value is an object with the following keys:
+
   * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
   * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
   * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
@@ -416,8 +466,14 @@ console.log(info);
   "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
 } */
 ```
-#####web3.eth.transaction
-Returns the transaction number `_i` from block with number `_number`. Return value is an object with the following keys:
+
+***
+
+#####web3.eth.getTransaction
+
+    web3.eth.getTransaction(hashStringOrNumber, blockNumber)
+
+Returns the transaction by number or hash `hashStringOrNumber` from block with number `blockNumber`. Return value is an object with the following keys:
   * `hash`: The hash of the transaction. A 32-byte hash.
   * `input`: The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation. A byte array.
   * `to`: The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction (a 20-byte address).
@@ -447,8 +503,15 @@ console.log(transaction);
 
 ```
 
-#####web3.eth.uncle
-Returns the uncle number `_i` from block with number `_number`. Return value is an object with the following keys:
+***
+
+##### web3.eth.getUncle
+
+    web3.eth.getUncle(uncleNumber, blockHashStringOrNumber)
+
+Returns the uncle with number `uncleNumber` from the block with number or hash `blockHashStringOrNumber`.
+
+Return value is an object with the following keys:
   * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
   * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
   * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
@@ -487,7 +550,12 @@ console.log(uncle);
 */
 ```
 
-#####web3.eth.transact
+***
+
+##### web3.eth.sendTransaction
+
+    web3.eth.sendTransaction(transactionObject)
+
 Creates a new message-call transaction.
   * `_params`, an anonymous object specifying the parameters of the transaction.
     * `from`, the address for the sending account;
@@ -501,7 +569,7 @@ Creates a new message-call transaction.
   * `_fn`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
 ```javascript
 
-// solidity source code
+// compile solidity source code
 var source = "" + 
 "contract test {\n" +
 "   function multiply(uint a) returns(uint d) {\n" +
@@ -511,11 +579,16 @@ var source = "" +
 
 var compiled = web3.eth.solidity(source);
 
-var address = web3.eth.transact({code: compiled});
+var address = web3.eth.sendTransaction({data: compiled});
 console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 ```
 
-#####web3.eth.call
+***
+
+##### web3.eth.call
+
+    web3.eth.call(callObject)
+
 Executes a new message-call immediately without creating a transaction on the block chain.
   * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
 ```javascript
@@ -527,7 +600,9 @@ var result = web3.eth.call(options);
 console.log(result); // "0x0000000000000000000000000000000000000000000000000000000000000015"
 ```
 
-#####web3.eth.logs
+***
+
+##### web3.eth.logs
 Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of. Returns the list of log entries in Ethereum matching the given `_filter`. The filter is an object including fields:
   * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
   * `latest`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
@@ -541,7 +616,9 @@ Past messages may be filtered and their attributes inspected, and future message
     * `data`: The associated data of the log.
     * `number`: The block number from which this log is.
 
-#####web3.eth.watch
+***
+
+##### web3.eth.watch
 `web3.eth.watch(_filter)`: Creates a watch object to notify when the state changes in a particular way, given by `_filter`. Filter may be a log filter object, as defined above. It may also be either `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively. Returns a watch object with the following methods:
   * `changed(_f)`: Installs a handler, `_f`, which is called when the state changes due to logs that fit `_filter`. These (new) log entries are passed as a parameter in a format equivalent to the return value of `web3.eth.logs`.
   * `logs()`: Returns all of the log entries that fit `_filter`.
@@ -554,7 +631,9 @@ watch.changed(function (log) {
 });
 ```
 
-#####web3.eth.contract
+***
+
+##### web3.eth.contract
 This method should be called when we want to call / transact some solidity method from javascript. It returns an object which has the same methods available as solidity contract description.
 
 You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
@@ -592,21 +671,33 @@ watch.changed(function (result) {
 });
 ```
 
+***
+
 #####web3.eth.flush
 
 ```javascript
 // TODO:
 ```
 
-#####web3.eth.compilers
+***
+
+##### web3.eth.getCompilers
+
+    web3.eth.getCompilers()
+
 Returns an array of available compilers
 ```javascript
-var number = web3.eth.compilers();
+var number = web3.eth.getCompilers();
 console.log(number); // ["lll", "solidity", "serpent"]
 ```
 
-#####web3.eth.solidity
-Compiles the solidity source code `_s` and returns the output data.
+***
+
+##### web3.eth.compile.solidity
+
+    web3.eth.compile.solidity(sourceString)
+
+Compiles the solidity source code `sourceString` and returns the output data.
 ```javascript
 var source = "" + 
     "contract test {\n" +
@@ -614,21 +705,39 @@ var source = "" +
     "       return a * 7;\n" +
     "   }\n" +
     "}\n";
-var code = web3.eth.solidity(source);
+var code = web3.eth.compile.solidity(source);
 console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
 ```
 
-#####web3.eth.lll
-Compiles the LLL source code `_s` and returns the output data.
+***
+
+##### web3.eth.compile.lll
+
+    web3. eth.compile.lll(sourceString)
+
+Compiles the LLL source code `sourceString` and returns the output data.
 ```javascript
-// TODO (_code)
+var source = "...";
+
+var code = web3.eth.compile.lll(source);
+console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
 ```
 
-#####web3.eth.serpent
-Compiles the serpent source code `_s` and returns the output data.
+***
+
+##### web3.eth.compile.serpent
+
+    web3.eth.compile.serpent(sourceString)
+
+Compiles the serpent source code `sourceString ` and returns the output data.
 ```javascript
-// TODO (_code)
+var source = "...";
+
+var code = web3.eth.compile.serpent(source);
+console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
 ```
+
+***
 
 #####web3.db.put
 This method should be called, when we want to store number in local leveldb database.
@@ -641,6 +750,8 @@ var value = web3.db.get('test', 'key');
 console.log(value); // "0x05"
 ```
 
+***
+
 #####web3.db.putString
 This method should be called, when we want to store string in local leveldb database.
 First param is db name, second is the key, and third is the string value.
@@ -651,6 +762,8 @@ console.log(result); // true
 var value = web3.db.get('test', 'key');
 console.log(value); // "5"
 ```
+
+***
 
 #####web3.db.get
 This method should be called, when we want to get number value from local leveldb database.
@@ -663,6 +776,8 @@ var value = web3.db.get('test', 'key');
 console.log(value); // "0x05"
 ```
 
+***
+
 #####web3.db.getString
 This method should be called, when we want to get string value from local leveldb database.
 First param is db name and second is the key of string value.
@@ -674,11 +789,15 @@ var value = web3.db.get('test', 'key');
 console.log(value); // "5"
 ```
 
+***
+
 #####web3.shh
 [Whisper  Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
 ```javascript
 var shh = web3.shh;
 ```
+
+***
 
 #####web3.shh.post
 This method should be called, when we want to post whisper message. `_message` object may have following fields:
@@ -704,12 +823,16 @@ var message = {
 web3.shh.post(message);
 ```
 
+***
+
 #####web3.shh.newIdentity
 Should be called to create new identity.
 ```javascript
 var identity = web3.shh.newIdentity();
 console.log(identity); // "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
 ```
+
+***
 
 #####web3.shh.haveIdentity
 Should be called, if we want to check if user has given identity. Accepts one param. Returns true if he has, otherwise false.
@@ -722,6 +845,8 @@ var result2 = web3.shh.haveIdentity(identity + "0");
 console.log(result2); // false
 ```
 
+***
+
 #####web3.shh.newGroup
 ```javascript
 // TODO: not implemented yet
@@ -731,6 +856,8 @@ console.log(result2); // false
 ```javascript
 // TODO: not implemented yet
 ```
+
+***
 
 #####web3.shh.watch
 This method should be used, when you want to watch whisper messages.
