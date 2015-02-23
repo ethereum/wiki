@@ -51,9 +51,9 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [compile.serpent(string)](#web3ethcompileserpent) -> hexString
     * [logs](#web3ethlogs) *(_object/_string)*
     * [filter(array (, options) )](#web3ethfilter)
-        - [watch(callback)](#web3ethlogs)
-        - [stopWatching(callback)](#web3ethlogs)
-        - [get()](#web3ethlogs)
+        - [watch(callback)](#web3ethfilter)
+        - [stopWatching(callback)](#web3ethfilter)
+        - [get()](#web3ethfilter)
     * [contract](#web3ethcontract) *(_address, _abi)*
     * [flush](#web3ethflush)
   * [db](#web3db)
@@ -67,10 +67,10 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [hasIdentity(hexString)](#web3shhhaveidentity)
     * [newGroup(_id, _who)](#web3shhnewgroup)
     * [addToGroup(_id, _who)](#web3shhaddtogroup)
-    * [filter(object/string)](#web3shhwatch)
-      * [watch(callback)](#)
-      * [stopWatching(callback)](#)
-      * [get(callback)](#)
+    * [filter(object/string)](#web3shhfilter)
+      * [watch(callback)](#web3shhfilter)
+      * [stopWatching(callback)](#web3shhfilter)
+      * [get(callback)](#web3shhfilter)
 
 # Parameters
 
@@ -614,17 +614,19 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
 
 ##### web3.eth.filter
 
-    // can be 'chain' or 'pending'
-    web3.eth.filter(filterString)
-    // object is a log filter 
-    web3.eth.filter(options)
-    // object is an event object 
-    web3.eth.filter(object [, eventArguments [, options]])
-    // an array of events object belonging to specific contract objects (not implemented yet)
-    web3.eth.filter(array [, options])
-    // object is a contract object (not implemented yet)
-    web3.eth.filter(object [, options])
 
+```js
+// can be 'chain' or 'pending'
+web3.eth.filter(filterString)
+// object is a log filter 
+web3.eth.filter(options)
+// object is an event object 
+web3.eth.filter(eventObject [, eventArguments [, options]])
+// an array of events object belonging to specific contract objects (not implemented yet)
+web3.eth.filter(eventArray [, options])
+// object is a contract object (not implemented yet)
+web3.eth.filter(contractObject [, options])
+```
   
    * `filterString`:  `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively
    * `options`
@@ -638,17 +640,17 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
       
 If its a log filter it returns a list of log entries; each includes the following fields:
 
-    * `address`: The address of the account whose execution of the message resulted in the log entry being made.
-    * `topic`: The topic(s) of the log.
-    * `data`: The associated data of the log.
-    * `number`: The block number from which this log is.
+* `address`: The address of the account whose execution of the message resulted in the log entry being made.
+* `topic`: The topic(s) of the log.
+* `data`: The associated data of the log.
+* `number`: The block number from which this log is.
 
 If its an event filter it returns a filter object with the return values of event.
 
-Methods:
-  * `watch(callback)`: Watches for state changes that fit the filter and calls the callback.
-  * `stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
-  * `get()`: Returns all of the log entries that fit the filter.
+#### Filter Methods:
+  * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback.
+  * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
+  * `filter.get()`: Returns all of the log entries that fit the filter.
 
 
 ```javascript
@@ -904,7 +906,7 @@ var options = {
 
 var filter = web3.shh.filter(options);
 
-filter.arrived(function(res) {
+filter.watch(function(res) {
   console.log(res);
   /* {
   "expiry":1422565026,
