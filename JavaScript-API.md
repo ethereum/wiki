@@ -6,44 +6,51 @@ There is, at the global scope, one objects; the `web3` object, containing data h
 
 # API
 
-This API is deprecated and will be replaced with new the proposal: https://github.com/ethereum/wiki/wiki/JavaScript-API-improvement-proposal
-most new functions are already available in the current etheruem.js develop barnch. Old funcitons will still be usable, but will show a deprecated warning. Please stay tuned as we update the documentation.
-
 * [web3](#web3)
-  * [sha3](#web3sha3) *(_s1)*
-  * [toAscii](#web3toascii) *(_s)*
-  * [fromAscii](#web3fromascii) *(_s, [_padding])*
-  * [toDecimal](#web3todecimal) *(_s)*
-  * [fromDecimal](#web3fromdecimal) *(_s)*
-  * [setProvider](#web3setprovider)
+  * [version](#) (community wish)
+     * [network](#) -> string e.g. '0.0.1' (the node version)
+     * [api](#) -> string e.g. '0.0.1' (the ethereum.js version)
+     * [client](#) -> string e.g. 'AlethZero/1.0.0' (the client ID)
+  * [port](#) -> number e.g. 8080 (community wish)
+  * [sha3](#web3sha3) *(s1)*
+  * [toAscii](#web3toascii) *(hexString)*, returns textString
+  * [fromAscii](#web3fromascii) *(textString, [padding])*, returns hexString
+  * [toDecimal](#web3todecimal) *(hexString)*, returns number
+  * [fromDecimal](#web3fromdecimal) *(number)*, returns hexString
+  * [fromWei](#web3fromwei) *(number, unit)*, returns number|BigNumber (depending on the input)
+  * [toWei](#web3toWei) *(number, unit)*, returns number|BigNumber (depending on the input)
+  * [isAddress](#web3isAddress) *(hexString)*, returns boolean
+  * [setProvider](#web3setprovider) *(provider)*
   * [reset](#web3reset)
   * [eth](#web3eth)
-    * [coinbase](#web3ethcoinbase)
-    * [listening](#web3ethlistening)
-    * [mining](#web3ethmining)
-    * [gasPrice](#web3ethgasprice)
-    * [accounts](#web3ethaccounts)
-    * [register](#web3ethregister)
-    * [unregister](#web3ethunregister)
-    * [peerCount](#web3ethpeercount)
-    * [defaultBlock](#web3ethdefaultblock)
-    * [number](#web3ethnumber)
-    * [balanceAt](#web3ethbalanceat) *(_address)*
-    * [stateAt](#web3ethstateat) *(_address, _storage)*
-    * [storageAt](#web3ethstorageat) *(_address)*
-    * [countAt](#web3ethcountat) *(_address)*
-    * [codeAt](#web3ethcodeat) *(_address)*
-    * [transact](#web3ethtransact) *(_object)*
-    * [call](#web3ethcall) *(_object)*
-    * [block](#web3ethblock) *(_hash/_number)*
-    * [transaction](#web3ethtransaction) *(_object, _number)*
-    * [uncle](#web3ethuncle) *(_hash/number)*
-    * [compilers](#web3ethcompilers) *()*
-    * [lll](#web3ethlll) *(_string)*
-    * [solidity](#web3ethsolidity) *(_object)*
-    * [serpent](#web3ethserpent) *(_object)*
+    * [coinbase](#web3ethcoinbase) -> hexString
+    * [listening](#web3ethlistening) -> boolean
+    * [mining](#web3ethmining) -> boolean
+    * [gasPrice](#web3ethgasprice) -> BigNumber
+    * [accounts](#web3ethaccounts) -> array of hexStrings
+    * [register(hexString)](#web3ethregister)
+    * [unRegister(hexString)](#web3ethunregister)
+    * [peerCount](#web3ethpeercount) -> Integer
+    * [defaultBlock](#web3ethdefaultblock) -> Integer
+    * [blockNumber](#web3ethnumber) -> Integer
+    * [getBalance(address)](#web3ethbalanceat) -> BigNumber
+    * [getState(address, storage)](#web3ethstateat) -> hexString
+    * [getStorage(address)](#web3ethstorageat) -> hexString
+    * [getTransactionCount(address)](#web3ethcountat) -> Integer
+    * [getBlockTransactionCount(hash/number)](#web3ethtransactionCountcall) -> Integer
+    * [getCode(address)](#web3ethcodeat) -> hexString
+    * [sendTransaction(object)](#web3ethtransact)
+    * [call(object)](#web3ethcall) -> hexString
+    * [getBlock(hash/number)](#web3ethblock) -> headerObject
+    * [getTransaction(object, number)](#web3ethtransaction) -> transactionObject
+    * [getUncle(hash/number)](#web3ethuncle) -> headerObject
+    * [getBlockUncleCount(hash/number)](#web3ethuncleCountcall) -> Integer
+    * [getCompilers()](#web3ethcompilers) -> array of strings
+    * [compile.lll(string)](#web3ethlll) -> hexString
+    * [compile.solidity(string)](#web3ethsolidity) -> hexString
+    * [compile.serpent(string)](#web3ethserpent) -> hexString
     * [logs](#web3ethlogs) *(_object/_string)*
-    * [watch](#web3ethwatch) *(_object/_string)*
+    * [watch](#web3ethwatch) *(_object/_string)* // will change to `filter`
       * [arrived](#) *(_callback)*
       * [changed](#) *(_callback)*
       * [logs](#) *(_callback)*
@@ -124,6 +131,48 @@ Returns the hex data string representing (in big-endian format) the decimal inte
 ```javascript
 var value = web3.fromDecimal('21');
 console.log(value === "0x15"); // true
+```
+
+##### web3.fromWei([String,BigNumber] number, [String] unit)
+Converts a number of wei into the following ethereum units:
+
+- kwei/ada
+- mwei/babbage
+- gwei/shannon
+- szabo
+- finney
+- ether
+- kether/grand/einstein
+- mether
+- gether
+- tether
+
+**Note** If you pass a BigNumber object, it will return one as well.
+
+```javascript
+var value = web3.fromWei('21000000000000', 'finney');
+console.log(value === "0.021"); // true
+```
+
+##### web3.toWei([String,BigNumber] number, [String] unit)
+Converts a number a ethereum unit into wei. Possible units are:
+
+- kwei/ada
+- mwei/babbage
+- gwei/shannon
+- szabo
+- finney
+- ether
+- kether/grand/einstein
+- mether
+- gether
+- tether
+
+**Note** If you pass a BigNumber object, it will return one as well.
+
+```javascript
+var value = web3.toWei('1', 'ether');
+console.log(value === "1000000000000000000"); // true
 ```
 
 ##### web3.setProvider
