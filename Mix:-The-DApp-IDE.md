@@ -17,15 +17,11 @@ In the IDE, choose `File > New Project`. Enter the contract name "MovieRaings" a
 Select Contract and enter the text for the rating contract:
 
 	contract Rating {
-		function rating(string32 _key) constant returns (uint256) {
-			return ratings[_key];
-		}
 		function setRating(string32 _key, uint256 _value) {
 			ratings[_key] = _value;
 		}
-		mapping (string32 => uint256) ratings;
+		mapping (string32 => uint256) public  ratings;
 	}
-
 
 Check [Solidity tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial) for solidity reference.
 
@@ -37,7 +33,7 @@ Now select index.html and enter the following html code:
 	<script type="text/javascript">
 	function getRating() {
         var param = document.getElementById("query").value;
-        var res = contracts["Rating"].contract.rating(param);
+        var res = contracts["Rating"].contract.ratings(param);
         document.getElementById("queryres").innerText = res;
     }
 
