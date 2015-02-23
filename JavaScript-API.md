@@ -50,11 +50,10 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [compile.solidity(string)](#web3ethcompilesolidity) -> hexString
     * [compile.serpent(string)](#web3ethcompileserpent) -> hexString
     * [logs](#web3ethlogs) *(_object/_string)*
-    * [watch](#web3ethwatch) *(_object/_string)* // will change to `filter`
-      * [arrived](#) *(_callback)*
-      * [changed](#) *(_callback)*
-      * [logs](#) *(_callback)*
-      * [uninstall](#) *(_callback)*
+    * [filter(array (, options) )](#web3ethfilter)
+        - [watch(callback)](#web3ethlogs)
+        - [stopWatching(callback)](#web3ethlogs)
+        - [get()](#web3ethlogs)
     * [contract](#web3ethcontract) *(_address, _abi)*
     * [flush](#web3ethflush)
   * [db](#web3db)
@@ -63,16 +62,15 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [get](#web3dbget) *(_name, _key)*
     * [getString](#web3dbgetstring) *(_name, _key)*
   * [shh](#web3shh)
-    * [post](#web3shhpost) *(_object)*
-    * [newIdentity](#web3shhnewidentity) *()*
-    * [haveIdentity](#web3shhhaveidentity) *(_string)*
-    * [newGroup](#web3shhnewgroup) *(_id, _who)*
-    * [addToGroup](#web3shhaddtogroup) *(_group, _who)*
-    * [watch](#web3shhwatch) *(_object/_string)*
-      * [arrived](#) *(_callback)*
-      * [changed](#) *(_callback)*
-      * [messages](#) *(_callback)*
-      * [uninstall](#) *(_callback)*
+    * [post(postObject)](#web3shhpost)
+    * [newIdentity()](#web3shhnewidentity)
+    * [hasIdentity(hexString)](#web3shhhaveidentity)
+    * [newGroup(_id, _who)](#web3shhnewgroup)
+    * [addToGroup(_id, _who)](#web3shhaddtogroup)
+    * [filter(object/string)](#web3shhwatch)
+      * [watch(callback)](#)
+      * [stopWatching(callback)](#)
+      * [get(callback)](#)
 
 # Parameters
 
@@ -614,31 +612,49 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
 
 ***
 
-##### web3.eth.logs
-Past messages may be filtered and their attributes inspected, and future messages (and the changes they implicitly bring) may be notified of. Returns the list of log entries in Ethereum matching the given `_filter`. The filter is an object including fields:
-  * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
-  * `latest`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
-  * `max`: The maximum number of messages to return.
-  * `skip`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
-  * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
-  * `topic`: A set of values which must each appear in the log entries.
-  * Returns a list of log entries; each includes the following fields:
+##### web3.eth.filter
+
+    // can be 'chain' or 'pending'
+    web3.eth.filter(filterString)
+    // object is a log filter 
+    web3.eth.filter(options)
+    // object is an event object 
+    web3.eth.filter(object [, eventArguments [, options]])
+    // an array of events object belonging to specific contract objects (not implemented yet)
+    web3.eth.filter(array [, options])
+    // object is a contract object (not implemented yet)
+    web3.eth.filter(object [, options])
+
+  
+   * `filterString`:  `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively
+   * `options`
+       * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
+       * `latest`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
+       * `max`: The maximum number of messages to return.
+       * `skip`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
+       * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
+       * `topic`: A set of values which must each appear in the log entries.
+   * `eventArguments` is an object with keys of one or more indexed arguments for the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
+      
+If its a log filter it returns a list of log entries; each includes the following fields:
+
     * `address`: The address of the account whose execution of the message resulted in the log entry being made.
     * `topic`: The topic(s) of the log.
     * `data`: The associated data of the log.
     * `number`: The block number from which this log is.
 
-***
+If its an event filter it returns a filter object with the return values of event.
 
-##### web3.eth.watch
-`web3.eth.watch(_filter)`: Creates a watch object to notify when the state changes in a particular way, given by `_filter`. Filter may be a log filter object, as defined above. It may also be either `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively. Returns a watch object with the following methods:
-  * `changed(_f)`: Installs a handler, `_f`, which is called when the state changes due to logs that fit `_filter`. These (new) log entries are passed as a parameter in a format equivalent to the return value of `web3.eth.logs`.
-  * `logs()`: Returns all of the log entries that fit `_filter`.
-  * `uninstall()`: Uninstalls the watch. Should always be called once it is done with.
+Methods:
+  * `watch(callback)`: Watches for state changes that fit the filter and calls the callback.
+  * `stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
+  * `get()`: Returns all of the log entries that fit the filter.
+
+
 ```javascript
-var watch = web3.eth.watch('pending');
+var filter = web3.eth.filter('pending');
 
-watch.changed(function (log) {
+filter.watch(function (log) {
   console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
 });
 ```
@@ -846,11 +862,11 @@ console.log(identity); // "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7
 
 ***
 
-#####web3.shh.haveIdentity
+#####web3.shh.hasIdentity
 Should be called, if we want to check if user has given identity. Accepts one param. Returns true if he has, otherwise false.
 ```javascript
 var identity = web3.shh.newIdentity();
-var result = web3.shh.haveIdentity(identity);
+var result = web3.shh.hasIdentity(identity);
 console.log(result); // true
 
 var result2 = web3.shh.haveIdentity(identity + "0");
@@ -859,19 +875,21 @@ console.log(result2); // false
 
 ***
 
-#####web3.shh.newGroup
-```javascript
-// TODO: not implemented yet
-```
-
-#####web3.shh.addToGroup
+##### web3.shh.newGroup
 ```javascript
 // TODO: not implemented yet
 ```
 
 ***
 
-#####web3.shh.watch
+##### web3.shh.addToGroup
+```javascript
+// TODO: not implemented yet
+```
+
+***
+
+##### web3.shh.filter
 This method should be used, when you want to watch whisper messages.
 Available filter options are:
 * `topic`: string or array of strings. filter messages with this topic
@@ -884,9 +902,9 @@ var options = {
   topic: [web3.fromAscii(topic)]
 };
 
-var watch = web3.shh.watch(options);
+var filter = web3.shh.filter(options);
 
-watch.arrived(function(res) {
+filter.arrived(function(res) {
   console.log(res);
   /* {
   "expiry":1422565026,
@@ -910,7 +928,7 @@ A simple HTML snippet that will display the user's primary account balance of Et
 <html><body>
 <div>You have <span id="ether">?</span> Weis</div>
 <script>
-web3.eth.watch('pending').changed(function() {
+web3.eth.filter('pending').watch(function() {
     var balance = web3.eth.balanceAt(web3.eth.coinbase);
     document.getElementById("ether").innerText = web3.toDecimal(balance);
   });
