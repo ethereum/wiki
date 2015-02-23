@@ -1,4 +1,4 @@
-Ethereum: Libro Bianco - White Paper (una traduzione di Leonardo Maria Pedretti)
+Ethereum: Libro Bianco - White Paper (una traduzione di Leonardo Maria Pedretti: lm.pedretti@gmail.com)
 
 ### Una Piattaforma di Nuova Generazione per i Contratti Intelligenti e le Applicazioni Decentralizzate
 
