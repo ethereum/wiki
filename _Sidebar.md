@@ -40,6 +40,7 @@
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 - [Solidity Tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial)
 - [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
+- [Mix Tutorial](https://github.com/ethereum/wiki/wiki/Mix:-The-DApp-IDE)
 - [Mix Features](https://github.com/ethereum/wiki/wiki/Mix-Features)
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
