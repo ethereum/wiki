@@ -133,7 +133,10 @@ var value = web3.fromDecimal('21');
 console.log(value === "0x15"); // true
 ```
 
-##### web3.fromWei([String,BigNumber] number, [String] unit)
+##### web3.fromWei
+
+    web3.fromWei([String,BigNumber] number, [String] unit)
+
 Converts a number of wei into the following ethereum units:
 
 - kwei/ada
@@ -154,7 +157,10 @@ var value = web3.fromWei('21000000000000', 'finney');
 console.log(value === "0.021"); // true
 ```
 
-##### web3.toWei([String,BigNumber] number, [String] unit)
+##### web3.toWei
+
+    web3.toWei([String,BigNumber] number, [String] unit)
+
 Converts a number a ethereum unit into wei. Possible units are:
 
 - kwei/ada
