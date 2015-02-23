@@ -91,25 +91,39 @@ The `web3` object can be used for general data handling.
 var web3 = require('web3')
 ```
 
+***
+
 ##### web3.sha3
+
+    web3.sha3(string)
+
 Returns the SHA3 of the given data.
 ```javascript
-var str = web3.fromAscii("Some ASCII string to be hashed");
+var str = web3.sha3("Some ASCII string to be hashed");
 console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
 
 var hash = web3.sha3(str);
 console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
 ```
 
+***
+
 ##### web3.toAscii
+
+    web3.toAscii(hexString);
+
 Returns an ASCII string made from the data `_s`.
 ```javascript
 var str = web3.toAscii("0x657468657265756d000000000000000000000000000000000000000000000000");
 console.log(str); // ethereum
 ```
 
+***
 
 ##### web3.fromAscii
+
+    web3.fromAscii(string);
+
 Returns data of the ASCII string `_s`, auto-padded to `_padding` bytes (default to 32) and left-aligned.
 ```javascript
 var str = web3.fromAscii('ethereum');
@@ -119,6 +133,8 @@ var str2 = web3.fromAscii('ethereum', 32);
 console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000000000000"
 ```
 
+***
+
 ##### web3.toDecimal
 Returns the decimal string representing the data `_s` (when interpreted as a big-endian integer).
 ```javascript
@@ -126,12 +142,16 @@ var value = web3.toDecimal('0x15');
 console.log(value === "21"); // true
 ```
 
+***
+
 ##### web3.fromDecimal
 Returns the hex data string representing (in big-endian format) the decimal integer `_s`.
 ```javascript
 var value = web3.fromDecimal('21');
 console.log(value === "0x15"); // true
 ```
+
+***
 
 ##### web3.fromWei
 
@@ -463,7 +483,7 @@ Past messages may be filtered and their attributes inspected, and future message
   * `topic`: A set of values which must each appear in the log entries.
   * Returns a list of log entries; each includes the following fields:
     * `address`: The address of the account whose execution of the message resulted in the log entry being made.
-    * `topics`: The topic(s) of the log.
+    * `topic`: The topic(s) of the log.
     * `data`: The associated data of the log.
     * `number`: The block number from which this log is.
 
@@ -510,7 +530,7 @@ watch.changed(function (result) {
     /*
     {
         address: '0x0123123121',
-        topics: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
+        topic: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
         data: "0x0000000000000000000000000000000000000000000000000000000000000001",
         number: 2
     }
@@ -682,7 +702,7 @@ watch.arrived(function(res) {
   "payload":"0x7b2274797065223a226d657373616765222c2263686174223a2265537668624d763939784c345442537741222c2274696d657374616d70223a7b222464617465223a313432323536343932363533377d2c22746f706963223a22222c2266726f6d223a7b226964656e74697479223a2230783365633035326663333337366638613231386232346236353238303361353839323033386333393431396139613434393233613631623131336237373835643136656431353732646636323838353961663335303436373065346466333164636438623365653961323131306664373130633934383639306630353537333934222c226e616d65223a22416365746f7465227d2c226d657373616765223a2273617361222c226964223a227a465232614e68594a666f4d4c62707333227d",
   "sent":1422564926,
   "to":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  "topics":["0x6578616d"],
+  "topic":["0x6578616d"],
   "ttl":100,
   "workProved":0
   } 
