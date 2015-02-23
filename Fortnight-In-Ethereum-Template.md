@@ -75,6 +75,16 @@ refactoring sprint to restore interop based on the new architecture
 _Other news?_  
 Jannik is doing a two month internship in the Berlin office and helps to clean up and document the code.
 
+###POC8 Protocol
+_What's the current status of what you're working on?_  
+_What progress has been made in the last two weeks?_  
+_What are the next steps?_  
+
+###POC9 Protocol
+_What's the current status of what you're working on?_    
+_What progress has been made in the last two weeks?_  
+_What are the next steps?_  
+
 ###Mix - Arkadiy Paronyan
 
 _What's the current status of what you're working on?_	
