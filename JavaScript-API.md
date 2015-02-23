@@ -7,7 +7,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
 # API
 
 * [web3](#web3)
-  * [version](#) (community wish)
+  * [version](#) (community wish) (not available yet)
      * [network](#) -> string e.g. '0.0.1' (the node version)
      * [api](#) -> string e.g. '0.0.1' (the ethereum.js version)
      * [client](#) -> string e.g. 'AlethZero/1.0.0' (the client ID)
