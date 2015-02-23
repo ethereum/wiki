@@ -1,4 +1,4 @@
-**This spec is REVISION 15. Whenever you substantively (ie. not clarifications) update the algorithm, please update the revision number in this sentence. Also, in all implementations please include a spec revision number**
+**This spec is REVISION 16. Whenever you substantively (ie. not clarifications) update the algorithm, please update the revision number in this sentence. Also, in all implementations please include a spec revision number**
 
 Latest change: FNV removed.
 
@@ -7,7 +7,7 @@ Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version o
 The general route that the algorithm takes is as follows:
 
 1. There exists a **seed** which can be computed for each block by scanning through the block headers up until that point.
-2. From the seed, one can compute a **32 MB pseudorandom cache**. Light clients store the cache.
+2. From the seed, one can compute a **1 MB pseudorandom cache**. Light clients store the cache.
 3. From the cache, we can generate a **1 GB dataset** ("the DAG"), with the property that each item in the dataset depends on only a small number of items from the cache. Full clients and miners store the DAG.  The DAG grows exponentially with time.
 4. Mining involves grabbing random slices of the DAG and hashing them together. Verification can be done with low memory by using the cache to regenerate the specific pieces of the DAG that you need, so you only need to store the cache.
 
@@ -29,7 +29,7 @@ CACHE_BYTES_GROWTH=2**19   # growth per epoch (~1 MB per year)
 EPOCH_LENGTH=30000         # blocks per epoch
 MIX_BYTES=128              # width of mix
 HASH_BYTES=64              # hash length in bytes
-DAG_PARENTS=256            # number of parents of each dag element
+DAG_PARENTS=1024           # number of parents of each dag element
 CACHE_ROUNDS=3             # number of processing rounds in cache production
 ACCESSES=128               # number of accesses in hashimoto loop
 ```
@@ -41,13 +41,13 @@ The parameters for Ethash's cache and DAG depend on the block number. In order t
 ```python
 from math import exp
 def get_datasize(block_number):
-    datasize_in_bytes = DAG_BYTES_INIT * exp(DAG_COEFF * block_number // EPOCH_LENGTH)
+    datasize_in_bytes = DAG_BYTES_INIT * int(exp(DAG_COEFF * block_number // EPOCH_LENGTH))
     while not _isprime(datasize_in_bytes // MIX_BYTES):
         datasize_in_bytes -= MIX_BYTES
     return datasize_in_bytes
 
 def get_cachesize(block):
-    cachesize_in_bytes = CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * (block.number // EPOCH_LENGTH)
+    cachesize_in_bytes = DAG_BYTES_INIT * int(exp(DAG_COEFF * block_number // EPOCH_LENGTH)) // DAG_PARENTS
     while not _isprime(cachesize_in_bytes // HASH_BYTES):
         cachesize_in_bytes -= HASH_BYTES
     return cachesize_in_bytes
