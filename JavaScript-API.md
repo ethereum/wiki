@@ -112,7 +112,7 @@ console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37
 
     web3.toAscii(hexString);
 
-Returns an ASCII string made from the data `_s`.
+Returns an ASCII string made from the data `hexString`.
 ```javascript
 var str = web3.toAscii("0x657468657265756d000000000000000000000000000000000000000000000000");
 console.log(str); // ethereum
@@ -122,9 +122,9 @@ console.log(str); // ethereum
 
 ##### web3.fromAscii
 
-    web3.fromAscii(string);
+    web3.fromAscii(string, padding);
 
-Returns data of the ASCII string `_s`, auto-padded to `_padding` bytes (default to 32) and left-aligned.
+Returns data of the ASCII string `string`, auto-padded to `padding` bytes (default to 32) and left-aligned.
 ```javascript
 var str = web3.fromAscii('ethereum');
 console.log(str); // "0x657468657265756d000000000000000000000000000000000000000000000000"
@@ -136,7 +136,10 @@ console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000
 ***
 
 ##### web3.toDecimal
-Returns the decimal string representing the data `_s` (when interpreted as a big-endian integer).
+
+    web3.toDecimal(hexString);
+
+Returns the decimal string representing the data `hexString` (when interpreted as a big-endian integer).
 ```javascript
 var value = web3.toDecimal('0x15');
 console.log(value === "21"); // true
@@ -145,7 +148,10 @@ console.log(value === "21"); // true
 ***
 
 ##### web3.fromDecimal
-Returns the hex data string representing (in big-endian format) the decimal integer `_s`.
+
+    web3.fromDecimal(number);
+
+Returns the hex data string representing (in big-endian format) the decimal integer `number`.
 ```javascript
 var value = web3.fromDecimal('21');
 console.log(value === "0x15"); // true
@@ -202,6 +208,9 @@ console.log(value === "1000000000000000000"); // true
 ```
 
 ##### web3.setProvider
+
+    web3.setProvider(providor)
+
 Should be called to set provider.
 ```javascript
 web3.setProvider(new web3.providers.HttpSyncProvider());
@@ -210,6 +219,9 @@ web3.setProvider(new web3.providers.QtSyncProvider());
 ```
 
 ##### web3.reset
+
+    web3.reset()
+
 Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
 ```javascript
 web3.reset();
@@ -221,92 +233,134 @@ Should be called to get web3.eth object.
 var eth = web3.eth;
 ```
 
-#####web3.eth.coinbase
+##### web3.eth.coinbase
+
+    web3.eth.coinbase
+
 Returns the coinbase address of the client.
 ```javascript
 var coinbase = web3.eth.coinbase;
 console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
 ```
 
-#####web3.eth.listening
-Returns true if and only if the client is actively listening for network connections.
+##### web3.eth.listening
+
+    web3.eth.listening
+
+Returns `true` if and only if the client is actively listening for network connections.
 ```javascript
 var listening = web3.eth.listening;
 console.log(listening); // true of false
 ```
 
-#####web3.eth.mining
-Returns true if and only if the client is actively mining new blocks.
+##### web3.eth.mining
+
+    web3.eth.mining
+
+Returns `true` if and only if the client is actively mining new blocks.
 ```javascript
 var mining = web3.eth.mining;
 console.log(mining); // true or false
 ```
 
-#####web3.eth.gasPrice
-Returns the special 256-bit number equal to the hard-coded testnet price of gas.
+##### web3.eth.gasPrice
+
+    web3.eth.gasPrice
+
+Returns the special 256-bit number equal to the hard-coded testnet price of gas in wei.
 ```javascript
 var gasPrice = web3.eth.gasPrice;
-console.log(gasPrice); // "0x09184e72a000"
+console.log(gasPrice); // "10000000000000"
 ```
 
-#####web3.eth.accounts
-Returns list of the addresses owned by client
+##### web3.eth.accounts
+
+    web3.eth.accounts
+
+Returns an array of the addresses owned by client
 ```javascript
 var accounts = web3.eth.accounts;
 console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
 ```
 
-#####web3.eth.register
+##### web3.eth.register
+
+    web3.eth.register(addressHexString)
+
 Registers the given address to be included in `web3.eth.accounts`. This allows non-private-key owned accounts to be associated as an owned account (e.g., contract wallets).
 ```javascript
 web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
 
-#####web3.eth.unregister
+##### web3.eth.unRegister
+
+     web3.eth.unRegister(addressHexString)
+
 Unregisters the given address
 ```javascript
 web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
 
-#####web3.eth.peerCount
+##### web3.eth.peerCount
+
+    web3.eth.peerCount
+
 Returns the number of peers currently connected to the client.
 ```javascript
 var peerCount = web3.eth.peerCount;
 console.log(peerCount); // 4
 ```
 
-#####web3.eth.defaultBlock
-The default block number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
+##### web3.eth.defaultBlock
+
+    web3.eth.defaultBlock
+
+The default block number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. `-1` therefore means the most recently mined block, `0` means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
 ```javascript
 var defaultBlock = web3.eth.defaultBlock;
 console.log(defaultBlock); // -1
+
+// set a block
+web3.eth.defaultBlock = 0;
 ```
 
-#####web3.eth.number
+##### web3.eth.blockNumber
+
+    web3.eth.blockNumber
+
 Returns the number of the most recent block.
 ```javascript
-var number = web3.eth.number;
+var number = web3.eth.blockNumber;
 console.log(number); // 2744
 ```
 
-#####web3.eth.balanceAt
-Returns the balance of the account of address given by the address `_a`
+##### web3.eth.getBalance
+
+    web3.eth.getBalance(addressHexString)
+
+Returns the balance of the account of address given by the address `addressHexString`
 ```javascript
-var balance = web3.eth.balanceAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
+var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(balance); // "0x32884442997a37a000"
 ```
 
-#####web3.eth.stateAt
-Returns the value in storage at position given by the string `_s` of the account of address given by the address `_a`.
+##### web3.eth.getState
+
+    web3.eth.getState(addressHexString, position)
+
+Returns the value in storage at position `position` of the account by the given address `addressHexString`.
 ```javascript
-var state = web3.eth.stateAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
+var state = web3.eth.getState("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
 console.log(state); // "0x03"
 ```
 
-#####web3.eth.storageAt
+##### web3.eth.getStorage
+
+    web3.eth.getStorage(addressHexString)
+
 Dumps storage as json object.
 ```javascript
-var storage = web3.eth.storageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
+var storage = web3.eth.getStorage("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(storage); // { "0x" : "0x03" }
 ```
 
