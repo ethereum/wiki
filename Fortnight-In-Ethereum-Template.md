@@ -174,8 +174,8 @@ _What progress has been made in the last two weeks?_
 
 _What are the next steps?_  
 * More Basic Scenarios
-* * Chain consensus scenario with mining clients
-* * TX propagation scenario
+ + Chain consensus scenario with mining clients
+ + TX propagation scenario
 
 * Automatic triggering of all scenarios based on new buildbot builds
 * Automatic notification of devs in case of failures 
