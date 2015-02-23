@@ -20,7 +20,7 @@ Select Contract and enter the text for the rating contract:
 		function setRating(string32 _key, uint256 _value) {
 			ratings[_key] = _value;
 		}
-		mapping (string32 => uint256) public  ratings;
+		mapping (string32 => uint256) public ratings;
 	}
 
 Check [Solidity tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial) for solidity reference.
