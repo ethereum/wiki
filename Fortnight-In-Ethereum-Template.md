@@ -35,17 +35,17 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 * adding rlpx
-+ Wrote DHT code (https://github.com/ethereum/ethereumjs-dht)
+ + Wrote DHT code (https://github.com/ethereum/ethereumjs-dht)
 * Testing
-+ Fixed a several VM bugs caught be the tests
+ + Fixed a several VM bugs caught be the tests
 * Finalized a new ethereumjs-lib version
-+ Unified block/tx/code processing API
-+ simplified browser shims
-+ Cleaned up Docs
+ + Unified block/tx/code processing API
+ + simplified browser shims
+ + Cleaned up Docs
 
 _What are the next steps?_  
 * RLPx
-+ added encryption
+ + added encryption
 * More RPC tests
 
 ###Pythereum - Heiko
@@ -154,17 +154,17 @@ _What are the next steps?_
 
 _What's the current status of what you're working on?_	
 * Infrastructure to automatically 
-+ provision N (5..200) ec2 instances 
-+ with the latest go-client from buildbot 
-+ create deterministic configurations for all N clients
-+ run basic test scenarios
-+ log events in a computer readable json format
-+ collect logs in a central elasticsearch database
-+ automatically analyze the logs to decide on scenario success
+ + provision N (5..200) ec2 instances 
+ + with the latest go-client from buildbot 
+ + create deterministic configurations for all N clients
+ + run basic test scenarios
+ + log events in a computer readable json format
+ + collect logs in a central elasticsearch database
+ + automatically analyze the logs to decide on scenario success
 
 * Implemented scenarios:
-+ Start clients
-+ Connect clients
+ + Start clients
+ + Connect clients
 
 _What progress has been made in the last two weeks?_	
 * finalized log event spec (for the first scenarios) https://github.com/ethereum/system-testing/wiki/Log-Events
