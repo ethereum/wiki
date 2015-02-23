@@ -498,7 +498,7 @@ Returns the transaction by number or hash `hashStringOrNumber` from block with n
 var blockNumber = 668;
 var indexOfTransaction = 0
 
-var transaction = web3.eth.transaction(blockNumber, indexOfTransaction);
+var transaction = web3.eth.getTransaction(blockNumber, indexOfTransaction);
 console.log(transaction);
 /*
 {
@@ -519,7 +519,7 @@ console.log(transaction);
 
 ##### web3.eth.getUncle
 
-    web3.eth.getUncle(uncleNumber, blockHashStringOrNumber)
+    web3.eth.getUncle(blockHashStringOrNumber, uncleNumber)
 
 Returns the uncle with number `uncleNumber` from the block with number or hash `blockHashStringOrNumber`.
 
@@ -542,7 +542,7 @@ Return value is an object with the following keys:
 var blockNumber = 500;
 var indexOfUncle = 0
 
-var uncle = web3.eth.uncle(blockNumber, indexOfUncle);
+var uncle = web3.eth.getUncle(blockNumber, indexOfUncle);
 console.log(uncle);
 /*
 {
@@ -566,10 +566,10 @@ console.log(uncle);
 
 ##### web3.eth.sendTransaction
 
-    web3.eth.sendTransaction(transactionObject)
+    web3.eth.sendTransaction(transactionObject, callback)
 
 Creates a new message-call transaction.
-  * `_params`, an anonymous object specifying the parameters of the transaction.
+  * `transactionObject`, an anonymous object specifying the parameters of the transaction.
     * `from`, the address for the sending account;
     * `value`, the value transferred for the transaction (in Wei), also the endowment if it's a contract-creation transaction;
     * `endowment`, synonym for `value`;
@@ -578,7 +578,7 @@ Creates a new message-call transaction.
     * `code`, a synonym for `data`;
     * `gas`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
     * `gasPrice`, the price of gas for this transaction, defaults to the mean network gasPrice.
-  * `_fn`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
+  * `callback`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
 ```javascript
 
 // compile solidity source code
