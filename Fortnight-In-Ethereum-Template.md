@@ -35,7 +35,7 @@ _What's the current status of what you're working on?_
 
 _What progress has been made in the last two weeks?_	
 * adding rlpx
-* * * Wrote DHT code (https://github.com/ethereum/ethereumjs-dht)
+* * Wrote DHT code (https://github.com/ethereum/ethereumjs-dht)
 * Testing
 * * Fixed a several VM bugs caught be the tests
 * Finalized a new ethereumjs-lib version
