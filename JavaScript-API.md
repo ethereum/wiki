@@ -412,6 +412,18 @@ console.log(number); // 1
 
 ***
 
+##### web3.eth.getBlockTransactionCount
+
+    web3.eth.getBlockTransactionCount(hashStringOrBlockNumber)
+
+Returns the number of transactions in a given block `hashStringOrBlockNumber`.
+```javascript
+var number = web3.eth.getBlockTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
+console.log(number); // 1
+```
+
+***
+
 ##### web3.eth.getCode
 
     web3.eth.getCode(addressHexString)
