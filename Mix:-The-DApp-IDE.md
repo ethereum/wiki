@@ -69,7 +69,7 @@ Open the debugger pane by pressing `F7` or selecting `Windows > Show right` view
 
 ## Transaction log
 
-Now lets test out contract. Type "Titanic" in the web preview query input and you should see the result returned. Enter a name and a rating in store fields and click `Save` to add a new rating. Note that all  transactions and calls made to the contract during state deployment and debugging session are recorded into Transaction log to the right. Double click on any entry to load the execution into the debugger. There is also a mine button to instantly mine a new block on the chain and put all pending transactions there.
+Now let's test out contract. Type "Titanic" in the web preview query input and you should see the result returned. Enter a name and a rating in store fields and click `Save` to add a new rating. Note that all  transactions and calls made to the contract during state deployment and debugging session are recorded into Transaction log to the right. Double click on any entry to load the execution into the debugger. There is also a mine button to instantly mine a new block on the chain and put all pending transactions there.
 
 ## Debugging
 
