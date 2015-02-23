@@ -87,11 +87,16 @@ _What are the next steps?_
 
 ###Mix - Arkadiy Paronyan
 
-_What's the current status of what you're working on?_	
+_What's the current status of what you're working on?_
+First public version was released with poc8 recently. Currently working on new features.	
 
 _What progress has been made in the last two weeks?_	
+Done major UI redesign for poc8 release.
+Deploy contracts to network story has been  implemented.
+Various issues for Windows and OS X platforms resolved.
 
 _What are the next steps?_  
+Solidity source level debugging story.
 
 ###Swarm - Daniel Nagy
 
