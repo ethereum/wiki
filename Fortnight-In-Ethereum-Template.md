@@ -291,11 +291,14 @@ Release the website! Continue reaching out to various entites that could potenti
 
 ###Ether Academy Website/Ethdev Website - Ken Kappler
 
-_What's the current status of what you're working on?_ 	
+_What's the current status of what you're working on?_  
+Jr Bedard (of ether.fund) has been contracted to build a new Code Academy type site for teaching developers to build smart contracts.	
 
 _What progress has been made in the last two weeks?_	
+Development is continuing nicely, the framework of handling user accounts is almost in place.
 
 _What are the next steps?_  
+Design decisions, content creation.
 
 ###In the Media - George Hallam
 
