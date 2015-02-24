@@ -718,9 +718,14 @@ var MyContract = web3.eth.contract(abi);
 var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
 
 // watch for an event
-myContractInstance({some: 'args'}, filterObject).watch(function(result){
+var myEvent = myContractInstance.MyEvent({some: 'args'}, filterObject);
+myEvent.watch(function(result){
    ...
 });
+
+var myResults = myEvent.get();
+
+myEvent.stopWatching();
 ```
 
 ***
