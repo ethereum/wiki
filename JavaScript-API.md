@@ -366,10 +366,15 @@ console.log(number); // 2744
 
     web3.eth.getBalance(addressHexString)
 
+**Returns**
+BigNumber() of wei
+
 Returns the balance of the account of address given by the address `addressHexString`
 ```javascript
 var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
-console.log(balance); // "0x32884442997a37a000"
+console.log(balance); // BigNumber()
+console.log(balance.toString(10)); // '1000000000000'
+console.log(balance.toNumber()); // 1000000000000
 ```
 
 ***
