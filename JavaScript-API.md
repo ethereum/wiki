@@ -709,6 +709,20 @@ filter.watch(function (result) {
 });
 ```
 
+##### Contract Events
+
+You can use events like [filters](#web3ethfilter) and they have the same methods. Though the first parameter for an event are the indexed arguments as an object:
+
+```js
+var MyContract = web3.eth.contract(abi);
+var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
+
+// watch for an event
+myContractInstance({some: 'args'}, filterObject).watch(function(result){
+   ...
+});
+```
+
 ***
 
 #####web3.eth.flush
