@@ -281,10 +281,12 @@ console.log(mining); // true or false
 
     web3.eth.gasPrice
 
-Returns the special 256-bit number equal to the hard-coded testnet price of gas in wei.
+**Returns ->** BigNumber() in wei
+
+Returns the current gasPrice in wei.
 ```javascript
 var gasPrice = web3.eth.gasPrice;
-console.log(gasPrice); // "10000000000000"
+console.log(gasPrice.toString(10)); // "10000000000000"
 ```
 
 ***
@@ -366,13 +368,12 @@ console.log(number); // 2744
 
     web3.eth.getBalance(addressHexString)
 
-**Returns**
-BigNumber() of wei
+**Returns ->** BigNumber() in wei
 
 Returns the balance of the account of address given by the address `addressHexString`
 ```javascript
 var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
-console.log(balance); // BigNumber()
+console.log(balance); // instanceof BigNumber
 console.log(balance.toString(10)); // '1000000000000'
 console.log(balance.toNumber()); // 1000000000000
 ```
