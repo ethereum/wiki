@@ -11,7 +11,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
      * [network](#) -> string e.g. '0.0.1' (the node version)
      * [api](#) -> string e.g. '0.0.1' (the ethereum.js version)
      * [client](#) -> string e.g. 'AlethZero/1.0.0' (the client ID)
-  * [port](#) -> number e.g. 8080 (community wish)
+  * [port](#) -> number e.g. 8080 (not available yet)
   * [sha3](#web3sha3) *(s1)*
   * [toAscii](#web3toascii) *(hexString)*, returns textString
   * [fromAscii](#web3fromascii) *(textString, [padding])*, returns hexString
