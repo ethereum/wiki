@@ -171,7 +171,7 @@ would result in the JSON:
 # Example Javascript Usage
 
 ```js
-var Test = eth.contractFromAbi(
+var Test = eth.contract(
 [{
 "type":"event",
 "inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
@@ -186,7 +186,7 @@ var Test = eth.contractFromAbi(
 "name":"foo",
 "outputs": []
 }]);
-var theTest = Test(addrTest);
+var theTest = new Test(addrTest);
 
 // examples of usage:
 // every log entry ("event") coming from theTest (i.e. Event & Event2):
@@ -206,12 +206,12 @@ var f4 = eth.filter(theTest.Event, {'a': [69, 42]});
 // also written as
 var f4 = theTest.Event({'a': [69, 42]});
 
-// options may also be supplied as a second parameter with `earliest`, `latest`, `offset` and `max`, as defined for `eth.watch`.
+// options may also be supplied as a second parameter with `earliest`, `latest`, `offset` and `max`, as defined for `eth.filter`.
 var options = { 'max': 100 };
 var f4 = theTest.Event({'a': [69, 42]}, options);
 
 var trigger;
-f4.changed(trigger);
+f4.watch(trigger);
 
 // call foo to make an Event:
 theTest.foo(69);
@@ -239,7 +239,7 @@ web3.eth.filter({'max': 100, 'address': theTest.address, 'topics': [ [69, 42] ]}
   n // from the 'number'
 ```
 
-* NOTE1: `eth.watch(...).logs()` and `eth.logs()` should work similarly, though renamed to `.events()`. They should return arrays of objects with data similar to the trigger's params, e.g.:
+Event result:
 ```js
 [ {
   'event': Test.Event,
