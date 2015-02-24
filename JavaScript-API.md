@@ -491,7 +491,7 @@ Returns the transaction by number or hash `hashStringOrNumber` from block with n
   * `gas`: The amount of GAS supplied for this transaction to happen (an integer).
   * `gasPrice`: The price offered to the miner to purchase this amount of GAS, in Wei/GAS (a big int).
   * `nonce`: The transaction nonce (an integer).
-  * `value`: The amount of ETH to be transferred to the recipient with the transaction (a big int).
+  * `value`: The amount of ETH to be transferred to the recipient with the transaction in wei (a big int).
 ```javascript
 var blockNumber = 668;
 var indexOfTransaction = 0
@@ -569,13 +569,13 @@ console.log(uncle);
 Creates a new message-call transaction.
   * `transactionObject`, an anonymous object specifying the parameters of the transaction.
     * `from`, the address for the sending account;
-    * `value`, the value transferred for the transaction (in Wei), also the endowment if it's a contract-creation transaction;
+    * `value (number|hexString|BigNumber)`, the value transferred for the transaction in Wei, also the endowment if it's a contract-creation transaction;
     * `endowment`, synonym for `value`;
     * `to`, the destination address of the message, left undefined for a contract-creation transaction;
     * `data`, either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
     * `code`, a synonym for `data`;
-    * `gas`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
-    * `gasPrice`, the price of gas for this transaction, defaults to the mean network gasPrice.
+    * `gas (number|hexString|BigNumber)`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
+    * `gasPrice (number|hexString|BigNumber)`, the price of gas for this transaction in wei, defaults to the mean network gasPrice.
   * `callback`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
 ```javascript
 
