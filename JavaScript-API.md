@@ -54,7 +54,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
         - [watch(callback)](#web3ethfilter)
         - [stopWatching(callback)](#web3ethfilter)
         - [get()](#web3ethfilter)
-    * [contract](#web3ethcontract) *(_address, _abi)*
+    * [contract](#web3ethcontract) *(abiArray)*
     * [flush](#web3ethflush)
   * [db](#web3db)
     * [put](#web3dbput) *(_name, _key, _value)*
@@ -664,12 +664,16 @@ filter.watch(function (log) {
 ***
 
 ##### web3.eth.contract
-This method should be called when we want to call / transact some solidity method from javascript. It returns an object which has the same methods available as solidity contract description.
+
+    web3.eth.contract(abiArray)
+
+This method creates a contract object for a solidity contract. It has the same methods available as solidity contract description itself.
 
 You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
 
 usage example:
 ```javascript
+// contract abi
 var abi = [{
      name: 'myMethod',
      type: 'function',
@@ -679,16 +683,20 @@ var abi = [{
      name: 'myEvent',
      type: 'event',
      inputs: [{name: 'a', type: 'int', indexed: true},{name: 'b', type: 'bool', indexed: false]
-}];  // contract abi
+}];
 
-var myContract = web3.eth.contract('0x0123123121', abi); // creation of contract object
+// creation of contract object
+var MyContract = web3.eth.contract(abi);
 
-myContract.myMethod('this is test string param for call'); // myMethod call (implicit, default)
-myContract.call().myMethod('this is test string param for call'); // myMethod call (explicit)
-myContract.transact().myMethod('this is test string param for transact'); // myMethod transact
+// initiate with the contract address
+var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
 
-var watch = myContract.myEvent({a: 5});
-watch.changed(function (result) {
+myContractInstance.myMethod('this is test string param for call'); // myMethod call (implicit, default)
+myContractInstance.call().myMethod('this is test string param for call'); // myMethod call (explicit)
+myContractInstance.transact().myMethod('this is test string param for transact'); // myMethod transact
+
+var filter = myContractInstance.myEvent({a: 5});
+filter.watch(function (result) {
     console.log(result);
     /*
     {
