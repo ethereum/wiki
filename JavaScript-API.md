@@ -693,7 +693,7 @@ var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
 
 myContractInstance.myMethod('this is test string param for call'); // myMethod call (implicit, default)
 myContractInstance.call().myMethod('this is test string param for call'); // myMethod call (explicit)
-myContractInstance.transact().myMethod('this is test string param for transact'); // myMethod transact
+myContractInstance.sendTransaction().myMethod('this is test string param for transact'); // myMethod sendTransaction
 
 var filter = myContractInstance.myEvent({a: 5});
 filter.watch(function (result) {
