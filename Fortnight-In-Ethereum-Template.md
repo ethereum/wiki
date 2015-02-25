@@ -22,10 +22,23 @@ Further preparation for release.
 ###Go/Mist - Jeffrey Wilcke
 
 _What's the current status of what you're working on?_	
+Improving networking encryption, optimising block processing, refining Mist UI
 
 _What progress has been made in the last two weeks?_	
+Release of PoC 8 including:
+
+ * Improved UI and UX
+
+ * Multithreaded miner
+
+ * Updated RPC interface
+
+ * Improved networking & peer discovery
+
+ * Moved from WebKit to Chromium rendering engine (QtWebEngine)
 
 _What are the next steps?_  
+Finalising command-line interface and polishing Mist components in preparation for beta
 
 ###Node Ethereum - Martin Becze
 
