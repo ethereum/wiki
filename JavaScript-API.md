@@ -37,12 +37,12 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [getState(address, storage)](#web3ethgetstate) -> hexString
     * [getStorage(address)](#web3ethgetstorage) -> hexString
     * [getData(address)](#web3ethgetdata) -> hexString
-    * [getTransaction(object, number)](#web3ethgettransaction) -> transactionObject
-    * [getTransactionCount(address)](#web3ethgettransactioncount) -> Integer
     * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
     * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount) -> Integer
     * [getUncle(hash/number)](#web3ethgetuncle) -> headerObject
     * [getBlockUncleCount(hash/number)](#web3ethgetblockunclecount) -> Integer
+    * [getTransaction(object, number)](#web3ethgettransaction) -> transactionObject
+    * [getTransactionCount(address)](#web3ethgettransactioncount) -> Integer
     * [sendTransaction(object)](#web3ethsendtransaction)
     * [contract](#web3ethcontract) *(abiArray)*
     * [call(object)](#web3ethcall) -> hexString
