@@ -77,13 +77,23 @@ Jannik is doing a two month internship in the Berlin office and helps to clean u
 
 ###POC8 Protocol
 _What's the current status of what you're working on?_  
+PoC8 protocol is done.
+
 _What progress has been made in the last two weeks?_  
+PoC8 has been released.
+
 _What are the next steps?_  
+PoC9.
 
 ###POC9 Protocol
 _What's the current status of what you're working on?_    
+There are a number of changes that security auditors have suggested, and we are currently in the process of implementing them. We are also in the process of finalizing our PoW implementation.
+
 _What progress has been made in the last two weeks?_  
+Work on mining, and security audit meetings in which we discussed some of the upcoming protocol changes.
+
 _What are the next steps?_  
+Finish it.
 
 ###Mix - Arkadiy Paronyan
 
