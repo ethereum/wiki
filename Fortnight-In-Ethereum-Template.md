@@ -151,11 +151,17 @@ _What are the next steps?_
 ###Dev P2P - Felix Lange
 
 _What's the current status of what you're working on?_	
+We're almost done implementing the new RLPx protocol
+in go-ethereum.
 
 _What progress has been made in the last two weeks?_	
+We have released the node discovery part of RLPx in PoC 8
+and it seems to be working for most people.
 
 _What are the next steps?_  
-
+We will implement the remaining parts of the protocol (Encrytion
+Handshake, authenticated packets) and define a peer selection
+strategy.
 
 ##Languages
 
