@@ -327,7 +327,7 @@ Here, `ai` means "an array followed by an integer". You can do things like `iiaa
 
 There are two types of strings in Serpent: short strings, eg. `"george"`, and long strings, eg. `text("afjqwhruqwhurhqkwrhguqwhrkuqwrkqwhwhrugquwrguwegtwetwet")`. Short strings, given simply in quotes as above, are treated as numbers; long strings, surrounded by the `text` keyword as above, are treated as array-like objects; you can do `getch(str, index)` and `setch(str, index)` to manipulate characters in strings (doing `str[0]` will treat the string as an array and try to fetch the first 32 characters as a number).
 
-To use strings as function arguments or outputs, use the `s` tag, much like you would use `a` for arrays. `len(s)` gives you the length of a string, and `shrink` works for strings the same way as for arrays too.
+To use strings as function arguments or outputs, use the `str` tag, much like you would use `arr` for arrays. `len(s)` gives you the length of a string, and `shrink` works for strings the same way as for arrays too.
 
 Here is an example of returning/retrieving a string:
 ```
