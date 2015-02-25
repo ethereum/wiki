@@ -470,9 +470,9 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
 
 ##### web3.eth.getBlock
 
-     web3.eth.getBlock([string, number]hasHexStringOrBlockNumber)
+     web3.eth.getBlock(hashHexStringOrBlockNumber)
 
-Returns the block with number `hasHexStringOrBlockNumber`. Return value is an object with the following keys:
+**Returns** a block object with number or hash `hashHexStringOrBlockNumber`:
 
   * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
   * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
@@ -482,9 +482,9 @@ Returns the block with number `hasHexStringOrBlockNumber`. Return value is an ob
   * `transactionsRoot`: The root of the block's transactions trie (a 32-byte hash).
   * `difficulty`: The PoW difficulty of this block (a big int).
   * `number`: The number of this block (an integer).
-  * `minGasPrice`: The minimum price, in Wei, of one GAS, that the miner accepted for any transactions in this block (a big int).
-  * `gasLimit`: The gas limit of this block (an integer).
-  * `gasUsed`: The amount of gas used in this block (an integer).
+  * `minGasPrice` (BigNumber): The minimum price, in Wei of one GAS, that the miner accepted for any transactions in this block.
+  * `gasLimit`: The gas limit of this block (integer).
+  * `gasUsed`: The amount of gas used in this block (integer).
   * `timestamp`: The timestamp of this block (an integer).
   * `extraData`: Any extra data this block contains (a byte array).
   * `nonce`: The block's PoW nonce (a 32-byte hash).
@@ -499,7 +499,7 @@ console.log(info);
   "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "gasLimit": 125000,
   "hash": "80452e84d0d0599d779a4e466d0b70d50ca316499a8489604d5b9df436ccfeee",
-  "minGasPrice": "0x09184e72a000",
+  "minGasPrice": instanceof BigNumber,
   "miner": "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
   "nonce": "0xed0c6a53777b15880fb359dfd9368d002c959243a19c35ca1ae2e97f9bf78a53",
   "number": 3150,
@@ -517,16 +517,18 @@ console.log(info);
 
     web3.eth.getTransaction(hashStringOrNumber, blockNumber)
 
-Returns the transaction by number or hash `hashStringOrNumber` from block with number `blockNumber`. Return value is an object with the following keys:
+**Returns** a transaction object by number or hash `hashStringOrNumber` from block with `blockNumber`:
+
   * `hash`: The hash of the transaction. A 32-byte hash.
   * `input`: The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation. A byte array.
   * `to`: The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction (a 20-byte address).
   * `from`: The cryptographically verified address from which the transaction was sent (a 20-byte address).
   * `gas`: The amount of GAS supplied for this transaction to happen (an integer).
-  * `gasPrice`: The price offered to the miner to purchase this amount of GAS, in Wei/GAS (a big int).
-  * `nonce`: The transaction nonce (an integer).
-  * `value`: The amount of ETH to be transferred to the recipient with the transaction in wei (a big int).
-```javascript
+  * `gasPrice` (BigNumber): The price offered to the miner to purchase this amount of GAS, in Wei per GAS.
+  * `nonce` (BigNumber): The transaction nonce.
+  * `value` (BigNumber): The amount of ETH to be transferred to the recipient with the transaction in wei.
+
+```js
 var blockNumber = 668;
 var indexOfTransaction = 0
 
@@ -536,12 +538,12 @@ console.log(transaction);
 {
 "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
 "gas":520464,
-"gasPrice":"0x09184e72a000",
+"gasPrice": instanceof BigNumber,
 "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
 "input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
 "nonce":"0x",
 "to":"0x0000000000000000000000000000000000000000",
-"value":"0x"
+"value": instanceof BigNumber
 }
 */
 
