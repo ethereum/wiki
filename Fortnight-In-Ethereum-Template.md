@@ -160,10 +160,13 @@ The next big features are array types and debugging support. In general, we will
 ###Serpent - Vitalik Buterin
 
 _What's the current status of what you're working on?_ 	
+Serpent is close to full-featured, and is the backbone of many projects including augur and btcrelay. Strings and arrays are fully supported, as is the PoC8 contract ABI.
 
 _What progress has been made in the last two weeks?_	
+Testing and bug fixing mostly. Also, the pyethereum.tester environment has been substantially improved, making it highly interoperable with serpent functions (and solidity functions).
 
 _What are the next steps?_  
+Perhaps proper strong typing, we'll see. But ultimately I would like to see serpent become a community project, and have many others and not just myself maintaining and contributing code.
 
 
 ##Release
