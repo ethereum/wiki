@@ -106,7 +106,7 @@ Additionally, the Pyethereum testing environment that we will be using simply as
 
 第二行创建了一个初始化的状态(类似于创世块, genesis block)。第三行创建了一个Python对象，代表mul2.se这个合约。你可以用`c.address`来查看这份合约存放的地址。第四行调用这个合约，传入参数42,然后我们看到这份合约返回给我们结果84。
 
-如果要在testnet或者livenet上调用这样一份合约，你需要打包一个包含类似”以整型参数42作为输入调用函数double“这样信息的交易发送给这份合约。命令如下：
+如果要在testnet或者livenet上调用这样一份合约，你需要打包一个内容为”以整型参数42作为输入调用函数double“的消息发送给这份合约。使用下面的命令可以得到消息对应的字节码：
 
     > serpent encode_abi double i 42
     eee97206000000000000000000000000000000000000000000000000000000000000002a
@@ -142,7 +142,7 @@ Additionally, the Pyethereum testing environment that we will be using simply as
     > c.ask(0x6861727279)
     [65]
 
-如果我们想要把上面的第一次调用写成交易的形式：
+如果我们想要把上面的第一次调用写成消息的形式：
 
 ```
 > serpent encode_abi register ii 0x67656f726765 45
@@ -337,7 +337,7 @@ Serpent还定义了两个常用的数组操作：
 
 Serpent中有两种字符串：短字符串(short strings)，例如`"george"`，以及长字符串(long strings)，例如`text("afjqwhruqwhurhqkwrhguqwhrkuqwrkqwhwhrugquwrguwegtwetwet")`.用双引号括起来的短字符串和数字类型是等价的；用`text`关键字定义的长字符串则是类似与数组的对象。我们可以使用`getch(str, index)`和`setch(str, index)`方法来操作字符串中的字符。`str[0]`这样的写法则会将字符串当作数组处理，将字符当作数字返回。
 
-将字符串用作函数参数或者返回值时，需要在函数签名中使用字符串标记`str`，类似使用`arr`来标记数组。使用`len(s)`方法可以得到字符串的长度，and `shrink` works for strings the same way as for arrays too. ???
+将字符串用作函数参数或者返回值时，需要在函数签名中使用字符串标记`str`，类似使用`arr`来标记数组。使用`len(s)`方法可以得到字符串的长度，而`slice(s)`方法可以用来裁剪字符串。
 
 下面是一个用字符串做参数和返回值的例子：
 
@@ -369,7 +369,7 @@ def runThis():
 
 接下来看另一个例子，一个查找数组中最大元素的macro:
 
-    macro maxarray($a:$asz):
+    macro maxarray($a:$asz): # search pattern. below is substitution pattern
         $m = 0
         $i = 0
         while i < $asz:
@@ -383,7 +383,7 @@ def runThis():
 
 https://github.com/ethereum/serpent/blob/poc7/examples/peano.se
 
-这里要提醒读者注意的是：macros不是函数(functions)。每次调用macro的时候，macro的定义都会被文本复制到调用的地方（宏展开）。因此当macro的定义变得很长时，请考虑定义一个函数替代它。还要注意的是占位符前面的$符号非常重要：如果$a前少了$符号，实际上是在使用名字为a的变量。我们也可以在替换模式(substitution pattern)而不是搜索模式(search pattern)中使用$占位符，这样在每一次宏展开时会产生一个名字为随机前缀的变量。在替换模式中也可以使用普通变量(变量名前面没有$)，结果就是所有宏展开使用的是同一个变量，而且该变量可能在宏展开之外的地方也会用到。
+这里要提醒读者注意的是：macros不是函数(functions)。每次调用macro的时候，macro的定义都会被文本复制到调用的地方（宏展开）。因此当macro的定义变得很长时，请考虑定义一个函数替代它。还要注意的是占位符前面的$符号非常重要：如果$a前少了$符号，实际上是在使用名字为a的变量。我们也可以在替换模式(substitution pattern, 指宏的定义体)而不是搜索模式(search pattern，指宏定义的第一行)中使用$占位符，这样在每一次宏展开时会产生一个名字为随机前缀的变量。在替换模式中也可以使用普通变量(变量名前面没有$)，结果就是所有宏展开使用的是同一个变量，而且该变量可能在宏展开之外的地方也会用到。
 
 ### 类型
 
