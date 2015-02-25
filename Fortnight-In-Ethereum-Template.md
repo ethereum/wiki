@@ -101,10 +101,13 @@ Solidity source level debugging story.
 ###Swarm - Daniel Nagy
 
 _What's the current status of what you're working on?_ 	
+It is in an advanced prototype stage, fully functional, but generating much more than necessary traffic over the network.
 
 _What progress has been made in the last two weeks?_	
+Integration with the newest developments in the go client, especially, but not exclusively the new peer discovery system that would allow us to optimize network traffic and client load.
 
 _What are the next steps?_  
+Besides merging with the main development branch, which requires unification of command line and configuration options with Whisper (i.e. a similar set of configuration options should be available for Swarm), some documentation needs to be written in order to help people play with it.
 
 ###Whisper - Gavin Wood
 
@@ -201,18 +204,25 @@ I will add Blockchain tests, which probably will be the last type of tests. With
 ###Build System - Caktux
 
 _What's the current status of what you're working on?_ 	 
+The build system has received major upgrades and is really starting to cover every aspect of the build process and packaging of the different projects on all platforms. OSX users now benefit from pre-compiled "bottles" using brew along with readily available binaries of Mist and AlethZero for the less technically inclined. There are also packages for Ubuntu for both projects, although the upgrade Qt 5.4 still has unresolved issues. The build server also uses https only for obvious reasons.
+Pull requests are now being checked across 7 different builders with even more to come, assuring much better quality code merges.
 
 _What progress has been made in the last two weeks?_	
+Half of what is mentioned above, let's say it's all recent enough :) Joris Bontje has also made a very nice looking and useful Buildboard at http://ethereum-buildboard.meteor.com/
 
 _What are the next steps?_  
+Full integration tests, from contract deployments, transactions to those, and full assertions of expected results in a DApp's UI. This should be in place by the end of the week if not today the 24th.
 
 ###Audit - Jutta
 
 _What's the current status of what you're working on?_	
+We are currently in the middle of the security audit, our main auditor is looking at the design and the code base, further auditors are looking at focus topics like networking. We are in continuous exchange, responding to raised issues, providing further required information.  
 
 _What progress has been made in the last two weeks?_	
+Ongoing development of the p2p/networking protocol and PoW algorithm required some recent rearrangement of the auditing schedule. Issues raised by auditors and submitted by bounty hunters have been mitigated. 
 
 _What are the next steps?_  
+We will focus on the networking and p2p/networking protocol to minimize delays.  
 
 ###Dapps - Fabian/AVSA
 
@@ -225,10 +235,13 @@ _What are the next steps?_
 ###ET Hash - Matthew
 
 _What's the current status of what you're working on?_  
+We are on Revision 16 now.
 
 _What progress has been made in the last two weeks?_	 
+There is now a go client, an opencl client.
 
 _What are the next steps?_  
+We are working on integration with the Go client and hopefully other clients prior to launch.
 
 ###Vapor - Aaron Davis (Kumavis)
 
@@ -249,6 +262,16 @@ Finish basic identity management and wallet view.
 Package node-ethereum with native builds.
 Build Dapp runtime environment.
 
+###Launch - Vinay
+_Launch Date?_  
+Ask me after Zug!
+
+_Which Apps will be available?_  
+No idea, I just got hired and I don't know anything yet!
+
+_Which Exchanges will be integrated?_   
+I'll ask George!
+
 ##Leadership
 
 ###Foundation - Joseph Lubin
@@ -263,11 +286,14 @@ _What are the next steps?_
 
 ###Meetups - Texture
 
-_What's the current status of what you're working on?_	 
+_What's the current status of what you're working on?_	
+Comms has been focused on ethereum.org and bounty sites for the last month and a half. I was tasked with design and front end development. Have moved back to meetups full time now. Working on Ethereum 101, Genesis Block Party, regrouping and strategizing for launch.  
 
 _What progress has been made in the last two weeks?_	
+Have moved away from design and development. Developed idea for the Genesis Block Party and have begun to work with meetup organizers to have a day of meetups around launch. Group skypes have occurred every thursday, ramping up to daily meetings. 
 
 _What are the next steps?_  
+Concretize the Block Party, Finish the slides for 101 series. Get swag together for launch parties. 
 
 ###Upcoming Events - Texture
 
