@@ -451,19 +451,19 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
   * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
   * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
   * `miner`: The address of the account that was rewarded for mining this block (né the coinbase address). A 20-byte address.
-  * `stateRoot`: The root of the state trie (a 32-byte hash).
-  * `transactionsRoot`: The root of the block's transactions trie (a 32-byte hash).
-  * `difficulty`: The PoW difficulty of this block (a big int).
-  * `number`: The number of this block (an integer).
-  * `minGasPrice` (BigNumber): The minimum price, in Wei of one GAS, that the miner accepted for any transactions in this block.
-  * `gasLimit`: The gas limit of this block (integer).
-  * `gasUsed`: The amount of gas used in this block (integer).
-  * `timestamp`: The timestamp of this block (an integer).
-  * `extraData`: Any extra data this block contains (a byte array).
-  * `nonce`: The block's PoW nonce (a 32-byte hash).
-  * `children`: The hashes of any children this block has (an array of 32-byte hashes)
-  * `totalDifficulty`: The total difficulty of the entire chain up and including this block (a bigint).
-  * `bloom`: The bloom filter of this block (a 32-byte hash).
+  * `stateRoot` (32-byte hash): The root of the state trie.
+  * `transactionsRoot` (32-byte hash): The root of the block's transactions trie.
+  * `difficulty` (integer): The PoW difficulty of this block.
+  * `number` (integer): The number of this block.
+  * `minGasPrice` (BigNumber): The minimum price, in Wei per GAS, that the miner accepted for any transactions in this block.
+  * `gasLimit` (integer): The gas limit of this block.
+  * `gasUsed` (integer): The amount of gas used in this block.
+  * `timestamp` (integer): The timestamp of this block (an integer).
+  * `extraData` (byte array): Any extra data this block contains.
+  * `nonce` (32-byte hash): The block's PoW nonce.
+  * `children` (array of 32-byte hashes): The hashes of any children this block has.
+  * `totalDifficulty` (integer): The total difficulty of the entire chain up and including this block.
+  * `bloom` (32-byte hash): The bloom filter of this block.
 ```javascript
 var info = web3.eth.block(3150);
 console.log(info);
@@ -510,16 +510,16 @@ Return value is an object with the following keys:
   * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
   * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
   * `miner`: The address of the account that was rewarded for mining this block (né the coinbase address). A 20-byte address.
-  * `stateRoot`: The root of the state trie (a 32-byte hash).
-  * `transactionsRoot`: The root of the block's transactions trie (a 32-byte hash).
-  * `difficulty`: The PoW difficulty of this block (a big int).
-  * `number`: The number of this block (an integer).
-  * `minGasPrice`: The minimum price, in Wei, of one GAS, that the miner accepted for any transactions in this block (a big int).
-  * `gasLimit`: The gas limit of this block (an integer).
-  * `gasUsed`: The amount of gas used in this block (an integer).
-  * `timestamp`: The timestamp of this block (an integer).
-  * `extraData`: Any extra data this block contains (a byte array).
-  * `nonce`: The block's PoW nonce (a 32-byte hash).
+  * `stateRoot` (32-byte hash): The root of the state trie.
+  * `transactionsRoot` (32-byte hash): The root of the block's transactions trie.
+  * `difficulty` (integer): The PoW difficulty of this block.
+  * `number` (integer): The number of this block.
+  * `minGasPrice` (BigNumber): The minimum price, in Wei per GAS, that the miner accepted for any transactions in this block.
+  * `gasLimit` (integer): The gas limit of this block.
+  * `gasUsed` (integer): The amount of gas used in this block.
+  * `timestamp` (integer): The timestamp of this block.
+  * `extraData` (byte array): Any extra data this block contains.
+  * `nonce` (32-byte hash): The block's PoW nonce.
 ```javascript
 var blockNumber = 500;
 var indexOfUncle = 0
@@ -552,13 +552,13 @@ console.log(uncle);
 
 **Returns** a transaction object by number or hash `hashStringOrNumber` from block with `blockNumber`:
 
-  * `hash`: The hash of the transaction. A 32-byte hash.
-  * `input`: The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation. A byte array.
-  * `to`: The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction (a 20-byte address).
-  * `from`: The cryptographically verified address from which the transaction was sent (a 20-byte address).
-  * `gas`: The amount of GAS supplied for this transaction to happen (an integer).
+  * `hash` (32-byte hash): The hash of the transaction.
+  * `input` (byte array): The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation.
+  * `to` (20-byte address): The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction.
+  * `from` (20-byte address): The cryptographically verified address from which the transaction was sent .
+  * `gas` (integer): The amount of GAS supplied for this transaction to happen.
   * `gasPrice` (BigNumber): The price offered to the miner to purchase this amount of GAS, in Wei per GAS.
-  * `nonce` (BigNumber): The transaction nonce.
+  * `nonce` (32-byte hash): The transaction nonce.
   * `value` (BigNumber): The amount of ETH to be transferred to the recipient with the transaction in wei.
 
 ```js
@@ -602,13 +602,13 @@ console.log(number); // 1
 
 Creates a new message-call transaction.
   * `transactionObject`, an anonymous object specifying the parameters of the transaction.
-    * `from`, the address for the sending account;
+    * `from` (hexString), the address for the sending account;
     * `value (number|hexString|BigNumber)`, the value transferred for the transaction in Wei, also the endowment if it's a contract-creation transaction;
     * `endowment`, synonym for `value`;
-    * `to`, the destination address of the message, left undefined for a contract-creation transaction;
-    * `data`, either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
+    * `to` (hexString), the destination address of the message, left undefined for a contract-creation transaction;
+    * `data`  (hexString), either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
     * `code`, a synonym for `data`;
-    * `gas (number|hexString|BigNumber)`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
+    * `gas (integer)`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
     * `gasPrice (number|hexString|BigNumber)`, the price of gas for this transaction in wei, defaults to the mean network gasPrice.
   * `callback`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
 ```javascript
@@ -633,6 +633,8 @@ console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 
     web3.eth.contract(abiArray)
 
+**Returns** a contract object, which can be used to initiate use contracts on an address.
+
 This method creates a contract object for a solidity contract. It has the same methods available as solidity contract description itself.
 
 You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
@@ -654,7 +656,7 @@ var abi = [{
 // creation of contract object
 var MyContract = web3.eth.contract(abi);
 
-// initiate with the contract address
+// initiate contract for an address
 var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
 
 myContractInstance.myMethod('this is test string param for call'); // myMethod call (implicit, default)
@@ -700,8 +702,10 @@ myEvent.stopWatching();
 
     web3.eth.call(callObject)
 
-Executes a new message-call immediately without creating a transaction on the block chain.
-  * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
+**Returns** the data which matches the call.
+
+Executes a new message-call immediately without creating a transaction on the block chain. `callObject` is an object specifying the parameters of the transaction.
+
 ```javascript
 var options = {
     to: "0xc4abd0339eb8d57087278718986382264244252f", 
@@ -727,7 +731,6 @@ web3.eth.filter(eventArray [, options])
 // object is a contract object (not implemented yet)
 web3.eth.filter(contractObject [, options])
 ```
-  
    * `filterString`:  `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively
    * `options`
        * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
@@ -737,7 +740,16 @@ web3.eth.filter(contractObject [, options])
        * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
        * `topic`: A set of values which must each appear in the log entries.
    * `eventArguments` is an object with keys of one or more indexed arguments for the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
-      
+
+**Returns** a filter object with the following methods:
+
+#### Filter Methods:
+  * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback.
+  * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
+  * `filter.get()`: Returns all of the log entries that fit the filter.
+
+#### Callback return values
+
 If its a log filter it returns a list of log entries; each includes the following fields:
 
 * `address`: The address of the account whose execution of the message resulted in the log entry being made.
@@ -745,13 +757,11 @@ If its a log filter it returns a list of log entries; each includes the followin
 * `data`: The associated data of the log.
 * `number`: The block number from which this log is.
 
-If its an event filter it returns a filter object with the return values of event.
+If its an event filter it returns a filter object with the return values of event:
 
-#### Filter Methods:
-  * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback.
-  * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
-  * `filter.get()`: Returns all of the log entries that fit the filter.
-
+* `args`: The arguments coming from the event
+* `topic`: The topic(s) of the log.
+* `number`: The block number from at which this event happened.
 
 ```javascript
 var filter = web3.eth.filter('pending');
@@ -759,6 +769,11 @@ var filter = web3.eth.filter('pending');
 filter.watch(function (log) {
   console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
 });
+
+var myResults = filter.get();
+
+filter.stopWatching();
+
 ```
 
 ***
@@ -767,7 +782,8 @@ filter.watch(function (log) {
 
     web3.eth.getCompilers()
 
-Returns an array of available compilers
+**Returns** an array of available compilers.
+
 ```javascript
 var number = web3.eth.getCompilers();
 console.log(number); // ["lll", "solidity", "serpent"]
@@ -778,6 +794,8 @@ console.log(number); // ["lll", "solidity", "serpent"]
 ##### web3.eth.compile.solidity
 
     web3.eth.compile.solidity(sourceString)
+
+**Returns** the compiled solidity code as HEX string.
 
 Compiles the solidity source code `sourceString` and returns the output data.
 ```javascript
@@ -797,6 +815,8 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
     web3. eth.compile.lll(sourceString)
 
+**Returns** the compiled lll code as HEX string.
+
 Compiles the LLL source code `sourceString` and returns the output data.
 ```javascript
 var source = "...";
@@ -810,6 +830,8 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 ##### web3.eth.compile.serpent
 
     web3.eth.compile.serpent(sourceString)
+
+**Returns** the compiled serpent code as HEX string.
 
 Compiles the serpent source code `sourceString ` and returns the output data.
 ```javascript
