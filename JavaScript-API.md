@@ -12,16 +12,16 @@ There is, at the global scope, one objects; the `web3` object, containing data h
      * [api](#) -> string e.g. '0.0.1' (the ethereum.js version)
      * [client](#) -> string e.g. 'AlethZero/1.0.0' (the client ID)
   * [port](#) -> number e.g. 8080 (not available yet)
-  * [sha3](#web3sha3) *(s1)*
-  * [toAscii](#web3toascii) *(hexString)*, returns textString
-  * [fromAscii](#web3fromascii) *(textString, [padding])*, returns hexString
-  * [toDecimal](#web3todecimal) *(hexString)*, returns number
-  * [fromDecimal](#web3fromdecimal) *(number)*, returns hexString
-  * [fromWei](#web3fromwei) *(number, unit)*, returns number|BigNumber (depending on the input)
-  * [toWei](#web3toWei) *(number, unit)*, returns number|BigNumber (depending on the input)
-  * [isAddress](#web3isAddress) *(hexString)*, returns boolean
-  * [setProvider](#web3setprovider) *(provider)*
-  * [reset](#web3reset)
+  * [sha3(string)](#web3sha3) -> hexString 
+  * [toAscii(hexString)](#web3toascii) -> textString
+  * [fromAscii(textString, [padding])](#web3fromascii) -> hexString
+  * [toDecimal(hexString)](#web3todecimal) -> number
+  * [fromDecimal(number)](#web3fromdecimal) -> hexString
+  * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei) -> string|BigNumber (depending on the input)
+  * [toWei(numberStringOrBigNumber, unit)](#web3toWei) -> string|BigNumber (depending on the input)
+  * [isAddress(hexString)](#web3isAddress) -> boolean
+  * [setProvider(provider)](#web3setprovider)
+  * [reset()](#web3reset)
   * [eth](#web3eth)
     * [coinbase](#web3ethcoinbase) -> hexString
     * [listening](#web3ethlistening) -> boolean
@@ -44,7 +44,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [getTransaction(object, number)](#web3ethgettransaction) -> transactionObject
     * [getTransactionCount(address)](#web3ethgettransactioncount) -> Integer
     * [sendTransaction(object)](#web3ethsendtransaction)
-    * [contract](#web3ethcontract) *(abiArray)*
+    * [contract(abiArray)](#web3ethcontract) -> contractObject
     * [call(object)](#web3ethcall) -> hexString
     * [filter(array (, options) )](#web3ethfilter)
         - [watch(callback)](#web3ethfilter)
@@ -56,10 +56,10 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [compile.serpent(string)](#web3ethcompileserpent) -> hexString
     * [flush](#web3ethflush)
   * [db](#web3db)
-    * [put](#web3dbput) *(_name, _key, _value)*
-    * [putString](#web3dbputstring) *(__name, _key, _value)*
-    * [get](#web3dbget) *(_name, _key)*
-    * [getString](#web3dbgetstring) *(_name, _key)*
+    * [put(name, key, value)](#web3dbput)
+    * [putString(name, key, value)](#web3dbputstring)
+    * [get(name, key)](#web3dbget)
+    * [getString(name, key)](#web3dbgetstring)
   * [shh](#web3shh)
     * [post(postObject)](#web3shhpost)
     * [newIdentity()](#web3shhnewidentity)
