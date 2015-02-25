@@ -506,13 +506,13 @@ console.log(number); // 1
 Returns the uncle with number `uncleNumber` from the block with number or hash `blockHashStringOrNumber`.
 
 Return value is an object with the following keys:
-  * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
-  * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
-  * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
-  * `miner`: The address of the account that was rewarded for mining this block (né the coinbase address). A 20-byte address.
+  * `hash` (32-byte hash): The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header).
+  * `parentHash` (32-byte hash): The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header).
+  * `sha3Uncles` (32-byte hash): The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
+  * `miner` (20-byte hash): The address of the account that was rewarded for mining this block (né the coinbase address).
   * `stateRoot` (32-byte hash): The root of the state trie.
   * `transactionsRoot` (32-byte hash): The root of the block's transactions trie.
-  * `difficulty` (integer): The PoW difficulty of this block.
+  * `difficulty` (BigNumber): The PoW difficulty of this block.
   * `number` (integer): The number of this block.
   * `minGasPrice` (BigNumber): The minimum price, in Wei per GAS, that the miner accepted for any transactions in this block.
   * `gasLimit` (integer): The gas limit of this block.
