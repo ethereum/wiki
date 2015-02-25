@@ -428,32 +428,6 @@ console.log(storage); // { "0x" : "0x03" }
 
 ***
 
-##### web3.eth.getTransactionCount
-
-    web3.eth.getTransactionCount(addressHexString)
-
-**Returns** the number of transactions send from the given address `addressHexString`.
-
-```javascript
-var number = web3.eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
-console.log(number); // 1
-```
-
-***
-
-##### web3.eth.getBlockTransactionCount
-
-    web3.eth.getBlockTransactionCount(hashStringOrBlockNumber)
-
-**Returns** the number of transactions in a given block `hashStringOrBlockNumber`.
-
-```javascript
-var number = web3.eth.getBlockTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
-console.log(number); // 1
-```
-
-***
-
 ##### web3.eth.getData
 
     web3.eth.getData(addressHexString)
@@ -512,40 +486,15 @@ console.log(info);
 
 ***
 
-#####web3.eth.getTransaction
+##### web3.eth.getBlockTransactionCount
 
-    web3.eth.getTransaction(hashStringOrNumber, blockNumber)
+    web3.eth.getBlockTransactionCount(hashStringOrBlockNumber)
 
-**Returns** a transaction object by number or hash `hashStringOrNumber` from block with `blockNumber`:
+**Returns** the number of transactions in a given block `hashStringOrBlockNumber`.
 
-  * `hash`: The hash of the transaction. A 32-byte hash.
-  * `input`: The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation. A byte array.
-  * `to`: The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction (a 20-byte address).
-  * `from`: The cryptographically verified address from which the transaction was sent (a 20-byte address).
-  * `gas`: The amount of GAS supplied for this transaction to happen (an integer).
-  * `gasPrice` (BigNumber): The price offered to the miner to purchase this amount of GAS, in Wei per GAS.
-  * `nonce` (BigNumber): The transaction nonce.
-  * `value` (BigNumber): The amount of ETH to be transferred to the recipient with the transaction in wei.
-
-```js
-var blockNumber = 668;
-var indexOfTransaction = 0
-
-var transaction = web3.eth.getTransaction(blockNumber, indexOfTransaction);
-console.log(transaction);
-/*
-{
-"from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
-"gas":520464,
-"gasPrice": instanceof BigNumber,
-"hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
-"input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
-"nonce":"0x",
-"to":"0x0000000000000000000000000000000000000000",
-"value": instanceof BigNumber
-}
-*/
-
+```javascript
+var number = web3.eth.getBlockTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
+console.log(number); // 1
 ```
 
 ***
@@ -597,6 +546,56 @@ console.log(uncle);
 
 ***
 
+#####web3.eth.getTransaction
+
+    web3.eth.getTransaction(hashStringOrNumber, blockNumber)
+
+**Returns** a transaction object by number or hash `hashStringOrNumber` from block with `blockNumber`:
+
+  * `hash`: The hash of the transaction. A 32-byte hash.
+  * `input`: The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation. A byte array.
+  * `to`: The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction (a 20-byte address).
+  * `from`: The cryptographically verified address from which the transaction was sent (a 20-byte address).
+  * `gas`: The amount of GAS supplied for this transaction to happen (an integer).
+  * `gasPrice` (BigNumber): The price offered to the miner to purchase this amount of GAS, in Wei per GAS.
+  * `nonce` (BigNumber): The transaction nonce.
+  * `value` (BigNumber): The amount of ETH to be transferred to the recipient with the transaction in wei.
+
+```js
+var blockNumber = 668;
+var indexOfTransaction = 0
+
+var transaction = web3.eth.getTransaction(blockNumber, indexOfTransaction);
+console.log(transaction);
+/*
+{
+"from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+"gas":520464,
+"gasPrice": instanceof BigNumber,
+"hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
+"input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
+"nonce":"0x",
+"to":"0x0000000000000000000000000000000000000000",
+"value": instanceof BigNumber
+}
+*/
+
+```
+
+***
+##### web3.eth.getTransactionCount
+
+    web3.eth.getTransactionCount(addressHexString)
+
+**Returns** the number of transactions send from the given address `addressHexString`.
+
+```javascript
+var number = web3.eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
+console.log(number); // 1
+```
+
+***
+
 ##### web3.eth.sendTransaction
 
     web3.eth.sendTransaction(transactionObject, callback)
@@ -626,74 +625,6 @@ var compiled = web3.eth.solidity(source);
 
 var address = web3.eth.sendTransaction({data: compiled});
 console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
-```
-
-***
-
-##### web3.eth.call
-
-    web3.eth.call(callObject)
-
-Executes a new message-call immediately without creating a transaction on the block chain.
-  * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
-```javascript
-var options = {
-    to: "0xc4abd0339eb8d57087278718986382264244252f", 
-    data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
-};
-var result = web3.eth.call(options);
-console.log(result); // "0x0000000000000000000000000000000000000000000000000000000000000015"
-```
-
-***
-
-##### web3.eth.filter
-
-
-```js
-// can be 'chain' or 'pending'
-web3.eth.filter(filterString)
-// object is a log filter 
-web3.eth.filter(options)
-// object is an event object 
-web3.eth.filter(eventObject [, eventArguments [, options]])
-// an array of events object belonging to specific contract objects (not implemented yet)
-web3.eth.filter(eventArray [, options])
-// object is a contract object (not implemented yet)
-web3.eth.filter(contractObject [, options])
-```
-  
-   * `filterString`:  `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively
-   * `options`
-       * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
-       * `latest`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
-       * `max`: The maximum number of messages to return.
-       * `skip`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
-       * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
-       * `topic`: A set of values which must each appear in the log entries.
-   * `eventArguments` is an object with keys of one or more indexed arguments for the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
-      
-If its a log filter it returns a list of log entries; each includes the following fields:
-
-* `address`: The address of the account whose execution of the message resulted in the log entry being made.
-* `topic`: The topic(s) of the log.
-* `data`: The associated data of the log.
-* `number`: The block number from which this log is.
-
-If its an event filter it returns a filter object with the return values of event.
-
-#### Filter Methods:
-  * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback.
-  * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
-  * `filter.get()`: Returns all of the log entries that fit the filter.
-
-
-```javascript
-var filter = web3.eth.filter('pending');
-
-filter.watch(function (log) {
-  console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
-});
 ```
 
 ***
@@ -765,10 +696,69 @@ myEvent.stopWatching();
 
 ***
 
-#####web3.eth.flush
+##### web3.eth.call
+
+    web3.eth.call(callObject)
+
+Executes a new message-call immediately without creating a transaction on the block chain.
+  * `_params`, an anonymous object specifying the parameters of the transaction, similar to that above.
+```javascript
+var options = {
+    to: "0xc4abd0339eb8d57087278718986382264244252f", 
+    data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
+};
+var result = web3.eth.call(options);
+console.log(result); // "0x0000000000000000000000000000000000000000000000000000000000000015"
+```
+
+***
+
+##### web3.eth.filter
+
+```js
+// can be 'chain' or 'pending'
+web3.eth.filter(filterString)
+// object is a log filter 
+web3.eth.filter(options)
+// object is an event object 
+web3.eth.filter(eventObject [, eventArguments [, options]])
+// an array of events object belonging to specific contract objects (not implemented yet)
+web3.eth.filter(eventArray [, options])
+// object is a contract object (not implemented yet)
+web3.eth.filter(contractObject [, options])
+```
+  
+   * `filterString`:  `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively
+   * `options`
+       * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
+       * `latest`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
+       * `max`: The maximum number of messages to return.
+       * `skip`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
+       * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
+       * `topic`: A set of values which must each appear in the log entries.
+   * `eventArguments` is an object with keys of one or more indexed arguments for the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
+      
+If its a log filter it returns a list of log entries; each includes the following fields:
+
+* `address`: The address of the account whose execution of the message resulted in the log entry being made.
+* `topic`: The topic(s) of the log.
+* `data`: The associated data of the log.
+* `number`: The block number from which this log is.
+
+If its an event filter it returns a filter object with the return values of event.
+
+#### Filter Methods:
+  * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback.
+  * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
+  * `filter.get()`: Returns all of the log entries that fit the filter.
+
 
 ```javascript
-// TODO:
+var filter = web3.eth.filter('pending');
+
+filter.watch(function (log) {
+  console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
+});
 ```
 
 ***
@@ -827,6 +817,14 @@ var source = "...";
 
 var code = web3.eth.compile.serpent(source);
 console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
+```
+
+***
+
+#####web3.eth.flush
+
+```javascript
+// TODO:
 ```
 
 ***
