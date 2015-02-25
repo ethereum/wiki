@@ -38,7 +38,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [getStorage(address)](#web3ethgetstorage) -> hexString
     * [getTransactionCount(address)](#web3ethgettransactioncount) -> Integer
     * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount) -> Integer
-    * [getCode(address)](#web3ethgetcode) -> hexString
+    * [getData(address)](#web3ethgetdata) -> hexString
     * [sendTransaction(object)](#web3ethsendtransaction)
     * [call(object)](#web3ethcall) -> hexString
     * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
@@ -110,7 +110,7 @@ console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37
 
     web3.toAscii(hexString);
 
-Returns an ASCII string made from the data `hexString`.
+**Returns** an ASCII string made from the data `hexString`.
 ```javascript
 var str = web3.toAscii("0x657468657265756d000000000000000000000000000000000000000000000000");
 console.log(str); // ethereum
@@ -120,9 +120,9 @@ console.log(str); // ethereum
 
 ##### web3.fromAscii
 
-    web3.fromAscii(string, padding);
+    web3.fromAscii(string[, padding]);
 
-Returns data of the ASCII string `string`, auto-padded to `padding` bytes (default to 32) and left-aligned.
+**Returns** data of the ASCII string `string` and padded to `padding` bytes (default to 32) and left-aligned.
 ```javascript
 var str = web3.fromAscii('ethereum');
 console.log(str); // "0x657468657265756d000000000000000000000000000000000000000000000000"
@@ -137,7 +137,7 @@ console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000
 
     web3.toDecimal(hexString);
 
-Returns the decimal string representing the data `hexString` (when interpreted as a big-endian integer).
+**Returns** the decimal string representing the data `hexString` (when interpreted as a big-endian integer).
 ```javascript
 var value = web3.toDecimal('0x15');
 console.log(value === "21"); // true
@@ -149,7 +149,7 @@ console.log(value === "21"); // true
 
     web3.fromDecimal(number);
 
-Returns the hex data string representing (in big-endian format) the decimal integer `number`.
+**Returns** the HEX string representing the decimal integer `number`.
 ```javascript
 var value = web3.fromDecimal('21');
 console.log(value === "0x15"); // true
@@ -160,6 +160,8 @@ console.log(value === "0x15"); // true
 ##### web3.fromWei
 
     web3.fromWei([String,BigNumber] number, [String] unit)
+
+**Returns** either a number string, or a BigNumber object, depending on the given `number` parameter.
 
 Converts a number of wei into the following ethereum units:
 
@@ -174,11 +176,9 @@ Converts a number of wei into the following ethereum units:
 - gether
 - tether
 
-**Note** If you pass a BigNumber object, it will return one as well.
-
 ```javascript
 var value = web3.fromWei('21000000000000', 'finney');
-console.log(value === "0.021"); // true
+console.log(value); // "0.021"
 ```
 
 ***
@@ -186,6 +186,8 @@ console.log(value === "0.021"); // true
 ##### web3.toWei
 
     web3.toWei([String,BigNumber] number, [String] unit)
+
+**Returns** either a number string, or a BigNumber object, depending on the given `number` parameter.
 
 Converts a number a ethereum unit into wei. Possible units are:
 
@@ -200,11 +202,10 @@ Converts a number a ethereum unit into wei. Possible units are:
 - gether
 - tether
 
-**Note** If you pass a BigNumber object, it will return one as well.
 
 ```javascript
 var value = web3.toWei('1', 'ether');
-console.log(value === "1000000000000000000"); // true
+console.log(value); // "1000000000000000000"
 ```
 
 ***
@@ -213,9 +214,11 @@ console.log(value === "1000000000000000000"); // true
 
     web3.setProvider(providor)
 
+**Returns** undefined
+
 Should be called to set provider.
 ```javascript
-web3.setProvider(new web3.providers.HttpSyncProvider());
+web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8545'));
 // or
 web3.setProvider(new web3.providers.QtSyncProvider());
 ```
@@ -226,6 +229,8 @@ web3.setProvider(new web3.providers.QtSyncProvider());
 
     web3.reset()
 
+**Returns** undefined
+
 Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
 ```javascript
 web3.reset();
@@ -234,7 +239,8 @@ web3.reset();
 ***
 
 ##### web3.eth
-Should be called to get web3.eth object.
+Contains the ethereum blockchain related methods.
+
 ```javascript
 var eth = web3.eth;
 ```
@@ -245,7 +251,10 @@ var eth = web3.eth;
 
     web3.eth.coinbase
 
-Returns the coinbase address of the client.
+**Returns** the coinbase address of the client.
+
+The coinbase is the address were the mining rewards go into.
+
 ```javascript
 var coinbase = web3.eth.coinbase;
 console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
@@ -257,7 +266,8 @@ console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
 
     web3.eth.listening
 
-Returns `true` if and only if the client is actively listening for network connections.
+**Returns** `true` if and only if the client is actively listening for network connections, otherwise `false`.
+
 ```javascript
 var listening = web3.eth.listening;
 console.log(listening); // true of false
@@ -269,7 +279,8 @@ console.log(listening); // true of false
 
     web3.eth.mining
 
-Returns `true` if and only if the client is actively mining new blocks.
+**Returns** `true` if the client is mining, otherwise `false`.
+
 ```javascript
 var mining = web3.eth.mining;
 console.log(mining); // true or false
@@ -281,9 +292,10 @@ console.log(mining); // true or false
 
     web3.eth.gasPrice
 
-**Returns ->** BigNumber() in wei
+**Returns ->** a BigNumber object of the current gas price in wei.
 
-Returns the current gasPrice in wei.
+The gas price is determined by the x latest blocks median gas price.
+
 ```javascript
 var gasPrice = web3.eth.gasPrice;
 console.log(gasPrice.toString(10)); // "10000000000000"
@@ -295,7 +307,8 @@ console.log(gasPrice.toString(10)); // "10000000000000"
 
     web3.eth.accounts
 
-Returns an array of the addresses owned by client
+**Returns** an array of the addresses owned by client.
+
 ```javascript
 var accounts = web3.eth.accounts;
 console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
@@ -307,7 +320,10 @@ console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
 
     web3.eth.register(addressHexString)
 
+**Returns** ?
+
 Registers the given address to be included in `web3.eth.accounts`. This allows non-private-key owned accounts to be associated as an owned account (e.g., contract wallets).
+
 ```javascript
 web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
@@ -318,7 +334,10 @@ web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 
      web3.eth.unRegister(addressHexString)
 
-Unregisters the given address
+**Returns** ?
+
+Unregisters a given address.
+
 ```javascript
 web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
@@ -329,7 +348,8 @@ web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 
     web3.eth.peerCount
 
-Returns the number of peers currently connected to the client.
+**Returns** the number of peers currently connected to the client.
+
 ```javascript
 var peerCount = web3.eth.peerCount;
 console.log(peerCount); // 4
@@ -341,12 +361,15 @@ console.log(peerCount); // 4
 
     web3.eth.defaultBlock
 
-The default block number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. `-1` therefore means the most recently mined block, `0` means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
+**Returns** the default block number/age to use when querying a state.
+
+When positive this is a block number, when 0 or negative it is a block age. `-1` therefore means the most recently mined block, `0` means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
+
 ```javascript
 var defaultBlock = web3.eth.defaultBlock;
 console.log(defaultBlock); // -1
 
-// set a block
+// set the default block
 web3.eth.defaultBlock = 0;
 ```
 
@@ -356,7 +379,8 @@ web3.eth.defaultBlock = 0;
 
     web3.eth.blockNumber
 
-Returns the number of the most recent block.
+**Returns** the number of the most recent block.
+
 ```javascript
 var number = web3.eth.blockNumber;
 console.log(number); // 2744
@@ -368,9 +392,8 @@ console.log(number); // 2744
 
     web3.eth.getBalance(addressHexString)
 
-**Returns ->** BigNumber() in wei
+**Returns ->** a BigNumber object of the current balance for the given address in wei.
 
-Returns the balance of the account of address given by the address `addressHexString`
 ```javascript
 var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(balance); // instanceof BigNumber
@@ -384,7 +407,8 @@ console.log(balance.toNumber()); // 1000000000000
 
     web3.eth.getState(addressHexString, position)
 
-Returns the value in storage at position `position` of the account by the given address `addressHexString`.
+**Returns** the value in storage at position `position` of the address `addressHexString`.
+
 ```javascript
 var state = web3.eth.getState("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
 console.log(state); // "0x03"
@@ -396,7 +420,8 @@ console.log(state); // "0x03"
 
     web3.eth.getStorage(addressHexString)
 
-Dumps storage as json object.
+**Returns** the storage as a json object.
+
 ```javascript
 var storage = web3.eth.getStorage("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(storage); // { "0x" : "0x03" }
@@ -408,7 +433,8 @@ console.log(storage); // { "0x" : "0x03" }
 
     web3.eth.getTransactionCount(addressHexString)
 
-Returns the number of transactions send from the account of address given by `addressHexString`.
+**Returns** the number of transactions send from the given address `addressHexString`.
+
 ```javascript
 var number = web3.eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(number); // 1
@@ -420,7 +446,8 @@ console.log(number); // 1
 
     web3.eth.getBlockTransactionCount(hashStringOrBlockNumber)
 
-Returns the number of transactions in a given block `hashStringOrBlockNumber`.
+**Returns** the number of transactions in a given block `hashStringOrBlockNumber`.
+
 ```javascript
 var number = web3.eth.getBlockTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(number); // 1
@@ -428,14 +455,15 @@ console.log(number); // 1
 
 ***
 
-##### web3.eth.getCode
+##### web3.eth.getData
 
-    web3.eth.getCode(addressHexString)
+    web3.eth.getData(addressHexString)
 
-Returns code at given address `addressHexString`.
+**Returns** the data at given address `addressHexString`.
+
 ```javascript
-var code = web3.eth.getCode("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
-console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
+var data = web3.eth.getData("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
+console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 ```
 
 ***
