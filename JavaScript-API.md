@@ -36,25 +36,24 @@ There is, at the global scope, one objects; the `web3` object, containing data h
     * [getBalance(address)](#web3ethgetbalance) -> BigNumber
     * [getState(address, storage)](#web3ethgetstate) -> hexString
     * [getStorage(address)](#web3ethgetstorage) -> hexString
-    * [getTransactionCount(address)](#web3ethgettransactioncount) -> Integer
-    * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount) -> Integer
     * [getData(address)](#web3ethgetdata) -> hexString
-    * [sendTransaction(object)](#web3ethsendtransaction)
-    * [call(object)](#web3ethcall) -> hexString
-    * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
     * [getTransaction(object, number)](#web3ethgettransaction) -> transactionObject
+    * [getTransactionCount(address)](#web3ethgettransactioncount) -> Integer
+    * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
+    * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount) -> Integer
     * [getUncle(hash/number)](#web3ethgetuncle) -> headerObject
     * [getBlockUncleCount(hash/number)](#web3ethgetblockunclecount) -> Integer
-    * [getCompilers()](#web3ethgetcompilers) -> array of strings
-    * [compile.lll(string)](#web3ethcompilelll) -> hexString
-    * [compile.solidity(string)](#web3ethcompilesolidity) -> hexString
-    * [compile.serpent(string)](#web3ethcompileserpent) -> hexString
-    * [logs](#web3ethlogs) *(_object/_string)*
+    * [sendTransaction(object)](#web3ethsendtransaction)
+    * [contract](#web3ethcontract) *(abiArray)*
+    * [call(object)](#web3ethcall) -> hexString
     * [filter(array (, options) )](#web3ethfilter)
         - [watch(callback)](#web3ethfilter)
         - [stopWatching(callback)](#web3ethfilter)
         - [get()](#web3ethfilter)
-    * [contract](#web3ethcontract) *(abiArray)*
+    * [getCompilers()](#web3ethgetcompilers) -> array of strings
+    * [compile.lll(string)](#web3ethcompilelll) -> hexString
+    * [compile.solidity(string)](#web3ethcompilesolidity) -> hexString
+    * [compile.serpent(string)](#web3ethcompileserpent) -> hexString
     * [flush](#web3ethflush)
   * [db](#web3db)
     * [put](#web3dbput) *(_name, _key, _value)*
