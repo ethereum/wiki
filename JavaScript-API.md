@@ -447,13 +447,13 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
 
 **Returns** a block object with number or hash `hashHexStringOrBlockNumber`:
 
-  * `hash`: The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header). A 32-byte hash.
-  * `parentHash`: The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header). A 32-byte hash.
-  * `sha3Uncles`: The SHA3 of the RLP-encoded dump of the uncles portion of the block (a 32-byte hash).
-  * `miner`: The address of the account that was rewarded for mining this block (né the coinbase address). A 20-byte address.
+  * `hash` (32-byte hash): The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header).
+  * `parentHash` (32-byte hash): The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header).
+  * `sha3Uncles` (32-byte hash): The SHA3 of the RLP-encoded dump of the uncles portion of the block.
+  * `miner` (20-byte address): The address of the account that was rewarded for mining this block (né the coinbase address).
   * `stateRoot` (32-byte hash): The root of the state trie.
   * `transactionsRoot` (32-byte hash): The root of the block's transactions trie.
-  * `difficulty` (integer): The PoW difficulty of this block.
+  * `difficulty` (BigNumber): The PoW difficulty of this block.
   * `number` (integer): The number of this block.
   * `minGasPrice` (BigNumber): The minimum price, in Wei per GAS, that the miner accepted for any transactions in this block.
   * `gasLimit` (integer): The gas limit of this block.
@@ -462,7 +462,7 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
   * `extraData` (byte array): Any extra data this block contains.
   * `nonce` (32-byte hash): The block's PoW nonce.
   * `children` (array of 32-byte hashes): The hashes of any children this block has.
-  * `totalDifficulty` (integer): The total difficulty of the entire chain up and including this block.
+  * `totalDifficulty` (BigNumber): The total difficulty of the entire chain up and including this block.
   * `bloom` (32-byte hash): The bloom filter of this block.
 ```javascript
 var info = web3.eth.block(3150);
