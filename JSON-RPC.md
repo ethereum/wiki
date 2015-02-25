@@ -419,6 +419,18 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0xd5677c
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transact","params":[{"code":"0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"}],"id":1}' http://localhost:8080
 ```
+* parameters:
+```json
+{
+"from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
+"to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
+gas: 30400,
+gasPrice: "0x9184e72a000", // hex of a big int
+value: "0x9184e72a000", // hex of a big int
+data: "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
+}
+```
+
 * response:
 ```json
 {
