@@ -7,9 +7,9 @@ Proposed changes:
 Add the following return values as needed as they are returned by 
 web3.eth.getBlock https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethgetblock
 
-* Add minGasPrice (minimum price in wei per gas the miner accepted for txs in this block)
-* Add gasUsed
-* Add children (array of block hashes of all children of the block)
-* Add totalDifficulty (total difficulty of block as specified in Yellow Paper (YP))
-* logsBloom (the logsBloom filter of this block as specified in YP)
+* Add `minGasPrice` (minimum price in wei per gas the miner accepted for txs in this block)
+* Add `gasUsed`
+* Add `children` (array of block hashes of all children of the block)
+* Add `totalDifficulty` (total difficulty of block as specified in Yellow Paper (YP))
+* `logsBloom` (the logsBloom filter of this block as specified in YP)
 
