@@ -2,9 +2,9 @@ In order to satisfy the data needed by the new JS API (https://github.com/ethere
 
 Proposed changes:
 
-### eth_blockByHash
+### eth_blockByHash and eth_blockByNumber 
 
-All these are needed as they are returned by 
+Add the following return values as needed as they are returned by 
 web3.eth.getBlock https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethgetblock
 
 * Add minGasPrice (minimum price in wei per gas the miner accepted for txs in this block)
