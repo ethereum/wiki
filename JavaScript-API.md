@@ -4,6 +4,37 @@ To make your ÐApp work with on Ethereum, you'll need to know about the Ethereum
 
 There is, at the global scope, one objects; the `web3` object, containing data handling functions (commonly used for all other APIs). This object also contains other subprotocol objects including the `eth` object - `web3.eth` (for specifically Ethereum interaction) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
+## A not on big numbers in JavaScript
+
+You will always get a BigNumber object for balance values as JavaScript is not able to handle big numbers correctly.
+Look at the following examples:
+
+```js
+"101010100324325345346456456456456456456"
+// "101010100324325345346456456456456456456"
+101010100324325345346456456456456456456
+// 1.0101010032432535e+38
+```
+
+To make calculations a correct number representations possible you must have the (BigNumber Library)[https://github.com/MikeMcl/bignumber.js/] in your dapp project.
+
+This way you can make easy calculations with you wei balances:
+
+```js
+var balance = new BigNumber('131242344353464564564574574567456');
+
+balance.plus(21).toString(10); // toString(10) converts it to a number string
+// "131242344353464564564574574567477"
+```
+
+While the next example wouldn't work, therefore its recommended to keep you balance always in wei and only transform it to other units when presenting to the user:
+```js
+var balance = new BigNumber('13124.234435346456466666457455567456');
+
+balance.plus(21).toString(10); // toString(10) converts it to a number string, but can only show max 20 floating points 
+// "13145.23443534645646666646" // you number would be cut after the 20 floating point
+```
+
 # API
 
 * [web3](#web3)
@@ -19,6 +50,7 @@ There is, at the global scope, one objects; the `web3` object, containing data h
   * [fromDecimal(number)](#web3fromdecimal) -> hexString
   * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei) -> string|BigNumber (depending on the input)
   * [toWei(numberStringOrBigNumber, unit)](#web3toWei) -> string|BigNumber (depending on the input)
+  * [toBigNumber(numberOrHexString)](#web3tobigNumber) -> BigNumber
   * [isAddress(hexString)](#web3isAddress) -> boolean
   * [setProvider(provider)](#web3setprovider)
   * [reset()](#web3reset)
@@ -209,6 +241,20 @@ console.log(value); // "1000000000000000000"
 
 ***
 
+##### web3.toBigNumber
+
+    web3.toBigNumber(numberOrHexString);
+
+**Returns** a BigNumber object representing the given value
+
+```javascript
+var value = web3.toBigNumber('200000000000000000000001');
+console.log(value); // instanceOf BigNumber
+console.log(value.toNumber()); // 2.0000000000000002e+23
+console.log(value.toString(10)); // '200000000000000000000001'
+```
+
+***
 ##### web3.setProvider
 
     web3.setProvider(providor)
@@ -391,7 +437,9 @@ console.log(number); // 2744
 
     web3.eth.getBalance(addressHexString)
 
-**Returns ->** a BigNumber object of the current balance for the given address in wei.
+**Returns** a BigNumber object of the current balance for the given address in wei.
+
+See the note on BigNumber at the top of the document.
 
 ```javascript
 var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
