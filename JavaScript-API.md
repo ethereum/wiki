@@ -44,6 +44,8 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
      * [api](#) -> string e.g. '0.0.1' (the ethereum.js version)
      * [client](#) -> string e.g. 'AlethZero/1.0.0' (the client ID)
   * [port](#) -> number e.g. 8080 (not available yet)
+  * [setProvider(provider)](#web3setprovider)
+  * [reset()](#web3reset)
   * [sha3(string)](#web3sha3) -> hexString 
   * [toAscii(hexString)](#web3toascii) -> textString
   * [fromAscii(textString, [padding])](#web3fromascii) -> hexString
@@ -53,8 +55,6 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [toWei(numberStringOrBigNumber, unit)](#web3toWei) -> string|BigNumber (depending on the input)
   * [toBigNumber(numberOrHexString)](#web3tobignumber) -> BigNumber
   * [isAddress(hexString)](#web3isAddress) -> boolean
-  * [setProvider(provider)](#web3setprovider)
-  * [reset()](#web3reset)
   * [eth](#web3eth)
     * [coinbase](#web3ethcoinbase) -> hexString
     * [listening](#web3ethlistening) -> boolean
