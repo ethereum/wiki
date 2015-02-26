@@ -104,15 +104,6 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
       * [stopWatching(callback)](#web3shhfilter)
       * [get(callback)](#web3shhfilter)
 
-# Parameters
-
-The canonical form of almost all parameters in this API is data represented as hex, prefixed with an `0x`. There's automatic conversion from decimal strings to the hex representation (interpreted as a big-endian as is standard for Ethereum). So, the following two forms are identically interpreted:
-
-* `"0x414243"`
-* `"4276803"`
-
-In each case, they are interpreted as the number 4276803. To convert to or from other datatypes, such as strings and integers, there are a number of conversion functions, detailed later.
-
 # Usage
 
 ##### web3
