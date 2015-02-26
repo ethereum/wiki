@@ -1,6 +1,6 @@
 # Introduction
 
-To make your ÐApp work with on Ethereum, you can use the `web3` object provided by the [ethereum.js library](https://github.com/ethereum/ethereum.js). ethereumjs communites to a local node through RPC calls which you can find [here](https://github.com/ethereum/wiki/wiki/JSON-RPC). ethereum.js can be used with AlethZero, Mist and an external browser.
+To make your ÐApp work with on Ethereum, you can use the `web3` object provided by the [ethereum.js library](https://github.com/ethereum/ethereum.js). ethereumjs communicates to a local node through RPC calls which can be found [here](https://github.com/ethereum/wiki/wiki/JSON-RPC). ethereum.js works with AlethZero and Mist, and also in an external browser if one of the former nodes are running locally.
 
 `web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
@@ -138,6 +138,34 @@ console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37
 
 ***
 
+##### web3.setProvider
+
+    web3.setProvider(providor)
+
+**Returns** undefined
+
+Should be called to set provider.
+```javascript
+web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8545')); // 8080 for cpp/AZ, 8545 for go/mist
+// or
+web3.setProvider(new web3.providers.QtSyncProvider());
+```
+
+***
+
+##### web3.reset
+
+    web3.reset()
+
+**Returns** undefined
+
+Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
+```javascript
+web3.reset();
+```
+
+***
+
 ##### web3.toAscii
 
     web3.toAscii(hexString);
@@ -255,33 +283,6 @@ var value = web3.toBigNumber('200000000000000000000001');
 console.log(value); // instanceOf BigNumber
 console.log(value.toNumber()); // 2.0000000000000002e+23
 console.log(value.toString(10)); // '200000000000000000000001'
-```
-
-***
-##### web3.setProvider
-
-    web3.setProvider(providor)
-
-**Returns** undefined
-
-Should be called to set provider.
-```javascript
-web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8545'));
-// or
-web3.setProvider(new web3.providers.QtSyncProvider());
-```
-
-***
-
-##### web3.reset
-
-    web3.reset()
-
-**Returns** undefined
-
-Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
-```javascript
-web3.reset();
 ```
 
 ***
