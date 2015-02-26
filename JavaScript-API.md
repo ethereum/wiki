@@ -16,7 +16,7 @@ Look at the following examples:
 // 1.0101010032432535e+38
 ```
 
-To make calculations a correct number representations possible you must have the (BigNumber Library)[https://github.com/MikeMcl/bignumber.js/] in your dapp project.
+To make calculations a correct number representations possible you must have the [BigNumber Library](https://github.com/MikeMcl/bignumber.js/) in your dapp project.
 
 This way you can make easy calculations with you wei balances:
 
