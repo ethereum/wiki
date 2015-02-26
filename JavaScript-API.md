@@ -247,7 +247,7 @@ console.log(value); // "1000000000000000000"
 
 **Returns** a BigNumber object representing the given value
 
-See the (note on BigNumber)[#a-note-on-big-numbers-in-javascript].
+See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
 ```javascript
 var value = web3.toBigNumber('200000000000000000000001');
@@ -343,7 +343,7 @@ console.log(mining); // true or false
 
 The gas price is determined by the x latest blocks median gas price.
 
-See the (note on BigNumber)[#a-note-on-big-numbers-in-javascript].
+See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
 ```javascript
 var gasPrice = web3.eth.gasPrice;
@@ -443,7 +443,7 @@ console.log(number); // 2744
 
 **Returns** a BigNumber object of the current balance for the given address in wei.
 
-See the (note on BigNumber)[#a-note-on-big-numbers-in-javascript].
+See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
 ```javascript
 var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
