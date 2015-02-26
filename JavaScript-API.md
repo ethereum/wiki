@@ -1058,8 +1058,8 @@ A simple HTML snippet that will display the user's primary account balance of Et
 <div>You have <span id="ether">?</span> Weis</div>
 <script>
 web3.eth.filter('pending').watch(function() {
-    var balance = web3.eth.balanceAt(web3.eth.coinbase);
-    document.getElementById("ether").innerText = web3.toDecimal(balance);
+    var balance = web3.eth.getBalance(web3.eth.coinbase);
+    document.getElementById("ether").innerText = balance.toString(10);
   });
 </script>
 </body></html>
