@@ -1,8 +1,8 @@
 # Introduction
 
-To make your ÐApp work with on Ethereum, you'll need to know about the Ethereum Javascript bindings, or, if you like, magic Javascript objects. These bindings may be used with AlethZero, Mist and external browser. These bindings can be found at [ethereum.js](https://github.com/ethereum/ethereum.js) repository.
+To make your ÐApp work with on Ethereum, you can use the `web3` object provided by the [ethereum.js library](https://github.com/ethereum/ethereum.js). ethereumjs communites to a local node through RPC calls which you can find [here](https://github.com/ethereum/wiki/wiki/JSON-RPC). ethereum.js can be used with AlethZero, Mist and an external browser.
 
-There is, at the global scope, one objects; the `web3` object, containing data handling functions (commonly used for all other APIs). This object also contains other subprotocol objects including the `eth` object - `web3.eth` (for specifically Ethereum interaction) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
+`web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
 ## A note on big numbers in JavaScript
 
