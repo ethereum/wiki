@@ -507,6 +507,7 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
   * `stateRoot` (32-byte hash): The root of the state trie.
   * `transactionsRoot` (32-byte hash): The root of the block's transactions trie.
   * `difficulty` (BigNumber): The PoW difficulty of this block.
+  * `totalDifficulty` (BigNumber): The total difficulty of the entire chain up and including this block.
   * `number` (integer): The number of this block.
   * `minGasPrice` (BigNumber): The minimum price, in Wei per GAS, that the miner accepted for any transactions in this block.
   * `gasLimit` (integer): The gas limit of this block.
@@ -515,7 +516,6 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
   * `extraData` (byte array): Any extra data this block contains.
   * `nonce` (32-byte hash): The block's PoW nonce.
   * `children` (array of 32-byte hashes): The hashes of any children this block has.
-  * `totalDifficulty` (BigNumber): The total difficulty of the entire chain up and including this block.
   * `bloom` (32-byte hash): The bloom filter of this block.
 ```javascript
 var info = web3.eth.block(3150);
