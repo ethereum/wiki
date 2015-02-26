@@ -29,7 +29,7 @@ MIX_BYTES=128              # width of mix
 HASH_BYTES=64              # hash length in bytes
 DAG_PARENTS=1024           # number of parents of each dag element
 CACHE_ROUNDS=3             # number of processing rounds in cache production
-ACCESSES=128               # number of accesses in hashimoto loop
+ACCESSES=64               # number of accesses in hashimoto loop
 ```
 
 ### Parameters
