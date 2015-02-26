@@ -51,7 +51,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [fromDecimal(number)](#web3fromdecimal) -> hexString
   * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei) -> string|BigNumber (depending on the input)
   * [toWei(numberStringOrBigNumber, unit)](#web3toWei) -> string|BigNumber (depending on the input)
-  * [toBigNumber(numberOrHexString)](#web3tobigNumber) -> BigNumber
+  * [toBigNumber(numberOrHexString)](#web3tobignumber) -> BigNumber
   * [isAddress(hexString)](#web3isAddress) -> boolean
   * [setProvider(provider)](#web3setprovider)
   * [reset()](#web3reset)
