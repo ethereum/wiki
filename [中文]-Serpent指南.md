@@ -37,9 +37,7 @@ Serpent与Python之间的主要区别有:
     def double(x):
          return(x * 2)
 
-这是一个非常简单的只有两行代码的合约，它定义了一个函数。一份Serpent合约通过函数向其他合约或者交易(transaction)提供”接口“(interface)，合约定义的函数即可以被交易也可以被其他合约调用。例如一份定义货币的合约可能会定义类似`send(to,value`和`check_balance(address)`的函数。
-
-Additionally, the Pyethereum testing environment that we will be using simply assumes that data input and output are in this format.
+这是一个非常简单的只有两行代码的合约，它定义了一个函数。一份Serpent合约通过函数向其他合约或者交易(transaction)提供”接口“(interface)，合约定义的函数即可以被交易也可以被其他合约调用。例如一份定义货币的合约可能会定义类似`send(to,value)`和`check_balance(address)`的函数。
 
 现在让我们来编译这份代码。在命令行中输入:
 
