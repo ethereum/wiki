@@ -16,18 +16,19 @@ Look at the following examples:
 // 1.0101010032432535e+38
 ```
 
-To make calculations a correct number representations possible you must have the [BigNumber Library](https://github.com/MikeMcl/bignumber.js/) in your dapp project.
+Ethereum.js depends on the [BigNumber Library](https://github.com/MikeMcl/bignumber.js/) dependency, so you need to add it to your project if not present.
 
-This way you can make easy calculations with you wei balances:
+To make easy calculations with wei balances use the following:
 
 ```js
 var balance = new BigNumber('131242344353464564564574574567456');
+// or var balance = web3.eth.getBalance(someAddress);
 
 balance.plus(21).toString(10); // toString(10) converts it to a number string
 // "131242344353464564564574574567477"
 ```
 
-While the next example wouldn't work, therefore its recommended to keep you balance always in wei and only transform it to other units when presenting to the user:
+The next example wouldn't work as we have more than 20 floating points, therefore its recommended to keep you balance always in wei and only transform it to other units when presenting to the user:
 ```js
 var balance = new BigNumber('13124.234435346456466666457455567456');
 
