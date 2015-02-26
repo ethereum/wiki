@@ -4,7 +4,7 @@ To make your ÐApp work with on Ethereum, you'll need to know about the Ethereum
 
 There is, at the global scope, one objects; the `web3` object, containing data handling functions (commonly used for all other APIs). This object also contains other subprotocol objects including the `eth` object - `web3.eth` (for specifically Ethereum interaction) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
-## A not on big numbers in JavaScript
+## A note on big numbers in JavaScript
 
 You will always get a BigNumber object for balance values as JavaScript is not able to handle big numbers correctly.
 Look at the following examples:
@@ -247,6 +247,8 @@ console.log(value); // "1000000000000000000"
 
 **Returns** a BigNumber object representing the given value
 
+See the (note on BigNumber)[#a-note-on-big-numbers-in-javascript].
+
 ```javascript
 var value = web3.toBigNumber('200000000000000000000001');
 console.log(value); // instanceOf BigNumber
@@ -340,6 +342,8 @@ console.log(mining); // true or false
 **Returns ->** a BigNumber object of the current gas price in wei.
 
 The gas price is determined by the x latest blocks median gas price.
+
+See the (note on BigNumber)[#a-note-on-big-numbers-in-javascript].
 
 ```javascript
 var gasPrice = web3.eth.gasPrice;
@@ -439,7 +443,7 @@ console.log(number); // 2744
 
 **Returns** a BigNumber object of the current balance for the given address in wei.
 
-See the note on BigNumber at the top of the document.
+See the (note on BigNumber)[#a-note-on-big-numbers-in-javascript].
 
 ```javascript
 var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
