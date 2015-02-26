@@ -12,7 +12,13 @@ web3.eth.getBlock https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethge
 * `children` (array of block hashes of all children of the block)
 * `totalDifficulty` (total difficulty of block as specified in Yellow Paper (YP))
 * `logsBloom` (the logsBloom filter of this block as specified in YP)
-* `transactions` (array of tx objects for all txs in this block)
+* `transactions` (array of transaction objects for all transactions in this block)
 * `uncles` (array of block hashes for all uncles of this block)
+
+### eth_logs, eth_filterLogs, eth_logs and eth_changed
+
+Add the following return value to allow for easier debugging
+
+* `transaction` (object of the transaction this log belongs to)
 
 
