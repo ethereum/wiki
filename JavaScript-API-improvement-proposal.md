@@ -12,7 +12,7 @@ This requires little change to the current API and is easy to implement. There w
 
 Properties like `coinbase`, `mining` etc, will always be sync, as they are using getters and setters and have no parameters.
 
-# register with callback proposal
+# Register with callback proposal
 
 Instead of adding a new filter option, we can simple add a callback to the `web3.eth.register()` function, which will fire when a transaction want to be send through the dapps proxy:
 
@@ -21,6 +21,8 @@ web3.eth.register(address, label, funciton(tx){
    // send the transaction through a contract or do something with it.
 });
 ```
+
+***
 
 # OLD:  Already implemented changes
 The changes should be backwards compatible for a while, and we throw a warning stating thats it deprecated. Simple map. The return values of the funcitons don't change for now. (community wish)
