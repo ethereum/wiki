@@ -1,4 +1,28 @@
+# Optional Sync/Async proposal
 
+Allowing for an optional async beahvior. This way expensive lookups (like block lookups) can be avoided to freeze the browser interface.
+
+```js
+var result = web3.eth.getBlock(myHash);
+
+web3.eth.getBlock(myHash, callback(result){ ... });
+```
+
+This requires little change to the current API and is easy to implement. There would be only one HTTPprovidor, which chooses sync or async, depending on a callback beeing passed as the last parameter.
+
+Properties like `coinbase`, `mining` etc, will always be sync, as they are using getters and setters and have no parameters.
+
+# register with callback proposal
+
+Instead of adding a new filter option, we can simple add a callback to the `web3.eth.register()` function, which will fire when a transaction want to be send through the dapps proxy:
+
+```js
+web3.eth.register(address, label, funciton(tx){
+   // send the transaction through a contract or do something with it.
+});
+```
+
+# OLD:  Already implemented changes
 The changes should be backwards compatible for a while, and we throw a warning stating thats it deprecated. Simple map. The return values of the funcitons don't change for now. (community wish)
 
 All returned numbers should be typed statically either to JS integers or BigNumbers, depending on their practical maximum value. This should be annotated whenever a number is returned.
@@ -35,7 +59,7 @@ All returned numbers should be typed statically either to JS integers or BigNumb
     * [getStorage(address)](#web3ethstorageat) -> hexString // PREVIOUS: storageAt()
     * [getTransactionCount(address)](#web3ethcountat) -> Integer // PREVIOUS: countAt()
     * [getBlockTransactionCount(hash/number)](#web3ethtransactionCountcall) -> Integer // PREVIOUS: transactionCount()
-    * [getCode(address)](#web3ethcodeat) -> hexString// PREVIOUS: codeAt()
+    * [getData(address)](#web3ethcodeat) -> hexString// PREVIOUS: codeAt()
     * [sendTransaction(object)](#web3ethtransact)  // PREVIOUS: transact() 
     * [call(object)](#web3ethcall) -> hexString
     * [getBlock(hash/number)](#web3ethblock) -> headerObject // PREVIOUS: block() 
