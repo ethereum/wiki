@@ -17,7 +17,7 @@ web3.eth.getBlock https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethge
 
 ### eth_logs, eth_filterLogs, eth_logs and eth_changed
 
-Add the following return value to allow for easier debugging
+Add the following return value to any returned logs. This allows developers to better debug logs, as well as provide additional data (like value send, gasPrice payed etc), which are connected to this log.
 
 * `transaction` (object of the transaction this log belongs to)
 
