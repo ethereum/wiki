@@ -417,7 +417,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0xd5677c
 *creates new message call transaction.*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transact","params":[{"code":"0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"}],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transact","params":[as below],"id":1}' http://localhost:8080
 ```
 * parameters:
 ```js
