@@ -140,7 +140,7 @@ console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37
 
 Should be called to set provider.
 ```javascript
-web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8545')); // 8080 for cpp/AZ, 8545 for go/mist
+web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545')); // 8080 for cpp/AZ, 8545 for go/mist
 // or
 web3.setProvider(new web3.providers.QtSyncProvider());
 ```
