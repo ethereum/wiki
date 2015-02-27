@@ -864,6 +864,17 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["test","
 "0x68656c6c6f20776f726c64"
 curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf","topic":"0x68656c6c6f20776f726c64","payload":"0x68656c6c6f20776f726c64","ttl":100,"priority":100}],"id":73}' http://localhost:8080
 ```
+* Parameters
+```js
+from: 
+{
+"0x0424406af6d2f23b503be4714e22ad34732d847a30f7c317d11d579a82e24f2e841e712298aad4837d96c84887232495def5cc4b70ed28e36513b52c951110d430",
+topic: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
+payload: "0x7b2274797065223a226d6",
+priority: "0x64", //workToProve?
+ttl: "0x64",
+}
+```
 * response:
 ```json
 {
