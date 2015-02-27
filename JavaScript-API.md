@@ -978,11 +978,14 @@ var shh = web3.shh;
 ***
 
 #####web3.shh.post
+
+   web3.shh.post(object)
+
 This method should be called, when we want to post whisper message. `_message` object may have following fields:
-  * `from`: identity of sender
-  * `to`: identity of receiver
+  * `from`: identity of sender as hexString
+  * `to`: identity of receiver as hexString
   * `payload`: message payload
-  * `ttl`: time to live
+  * `ttl`: time to live in seconds
   * `workToProve`: TODO
   * `topic`: string or array of strings, with message topics
 ```javascript
@@ -992,10 +995,10 @@ var payload = 'hello whisper world!';
 
 var message = {
   from: identity,
-  topic: [web3.fromAscii(topic)],
-  payload: web3.fromAscii(payload),
+  topic: [topic],
+  payload: payload,
   ttl: 100,
-  priority: 100
+  workToProve: 100
 };
 
 web3.shh.post(message);
@@ -1019,7 +1022,7 @@ var identity = web3.shh.newIdentity();
 var result = web3.shh.hasIdentity(identity);
 console.log(result); // true
 
-var result2 = web3.shh.haveIdentity(identity + "0");
+var result2 = web3.shh.hasIdentity(identity + "0");
 console.log(result2); // false
 ```
 
@@ -1040,6 +1043,9 @@ console.log(result2); // false
 ***
 
 ##### web3.shh.filter
+
+    wev3.shh.filter(options)
+
 This method should be used, when you want to watch whisper messages.
 Available filter options are:
 * `topic`: string or array of strings. filter messages with this topic
@@ -1049,7 +1055,8 @@ Available filter options are:
 var topic = 'example';
 
 var options = {
-  topic: [web3.fromAscii(topic)]
+  topic: [topic],
+  to: '0x32jkh23kjh4j23h5j34h5j3464'
 };
 
 var filter = web3.shh.filter(options);
@@ -1060,10 +1067,11 @@ filter.watch(function(res) {
   "expiry":1422565026,
   "from":"0x3ec052fc3376f8a218b24b652803a5892038c39419a9a44923a61b113b7785d16ed1572df628859af3504670e4df31dcd8b3ee9a2110fd710c948690f0557394",
   "hash":"0x33eb2da77bf3527e28f8bf493650b1879b08c4f2a362beae4ba2f71bafcd91f9",
-  "payload":"0x7b2274797065223a226d657373616765222c2263686174223a2265537668624d763939784c345442537741222c2274696d657374616d70223a7b222464617465223a313432323536343932363533377d2c22746f706963223a22222c2266726f6d223a7b226964656e74697479223a2230783365633035326663333337366638613231386232346236353238303361353839323033386333393431396139613434393233613631623131336237373835643136656431353732646636323838353961663335303436373065346466333164636438623365653961323131306664373130633934383639306630353537333934222c226e616d65223a22416365746f7465227d2c226d657373616765223a2273617361222c226964223a227a465232614e68594a666f4d4c62707333227d",
-  "sent":1422564926,
-  "to":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  "topic":["0x6578616d"],
+  "payload": 'The send message',
+  "payloadRaw": "0xjk5h34kj5h34kj6kj346456547trhfghfdgh",
+  "sent": 1422564926,
+  "to":"0x32jkh23kjh4j23h5j34h5j3464",
+  "topic":['myTopic'],
   "ttl":100,
   "workProved":0
   } 
