@@ -988,9 +988,9 @@ This method should be called, when we want to post whisper message. `_message` o
   * `to`: identity of receiver as hexString
   * `payload`: message payload
   * `ttl`: time to live in seconds
-  * `workToProve`: TODO
+  * `workToProve`: // or priority TODO
   * `topic`: string or array of strings, with message topics
-```javascript
+```js
 var identity = web3.shh.newIdentity();
 var topic = 'example';
 var payload = 'hello whisper world!';
@@ -1000,7 +1000,7 @@ var message = {
   topic: [topic],
   payload: payload,
   ttl: 100,
-  workToProve: 100
+  workToProve: 100 // or priority TODO
 };
 
 web3.shh.post(message);
