@@ -46,7 +46,8 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [port](#) -> number e.g. 8080 (not available yet)
   * [setProvider(provider)](#web3setprovider)
   * [reset()](#web3reset)
-  * [sha3(string)](#web3sha3) -> hexString 
+  * [sha3(string)](#web3sha3) -> hexString
+  * [toHex(stringOrNumber)](#web3tohex) -> textString
   * [toAscii(hexString)](#web3toascii) -> textString
   * [fromAscii(textString, [padding])](#web3fromascii) -> hexString
   * [toDecimal(hexString)](#web3todecimal) -> number
@@ -157,6 +158,26 @@ web3.reset();
 
 ***
 
+##### web3.toHex
+
+    web3.toHex(mixed);
+
+**Returns** the hex string of `mixed`.
+
+Following input values are possible:
+
+- string
+- number or string of number
+- hex string
+- array (will be stringified before)
+- object (will be stringified before)
+
+```javascript
+var str = web3.toHex({test: 'test'});
+console.log(str); // '0x7b2274657374223a2274657374227d'
+```
+
+***
 ##### web3.toAscii
 
     web3.toAscii(hexString);
