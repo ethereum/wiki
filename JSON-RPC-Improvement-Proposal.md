@@ -2,6 +2,9 @@ In order to satisfy the data needed by the new JS API (https://github.com/ethere
 
 Proposed changes:
 
+All values in returned objects (transactions, blocks, shh posts) are transfered in HEX.
+Simple values like, peerCount, defaultBlock stay as integer.
+
 ### eth_blockByHash and eth_blockByNumber 
 
 Add the following return values as needed as they are returned by 
