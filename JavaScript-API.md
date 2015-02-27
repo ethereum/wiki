@@ -1,4 +1,4 @@
-**Note** The JS API is currently changed, therefore not everything whats written here will work as expected with the latest develop branch. Please stay tuned while we fix that.
+**Note:** *The JS API is currently changed, therefore not everything whats written here will work as expected with the latest develop branch. Please stay tuned while we fix that.*
 
 # Introduction
 
