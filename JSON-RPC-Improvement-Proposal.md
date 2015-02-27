@@ -23,7 +23,7 @@ Change needed changing all out and inputs to HEX:
 https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_transactionbyhash
 ### eth_transactionByHash
 
-Return transaction from passing in the transaction hash as input, not the block hash and number.
+Change input from block hash and transaction number in block to the transaction hash.
 
 ### eth_blockByHash and eth_blockByNumber 
 
