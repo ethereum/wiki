@@ -309,13 +309,16 @@ I'll ask George!
 
 ##Leadership
 
-###Foundation - Joseph Lubin
+###Foundation - Mihai Alisie
 
 _What's the current status of what you're working on?_ 	
+Currently we are focusing our attention on the Genesis launch, making sure that all the aspects involved in the release are taken care off. We are also experimenting with an open collaboration system designed to create the favorable conditions for developers to unleash their creativity and build amazing things with ethereum. 
 
 _What progress has been made in the last two weeks?_	
+Intense brainstorming and discussions regarding the launch strategy and how to best nurture the growth of the ethereum community and ecosystem as a whole. 
 
 _What are the next steps?_  
+Coordinate with comms, dev and the community in order to concretize the ethereum Genesis launch strategy. Regarding post-Genesis plans, there will be a number of exciting announcements coming in the following weeks ^_^
 
 ##Communications 
 
@@ -333,10 +336,13 @@ Concretize the Block Party, Finish the slides for 101 series. Get swag together 
 ###Upcoming Events - Texture
 
 _What's the current status of what you're working on?_	
+Working with meetup organizers on Genesis Block Parties
 
 _What progress has been made in the last two weeks?_	
+Working with Sarah Masare from Silicon Valley, Cameron and Peter Van Garderen from Vancouver on formalizing the Genesis Block Party. 
 
 _What are the next steps?_  
+Confirm release date, get swag printed, have meetups sign on for block party
 
 ###Comms - George Hallam
 
