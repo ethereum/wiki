@@ -871,7 +871,7 @@ from:
 "0x0424406af6d2f23b503be4714e22ad34732d847a30f7c317d11d579a82e24f2e841e712298aad4837d96c84887232495def5cc4b70ed28e36513b52c951110d430",
 topic: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
 payload: "0x7b2274797065223a226d6",
-priority: "0x64", //workToProve?
+priority: "0x64", // TODO or workToProve?
 ttl: "0x64",
 }
 ```
@@ -977,7 +977,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7
   "to":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
   "topics":["0x6578616d"],
   "ttl":100,
-  "workProved":0
+  "workProved":0 // TODO or priority?
   }]
 }
 ```
@@ -1002,9 +1002,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getMessages","params":[7],"i
   "to":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
   "topic":["0xa548145f","0x70a19471"],
   "ttl":100,
-  "workProved":0
+  "workProved":0 // TODO or priority?
 }]
 }
 ```
-
-Questions? @marek
