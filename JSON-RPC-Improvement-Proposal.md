@@ -20,6 +20,11 @@ Change needed changing all out and inputs to HEX:
 - [ ] shh_getMessages
 - [ ] shh_post
 
+https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_transactionbyhash
+### eth_transactionByHash
+
+Return transaction from passing in the transaction hash as input, not the block hash and number.
+
 ### eth_blockByHash and eth_blockByNumber 
 
 Add the following return values as needed as they are returned by 
