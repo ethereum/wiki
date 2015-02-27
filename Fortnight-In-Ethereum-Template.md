@@ -259,10 +259,13 @@ We will focus on the networking and p2p/networking protocol to minimize delays.
 ###Dapps - Fabian/AVSA
 
 _What's the current status of what you're working on?_	
+Improving and streamlining the ethreuem.js APIand RPC endpoints.
 
 _What progress has been made in the last two weeks?_	
+Build a full featured whisper chat dapp and the wallet dapp interface.
 
 _What are the next steps?_  
+Finalising the wallet app, when the ethereum.js api and RPC is working properly.
 
 ###ET Hash - Matthew
 
