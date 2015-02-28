@@ -30,7 +30,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string
 // "131242344353464564564574574567477"
 ```
 
-The next example wouldn't work as we have more than 20 floating points, therefore its recommended to keep you balance always in *wei* and only transform it to other units when presenting to the user:
+The next example wouldn't work as we have more than 20 floating points, therefore it is recommended to keep you balance always in *wei* and only transform it to other units when presenting to the user:
 ```js
 var balance = new BigNumber('13124.234435346456466666457455567456');
 
