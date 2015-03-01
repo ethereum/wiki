@@ -20,8 +20,17 @@ Change needed changing all out and inputs to HEX:
 - [ ] shh_getMessages
 - [ ] shh_post
 
-https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_transactionbyhash
+### Remove the following RPC functions
+
+- [ ] eth_setCoinbase
+- [ ] eth_setListening
+- [ ] eth_setMining
+- [ ] eth_setDefaultBlock (must be passed as the second parameter to the specific funcitons)
+- [ ] eth_setCoinbase
+- [ ] eth_setCoinbase
+
 ### eth_transactionByHash
+https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_transactionbyhash
 
 Change input parameters from block hash and transaction number in block -> to the transaction hash.
 
