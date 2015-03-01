@@ -25,9 +25,7 @@ Change needed changing all out and inputs to HEX:
 - [ ] eth_setCoinbase
 - [ ] eth_setListening
 - [ ] eth_setMining
-- [ ] eth_setDefaultBlock (must be passed as the second parameter to the specific funcitons)
-- [ ] eth_setCoinbase
-- [ ] eth_setCoinbase
+- [ ] eth_setDefaultBlock (must be passed as the second parameter to the specific funcitons
 
 ### eth_transactionByHash
 https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_transactionbyhash
