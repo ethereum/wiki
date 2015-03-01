@@ -179,26 +179,17 @@ def mine(params, dag, header, difficulty):
     return nonce
 ```
 
-### Defining the seed
+### Defining the Seed Hash
 
-In order to compute the seed for a given block, we use the following algorithm:
+In order to compute the seed hash for a given block, we use the following algorithm:
 
 ```python
- def get_seedset(params, block):
-     if block.number == 0:
-         return ('\x42' * 32, '\x43' * 32)
-     elif (block.number % EPOCH_LENGTH == 0):
-         front_buffer_seed, back_buffer_seed = get_seedset(params, block.parent)
-         if (block.number // EPOCH_LENGTH) % 2:
-             back_buffer_seed = sha3_256(back_buffer_seed + block.prevhash)
-         else:
-             front_buffer_seed = sha3_256(front_buffer_seed + block.prevhash)
-         return (front_buffer_seed, back_buffer_seed)
-     else:
-         return get_seedset(params, block.parent)
+ def get_seedhash(block):
+     seedBlockNum = max(0, block.number // EPOCH_LENGTH - 1) * EPOCH_LENGTH
+     return ChainManager.getBlockByNumber(seedBlockNum).hash()
 ```
 
-This function outputs two seeds, for using a *double buffer* (similar to the pattern used in computer graphics, see [wikipedia](https://en.wikipedia.org/wiki/Multiple_buffering#Double_buffering_in_computer_graphics)). During even-numbered epochs, the PoW uses a DAG based on the `front_buffer_seed`, and during odd-numbered epochs the PoW uses the `back_buffer_seed`; this allows a miner to rebuild one DAG while simultaneously still using the other DAG, ensuring a smooth transition as the dataset gets updated.
+Since the seed block number for a particular block is a little more than an EPOCH_LENGTH in the past, a *double buffer* can be used to store DAGs (similar to the pattern used in computer graphics, see [wikipedia](https://en.wikipedia.org/wiki/Multiple_buffering#Double_buffering_in_computer_graphics)).
 
 ### Appendix
 
