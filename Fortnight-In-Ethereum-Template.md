@@ -222,7 +222,7 @@ _What are the next steps?_
 
 Later advanced scenarios as listed here: https://github.com/ethereum/system-testing/issues?q=is%3Aopen+is%3Aissue+label%3A%22test+scenario%22
 
-###Testing - Christophe Jentzsch
+###Testing - Christoph Jentzsch
 
 _What's the current status of what you're working on?_	
 After the creation of the tools for the block tests, I am now actually writing different tests to ensure that all clients have the same definition on a valid block (in form of an RLP). 
@@ -245,7 +245,15 @@ Half of what is mentioned above, let's say it's all recent enough :) Joris Bontj
 _What are the next steps?_  
 Full integration tests, from contract deployments, transactions to those, and full assertions of expected results in a DApp's UI. This should be in place by the end of the week if not today the 24th.
 
-###Audit - Jutta
+###JSON RPC - Marek Kotewicz
+
+_What's the current status of what you're working on?_	
+
+_What progress has been made in the last two weeks?_	
+
+_What are the next steps?_  
+
+###Security Audit - Jutta
 
 _What's the current status of what you're working on?_	
 We are currently in the middle of the security audit, our main auditor is looking at the design and the code base, further auditors are looking at focus topics like networking. We are in continuous exchange, responding to raised issues, providing further required information.  
