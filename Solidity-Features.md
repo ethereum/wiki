@@ -468,3 +468,18 @@ contract test {
   uint m_b;
 }
 ```
+
+## Arguments of the base class constructor
+[PT](https://www.pivotaltracker.com/story/show/88454388) It is possible to pass arguments to the base class constructor.
+```
+contract Base {
+	function Base(uint i)
+	{
+		m_i = i;
+	}
+	uint public m_i;
+}
+contract Derived is Base(0) {
+	function Derived(uint i) Base(i) {}
+}
+```
