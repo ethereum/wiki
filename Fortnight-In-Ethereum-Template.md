@@ -8,13 +8,37 @@ What is the overall current of status of the Ethereum project? What is the next 
 
 ##Clients/Protocol 
 
-###CPP - Gavin Wood
+###CPP - Alex
 
 _What's the current status of what you're working on?_	
-Nearing release.
+Nearing release of PoC 9 (Mar 6):
+
+    new PoW
+
+    structured logging
+
+    peer selection strategy for node discovery
+
+    rlpx wireline protocol (interop w/Go client)
 
 _What progress has been made in the last two weeks?_  
-Two weeks closer to release.
+Release of PoC 8:
+
+    Improved networking & peer discovery
+
+    evm testing
+
+    updates for compliance w/YP
+
+    rpc/ethereum-js updates, bug fixes, interop
+
+    dapp loading
+
+    continued development of solidity features
+
+    continued development for chromium support
+
+    updates for natspec support
 
 _What are the next steps?_  
 Further preparation for release.
@@ -140,13 +164,21 @@ _What progress has been made in the last two weeks?_
 
 _What are the next steps?_  
 
-###Yellow Paper (recent changes) - Gavin Wood
+###Yellow Paper (recent changes) - Alex
 
 _What's the current status of what you're working on?_ 	 
+We're almost done implementing the new RLPx protocol
+in go-ethereum.
 
 _What progress has been made in the last two weeks?_	
+We have released the node discovery part of RLPx in PoC 8
+and it seems to be working for most people.
+We ran various simulations of peer connecting strategies to study their influence on network well-formedness. https://docs.google.com/spreadsheets/d/1Xsg0367XibBCg1HegKoInrarLmU_ozwlBLPatv0hhEY/edit?usp=sharing
 
 _What are the next steps?_  
+We will implement the remaining parts of the protocol (Encryption
+Handshake, authenticated packets) and define a peer selection
+strategy.
 
 ###Dev P2P - Felix Lange
 
