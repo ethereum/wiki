@@ -59,9 +59,7 @@ add additional 3rd parameter (Boolean) include transactionObjects (default: FALS
 * `uncles` (array of block hashes for all uncles of this block)
 
 
-###
-
-eth_transactionBy*
+### eth_transactionBy*
 
 - [ ] `blockNumber` (rename from number)
 - [ ] `transactionIndex`
