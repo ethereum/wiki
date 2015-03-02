@@ -70,8 +70,8 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [defaultBlock](#web3ethdefaultblock) -> Integer
     * [blockNumber](#web3ethblocknumber) -> Integer
     * [getBalance(address)](#web3ethgetbalance) -> BigNumber
+    * [getStorage(address)](#web3ethgetstorage) -> object
     * [getStorageAt(address, position)](#web3ethgetstorageat) -> hexString
-    * [getStorage(address)](#web3ethgetstorage) -> hexString
     * [getData(address)](#web3ethgetdata) -> hexString
     * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
     * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount) -> Integer
@@ -301,6 +301,32 @@ console.log(value.toString(10)); // '200000000000000000000001'
 
 ***
 
+##### web3.net.listening
+
+    web3.net.listening
+
+**Returns** `true` if and only if the client is actively listening for network connections, otherwise `false`.
+
+```javascript
+var listening = web3.net.listening;
+console.log(listening); // true of false
+```
+
+***
+
+##### web3.net.peerCount
+
+    web3.net.peerCount
+
+**Returns** the number of peers currently connected to the client.
+
+```javascript
+var peerCount = web3.net.peerCount;
+console.log(peerCount); // 4
+```
+
+***
+
 ##### web3.eth
 Contains the ethereum blockchain related methods.
 
@@ -321,19 +347,6 @@ The coinbase is the address were the mining rewards go into.
 ```javascript
 var coinbase = web3.eth.coinbase;
 console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
-```
-
-***
-
-##### web3.eth.listening
-
-    web3.eth.listening
-
-**Returns** `true` if and only if the client is actively listening for network connections, otherwise `false`.
-
-```javascript
-var listening = web3.eth.listening;
-console.log(listening); // true of false
 ```
 
 ***
@@ -409,19 +422,6 @@ web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 
 ***
 
-##### web3.eth.peerCount
-
-    web3.eth.peerCount
-
-**Returns** the number of peers currently connected to the client.
-
-```javascript
-var peerCount = web3.eth.peerCount;
-console.log(peerCount); // 4
-```
-
-***
-
 ##### web3.eth.defaultBlock
 
     web3.eth.defaultBlock
@@ -470,19 +470,6 @@ console.log(balance.toNumber()); // 1000000000000
 
 ***
 
-##### web3.eth.getStorageAt
-
-    web3.eth.getStorageAt(addressHexString, position)
-
-**Returns** the value in storage at position `position` of the address `addressHexString`.
-
-```javascript
-var state = web3.eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
-console.log(state); // "0x03"
-```
-
-***
-
 ##### web3.eth.getStorage
 
     web3.eth.getStorage(addressHexString)
@@ -492,6 +479,19 @@ console.log(state); // "0x03"
 ```javascript
 var storage = web3.eth.getStorage("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(storage); // { "0x" : "0x03" }
+```
+
+***
+
+##### web3.eth.getStorageAt
+
+    web3.eth.getStorageAt(addressHexString, position)
+
+**Returns** the value in storage at position `position` of the address `addressHexString`.
+
+```javascript
+var state = web3.eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
+console.log(state); // "0x03"
 ```
 
 ***
