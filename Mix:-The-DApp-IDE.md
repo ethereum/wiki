@@ -60,6 +60,16 @@ Now select index.html and enter the following html code:
 	</body>
 	</html>
 ```
+Note that Mix exposes the following objects into the global window context:
+* [`web3`](https://github.com/ethereum/wiki/wiki/JavaScript-API#web3) - Ethereum JavaScript API 
+
+* `contracts` - A collection of contract objects. A key to the collection is the contract name. A value is an object with the following properties:
+ * `contract` - Contract object instance (created as in `web3.eth.contract`)
+ * `address` - Contract address from the last deployed state (see below)
+ * `interface` - Contract ABI
+
+Check the [JavaScript API Reference](https://github.com/ethereum/wiki/wiki/JavaScript-API) for further information.
+
 Select `File > Save` to save project files. You should see the web preview in the web preview pane.
 
 ## Setting up state
@@ -72,5 +82,19 @@ Open the debugger pane by pressing `F7` or selecting `Windows > Show right` view
 Now let's test out contract. Type "Titanic" in the web preview query input and you should see the result returned. Enter a name and a rating in store fields and click `Save` to add a new rating. Note that all  transactions and calls made to the contract during state deployment and debugging session are recorded into Transaction log to the right. Double click on any entry to load the execution into the debugger. There is also a mine button to instantly mine a new block on the chain and put all pending transactions there.
 
 ## Debugging
+
+Mix currently supports assembly level contract code debugging. Source level debugging is a work in progress.
+
+### Assembly level debugging
+
+Double-click a `setRating` transaction in the transaction log to debug it. The VM assembly code is loaded into the assembly view and the execution slider is reset to a first position. You can navigate the execution using the slider and/or step buttons. At any execution point the following information is available:
+
+* VM stack. 
+* Call stack - Grows when contract is calling into another contract. Double click a stack frame to view the machine state in that frame
+* Storage - Storage data associated with the contract
+* Memory - Machine memory allocated up to this execution point
+* Call data - Transaction or call parameters
+
+See the [Ethereum Yellow Paper](http://gavwood.com/Paper.pdf) for VM instruction description.
 
 ## Deployment to network
