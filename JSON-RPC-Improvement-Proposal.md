@@ -36,12 +36,18 @@ Change needed changing all out and inputs to HEX (for all):
 ### eth_transactionByHash
 https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_transactionbyhash
 
-Change input parameters from block hash and transaction number in block -> to the transaction hash.
+Rename to `eth_transactionByBlockHashAndIndex`
+
+Release: replaced by new function:
+
+Accepts the transaction hash and returns the transaction.
 
 ### eth_blockByHash and eth_blockByNumber 
 
 Add the following return values as needed as they are returned by 
 web3.eth.getBlock https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethgetblock
+
+add additional 3rd parameter (Boolean) include transactionObjects
 
 * `minGasPrice` (minimum price in wei per gas the miner accepted for txs in this block)
 * `gasUsed`
@@ -55,6 +61,11 @@ web3.eth.getBlock https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethge
 
 Add the following return value to any returned logs. This allows developers to better debug logs, as well as provide additional data (like value send, gasPrice payed etc), which are connected to this log.
 
-- [ ] `hash` (hash of transaction, this event log belongs to)
+- [ ] `transactionHash` (hash of transaction, this event log belongs to)
+- [ ] `blockHash`
+- [ ] `transactionIndex`
+- [ ] `logIndex`
+- [ ] `hash`
+- [ ] `blockNumber` (rename from number)
 
 
