@@ -58,15 +58,16 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [toWei(numberStringOrBigNumber, unit)](#web3toWei) -> string|BigNumber (depending on the input)
   * [toBigNumber(numberOrHexString)](#web3tobignumber) -> BigNumber
   * [isAddress(hexString)](#web3isAddress) -> boolean
+  * [net](#)
+    * [listening](#web3netlistening) -> boolean
+    * [peerCount](#web3ethpeercount) -> Integer
   * [eth](#web3eth)
     * [coinbase](#web3ethcoinbase) -> hexString
-    * [listening](#web3ethlistening) -> boolean
-    * [mining](#web3ethmining) -> boolean
     * [gasPrice](#web3ethgasprice) -> BigNumber
     * [accounts](#web3ethaccounts) -> array of hexStrings
+    * [mining](#web3ethmining) -> boolean
     * [register(hexString)](#web3ethregister)
     * [unRegister(hexString)](#web3ethunregister)
-    * [peerCount](#web3ethpeercount) -> Integer
     * [defaultBlock](#web3ethdefaultblock) -> Integer
     * [blockNumber](#web3ethblocknumber) -> Integer
     * [getBalance(address)](#web3ethgetbalance) -> BigNumber
