@@ -62,7 +62,7 @@ add **additional 3rd parameter (Boolean)** include transactionObjects (default: 
 * `totalDifficulty` (total difficulty of block as specified in Yellow Paper (YP))
 * `logsBloom` (the logsBloom filter of this block as specified in YP)
 * `transactions` (array of transaction objects or hashes for all transactions in this block)
-* `uncles` (array of block hashes for all uncles of this block)
+* `size` integer in bytes
 
 
 ### eth_transactionBy*
