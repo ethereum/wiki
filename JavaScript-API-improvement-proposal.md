@@ -45,9 +45,7 @@ myContract.myMethod([param_1,] [param_2,] [...]);
 ```javascript
 // NEW
 myContract.call('myMethod', [params_1 ,] [params_2 ,] [...])
-```
 
-```javascript
 myContract.send('myMethod', [params_1 ,] [params_2 ,] [...])
 ```
 
