@@ -79,7 +79,7 @@ Press `F5` (or run the current editing state if this is not the default state).
 Verify that the return value of `get` is displayed and is this is the good one => in the transaction log (column `returned`).
 
 
-# Deploy to NetWork
+# Deploy to Network
 
 This feature allows users to deploy the current project as a Dapp in the main blockchain.
 This will deploy contracts and package/register front end resources.
