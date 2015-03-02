@@ -32,7 +32,13 @@ Change needed changing all out and inputs to HEX (for all):
 - [ ] eth_setListening
 - [ ] eth_setMining
 - [ ] eth_setDefaultBlock (must be passed as the second parameter to the specific funcitons
-- [ ] eth_defaultBlock
+- [ ] eth_defaultBlock (**We pass it now on per function basis**)
+
+### add
+
+- [ ] eth_version ? is network version ===  node/client version
+- [ ] shh_version ? is network version ===  node/client version
+- [ ] net_version ? is network version ===  node/client version
 
 ### eth_transactionByHash
 https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_transactionbyhash
