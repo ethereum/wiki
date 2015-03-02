@@ -70,7 +70,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [defaultBlock](#web3ethdefaultblock) -> Integer
     * [blockNumber](#web3ethblocknumber) -> Integer
     * [getBalance(address)](#web3ethgetbalance) -> BigNumber
-    * [getState(address, storage)](#web3ethgetstate) -> hexString
+    * [getStorageAt(address, position)](#web3ethgetstorageat) -> hexString
     * [getStorage(address)](#web3ethgetstorage) -> hexString
     * [getData(address)](#web3ethgetdata) -> hexString
     * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
@@ -470,14 +470,14 @@ console.log(balance.toNumber()); // 1000000000000
 
 ***
 
-##### web3.eth.getState
+##### web3.eth.getStorageAt
 
-    web3.eth.getState(addressHexString, position)
+    web3.eth.getStorageAt(addressHexString, position)
 
 **Returns** the value in storage at position `position` of the address `addressHexString`.
 
 ```javascript
-var state = web3.eth.getState("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
+var state = web3.eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
 console.log(state); // "0x03"
 ```
 
