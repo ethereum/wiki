@@ -64,6 +64,7 @@ add additional 3rd parameter (Boolean) include transactionObjects (default: FALS
 eth_transactionBy*
 
 - [ ] `blockNumber` (rename from number)
+- [ ] `transactionIndex`
 
 
 ### eth_logs, eth_filterLogs, eth_logs and eth_changed
