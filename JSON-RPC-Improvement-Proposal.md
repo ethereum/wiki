@@ -49,6 +49,6 @@ web3.eth.getBlock https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethge
 
 Add the following return value to any returned logs. This allows developers to better debug logs, as well as provide additional data (like value send, gasPrice payed etc), which are connected to this log.
 
-* `transaction` (object of the transaction this log belongs to)
+- [ ] `hash` (hash of transaction, this event log belongs to)
 
 
