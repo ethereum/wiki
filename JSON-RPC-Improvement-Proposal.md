@@ -54,7 +54,7 @@ Accepts the transaction hash and returns the transaction.
 Add the following return values as needed as they are returned by 
 web3.eth.getBlock https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethgetblock
 
-add additional 3rd parameter (Boolean) include transactionObjects (default: FALSE)
+add **additional 3rd parameter (Boolean)** include transactionObjects (default: FALSE)
 
 * `minGasPrice` (minimum price in wei per gas the miner accepted for txs in this block)
 * `gasUsed`
