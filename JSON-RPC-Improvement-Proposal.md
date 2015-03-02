@@ -32,13 +32,14 @@ Change needed changing all out and inputs to HEX (for all):
 - [ ] eth_setListening
 - [ ] eth_setMining
 - [ ] eth_setDefaultBlock (must be passed as the second parameter to the specific funcitons
+- [ ] eth_defaultBlock
 
 ### eth_transactionByHash
 https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_transactionbyhash
 
 Rename to `eth_transactionByBlockHashAndIndex`
 
-Release: replaced by new function:
+*Release: replaced by new function `eth_transactionByHash`:*
 
 Accepts the transaction hash and returns the transaction.
 
@@ -47,15 +48,23 @@ Accepts the transaction hash and returns the transaction.
 Add the following return values as needed as they are returned by 
 web3.eth.getBlock https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethgetblock
 
-add additional 3rd parameter (Boolean) include transactionObjects
+add additional 3rd parameter (Boolean) include transactionObjects (default: FALSE)
 
 * `minGasPrice` (minimum price in wei per gas the miner accepted for txs in this block)
 * `gasUsed`
 * `children` (array of block hashes of all children of the block)
 * `totalDifficulty` (total difficulty of block as specified in Yellow Paper (YP))
 * `logsBloom` (the logsBloom filter of this block as specified in YP)
-* `transactions` (array of transaction objects for all transactions in this block)
+* `transactions` (array of transaction objects or hashes for all transactions in this block)
 * `uncles` (array of block hashes for all uncles of this block)
+
+
+###
+
+eth_transactionBy*
+
+- [ ] `blockNumber` (rename from number)
+
 
 ### eth_logs, eth_filterLogs, eth_logs and eth_changed
 
