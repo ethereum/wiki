@@ -470,7 +470,7 @@ contract test {
 ```
 
 ## Arguments of the base class constructor
-[PT](https://www.pivotaltracker.com/story/show/88454388) It is possible to pass arguments to the base class constructor.
+[PT](https://www.pivotaltracker.com/story/show/88454388) It is possible to pass arguments to the base contract's constructor. The arguments for the base constructor in the header will be optional later.
 ```
 contract Base {
 	function Base(uint i)
