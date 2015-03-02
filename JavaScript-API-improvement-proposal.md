@@ -32,21 +32,8 @@ myContract.myEvent([data]).changed(function (res) {
 
 we can do it in more 'javascript way' (similar to [jQuery's on](http://www.w3schools.com/jquery/event_on.asp)
 ```javascript
-myContract.on('myEvent', [data,] function (res) {
+var filter = myContract.onMyEvent( [data,] [data2,] function (res) {
 });
-```
-
-2.
-```javascript
-// OLD
-myContract.myMethod([param_1,] [param_2,] [...]);
-```
-
-```javascript
-// NEW
-myContract.call('myMethod', [params_1 ,] [params_2 ,] [...])
-
-myContract.send('myMethod', [params_1 ,] [params_2 ,] [...])
 ```
 
 ***
