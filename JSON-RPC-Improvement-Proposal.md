@@ -20,6 +20,12 @@ Change needed changing all out and inputs to HEX:
 - [ ] shh_getMessages
 - [ ] shh_post
 
+### name changes
+
+- [ ] net_peerCount
+- [ ] net_listening
+
+
 ### Remove the following RPC functions
 
 - [ ] eth_setCoinbase
