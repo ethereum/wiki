@@ -5,7 +5,7 @@ Proposed changes:
 All values in returned objects (transactions, blocks, shh posts) are transfered in HEX.
 Simple values like, peerCount, defaultBlock stay as integer.
 
-Change needed changing all out and inputs to HEX:
+Change needed changing all out and inputs to HEX (for all):
 
 - [x] eth_transact
 - [ ] eth_blockByHash
