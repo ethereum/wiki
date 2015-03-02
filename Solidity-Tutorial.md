@@ -515,14 +515,11 @@ Other contracts can call `c.data()` to retrieve the value of data in storage, bu
 
 ## Accessor Functions
 
-The compiler automatically creates accessor functions for all public state variables. The contract given below will have a function called `data` that does not take any arguments and returns a uint, the value of the state variable `data`.
+The compiler automatically creates accessor functions for all public state variables. The contract given below will have a function called `data` that does not take any arguments and returns a uint, the value of the state variable `data`. The initialization of state variables can be done at declaration.
 
 ```
 contract test {
-    function test() {
-        data = 42;
-    }
-    uint public data;
+     uint public data = 42;
 }
 ```
 
