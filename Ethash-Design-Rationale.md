@@ -22,19 +22,4 @@ FNV was used to provide a data aggregation function which is (i) non-associative
 
 ### Scheduled Obsolescence
 
-While demanding ASIC hardness avoids the familiar centralization people are familiar with in BitCoin, it does not avoid the endemic centralization that can occur when firms invest in GPU hardware instead.  To discourage this, Ethash includes and aggressive schedule of exponential increase in memory requirements, effectively rendering mining impossible by 2017.
-
-The following presents the memory schedule for the DAG:
-<img src="http://s22.postimg.org/g712l0c29/Graph.png" alt="Mining Memory Schedule" style="width: 50px;"/>
-
-The cache is 1/1024th of the DAG size.
-
-Based on this schedule, we have the following timeline:
-
-- In July 2015, the DAG will require 2 GB of RAM
-  - The Lenovo Thinkpad ships with this much GDDR
-- In December 2015, the DAG will exceed 8GB of RAM
-  - This is the amount of RAM that the Radeon R9 has, which sells for ~$600 retail (see [here](http://www.ncixus.com/products/?sku=104393)).
-- In March 2016, the DAG will exceed 24GB of RAM
-  - This is the amount of RAM that the NVIDIA Tesla K80 possesses, which is the most powerful GPU on the market
-- In December 2016, the DAG will require 128GB of RAM, and the cache will require 128MB.
+While demanding ASIC hardness avoids the familiar centralization people are familiar with in BitCoin, it does not avoid the endemic centralization that can occur when firms invest in GPU hardware instead.  To discourage this, Ethash includes and aggressive schedule of linearly increasing memory requirements.  The memory grows at 7 GB every 9 months. The cache is 1/1024th of the DAG size.
