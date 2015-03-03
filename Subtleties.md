@@ -2,7 +2,9 @@
 
 * Storage is a key/value store where keys and values are both 32 bytes
 * Values on the stack are 32 bytes
-* Memory is a byte-array. Memory starts off zero-size, but can be expanded in 32-byte chunks by simply accessing or storing memory at indices greater than its current size. There is a fee of 1 gas per 32 bytes for expanding memory.
+* Memory is a byte-array. Memory starts off zero-size, but can be expanded in 32-byte chunks by simply accessing or storing memory at indices greater than its current size.
+* The fee for expanding memory is determined via a subtract-the-integrals method. Specifically, `TOTALFEE(SZ) = SZ * 3 + floor(SZ / 512)` is the total fee for expanding the memory to `SZ` 32-byte chunks (note: partially filled chunks are counted, so 33 bytes = 2 chunks), and if a particular operation expands memory from size `x` to `y`, the additional gas cost is `TOTALFEE(y) - TOTALFEE(x)`
+* If an operation writes a slice of data zero bytes wide to memory, even if the start index of the slice exceeds the current memory size, memory is NOT expanded.
 
 ## Nonces
 
@@ -63,5 +65,5 @@
     * 40 base
     * 9000 additional if the value is nonzero
     * 25000 additional if the destination account does not yet exist (note: there is a difference between zero-balance and nonexistent!)
-* `CALLCODE` operates similarly to call, except without the 25000 gas.
+* `CALLCODE` operates similarly to call, except without the potential for a 25000 gas surcharge.
 * The child message of a nonzero-value `CALL` operation (NOT the top-level message arising from a transaction!) gains an additional 2300 gas on top of the gas supplied by the calling account; this stipend can be considered to be paid out of the 9000 mandatory additional fee for nonzero-value calls. This ensures that a call recipient will always have enough gas to log that it received funds.
