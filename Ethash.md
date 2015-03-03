@@ -1,4 +1,4 @@
-**This spec is REVISION 18. Whenever you substantively (ie. not clarifications) update the algorithm, please update the revision number in this sentence. Also, in all implementations please include a spec revision number**
+**This spec is REVISION 19. Whenever you substantively (ie. not clarifications) update the algorithm, please update the revision number in this sentence. Also, in all implementations please include a spec revision number**
 
 Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version of Dagger-Hashimoto, although it can no longer appropriately be called that since many of the original features of both algorithms have been drastically changed in the last month of research and development. See [https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto](https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto) for the original version.
 
@@ -21,9 +21,10 @@ We employ the following definitions:
 
 ```
 WORD_BYTES=4               # bytes in word
-DAG_COEFF=0.0316465        # the DAG coefficient
+DATASET_BYTES_INIT=2**30   # bytes in dataset at genesis
+DATASET_BYTES_GROWTH=2**26 # growth per epoch (~5878 MB per year)
 CACHE_BYTES_INIT=2**25     # bytes in cache at genesis
-CACHE_BYTES_GROWTH=2**19   # growth per epoch (~1 MB per year)
+CACHE_BYTES_GROWTH=2**17   # growth per epoch (~11 MB per year)
 EPOCH_LENGTH=30000         # blocks per epoch
 MIX_BYTES=128              # width of mix
 HASH_BYTES=64              # hash length in bytes
@@ -39,16 +40,10 @@ The parameters for Ethash's cache and DAG depend on the block number. In order t
 ```python
 from math import exp
 def get_datasize(block_number):
-    datasize_in_bytes = DAG_BYTES_INIT * int(exp(DAG_COEFF * block_number // EPOCH_LENGTH))
-    while not _isprime(datasize_in_bytes // MIX_BYTES):
-        datasize_in_bytes -= MIX_BYTES
-    return datasize_in_bytes
+    return DATASET_BYTES_INIT + DATASET_BYTES_GROWTH * int(block.number // 30000)
 
 def get_cachesize(block):
-    cachesize_in_bytes = DAG_BYTES_INIT * int(exp(DAG_COEFF * block_number // EPOCH_LENGTH)) // DAG_PARENTS
-    while not _isprime(cachesize_in_bytes // HASH_BYTES):
-        cachesize_in_bytes -= HASH_BYTES
-    return cachesize_in_bytes
+    return CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * int(block.number // 30000)
 
 def _isprime(n):
     for i in range(2, int(n ** 0.5 + 1)):
