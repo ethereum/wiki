@@ -123,7 +123,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":64}' http://localhost:8080
 ```
-### Parameters 
+#### Parameters
 none
 
 ### Response
@@ -151,7 +151,7 @@ DEPRECATED/REMOVED
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_listening","params":[],"id":67}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 none
 
 ### Response
@@ -178,7 +178,7 @@ DEPRECATED/REMOVED
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 none
 
 ### Response
@@ -206,7 +206,7 @@ DEPRECATED/REMOVED
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 none
 
 ### Response
@@ -227,7 +227,7 @@ none
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id":1}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 none
 
 ### Response
@@ -248,7 +248,7 @@ none
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id":74}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 none
 
 ### Response
@@ -269,7 +269,7 @@ none
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"id":77}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 none
 
 ### Response
@@ -294,7 +294,7 @@ DEPRTECATED/REMOVED
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 none
 
 ### Response
@@ -315,7 +315,7 @@ none
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x-1"],"id":1}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 
 - address as hex string
 - defaultBlock as signed integer
@@ -345,7 +345,7 @@ params: [
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_stateAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "0x-1"],"id":1}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 
 - address as hex string
 - the position in the storage
@@ -376,7 +376,7 @@ params: [
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_storageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x-1"],"id":1}' http://localhost:8080
 ```
-### Parameters 
+#### Parameters
 
 - address as hex string
 - defaultBlock as signed integer
@@ -406,7 +406,7 @@ params: [
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","0x-1"],"id":1}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 
 - address as hex string
 - defaultBlock as signed integer
@@ -436,7 +436,7 @@ params: [
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 
 - hash of a block
 
@@ -464,7 +464,7 @@ params: [
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByNumber","params":["0xe8"],"id":1}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 
 - number of a block
 
@@ -492,7 +492,7 @@ params: [
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
 ```
 
-### Parameters 
+#### Parameters
 
 - hash of a block
 
