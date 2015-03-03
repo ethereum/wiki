@@ -6,25 +6,18 @@ Users signed in with GitHub can edit and add pages using the [browser](https://h
 
 ## Status 
 
-### Proof-Of-Concept 7 (stable)
-The latest stable (i.e. the clients are interoperable) release is PoC7. See below for releases. You can browse the chain using the poc7 [block explorer](http://poc-7.ethdev.com/).
+### Frontier (in development)
 
-### Proof-Of-Concept 8 (in development)
-Currently in development, mainly the new p2p networking changes and peer selection. 
+Ethereum Frontier (aka PoC-9) is expected to launch soon! For more details on Frontier, see [Vinay Gupta's blog post](https://blog.ethereum.org/2015/03/03/ethereum-launch-process/).
 
 ## Getting started
 To get the basic concepts of Ethereum read the [ethereum whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper) and the [design rationale](https://github.com/ethereum/wiki/wiki/Design-Rationale) or for a more formal review the [ethereum yellow paper](http://gavwood.com/Paper.pdf). See the [ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for quick start to developing smart contracts.
 
 ## Don't get lost
-Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FAQ](https://github.com/ethereum/wiki/wiki/FAQ). There is a [another wiki](https://github.com/ethereum/cpp-ethereum/wiki) for information relevant to the C++ implementation.
+Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FAQ](https://github.com/ethereum/wiki/wiki/FAQ). There are separate wikis for information relevant to the [C++](https://github.com/ethereum/cpp-ethereum/wiki) and [Go](https://github.com/ethereum/go-ethereum/wiki) implementations (Python and Javascript coming soon),
 
 ## Downloads
-Currently stable clients are available for PoC-7 (Proof of Concept VII):
-- [AlethZero, eth and neth](https://github.com/ethereum/cpp-ethereum/wiki) (C++)
-- [Mist](https://github.com/ethereum/go-ethereum/releases) (Go) 
-- [pyeth](https://github.com/ethereum/pyethereum/releases) (Python)
-
-Bleeding edge PoC-8 code can be cloned from the develop branch of their git repositories:
+Bleeding edge PoC-9 code can be cloned from the develop branch of their git repositories:
 - https://github.com/ethereum/cpp-ethereum
 - https://github.com/ethereum/go-ethereum
 - https://github.com/ethereum/pyethereum
