@@ -67,6 +67,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_blockByHash](#eth_blockbyhash)
 * [eth_blockByNumber](#eth_blockbynumber)
 * [eth_transactionByHash](#eth_transactionbyhash)
+* [eth_transactionByBlockHashAndIndex](#eth_transactionbyblockhashandindex)
 * [eth_transactionByNumber](#eth_transactionbynumber)
 * [eth_uncleByHash](#eth_unclebyhash)
 * [eth_uncleByNumber](#eth_unclebynumber)
@@ -653,16 +654,18 @@ none
 *returns block info for block with given hash.*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", ""],"id":1}' http://localhost:8080
 ```
 
 * Parameters:
 
 - hash of a block
+- include transaction objects (If FALSE it only includes the hashes in an array)
 
 ```js
 params: [
    '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331',
+   true
 ]
 ```
 
@@ -672,19 +675,27 @@ params: [
 "id":1,
 "jsonrpc":"2.0",
 "result": {
-  "difficulty": "0x027f07",
-  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "gasLimit": "0x9f759", // 653145
-  "gasLimit": "0x9f759", // 653145
-  "hash": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
-  "miner": "0x4e65fda2159562a496f9f3522f89122a3088497a",
-  "nonce": "0xe04d296d2460cfb8472af2c5fd05b5a214109c25688d3704aed5484f9a7792f2",
   "number": "0x1b4", // 436
+  "hash": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
   "parentHash": "0x9646252be9520f6e71339a8df9c55e4d7619deeb018d2a3f2d21fc165dde5eb5",
+  "nonce": "0xe04d296d2460cfb8472af2c5fd05b5a214109c25688d3704aed5484f9a7792f2",
   "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+  "logsBloom": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
+  "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
   "stateRoot": "0xd5855eb08b3387c0af375e9cdb6acfc05eb8f519e419b874b6ff2ffda7ed1dff",
+  "miner": "0x4e65fda2159562a496f9f3522f89122a3088497a",
+  "difficulty": "0x027f07", // 163591 big int?
+  "totalDifficulty":  "0x027f07", // 163591 big int
+  "size":  "0x027f07", // 163591 big int? of bytes
+  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "gasLimit": "0x9f759", // 653145 big int?
+  "minGasPrice": "0x9f759", // 653145 big int
+  "gasUsed": "0x9f759", // 653145 big int?
   "timestamp": "0x54e34e8e" // 1424182926
-  "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+  "transactions": [{
+      // see eth_transaction objects
+   },{ ... }] // or array of hashes, if the last given parameter if is FALSE
+   "unlces": ["0x1606e5...", "0xd5145a9..."]
   }
 }
 ```
@@ -701,10 +712,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":["0x
 * Parameters:
 
 - number of a block
+- include transaction objects (If FALSE it only includes the hashes in an array)
 
 ```js
 params: [
    '0x1b4', // 436
+   true
 ]
 ```
 
@@ -714,119 +727,190 @@ See [blockByHash](#eth_blockbyhash)
 ***
 
 #### `eth_transactionByHash`
-*returns transaction with number[0] from the block with hash["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"]*
+*returns transaction with hash*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByHash","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, 0],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"],"id":1}' http://localhost:8080
 ```
+
+* Parameters:
+
+- hash of a transaction
+
+```js
+params: [
+   '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
+]
+```
+
 * response:
 ```js
 {
 "id":1,
 "jsonrpc":"2.0",
 "result": {
-  "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
-  "gas": "0x7f110" // 520464
-  "gasPrice":"0x09184e72a000",
-  "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
-    "input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
-  "nonce":"0x",
-  "to":"0x0000000000000000000000000000000000000000",
-  "value":"0x"
+    "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
+    "nonce":"0x",
+    "blockHash": "0x6fd9e2a26abeab0aa2411c6ef2fc5426d6adb7ab17f30a99d3cb96aed1d1055b",
+    "blockNumber": "0x15df", // 5599
+    "transactionIndex":  "0x1", // 1
+    "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+    "to":"0x85h43d8a49eeb85d32cf465507dd71d507100c1",
+    "value":"0x7f110" // 520464 big int
+    "gas": "0x7f110" // 520464
+    "gasPrice":"0x09184e72a000",
+    "input":"0x603880600c6000396000f30060...",
   }
 }
 ```
+
+***
+
+#### `eth_transactionByBlockHashAndIndex`
+*returns transaction with number[0] from the block with hash["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"]*
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByHash","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, "0x0"],"id":1}' http://localhost:8080
+```
+
+* Parameters:
+
+- hash of a block
+- index of the transaction
+
+```js
+params: [
+   '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331',
+   '0x0' // 0
+]
+```
+
+* response:
+See [eth_transactionByHash](#eth_transactionbyhash)
+
+***
+
 #### `eth_transactionByNumber`
-*returns transaction with number[0] from the block with number[668]*
+*returns transaction from the block with number[668] at positon number[0]*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByNumber","params":[668, 0],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByNumber","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
 ```
+
+* Parameters:
+
+- number of the block
+- index number of the transaction
+
+```js
+params: [
+   '0x29c', // 668
+   '0x0' // 0
+]
+```
+
 * response:
-```json
-{
-"id":1,
-"jsonrpc":"2.0",
-"result": {
-  "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
-  "gas":520464,
-  "gasPrice":"0x09184e72a000",
-  "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
-  "input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
-  "nonce":"0x",
-  "to":"0x0000000000000000000000000000000000000000",
-  "value":"0x"
-  }
-}
-```
+See [eth_transactionByHash](#eth_transactionbyhash)
+
+***
+
 #### `eth_uncleByHash`
-*returns uncle with number[0] from the block with hash["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"]*
+*returns uncle from the block with hash  "0xc6ef2fc5426d6ad6fd9e2a..." at index positon 0*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", 0],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}' http://localhost:8080
 ```
+
+* Parameters:
+
+- hash of the block
+- index number of the uncle
+
+```js
+params: [
+   '0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b',
+   '0x0' // 0
+]
+```
+
 * response:
-```json
-{
-"id":1,
-"jsonrpc":"2.0",
-"result": {
-  "difficulty":"0x",
-  "extraData":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "gasLimit":"0x",
-  "hash":"0000000000000000000000000000000000000000000000000000000000000000",
-  "miner":"0x0000000000000000000000000000000000000000",
-  "nonce":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "number":"0x",
-  "parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "sha3Uncles":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "stateRoot":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "timestamp":"0x54e34e8e",
-  "transactionsRoot":"0x0000000000000000000000000000000000000000000000000000000000000000"
-  }
-}
-```
+See [blockByHash](#eth_blockbyhash)
+
+***
+
 #### `eth_uncleByNumber`
-*returns uncle with number[0] from the block with number[500]*
+*returns uncle from the block with number 668 at index position 0*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleByNumber","params":[500, 0],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleByNumber","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
 ```
+
+* Parameters:
+
+- number of the block
+- index number of the uncle
+
+```js
+params: [
+   '0x29c', // 668
+   '0x0' // 0
+]
+```
+
 * response:
-```json
-{
-"id":1,
-"jsonrpc":"2.0",
-"result": {
-  "difficulty":"0x",
-  "extraData":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "gasLimit":"0x",
-  "hash":"0000000000000000000000000000000000000000000000000000000000000000",
-  "miner":"0x0000000000000000000000000000000000000000",
-  "nonce":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "number":"0x",
-  "parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "sha3Uncles":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "stateRoot":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "timestamp":"0x54e34e8e",
-  "transactionsRoot":"0x0000000000000000000000000000000000000000000000000000000000000000"
-  }
-}
-```
+See [blockByHash](#eth_blockbyhash)
+
+***
+
 #### `eth_compilers`
 *returns list of available compilers for the client*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compilers","params":[],"id":1}' http://localhost:8080
 ```
+
+* Parameters:
+none
+
 * response:
 ```json
 {
 "id":1,
 "jsonrpc":"2.0",
-"result":["lll", "solidity", "serpent"]
+"result": ["lll", "solidity", "serpent"]
 }
 ```
+
+***
+
+#### `eth_solidity`
+*returns compiled solidity code*
+* request:
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_solidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}' http://localhost:8080
+```
+
+* Parameters:
+
+- the source code as string
+
+```js
+params: [
+   '0x636f6e74726163742074657374207b2066756...', // "contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"
+]
+```
+
+* response:
+```js
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056" // the compiled source code
+}
+```
+
+***
+
 #### `eth_lll`
 *returns compiled lll code*
 * request:
@@ -837,20 +921,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compilers","params":[],"id":
 ```json
 // TODO
 ```
-#### `eth_solidity`
-*returns compiled solidity code*
-* request:
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_solidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}' http://localhost:8080
-```
-* response:
-```json
-{
-"id":1,
-"jsonrpc":"2.0",
-"result":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
-}
-```
+
+***
+
 #### `eth_serpent`
 *returns compiled serpent code*
 * request:
@@ -861,6 +934,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_solidity","params":["contrac
 ```json
 // TODO
 ```
+
+***
+
 #### `eth_newFilter`
 *creates watch object to notify, when state changes in particular way, defined by filter. Returns new filter id.*
 * request:
@@ -870,6 +946,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic
 * response:
 ```json
 ```
+
+***
+
 #### `eth_newFilterString`
 *creates watch object to notify, when state changes in particular way, defined by filter. Returns new filter id.*
 * request:
@@ -884,6 +963,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilterString","params":["
 "result": 1
 }
 ```
+
+***
+
 #### `eth_uninstallFilter`
 *uninstalls watch with given id. Should always be called when watch is no longer needed.*
 * request:
@@ -898,6 +980,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":[0
 "result": true
 }
 ```
+
+***
+
 #### `eth_changed`
 *polling method, which returns array of logs which occurred since last poll*
 * request:
@@ -916,6 +1001,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":7
   }]
 }
 ```
+
+***
+
 #### `eth_filterLogs`
 *returns all logs matching filter with given id*
 * request:
@@ -934,6 +1022,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_filterLogs","params":[0],"id
   }]
 }
 ```
+
+***
+
 #### `eth_logs`
 *returns all logs matching filter object*
 * request:
@@ -952,6 +1043,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_logs","params":[{"topic":"0x
   }]
 }
 ```
+
+***
+
 #### `eth_getWork`
 *returns the hash of current block and difficulty to be met.*
 * request:
@@ -984,6 +1078,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":["0x123
 }
 ```
 
+***
+
 #### `db_put`
 *stores number in local database. First param is database name["test"], second is key["key"], third is value["5"]*
 * request:
@@ -998,6 +1094,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["test","key","
 "result": true
 }
 ```
+
+***
+
 #### `db_get`
 *returns number from local database. First param is database name["test"], second is key["key"]*
 * request:
@@ -1012,6 +1111,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["test","key"],
 "result": "0x05"
 }
 ```
+
+***
+
 #### `db_putString`
 *stores string in local database. First param is database name["test"], second is key["key"], third is value["5"]*
 * request:
@@ -1026,6 +1128,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["test","
 "result": true
 }
 ```
+
+***
+
 #### `db_getString`
 *returns string from local database. First param is database name["test"], second is key["key"].*
 * request:
@@ -1066,6 +1171,9 @@ ttl: "0x64",
 "result": true
 }
 ```
+
+***
+
 #### `shh_newIdeninty`
 *creates new whisper identity*
 * request:
@@ -1080,6 +1188,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_newIdentity","params":[],"id
 "result":"0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
 }
 ```
+
+***
+
 #### `shh_haveIdentity`
 *returns true if client has given identity*
 * request:
@@ -1094,6 +1205,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc
 "result": true
 }
 ```
+
+***
+
 #### `shh_newGroup`
 * request:
 ```bash
@@ -1103,6 +1217,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc
 ```json
 // TODO: not implemented yet
 ```
+
+***
+
 #### `shh_addToGroup`
 * request:
 ```bash
@@ -1112,6 +1229,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc
 ```json
 // TODO: not implemented yet
 ```
+
+***
+
 #### `shh_newFilter`
 *creates watch object to notify, when client receives whisper message matching particular format, defined by filter. Returns new filter id.*
 * request:
@@ -1126,6 +1246,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic
 "result": 7
 }
 ```
+
+***
+
 #### `shh_uninstallFilter`
 *uninstalls watch with given id. Should always be called when watch is no longer needed.*
 * request:
@@ -1140,6 +1263,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7
 "result": 7
 }
 ```
+
+***
+
 #### `shh_changed`
 *polling method, which returns array of messages which are received since last poll*
 * request:
@@ -1164,6 +1290,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7
   }]
 }
 ```
+
+***
 
 #### `shh_getMessages`
 *returns array of whisper messages received by filter with given id.*
