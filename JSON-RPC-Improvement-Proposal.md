@@ -71,6 +71,7 @@ add **additional 3rd parameter (Boolean)** include transactionObjects (default: 
 * `totalDifficulty` (total difficulty of block as specified in Yellow Paper (YP))
 * `logsBloom` (the logsBloom filter of this block as specified in YP)
 * `transactions` (array of transaction objects or hashes for all transactions in this block)
+* `unlces` array of block hashes
 * `size` integer in bytes
 
 
