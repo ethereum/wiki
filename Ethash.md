@@ -5,7 +5,7 @@ Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version o
 The general route that the algorithm takes is as follows:
 
 1. There exists a **seed** which can be computed for each block by scanning through the block headers up until that point.
-2. From the seed, one can compute a **1 MB pseudorandom cache**. Light clients store the cache.
+2. From the seed, one can compute a **32 MB pseudorandom cache**. Light clients store the cache.
 3. From the cache, we can generate a **1 GB dataset** ("the DAG"), with the property that each item in the dataset depends on only a small number of items from the cache. Full clients and miners store the DAG.  The DAG grows linearly with time.
 4. Mining involves grabbing random slices of the DAG and hashing them together. Verification can be done with low memory by using the cache to regenerate the specific pieces of the DAG that you need, so you only need to store the cache.
 
