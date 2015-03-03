@@ -40,6 +40,15 @@ Change needed changing all out and inputs to HEX (for all):
 - [ ] shh_version ? is network version ===  node/client version
 - [ ] net_version ? is network version ===  node/client version
 
+### add as last parameter "defaultBlock" to the following methods:
+
+- [ ] eth_balanceAt
+- [ ] eth_codeAt
+- [ ] eth_stateAt
+- [ ] eth_storageAt
+- [ ] eth_countAt
+- [ ] eth_call
+
 ### eth_transactionByHash
 https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_transactionbyhash
 
