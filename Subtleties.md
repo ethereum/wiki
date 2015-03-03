@@ -59,3 +59,9 @@
 * If contract A calls contract B calls contract A, then the inner execution of A will have its own, fresh, memory, stack and PC, but it will modify and read the same balance and storage.
 * If contract initialization returns an empty array, then no contract will be created. This allows you to "abuse" contract initialization as an atomic multi-operation, which might be useful in some protocols where you want to do multiple things but you don't want some of them to be able to process without others.
 * `JUMP` and `JUMPI` instructions are only allowed to jump onto destinations that are (1) occupied by a `JUMPDEST` opcode, and (2) are not inside `PUSH` data. Note that properly processing these conditions requires preprocessing the code; a particularly pathological use case is `PUSH2 JUMPDEST PUSH1 PUSH2 JUMPDEST PUSH1 PUSH2 JUMPDEST PUSH1 ...`, as this code has all `JUMPDEST`s invalid but an alternative piece of code equivalent to this but only with the leading `PUSH2` replaced with another op (eg. `BALANCE`) will have all `JUMPDESTS`s valid.
+* `CALL` has a multi-part gas cost:
+    * 40 base
+    * 9000 additional if the value is nonzero
+    * 25000 additional if the destination account does not yet exist (note: there is a difference between zero-balance and nonexistent!)
+* `CALLCODE` operates similarly to call, except without the 25000 gas.
+* The child message of a nonzero-value `CALL` operation (NOT the top-level message arising from a transaction!) gains an additional 2300 gas on top of the gas supplied by the calling account; this stipend can be considered to be paid out of the 9000 mandatory additional fee for nonzero-value calls. This ensures that a call recipient will always have enough gas to log that it received funds.
