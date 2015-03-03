@@ -434,6 +434,15 @@ web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 
 **Returns** the default block number/age to use when querying a state.
 
+This default block is used for the following methods (optionally you can overwrite the defaultBlock by passing it as the last parameter):
+
+- [web3.eth.getBalance()](#web3ethgetbalance)
+- [web3.eth.getData()](#web3ethgetdata)
+- [web3.eth.getTransactionCount()](#web3ethgettransactioncount)
+- [web3.eth.getStorage()](#web3ethgetstorage)
+- [web3.eth.getStorageAt()](#web3ethgetstorageat)
+- [web3.eth.call()](#web3ethcall)
+
 When positive this is a block number, when 0 or negative it is a block age. `-1` therefore means the most recently mined block, `0` means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
 
 ```javascript
@@ -461,11 +470,12 @@ console.log(number); // 2744
 
 ##### web3.eth.getBalance
 
-    web3.eth.getBalance(addressHexString [, callback])
+    web3.eth.getBalance(addressHexString [, defaultBlock] [, callback])
 
 **Returns** a BigNumber object of the current balance for the given address in wei.
 
-If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
+- If you pass an optional callback the HTTP request is made asynchronous.
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
@@ -480,11 +490,12 @@ console.log(balance.toNumber()); // 1000000000000
 
 ##### web3.eth.getStorage
 
-    web3.eth.getStorage(addressHexString [, callback])
+    web3.eth.getStorage(addressHexString [, defaultBlock] [, callback])
 
 **Returns** the storage as a json object.
 
-If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
+- If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var storage = web3.eth.getStorage("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
@@ -495,11 +506,12 @@ console.log(storage); // { "0x" : "0x03" }
 
 ##### web3.eth.getStorageAt
 
-    web3.eth.getStorageAt(addressHexString, position [, callback])
+    web3.eth.getStorageAt(addressHexString, position [, defaultBlock] [, callback])
 
 **Returns** the value in storage at position `position` of the address `addressHexString`.
 
-If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
+- If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var state = web3.eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
@@ -510,11 +522,12 @@ console.log(state); // "0x03"
 
 ##### web3.eth.getData
 
-    web3.eth.getData(addressHexString [, callback])
+    web3.eth.getData(addressHexString [, defaultBlock] [, callback])
 
 **Returns** the data at given address `addressHexString`.
 
-If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
+- If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var data = web3.eth.getData("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
@@ -677,11 +690,12 @@ console.log(transaction);
 ***
 ##### web3.eth.getTransactionCount
 
-    web3.eth.getTransactionCount(addressHexString [, callback])
+    web3.eth.getTransactionCount(addressHexString [, defaultBlock] [, callback])
 
 **Returns** the number of transactions send from the given address `addressHexString`.
 
-If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
+- If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var number = web3.eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
@@ -796,11 +810,12 @@ myEvent.stopWatching();
 
 ##### web3.eth.call
 
-    web3.eth.call(callObject [, callback])
+    web3.eth.call(callObject [, defaultBlock] [, callback])
 
 **Returns** the data which matches the call.
 
-If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
+- If you pass an optional callback the HTTP request is made asynchronous.
 
 Executes a new message-call immediately without creating a transaction on the block chain. `callObject` is an object specifying the parameters of the transaction.
 
