@@ -120,9 +120,12 @@ var web3 = require('web3')
 
 ##### web3.sha3
 
-    web3.sha3(string)
+    web3.sha3(string [, callback])
 
-Returns the SHA3 of the given data.
+**Returns** the SHA3 of the given data.
+
+If you pass an optional callback the HTTP request is made asynchronous.
+
 ```javascript
 var str = web3.sha3("Some ASCII string to be hashed");
 console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
@@ -411,9 +414,11 @@ web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 
 ##### web3.eth.unRegister
 
-     web3.eth.unRegister(addressHexString)
+     web3.eth.unRegister(addressHexString [, callback])
 
 **Returns** ?
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 Unregisters a given address.
 
@@ -456,9 +461,11 @@ console.log(number); // 2744
 
 ##### web3.eth.getBalance
 
-    web3.eth.getBalance(addressHexString)
+    web3.eth.getBalance(addressHexString [, callback])
 
 **Returns** a BigNumber object of the current balance for the given address in wei.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
@@ -473,9 +480,11 @@ console.log(balance.toNumber()); // 1000000000000
 
 ##### web3.eth.getStorage
 
-    web3.eth.getStorage(addressHexString)
+    web3.eth.getStorage(addressHexString [, callback])
 
 **Returns** the storage as a json object.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var storage = web3.eth.getStorage("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
@@ -486,9 +495,11 @@ console.log(storage); // { "0x" : "0x03" }
 
 ##### web3.eth.getStorageAt
 
-    web3.eth.getStorageAt(addressHexString, position)
+    web3.eth.getStorageAt(addressHexString, position [, callback])
 
 **Returns** the value in storage at position `position` of the address `addressHexString`.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var state = web3.eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
@@ -499,9 +510,11 @@ console.log(state); // "0x03"
 
 ##### web3.eth.getData
 
-    web3.eth.getData(addressHexString)
+    web3.eth.getData(addressHexString [, callback])
 
 **Returns** the data at given address `addressHexString`.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var data = web3.eth.getData("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
@@ -512,7 +525,7 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
 
 ##### web3.eth.getBlock
 
-     web3.eth.getBlock(hashHexStringOrBlockNumber)
+     web3.eth.getBlock(hashHexStringOrBlockNumber [, callback])
 
 **Returns** a block object with number or hash `hashHexStringOrBlockNumber`:
 
@@ -533,6 +546,9 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
   * `nonce` (32-byte hash): The block's PoW nonce.
   * `children` (array of 32-byte hashes): The hashes of any children this block has.
   * `bloom` (32-byte hash): The bloom filter of this block.
+
+If you pass an optional callback the HTTP request is made asynchronous.
+
 ```javascript
 var info = web3.eth.block(3150);
 console.log(info);
@@ -557,9 +573,11 @@ console.log(info);
 
 ##### web3.eth.getBlockTransactionCount
 
-    web3.eth.getBlockTransactionCount(hashStringOrBlockNumber)
+    web3.eth.getBlockTransactionCount(hashStringOrBlockNumber [, callback])
 
 **Returns** the number of transactions in a given block `hashStringOrBlockNumber`.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var number = web3.eth.getBlockTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
@@ -570,9 +588,11 @@ console.log(number); // 1
 
 ##### web3.eth.getUncle
 
-    web3.eth.getUncle(blockHashStringOrNumber, uncleNumber)
+    web3.eth.getUncle(blockHashStringOrNumber, uncleNumber [, callback])
 
 Returns the uncle with number `uncleNumber` from the block with number or hash `blockHashStringOrNumber`.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 Return value is an object with the following keys:
   * `hash` (32-byte hash): The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header).
@@ -589,7 +609,8 @@ Return value is an object with the following keys:
   * `timestamp` (integer): The timestamp of this block.
   * `extraData` (byte array): Any extra data this block contains.
   * `nonce` (32-byte hash): The block's PoW nonce.
-```javascript
+
+```js
 var blockNumber = 500;
 var indexOfUncle = 0
 
@@ -617,7 +638,7 @@ console.log(uncle);
 
 #####web3.eth.getTransaction
 
-    web3.eth.getTransaction(hashStringOrNumber, blockNumber)
+    web3.eth.getTransaction(hashStringOrNumber, blockNumber [, callback])
 
 **Returns** a transaction object by number or hash `hashStringOrNumber` from block with `blockNumber`:
 
@@ -629,6 +650,8 @@ console.log(uncle);
   * `gasPrice` (BigNumber): The price offered to the miner to purchase this amount of GAS, in Wei per GAS.
   * `nonce` (32-byte hash): The transaction nonce.
   * `value` (BigNumber): The amount of ETH to be transferred to the recipient with the transaction in wei.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 ```js
 var blockNumber = 668;
@@ -654,9 +677,11 @@ console.log(transaction);
 ***
 ##### web3.eth.getTransactionCount
 
-    web3.eth.getTransactionCount(addressHexString)
+    web3.eth.getTransactionCount(addressHexString [, callback])
 
 **Returns** the number of transactions send from the given address `addressHexString`.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var number = web3.eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
@@ -667,7 +692,9 @@ console.log(number); // 1
 
 ##### web3.eth.sendTransaction
 
-    web3.eth.sendTransaction(transactionObject, callback)
+    web3.eth.sendTransaction(transactionObject [, callback])
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 Creates a new message-call transaction.
   * `transactionObject`, an anonymous object specifying the parameters of the transaction.
@@ -769,9 +796,11 @@ myEvent.stopWatching();
 
 ##### web3.eth.call
 
-    web3.eth.call(callObject)
+    web3.eth.call(callObject [, callback])
 
 **Returns** the data which matches the call.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 Executes a new message-call immediately without creating a transaction on the block chain. `callObject` is an object specifying the parameters of the transaction.
 
@@ -849,9 +878,11 @@ filter.stopWatching();
 
 ##### web3.eth.getCompilers
 
-    web3.eth.getCompilers()
+    web3.eth.getCompilers([callback])
 
 **Returns** an array of available compilers.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var number = web3.eth.getCompilers();
@@ -862,12 +893,14 @@ console.log(number); // ["lll", "solidity", "serpent"]
 
 ##### web3.eth.compile.solidity
 
-    web3.eth.compile.solidity(sourceString)
+    web3.eth.compile.solidity(sourceString [, callback])
 
 **Returns** the compiled solidity code as HEX string.
 
+If you pass an optional callback the HTTP request is made asynchronous.
+
 Compiles the solidity source code `sourceString` and returns the output data.
-```javascript
+```js
 var source = "" + 
     "contract test {\n" +
     "   function multiply(uint a) returns(uint d) {\n" +
@@ -882,9 +915,11 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ##### web3.eth.compile.lll
 
-    web3. eth.compile.lll(sourceString)
+    web3. eth.compile.lll(sourceString [, callback])
 
 **Returns** the compiled lll code as HEX string.
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 Compiles the LLL source code `sourceString` and returns the output data.
 ```javascript
@@ -898,12 +933,15 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ##### web3.eth.compile.serpent
 
-    web3.eth.compile.serpent(sourceString)
+    web3.eth.compile.serpent(sourceString [, callback])
 
 **Returns** the compiled serpent code as HEX string.
 
+If you pass an optional callback the HTTP request is made asynchronous.
+
 Compiles the serpent source code `sourceString ` and returns the output data.
-```javascript
+
+```js
 var source = "...";
 
 var code = web3.eth.compile.serpent(source);
@@ -920,7 +958,7 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ***
 
-#####web3.db.put
+##### web3.db.put
 This method should be called, when we want to store number in local leveldb database.
 First param is db name, second is the key, and third is the value.
 ```javascript
@@ -933,7 +971,7 @@ console.log(value); // "0x05"
 
 ***
 
-#####web3.db.putString
+##### web3.db.putString
 This method should be called, when we want to store string in local leveldb database.
 First param is db name, second is the key, and third is the string value.
 ```javascript
@@ -946,7 +984,7 @@ console.log(value); // "5"
 
 ***
 
-#####web3.db.get
+##### web3.db.get
 This method should be called, when we want to get number value from local leveldb database.
 First param is db name and second is the key of value.
 ```javascript
@@ -959,7 +997,7 @@ console.log(value); // "0x05"
 
 ***
 
-#####web3.db.getString
+##### web3.db.getString
 This method should be called, when we want to get string value from local leveldb database.
 First param is db name and second is the key of string value.
 ```javascript
@@ -972,7 +1010,7 @@ console.log(value); // "5"
 
 ***
 
-#####web3.shh
+##### web3.shh
 [Whisper  Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
 ```javascript
 var shh = web3.shh;
@@ -980,9 +1018,11 @@ var shh = web3.shh;
 
 ***
 
-#####web3.shh.post
+##### web3.shh.post
 
-   web3.shh.post(object)
+   web3.shh.post(object [, callback])
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 This method should be called, when we want to post whisper message. `_message` object may have following fields:
   * `from`: identity of sender as hexString
@@ -1009,16 +1049,31 @@ web3.shh.post(message);
 
 ***
 
-#####web3.shh.newIdentity
+##### web3.shh.newIdentity
+
+    web3.shh.newIdentity([callback])
+
+**Returns** a new identity hex string.
+
+If you pass an optional callback the HTTP request is made asynchronous.
+
 Should be called to create new identity.
-```javascript
+
+```js
 var identity = web3.shh.newIdentity();
 console.log(identity); // "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
 ```
 
 ***
 
-#####web3.shh.hasIdentity
+##### web3.shh.hasIdentity
+
+    web3.shh.hasIdentity([callback])
+
+**Returns** a boolean whether or not the identity exists.
+
+If you pass an optional callback the HTTP request is made asynchronous.
+
 Should be called, if we want to check if user has given identity. Accepts one param. Returns true if he has, otherwise false.
 ```javascript
 var identity = web3.shh.newIdentity();
