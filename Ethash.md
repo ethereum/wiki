@@ -23,7 +23,7 @@ We employ the following definitions:
 WORD_BYTES=4                   # bytes in word
 DATASET_BYTES_INIT=2**30       # bytes in dataset at genesis
 DATASET_BYTES_GROWTH=113000000 # growth per epoch (~7 GB per year)
-CACHE_MULTIPLIER=1024          # Size of the Cache relative to the DAG
+CACHE_MULTIPLIER=1024          # Size of the DAG relative to the cache
 EPOCH_LENGTH=30000             # blocks per epoch
 MIX_BYTES=128                  # width of mix
 HASH_BYTES=64                  # hash length in bytes
@@ -64,8 +64,6 @@ GetDataSizes[n_] := Module[{
 ```
 
 Essentially, we are keeping the size of the dataset to always be equal to the highest prime below a linearly growing function, so on average in the long term the dataset will grow roughly linearly.  Tabulated version of ``get_datasize` and `get_cachesize` have been provided in the appendix.
-
-`sha3_256` and `sha3_512` are assumed to accept word arrays or strings as input and output a word array. Many operations inside of the ethash spec operate on word arrays.
 
 We can now get the parameters (in python):
 
@@ -237,33 +235,7 @@ test_params = {
 }
 ```
 
-The following lookup tables provide approximately 7 years of tabulated DAG and cache sizes.  They were generated with the following *Mathematica* functions:
-
-```mathematica
-GetDataSizes[n_] := With[
-    {DAGSizeBytesInit = 2^30, 
-     DAGSizeBytesGrowth = 2^17, 
-          MixBytes = 2^12,
-     DAGCoeff = 0.00263721}, 
-    Module[{j = 0, i = 100}, 
-           Reap[
-      While[j < n, 
-       While[Prime[i]*MixBytes < DAGSizeBytesInit * E^(DAGCoeff*j), 
-        i++]; 
-       Sow[Prime[i - 1]*MixBytes]; j++]]]][[2]][[1]]
-            
-GetCacheSizes[n_]:= 
-With[{ CacheSizeBytesInit=2^25,
-       DAGSizeBytesGrowth=2^17,
-       HashBytes=2^12},
-   Module[{j=0,i=100},
-      Reap[
-         While[j<n,
-            While[Prime[i]*HashBytes < 
-                  (DAGSizeBytesInit + DAGSizeBytesGrowth * j) / 32, i++];
-            Sow[Prime[i-1]*HashBytes];
-            j++]]]][[2]][[1]]
-```
+The following lookup tables provide approximately 3.5 years of tabulated DAG and cache sizes.  They were generated with the *Mathematica* functions provided above:
 
 ```python
 def get_datasize(block_number):
