@@ -113,6 +113,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 }
 ```
 
+***
+
 #### `eth_coinbase`
 *returns client coinbase address*
 
@@ -120,6 +122,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":64}' http://localhost:8080
 ```
+* Parameters: 
+none
+
 * response:
 ```json
 {
@@ -129,21 +134,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":6
 }
 ```
 
-#### `eth_setCoinbase`
-*sets new address of coinbase*
+***
 
-* request:
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setCoinbase","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":66}' http://localhost:8080
+#### `eth_setCoinbase`
+DEPRECATED/REMOVED
 ```
-* response:
-```json
-{
-"id":66,
-"jsonrpc":"2.0",
-"result":true
-}
-```
+
+***
 
 #### `eth_listening`
 *returns true if client is actively listening for network connections*
@@ -152,6 +149,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setCoinbase","params":["0x40
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_listening","params":[],"id":67}' http://localhost:8080
 ```
+
+* Parameters: 
+none
+
 * response:
 ```json
 {
@@ -160,27 +161,25 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_listening","params":[],"id":
 "result":true
 }
 ```
-#### `eth_setListening`
-*sets client should be actively listening for network connections*
 
-* request:
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setListening","params":[false],"id":68}' http://localhost:8080
+***
+
+#### `eth_setListening`
+DEPRECATED/REMOVED
 ```
-* response:
-```json
-{
-"id":68,
-"jsonrpc":"2.0",
-"result":true
-}
-```
+
+***
+
 #### `eth_mining`
 *returns true if client is actively mining new blocks*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}' http://localhost:8080
 ```
+
+* Parameters: 
+none
+
 * response:
 ```json
 {
@@ -188,27 +187,27 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}
 "jsonrpc":"2.0",
 "result":true
 }
+
 ```
+
+***
+
 #### `eth_setMining`
-*sets if client should be actively mining new blocks* 
-* request:
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setMining","params":[false],"id":72}' http://localhost:8080
+DEPRECATED/REMOVED
 ```
-* response:
-```json
-{
-"id":72,
-"jsonrpc":"2.0",
-"result":true
-}
-```
+
+***
+
 #### `eth_gasPrice`
 *returns special 256-bit number equal to hard-coded testnet price of gas*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}' http://localhost:8080
 ```
+
+* Parameters: 
+none
+
 * response:
 ```json
 {
@@ -217,12 +216,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":7
 "result":"0x09184e72a000"
 }
 ```
+
+***
+
 #### `eth_accounts`
 *returns list of the addresses owned by client*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id":1}' http://localhost:8080
 ```
+
+* Parameters: 
+none
+
 * response:
 ```json
 {
@@ -231,12 +237,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id"
 "result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
 }
 ```
+
+***
+
 #### `eth_peerCount`
 *returns number of peers currenly connected to the client*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id":74}' http://localhost:8080
 ```
+
+* Parameters: 
+none
+
 * response:
 ```json
 {
@@ -245,12 +258,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id":
 "result": 2
 }
 ```
+
+***
+
 #### `eth_defaultBlock`
 *returns default number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"id":77}' http://localhost:8080
 ```
+
+* Parameters: 
+none
+
 * response:
 ```js
 {
@@ -259,26 +279,23 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"i
 "result": -1
 }
 ```
+
 #### `eth_setDefaultBlock`
-*sets default/number age to use when querying state.*
-* request:
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_setDefaultBlock","params":[1],"id":80}' http://localhost:8080
+DEPRTECATED/REMOVED
 ```
-* response:
-```json
-{
-"id":80,
-"jsonrpc":"2.0",
-"result":true
-}
-```
+
+***
+
 #### `eth_number`
 *returns the number of most recent block*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83}' http://localhost:8080
 ```
+
+* Parameters: 
+none
+
 * response:
 ```js
 {
@@ -287,12 +304,28 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83}
 "result": 1207
 }
 ```
+
+***
+
 #### `eth_balanceAt`
 *returns the balance of the account of given address*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x-1"],"id":1}' http://localhost:8080
 ```
+
+* Parameters: 
+
+- address as hex string
+- defaultBlock as signed integer
+
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+   '0x-1' // -1
+]
+```
+
 * response:
 ```json
 {
@@ -301,12 +334,30 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d
 "result":"0x0234c8a3397aab580000"
 }
 ```
+
+***
+
 #### `eth_stateAt`
 *returns the value in storage at position[0] given by string of the account given by address["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_stateAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_stateAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "0x-1"],"id":1}' http://localhost:8080
 ```
+
+* Parameters: 
+
+- address as hex string
+- the position in the storage
+- defaultBlock as signed integer
+
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+   '0x0', // 0
+   '0x-1' // -1
+]
+```
+
 * response:
 ```json
 {
@@ -315,12 +366,27 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_stateAt","params":["0x407d73
 "result":"0x03"
 }
 ```
+
+***
+
 #### `eth_storageAt`
 *returns storage dumped to json*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_storageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_storageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x-1"],"id":1}' http://localhost:8080
 ```
+* Parameters: 
+
+- address as hex string
+- defaultBlock as signed integer
+
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+   '0x-1' // -1
+]
+```
+
 * response:
 ```json
 {
@@ -329,12 +395,28 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_storageAt","params":["0x407d
 "result":{"0x":"0x03"}
 }
 ```
+
+***
+
 #### `eth_countAt`
 *returns the number of transactions send from account of given address*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","0x-1"],"id":1}' http://localhost:8080
 ```
+
+* Parameters: 
+
+- address as hex string
+- defaultBlock as signed integer
+
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+   '0x-1' // -1
+]
+```
+
 * response:
 ```js
 {
@@ -343,12 +425,26 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0x407d73
 "result":1
 }
 ```
+
+***
+
 #### `eth_transactionCountByHash`
-*returns the number of transactions in block of given hash*
+*returns the number of transactions in block of given block hash*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
 ```
+
+* Parameters: 
+
+- hash of a block
+
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1'
+]
+```
+
 * response:
 ```js
 {
@@ -357,12 +453,26 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByHash","par
 "result":1
 }
 ```
+
+***
+
 #### `eth_transactionCountByNumber`
 *returns the number of transactions in block of given number*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByNumber","params":[232],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByNumber","params":["0xe8"],"id":1}' http://localhost:8080
 ```
+
+* Parameters: 
+
+- number of a block
+
+```js
+params: [
+   '0xe8', // 232
+]
+```
+
 * response:
 ```js
 {
@@ -371,12 +481,26 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByNumber","p
 "result":1
 }
 ```
+
+***
+
 #### `eth_uncleCountByHash`
 *returns the number of uncles for block of given hash*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
 ```
+
+* Parameters: 
+
+- hash of a block
+
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1'
+]
+```
+
 * response:
 ```js
 {
@@ -385,12 +509,26 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByHash","params":[
 "result":1
 }
 ```
+
+***
+
 #### `eth_uncleCountByNumber`
 *returns the number of uncles for block of given number*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByNumber","params":[1232],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByNumber","params":["0xe8"],"id":1}' http://localhost:8080
 ```
+
+* Parameters:
+
+- number of a block
+
+```js
+params: [
+   '0xe8', // 232
+]
+```
+
 * response:
 ```js
 {
@@ -399,12 +537,26 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByNumber","params"
 "result":1
 }
 ```
+
+***
+
 #### `eth_codeAt`
-*returns code at given address*
+*returns data at a given address*
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8"],"id":1}' http://localhost:8080
 ```
+
+* Parameters:
+
+- address as hex string
+
+```js
+params: [
+   '0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8',
+]
+```
+
 * response:
 ```json
 {
@@ -413,21 +565,27 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0xd5677c
 "result":"0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 }
 ```
+
+***
+
 #### `eth_transact`
 *creates new message call transaction.*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transact","params":[as below],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transact","params":[see below],"id":1}' http://localhost:8080
 ```
-* parameters:
+* Parameters:
+
+- The transaction object
+
 ```js
 {
-"from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
-"to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
-"gas": "0x76c0",// 30400,
-"gasPrice": "0x9184e72a000", // hex of a big int
-"value": "0x9184e72a000", // hex of a big int
-"data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
+  "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
+  "to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
+  "gas": "0x76c0",// 30400,
+  "gasPrice": "0x9184e72a000", // hex of a big int
+  "value": "0x9184e72a000", // hex of a big int
+  "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
 }
 ```
 
@@ -439,18 +597,24 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transact","params":[as below
 "result":"0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 }
 ```
+
+***
+
 #### `eth_call`
 *executes new message call immediately without creating a transaction on the block chain.*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{"to":"0xc4abd0339eb8d57087278718986382264244252f","data":"0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"}],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[see below],"id":1}' http://localhost:8080
 ```
 
-* parameters:
+* Parameters:
+
+- The call object
+
 ```js
 {
-"to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
-"data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
+  "to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
+  "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
 }
 ```
 
@@ -462,11 +626,18 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{"to":"0xc4a
 "result":"0x0000000000000000000000000000000000000000000000000000000000000015"
 }
 ```
+
+***
+
 #### `eth_flush`
 * request:
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_flush","params":[],"id":64}' http://localhost:8080
 ```
+
+* Parameters:
+none
+
 * response:
 ```json
 {
@@ -475,12 +646,26 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_flush","params":[],"id":64}'
 "result":true
 }
 ```
+
+***
+
 #### `eth_blockByHash`
 *returns block info for block with given hash.*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"],"id":1}' http://localhost:8080
 ```
+
+* Parameters:
+
+- hash of a block
+
+```js
+params: [
+   '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331',
+]
+```
+
 * response:
 ```js
 {
@@ -490,7 +675,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["ee67
   "difficulty": "0x027f07",
   "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "gasLimit": "0x9f759", // 653145
-  "hash": "ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
+  "gasLimit": "0x9f759", // 653145
+  "hash": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
   "miner": "0x4e65fda2159562a496f9f3522f89122a3088497a",
   "nonce": "0xe04d296d2460cfb8472af2c5fd05b5a214109c25688d3704aed5484f9a7792f2",
   "number": "0x1b4", // 436
@@ -503,33 +689,30 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["ee67
 }
 ```
 
+***
+
 #### `eth_blockByNumber`
 *returns block info for block with given number.*
 * request:
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":[436],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":["0x1b4"],"id":1}' http://localhost:8080
 ```
-* response:
+
+* Parameters:
+
+- number of a block
+
 ```js
-{
-"id":1,
-"jsonrpc":"2.0",
-"result": {
-  "difficulty": "0x027f07",
-  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "gasLimit": "0x9f759", // 653145
-  "hash": "ee670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
-  "miner": "0x4e65fda2159562a496f9f3522f89122a3088497a",
-  "nonce": "0xe04d296d2460cfb8472af2c5fd05b5a214109c25688d3704aed5484f9a7792f2",
-  "number": "0x1b4", // 436
-  "parentHash": "0x9646252be9520f6e71339a8df9c55e4d7619deeb018d2a3f2d21fc165dde5eb5",
-  "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-  "stateRoot": "0xd5855eb08b3387c0af375e9cdb6acfc05eb8f519e419b874b6ff2ffda7ed1dff",
-  "timestamp": "0x54e34e8e" // 1424182926
-  "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
-  }
-}
+params: [
+   '0x1b4', // 436
+]
 ```
+
+* response:
+See [blockByHash](#eth_blockbyhash)
+
+***
+
 #### `eth_transactionByHash`
 *returns transaction with number[0] from the block with hash["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"]*
 * request:
