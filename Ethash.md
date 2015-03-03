@@ -22,7 +22,8 @@ We employ the following definitions:
 ```
 WORD_BYTES=4                   # bytes in word
 DATASET_BYTES_INIT=2**30       # bytes in dataset at genesis
-DATASET_BYTES_GROWTH=113000000 # growth per epoch (~5878 MB per year)
+DATASET_BYTES_GROWTH=113000000 # growth per epoch (~7 GB per year)
+CACHE_MULTIPLIER=1024          # Size of the Cache relative to the DAG
 EPOCH_LENGTH=30000             # blocks per epoch
 MIX_BYTES=128                  # width of mix
 HASH_BYTES=64                  # hash length in bytes
@@ -33,7 +34,7 @@ ACCESSES=64                    # number of accesses in hashimoto loop
 
 ### Parameters
 
-The parameters for Ethash's cache and DAG depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we use the following functions:
+The parameters for Ethash's cache and DAG depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we compute tables using the following functions (in Mathematica):
 
 ```mathematica
 GetDataSizes[n_] := Module[{
@@ -47,13 +48,26 @@ GetDataSizes[n_] := Module[{
              Floor[(DAGSizeBytesInit + DAGGrowth * j) / MixBytes]},
              While[! PrimeQ[i], i--];
              Sow[i*MixBytes]; j++]]]][[2]][[1]]
+
+ GetCacheSizes[n_] := Module[{
+        DAGSizeBytesInit = 2^30,
+        MixBytes = 128,
+        DAGGrowth = 113000000,
+        HashBytes = 64,
+        CacheMultiplier = 1024,
+        j = 0},
+    Reap[
+      While[j < n,
+       Module[{i = Floor[(DAGSizeBytesInit + DAGGrowth * j) / (CacheMultiplier * HashBytes)]},
+        While[! PrimeQ[i], i--];
+        Sow[i*HashBytes]; j++]]]][[2]][[1]]
 ```
 
 Essentially, we are keeping the size of the dataset to always be equal to the highest prime below a linearly growing function, so on average in the long term the dataset will grow roughly linearly.  Tabulated version of ``get_datasize` and `get_cachesize` have been provided in the appendix.
 
 `sha3_256` and `sha3_512` are assumed to accept word arrays or strings as input and output a word array. Many operations inside of the ethash spec operate on word arrays.
 
-We can now get the parameters:
+We can now get the parameters (in python):
 
 ```python
 def get_params(block):
