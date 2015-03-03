@@ -28,7 +28,7 @@ CACHE_BYTES_GROWTH=2**17   # growth per epoch (~11 MB per year)
 EPOCH_LENGTH=30000         # blocks per epoch
 MIX_BYTES=128              # width of mix
 HASH_BYTES=64              # hash length in bytes
-DAG_PARENTS=1024           # number of parents of each dag element
+DAG_PARENTS=1256           # number of parents of each dag element
 CACHE_ROUNDS=3             # number of processing rounds in cache production
 ACCESSES=64               # number of accesses in hashimoto loop
 ```
