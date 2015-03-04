@@ -10,8 +10,8 @@
 ### 목차
 
 * [역사](#%EC%97%AD%EC%82%AChistory)
-    * [상태변환시스템으로서의 비트코인](#%EC%97%AD%EC%82%AChistory)
-    * [채굴](#mining)
+    * [상태변환시스템으로서의 비트코인](#%EC%83%81%ED%83%9C%EB%B3%80%ED%99%98%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%9C%BC%EB%A1%9C%EC%84%9C%EC%9D%98-%EB%B9%84%ED%8A%B8%EC%BD%94%EC%9D%B8bitcoin-as-a-state-transition-system)
+    * [채굴](#%EC%B1%84%EA%B5%B4)
     * [머클트리](#merkle-trees)
     * [블록체인 사용한 다른 사용사례](#alternative-blockchain-applications)
     * [스크립팅](#scripting)
