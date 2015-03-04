@@ -162,6 +162,10 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 
 + Specifications
   + [Solidity, Docs and ABI](https://github.com/ethereum/cpp-ethereum/wiki/Solidity%2C-Docs-and-ABI)
+  + [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
++ Tutorials
+  + [Solidity Tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial)
+  + [Contract Writing in Solidity](https://dappsforbeginners.wordpress.com)
 
 ### How to test contracts?
 
