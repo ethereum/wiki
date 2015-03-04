@@ -7,20 +7,9 @@ Proposed changes:
 All values in returned objects (transactions, blocks, shh posts) are transfered in HEX.
 Simple values like, peerCount, defaultBlock stay as integer.
 
-Change needed changing all out and inputs to HEX (for all):
+**Change needed changing all out and inputs to HEX (for all).**
 
-- [x] eth_transact
-- [ ] eth_blockByHash
-- [ ] eth_blockByNumber
-- [x] eth_transactionByHash
-- [ ] eth_uncleByHash
-- [ ] eth_uncleByNumber
-- [ ] eth_changed
-- [ ] eth_filterLogs
-- [ ] eth_logs
-- [ ] shh_changed
-- [ ] shh_getMessages
-- [ ] shh_post
+**rename all RPC endpoints to proper names**
 
 ### name changes
 
