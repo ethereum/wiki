@@ -71,7 +71,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_compileSolidity](#eth_compileSolidity)
 * [eth_compileSerpent](#eth_compileSerpent)
 * [eth_newFilter](#eth_newfilter)
-* [eth_newBlockchainWatch](#eth_newblockchainwatch)
+* [eth_newBlockWatch](#eth_newblockwatch)
 * [eth_uninstallFilter](#eth_uninstallfilter)
 * [eth_getFilterChanges](#eth_getfilterchanges)
 * [eth_getFilterLogs](#eth_getfilterlogs)
@@ -971,12 +971,12 @@ params: [{
 
 ***
 
-#### `eth_newBlockchainFilter`
+#### `eth_newBlockFilter`
 *creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new watch id. To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges)*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockchainFilter","params":["0x70656e64696e67"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["0x70656e64696e67"],"id":73}' http://localhost:8080
 ```
 
 ##### Parameters
