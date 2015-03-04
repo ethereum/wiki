@@ -204,14 +204,14 @@ import sha3, copy
 
 # Assumes little endian bit ordering (same as Intel architectures)
 def decode_int(s):
-   return int(s[::-1].encode('hex'), 16) if s else 0
+    return int(s[::-1].encode('hex'), 16) if s else 0
 
 def encode_int(s):
-   a = "%x" % s
-   return '' if s == 0 else ('0' * (len(a) % 2) + a).decode('hex')[::-1]
+    a = "%x" % s
+    return '' if s == 0 else ('0' * (len(a) % 2) + a).decode('hex')[::-1]
 
 def zpad(s, length):
-   return s + '\x00' * max(0, length - len(s))
+    return s + '\x00' * max(0, length - len(s))
 
 def hash_words(h, sz, x):
     if isinstance(x, list):
