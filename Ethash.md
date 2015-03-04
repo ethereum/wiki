@@ -20,16 +20,16 @@ See [https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale](https://gith
 We employ the following definitions:
 
 ```
-WORD_BYTES = 4                   # bytes in word
-DATASET_BYTES_INIT = 2**30       # bytes in dataset at genesis
-DATASET_BYTES_GROWTH = 113000000 # growth per epoch (~7 GB per year)
-CACHE_MULTIPLIER = 1024          # Size of the DAG relative to the cache
-EPOCH_LENGTH = 30000             # blocks per epoch
-MIX_BYTES = 128                  # width of mix
-HASH_BYTES = 64                  # hash length in bytes
-DAG_PARENTS = 256               # number of parents of each dag element
-CACHE_ROUNDS = 3                 # number of processing rounds in cache production
-ACCESSES = 64                    # number of accesses in hashimoto loop
+WORD_BYTES = 4                    # bytes in word
+DATASET_BYTES_INIT = 2**30        # bytes in dataset at genesis
+DATASET_BYTES_GROWTH = 113000000  # growth per epoch (~7 GB per year)
+CACHE_MULTIPLIER = 1024           # Size of the DAG relative to the cache
+EPOCH_LENGTH = 30000              # blocks per epoch
+MIX_BYTES = 128                   # width of mix
+HASH_BYTES = 64                   # hash length in bytes
+DAG_PARENTS = 256                 # number of parents of each dag element
+CACHE_ROUNDS = 3                  # number of rounds in cache production
+ACCESSES = 64                     # number of accesses in hashimoto loop
 ```
 
 ### Parameters
