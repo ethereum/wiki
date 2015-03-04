@@ -406,97 +406,121 @@ BLK_LIMIT_FACTOR 와 EMA_FACTOR은  상수이며 각각 잠정적으로 65536와
 
 ### 연산과 튜링완전성(Computation And Turing-Completeness)
 
-An important note is that the Ethereum virtual machine is Turing-complete; this means that EVM code can encode any computation that can be conceivably carried out, including infinite loops. EVM code allows looping in two ways. First, there is a `JUMP` instruction that allows the program to jump back to a previous spot in the code, and a `JUMPI` instruction to do conditional jumping, allowing for statements like `while x < 27: x = x * 2`. Second, contracts can call other contracts, potentially allowing for looping through recursion. This naturally leads to a problem: can malicious users essentially shut miners and full nodes down by forcing them to enter into an infinite loop? The issue arises because of a problem in computer science known as the halting problem: there is no way to tell, in the general case, whether or not a given program will ever halt.
+중요한 점은 이더리움 가상 머신(EVM)이 튜링-완전하다는 것이다. 즉 EVM은 무한 순환을 포함한 상상가능한 모든 계산 수행을 코딩할 수 있다. EVM코드는 순환 계산을 다음 두 가지 방법으로 수행한다.
+첫번째는 JUMP 명령어로 코드의 이전 장소로 되돌아가고,  JUMPI 명령어로 while x < 27: x = x * 2 같은 문장처럼 조건에 따라 건너뛰게 하는 것이다.
+두번째는 한 계약이 재귀 반복을 통해 순환을 일으킬 가능성이 있는 다른 계약을 호출하는 것이다.
+이것은 자연스럽게 어떤 문제를 야기한다: 악의적인 사용자가 계산을 무한 순환에 빠뜨리는 방법으로 채굴자와 풀 노드를 마비시켜버릴 수 있을까?
+컴퓨터 학계에서 정지문제(halting problem)라고 알려진 유명한 문제를 통해 이런 이슈를 피할 수 없음을 알 수 있다. 일반적으로 어떤 주어진 문제가 궁극적으로 멈추는지 아닌지를 미리 판별할 방법은 없다.
+상태변환 과정에서 설명했듯이, 한 거래에 최대로 계산할 수 있는 단계 수를 설정함으로써 우리는 해답을 얻을 수 있다. 만약 계산 단계가 그 최대수보다 더 많으면 계산은 원점으로 돌아가지만 수수료는 그대로 지불된다
+메시지들도 같은 방법으로 작동한다. 우리가 제시한 해답의 의미를 더 잘 이해하기 위해, 아래와 같은 몇가지 보기를 생각해보자.
 
-As described in the state transition section, our solution works by requiring a transaction to set a maximum number of computational steps that it is allowed to take, and if execution takes longer computation is reverted but fees are still paid. Messages work in the same way. To show the motivation behind our solution, consider the following examples:
+* 한 악의적 공격자가 무한 순환을 실행하는 계약을 만들어 채굴자로 하여금 무한 순환을 실행하도록 거래를 보냈다고 하자. 채굴자는 거래를 진행하고 무한 순환을 실행해 가스를 다 소모해서 실행 도중에 멈춘다고 하더라도, 거래는 여전히 유효하고 채굴자는 여전히 공격자에게 이미 실행된  각 계산 단계마다의 수수료를 요구할 수 있다. 
+* 한 악의적 공격자가 채굴자에게 계산을 오랫동안 계속하게 할 목적으로 아주 긴 무한 순환 프로그램을 짰다고 하자. 계산이 끝났을 때 아주 조금의 블록만이 생성되어 채굴자가 수수료를 요구하기 위해 그 거래를 포함하는게 불가능하게 만드는 게 악의적 공격자의 목적이다. 하지만, 그 공격자는 실제 실행되는 계산 단계의 상한선을 규정하는 STARTGAS 명령어에 대한 값을 제출해야만 하고, 따라서 채굴자는 해당 계산이 과도하게 많은 단계의 수를 필요로 한다는 것을 계산 전에 미리 알게 된다.
+* 예를 들어send(A,contract.storage[A]); contract.storage[A] = 0, 같은 명령이 들어간 계약이 있다고 하자. 한 악의적 공격자가 이 계약을 본 후 첫번째 계산 단계만 실행시키고 두번째 단계는 실행할 수 없을 만큼의(예를 들어 예금 인출만 한 다음  장부에 기록되는 스텝은 실행되지 않게) 가스만 넣고 거래를 진행시켰다고 하자.  계약 작성자는 이런 공격에 대해 방어를 걱정할 필요가 없다. 왜냐하면 계산 실행이 도중에 멈추면, 해당 변화도 원상복구되기 때문이다.
+* 어떤 금융 계약이 9개의 금융상품 자료값의 평균을 취해 위험을 최소화하도록 작동하고 있다고 하자. 그 중 DAOs 섹션에서 설명된 것 같은 가변주소요청 메커니즘을 통해 변경가능하도록 디자인 된 하나의 자료값을 악의적 공격자가 취한다고 하자. 그렇게 함으로써 이 금융 계약으로부터 펀드를 찾으려는 모든 시도에 대해 가스가 다 소모되도록 시도하게 된다. 하지만 금융 계약은 이 문제를 막기 위해 메시지 위에 가스 한도를 설정해 두는 것으로 공격을 방어할 수 있다..
 
-* An attacker creates a contract which runs an infinite loop, and then sends a transaction activating that loop to the miner. The miner will process the transaction, running the infinite loop, and wait for it to run out of gas. Even though the execution runs out of gas and stops halfway through, the transaction is still valid and the miner still claims the fee from the attacker for each computational step.
-* An attacker creates a very long infinite loop with the intent of forcing the miner to keep computing for such a long time that by the time computation finishes a few more blocks will have come out and it will not be possible for the miner to include the transaction to claim the fee. However, the attacker will be required to submit a value for `STARTGAS` limiting the number of computational steps that execution can take, so the miner will know ahead of time that the computation will take an excessively large number of steps.
-* An attacker sees a contract with code of some form like `send(A,contract.storage[A]); contract.storage[A] = 0`, and sends a transaction with just enough gas to run the first step but not the second (ie. making a withdrawal but not letting the balance go down). The contract author does not need to worry about protecting against such attacks, because if execution stops halfway through the changes get reverted.
-* A financial contract works by taking the median of nine proprietary data feeds in order to minimize risk. An attacker takes over one of the data feeds, which is designed to be modifiable via the variable-address-call mechanism described in the section on DAOs, and converts it to run an infinite loop, thereby attempting to force any attempts to claim funds from the financial contract to run out of gas. However, the financial contract can set a gas limit on the message to prevent this problem.
-
-The alternative to Turing-completeness is Turing-incompleteness, where `JUMP` and `JUMPI` do not exist and only one copy of each contract is allowed to exist in the call stack at any given time. With this system, the fee system described and the uncertainties around the effectiveness of our solution might not be necessary, as the cost of executing a contract would be bounded above by its size. Additionally, Turing-incompleteness is not even that big a limitation; out of all the contract examples we have conceived internally, so far only one required a loop, and even that loop could be removed by making 26 repetitions of a one-line piece of code. Given the serious implications of Turing-completeness, and the limited benefit, why not simply have a Turing-incomplete language? In reality, however, Turing-incompleteness is far from a neat solution to the problem. To see why, consider the following contracts:
+튜링-완전에 대한 대칭적인 개념은 튜링-비완전이다. 즉 JUMP 명령어나 JUMPI 명령어가 존재하지 않으며, 그 어떤 주어진 시간에도 오직 각각의 계약의 복사본 하나만이 허용된다. 이런 시스템 아래에서는 위에 서술된 수수료 시스템이라든지 우리가 제시한 해답의 효율성을 둘러싼 불확실성에 관한 논쟁은 불필요할 것이다. 한 계약을 실행하는데 드는 비용은 프로그램의 크기에 따라 상한선이 정해질 것이기 때문이다.
+나아가, 튜링-비완전성은 그리 큰 제한도 아니다. 우리가 현재까지 상상했던 계약 가운데, 순환 명령을 필요로 했던 것은 단 하나 뿐이었다.  그리고 그 순환 명령조차도 프로그램 코딩에서 한 문장을 26번 반복함으로써 없앨수 있었다.
+튜링-완전이 함의하고 있는 심각성과 그 제한적인 이점을 생각해볼 때, 왜 튜링-불완전 언어를 쓰면 안되는 걸까?
+하지만 현실적으로, 튜링-불완전성은 순환 문제와 악성 공격에 대한 깔끔한 해답이 아니다.
+왜 그런지를 알기 위해 아래와 같은 예제 계약을 보자. 
 
     C0: call(C1); call(C1);
     C1: call(C2); call(C2);
     C2: call(C3); call(C3);
     ...
     C49: call(C50); call(C50);
-    C50: (run one step of a program and record the change in storage)
+    C50: (프로그램의 한 단계를 실행한 후 그 변화를 저장소에 기록한다.) 
 
-Now, send a transaction to A. Thus, in 51 transactions, we have a contract that takes up 2<sup>50</sup> computational steps. Miners could try to detect such logic bombs ahead of time by maintaining a value alongside each contract specifying the maximum number of computational steps that it can take, and calculating this for contracts calling other contracts recursively, but that would require miners to forbid contracts that create other contracts (since the creation and execution of all 26 contracts above could easily be rolled into a single contract). Another problematic point is that the address field of a message is a variable, so in general it may not even be possible to tell which other contracts a given contract will call ahead of time. Hence, all in all, we have a surprising conclusion: Turing-completeness is surprisingly easy to manage, and the lack of Turing-completeness is equally surprisingly difficult to manage unless the exact same controls are in place - but in that case why not just let the protocol be Turing-complete?
+이제 A 에게 거래를 보내자. 51번의 거래에서 우리는 2 의 50승의 계산 단계를 계속하는 계약을 보낸다..채굴자들은 각 계약에 따른 계산 단계의 최대 수와 다른 계약을 재귀적으로 호출하는 계약에 대한 계산 단계 수를 모두 확보함으로써, 이런 논리 폭탄을 사전에 감지하려고 시도할 수 있을지도 모른다. 하지만 이런 시도는 채굴자들이 다른 계약을 호출하는 계약은 다루지 못하게 만든다. (왜냐하면 위의 모든 26개 계약의 작성과 실행은 한 줄의 계약으로 쉽게 합쳐질 수 있기 때문이다.)
+다른 문제적 지점은 메시지의 주소 필드는 변수라는 점이다. 그래서 일반적으로, 주어진 계약이 사전에 미리 호출하는 다른 계약이 뭔지를 판별하는 것조차 불가능할지도 모른다.
+그래서,결국  우리는 놀라운 결론에 도달한다. 튜링-완전은 놀랍도록 다루기 쉬우며, 만약 튜링완전성이 없으면 정확히 같은 계약으로 대체할 수 없는 한, 마찬가지로 다루기가 놀랍도록 어렵다는 점이다. 그렇다면, 그냥 그 프로토콜을 튜링-완전하게 놔두는게 좋을 것이다.
 
-### Currency And Issuance
+### 통화 그리고 발행(Currency and Issuance)
 
-The Ethereum network includes its own built-in currency, ether, which serves the dual purpose of providing a primary liquidity layer to allow for efficient exchange between various types of digital assets and, more importantly, of providing a mechanism for paying transaction fees. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate in Bitcoin), the denominations will be pre-labelled:
+이더리움(Ethereum) 네트워크는 그 안에서 자체적으로 통용되는, ‘이더(Ether)’라는 화폐를 가지고 있다. 이더는 여러가지 가상자산들간의 효율적인 교환을 가능케하는 매개물의 역할을 하며, 또한 트랜잭션 수수료(transaction fee)를 지불하기 위한 방법을 제공한다. 사용자의 편의와 향후 있을 지 모르는 논쟁을 예방하는 차원에서, 이더(Ether)의 각 단위에 대한 명칭은 다음과 같이 미리 정해졌다. (비트코인 명칭과 관련하여 벌어지는 논쟁 참조)
 
 * 1: wei
 * 10<sup>12</sup>: szabo
 * 10<sup>15</sup>: finney
 * 10<sup>18</sup>: ether
 
-This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi". In the near future, we expect "ether" to be used for ordinary transactions, "finney" for microtransactions and "szabo" and "wei" for technical discussions around fees and protocol implementation; the remaining denominations may become useful later and should not be included in clients at this point.
+위 명칭들은, 미화 명칭인 “달러”와 “센트” 또는 비트코인의 “BTC”와 “사토시” 등의 확장개념으로 생각하면 이해하는데 도움이 될 것이다. 가까운 미래에, “이더(ether)”는 일반 거래(transaction)를 위해, “피니(finney)”는 소액결제를 위해, 그리고 “싸보 또는재보(zsabo)”와 “웨이(wei)”가 수수료나 프로토콜도입 등과 관련된 기술적논의를 위해 사용될 것으로 기대된다. 나머지 명칭들은, 지금 당장은 클라이언트에 포함시키지 않는다.
 
-The issuance model will be as follows:
+화페발행 모델:
 
-* Ether will be released in a currency sale at the price of 1000-2000 ether per BTC, a mechanism intended to fund the Ethereum organization and pay for development that has been used with success by other platforms such as Mastercoin and NXT. Earlier buyers will benefit from larger discounts. The BTC received from the sale will be used entrirely to pay salaries and bounties to developers and invested into various for-profit and non-profit projects in the Ethereum and cryptocurrency ecosystem.
-* 0.099x the total amount sold (60102216 ETH) will be allocated to the organization to compensate early contributors and pay ETH-denominated expenses before the genesis block.
-* 0.099x the total amount sold will be maintained as a long-term reserve.
-* 0.26x the total amount sold will be allocated to miners per year forever after that point.
+* BTC 당 1000-2000개의 가격으로 이더를 판매한다. Matercoin이나 NXT와 같은 다른 암호화화폐 플랫폼에서 성공적으로 사용했던 방법으로, 이더리움 조직을 금전적으로 지원하고 개발에 필요한 비용을 댄다. 이 시기에 이더를 구매하는 구매자들은 큰 폭의 할인을 통해 저렴하게 이더를 얻게 된다. 이렇게 모인 자금은 전액, 개발자를 위한 월급과 보상, 그리고 여러가지의 이더리움 관련 영리와 비영리프로젝트를 위한 투자금으로써 사용된다. 
+* 판매 된 총 이더(60,102,216 ETH)의 0.099배 만큼(5,950,110)의 이더가 신규발행 되어, 이더리움 런칭 전의  초기기여자들과 ‘이더로 이미 발생 된 비용에 대한 미지급금’을 처리하기 위해 이더리움조직(Ethereum organization)에게 분배된다.
+* 또 다른 0.099배 만큼의 이더는 장기보유금으로 신규 발행하여 적립해둔다.
+* 채굴시점 이후부터 영구히 매년, 총 판매수량(60,102,216 ETH)의 0.26배 만큼(15,626,576)씩을 채굴자에게 신규 발행해준다.
 
-| Group  | At launch | After 1 year | After 5 years
+| 분류  | 런칭시 | 1년후 | 5년후 |
 | ------------- | ------------- |-------------| ----------- |
-| Currency units  | 1.198X | 1.458X  |  2.498X |
-| Purchasers  | 83.5% | 68.6%  | 40.0% |
-| Reserve spent pre-sale | 8.26% | 6.79% | 3.96% |
-| Reserve used post-sale | 8.26% | 6.79% | 3.96% |
-| Miners | 0% | 17.8% | 52.0% |
+| 초기판매 이더총량에 대한 배수  | 1.198X | 1.458X  |  2.498X |
+| 구매자  | 83.5% | 68.6%  | 40.0% |
+| 런칭전 미지급 적립금 | 8.26% | 6.79% | 3.96% |
+| 런칭후 적립급 | 8.26% | 6.79% | 3.96% |
+| 채굴자 채굴량 | 0% | 17.8% | 52.0% |
 
-**Long-Term Supply Growth Rate (percent)**
+** 이더 장기 공급 성장률(%)**
 
 ![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
 
-_Despite the linear currency issuance, just like with Bitcoin over time the supply growth rate nevertheless tends to zero_
+_매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러한 것처럼, 발행된 총 이더에 대한 신규 이더의 발행률은 그 비중이 0을 향하여 계속 줄어들게 된다._
 
-The two main choices in the above model are (1) the existence and size of an endowment pool, and (2) the existence of a permanently growing linear supply, as opposed to a capped supply as in Bitcoin. The justification of the endowment pool is as follows. If the endowment pool did not exist, and the linear issuance reduced to 0.217x to provide the same inflation rate, then the total quantity of ether would be 16.5% less and so each unit would be 19.8% more valuable. Hence, in the equilibrium 19.8% more ether would be purchased in the sale, so each unit would once again be exactly as valuable as before. The organization would also then have 1.198x as much BTC, which can be considered to be split into two slices: the original BTC, and the additional 0.198x. Hence, this situation is _exactly equivalent_ to the endowment, but with one important difference: the organization holds purely BTC, and so is not incentivized to support the value of the ether unit.
+위 모델에서 결정되어야할 두 가지 선택이 있다. (1) 하나는, ‘재단보유금(endowment pool)’의 존재유무와 그 규모이며, (2) 둘째는 총 발행코인량이 정해져 있는 비트코인과는 달리, 신규코인을 끊임없이 발행해야 하는지의 여부이다. 
 
-The permanent linear supply growth model reduces the risk of what some see as excessive wealth concentration in Bitcoin, and gives individuals living in present and future eras a fair chance to acquire currency units, while at the same time retaining a strong incentive to obtain and hold ether because the "supply growth rate" as a percentage still tends to zero over time. We also theorize that because coins are always lost over time due to carelessness, death, etc, and coin loss can be modeled as a percentage of the total supply per year, that the total currency supply in circulation will in fact eventually stabilize at a value equal to the annual issuance divided by the loss rate (eg. at a loss rate of 1%, once the supply reaches 26X then 0.26X will be mined and 0.26X lost every year, creating an equilibrium).
+‘재단보유금(endowment pool)’의 정당성에 대해서는 다음과 같이 설명할 수 있다. 만일 이러한 보유금이 없는 상황이라면, 같은 인플레이션율을 유지하기 위해서는 연간 발행량이 26%가 아닌, 21.7%로 줄어들어야 한다. 그렇게 되면 이더의 총량은 16.5% 줄어들게 되며, 각 이더의 가치는 19.8%증가하게 된다. 이 경우 균형을 위해서는 19.8%의 이더가 더 프리세일에서 판매되어야 한다. 그렇게 되면 각 경우의 이더 가치는 서로 정확히 동일해진다. 그렇게 되면 이더리움 재단이 1.198배의 BTC를 가지게 되는데, 이를 처음 BTC 액수(1배수)와 추가된 0.198배수의 BTC로 나누어보면 결국 상황이 동일해진다는 점을 알 수 있다. 그러나 한 가지 차이점은 이 경우 조직이 가진것은 이더가 아닌 BTC이므로, 이더의 가치를 높이기 위한 인센티브를 얻지 못한다는 점이다.
 
-Note that in the future, it is likely that Ethereum will switch to a proof-of-stake model for security, reducing the issuance requirement to somewhere between zero and 0.05X per year. In the event that the Ethereum organization loses funding or for any other reason disappears, we leave open a "social contract": anyone has the right to create a future candidate version of Ethereum, with the only condition being that the quantity of ether must be at most equal to `60102216 * (1.198 + 0.26 * n)` where `n` is the number of years after the genesis block. Creators are free to crowd-sell or otherwise assign some or all of the difference between the PoS-driven supply expansion and the maximum allowable supply expansion to pay for development. Candidate upgrades that do not comply with the social contract may justifiably be forked into compliant versions.
+정해진 양의 이더를 영구적으로 신규발행하는 모델(permanent linear supply growth model)은 비트코인이 겪고있는 ‘부의 집중현상’을 완화시킬 수 있다. 또한 현재 또는 미래의 참여자들이 계속해서 이더를 시장이 아닌 채굴을 통해 얻을 수 있는 기회를 제공한다. 동시에, “공급성장률(Supply Growth Rate)”은 계속해서 0을 향해 줄어들게 된다. 우리측의 이론으로는 다음과 같은 현상을 예상해 볼 수 있다. 시간이 흐름에 따라 사용자들의 부주의, 죽음 등으로 인해 현실적으로 일부의 이더들이 계속해서 시장에서 사라지게 된다. 이렇게 사라지는 이더로 인해 점점 줄어드는 ‘시장유통가능 이더총량(the total currency supply in circulation)’은 매년 신규발행되는 이더에 의해 균형을 이루게 된다. (ex. 만일 총 이더량이 26배수(1,562,657,616 ETH)에 달했고, 매년 이 중 1%(0.26배수)에 해당하는 이더가 소실된다면, 이는 매년 새로이 발행되는 0.26배수의 이더와 균형을 이루게 된다)
+ 
+장래, 공급성장률을 약 ‘0에서 0.05배수 이내’가 되도록 수정을 하면서, POS로 채굴모델을 변경할 계획을 가지고 있다. 만일, ‘이더리움 재단(Ethereum organization)’이 보유금을 모두 잃거나, 또는 여타의 이유로 사라지게 되면, “사회적계약(social contract)”을 열어둘 것이다. 이를 통해, 이더 발행량을 최대 ‘60102216 * (1.198 + 0.26 * n)‘를 넘지 않도록만(n은 첫 블록 생성 이후의 총 년수) 지킨다면, 누구든지 이더리움의 ‘후속버전(a future candidate version:RC버전)’을 만들 수 있을 것이다. 이 후속버전의 창시자는 개발/관리에 필요한 비용을 충당하기 위해서, 공개판매(crowd-sell)를 하거나, ‘총 가능 이더발행량’과 ‘POS를 통한 공급량’ 간의 차액 중 일부나 전부를 이용할 수 있을 것이다. 만일 어떠한 창시자가 이러한 “사회적계약(social contract)”에 반하는 내용을 업데이트하게 된다면, 결국 대의에 의해 합당한(compliant) 버전에서 별개로 포크되어(forked)나와 탈락하게 될 것이다.
 
-### Mining Centralization
+### 채굴 중앙집중화(Mining Centralization)
 
-The Bitcoin mining algorithm works by having miners compute SHA256 on slightly modified versions of the block header millions of times over and over again, until eventually one node comes up with a version whose hash is less than the target (currently around 2<sup>192</sup>). However, this mining algorithm is vulnerable to two forms of centralization. First, the mining ecosystem has come to be dominated by ASICs (application-specific integrated circuits), computer chips designed for, and therefore thousands of times more efficient at, the specific task of Bitcoin mining. This means that Bitcoin mining is no longer a highly decentralized and egalitarian pursuit, requiring millions of dollars of capital to effectively participate in. Second, most Bitcoin miners do not actually perform block validation locally; instead, they rely on a centralized mining pool to provide the block headers. This problem is arguably worse: as of the time of this writing, the top three mining pools indirectly control roughly 50% of processing power in the Bitcoin network, although this is mitigated by the fact that miners can switch to other mining pools if a pool or coalition attempts a 51% attack.
+비트코인 채굴 방식은, 목표 값(현재 기준 약 2<sup>192</sup>)보다 낮은 값이 나올 때까지, 블록헤더에 대한 sha256 해싱 작업을 무한정 반복하는 것이다. 하지만 해당 방식에는 두 가지 약점이 존재한다. 
 
-The current intent at Ethereum is to use a mining algorithm where miners are required to fetch random data from the state, compute some randomly selected transactions from the last N blocks in the blockchain, and return the hash of the result. This has two important benefits. First, Ethereum contracts can include any kind of computation, so an Ethereum ASIC would essentially be an ASIC for general computation - ie. a better CPU. Second, mining requires access to the entire blockchain, forcing miners to store the entire blockchain and at least be capable of verifying every transaction. This removes the need for centralized mining pools; although mining pools can still serve the legitimate role of evening out the randomness of reward distribution, this function can be served equally well by peer-to-peer pools with no central control.
+첫번째는 현재 채굴참여에 대한 장벽이 매우 높아졌다는 것이다. 현재 채굴생태계는 ASIC(특수목적을 위해 전용으로 설계된 반도체로, 범용반도체에 비해 성능이 뛰어남)에 의해 완전히 잠식되었다. 이러한 ASIC채굴기는 일반 GPU채굴기 등에 비해 수 천배 이상의 효율을 가지는데, 따라서 ASIC이 아닌 일반컴퓨터를 통한 일반사용자들의 채굴행위는 경쟁력에서 밀려 효용을 잃게 되었다. 과거의 채굴행위가 분권화되고 이타적인 참여자 중심의 ‘생태계’였다면, 현재는 수십억원의 투자가 되어야만 참여가 가능한 재력가들의 ‘사업’으로 변질되고 말았다. 
 
-This model is untested, and there may be difficulties along the way in avoiding certain clever optimizations when using contract execution as a mining algorithm. However, one notably interesting feature of this algorithm is that it allows anyone to "poison the well", by introducing a large number of contracts into the blockchain specifically designed to stymie certain ASICs. The economic incentives exist for ASIC manufacturers to use such a trick to attack each other. Thus, the solution that we are developing is ultimately an adaptive economic human solution rather than purely a technical one.
+두번째는 채굴방식이다. 이전처럼 여러 지역에서 여러 참여자가 블록생성에 참여하는 것이 아니라, 중앙집중화된 채굴풀(Mining pool)이 제공하는 블록헤더(block header)에 의존하여 채굴에 참여한다는 점이다. 이로 인한 부작용이 상당한데, 현재 기준으로는, 3개 채굴풀들이 개인들의 컴퓨팅파워를 인계 받아서 무려 50%에 육박하는 해시를 간접적으로 통제하고 있다. 물론 해당 풀의 점유율이 50%를 넘어가기 전에 개인들이 다른 소규모 풀들로 이동을 할 수 있기 때문에, 풀들이 마음대로 자원을 남용할 수는 없겠지만, 이는 여전히 큰 문제이다. 
 
-### Scalability
+이더리움의 채굴 방식은 조금 다르다. 각 채굴자가 상태정보(the state)에서 무작위의 정보를 가져와서, 무작위로 선택 된 최근 몇개의 블록내역을 해싱 작업하고 결과값을 내놓는 것이다. 이렇게 하게 되면 두가지 이점이 있다. 
 
-One common concern about Ethereum is the issue of scalability. Like Bitcoin, Ethereum suffers from the flaw that every transaction needs to be processed by every node in the network. With Bitcoin, the size of the current blockchain rests at about 15 GB, growing by about 1 MB per hour. If the Bitcoin network were to process Visa's 2000 transactions per second, it would grow by 1 MB per three seconds (1 GB per hour, 8 TB per year). Ethereum is likely to suffer a similar growth pattern, worsened by the fact that there will be many applications on top of the Ethereum blockchain instead of just a currency as is the case with Bitcoin, but ameliorated by the fact that Ethereum full nodes need to store just the state instead of the entire blockchain history.
+첫번째는 이더리움 계약이 모든 종류의 컴퓨터 계산방식을 포괄할 수 있다는 점이다. 따라서 자연히 ASIC도 모든 계산방식에 적합하게 설계되어야 하는데, 이렇게 되면 결국 ASIC이라기 보다는 일종의 고성능 CPU가 되는 셈이다. 즉 현실적으로 ASIC(주문형 전용반도체) 자체가 무용지물이 된다.
 
-The problem with such a large blockchain size is centralization risk. If the blockchain size increases to, say, 100 TB, then the likely scenario would be that only a very small number of large businesses would run full nodes, with all regular users using light SPV nodes. In such a situation, there arises the potential concern that the full nodes could band together and all agree to cheat in some profitable fashion (eg. change the block reward, give themselves BTC). Light nodes would have no way of detecting this immediately. Of course, at least one honest full node would likely exist, and after a few hours information about the fraud would trickle out through channels like Reddit, but at that point it would be too late: it would be up to the ordinary users to organize an effort to blacklist the given blocks, a massive and likely infeasible coordination problem on a similar scale as that of pulling off a successful 51% attack. In the case of Bitcoin, this is currently a problem, but there exists a blockchain modification [suggested by Peter Todd](http://sourceforge.net/p/bitcoin/mailman/message/31709140/) which will alleviate this issue.
+두번째로, 채굴자들은 작업 시 전체 블록체인을 다운 받아 모든 이체내역을 검증해야 한다는 점이다. 이렇게 되면 중앙집중화 된 대형 풀이 필요없게 된다. 물론 대형풀 자체는 신규블록생성 보상을 균일하게 참여자들에게 배분해 주는 효과가 있긴 하지만, 그러한 효과는 P2P형식의 풀(pool)을 통해서도 충분히 구현이 가능하다. 굳이 중앙집중형 풀(centralized pool) 방식을 사용할 필요가 없다.
 
-In the near term, Ethereum will use two additional strategies to cope with this problem. First, because of the blockchain-based mining algorithms, at least every miner will be forced to be a full node, creating a lower bound on the number of full nodes. Second and more importantly, however, we will include an intermediate state tree root in the blockchain after processing each transaction. Even if block validation is centralized, as long as one honest verifying node exists, the centralization problem can be circumvented via a verification protocol. If a miner publishes an invalid block, that block must either be badly formatted, or the state `S[n]` is incorrect. Since `S[0]` is known to be correct, there must be some first state `S[i]` that is incorrect where `S[i-1]` is correct. The verifying node would provide the index `i`, along with a "proof of invalidity" consisting of the subset of Patricia tree nodes needing to process `APPLY(S[i-1],TX[i]) -> S[i]`. Nodes would be able to use those nodes to run that part of the computation, and see that the `S[i]` generated does not match the `S[i]` provided.
+물론 위의 채굴 모델이 아직 검증된 것은 아니다. 또한 ASIC장비에 대한 저항성을 높이는 작업도, 이론처럼 현실에서 적용이 될 수 있을지에 대하여는 의문의 여지가 있다. 하지만 한 가지 확실한 것은, 여러종류의 수많은 계약이 적용이 되면, 이를 모두 포괄하는 ASIC을 예전처럼 만들어 내기는 어렵다는 점이다. 또한 어떠한 종류의 작업에 특화 된 ASIC이 존재한다면, 이에 반하는 작업을 요하는 계약이 생성되는 것을 원치 않을 것이다. 그러면 해당 ASIC채굴자의 경쟁자는 그에 적대적인, 즉 비효율적인 작업을 요하는 계약들을 생성해 냄으로써 공격을 가할 것이다. 즉, 각 부분에 특화된 ASIC을 소유한 채굴자들은 서로에게 불리한 작업을 하게하는 계약들을 만들어 냄으로써 서로를 공격할 것이다. 물론 이러한 방법은 ‘기술적’인 접근이라기보다는 ‘경제학적 인간행동론’에 근거한 접근에 가깝다. 
 
-Another, more sophisticated, attack would involve the malicious miners publishing incomplete blocks, so the full information does not even exist to determine whether or not blocks are valid. The solution to this is a challenge-response protocol: verification nodes issue "challenges" in the form of target transaction indices, and upon receiving a node a light node treats the block as untrusted until another node, whether the miner or another verifier, provides a subset of Patricia nodes as a proof of validity.
+### 확장성(Scalability)
 
-## Conclusion
+이더리움에 대한 한 가지 공통된 의문점은 확장성 부분이다. 비트코인과 마찬가지로 이더리움도 모든 이체작업이 네크워크 상의 전체 노드에 의해서 일일이 검증 및 작업이 되어야 한다는 약점이 있다. 비트코인의 경우, 현재 전체 블록체인의 크기가 약 15GB에 이르며, 그 크기는 매 시간 1MB씩 꾸준히 늘어나고 있다. VISA의 경우 초당 2,000여 건의 이체작업을 처리하는데, 이는 매 3초당 1MB씩의 확장(시간 당 1GB, 매 년 8TB)을 의미한다. 이더리움도 비슷한 문제를 겪을 것이고, 단순히 화폐로써의 역할 만하는 비트코인에 비한다면, 온갖 종류의 탈중앙화된 어플리케이션들(Dapps: Decentralized applications)을 포괄하는 이더리움은 이 부분에서 훨씬 더 많은 문제를 겪을 수도 있을 것이다. 하지만 한 가지 다른 점은, 이더리움은 ‘전체 블록체인 히스토리’가 아닌, 단지 ‘상태 정보(the state)’만 가지고 있으면 된다는 점이다. 
 
-The Ethereum protocol was originally conceived as an upgraded version of a cryptocurrency, providing advanced features such as on-blockchain escrow, withdrawal limits, financial contracts, gambling markets and the like via a highly generalized programming language. The Ethereum protocol would not "support" any of the applications directly, but the existence of a Turing-complete programming language means that arbitrary contracts can theoretically be created for any transaction type or application. What is more interesting about Ethereum, however, is that the Ethereum protocol moves far beyond just currency. Protocols around decentralized file storage, decentralized computation and decentralized prediction markets, among dozens of other such concepts, have the potential to substantially increase the efficiency of the computational industry, and provide a massive boost to other peer-to-peer protocols by adding for the first time an economic layer. Finally, there is also a substantial array of applications that have nothing to do with money at all.
+만일 개개의 모든 노드가 전체 블록체인을 보관해야 한다면, 아래와 같은 문제가 생길 수 있다. 블록체인의 크기가 점점 커져 100TB에 육박하게 되었다고 생각해보자. 이 정도 수준으로 보관해야하는 블록체인의 크기가 커지면, 오직 소수의 사업가나 기업 형태의 참여자만이 이를 감당할 수 있게 된다. 다수의 일반 사용자들은 ‘라이트 SPV(Simple Payment Verification)’ 노드만들 사용하게 될 것이다. 이렇게 되면, 전체 블록체인의 내역을 가진 소수의 참여자들이 결탁하여, 장부내역을 수정하거나 블록보상량을 바꿔치기 하는 등의 조작행위가 일어날 수 있을 것이다. 단순한 ‘라이트 노드(light node)’로써는 이러한 조작을 감지할 방법이 없다. 물론 ‘전체 블록체인를 소유한 노드(full node)’ 중에서도 선의의 참가자가 있을지 모른다. 그러나 다수의 ‘완전노드(full node)’가 작심하여 블록체인 조작을 시도한다면, 이를 발견하는 시점에서는 이미 늦었다고 봐야 할 것이다. 실제로 비트코인이 현재 이와 비슷한 문제에 처할 위험이 있다고 경고받고 있으며, 해당 문제를 완화시키는 방법에 대하여는 [Peter Todd에 의해 논의된 바](http://sourceforge.net/p/bitcoin/mailman/message/31709140/) 있다.
 
-The concept of an arbitrary state transition function as implemented by the Ethereum protocol provides for a platform with unique potential; rather than being a closed-ended, single-purpose protocol intended for a specific array of applications in data storage, gambling or finance, Ethereum is open-ended by design, and we believe that it is extremely well-suited to serving as a foundational layer for a very large number of both financial and non-financial protocols in the years to come.
+위의 문제를 해결키 위해, 가까운 시일 안에 두 가지의 전략을 추가로 도입할 예정이다. 첫번째로 이더리움도 기본적으로 블록체인 기술을 바탕으로 한 채굴 알고리듬을 사용하고 있기 때문에, 모든 채굴자들은 ‘완전노드(full node)’가 되도록 의무화 될 것이며, 이는 필요한 최소한의 완전노드 숫자를 확보할 수 있도록 해줄 것이다 . 두번째로, 이체내역 검증 작업 이후 블록체인에 ‘중간상태 트리루트(an intermediate state tree root)’를 도입하는 것이다. 이렇게 되면, 아무리 블록생성 작업이 소수의 노드에 집중되더라도, 단 하나의 선의의 노드(honest node)만 존재한다면 검증 프로토콜(verification protocol)을 통해 이 문제를 해결할 수 있다. 
 
-## Notes and Further Reading
+만일 어떠한 채굴노드가 전파한 블록이 검증오류(invalid)처리가 되었다면, 해당 블록의 ‘구성(format)’이 맞지 않거나 ‘상태내역 S [ n ]’이 틀린 경우일 것이다. ‘S [ 0 ]’ 상태가 옳은 것으로 간주되기 때문에, ‘S[ i-1 ]’이 맞다면, ‘S[ i ]’에 오류가 있는 것이다. 검증작업에 참여하는 노드는, ‘APPLY(S[i-1],TX[i]) -> S[i]’ 작업(processing)을 하는 ‘페트리샤 트리 노드의 부분집합(the subset of Patricia tree)’을 통해 ‘검증오류증명(proof of invalidity)’과 ‘인덱스 i’를 제공한다. 노드들은, 위의 노드들을 이용해 해당 작업을 수행하며, 생성한 ‘S[ i ]’가 제공받은 ‘S[ i ]’와 일치하지 않음을 발견하게 된다. 
 
-#### Notes
+또한 ‘불완전한 블록(incomplete block)’을 전파하려는 악의의 채굴노드들과 관련된 더욱 정교한 공격이 이루어질 수 있다. 블록을 검증하는데에 필요한 정보가 온전히 존재하지 않을 수도 있다. 이 경우, ‘질의-응답프로토콜(challenge-response protocol)’ 기법이 사용될 수 있다. 검증노드가 ‘목표 블록의 인덱스 형태(target transaction indices)’로 ‘질문(challenge)’을 생성하고, 노드를 수신하는 라이트노드(light node)는 해당 블록(challenge)을 일단 검증오류블록으로 취급한다. 이후, 다른 노드(채굴노드이든 검증노드이든)가 ‘페트리샤 트리 노드의 부분집합(the subset of Patricia tree)’을 검증증명(proof of validity)으로써 제공한다면, 그때서 위의 블록은 검증된(유효한) 것으로 취급된다.
 
-1. A sophisticated reader may notice that in fact a Bitcoin address is the hash of the elliptic curve public key, and not the public key itself. However, it is in fact perfectly legitimate cryptographic terminology to refer to the pubkey hash as a public key itself. This is because Bitcoin's cryptography can be considered to be a custom digital signature algorithm, where the public key consists of the hash of the ECC pubkey, the signature consists of the ECC pubkey concatenated with the ECC signature, and the verification algorithm involves checking the ECC pubkey in the signature against the ECC pubkey hash provided as a public key and then verifying the ECC signature against the ECC pubkey.
-2. Technically, the median of the 11 previous blocks.
-3. Internally, 2 and "CHARLIE" are both numbers, with the latter being in big-endian base 256 representation. Numbers can be at least 0 and at most 2<sup>256</sup>-1.
+## 결론
 
-#### Further Reading
+이더리움 프로토콜은 본래 매우 범용적인 프로그래밍 언어를 통해 ‘블록체인상 에스크로나 인출한도설정, 금전계약, 도박 시장 등의 고급 기능’을 제공하는, 가상화폐의 업그레이드 버전으로 구상되었다. 이더리움 프로토콜은 이러한 어플리케이션들을 직접적으로 제공하는 것이 아니라, 튜링완전언어(Turing-complete programming language)를 통해 이론적으로 거의 모든 형태의 이체방식이나 어플리케이션을 만들어낼 수 있도록 지원한다. 더욱 흥미로운 점은, 이더리움은 단순한 ‘화폐’의 차원을 훨씬 뛰어넘는다는 점이다. 분산저장공간(DFS:decentralized file storage)이나, 분산컴퓨팅, 분산예측시장(decentralized prediction market) 프로토콜 등은 사실 수많은 응용개념들 중 일부에 불과하다. 이러한 새로운 개념들은 컴퓨팅 산업의 효율성을 폭발적으로 높일 수 있는 잠재력이 있으며, P2P프로토콜에 처음으로 ‘경제적인 차원(economic layer)’을 입힘으로써 엄청난 혁신을 가져올 수 있을 것이다. 마지막으로, 컴퓨팅이나 금융과 관련이 없는 분야들에서도 다양한 어플리케이션들이 나올 것이다. 
+
+이더리움 프로토콜이 제공하는 ‘임의상태변환(arbitrary state transition function)’이라는 개념은 고유의 잠재력을 지닌 플랫폼을 탄생시킨다. 기존의 자료저장공간이나 도박, 금융 등의 하나의 목적에 특화된 폐쇠형 구조(close-ended)와는 달리, 이더리움은 자유롭게 조정이 가능한 구조(open-ended)이다. 우리는 이것이 몇 년 이내에, 금융부문이든 비금융부문이든 엄청나게 많은 종류의 서비스를 설계할 수 있도록 돕는 것에 특화된 기반이 될 것이라고 믿는다.
+
+## 주석과 추가자료
+
+#### 주석
+
+1. 관찰력이 좋은 독자라면, 비트코인 주소는 ‘공개키(public key)’가 아니라, ‘타원곡선공개키의 해시(the hash of the elliptic curve public key)’로 이루어져 있다는 것은 눈치챘을 것이다. 물론, 암호학적 관점에서 보자면 ‘공개키 해시(public key hash)’로 부르든 단순히 ‘공개키(public key)’로 부르든 차이는 없다. 왜냐하면, ‘비트코인 암호기법’ 자체가 ‘일종의 맞춤형 전자서명알고리즘’이고, 이 알고리즘에서는 공개키가 ‘타원곡선공개키의 해시(the hash of the Elliptic Curve public key)’를 포함하고 있고, 여기서의 ‘서명(signature)’은 ‘타원곡선서명(ECC signature)’과 연결된 ‘타원곡선공개키(ECC public key)’로 구성되어 있기 때문이다. 또한 ‘검증알고리즘’은 서명(signature) 안의 ‘타원곡선공개키(ECC public key)’를, 공개키로써 제공 된 ‘타원곡선공개키해시(the hash of the elliptic curve public key)’와 대조확인하고, 또한 ‘서명’을 ‘타원곡선공개키(ECC public key)’와 대조하여 검증하는 것이기 때문이다.
+
+2. 기술적으로는, 이전 11개 블록의 중간값(median)이다.
+
+3. 내부적으로는 2와 “CHARLIE” 모두 숫자이다. 다만 “CHARLIE”는 ‘빅 엔디언(big-endian)’ 기반의 256비트로 표시한 것이다. 숫자는 0부터 2<sup>256</sup>-1까지 사용한다.
+
+#### 추가자료
 
 1. Intrinsic value: http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/
 2. Smart property: https://en.bitcoin.it/wiki/Smart_Property
