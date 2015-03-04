@@ -10,10 +10,9 @@ In order to free ethereum implementation developers from the hassle of writing t
 
 ### JSON-RPC Endpoint
 
-Default json-rpc endpoint:
+Default json-rpc endpoint for cpp-ethereum is:
 ```
-CPP: http://localhost:8080
-GO (mist) http://localhost:8545
+http://localhost:8080/
 ```
 
 You can start it by running `eth` application with `-j` option:
@@ -576,7 +575,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[s
 0. The transaction object
 
 ```js
-params = [{
+params: [{
   "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
   "to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
   "gas": "0x76c0",// 30400,
@@ -1242,7 +1241,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":
 0. the shh post object
 
 ```js
-params = [{
+params: [{
   from: "0x0424406a...",
   topic: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
   payload: "0x7b2274797065223a226d6...",
@@ -1297,7 +1296,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0xc9
 0. the identity to check
 
 ```js
-params = ["0xc931d93e97ab07fe42d9234..."]
+params: ["0xc931d93e97ab07fe42d9234..."]
 ```
 
 ##### Response
