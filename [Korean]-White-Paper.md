@@ -9,7 +9,7 @@
 
 ### 목차
 
-* [역사](#역사)
+* [역사](#%EC%97%AD%EC%82%AChistory)
     * [상태변환시스템으로서의 비트코인](#%EC%97%AD%EC%82%AChistory)
     * [채굴](#mining)
     * [머클트리](#merkle-trees)
