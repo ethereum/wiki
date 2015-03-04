@@ -17,9 +17,9 @@ Answers to questions about Ethereum
   * [How to get free testnet Ether?](#how-to-get-free-testnet-ether)
 * [Contracts](#contracts)
   * [Where can I learn about contract development?](#where-can-i-learn-about-contract-development)
+  * [Where can I learn Solidity?](#where-can-i-learn-solidity)
   * [Where can I learn Serpent?](#where-can-i-learn-serpent)
   * [Where can I learn LLL?](#where-can-i-learn-lll)
-  * [Where can I learn Mutan?](#where-can-i-learn-mutan)
   * [Where can I learn Solidity?](#where-can-i-learn-solidity)
   * [How to test contracts?](#how-to-test-contracts)
   * [How to deploy contracts automatically?](#how-to-deploy-contracts-automatically)
@@ -158,15 +158,6 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 + Videos
   + [Programming Society with Asm](https://www.youtube.com/watch?v=xO1AxsYAkU8)
 
-### Where can I learn Mutan, the C-like language?
-
-+ Specifications
-  + [The Mutan Language](https://github.com/ethereum/go-ethereum/wiki/Mutan-0.6)
-+ Examples
-  + [Mutan 0.6 Examples](https://github.com/ethereum/go-ethereum/wiki/Mutan-0.6-Examples)
-+ Videos
-  + [Writing Smart Contracts with Mutan and Go Ethereum](https://www.youtube.com/playlist?list=PLJqWcTqh_zKFQy2LlvkzHR2cEEMTvUWj8)
-
 ### Where can I learn Solidity, the JavaScript-like language?
 
 + Specifications
@@ -193,10 +184,6 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
   + [By Dennis Mckinnon](https://github.com/dennismckinnon/Ethereum-Contracts) ([@dennismckinnon](https://github.com/dennismckinnon))
   + [By Project Douglas](https://github.com/project-douglas/eris/tree/master/contracts) ([@project-douglas](https://github.com/project-douglas))
   + [By Doug A.](https://github.com/d11e9/g3) ([@dlle9](https://github.com/d11e9))
-+ Mutan
-  + [By Jeffrey Wilcke](https://github.com/ethereum/go-ethereum/wiki/Mutan-0.6-Examples) ([@obscuren](https://github.com/obscuren))
-+ CLL
-  + [By Joris Bontje](https://github.com/jorisbontje/cll-sim) ([@jorisbontje](https://github.com/jorisbontje))
 
 ## ÐApps
 
@@ -209,8 +196,6 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 
 ### Where can I learn about ÐApp development?
 
-+ [Your first dapp, under one hour](http://forum.ethereum.org/discussion/1402/how-to-get-started-your-first-dapp-under-one-hour) ([@stephantual](https://github.com/stephantual))
-+ [Sub currency to rainbow coin](http://dappsforbeginners.wordpress.com/2014/10/14/sub-currency-to-rainbow-coin/) (Ken Kappler)
 + [Writing Your Own Currency](http://hidskes.com/blog/2014/05/21/ethereum-dapp-development-for-web-developers/) ([@maran](https://github.com/maran))
 
 ### Where can I find ÐApp development tools?
