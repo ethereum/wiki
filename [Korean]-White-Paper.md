@@ -10,7 +10,7 @@
 ### 목차
 
 * [역사](#역사)
-    * [상태변환시스템으로서의 비트코인](#상태변환시스템으로서의-비트코인)
+    * [상태변환시스템으로서의 비트코인](#%EC%97%AD%EC%82%AChistory)
     * [채굴](#mining)
     * [머클트리](#merkle-trees)
     * [블록체인 사용한 다른 사용사례](#alternative-blockchain-applications)
