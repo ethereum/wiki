@@ -971,7 +971,7 @@ params: [{
 ***
 
 #### `eth_newPoll`
-*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new poll id. To check if the state has changed. Call [eth_changed](#eth_changed)*
+*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new poll id. To check if the state has changed, call [eth_changed](#eth_changed)*
 
 ##### Request Example
 ```bash
