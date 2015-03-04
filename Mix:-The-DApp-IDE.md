@@ -98,3 +98,28 @@ Double-click a `setRating` transaction in the transaction log to debug it. The V
 See the [Ethereum Yellow Paper](http://gavwood.com/Paper.pdf) for VM instruction description.
 
 ## Deployment to network
+
+The deployment step allows users to deploy the current project as a Dapp in the main blockchain.
+This will deploy contracts and package/register front end resources.
+
+Click on `Deploy`, `Deploy to Network`.
+This modal dialog displays: 
+ - A combobox to select the account to use.
+ - `Ethereum Application URL` is the address that users should use in AlethZero to access to the Dapp.
+(ex: eth/user1/app1).
+ - `Web Application Resources URL` is the URL where the front resources (html/js/...) will be stored.
+ - `Amount of gas to use..` is the amount of gas that the deployment process will use to deploy contracts.
+ - `Package (Base64)` is filled only when the resources are packaged. This is the Base64 conversion of the current package.
+
+The first step is to click on `Deploy contract / Package resources`. This step will:
+ - Deploy contracts on the main blockchain.
+ - Package the front end resources (with encryption).
+ - Register the dapp into an owned registrar. (Basically a mapping between DappName (project title) => Hash of the front end package).
+
+Users can now (if they need) click on `Package resources only`, this action will repackage the resources without redeploying contracts on the blockchain.
+
+`Open Package Directory` will open the deployment directory in a file browser.
+
+`Register Web Application` is mandatory, this action will associate the package with an http location (Web Application Resources URL). Used by AlethZero to retrieve the package and display the content in a webview.
+
+Once the `Register Web Application` step is done, users can use AlethZero to access to the dapp, using the Ethereum URL (ex: eth/user1/app1).
