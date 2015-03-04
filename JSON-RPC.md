@@ -137,7 +137,6 @@ none
 
 #### `eth_setListening`
 DEPRECATED/REMOVED
-```
 
 ***
 
