@@ -106,3 +106,12 @@ Users can now (if they need) click on `Package resources only`, this action will
 
 Once the `Register Web Application` step is done, users can use AlethZero to access to the dapp, using the Ethereum URL (ex: eth/user1/app1).
 
+# Account Management
+
+When a new state is created, it is possible to add new accounts which can be used to send transaction.
+It is not possible to delete an account if this one is used by a transaction.
+By default, one account is created, this account will be used to deploy standards contract like `Config` and `NameReg` but can also be used in other transactions.
+For each created account users have to specify a balance. When users start to debugging, the state will be initialized with all the configured accounts/balances.
+
+When a transaction is edited, users can select which account to set as the sender.
+
