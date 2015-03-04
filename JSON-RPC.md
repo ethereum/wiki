@@ -285,7 +285,7 @@ none
 {
 "id":83,
 "jsonrpc":"2.0",
-"result": 1207
+"result": "0x4b7" // 1207
 }
 ```
 
