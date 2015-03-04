@@ -97,7 +97,7 @@ The following RPC messages should be accepted by the RPC-backend:
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c6f20776f726c64"],"id":64}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c6f20776f726c64"],"id":64}'
 ```
 ##### Response
 ```json
@@ -116,7 +116,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":67}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":67}'
 ```
 
 ##### Parameters
@@ -143,7 +143,7 @@ DEPRECATED/REMOVED
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":74}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":74}'
 ```
 
 ##### Parameters
@@ -166,7 +166,7 @@ none
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":64}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":64}'
 ```
 ##### Parameters
 none
@@ -192,7 +192,7 @@ DEPRECATED/REMOVED
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}'
 ```
 
 ##### Parameters
@@ -220,7 +220,7 @@ DEPRECATED/REMOVED
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}'
 ```
 
 ##### Parameters
@@ -242,7 +242,7 @@ none
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":null,"id":1}'
 ```
 
 ##### Parameters
@@ -272,7 +272,7 @@ DEPRTECATED/REMOVED
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}'
 ```
 
 ##### Parameters
@@ -294,7 +294,7 @@ none
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "-0x1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "-0x1"],"id":1}'
 ```
 
 ##### Parameters
@@ -326,7 +326,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorage","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "-0x1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorage","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "-0x1"],"id":1}'
 ```
 
 ##### Parameters
@@ -357,7 +357,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "-0x1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "-0x1"],"id":1}'
 ```
 
 ##### Parameters
@@ -390,7 +390,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","-0x1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","-0x1"],"id":1}'
 ```
 
 ##### Parameters
@@ -421,7 +421,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}'
 ```
 
 ##### Parameters
@@ -450,7 +450,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xe8"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xe8"],"id":1}'
 ```
 
 ##### Parameters
@@ -479,7 +479,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id"Block:1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id"Block:1}'
 ```
 
 ##### Parameters
@@ -508,7 +508,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockNumber","params":["0xe8"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockNumber","params":["0xe8"],"id":1}'
 ```
 
 ##### Parameters
@@ -537,7 +537,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getData","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "-0x1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getData","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "-0x1"],"id":1}'
 ```
 
 ##### Parameters
@@ -568,7 +568,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[see below],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[see below],"id":1}'
 ```
 ##### Parameters
 
@@ -601,7 +601,7 @@ params = [{
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[see below],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[see below],"id":1}'
 ```
 
 ##### Parameters
@@ -630,7 +630,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[see below],"
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_flush","params":[],"id":64}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_flush","params":[],"id":64}'
 ```
 
 ##### Parameters
@@ -652,7 +652,7 @@ none
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", true],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", true],"id":1}'
 ```
 
 ##### Parameters
@@ -705,7 +705,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}'
 ```
 
 ##### Parameters
@@ -730,7 +730,7 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"],"id":1}'
 ```
 
 ##### Parameters
@@ -771,7 +771,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, "0x0"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, "0x0"],"id":1}'
 ```
 
 ##### Parameters
@@ -796,7 +796,7 @@ See [eth_getTransactionByHash](#eth_gettransactionbyhash)
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
 ```
 
 ##### Parameters
@@ -821,7 +821,7 @@ See [eth_getTransactionByHash](#eth_gettransactionbyhash)
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}'
 ```
 
 ##### Parameters
@@ -846,7 +846,7 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
 ```
 
 ##### Parameters
@@ -871,7 +871,7 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCompilers","params":[],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCompilers","params":[],"id":1}'
 ```
 
 ##### Parameters
@@ -893,7 +893,7 @@ none
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}'
 ```
 
 ##### Parameters
@@ -950,7 +950,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic":"0x12341234"}],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic":"0x12341234"}],"id":73}'
 ```
 
 ##### Parameters
@@ -977,7 +977,7 @@ params: [{
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["0x70656e64696e67"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["0x70656e64696e67"],"id":73}'
 ```
 
 ##### Parameters
@@ -1004,7 +1004,7 @@ params: ["0x70656e64696e67"] // "pending"
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":["0x1"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":["0x1"],"id":73}'
 ```
 
 ##### Parameters
@@ -1031,7 +1031,7 @@ params: ["0x1"] // 1
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0x16"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0x16"],"id":73}'
 ```
 
 ##### Parameters
@@ -1067,7 +1067,7 @@ params: ["0x16"] // 22
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterLogs","params":["0x16"],"id":74}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterLogs","params":["0x16"],"id":74}'
 ```
 
 ##### Parameters
@@ -1088,7 +1088,7 @@ See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topic":"0x12341234"}],"id":74}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topic":"0x12341234"}],"id":74}'
 ```
 
 ##### Parameters
@@ -1109,7 +1109,7 @@ See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getWork","params":[],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getWork","params":[],"id":73}'
 ```
 
 ##### Parameters
@@ -1137,7 +1137,7 @@ The hash first of the two result values is the header hash without the nonce (th
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":"0x1234567890abcdef1234567890abcdef"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":"0x1234567890abcdef1234567890abcdef"],"id":73}'
 ```
 
 ##### Parameters
@@ -1164,7 +1164,7 @@ params: ["0x1234567890abcdef1234567890abcdef"]
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["0x74657374","0x6b6579","0x6d79537472696e67"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["0x74657374","0x6b6579","0x6d79537472696e67"],"id":73}'
 ```
 
 ##### Parameters
@@ -1197,7 +1197,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["0x74657374","0x6b6579"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["0x74657374","0x6b6579"],"id":73}'
 ```
 
 ##### Parameters
@@ -1229,7 +1229,7 @@ params: [
 ##### Request Example
 ```bash
 "0x68656c6c6f20776f726c64"
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f2..","topic":"0x68656c6c6f20776f726c64","payload":"0x68656c6c6f20776f726c64","ttl":0x64,"priority":0x64}],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f2..","topic":"0x68656c6c6f20776f726c64","payload":"0x68656c6c6f20776f726c64","ttl":0x64,"priority":0x64}],"id":73}'
 ```
 ##### Parameters
 
@@ -1261,7 +1261,7 @@ params = [{
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_newIdentity","params":[],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_newIdentity","params":[],"id":73}'
 ```
 
 ##### Parameters
@@ -1283,7 +1283,7 @@ none
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283..."],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283..."],"id":73}'
 ```
 
 ##### Parameters
@@ -1336,7 +1336,7 @@ params = ["0xc931d93e97ab07fe42d9234..."]
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic":"0x68656c6c6f20776f726c64", "to": "0x34kh345k34kjh5k34"}],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic":"0x68656c6c6f20776f726c64", "to": "0x34kh345k34kjh5k34"}],"id":73}'
 ```
 
 ##### Parameters
@@ -1366,7 +1366,7 @@ params: [{
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":["0x7"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":["0x7"],"id":73}'
 ```
 
 ##### Parameters
@@ -1393,7 +1393,7 @@ params: ["0x7"] // 7
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_changed","params":["0x7"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_changed","params":["0x7"],"id":73}'
 ```
 
 ##### Parameters
@@ -1430,7 +1430,7 @@ params: ["0x7"] // 7
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getMessages","params":["0x7"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getMessages","params":["0x7"],"id":73}'
 ```
 
 ##### Parameters
