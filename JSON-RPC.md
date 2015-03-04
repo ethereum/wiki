@@ -10,9 +10,10 @@ In order to free ethereum implementation developers from the hassle of writing t
 
 ### JSON-RPC Endpoint
 
-Default json-rpc endpoint for cpp-ethereum is:
+Default json-rpc endpoint:
 ```
-http://localhost:8080/
+CPP: http://localhost:8080
+GO (mist) http://localhost:8545
 ```
 
 You can start it by running `eth` application with `-j` option:
