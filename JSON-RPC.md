@@ -46,24 +46,24 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_mining](#eth_mining)
 * [eth_gasPrice](#eth_gasprice)
 * [eth_accounts](#eth_accounts)
-* [eth_number](#eth_number)
-* [eth_balanceAt](#eth_balanceat)
-* [eth_stateAt](#eth_stateat)
-* [eth_storageAt](#eth_storageat)
-* [eth_countAt](#eth_countat)
-* [eth_transactionCountByHash](#eth_transactioncountbyhash)
-* [eth_transactionCountByNumber](#eth_transactioncountbynumber)
-* [eth_uncleCountByHash](#eth_unclecountbyhash)
-* [eth_uncleCountByNumber](#eth_unclecountbynumber)
-* [eth_codeAt](#eth_codeat)
-* [eth_transact](#eth_transact)
+* [eth_blockNumber](#eth_blocknumber)
+* [eth_getBalance](#eth_getbalance) // deprecated eth_balanceAt
+* [eth_getStorage](#eth_getStorage)
+* [eth_getStorageAt](#eth_getstorageat) // deprecated eth_stateAt
+* [eth_getTransactionCount](#eth_gettransactioncount) // deprecated eth_countAt
+* [eth_getBlockTransactionCountByHash](#eth_getblocktransactioncountbyhash)
+* [eth_getBlockTransactionCountByNumber](#eth_getBlockTransactioncountbynumber)
+* [eth_getBlockUncleCountByHash](#eth_getblockunclecountbyhash)
+* [eth_getUncleCountByNumber](#eth_getunclecountbynumber)
+* [eth_getData](#eth_getdata)
+* [eth_sendTransaction](#eth_sendtransaction)
 * [eth_call](#eth_call)
 * [eth_flush](#eth_flush)
-* [eth_blockByHash](#eth_blockbyhash)
-* [eth_blockByNumber](#eth_blockbynumber)
+* [eth_getBlockByHash](#eth_getblockbyhash)
+* [eth_getBlockByNumber](#eth_getblockbynumber)
 * [eth_transactionByHash](#eth_transactionbyhash)
 * [eth_transactionByBlockHashAndIndex](#eth_transactionbyblockhashandindex)
-* [eth_transactionByNumber](#eth_transactionbynumber)
+* [eth_transactionByBlockNumberAndIndex](#eth_transactionbynumberandindex)
 * [eth_uncleByHash](#eth_unclebyhash)
 * [eth_uncleByNumber](#eth_unclebynumber)
 * [eth_compilers](#eth_compilers)
@@ -152,11 +152,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":
 none
 
 ##### Response
-```json
+```js
 {
 "id":74,
 "jsonrpc":"2.0",
-"result": 2
+"result": "0x2" // 2
 }
 ```
 
@@ -269,12 +269,12 @@ DEPRTECATED/REMOVED
 
 ***
 
-#### `eth_number`
+#### `eth_blockNumber`
 *returns the number of most recent block*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_number","params":[],"id":83}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -291,12 +291,12 @@ none
 
 ***
 
-#### `eth_balanceAt`
+#### `eth_getBalance`
 *returns the balance of the account of given address*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_balanceAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x-1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x-1"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -320,14 +320,45 @@ params: [
 }
 ```
 
+
 ***
 
-#### `eth_stateAt`
+#### `eth_getStorage`
+*returns storage dumped to json*
+
+##### Request Example
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorage","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x-1"],"id":1}' http://localhost:8080
+```
+##### Parameters
+
+- address as hex string
+- defaultBlock as signed integer
+
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+   '0x-1' // -1
+]
+```
+
+##### Response
+```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result":{"0x":"0x03"}
+}
+```
+
+***
+
+#### `eth_getStorageAt`
 *returns the value in storage at position[0] given by string of the account given by address["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_stateAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "0x-1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "0x-1"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -355,42 +386,12 @@ params: [
 
 ***
 
-#### `eth_storageAt`
-*returns storage dumped to json*
-
-##### Request Example
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_storageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x-1"],"id":1}' http://localhost:8080
-```
-##### Parameters
-
-- address as hex string
-- defaultBlock as signed integer
-
-```js
-params: [
-   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-   '0x-1' // -1
-]
-```
-
-##### Response
-```json
-{
-"id":1,
-"jsonrpc":"2.0",
-"result":{"0x":"0x03"}
-}
-```
-
-***
-
-#### `eth_countAt`
+#### `eth_getTransactionCount`
 *returns the number of transactions send from account of given address*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","0x-1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","0x-1"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -416,12 +417,12 @@ params: [
 
 ***
 
-#### `eth_transactionCountByHash`
+#### `eth_getBlockTransactionCountByHash`
 *returns the number of transactions in block of given block hash*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -445,12 +446,12 @@ params: [
 
 ***
 
-#### `eth_transactionCountByNumber`
+#### `eth_getBlockTransactionCountByNumber`
 *returns the number of transactions in block of given number*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionCountByNumber","params":["0xe8"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xe8"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -474,12 +475,12 @@ params: [
 
 ***
 
-#### `eth_uncleCountByHash`
+#### `eth_getBlockUncleCountByHash`
 *returns the number of uncles for block of given hash*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockUncleCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -503,12 +504,12 @@ params: [
 
 ***
 
-#### `eth_uncleCountByNumber`
+#### `eth_getUncleCountByNumber`
 *returns the number of uncles for block of given number*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleCountByNumber","params":["0xe8"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByNumber","params":["0xe8"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -532,12 +533,12 @@ params: [
 
 ***
 
-#### `eth_codeAt`
+#### `eth_getData`
 *returns data at a given address*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_countAt","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getData","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -561,12 +562,12 @@ params: [
 
 ***
 
-#### `eth_transact`
+#### `eth_sendTransaction`
 *creates new message call transaction.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transact","params":[see below],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[see below],"id":1}' http://localhost:8080
 ```
 ##### Parameters
 
@@ -645,12 +646,12 @@ none
 
 ***
 
-#### `eth_blockByHash`
+#### `eth_getBlockByHash`
 *returns block info for block with given hash.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", ""],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", ""],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -698,12 +699,12 @@ params: [
 
 ***
 
-#### `eth_blockByNumber`
+#### `eth_getBlockByNumber`
 *returns block info for block with given number.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockByNumber","params":["0x1b4"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -719,7 +720,7 @@ params: [
 ```
 
 ##### Response
-See [blockByHash](#eth_blockbyhash)
+See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
@@ -789,12 +790,12 @@ See [eth_transactionByHash](#eth_transactionbyhash)
 
 ***
 
-#### `eth_transactionByNumber`
+#### `eth_transactionByBlockNumberAndIndex`
 *returns transaction from the block with number[668] at positon number[0]*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByNumber","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -835,7 +836,7 @@ params: [
 ```
 
 ##### Response
-See [blockByHash](#eth_blockbyhash)
+See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
@@ -860,7 +861,7 @@ params: [
 ```
 
 ##### Response
-See [blockByHash](#eth_blockbyhash)
+See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
