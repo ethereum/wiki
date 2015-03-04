@@ -53,8 +53,8 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_getTransactionCount](#eth_gettransactioncount) // deprecated eth_countAt
 * [eth_getBlockTransactionCountByHash](#eth_getblocktransactioncountbyhash)
 * [eth_getBlockTransactionCountByNumber](#eth_getBlockTransactioncountbynumber)
-* [eth_getBlockUncleCountByHash](#eth_getblockunclecountbyhash)
-* [eth_getUncleCountByNumber](#eth_getunclecountbynumber)
+* [eth_getUncleCountByBlockHash](#eth_getunclecountbyblockhash)
+* [eth_getUncleCountByBlockNumber](#eth_getunclecountbyblocknumber)
 * [eth_getData](#eth_getdata)
 * [eth_sendTransaction](#eth_sendtransaction)
 * [eth_call](#eth_call)
@@ -473,12 +473,12 @@ params: [
 
 ***
 
-#### `eth_getBlockUncleCountByHash`
+#### `eth_getUncleCountByBlockHash`
 *returns the number of uncles for block of given hash*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockUncleCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id"Block:1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -502,12 +502,12 @@ params: [
 
 ***
 
-#### `eth_getUncleCountByNumber`
+#### `eth_getUncleCountByBlockNumber`
 *returns the number of uncles for block of given number*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByNumber","params":["0xe8"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockNumber","params":["0xe8"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
