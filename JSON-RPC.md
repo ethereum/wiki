@@ -299,8 +299,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407
 
 ##### Parameters
 
-- address as hex string
-- defaultBlock as signed integer
+0. address as hex string
+1. defaultBlock as signed integer
 
 ```js
 params: [
@@ -331,8 +331,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorage","params":["0x407
 
 ##### Parameters
 
-- address as hex string
-- defaultBlock as signed integer
+0. address as hex string
+1. defaultBlock as signed integer
 
 ```js
 params: [
@@ -362,9 +362,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x4
 
 ##### Parameters
 
-- address as hex string
-- the position in the storage
-- defaultBlock as signed integer
+0. address as hex string
+1. the position in the storage
+2. defaultBlock as signed integer
 
 ```js
 params: [
@@ -395,8 +395,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params
 
 ##### Parameters
 
-- address as hex string
-- defaultBlock as signed integer
+0. address as hex string
+1. defaultBlock as signed integer
 
 ```js
 params: [
@@ -410,7 +410,7 @@ params: [
 {
 "id":1,
 "jsonrpc":"2.0",
-"result":1
+"result": "0x1"
 }
 ```
 
@@ -426,7 +426,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHa
 
 ##### Parameters
 
-- hash of a block
+0. hash of a block
 
 ```js
 params: [
@@ -439,7 +439,7 @@ params: [
 {
 "id":1,
 "jsonrpc":"2.0",
-"result":1
+"result": "0x1"
 }
 ```
 
@@ -455,7 +455,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNu
 
 ##### Parameters
 
-- number of a block
+0. number of a block
 
 ```js
 params: [
@@ -468,7 +468,7 @@ params: [
 {
 "id":1,
 "jsonrpc":"2.0",
-"result":1
+"result": "0x1"
 }
 ```
 
@@ -484,7 +484,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","p
 
 ##### Parameters
 
-- hash of a block
+0. hash of a block
 
 ```js
 params: [
@@ -497,7 +497,7 @@ params: [
 {
 "id":1,
 "jsonrpc":"2.0",
-"result":1
+"result": "0x1"
 }
 ```
 
@@ -513,7 +513,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockNumber",
 
 ##### Parameters
 
-- number of a block
+0. number of a block
 
 ```js
 params: [
@@ -526,7 +526,7 @@ params: [
 {
 "id":1,
 "jsonrpc":"2.0",
-"result":1
+"result": "0x1"
 }
 ```
 
@@ -542,8 +542,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getData","params":["0xd5677c
 
 ##### Parameters
 
-- address as hex string
-- defaultBlock as signed integer
+0. address as hex string
+1. defaultBlock as signed integer
 
 ```js
 params: [
@@ -572,7 +572,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[s
 ```
 ##### Parameters
 
-- The transaction object
+0. The transaction object
 
 ```js
 params = [{
@@ -606,7 +606,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[see below],"
 
 ##### Parameters
 
-- The call object
+0. The call object
 
 ```js
 {
@@ -657,8 +657,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0
 
 ##### Parameters
 
-- hash of a block
-- include transaction objects (If FALSE it only includes the hashes in an array)
+0. hash of a block
+1. include transaction objects (If FALSE it only includes the hashes in an array)
 
 ```js
 params: [
@@ -710,8 +710,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":[
 
 ##### Parameters
 
-- number of a block
-- include transaction objects (If FALSE it only includes the hashes in an array)
+0. number of a block
+1. include transaction objects (If FALSE it only includes the hashes in an array)
 
 ```js
 params: [
@@ -735,7 +735,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","param
 
 ##### Parameters
 
-- hash of a transaction
+0. hash of a transaction
 
 ```js
 params: [
@@ -776,8 +776,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAnd
 
 ##### Parameters
 
-- hash of a block
-- index of the transaction
+0. hash of a block
+1. index of the transaction
 
 ```js
 params: [
@@ -801,8 +801,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberA
 
 ##### Parameters
 
-- number of the block
-- index number of the transaction
+0. number of the block
+1. index number of the transaction
 
 ```js
 params: [
@@ -826,8 +826,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex"
 
 ##### Parameters
 
-- hash of the block
-- index number of the uncle
+0. hash of the block
+1. index number of the uncle
 
 ```js
 params: [
@@ -851,8 +851,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndInde
 
 ##### Parameters
 
-- number of the block
-- index number of the uncle
+0. number of the block
+1. index number of the uncle
 
 ```js
 params: [
@@ -898,7 +898,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["
 
 ##### Parameters
 
-- the source code as string
+0. the source code as string
 
 ```js
 params: [
@@ -955,7 +955,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic
 
 ##### Parameters
 
-- the filter object
+0. the filter object
 
 ```js
 params: [{
@@ -982,7 +982,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["0
 
 ##### Parameters
 
-- the string "pending" or "chain" (encoded as hex)
+0. the string "pending" or "chain" (encoded as hex)
 
 ```js
 params: ["0x70656e64696e67"] // "pending"
@@ -1009,7 +1009,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":["
 
 ##### Parameters
 
-- the filter id
+0. the filter id
 
 ```js
 params: ["0x1"] // 1
@@ -1036,7 +1036,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":[
 
 ##### Parameters
 
-- the filter id
+0. the filter id
 
 ```js
 params: ["0x16"] // 22
@@ -1072,7 +1072,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterLogs","params":["0x
 
 ##### Parameters
 
-- the filter id
+0. the filter id
 
 ```js
 params: ["0x16"] // 22
@@ -1093,7 +1093,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topic":
 
 ##### Parameters
 
-- the filter object
+0. the filter object
 
 ```js
 params: [{"topic":"0x12341234"}]
@@ -1142,7 +1142,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":"0x1234
 
 ##### Parameters
 
-- the proof of work
+0. the proof of work
 
 ```js
 params: ["0x1234567890abcdef1234567890abcdef"]
@@ -1169,9 +1169,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["0x74657374","
 
 ##### Parameters
 
-- database name
-- key name
-- string to store
+0. database name
+1. key name
+2. string to store
 
 ```js
 params: [
@@ -1202,8 +1202,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["0x74657374","
 
 ##### Parameters
 
-- database name
-- key name
+0. database name
+1. key name
 
 ```js
 params: [
@@ -1233,7 +1233,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":
 ```
 ##### Parameters
 
-- the shh post object
+0. the shh post object
 
 ```js
 params = [{
@@ -1288,7 +1288,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0xc9
 
 ##### Parameters
 
--  the identity to check
+0. the identity to check
 
 ```js
 params = ["0xc931d93e97ab07fe42d9234..."]
@@ -1341,7 +1341,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic
 
 ##### Parameters
 
-- the filter object
+0. the filter object
 
 ```js
 params: [{
@@ -1371,7 +1371,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":["
 
 ##### Parameters
 
-- the filter id
+0. the filter id
 
 ```js
 params: ["0x7"] // 7
@@ -1398,7 +1398,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_changed","params":["0x7"],"i
 
 ##### Parameters
 
-- the filter id
+0. the filter id
 
 ```js
 params: ["0x7"] // 7
@@ -1435,7 +1435,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getMessages","params":["0x7"
 
 ##### Parameters
 
-- the filter id
+0. the filter id
 
 ```js
 params: ["0x7"] // 7
