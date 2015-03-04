@@ -36,7 +36,7 @@
     * [채굴 중앙집중화](#%EC%B1%84%EA%B5%B4-%EC%A4%91%EC%95%99%EC%A7%91%EC%A4%91%ED%99%94mining-centralization)
     * [확장성](#%ED%99%95%EC%9E%A5%EC%84%B1scalability)
 * [결론](#%EA%B2%B0%EB%A1%A0)
-* [참고문헌과 추가 자료](#%EC%A3%BC%EC%84%9D%EA%B3%BC-%EC%B6%94%EA%B0%80%EC%9E%90%EB%A3%8C)
+* [주석과 추가 자료](#%EC%A3%BC%EC%84%9D%EA%B3%BC-%EC%B6%94%EA%B0%80%EC%9E%90%EB%A3%8C)
 
 ## 비트코인과 기존 개념들에 대한 소개(Introduction to Bitcoin and Existing Concepts)
 
