@@ -71,7 +71,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_solidity](#eth_solidity)
 * [eth_serpent](#eth_serpent)
 * [eth_newFilter](#eth_newfilter)
-* [eth_newFilterString](#eth_newfilterstring)
+* [eth_newPoll](#eth_newpoll)
 * [eth_uninstallFilter](#eth_uninstallfilter)
 * [eth_changed](#eth_changed)
 * [eth_filterLogs](#eth_filterlogs)
@@ -970,17 +970,17 @@ params: [{
 
 ***
 
-#### `eth_newFilterString`
-*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new filter id.*
+#### `eth_newPoll`
+*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new poll id. To check if the state has changed. Call [eth_changed](#eth_changed)*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilterString","params":["0x70656e64696e67"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newPoll","params":["0x70656e64696e67"],"id":73}' http://localhost:8080
 ```
 
 ##### Parameters
 
-- the filter string like "pending" or "chain" (encoded as hex)
+- the string "pending" or "chain" (encoded as hex)
 
 ```js
 params: ["0x70656e64696e67"] // "pending"
