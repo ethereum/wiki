@@ -91,7 +91,7 @@ def mkcache(cache_size, seed):
     for _ in range(CACHE_ROUNDS):
         for i in range(n):
             v = o[i][0] % n
-            o[i] = sha3_512(map(xor, o[(i-1+n)%n], o[v]))
+            o[i] = sha3_512(map(xor, o[(i-1+n) % n], o[v]))
 
     return o
 ```
