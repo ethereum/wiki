@@ -1,5 +1,5 @@
 Ethereum: Libro Bianco - White Paper (una traduzione di Leonardo Maria Pedretti: lm.pedretti@gmail.com)
-it.linkedin.com/in/leonardompedretti
+[Linkedin](https://www.linkedin.com/in/leonardompedretti)
 
 ### Una Piattaforma di Nuova Generazione per i Contratti Intelligenti e le Applicazioni Decentralizzate
 
