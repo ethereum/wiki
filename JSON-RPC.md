@@ -71,9 +71,9 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_solidity](#eth_solidity)
 * [eth_serpent](#eth_serpent)
 * [eth_newFilter](#eth_newfilter)
-* [eth_newPoll](#eth_newpoll)
+* [eth_newBlockchainWatch](#eth_newblockchainwatch)
 * [eth_uninstallFilter](#eth_uninstallfilter)
-* [eth_changed](#eth_changed)
+* [eth_filterChanges](#eth_filterchanges)
 * [eth_filterLogs](#eth_filterlogs)
 * [eth_logs](#eth_logs)
 * [eth_getWork](#eth_getWork)
@@ -970,12 +970,12 @@ params: [{
 
 ***
 
-#### `eth_newPoll`
-*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new poll id. To check if the state has changed, call [eth_changed](#eth_changed)*
+#### `eth_newBlockchainFilter`
+*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new watch id. To check if the state has changed, call [eth_filterChanges](#eth_filterchanges)*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newPoll","params":["0x70656e64696e67"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockchainFilter","params":["0x70656e64696e67"],"id":73}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -1024,12 +1024,12 @@ params: ["0x1"] // 1
 
 ***
 
-#### `eth_changed`
+#### `eth_filterChanges`
 *polling method for a filter, which returns an array of logs which occurred since last poll*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":["0x16"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_filterChanges","params":["0x16"],"id":73}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -1077,7 +1077,7 @@ params: ["0x16"] // 22
 ```
 
 ##### Response
-See [eth_changed](#eth_changed)
+See [eth_filterChanges](#eth_filterchanges)
 
 ***
 
@@ -1098,7 +1098,7 @@ params: [{"topic":"0x12341234"}]
 ```
 
 ##### Response
-See [eth_changed](#eth_changed)
+See [eth_filterChanges](#eth_filterchanges)
 
 ***
 
