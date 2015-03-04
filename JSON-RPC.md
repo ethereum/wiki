@@ -61,27 +61,25 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_flush](#eth_flush)
 * [eth_getBlockByHash](#eth_getblockbyhash)
 * [eth_getBlockByNumber](#eth_getblockbynumber)
-* [eth_transactionByHash](#eth_transactionbyhash)
-* [eth_transactionByBlockHashAndIndex](#eth_transactionbyblockhashandindex)
-* [eth_transactionByBlockNumberAndIndex](#eth_transactionbynumberandindex)
-* [eth_uncleByHash](#eth_unclebyhash)
-* [eth_uncleByNumber](#eth_unclebynumber)
-* [eth_compilers](#eth_compilers)
-* [eth_lll](#eth_lll)
-* [eth_solidity](#eth_solidity)
-* [eth_serpent](#eth_serpent)
+* [eth_getTransactionByHash](#eth_gettransactionbyhash)
+* [eth_getTransactionByBlockHashAndIndex](#eth_gettransactionbyblockhashandindex)
+* [eth_getTransactionByBlockNumberAndIndex](#eth_gettransactionbynumberandindex)
+* [eth_getUnclebyBlockHashAndIndex](#eth_getunclebyblockhashandindex)
+* [eth_getUncleByBlockNumberAndIndex](#eth_getunclebyblocknumberandindex)
+* [eth_getCompilers](#eth_getcompilers)
+* [eth_compileLLL](#eth_compileLLL)
+* [eth_compileSolidity](#eth_compileSolidity)
+* [eth_compileSerpent](#eth_compileSerpent)
 * [eth_newFilter](#eth_newfilter)
 * [eth_newBlockchainWatch](#eth_newblockchainwatch)
 * [eth_uninstallFilter](#eth_uninstallfilter)
-* [eth_filterChanges](#eth_filterchanges)
-* [eth_filterLogs](#eth_filterlogs)
-* [eth_logs](#eth_logs)
+* [eth_getFilterChanges](#eth_getfilterchanges)
+* [eth_getFilterLogs](#eth_getfilterlogs)
+* [eth_getLogs](#eth_getlogs)
 * [eth_getWork](#eth_getWork)
 * [eth_submitWork](#eth_submitwork)
-* [db_put](#db_put)
-* [db_get](#db_get)
-* [db_putString](#db_putstring)
-* [db_getString](#db_getstring)
+* [db_put](#db_put) // was db_putString
+* [db_get](#db_get) // was db_getString
 * [shh_post](#shh_post)
 * [shh_newIdentity](#shh_newidentity)
 * [shh_haveIdentity](#shh_haveidentity)
@@ -724,12 +722,12 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
-#### `eth_transactionByHash`
+#### `eth_getTransactionByHash`
 *returns transaction with hash*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -765,12 +763,12 @@ params: [
 
 ***
 
-#### `eth_transactionByBlockHashAndIndex`
+#### `eth_getTransactionByBlockHashAndIndex`
 *returns transaction with number[0] from the block with hash["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"]*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByHash","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, "0x0"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, "0x0"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -786,16 +784,16 @@ params: [
 ```
 
 ##### Response
-See [eth_transactionByHash](#eth_transactionbyhash)
+See [eth_getTransactionByHash](#eth_gettransactionbyhash)
 
 ***
 
-#### `eth_transactionByBlockNumberAndIndex`
+#### `eth_getTransactionByBlockNumberAndIndex`
 *returns transaction from the block with number[668] at positon number[0]*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_transactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -811,16 +809,16 @@ params: [
 ```
 
 ##### Response
-See [eth_transactionByHash](#eth_transactionbyhash)
+See [eth_getTransactionByHash](#eth_gettransactionbyhash)
 
 ***
 
-#### `eth_uncleByHash`
+#### `eth_getUncleByBlockHashAndIndex`
 *returns uncle from the block with hash  "0xc6ef2fc5426d6ad6fd9e2a..." at index positon 0*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -840,12 +838,12 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
-#### `eth_uncleByNumber`
+#### `eth_getUncleByBlockNumberAndIndex`
 *returns uncle from the block with number 668 at index position 0*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uncleByNumber","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -865,12 +863,12 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
-#### `eth_compilers`
+#### `eth_getCompilers`
 *returns list of available compilers for the client*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compilers","params":[],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCompilers","params":[],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -887,12 +885,12 @@ none
 
 ***
 
-#### `eth_solidity`
+#### `eth_compileSolidity`
 *returns compiled solidity code*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_solidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -916,7 +914,7 @@ params: [
 
 ***
 
-#### `eth_lll`
+#### `eth_compileLLL`
 *returns compiled lll code*
 
 ##### Request Example
@@ -930,7 +928,7 @@ params: [
 
 ***
 
-#### `eth_serpent`
+#### `eth_compileSerpent`
 *returns compiled serpent code*
 
 ##### Request Example
@@ -972,7 +970,7 @@ params: [{
 ***
 
 #### `eth_newBlockchainFilter`
-*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new watch id. To check if the state has changed, call [eth_filterChanges](#eth_filterchanges)*
+*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new watch id. To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges)*
 
 ##### Request Example
 ```bash
@@ -1025,12 +1023,12 @@ params: ["0x1"] // 1
 
 ***
 
-#### `eth_filterChanges`
+#### `eth_getFilterChanges`
 *polling method for a filter, which returns an array of logs which occurred since last poll*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_filterChanges","params":["0x16"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0x16"],"id":73}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -1061,12 +1059,12 @@ params: ["0x16"] // 22
 
 ***
 
-#### `eth_filterLogs`
+#### `eth_getFilterLogs`
 *returns an array of all logs matching filter with given id*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_filterLogs","params":["0x16"],"id":74}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterLogs","params":["0x16"],"id":74}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -1078,16 +1076,16 @@ params: ["0x16"] // 22
 ```
 
 ##### Response
-See [eth_filterChanges](#eth_filterchanges)
+See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ***
 
-#### `eth_logs`
+#### `eth_getLogs`
 *returns an array of all logs matching filter object*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_logs","params":[{"topic":"0x12341234"}],"id":74}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topic":"0x12341234"}],"id":74}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -1099,7 +1097,7 @@ params: [{"topic":"0x12341234"}]
 ```
 
 ##### Response
-See [eth_filterChanges](#eth_filterchanges)
+See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ***
 
@@ -1159,75 +1157,11 @@ params: ["0x1234567890abcdef1234567890abcdef"]
 ***
 
 #### `db_put`
-*stores a number in the local database.*
-
-##### Request Example
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["0x74657374","0x6b6579","0x5"],"id":73}' http://localhost:8080
-```
-
-##### Parameters
-
-- database name
-- key name
-- value
-
-```js
-params: [
-  "0x74657374", // 'test'
-  "0x6b6579", // 'key'
-  "0x5" // 5
-]
-```
-
-##### Response
-```json
-{
-"id":1,
-"jsonrpc":"2.0",
-"result": true
-}
-```
-
-***
-
-#### `db_get`
-*returns number from local database.
-
-##### Request Example
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["0x74657374","0x6b6579"],"id":73}' http://localhost:8080
-```
-
-##### Parameters
-
-- database name
-- key name
-
-```js
-params: [
-  "0x74657374", // 'test'
-  "0x6b6579", // 'key'
-]
-```
-
-##### Response
-```js
-{
-"id":1,
-"jsonrpc":"2.0",
-"result": "0x5" // 5
-}
-```
-
-***
-
-#### `db_putString`
 *stores a string in local database.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["0x74657374","0x6b6579","0x6d79537472696e67"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["0x74657374","0x6b6579","0x6d79537472696e67"],"id":73}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -1255,12 +1189,12 @@ params: [
 
 ***
 
-#### `db_getString`
+#### `db_get`
 *returns string from local database.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["0x74657374","0x6b6579"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["0x74657374","0x6b6579"],"id":73}' http://localhost:8080
 ```
 
 ##### Parameters
