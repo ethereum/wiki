@@ -970,43 +970,75 @@ params: [
 ***
 
 #### `eth_newFilter`
-*creates watch object to notify, when state changes in particular way, defined by filter. Returns new filter id.*
+*creates watch object to notify, when state changes in particular way, defined by given filter object. Returns new filter id.*
 
 ##### Request Example
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic":"0x12341234"}],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- the filter object
+
+```js
+params: [{
+   "topic": '0x12341234...'
+}]
+```
+
 ##### Response
-```json
+```js
+"id":1,
+"jsonrpc":"2.0",
+"result": "0x1" // 1
 ```
 
 ***
 
 #### `eth_newFilterString`
-*creates watch object to notify, when state changes in particular way, defined by filter. Returns new filter id.*
+*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new filter id.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilterString","params":["pending"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilterString","params":["0x70656e64696e67"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- the filter string like "pending" or "chain" (encoded as hex)
+
+```js
+params: ["0x70656e64696e67"] // "pending"
+```
+
 ##### Response
-```json
+```js
 {
 "id":1,
 "jsonrpc":"2.0",
-"result": 1
+"result": "0x1" // 1
 }
 ```
 
 ***
 
 #### `eth_uninstallFilter`
-*uninstalls watch with given id. Should always be called when watch is no longer needed.*
+*uninstalls a filter with given id. Should always be called when watch is no longer needed.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":[0],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":["0x1"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- the filter id
+
+```js
+params: ["0x1"] // 1
+```
+
 ##### Response
 ```json
 {
@@ -1019,21 +1051,35 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":[0
 ***
 
 #### `eth_changed`
-*polling method, which returns array of logs which occurred since last poll*
+*polling method for a filter, which returns an array of logs which occurred since last poll*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":["0x16"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- the filter id
+
+```js
+params: ["0x16"] // 22
+```
+
 ##### Response
 ```js
 {
 "id":1,
 "jsonrpc":"2.0",
 "result": [{
-  "address":"0x0000000000000000000000000000000000000000",
+  "hash": "0xf7g76df7g554fdsf6sdgfdg6dd76gdfg",
+  "address":"0x54fdsf6sdgfdg6df7g76df7g5d76gdfg",
   "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "number":"0x1b4" // 436
+  "blockNumber":"0x1b4" // 436
+  "transactionHash":  "0x6sdgfdg6dd76f7g76df7g554fdsfgdfg"
+  "blockHash": "0x36sdg6dd76f7g76df7dgfdg6dd76f7g76df7g554fdsfgdfg"
+  "transactionIndex": "0x0" // 0
+  "logIndex": "0x1" // 1
   }]
 }
 ```
@@ -1041,46 +1087,44 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_changed","params":[0],"id":7
 ***
 
 #### `eth_filterLogs`
-*returns all logs matching filter with given id*
+*returns an array of all logs matching filter with given id*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_filterLogs","params":[0],"id":74}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_filterLogs","params":["0x16"],"id":74}' http://localhost:8080
 ```
-##### Response
+
+##### Parameters
+
+- the filter id
+
 ```js
-{
-"id":1,
-"jsonrpc":"2.0",
-"result": [{
-  "address":"0x0000000000000000000000000000000000000000",
-  "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "number":"0x1b4" // 436
-  }]
-}
+params: ["0x16"] // 22
 ```
+
+##### Response
+See [eth_changed](#eth_changed)
 
 ***
 
 #### `eth_logs`
-*returns all logs matching filter object*
+*returns an array of all logs matching filter object*
 
 ##### Request Example
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_logs","params":[{"topic":"0x12341234"}],"id":74}' http://localhost:8080
 ```
-##### Response
+
+##### Parameters
+
+- the filter object
+
 ```js
-{
-"id":1,
-"jsonrpc":"2.0",
-"result": [{
-  "address":"0x0000000000000000000000000000000000000000",
-  "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "number":"0x1b4" // 436
-  }]
-}
+params: [{"topic":"0x12341234"}]
 ```
+
+##### Response
+See [eth_changed](#eth_changed)
 
 ***
 
@@ -1091,24 +1135,43 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_logs","params":[{"topic":"0x
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getWork","params":[],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+none
+
 ##### Response
 ```json
 {
 "id":1,
 "jsonrpc":"2.0",
-"result": ["0x1234567890abcdef1234567890abcdef", "0xd1ffic017i0000000000000000000000"]
+"result": [
+    "0x1234567890abcdef1234567890abcdef",
+    "0xd1ffic017i0000000000000000000000"
+]
 }
 ```
 
+// TODO better explanation?
 The hash first of the two result values is the header hash without the nonce (the first part of the proof-of-work pair), the second of the two result values is the difficulty required to solve.
+
+***
 
 #### `eth_submitWork`
 *Used for submitting a solution to the proof-of-work. The return value is true if the submission is valid.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":["0x1234567890abcdef1234567890abcdef"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":"0x1234567890abcdef1234567890abcdef"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- the proof of work
+
+```js
+params: ["0x1234567890abcdef1234567890abcdef"]
+```
+
 ##### Response
 ```json
 {
@@ -1121,12 +1184,27 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":["0x123
 ***
 
 #### `db_put`
-*stores number in local database. First param is database name["test"], second is key["key"], third is value["5"]*
+*stores a number in the local database.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["test","key","5"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["0x74657374","0x6b6579","0x5"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- database name
+- key name
+- value
+
+```js
+params: [
+  "0x74657374", // 'test'
+  "0x6b6579", // 'key'
+  "0x5" // 5
+]
+```
+
 ##### Response
 ```json
 {
@@ -1139,30 +1217,58 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["test","key","
 ***
 
 #### `db_get`
-*returns number from local database. First param is database name["test"], second is key["key"]*
+*returns number from local database.
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["test","key"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["0x74657374","0x6b6579"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- database name
+- key name
+
+```js
+params: [
+  "0x74657374", // 'test'
+  "0x6b6579", // 'key'
+]
+```
+
 ##### Response
-```json
+```js
 {
 "id":1,
 "jsonrpc":"2.0",
-"result": "0x05"
+"result": "0x5" // 5
 }
 ```
 
 ***
 
 #### `db_putString`
-*stores string in local database. First param is database name["test"], second is key["key"], third is value["5"]*
+*stores a string in local database.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["test","key","5"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["0x74657374","0x6b6579","0x6d79537472696e67"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- database name
+- key name
+- string to store
+
+```js
+params: [
+  "0x74657374", // 'test'
+  "0x6b6579", // 'key'
+  "0x6d79537472696e67" // 'myString'
+]
+```
+
 ##### Response
 ```json
 {
@@ -1175,39 +1281,58 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["test","
 ***
 
 #### `db_getString`
-*returns string from local database. First param is database name["test"], second is key["key"].*
+*returns string from local database.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["test","key"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["0x74657374","0x6b6579"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- database name
+- key name
+
+```js
+params: [
+  "0x74657374", // 'test'
+  "0x6b6579", // 'key'
+]
+```
+
 ##### Response
-```json
+```js
 {
 "id":1,
 "jsonrpc":"2.0",
-"result": "5"
+"result": "0x6d79537472696e67" // myString
 }
 ```
+
+***
+
 #### `shh_post`
 *sends whisper message*
 
 ##### Request Example
 ```bash
 "0x68656c6c6f20776f726c64"
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf","topic":"0x68656c6c6f20776f726c64","payload":"0x68656c6c6f20776f726c64","ttl":100,"priority":100}],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f2..","topic":"0x68656c6c6f20776f726c64","payload":"0x68656c6c6f20776f726c64","ttl":0x64,"priority":0x64}],"id":73}' http://localhost:8080
 ```
-* Parameters
+##### Parameters
+
+- the shh post object
+
 ```js
-from: 
-{
-"0x0424406af6d2f23b503be4714e22ad34732d847a30f7c317d11d579a82e24f2e841e712298aad4837d96c84887232495def5cc4b70ed28e36513b52c951110d430",
-topic: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
-payload: "0x7b2274797065223a226d6",
-priority: "0x64", // TODO or workToProve?
-ttl: "0x64",
-}
+params = [{
+  from: "0x0424406a...",
+  topic: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
+  payload: "0x7b2274797065223a226d6...",
+  priority: "0x64", // TODO or workToProve?
+  ttl: "0x64",
+}]
 ```
+
 ##### Response
 ```json
 {
@@ -1226,6 +1351,10 @@ ttl: "0x64",
 ```bash
 curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_newIdentity","params":[],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+none
+
 ##### Response
 ```json
 {
@@ -1242,8 +1371,17 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_newIdentity","params":[],"id
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283..."],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+-  the identity to check
+
+```js
+params = ["0xc931d93e97ab07fe42d9234..."]
+```
+
 ##### Response
 ```json
 {
@@ -1282,18 +1420,30 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc
 ***
 
 #### `shh_newFilter`
-*creates watch object to notify, when client receives whisper message matching particular format, defined by filter. Returns new filter id.*
+*creates filter object to notify, when client receives whisper message matching particular format, defined by filter. Returns new filter id.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic":"0x68656c6c6f20776f726c64"}],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic":"0x68656c6c6f20776f726c64", "to": "0x34kh345k34kjh5k34"}],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- the filter object
+
+```js
+params: [{
+   "topic": '0x12341234...',
+   "to": "0x34kh345k34kjh5k34"
+}]
+```
+
 ##### Response
-```json
+```js
 {
 "id":1,
 "jsonrpc":"2.0",
-"result": 7
+"result": "0x7" // 7
 }
 ```
 
@@ -1304,14 +1454,23 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":["0x7"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- the filter id
+
+```js
+params: ["0x7"] // 7
+```
+
 ##### Response
 ```json
 {
 "id":1,
 "jsonrpc":"2.0",
-"result": 7
+"result": true
 }
 ```
 
@@ -1322,22 +1481,31 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_changed","params":["0x7"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- the filter id
+
+```js
+params: ["0x7"] // 7
+```
+
 ##### Response
-```json
+```js
 {
 "id":1,
 "jsonrpc":"2.0",
 "result": [{
-  "expiry":1422565026,
-  "from":"0x3ec052fc3376f8a218b24b652803a5892038c39419a9a44923a61b113b7785d16ed1572df628859af3504670e4df31dcd8b3ee9a2110fd710c948690f0557394",
   "hash":"0x33eb2da77bf3527e28f8bf493650b1879b08c4f2a362beae4ba2f71bafcd91f9",
-  "payload":"0x7b2274797065223a226d657373616765222c2263686174223a2265537668624d763939784c345442537741222c2274696d657374616d70223a7b222464617465223a313432323536343932363533377d2c22746f706963223a22222c2266726f6d223a7b226964656e74697479223a2230783365633035326663333337366638613231386232346236353238303361353839323033386333393431396139613434393233613631623131336237373835643136656431353732646636323838353961663335303436373065346466333164636438623365653961323131306664373130633934383639306630353537333934222c226e616d65223a22416365746f7465227d2c226d657373616765223a2273617361222c226964223a227a465232614e68594a666f4d4c62707333227d",
-  "sent":1422564926,
-  "to":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "from":"0x3ec052fc33..",
+  "to":"0x87gdf76g8d7fgdfg...",
+  "expiry": "0x54caa50a", // 1422566666
+  "sent": "0x54ca9ea2", // 1422565026
+  "ttl": "0x64" // 100
   "topics":["0x6578616d"],
-  "ttl":100,
+  "payload":"0x7b2274797065223a226d657373616765222c2263686..",
   "workProved":0 // TODO or priority?
   }]
 }
@@ -1350,23 +1518,16 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":[7
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getMessages","params":[7],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getMessages","params":["0x7"],"id":73}' http://localhost:8080
 ```
+
+##### Parameters
+
+- the filter id
+
+```js
+params: ["0x7"] // 7
+```
+
 ##### Response
-```json
-{
-"id":1,
-"jsonrpc":"2.0",
-"result":[{
-  "expiry":1424106174,
-  "from":"0xd551cf48d0b19ecad714109f287c5f1fa79a9d3779d8f1f83984968444c5236250aa1b30191bbc01d07e128857a28aee42cdf6b53298925f127959150802dbb0",
-  "hash":"0x35fcd832607182dc2b78f1780186dab569dfd7ed31b7d94f958e9deccf6f0249",
-  "payload":"0x7b2274797065223a226d657373616765222c2273656e64696e67223a747275652c2274696d657374616d70223a313432343130363037342c22746f706963223a22222c2266726f6d223a7b226964656e74697479223a2230786435353163663438643062313965636164373134313039663238376335663166613739613964333737396438663166383339383439363834343463353233363235306161316233303139316262633031643037653132383835376132386165653432636466366235333239383932356631323739353931353038303264626230222c226e616d65223a224469736f74677567227d2c226d657373616765223a223132222c2263686174223a224157746265357636387846727473724638222c226964223a22547a3470415353665257724d545257684b227d",
-  "sent":1424106074,
-  "to":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  "topic":["0xa548145f","0x70a19471"],
-  "ttl":100,
-  "workProved":0 // TODO or priority?
-}]
-}
-```
+See [shh_changed](#shh_changed)
