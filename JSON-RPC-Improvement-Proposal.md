@@ -15,7 +15,7 @@ Simple values like, peerCount, defaultBlock stay as integer.
 
 - [ ] net_peerCount
 - [ ] net_listening
-
+- [ ] all names are now adopted to the js api, see docs
 
 ### Remove the following RPC functions
 
