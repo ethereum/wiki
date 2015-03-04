@@ -389,7 +389,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","0x-1"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","-0x1"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
@@ -400,7 +400,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params
 ```js
 params: [
    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-   '0x-1' // -1
+   '-0x1' // -1
 ]
 ```
 
@@ -536,16 +536,18 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getData","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8"],"id":1}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getData","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "-0x1"],"id":1}' http://localhost:8080
 ```
 
 ##### Parameters
 
 - address as hex string
+- defaultBlock as signed integer
 
 ```js
 params: [
    '0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8',
+   '-0x1'  // -1
 ]
 ```
 
