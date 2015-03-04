@@ -40,17 +40,12 @@ You can also specify JSON-RPC port (default is 8080):
 The following RPC messages should be accepted by the RPC-backend:
 
 * [web3_sha3](#web3_sha3)
+* [net_peerCount](#net_peercount)
+* [net_listening](#net_listening)
 * [eth_coinbase](#eth_coinbase)
-* [eth_setCoinbase](#eth_setcoinbase)
-* [eth_listening](#eth_listening)
-* [eth_setListening](#eth_setlistening)
 * [eth_mining](#eth_mining)
-* [eth_setMining](#eth_setmining)
 * [eth_gasPrice](#eth_gasprice)
 * [eth_accounts](#eth_accounts)
-* [eth_peerCount](#eth_peercount)
-* [eth_defaultBlock](#eth_defaultblock)
-* [eth_setDefaultBlock](#eth_setdefaultblock)
 * [eth_number](#eth_number)
 * [eth_balanceAt](#eth_balanceat)
 * [eth_stateAt](#eth_stateat)
@@ -117,6 +112,57 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 
 ***
 
+#### `net_listening`
+*returns true if client is actively listening for network connections*
+
+
+##### Request Example
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":67}' http://localhost:8080
+```
+
+##### Parameters
+none
+
+##### Response
+```json
+{
+"id":67,
+"jsonrpc":"2.0",
+"result":true
+}
+```
+
+***
+
+#### `eth_setListening`
+DEPRECATED/REMOVED
+```
+
+***
+
+#### `net_peerCount`
+*returns number of peers currenly connected to the client*
+
+##### Request Example
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":74}' http://localhost:8080
+```
+
+##### Parameters
+none
+
+##### Response
+```json
+{
+"id":74,
+"jsonrpc":"2.0",
+"result": 2
+}
+```
+
+***
+
 #### `eth_coinbase`
 *returns client coinbase address*
 
@@ -141,36 +187,6 @@ none
 
 #### `eth_setCoinbase`
 DEPRECATED/REMOVED
-```
-
-***
-
-#### `eth_listening`
-*returns true if client is actively listening for network connections*
-
-
-##### Request Example
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_listening","params":[],"id":67}' http://localhost:8080
-```
-
-##### Parameters
-none
-
-##### Response
-```json
-{
-"id":67,
-"jsonrpc":"2.0",
-"result":true
-}
-```
-
-***
-
-#### `eth_setListening`
-DEPRECATED/REMOVED
-```
 
 ***
 
@@ -199,7 +215,6 @@ none
 
 #### `eth_setMining`
 DEPRECATED/REMOVED
-```
 
 ***
 
@@ -247,51 +262,11 @@ none
 
 ***
 
-#### `eth_peerCount`
-*returns number of peers currenly connected to the client*
-
-##### Request Example
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_peerCount","params":[],"id":74}' http://localhost:8080
-```
-
-##### Parameters
-none
-
-##### Response
-```json
-{
-"id":74,
-"jsonrpc":"2.0",
-"result": 2
-}
-```
-
-***
-
 #### `eth_defaultBlock`
-*returns default number/age to use when querying state. When positive this is a block number, when 0 or negative it is a block age. -1 therefore means the most recently mined block, 0 means the block being currently mined (i.e. to include pending transactions). Defaults to -1.*
-
-##### Request Example
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_defaultBlock","params":[],"id":77}' http://localhost:8080
-```
-
-##### Parameters
-none
-
-##### Response
-```js
-{
-"id":77,
-"jsonrpc":"2.0",
-"result": -1
-}
-```
+DEPRECATED/REMOVED
 
 #### `eth_setDefaultBlock`
 DEPRTECATED/REMOVED
-```
 
 ***
 
