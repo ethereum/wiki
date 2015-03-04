@@ -2,9 +2,20 @@ The purpose of this page is to serve as an introduction to the basics of Ethereu
 
 ### Introduction
 
-Ethereum is a platform that is intended to allow people to easily write decentralized applications (Đapps) using blockchain technology. A decentralized application is an application which serves some specific purpose to its users, but which has the important property that the application itself does not depend on any specific party existing. Rather than serving as a front-end for selling or providing a specific party's services, a Đapp is a tool for people and organizations on different sides of an interaction use to come together without any centralized intermediary. Even necessary "intermediary" functions that are typically the domain of centralized providers, such as filtering, identity management, escrow and dispute resolution, are either handled directly by the network or left open for anyone to participate, using tools like internal token systems and reputation systems to ensure that users get access to high-quality services. Early examples of Đapps include BitTorrent for file sharing and Bitcoin for currency. Ethereum takes the primary developments used by BitTorrent and Bitcoin, the peer to peer network and the blockchain, and generalizes them in order to allow developers to use these technologies for any purpose.
+Ethereum is a platform that is intended to allow people to easily write decentralized applications (Đapps) using blockchain technology. A decentralized application is an application which serves some specific purpose to its users, but which has the important property that the application itself does not depend on any specific party existing. Rather than serving as a front-end for selling or providing a specific party's services, a Đapp is a tool for people and organizations on different sides of an interaction use to come together without any centralized intermediary.
 
-The Ethereum blockchain can be alternately described as a blockchain with a built-in programming language, or as a consensus-based globally executed virtual machine. The part of the protocol that actually handles internal state and computation is referred to as the Ethereum Virtual Machine (EVM). From a practical standpoint, the EVM can be thought of as a large decentralized computer containing millions of objects, called "accounts", where each object contains its own internal code and a 32-byte key/value database called storage and objects can call other objects at will. In order to allow the outside world to interact with the EVM, a special type of account exists called an "externally owned account" (EOA), and a message from an EOA to any other account can be triggered by sending a transaction signed by the private key associated with that EOA. When an account that is not an EOA, called a "contract", receives a message, it automatically runs its code, and the code has the ability to read/write to its own internal storage, read the storage of the received message, and send messages (to other contracts, but also to itself). In a sense, the contract is the code that executes the contract.
+Even necessary "intermediary" functions that are typically the domain of centralized providers, such as filtering, identity management, escrow and dispute resolution, are either handled directly by the network or left open for anyone to participate, using tools like internal token systems and reputation systems to ensure that users get access to high-quality services. Early examples of Đapps include BitTorrent for file sharing and Bitcoin for currency. Ethereum takes the primary developments used by BitTorrent and Bitcoin, the peer to peer network and the blockchain, and generalizes them in order to allow developers to use these technologies for any purpose.
+
+The Ethereum blockchain can be alternately described as a blockchain with a built-in programming language, or as a consensus-based globally executed virtual machine. The part of the protocol that actually handles internal state and computation is referred to as the Ethereum Virtual Machine (EVM). From a practical standpoint, the EVM can be thought of as a large decentralized computer containing millions of objects, called "accounts", which have the ability to maintain an internal database, execute code and talk to each other.
+
+There are two types of accounts:
+
+1. **Externally owned account (EOAs)**: an account controlled by a private key, and if you own the private key associated with the EOA you have the ability to send ether and messages from it.
+2. **Contract**: an account that has its own code, and is controlled by code.
+
+By default, the Ethereum execution environment is lifeless; nothing happens and the state of every account remains the same. However, any user can trigger an action by sending a transaction from an externally owned account, setting Ethereum's wheels in motion. If the destination of the transaction is another EOA, then the transaction may transfer some ether but otherwise does nothing. However, if the destination is a contract, then the contract in turn activates, and automatically runs its code. 
+
+The code has the ability to read/write to its own internal storage (a database mapping 32-byte keys to 32-byte values), read the storage of the received message, and send messages to other contracts, triggering their execution in turn. Once execution stops, and all sub-executions triggered by a message sent by a contract stop (this all happens in a deterministic and synchronous order, ie. a sub-call completes fully before the parent call goes any further), the execution environment halts once again, until woken by the next transaction.
 
 Contracts generally serve four purposes:
 
@@ -18,7 +29,9 @@ Contracts generally serve four purposes:
 
 Contracts interact with each other through an activity that is alternately called either "calling" or "sending messages". A "message" is an object containing some quantity of ether (a special internal currency used in Ethereum with the primary purpose of paying transaction fees), a byte-array of data of any size, the addresses of a sender and a recipient. When a contract receives a message it has the option of returning some data, which the original sender of the message can then immediately use. In this way, sending a message is exactly like calling a function.
 
-Because contracts can play such different roles, we expect that contracts will be interacting with each other. As an example, consider a situation where Alice and Bob are betting 100 GavCoin that the temperature in San Francisco will not exceed 35ºC at any point in the next year. However, Alice is very security-conscious, and as her primary account uses a forwarding contract which only sends messages with the approval of two out of three private keys. Bob is paranoid about quantum cryptography, so he uses a forwarding contract which passes along only messages that have been signed with [Lamport signatures](https://en.wikipedia.org/wiki/Lamport_signature) alongside traditional ECDSA (but because he's old fashioned, he prefers to use a version of Lamport sigs based on SHA256, which is not supported in Ethereum directly). The betting contract itself needs to fetch data about the San Francisco weather from some contract, and it also needs to talk to the GavCoin contract when it wants to actually send the GavCoin to either Alice or Bob (or, more precisely, Alice or Bob's forwarding contract). We can show the relationships between the accounts thus:
+Because contracts can play such different roles, we expect that contracts will be interacting with each other. As an example, consider a situation where Alice and Bob are betting 100 GavCoin that the temperature in San Francisco will not exceed 35ºC at any point in the next year. However, Alice is very security-conscious, and as her primary account uses a forwarding contract which only sends messages with the approval of two out of three private keys. Bob is paranoid about quantum cryptography, so he uses a forwarding contract which passes along only messages that have been signed with [Lamport signatures](https://en.wikipedia.org/wiki/Lamport_signature) alongside traditional ECDSA (but because he's old fashioned, he prefers to use a version of Lamport sigs based on SHA256, which is not supported in Ethereum directly).
+
+The betting contract itself needs to fetch data about the San Francisco weather from some contract, and it also needs to talk to the GavCoin contract when it wants to actually send the GavCoin to either Alice or Bob (or, more precisely, Alice or Bob's forwarding contract). We can show the relationships between the accounts thus:
 
 ![img](http://vitalik.ca/files/contract_relationship.png)
 
@@ -95,7 +108,7 @@ Finally, we SSTORE to save the value 2020202020 in storage at index 54.
 
 At index 17, there is no instruction, so we stop. If there was anything left in the stack or memory, it would be deleted, but the storage will stay and be available next time someone sends a message. Thus, if the sender of this message sends the same message again (or perhaps someone else tries to reregister 54 to 3030303030), the next time the `JUMPI` at position 7 would not process, and execution would STOP early at position 8.
 
-Fortunately, you do not have to program in low-level assembly; a high-level language exists, especially designed for writing contracts, known as [Solidity](https://github.com/ethereum/wiki/wiki/Solidity) exist to make it much easier for you to write contracts (there are several others, too, including [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL-PoC-5), [Serpent](https://github.com/ethereum/wiki/wiki/Serpent) and [Mutan](https://github.com/ethereum/go-ethereum/wiki/Mutan-0.2), which you may find easier to learn or use depending on your experience). Any code you write in these languages gets compiled into EVM, and to create the contracts you send the transaction containing the EVM bytecode.
+Fortunately, you do not have to program in low-level assembly; a high-level language exists, especially designed for writing contracts, known as [Solidity](https://github.com/ethereum/wiki/wiki/Solidity) exists to make it much easier for you to write contracts (there are several others, too, including [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL-PoC-5), [Serpent](https://github.com/ethereum/wiki/wiki/Serpent) and [Mutan](https://github.com/ethereum/go-ethereum/wiki/Mutan-0.2), which you may find easier to learn or use depending on your experience). Any code you write in these languages gets compiled into EVM, and to create the contracts you send the transaction containing the EVM bytecode.
 
 There are two types of transactions: a sending transaction and a contract creating transaction. A sending transaction is a standard transaction, containing a receiving address, an ether amount, a data bytearray and some other parameters, and a signature from the private key associated with the sender account. A contract creating transaction looks like a standard transaction, except the receiving address is blank. When a contract creating transaction makes its way into the blockchain, the data bytearray in the transaction is interpreted as EVM code, and the value returned by that EVM execution is taken to be the code of the new contract; hence, you can have a transaction do certain things during initialization. The address of the new contract is deterministically calculated based on the sending address and the number of times that the sending account has made a transaction before (this value, called the account nonce, is also kept for unrelated security reasons). Thus, the full code that you need to put onto the blockchain to produce the above name registry is as follows:
 
@@ -111,72 +124,13 @@ In order to prevent deliberate attacks and abuse, the Ethereum protocol charges 
 
 The way the fee works is as follows. Every transaction must contain, alongside its other data, a `GASPRICE` and `STARTGAS` value. `STARTGAS` is the amount of "gas" that the transaction assigns itself, and `GASPRICE` is the fee that the transaction pays per unit of gas; thus, when a transaction is sent, the first thing that is done during evaluation is subtracting `STARTGAS * GASPRICE` wei plus the transaction's value from the sending account balance. `GASPRICE` is set by the transaction sender, but miners will likely refuse to process transactions whose `GASPRICE` is too low. 
 
-Gas can be roughly thought of as a counter of computational steps, and is something that exists during transaction execution but not outside of it. When transaction execution starts, the gas remaining is set to `STARTGAS - 500 - 5 * TXDATALEN` where `TXDATALEN` is the number of bytes in transaction data. Every computational step, a certain amount (usually 1, sometimes more depending on the operation) of gas is subtracted from the total. If gas goes down to zero, then all execution reverts, but the transaction is still valid and the sender still has to pay for gas. If transaction execution finishes with `N >= 0` gas remaining, then the sending account is refunded with `N * GASPRICE` wei.
+Gas can be roughly thought of as a counter of computational steps, and is something that exists during transaction execution but not outside of it. When transaction execution starts, the gas remaining is set to `STARTGAS - 21000 - 68 * TXDATALEN` where `TXDATALEN` is the number of bytes in transaction data (note: zero bytes are charged only 4 gas due to the greater compressibility of long strings of zero bytes). Every computational step, a certain amount (usually 1, sometimes more depending on the operation) of gas is subtracted from the total. If gas goes down to zero, then all execution reverts, but the transaction is still valid and the sender still has to pay for gas. If transaction execution finishes with `N >= 0` gas remaining, then the sending account is refunded with `N * GASPRICE` wei.
 
 During contract execution, when a contract sends a message, that message call itself comes with a gas limit, and the sub-execution works the same way (namely, it can either run out of gas and revert or execute successfully and return a value). If sub-execution runs out of gas, the parent execution continues; thus, it is perfectly "safe" for a contract to call another contract if you set a gas limit on the sub-execution. If sub-execution has some gas remaining, then that gas is returned to the parent execution to continue using.
 
 ### Virtual machine opcodes
 
-The opcodes in the EVM are as follows:
-
-* `0x00`: `STOP`, stops execution
-* `0x01`: `ADD`, pops 2 values `a`, `b` from the top of the stack and pushes `a+b` to the top of the stack (all arithmetic is modulo 2<sup>256</sup>)
-* `0x02`: `MUL`, pops 2 values `a`, `b`, pushes `a*b`
-* `0x03`: `SUB`, pops 2 values `a`, `b`, pushes `a-b` (`a` is the value immediately at the top of the stack before execution, `b` is second from top)
-* `0x04`: `DIV`, pops 2 values `a`, `b`, pushes `a/b` if `b != 0` else 0
-* `0x05`: `SDIV`, pops 2 values `a`, `b`, pushes `a/b` if `b != 0` else 0, except where `a` and `b` are treated as signed integers, ie. if `a >= 2^255` then it's treated as the negative value `a - 2^256`. Division with negative numbers is done as in Python, ie. `25 / 3 = 8`, `25 / -3 = -9`, `-25 / 3 = -9`, `-25 / -3 = 8`
-* `0x06`: `MOD`, pops 2 values `a`, `b`, pushes `a%b` if `b != 0` else 0
-* `0x07`: `SMOD`, pops 2 values `a`, `b`, pushes `a%b` if `b != 0` else 0, treating `a`, `b` as signed values. Modulo with negative numbers is done as in Python, ie. `25 % 3 = 1`, `25 % -3 = -2`, `-25 % 3 = 2`, `-25 % -3 = -1`
-* `0x08`: `EXP`, pops 2 values `a`, `b`, pushes `a^b`
-* `0x09`: `NEG`, pops 1 value `a`, pushes `-a` (ie. `2^256 - a`)
-* `0x0a`: `LT`, pops 2 values `a`, `b`, pushes 1 if `a < b` else 0
-* `0x0b`: `GT`, pops 2 values `a`, `b`, pushes 1 if `a > b` else 0
-* `0x0c`: `SLT`, pops 2 values `a`, `b`, pushes 1 if `a < b` else 0, doing a signed comparison
-* `0x0d`: `SGT`, pops 2 values `a`, `b`, pushes 1 if `a > b` else 0, doing a signed comparison
-* `0x0e`: `EQ`, pops 2 values `a`, `b`, pushes 1 if `a == b` else 0
-* `0x0f`: `NOT`, pops 1 value `a`, pushes 1 if `a = 0` else 0
-* `0x10`: `AND`, pops 2 values `a`, `b`, pushes the bitwise and of `a` and `b`
-* `0x11`: `OR`, pops 2 values `a`, `b`, pushes the bitwise or of `a` and `b`
-* `0x12`: `XOR`, pops 2 values `a`, `b`, pushes the bitwise xor of `a` and `b`
-* `0x13`: `BYTE`, pops 2 values `a`, `b`, pushes the `a`th byte of `b` (zero if `a >= 32`)
-* `0x20`: `SHA3`, pops 2 values `a`, `b`, pushes `SHA3(memory[a: a+b])`
-* `0x30`: `ADDRESS`, pushes the contract address
-* `0x31`: `BALANCE`, pushes the contract balance
-* `0x32`: `ORIGIN`, pushes the original sending account of the transaction that led to the current message (ie. the account that pays for the gas)
-* `0x33`: `CALLER`, pushes the sender of the current message
-* `0x34`: `CALLVALUE`, pushes the ether value sent with the current message
-* `0x35`: `CALLDATALOAD`, pops 1 value `a`, pushes `msgdata[a: a + 32]` where `msgdata` is the message data. All out-of-bounds bytes are assumed to be zero
-* `0x36`: `CALLDATASIZE`, pushes `len(msgdata)`
-* `0x37`: `CALLDATACOPY`, pops 3 values `a`, `b`, `c`, copies `msgdata[b: b+c]` to `memory[a: a+c]`
-* `0x38`: `CODESIZE`, pushes `len(code)` where `code` is the contract's code
-* `0x39`: `CODECOPY`, pops 3 values `a`, `b`, `c`, copies `code[b: b+c]` to `memory[a: a+c]`
-* `0x3a`: `GASPRICE`, pushes the `GASPRICE` of the current transaction
-* `0x40`: `PREVHASH`, pushes the hash of the previous block
-* `0x41`: `COINBASE`, pushes the coinbase (ie. miner's address) of the current block
-* `0x42`: `TIMESTAMP`, pushes the timestamp of the current block
-* `0x43`: `NUMBER`, pushes the number of the current block
-* `0x44`: `DIFFICULTY`, pushes the difficulty of the current block
-* `0x45`: `GASLIMIT`, pushes the gas limit of the current block
-* `0x50`: `POP`, pops one value from the stack
-* `0x51`: `DUP`, pops one value `a` from the stack and pushes `a` twice
-* `0x52`: `SWAP`, pops two values `a` and `b` and pushes them in reverse order
-* `0x53`: `MLOAD`, pops one value `a` and pushes `memory[a: a + 32]`
-* `0x54`: `MSTORE`, pops two values `a`, `b` and sets `memory[a: a + 32] = b`
-* `0x55`: `MSTORE8`, pops two values `a`, `b` and sets `memory[a] = b % 256`
-* `0x56`: `SLOAD`, pops one value `a` and pushes `storage[a]`
-* `0x57`: `SSTORE`, pops two values `a`, `b` and sets `storage[a] = b`
-* `0x58`: `JUMP`, pops one values `a`, and sets `PC = a` where `PC` is the program counter
-* `0x59`: `JUMPI`, pops two values `a`, `b` and sets `PC = a` if `b != 0`
-* `0x5a`: `PC`, pushes the program counter
-* `0x5b`: `MSIZE`, pushes `len(memory)`
-* `0x5c`: `GAS`, pushes the amount of gas remaining (before executing this operation)
-* `0x60` - `0x7f`: `PUSH1` - `PUSH32`, `PUSH_k` pushes a value corresponding to the next `k` bytes in the code, and sets `PC += k + 1` (ie. to the byte immediately after the `k` bytes pushed)
-* `0xf0`: `CREATE`, pops three values `a`, `b`, `c`, creates a new contract with initialization code `memory[b: b+c]` and endowment (ie. initial ether sent) `a`, and pushes the value of the contract
-* `0xf1`: `CALL`, pops seven values `a`, `b`, `c`, `d`, `e`, `f`, `g`, and sends a message to address `b` with `a` gas and `c` ether and data `memory[d: d+e]`. Output is saved to `memory[f: f+g]`, right-padding with zero bytes if the output length is less than `g` bytes. If execution did not run out of gas pushes 1, otherwise pushes 0.
-* `0xf2`: `RETURN`, pops two values `a`, `b`, and stops execution, returning `memory[a: a + b]`
-* `0xff`: `SUICIDE`, pops one value `a`, sends all remaining ether to that address, returns and flags the contract for deletion as soon as transaction execution ends
-
-Note that high-level languages will often have their own wrappers for these opcodes, sometimes with very different interfaces.
+A complete listing of the opcodes in the EVM can be found in the [yellow paper](http://gavwood.com/Paper.pdf). Note that high-level languages will often have their own wrappers for these opcodes, sometimes with very different interfaces.
 
 ### Basics of the Ethereum Blockchain
 
