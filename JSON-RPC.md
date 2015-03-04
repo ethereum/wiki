@@ -82,7 +82,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [db_get](#db_get) // was db_getString
 * [shh_post](#shh_post)
 * [shh_newIdentity](#shh_newidentity)
-* [shh_haveIdentity](#shh_haveidentity)
+* [shh_hasIdentity](#shh_hasidentity)
 * [shh_newGroup](#shh_newgroup)
 * [shh_addToGroup](#shh_addtogroup)
 * [shh_newFilter](#shh_newfilter)
@@ -1275,12 +1275,12 @@ none
 
 ***
 
-#### `shh_haveIdentity`
+#### `shh_hasIdentity`
 *returns true if client has given identity*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_haveIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283..."],"id":73}' http://localhost:8080
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283..."],"id":73}' http://localhost:8080
 ```
 
 ##### Parameters
