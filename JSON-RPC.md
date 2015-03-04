@@ -71,7 +71,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_compileSolidity](#eth_compileSolidity)
 * [eth_compileSerpent](#eth_compileSerpent)
 * [eth_newFilter](#eth_newfilter)
-* [eth_newBlockWatch](#eth_newblockwatch)
+* [eth_newBlockFilter](#eth_newblockfilter)
 * [eth_uninstallFilter](#eth_uninstallfilter)
 * [eth_getFilterChanges](#eth_getfilterchanges)
 * [eth_getFilterLogs](#eth_getfilterlogs)
