@@ -301,12 +301,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407
 ##### Parameters
 
 0. address as hex string
-1. defaultBlock as signed integer
+1. block number or the string "latest"
 
 ```js
 params: [
    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-   '-0x1' // -1
+   'latest'
 ]
 ```
 
@@ -333,12 +333,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorage","params":["0x407
 ##### Parameters
 
 0. address as hex string
-1. defaultBlock as signed integer
+1. block number or the string "latest"
 
 ```js
 params: [
    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-   '-0x1' // -1
+   '0x2' // 2
 ]
 ```
 
@@ -365,13 +365,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x4
 
 0. address as hex string
 1. the position in the storage
-2. defaultBlock as signed integer
+3. block number or the string "latest"
 
 ```js
 params: [
    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
    '0x0', // 0
-   '-0x1' // -1
+   '0x2' // 2
 ]
 ```
 
@@ -397,12 +397,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params
 ##### Parameters
 
 0. address as hex string
-1. defaultBlock as signed integer
+1. block number or the string "latest"
 
 ```js
 params: [
    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-   '-0x1' // -1
+   '0x2' // 2
 ]
 ```
 
@@ -544,12 +544,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getData","params":["0xd5677c
 ##### Parameters
 
 0. address as hex string
-1. defaultBlock as signed integer
+1. block number or the string "latest"
 
 ```js
 params: [
    '0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8',
-   '-0x1'  // -1
+   '0x2'  // 2
 ]
 ```
 
