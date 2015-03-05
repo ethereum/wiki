@@ -82,29 +82,42 @@ Verify that the return value of `get` is displayed and is this is the good one =
 # Deploy to Network
 
 This feature allows users to deploy the current project as a Dapp in the main blockchain.
-This will deploy contracts and package/register front end resources.
+This will deploy contracts and register front end resources.
+
+The deployment process includes two steps: 
+ - **The Deployment of contracts**:
+This step will deploy contracts in the main blockchain and package front end resources of the current project. After this operation the package (package.dapp) will be available inside the deployment directory.
+
+ - **The Registration of front end resources**:
+To render the Dapp, the Ethereum browser (Mist or AlethZero) needs to access this package. This step will register the URL where the resources are stored.
+
+To Deploy your Dapp, Please follow these instructions:
 
 Click on `Deploy`, `Deploy to Network`.
-This modal dialog displays: 
- - A combobox to select the account to use.
- - `Ethereum Application URL` is the address that users should use in AlethZero to access to the Dapp.
+This modal dialog displays two parts, We will focus on the first part (Deployment) for now:
+ 
+ **The Deployment of contracts**
+ - 4 Buttons: `Help` to access to the WikiPage, `Open Package Folder` to open the deployment directory (this button is only enable is the package is built), `Copy Base64 conversion to ClipBoard` to copy the Base64 value of the built package (this button is only enable is the package is built), `Exit` to close this modal dialog.   
+ - `Root Registrar address` is the address of the root registrar contract (used to link the Dapp with resources.
+ - `Account used to deploy` allows users to select the Ethereum account to use to deploy.
+ - `Amount of gas to use..` is the amount of gas that the deployment process will use to deploy contracts.
+ - `Ethereum Application URL` is the address that users should use in Mist (or AlethZero) to access to the Dapp.
 (ex: eth/user1/app1).
  - `Web Application Resources URL` is the URL where the front resources (html/js/...) will be stored.
- - `Amount of gas to use..` is the amount of gas that the deployment process will use to deploy contracts.
- - `Package (Base64)` is filled only when the resources are packaged. This is the Base64 conversion of the current package.
+ - 1 button to start the deployment process (The checkbox `Deploy Contract(s)` is disabled and checked if this is the first time the contract is deployed. If not you can choose to repackage the resources without redeploying the contract by unchecking this option).
 
-The first step is to click on `Deploy contract / Package resources`. This step will:
- - Deploy contracts on the main blockchain.
- - Package the front end resources (with encryption).
- - Register the dapp into an owned registrar. (Basically a mapping between DappName (project title) => Hash of the front end package).
+Click on `Deploy contract(s) and Package resources files` (last button) and the deployment is executed.
+Then many options/actions will be enabled: 
+ - `Open Package Folder`, `Copy Base64 conversion to ClipBoard`, `Deploy Contract(s)` 
+ - All inputs associated with the second step.
+ 
+**Registration of front end resources**
+ - `URL Hint contract address` is the address of the contract which is used to store the URL where the resources are.
+ - `Web Application Resources URL` is the URL from where the Ethereum browser will retrieve resources.
 
-Users can now (if they need) click on `Package resources only`, this action will repackage the resources without redeploying contracts on the blockchain.
+Click on `Register hosted Web Application` and Mix will register the front end resources on the Ethereum network.
 
-`Open Package Directory` will open the deployment directory in a file browser.
-
-`Register Web Application` is mandatory, this action will associate the package with an http location (Web Application Resources URL). Used by AlethZero to retrieve the package and display the content in a webview.
-
-Once the `Register Web Application` step is done, users can use AlethZero to access to the dapp, using the Ethereum URL (ex: eth/user1/app1).
+Users can now use  Mist or AlethZero to access to the Dapp, using the Ethereum URL (ex: eth/user1/app1).
 
 # Account Management
 
@@ -117,4 +130,3 @@ For each created account users have to specify a balance. When users start to de
 be initialized with all the configured accounts/balances.
 
 When a transaction is edited, users can select which account to set as the sender.
-
