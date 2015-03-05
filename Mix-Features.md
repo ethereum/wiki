@@ -101,7 +101,7 @@ This modal dialog displays two parts, We will focus on the first part (Deploymen
  - `Root Registrar address` is the address of the root registrar contract (used to link the Dapp with resources.
  - `Account used to deploy` allows users to select the Ethereum account to use to deploy.
  - `Amount of gas to use..` is the amount of gas that the deployment process will use to deploy contracts.
- - `Ethereum Application URL` is the address that users should use in Mist (or AlethZero) to access to the Dapp.
+ - `Ethereum Application URL` is the address that users should use in Mist (or AlethZero) to access to the Dapp. in italic, you can check the formatted Dapp URL (which will be used by the Ethereum browser)
 (ex: eth/user1/app1).
  - `Web Application Resources URL` is the URL where the front resources (html/js/...) will be stored.
  - 1 button to start the deployment process (The checkbox `Deploy Contract(s)` is disabled and checked if this is the first time the contract is deployed. If not you can choose to repackage the resources without redeploying the contract by unchecking this option).
