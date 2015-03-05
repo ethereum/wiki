@@ -665,13 +665,16 @@ console.log(uncle);
 **Returns** a transaction object by number or hash `hashStringOrNumber` from block with `blockNumber`:
 
   * `hash` (32-byte hash): The hash of the transaction.
-  * `input` (byte array): The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation.
+  * `nonce` (32-byte hash): The transaction nonce.
+  * `blockHash` (32-byte hash): the blocks hash, where this transaction appeared
+  * `blockNumber` (integer):  the blocks number, where this transaction appeared
+  * `transactionIndex` (integer):  the index a t which this transaction appeared in the block
   * `to` (20-byte address): The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction.
   * `from` (20-byte address): The cryptographically verified address from which the transaction was sent .
   * `gas` (integer): The amount of GAS supplied for this transaction to happen.
   * `gasPrice` (BigNumber): The price offered to the miner to purchase this amount of GAS, in Wei per GAS.
-  * `nonce` (32-byte hash): The transaction nonce.
   * `value` (BigNumber): The amount of ETH to be transferred to the recipient with the transaction in wei.
+  * `input` (byte array): The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation.
 
 If you pass an optional callback the HTTP request is made asynchronous.
 
@@ -683,14 +686,18 @@ var transaction = web3.eth.getTransaction(blockNumber, indexOfTransaction);
 console.log(transaction);
 /*
 {
-"from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
-"gas":520464,
-"gasPrice": instanceof BigNumber,
-"hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
-"input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
-"nonce":"0x",
-"to":"0x0000000000000000000000000000000000000000",
-"value": instanceof BigNumber
+    "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
+    "nonce":"0x",
+    "blockHash": "0x6fd9e2a26abeab0aa2411c6ef2fc5426d6adb7ab17f30a99d3cb96aed1d1055b",
+    "blockNumber": 5599
+    "transactionIndex":  1
+    "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+    "gas":520464,
+    "gasPrice": instanceof BigNumber,
+    "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
+    "input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
+    "to":"0x0000000000000000000000000000000000000000",
+    "value": instanceof BigNumber
 }
 */
 
