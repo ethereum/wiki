@@ -110,6 +110,16 @@ Click on `Deploy contract(s) and Package resources files` (last button) and the 
 Then many options/actions will be enabled: 
  - `Open Package Folder`, `Copy Base64 conversion to ClipBoard`, `Deploy Contract(s)` 
  - All inputs associated with the second step.
+
+**Host your web application**
+
+There are many places where to host front end resources, you just need to find a web server. One other way (and very easy way) could be to use the pastebin.com service:
+ - Follow the first deployment step to deploy contract(s). 
+ - The `Copy Base64 conversion to ClipBoard` icon will be enable (on top of the modal dialog), click on this icon to copy the Base64 content into the clipboard.
+ - Go to pastebin.com and paste the content into the `New Paste` input. Then click on `Submit'.
+ - Go through the Captcha.
+ - Copy the address targeted by the link `Raw` (on the top of the page).
+ - Use this address in the `Web Application Resources URL` field.
  
 **Registration of front end resources**
  - `URL Hint contract address` is the address of the contract which is used to store the URL where the resources are.
