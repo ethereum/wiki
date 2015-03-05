@@ -483,3 +483,15 @@ contract Derived is Base(0) {
 	function Derived(uint i) Base(i) {}
 }
 ```
+
+## Detect failed CALLs
+[PT](https://github.com/ethereum/cpp-ethereum/pull/1212) If a CALL fails, do not just silently continue. Currently, this issues a STOP but it will throw an exception once we have exceptions.
+```
+contract C {
+  function willFail() returns (uint) {
+    address(709).call();
+    return 1;
+  }
+}
+```
+`willFail` will always return an empty byte array (unless someone finds the correct private key...).
