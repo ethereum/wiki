@@ -88,7 +88,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [shh_addToGroup](#shh_addtogroup)
 * [shh_newFilter](#shh_newfilter)
 * [shh_uninstallFilter](#shh_uninstallfilter)
-* [shh_changed](#shh_changed)
+* [shh_getFilterChanges](#shh_getfilterchanges)
 * [shh_getMessages](#shh_getmessages)
 
 
@@ -1262,12 +1262,12 @@ params: [{
 
 ***
 
-#### `shh_newIdeninty`
+#### `shh_newIdentinty`
 *creates new whisper identity*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"ssh_newIdentity","params":[],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentinty","params":[],"id":73}'
 ```
 
 ##### Parameters
@@ -1394,12 +1394,12 @@ params: ["0x7"] // 7
 
 ***
 
-#### `shh_changed`
+#### `shh_getFilterChanges`
 *polling method, which returns array of messages which are received since last poll*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_changed","params":["0x7"],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getFilterChanges","params":["0x7"],"id":73}'
 ```
 
 ##### Parameters
@@ -1448,4 +1448,4 @@ params: ["0x7"] // 7
 ```
 
 ##### Response
-See [shh_changed](#shh_changed)
+See [shh_getFilterChanges](#shh_getfilterchanges)
