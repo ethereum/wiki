@@ -47,10 +47,10 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_gasPrice](#eth_gasprice)
 * [eth_accounts](#eth_accounts)
 * [eth_blockNumber](#eth_blocknumber)
-* [eth_getBalance](#eth_getbalance) // deprecated eth_balanceAt
+* [eth_getBalance](#eth_getbalance)
 * [eth_getStorage](#eth_getStorage)
-* [eth_getStorageAt](#eth_getstorageat) // deprecated eth_stateAt
-* [eth_getTransactionCount](#eth_gettransactioncount) // deprecated eth_countAt
+* [eth_getStorageAt](#eth_getstorageat)
+* [eth_getTransactionCount](#eth_gettransactioncount)
 * [eth_getBlockTransactionCountByHash](#eth_getblocktransactioncountbyhash)
 * [eth_getBlockTransactionCountByNumber](#eth_getBlockTransactioncountbynumber)
 * [eth_getUncleCountByBlockHash](#eth_getunclecountbyblockhash)
