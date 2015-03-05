@@ -959,12 +959,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic
 
 ```js
 params: [{
-  "earliest": "0x1", (optional) // 1
-  "latest": "0x2", (optional) // 2
-  "max": "0x3", (optional) // 3
-  "skip": "0x0", (optional) // 0
+  "fromBlock": "0x1", (optional) // 1
+  "toBlock": "0x2", (optional) // 2
+  "limit": "0x3", (optional) // 3
+  "offset": "0x0", (optional) // 0
   "address": "0xg534jh5g34..", (optional) // to filtercame from account
-  "topic": '0x12341234...' (optional) // string or array of strings
+  "topic": '0x12341234...' (optional) // STRING or ARRAY of topic strings
 }]
 ```
 
