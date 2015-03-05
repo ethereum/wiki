@@ -694,7 +694,7 @@ params: [
   "transactions": [{
       // see eth_transaction objects
    },{ ... }] // or array of hashes, if the last given parameter if is FALSE
-   "unlces": ["0x1606e5...", "0xd5145a9..."]
+   "uncles": ["0x1606e5...", "0xd5145a9..."]
   }
 }
 ```
