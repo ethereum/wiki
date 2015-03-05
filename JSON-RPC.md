@@ -951,7 +951,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic":"0x12341234"}],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topics":["0x12341234"]}],"id":73}'
 ```
 
 ##### Parameters
@@ -965,7 +965,7 @@ params: [{
   "limit": "0x3", (optional) // 3
   "offset": "0x0", (optional) // 0
   "address": "0xg534jh5g34..", (optional) // to filtercame from account
-  "topic": '0x12341234...' (optional) // STRING or ARRAY of topic strings
+  "topics": ['0x12341234...'] (optional) // array of topic strings
 }]
 ```
 
@@ -991,7 +991,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["p
 0. the string "pending" or "chain"
 
 ```js
-params: ["pending"] // "pending"
+params: ["pending"]
 ```
 
 ##### Response
@@ -1094,7 +1094,7 @@ See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topic":"0x12341234"}],"id":74}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topics":["0x12341234"]}],"id":74}'
 ```
 
 ##### Parameters
@@ -1102,7 +1102,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topic":
 0. the filter object
 
 ```js
-params: [{"topic":"0x12341234"}]
+params: [{"topics": ["0x12341234"] }]
 ```
 
 ##### Response
@@ -1235,7 +1235,7 @@ params: [
 ##### Request Example
 ```bash
 "0x68656c6c6f20776f726c64"
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f2..","topic":"0x68656c6c6f20776f726c64","payload":"0x68656c6c6f20776f726c64","ttl":0x64,"priority":0x64}],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f2..","topics": ["0x68656c6c6f20776f726c64"],"payload":"0x68656c6c6f20776f726c64","ttl":0x64,"priority":0x64}],"id":73}'
 ```
 ##### Parameters
 
@@ -1244,7 +1244,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":
 ```js
 params: [{
   from: "0x0424406a...",
-  topic: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
+  topics: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
   payload: "0x7b2274797065223a226d6...",
   priority: "0x64", // TODO or workToProve?
   ttl: "0x64",
@@ -1342,7 +1342,7 @@ params: ["0xc931d93e97ab07fe42d9234..."]
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic":"0x68656c6c6f20776f726c64", "to": "0x34kh345k34kjh5k34"}],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topics": ["0x68656c6c6f20776f726c64"], "to": "0x34kh345k34kjh5k34"}],"id":73}'
 ```
 
 ##### Parameters
@@ -1351,7 +1351,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic
 
 ```js
 params: [{
-   "topic": '0x12341234...',
+   "topics": ['0x12341234...'],
    "to": "0x34kh345k34kjh5k34"
 }]
 ```
