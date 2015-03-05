@@ -542,15 +542,18 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
 
 **Returns** a block object with number or hash `hashHexStringOrBlockNumber`:
 
+  * `number` (integer): The number of this block.
   * `hash` (32-byte hash): The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header).
   * `parentHash` (32-byte hash): The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header).
+  * `nonce`: (32-byte hash)
   * `sha3Uncles` (32-byte hash): The SHA3 of the RLP-encoded dump of the uncles portion of the block.
-  * `miner` (20-byte address): The address of the account that was rewarded for mining this block (né the coinbase address).
+  * `logsBloom` (32-byte hash): The bloom filter of this block.  
   * `stateRoot` (32-byte hash): The root of the state trie.
   * `transactionsRoot` (32-byte hash): The root of the block's transactions trie.
+  * `miner` (20-byte address): The address of the account that was rewarded for mining this block (né the coinbase address).
   * `difficulty` (BigNumber): The PoW difficulty of this block.
   * `totalDifficulty` (BigNumber): The total difficulty of the entire chain up and including this block.
-  * `number` (integer): The number of this block.
+  * `size` (integer) the size in bytes of the block
   * `minGasPrice` (BigNumber): The minimum price, in Wei per GAS, that the miner accepted for any transactions in this block.
   * `gasLimit` (integer): The gas limit of this block.
   * `gasUsed` (integer): The amount of gas used in this block.
@@ -558,7 +561,8 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
   * `extraData` (byte array): Any extra data this block contains.
   * `nonce` (32-byte hash): The block's PoW nonce.
   * `children` (array of 32-byte hashes): The hashes of any children this block has.
-  * `bloom` (32-byte hash): The bloom filter of this block.
+  * `transactions` (array) transaction objects or hashes, depending on the last parameter
+  * `uncles` (array) hashes of uncles
 
 If you pass an optional callback the HTTP request is made asynchronous.
 
@@ -566,19 +570,24 @@ If you pass an optional callback the HTTP request is made asynchronous.
 var info = web3.eth.block(3150);
 console.log(info);
  /*{
-  "difficulty": "0x02a88f",
-  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "gasLimit": 125000,
-  "hash": "80452e84d0d0599d779a4e466d0b70d50ca316499a8489604d5b9df436ccfeee",
-  "minGasPrice": instanceof BigNumber,
-  "miner": "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
-  "nonce": "0xed0c6a53777b15880fb359dfd9368d002c959243a19c35ca1ae2e97f9bf78a53",
   "number": 3150,
-  "parentHash": "0xf9de6948d835ed5257229b5103f9421a7f70c3ccc65fd31c0db85324e05702f5",
-  "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-  "stateRoot": "0xd878fcee309af964e8e70c66ec25b1e7de9eca9c4f49e90efddeea8f77a37e43",
-  "timestamp": 1416585210,
+  "difficulty": 125000,
+  "totalDifficulty": 124334345000,
   "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+  "hash": "0x452e84d0d0599d779a4e466d0b70d50ca316499a8489604d5b9df436ccfeee",
+  "parentHash": "0xf9de6948d835ed5257229b5103f9421a7f70c3ccc65fd31c0db85324e05702f5",
+  "nonce": "0xed0c6a53777b15880fb359dfd9368d002c959243a19c35ca1ae2e97f9bf78a53",
+  "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+  "logsBloom": "0xe84d0d0599d779a4e466d0b70d50ca316499a8489604d5b9df436ccfeee",
+  "stateRoot": "0xd878fcee309af964e8e70c66ec25b1e7de9eca9c4f49e90efddeea8f77a37e43",
+  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "minGasPrice": instanceof BigNumber,
+  "gasLimit": 125000,
+  "gasUsed": 34345,
+  "miner": "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+  "timestamp": 1416585210,
+  "transactions": [{...}, {...}],
+  "uncles": ["0xkj423h4kj23...", "0xlj4234k2..."]
 } */
 ```
 
@@ -846,12 +855,12 @@ web3.eth.filter(contractObject [, options])
 ```
    * `filterString`:  `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively
    * `options`
-       * `earliest`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
-       * `latest`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
-       * `max`: The maximum number of messages to return.
-       * `skip`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
+       * `fromBlock`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
+       * `toBlock`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
+       * `limit`: The maximum number of messages to return.
+       * `offset`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
        * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
-       * `topic`: A set of values which must each appear in the log entries.
+       * `topic`: A set of values which must each appear in the log entries. (string or array of strings)
    * `eventArguments` is an object with keys of one or more indexed arguments for the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
 
 **Returns** a filter object with the following methods:
