@@ -145,17 +145,24 @@ Now, we specify the main "hashimoto"-like loop, where we aggregate data from the
 def hashimoto(header, nonce, dagsize, dag_lookup):
     n = dagsize / HASH_BYTES
     w = MIX_BYTES / WORD_BYTES
+    mixhashes = MIX_BYTES / HASH_BYTES
     s = sha3_512(header + nonce)
     mix = []
     for _ in range(MIX_BYTES / HASH_BYTES):
         mix.extend(s)
     for i in range(ACCESSES):
-        p = fnv(i ^ s[0], mix[i % w]) % (n // w) * w
+        p = fnv(i ^ s[0], mix[i % w]) % (n // mixhashes) * mixhashes
         newdata = []
         for j in range(MIX_BYTES / HASH_BYTES):
             newdata.extend(dag_lookup(p + j))
         mix = map(fnv, mix, newdata)
-    return sha3_256(s+sha3_256(mix))
+    cmix = []
+    for i in range(0, len(mix), 4):
+        cmix.append(fnv(fnv(fnv(mix[i], mix[i+1]), mix[i+2]), mix[i+3]))
+    return {
+        "mixhash": serialize_hash(cmix),
+        "result": serialize_hash(sha3_256(s+cmix))
+    }
 
 def hashimoto_light(full_size, cache, header, nonce):
     return hashimoto(header, nonce, full_size, lambda x: calc_dag_item(cache, x))
@@ -212,11 +219,22 @@ def encode_int(s):
 def zpad(s, length):
     return s + '\x00' * max(0, length - len(s))
 
+def serialize_hash(h):
+    return ''.join([zpad(encode_int(x), 4) for x in h])
+  
+def deserialize_hash(h):
+    return [decode_int(h[i:i+WORD_BYTES]) for i in range(0, len(h), WORD_BYTES)]
+  
 def hash_words(h, sz, x):
     if isinstance(x, list):
-        x = ''.join([zpad(encode_int(a), WORD_BYTES) for a in x])
+        x = serialize_hash(x)
     y = h(x)
-    return [decode_int(y[i:i+WORD_BYTES]) for i in range(0, sz, WORD_BYTES)]
+    return deserialize_hash(y)
+
+def serialize_cache(ds):
+    return ''.join([serialize_hash(h) for h in ds])
+  
+serialize_dataset = serialize_cache
 
 # sha3 hash function, outputs 64 bytes
 def sha3_512(x):
