@@ -982,7 +982,7 @@ params: [{
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["0x70656e64696e67"],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["pending"],"id":73}'
 ```
 
 ##### Parameters
@@ -990,7 +990,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["0
 0. the string "pending" or "chain" (encoded as hex)
 
 ```js
-params: ["0x70656e64696e67"] // "pending"
+params: ["pending"] // "pending"
 ```
 
 ##### Response
