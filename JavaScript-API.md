@@ -122,9 +122,9 @@ var web3 = require('web3')
 
     web3.sha3(string [, callback])
 
-**Returns** the SHA3 of the given data.
-
 If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** the SHA3 of the given data.
 
 ```javascript
 var str = web3.sha3("Some ASCII string to be hashed");
@@ -416,9 +416,9 @@ web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 
      web3.eth.unRegister(addressHexString [, callback])
 
-**Returns** ?
-
 If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** ?
 
 Unregisters a given address.
 
@@ -472,10 +472,10 @@ console.log(number); // 2744
 
     web3.eth.getBalance(addressHexString [, defaultBlock] [, callback])
 
-**Returns** a BigNumber object of the current balance for the given address in wei.
-
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** a BigNumber object of the current balance for the given address in wei.
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
@@ -492,10 +492,10 @@ console.log(balance.toNumber()); // 1000000000000
 
     web3.eth.getStorage(addressHexString [, defaultBlock] [, callback])
 
-**Returns** the storage as a json object.
-
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** the storage as a json object.
 
 ```javascript
 var storage = web3.eth.getStorage("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
@@ -508,10 +508,10 @@ console.log(storage); // { "0x" : "0x03" }
 
     web3.eth.getStorageAt(addressHexString, position [, defaultBlock] [, callback])
 
-**Returns** the value in storage at position `position` of the address `addressHexString`.
-
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** the value in storage at position `position` of the address `addressHexString`.
 
 ```javascript
 var state = web3.eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
@@ -524,10 +524,10 @@ console.log(state); // "0x03"
 
     web3.eth.getData(addressHexString [, defaultBlock] [, callback])
 
-**Returns** the data at given address `addressHexString`.
-
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** the data at given address `addressHexString`.
 
 ```javascript
 var data = web3.eth.getData("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
@@ -538,7 +538,9 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
 
 ##### web3.eth.getBlock
 
-     web3.eth.getBlock(hashHexStringOrBlockNumber [, callback])
+     web3.eth.getBlock(hashHexStringOrBlockNumber, returnTransactionObjectsBoolean [, callback])
+
+If you pass an optional callback the HTTP request is made asynchronous.
 
 **Returns** a block object with number or hash `hashHexStringOrBlockNumber`:
 
@@ -563,8 +565,6 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
   * `children` (array of 32-byte hashes): The hashes of any children this block has.
   * `transactions` (array) transaction objects or hashes, depending on the last parameter
   * `uncles` (array) hashes of uncles
-
-If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var info = web3.eth.block(3150);
@@ -597,9 +597,9 @@ console.log(info);
 
     web3.eth.getBlockTransactionCount(hashStringOrBlockNumber [, callback])
 
-**Returns** the number of transactions in a given block `hashStringOrBlockNumber`.
-
 If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** the number of transactions in a given block `hashStringOrBlockNumber`.
 
 ```javascript
 var number = web3.eth.getBlockTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
@@ -612,9 +612,9 @@ console.log(number); // 1
 
     web3.eth.getUncle(blockHashStringOrNumber, uncleNumber [, callback])
 
-Returns the uncle with number `uncleNumber` from the block with number or hash `blockHashStringOrNumber`.
-
 If you pass an optional callback the HTTP request is made asynchronous.
+
+Returns the uncle with number `uncleNumber` from the block with number or hash `blockHashStringOrNumber`.
 
 Return value is an object with the following keys:
   * `hash` (32-byte hash): The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header).
@@ -662,6 +662,8 @@ console.log(uncle);
 
     web3.eth.getTransaction(hashStringOrNumber, blockNumber [, callback])
 
+If you pass an optional callback the HTTP request is made asynchronous.
+
 **Returns** a transaction object by number or hash `hashStringOrNumber` from block with `blockNumber`:
 
   * `hash` (32-byte hash): The hash of the transaction.
@@ -676,7 +678,6 @@ console.log(uncle);
   * `value` (BigNumber): The amount of ETH to be transferred to the recipient with the transaction in wei.
   * `input` (byte array): The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation.
 
-If you pass an optional callback the HTTP request is made asynchronous.
 
 ```js
 var blockNumber = 668;
@@ -708,10 +709,10 @@ console.log(transaction);
 
     web3.eth.getTransactionCount(addressHexString [, defaultBlock] [, callback])
 
-**Returns** the number of transactions send from the given address `addressHexString`.
-
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** the number of transactions send from the given address `addressHexString`.
 
 ```javascript
 var number = web3.eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
@@ -828,10 +829,10 @@ myEvent.stopWatching();
 
     web3.eth.call(callObject [, defaultBlock] [, callback])
 
-**Returns** the data which matches the call.
-
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** the data which matches the call.
 
 Executes a new message-call immediately without creating a transaction on the block chain. `callObject` is an object specifying the parameters of the transaction.
 
@@ -911,9 +912,10 @@ filter.stopWatching();
 
     web3.eth.getCompilers([callback])
 
+If you pass an optional callback the HTTP request is made asynchronous.
+
 **Returns** an array of available compilers.
 
-If you pass an optional callback the HTTP request is made asynchronous.
 
 ```javascript
 var number = web3.eth.getCompilers();
@@ -926,9 +928,10 @@ console.log(number); // ["lll", "solidity", "serpent"]
 
     web3.eth.compile.solidity(sourceString [, callback])
 
+If you pass an optional callback the HTTP request is made asynchronous.
+
 **Returns** the compiled solidity code as HEX string.
 
-If you pass an optional callback the HTTP request is made asynchronous.
 
 Compiles the solidity source code `sourceString` and returns the output data.
 ```js
@@ -948,9 +951,10 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
     web3. eth.compile.lll(sourceString [, callback])
 
+If you pass an optional callback the HTTP request is made asynchronous.
+
 **Returns** the compiled lll code as HEX string.
 
-If you pass an optional callback the HTTP request is made asynchronous.
 
 Compiles the LLL source code `sourceString` and returns the output data.
 ```javascript
@@ -966,9 +970,10 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
     web3.eth.compile.serpent(sourceString [, callback])
 
+If you pass an optional callback the HTTP request is made asynchronous.
+
 **Returns** the compiled serpent code as HEX string.
 
-If you pass an optional callback the HTTP request is made asynchronous.
 
 Compiles the serpent source code `sourceString ` and returns the output data.
 
@@ -1084,11 +1089,11 @@ web3.shh.post(message);
 
     web3.shh.newIdentity([callback])
 
-**Returns** a new identity hex string.
-
 If you pass an optional callback the HTTP request is made asynchronous.
 
 Should be called to create new identity.
+
+**Returns** a new identity hex string.
 
 ```js
 var identity = web3.shh.newIdentity();
@@ -1101,11 +1106,13 @@ console.log(identity); // "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7
 
     web3.shh.hasIdentity([callback])
 
-**Returns** a boolean whether or not the identity exists.
-
 If you pass an optional callback the HTTP request is made asynchronous.
 
 Should be called, if we want to check if user has given identity. Accepts one param. Returns true if he has, otherwise false.
+
+**Returns** a boolean whether or not the identity exists.
+
+
 ```javascript
 var identity = web3.shh.newIdentity();
 var result = web3.shh.hasIdentity(identity);
