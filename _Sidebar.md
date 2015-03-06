@@ -37,6 +37,8 @@
 - [PoC-1 Whitepaper](https://github.com/ethereum/wiki/wiki/Whisper-PoC-1-Protocol-Spec)
 
 ### ÐApp Development
+- [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
+- [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/JSON-RPC)
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 - [Solidity Tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial)
 - [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
@@ -45,8 +47,6 @@
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
-- [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
-- [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/JSON-RPC)
 
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
