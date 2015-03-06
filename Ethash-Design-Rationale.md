@@ -5,7 +5,6 @@ Ethash is intended to satisfy the following goals:
 3. **Light client verifiability**: a light client should be able to verify a round of mining in under 0.01 seconds on a desktop in C, and under 0.1 seconds in Python or Javascript, with at most 1 MB of memory (but exponentially increasing)
 4. **Light client slowdown**: the process of running the algorithm with a light client should be much slower than the process with a full client, to the point that the light client algorithm is not an economically viable route toward making a mining implementation, including via specialized hardware.
 5. **Light client fast startup**: a light client should be able to become fully operational and able to verify blocks within 40 seconds in Javascript.
-6. **Planned obsolescence**:  in order to discourage the aggregation of mining hardware among a small number of firms, the system has planned obsolescence by design.
 
 ### FNV
 
@@ -19,7 +18,3 @@ FNV was used to provide a data aggregation function which is (i) non-associative
 * The ~0.34x per year growth level was chosen to roughly be balanced with Moore's law increases at least initially (exponential growth has a risk of overshooting Moore's law, leading to a situation where mining requires very large amounts of memory and ordinary GPUs are no longer usable for mining).
 * 128 accesses was chosen because a larger number of accesses would lead to light verification taking too long, and a smaller number would mean that the bulk of the time consumption is the SHA3 at the end, not the memory reads, making the algorithm not so strongly IO-bound.
 * The epoch length cannot be infinite (ie. constant dataset) because then the algorithm could be optimized via ROM, and very long epoch lengths make it easier to create memory which is designed to be updated very infrequently and only read often. Excessively short epochs would increase barriers to entry as weak machines would need to spend much of their time on a fixed cost of updating the dataset. The epoch length can probably be reduced or increased substantially if design considerations require it.
-
-### Scheduled Obsolescence
-
-While demanding ASIC hardness avoids the familiar centralization people are familiar with in BitCoin, it does not avoid the endemic centralization that can occur when firms invest in GPU hardware instead.  To discourage this, Ethash includes and aggressive schedule of linearly increasing memory requirements.  The memory grows at 7 GB every 9 months. The cache is 1/1024th of the DAG size.
