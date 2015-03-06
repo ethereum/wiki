@@ -36,7 +36,7 @@
 - [PoC-1 Wire protocol](https://github.com/ethereum/wiki/wiki/Whisper-Wire-Protocol)
 - [PoC-1 Whitepaper](https://github.com/ethereum/wiki/wiki/Whisper-PoC-1-Protocol-Spec)
 
-### ÐApp Development
+### Ðapp Development
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
 - [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/JSON-RPC)
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
