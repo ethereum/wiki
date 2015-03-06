@@ -508,8 +508,8 @@ contract ArrayExample {
     byteData = byteInput; // bytes are stored in a compact way
   }
   function indexAccess() {
-    data[3].length += 20;
-    data[3][7] = data[3][2];
+    data.length += 20;
+    data[3][5] = data[3][2];
     byteData[2] = byteData[7]; // this will access sigle bytes
   }
   function clear() {
