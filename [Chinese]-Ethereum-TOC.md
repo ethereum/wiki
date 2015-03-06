@@ -3,3 +3,5 @@
 [Serpent语言指南](https://github.com/ethereum/wiki/wiki/%5B%E4%B8%AD%E6%96%87%5D-Serpent%E6%8C%87%E5%8D%97)
 
 [以太坊开发计划](https://github.com/ethereum/wiki/wiki/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%BC%80%E5%8F%91%E8%AE%A1%E5%88%92)
+
+[术语表](https://github.com/ethereum/wiki/wiki/%E6%9C%AF%E8%AF%AD%E8%A1%A8)
