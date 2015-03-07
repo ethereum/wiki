@@ -465,3 +465,9 @@ There are also special commands for a few crypto operations; particularly:
 * When calling abi_contract(), if you get this type of error `Exception: Error (file "main", line 1, char 5): Invalid object member (ie. a foo.bar not mapped to anything)` make sure you are specifying correct path to the file you are compiling.
 
 * If you get a core dump when calling abi_contract(), check that you do not have functions with the same name.
+
+* Constants need to be be defined inside shared, example:
+```
+def shared():
+    CONSTANT = 99
+```
