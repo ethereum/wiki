@@ -9,7 +9,7 @@ The general route that the algorithm takes is as follows:
 3. From the cache, we can generate a **1 GB dataset** ("the DAG"), with the property that each item in the dataset depends on only a small number of items from the cache. Full clients and miners store the DAG.  The DAG grows linearly with time.
 4. Mining involves grabbing random slices of the DAG and hashing them together. Verification can be done with low memory by using the cache to regenerate the specific pieces of the DAG that you need, so you only need to store the cache.
 
-The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it. The dataset also grows over time; it starts off at 1 GB, is 8GB by December 2015, and rises linearly 15GB by December 2016.
+The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it.
 
 The specification for the algorithm is written in python to give a balance between clarity and exactness. If you are interested in actually running the spec as code, then you can; simply prepend the code given at the start of the appendix.
 
@@ -22,7 +22,7 @@ We employ the following definitions:
 ```
 WORD_BYTES = 4                    # bytes in word
 DATASET_BYTES_INIT = 2**30        # bytes in dataset at genesis
-DATASET_BYTES_GROWTH = 2**23      # growth per epoch (~7 GB per year)
+DATASET_BYTES_GROWTH = 2**23      # growth per epoch
 CACHE_MULTIPLIER = 1024           # Size of the dataset relative to the cache
 EPOCH_LENGTH = 30000              # blocks per epoch
 MIX_BYTES = 128                   # width of mix
