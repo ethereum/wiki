@@ -841,8 +841,8 @@ web3.eth.filter(contractObject [, options])
 ```
    * `filterString`:  `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively
    * `options`
-       * `fromBlock`: The number of the earliest block (-1 may be given to mean the most recent, currently mining, block).
-       * `toBlock`: The number of the latest block (-1 may be given to mean the most recent, currently mining, block).
+       * `fromBlock`: The number of the earliest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
+       * `toBlock`: The number of the latest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
        * `limit`: The maximum number of messages to return.
        * `offset`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
        * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
