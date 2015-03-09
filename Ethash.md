@@ -35,38 +35,7 @@ ACCESSES = 64                     # number of accesses in hashimoto loop
 
 ### Parameters
 
-The parameters for Ethash's cache and DAG depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we compute tables using the following functions (in Mathematica):
-
-```mathematica
-GetDataSizes[n_] := Module[{
-       DataSetSizeBytesInit = 2^30,
-       MixBytes = 128,
-       DataSetGrowth = 2^23,
-       j = 0},
-       Reap[
-         While[j < n,
-           Module[{i =
-             Floor[(DataSetSizeBytesInit + DataSetGrowth * j) / MixBytes]},
-             While[! PrimeQ[i], i--];
-             Sow[i*MixBytes]; j++]]]][[2]][[1]]
-
- GetCacheSizes[n_] := Module[{
-        DataSetSizeBytesInit = 2^30,
-        MixBytes = 128,
-        DataSetGrowth = 2^23,
-        HashBytes = 64,
-        CacheMultiplier = 1024,
-        j = 0},
-    Reap[
-      While[j < n,
-       Module[{i = Floor[(DataSetSizeBytesInit + DataSetGrowth * j) / (CacheMultiplier * HashBytes)]},
-        While[! PrimeQ[i], i--];
-        Sow[i*HashBytes]; j++]]]][[2]][[1]]
-```
-
-Essentially, we are keeping the size of the dataset to always be equal to the highest prime below a linearly growing function, so on average in the long term the dataset will grow roughly linearly.  Tabulated version of ``get_datasize` and `get_cachesize` have been provided in the appendix.
-
-We can now get the parameters (in python):
+The parameters for Ethash's cache and DAG depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we compute tables using the following functions:
 
 ```python
 def get_datasize(block_number):
@@ -79,7 +48,10 @@ def get_cachesize(block_number):
     c = CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * (block_number // EPOCH_LENGTH)
     while not isprime(c // 64):
         c -= 64
+    return c
 ```
+
+A tabulated version, and mathematica code for generating it, is provided in the appendix.
 
 ### Cache Generation
 
@@ -267,7 +239,35 @@ def isprime(x):
     return True
 ```
 
-The following lookup tables provide approximately 2048 tabulated epochs of data sizes and cache sizes.  They were generated with the *Mathematica* functions provided above:
+
+The following lookup tables provide approximately 2048 tabulated epochs of data sizes and cache sizes.  They were generated with the *Mathematica* function provided here:
+
+
+```mathematica
+GetDataSizes[n_] := Module[{
+       DataSetSizeBytesInit = 2^30,
+       MixBytes = 128,
+       DataSetGrowth = 2^23,
+       j = 0},
+       Reap[
+         While[j < n,
+           Module[{i =
+             Floor[(DataSetSizeBytesInit + DataSetGrowth * j) / MixBytes]},
+             While[! PrimeQ[i], i--];
+             Sow[i*MixBytes]; j++]]]][[2]][[1]]
+
+ GetCacheSizes[n_] := Module[{
+        CacheSizeBytesInit = 2^24,
+        CacheGrowth = 2^17,
+        HashBytes = 64,
+        j = 0},
+       Reap[
+         While[j < n,
+           Module[{i =
+             Floor[(CacheSizeBytesInit + CacheGrowth * j) / HashBytes]},
+             While[! PrimeQ[i], i--];
+             Sow[i*HashBytes]; j++]]]][[2]][[1]]
+```
 
 ```python
 def get_datasize(block_number):
