@@ -174,7 +174,7 @@ Following input values are possible:
 
 - string
 - number or string of number
-- BigNumber instance -> will be converted to a number
+- BigNumber instance -> will be converted to a hex representation of a number
 - hex string
 - array (will be stringified before)
 - object (will be stringified before)
