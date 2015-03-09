@@ -78,7 +78,8 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount) -> Integer
     * [getUncle(hash/number)](#web3ethgetuncle) -> headerObject
     * [getBlockUncleCount(hash/number)](#web3ethgetblockunclecount) -> Integer
-    * [getTransaction(object, number)](#web3ethgettransaction) -> transactionObject
+    * [getTransaction(hash)](#web3ethgettransaction) -> transactionObject
+    * [getTransactionFromBlock(hashOrNumber, indexNumber)](#web3ethgettransactionfromblock) -> transactionObject
     * [getTransactionCount(address)](#web3ethgettransactioncount) -> Integer
     * [sendTransaction(object)](#web3ethsendtransaction)
     * [contract(abiArray)](#web3ethcontract) -> contractObject
@@ -640,11 +641,11 @@ console.log(uncle); // see web3.eth.getBlock
 
 #####web3.eth.getTransaction
 
-    web3.eth.getTransaction(hashStringOrNumber, blockNumber [, callback])
+    web3.eth.getTransaction(transactionHash [, callback])
 
 If you pass an optional callback the HTTP request is made asynchronous.
 
-**Returns** a transaction object by number or hash `hashStringOrNumber` from block with `blockNumber`:
+**Returns** a transaction object its hash `transactionHash`:
 
   * `hash` (32-byte hash): The hash of the transaction.
   * `nonce` (32-byte hash): The transaction nonce.
@@ -685,6 +686,22 @@ console.log(transaction);
 ```
 
 ***
+
+##### web3.eth.getTransactionFromBlock
+
+    getTransactionFromBlock(hashStringOrNumber, indexNumber [, callback])
+
+If you pass an optional callback the HTTP request is made asynchronous.
+
+**Returns** a transaction object by block number or hash `hashStringOrNumber` with transaction index `indexNumber`:
+
+```js
+var transaction = web3.eth.getTransactionFromBlock('0x4534534534', 2);
+console.log(transaction); // see web3.eth.getTransaction
+
+```
+
+
 ##### web3.eth.getTransactionCount
 
     web3.eth.getTransactionCount(addressHexString [, defaultBlock] [, callback])
