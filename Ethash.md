@@ -5,7 +5,7 @@ Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version o
 The general route that the algorithm takes is as follows:
 
 1. There exists a **seed** which can be computed for each block by scanning through the block headers up until that point.
-2. From the seed, one can compute a **32 MB pseudorandom cache**. Light clients store the cache.
+2. From the seed, one can compute a **16 MB pseudorandom cache**. Light clients store the cache.
 3. From the cache, we can generate a **1 GB dataset** ("the DAG"), with the property that each item in the dataset depends on only a small number of items from the cache. Full clients and miners store the DAG.  The DAG grows linearly with time.
 4. Mining involves grabbing random slices of the DAG and hashing them together. Verification can be done with low memory by using the cache to regenerate the specific pieces of the DAG that you need, so you only need to store the cache.
 
@@ -23,7 +23,8 @@ We employ the following definitions:
 WORD_BYTES = 4                    # bytes in word
 DATASET_BYTES_INIT = 2**30        # bytes in dataset at genesis
 DATASET_BYTES_GROWTH = 2**23      # growth per epoch
-CACHE_MULTIPLIER = 1024           # Size of the dataset relative to the cache
+CACHE_BYTES_INIT = 2**24          # bytes in cache at genesis
+CACHE_BYTES_GROWTH = 2**17        # growth per epoch
 EPOCH_LENGTH = 30000              # blocks per epoch
 MIX_BYTES = 128                   # width of mix
 HASH_BYTES = 64                   # hash length in bytes
@@ -69,10 +70,15 @@ We can now get the parameters (in python):
 
 ```python
 def get_datasize(block_number):
-    return DATASET_BYTES_INIT + DATASET_BYTES_GROWTH * (block_number // EPOCH_LENGTH)
+    c = DATASET_BYTES_INIT + DATASET_BYTES_GROWTH * (block_number // EPOCH_LENGTH)
+    while not isprime(c // 128):
+        c -= 128
+    return c
 
 def get_cachesize(block_number):
-    return (DATASET_BYTES_INIT + DATASET_BYTES_GROWTH * (block_number // EPOCH_LENGTH)) / CACHE_MULTIPLIER
+    c = CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * (block_number // EPOCH_LENGTH)
+    while not isprime(c // 64):
+        c -= 64
 ```
 
 ### Cache Generation
@@ -253,6 +259,12 @@ def sha3_256(x):
 
 def xor(a, b):
     return a ^ b
+
+def isprime(x):
+    for i in range(2, int(x**0.5)):
+         if x % i == 0:
+             return False
+    return True
 ```
 
 The following lookup tables provide approximately 2048 tabulated epochs of data sizes and cache sizes.  They were generated with the *Mathematica* functions provided above:
