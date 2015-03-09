@@ -11,7 +11,7 @@ The general route that the algorithm takes is as follows:
 
 The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it.
 
-The specification for the algorithm is written in python to give a balance between clarity and exactness. If you are interested in actually running the spec as code, then you can; simply prepend the code given at the start of the appendix.
+The specification for the algorithm is written in python to give a balance between clarity and exactness. If you are interested in actually running the spec as code, then you can; simply prepend the code given at the start of the appendix, or alternatively see the pyethereum files [here](https://github.com/ethereum/pyethereum/blob/develop/pyethereum/ethash.py) and [here](https://github.com/ethereum/pyethereum/blob/develop/pyethereum/ethash_utils.py)
 
 See [https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale](https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale) for design rationale considerations for this algorithm.
 
@@ -88,6 +88,7 @@ def mkcache(cache_size, seed):
     for i in range(1, n):
         o.append(sha3_512(o[-1]))
 
+    # Use a low-round version of randmemohash
     for _ in range(CACHE_ROUNDS):
         for i in range(n):
             v = o[i][0] % n
@@ -119,9 +120,11 @@ Each 64-byte item in the full 1 GB dataset is computed as follows:
 def calc_dataset_item(cache, i):
     n = len(cache)
     r = HASH_BYTES // WORD_BYTES
+    # initialize the mix
     mix = copy.copy(cache[i % n])
     mix[0] ^= i
     mix = sha3_512(mix)
+    # fnv it with a lot of random cache nodes based on i
     for j in range(DATASET_PARENTS):
         cache_index = fnv(i ^ j, mix[j % r])
         mix = map(fnv, mix, cache[cache_index % n])
@@ -145,16 +148,20 @@ Now, we specify the main "hashimoto"-like loop, where we aggregate data from the
 def hashimoto(header, nonce, full_size, dataset_lookup):
     n = full_size / HASH_BYTES
     mixhashes = MIX_BYTES / HASH_BYTES
-    s = sha3_512(header + nonce)
+    # combine header+nonce into a 64 byte seed
+    s = sha3_512(header + nonce[::-1])
+    # start the mix with replicated s
     mix = []
     for _ in range(MIX_BYTES / HASH_BYTES):
         mix.extend(s)
+    # mix in random dataset nodes
     for i in range(ACCESSES):
         p = fnv(i ^ s[0], mix[i % w]) % (n // mixhashes) * mixhashes
         newdata = []
         for j in range(MIX_BYTES / HASH_BYTES):
             newdata.extend(dataset_lookup(p + j))
         mix = map(fnv, mix, newdata)
+    # compress mix
     cmix = []
     for i in range(0, len(mix), 4):
         cmix.append(fnv(fnv(fnv(mix[i], mix[i+1]), mix[i+2]), mix[i+3]))
@@ -172,7 +179,7 @@ def hashimoto_full(full_size, dataset, header, nonce):
 
 Essentially, we maintain a "mix" 128 bytes wide, and repeatedly sequentially fetch 128 bytes from the full dataset and use the `fnv` function to combine it with the mix. 128 bytes of sequential access are used so that each round of the algorithm always fetches a full page from RAM, minimizing translation lookaside buffer misses which ASICs would theoretically be able to avoid.
 
-If the output of this algorithm is below the desired target, then the nonce is valid. Note that the double application of `sha3_256` ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.  It also serves to provide statistical assurance that the result is an unbiased, 256 bit number.
+If the output of this algorithm is below the desired target, then the nonce is valid. Note that the extra application of `sha3_256` at the end ensures that there exists an intermediate nonce which can be provided to prove that at least a small amount of work was done; this quick outer PoW verification can be used for anti-DDoS purposes.  It also serves to provide statistical assurance that the result is an unbiased, 256 bit number.
 
 ### Mining
 
@@ -190,12 +197,14 @@ def mine(full_size, dataset, header, difficulty):
 
 ### Defining the Seed Hash
 
-In order to compute the seed hash for a given block, we use the following algorithm:
+In order to compute the seed hash that would be used to mine on top of a given block, we use the following algorithm:
 
 ```python
  def get_seedhash(block):
-     seedBlockNum = max(0, block.number // EPOCH_LENGTH - 1) * EPOCH_LENGTH
-     return ChainManager.getBlockByNumber(seedBlockNum).hash()
+     s = '\x00' * 32
+     for i in range(block.number // 30000):
+         s = serialize_hash(sha3_256(s))
+     return s
 ```
 
 Since the seed block number for a particular block is a little more than an EPOCH_LENGTH in the past, a *double buffer* can be used to store DAGs (similar to the pattern used in computer graphics, see [wikipedia](https://en.wikipedia.org/wiki/Multiple_buffering#Double_buffering_in_computer_graphics)).
