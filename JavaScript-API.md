@@ -444,14 +444,20 @@ This default block is used for the following methods (optionally you can overwri
 - [web3.eth.getStorageAt()](#web3ethgetstorageat)
 - [web3.eth.call()](#web3ethcall)
 
-When positive this is a block number, when 0 or negative it is a block age. `-1` therefore means the most recently mined block, `0` means the block being currently mined (i.e. to include pending transactions). Defaults to -1.
+default block can be
+
+- a block number
+- `'latest'`, which would be the latest minded block
+- `'pending'`, which would the currently minded block including pending transactions
+
+*Default is `latest`*
 
 ```javascript
 var defaultBlock = web3.eth.defaultBlock;
-console.log(defaultBlock); // -1
+console.log(defaultBlock); // 'latest'
 
 // set the default block
-web3.eth.defaultBlock = 0;
+web3.eth.defaultBlock = 231;
 ```
 
 ***
