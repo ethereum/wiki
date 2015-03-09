@@ -701,6 +701,7 @@ console.log(transaction); // see web3.eth.getTransaction
 
 ```
 
+***
 
 ##### web3.eth.getTransactionCount
 
