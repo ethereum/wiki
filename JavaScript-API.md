@@ -545,9 +545,9 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
 
 ##### web3.eth.getBlock
 
-     web3.eth.getBlock(hashHexStringOrBlockNumber, returnTransactionObjectsBoolean [, callback])
+     web3.eth.getBlock(hashHexStringOrBlockNumber, returnTransactionObjects [, callback])
 
-If the `returnTransactionObjectsBoolean` parameter is `true` it returns all the transactions as objects in the `transactions` property, if `false` it only includes an array with transaction hashes.
+If the `returnTransactionObjects` parameter is `true` it returns all the transactions as objects in the `transactions` property, if `false` it only includes an array with transaction hashes.
 
 If you pass an optional callback the HTTP request is made asynchronous.
 
@@ -572,7 +572,7 @@ If you pass an optional callback the HTTP request is made asynchronous.
   * `extraData` (byte array): Any extra data this block contains.
   * `nonce` (32-byte hash): The block's PoW nonce.
   * `children` (array of 32-byte hashes): The hashes of any children this block has.
-  * `transactions` (array) transaction objects or hashes, depending on the `returnTransactionObjectsBoolean` parameter
+  * `transactions` (array) transaction objects or hashes, depending on the `returnTransactionObjects` parameter
   * `uncles` (array) hashes of uncles
 
 ```javascript
