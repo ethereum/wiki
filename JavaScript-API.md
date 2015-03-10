@@ -811,7 +811,7 @@ filter.watch(function (result) {
     /*
     {
         address: '0x0123123121',
-        topic: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
+        topics: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
         data: "0x0000000000000000000000000000000000000000000000000000000000000001",
         number: 2
     }
@@ -883,7 +883,7 @@ web3.eth.filter(contractObject [, options])
        * `limit`: The maximum number of messages to return.
        * `offset`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
        * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
-       * `topic`: A set of values which must each appear in the log entries. (string or array of strings)
+       * `topics`: An array of values which must each appear in the log entries.
    * `eventArguments` is an object with keys of one or more indexed arguments for the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
 
 **Returns** a filter object with the following methods:
@@ -898,14 +898,14 @@ web3.eth.filter(contractObject [, options])
 If its a log filter it returns a list of log entries; each includes the following fields:
 
 * `address`: The address of the account whose execution of the message resulted in the log entry being made.
-* `topic`: The topic(s) of the log.
+* `topics`: The topic(s) of the log.
 * `data`: The associated data of the log.
 * `number`: The block number from which this log is.
 
 If its an event filter it returns a filter object with the return values of event:
 
 * `args`: The arguments coming from the event
-* `topic`: The topic(s) of the log.
+* `topics`: The topic(s) of the log.
 * `number`: The block number from at which this event happened.
 
 ```javascript
@@ -1081,7 +1081,7 @@ This method should be called, when we want to post whisper message. `_message` o
   * `payload`: message payload
   * `ttl`: time to live in seconds
   * `workToProve`: // or priority TODO
-  * `topic`: string or array of strings, with message topics
+  * `topics`: array of strings or hexStrings, with message topics
 ```js
 var identity = web3.shh.newIdentity();
 var topic = 'example';
@@ -1089,7 +1089,7 @@ var payload = 'hello whisper world!';
 
 var message = {
   from: identity,
-  topic: [topic],
+  topics: [topic],
   payload: payload,
   ttl: 100,
   workToProve: 100 // or priority TODO
@@ -1159,14 +1159,14 @@ console.log(result2); // false
 
 This method should be used, when you want to watch whisper messages.
 Available filter options are:
-* `topic`: string or array of strings. filter messages with this topic
+* `topics`: array of strings. filter messages with by this topic(s)
 * `to`: filter the identity of receiver of the message
 
 ```javascript
 var topic = 'example';
 
 var options = {
-  topic: [topic],
+  topics: [topic],
   to: '0x32jkh23kjh4j23h5j34h5j3464'
 };
 
@@ -1182,7 +1182,7 @@ filter.watch(function(res) {
   "payloadRaw": "0xjk5h34kj5h34kj6kj346456547trhfghfdgh",
   "sent": 1422564926,
   "to":"0x32jkh23kjh4j23h5j34h5j3464",
-  "topic":['myTopic'],
+  "topics":['myTopic'],
   "ttl":100,
   "workProved":0
   } 
