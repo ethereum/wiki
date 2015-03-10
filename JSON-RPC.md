@@ -92,6 +92,27 @@ The following RPC messages should be accepted by the RPC-backend:
 * [shh_getMessages](#shh_getmessages)
 
 
+### The default block parameter
+
+The following methods have a extra default block parameter:
+
+- [eth_getBalance](#eth_getbalance)
+- [eth_getData](#eth_getdata)
+- [eth_getTransactionCount](#eth_gettransactioncount)
+- [eth_getStorage](#eth_getstorage)
+- [eth_getStorageAt](#eth_getstorageat)
+- [eth_call](#eth_call)
+
+When requests are made that act on the state of ethereum, the last default block parameter determines the height of the block.
+
+The following options are possible:
+
+- a block number
+- 'latest' is the latest minded block
+- 'pending' is the currently minded block including pending transactions
+
+The 'latest' refers to the latest block in the current canonical chain, 'pending' refers to the un-mined state.
+
 #### `web3_sha3`
 *returns SHA3 of the given data*
 
