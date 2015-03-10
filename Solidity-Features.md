@@ -521,7 +521,7 @@ contract ArrayExample {
 ```
 
 ## Now Variable
-[PT](https://www.pivotaltracker.com/story/show/89728640) The global context contains an immutable variable called `now` which is an alias to `block.timestamp`, i.e. it contains the timestamp of the current block.
+[PT](https://www.pivotaltracker.com/story/show/89728640) The global scope contains an immutable variable called `now` which is an alias to `block.timestamp`, i.e. it contains the timestamp of the current block.
 ```
 contract TimedContract {
   uint timeout = now + 4 weeks;
