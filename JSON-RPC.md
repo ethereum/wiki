@@ -988,7 +988,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["p
 
 ##### Parameters
 
-0. the string "pending" or "chain"
+0. the string "pending" or "latest" for changes in the latest block
 
 ```js
 params: ["pending"]
