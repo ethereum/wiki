@@ -610,10 +610,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[see below],"
 0. The call object
 
 ```js
-{
+params: [{
   "to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
   "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
-}
+}]
 ```
 
 ##### Response
