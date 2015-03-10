@@ -546,9 +546,9 @@ console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565
 
 ##### web3.eth.getBlock
 
-     web3.eth.getBlock(hashHexStringOrBlockNumber, returnTransactionObjects [, callback])
+     web3.eth.getBlock(hashHexStringOrBlockNumber[, returnTransactionObjects] [, callback])
 
-If the `returnTransactionObjects` parameter is `true` it returns all the transactions as objects in the `transactions` property, if `false` it only includes an array with transaction hashes.
+If the `returnTransactionObjects` parameter is `true` it returns all the transactions as objects in the `transactions` property, if `false` it only includes an array with transaction hashes. **Default is `false`**
 
 If you pass an optional callback the HTTP request is made asynchronous.
 
@@ -620,7 +620,9 @@ console.log(number); // 1
 
 ##### web3.eth.getUncle
 
-    web3.eth.getUncle(blockHashStringOrNumber, uncleNumber [, callback])
+    web3.eth.getUncle(blockHashStringOrNumber, uncleNumber[, returnTransactionObjects] [, callback])
+
+If the `returnTransactionObjects` parameter is `true` it returns all the transactions as objects in the `transactions` property, if `false` it only includes an array with transaction hashes. **Default is `false`**
 
 If you pass an optional callback the HTTP request is made asynchronous.
 
