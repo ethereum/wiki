@@ -139,7 +139,7 @@ var web3 = require('web3')
 
     web3.sha3(string [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the SHA3 of the given data.
 
@@ -434,7 +434,7 @@ web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 
      web3.eth.unRegister(addressHexString [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** ?
 
@@ -497,7 +497,7 @@ console.log(number); // 2744
     web3.eth.getBalance(addressHexString [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** a BigNumber object of the current balance for the given address in wei.
 
@@ -517,7 +517,7 @@ console.log(balance.toNumber()); // 1000000000000
     web3.eth.getStorage(addressHexString [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the storage as a json object.
 
@@ -533,7 +533,7 @@ console.log(storage); // { "0x" : "0x03" }
     web3.eth.getStorageAt(addressHexString, position [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the value in storage at position `position` of the address `addressHexString`.
 
@@ -549,7 +549,7 @@ console.log(state); // "0x03"
     web3.eth.getData(addressHexString [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the data at given address `addressHexString`.
 
@@ -623,7 +623,7 @@ console.log(info);
 
     web3.eth.getBlockTransactionCount(hashStringOrBlockNumber [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the number of transactions in a given block `hashStringOrBlockNumber`.
 
@@ -640,7 +640,7 @@ console.log(number); // 1
 
 If the `returnTransactionObjects` parameter is `true` it returns all the transactions as objects in the `transactions` property, if `false` it only includes an array with transaction hashes. **Default is `false`**
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 Returns the uncle with number `uncleNumber` from the block with number or hash `blockHashStringOrNumber`.
 
@@ -661,7 +661,7 @@ console.log(uncle); // see web3.eth.getBlock
 
     web3.eth.getTransaction(transactionHash [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** a transaction object its hash `transactionHash`:
 
@@ -709,7 +709,7 @@ console.log(transaction);
 
     getTransactionFromBlock(hashStringOrNumber, indexNumber [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** a transaction object by block number or hash `hashStringOrNumber` with transaction index `indexNumber`:
 
@@ -726,7 +726,7 @@ console.log(transaction); // see web3.eth.getTransaction
     web3.eth.getTransactionCount(addressHexString [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the number of transactions send from the given address `addressHexString`.
 
@@ -741,7 +741,7 @@ console.log(number); // 1
 
     web3.eth.sendTransaction(transactionObject [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 Creates a new message-call transaction.
   * `transactionObject`, an anonymous object specifying the parameters of the transaction.
@@ -846,7 +846,7 @@ myEvent.stopWatching();
     web3.eth.call(callObject [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous.
+- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the data which matches the call.
 
@@ -928,7 +928,7 @@ filter.stopWatching();
 
     web3.eth.getCompilers([callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** an array of available compilers.
 
@@ -944,7 +944,7 @@ console.log(number); // ["lll", "solidity", "serpent"]
 
     web3.eth.compile.solidity(sourceString [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the compiled solidity code as HEX string.
 
@@ -967,7 +967,7 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
     web3. eth.compile.lll(sourceString [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the compiled lll code as HEX string.
 
@@ -986,7 +986,7 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
     web3.eth.compile.serpent(sourceString [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 **Returns** the compiled serpent code as HEX string.
 
@@ -1074,7 +1074,7 @@ var shh = web3.shh;
 
    web3.shh.post(object [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 This method should be called, when we want to post whisper message. `_message` object may have following fields:
   * `from`: identity of sender as hexString
@@ -1105,7 +1105,7 @@ web3.shh.post(message);
 
     web3.shh.newIdentity([callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 Should be called to create new identity.
 
@@ -1122,7 +1122,7 @@ console.log(identity); // "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7
 
     web3.shh.hasIdentity([callback])
 
-If you pass an optional callback the HTTP request is made asynchronous.
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 Should be called, if we want to check if user has given identity. Accepts one param. Returns true if he has, otherwise false.
 
