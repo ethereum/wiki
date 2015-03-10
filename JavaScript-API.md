@@ -6,7 +6,7 @@ To make your ÐApp work with on Ethereum, you can use the `web3` object provided
 
 `web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
-## Sync vs. Async
+## Using callbacks
 
 As this API is designed to work with a local RPC node all its functions are by default made using synchronous HTTP requests.
 
