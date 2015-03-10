@@ -848,7 +848,7 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
 ##### web3.eth.filter
 
 ```js
-// can be 'chain' or 'pending'
+// can be 'latest' or 'pending'
 web3.eth.filter(filterString)
 // object is a log filter 
 web3.eth.filter(options)
@@ -859,7 +859,7 @@ web3.eth.filter(eventArray [, options])
 // object is a contract object (not implemented yet)
 web3.eth.filter(contractObject [, options])
 ```
-   * `filterString`:  `'chain'` or `'pending'` to watch for changes in the chain or pending transactions respectively
+   * `filterString`:  `'latest'` or `'pending'` to watch for changes in the latest block or pending transactions respectively
    * `options`
        * `fromBlock`: The number of the earliest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
        * `toBlock`: The number of the latest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
