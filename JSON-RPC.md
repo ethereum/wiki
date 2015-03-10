@@ -829,11 +829,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex"
 
 0. hash of the block
 1. index number of the uncle
+2. include transaction objects (If FALSE it only includes the hashes in an array)
 
 ```js
 params: [
    '0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b',
-   '0x0' // 0
+   '0x0', // 0
+   true
 ]
 ```
 
@@ -854,11 +856,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndInde
 
 0. number of the block
 1. index number of the uncle
+2. include transaction objects (If FALSE it only includes the hashes in an array)
 
 ```js
 params: [
    '0x29c', // 668
-   '0x0' // 0
+   '0x0', // 0
+   true
 ]
 ```
 
