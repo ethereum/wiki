@@ -6,6 +6,22 @@ To make your ÐApp work with on Ethereum, you can use the `web3` object provided
 
 `web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
+## Sync vs. Async
+
+As this API is designed to work with a local RPC node all its functions are by default made using synchronous HTTP requests.
+
+If you want to make asynchronous request, you can pass an optional callback as the last parameter to most functions.
+All callbacks are using an error first callback style:
+
+```js
+web3.eth.getBlock(48, function(error, result){
+    if(!error)
+        console.log(result)
+    else
+        console.error(error);
+})
+```
+
 ## A note on big numbers in JavaScript
 
 You will always get a BigNumber object for balance values as JavaScript is not able to handle big numbers correctly.
