@@ -322,7 +322,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407
 ##### Parameters
 
 0. address as hex string
-1. block number or the string "latest" or "pending"
+1. block number or the string "latest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -354,7 +354,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorage","params":["0x407
 ##### Parameters
 
 0. address as hex string
-1. block number or the string "latest" or "pending"
+1. block number or the string "latest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -386,7 +386,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x4
 
 0. address as hex string
 1. the position in the storage
-3. block number or the string "latest" or "pending"
+3. block number or the string "latest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -418,7 +418,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params
 ##### Parameters
 
 0. address as hex string
-1. block number or the string "latest" or "pending"
+1. block number or the string "latest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -565,7 +565,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getData","params":["0xd5677c
 ##### Parameters
 
 0. address as hex string
-1. block number or the string "latest" or "pending"
+1. block number or the string "latest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
