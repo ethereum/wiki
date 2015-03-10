@@ -587,7 +587,6 @@ If you pass an optional callback the HTTP request is made asynchronous.
   * `gasUsed` (integer): The amount of gas used in this block.
   * `timestamp` (integer): The timestamp of this block (an integer).
   * `extraData` (byte array): Any extra data this block contains.
-  * `nonce` (32-byte hash): The block's PoW nonce.
   * `children` (array of 32-byte hashes): The hashes of any children this block has.
   * `transactions` (array) transaction objects or hashes, depending on the `returnTransactionObjects` parameter
   * `uncles` (array) hashes of uncles
