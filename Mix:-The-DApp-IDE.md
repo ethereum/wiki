@@ -98,3 +98,52 @@ Double-click a `setRating` transaction in the transaction log to debug it. The V
 See the [Ethereum Yellow Paper](http://gavwood.com/Paper.pdf) for VM instruction description.
 
 ## Deployment to network
+
+This feature allows users to deploy the current project as a Dapp in the main blockchain.
+This will deploy contracts and register front end resources.
+
+The deployment process includes two steps: 
+ - **The Deployment of contracts**:
+This step will deploy contracts in the main blockchain and package front end resources of the current project. After this operation the package (package.dapp) will be available inside the deployment directory.
+
+ - **The Registration of front end resources**:
+To render the Dapp, the Ethereum browser (Mist or AlethZero) needs to access this package. This step will register the URL where the resources are stored.
+
+To Deploy your Dapp, Please follow these instructions:
+
+Click on `Deploy`, `Deploy to Network`.
+This modal dialog displays two parts, We will focus on the first part (Deployment) for now:
+ 
+ **The Deployment of contracts**
+ - 4 Buttons: `Help` to access to the WikiPage, `Open Package Folder` to open the deployment directory (this button is only enable is the package is built), `Copy Base64 conversion to ClipBoard` to copy the Base64 value of the built package (this button is only enable is the package is built), `Exit` to close this modal dialog.   
+ - `Root Registrar address` is the address of the root registrar contract (used to link the Dapp with resources.
+ - `Account used to deploy` allows users to select the Ethereum account to use to deploy.
+ - `Amount of gas to use..` is the amount of gas that the deployment process will use to deploy contracts.
+ - `Ethereum Application URL` is the address that users should use in Mist (or AlethZero) to access to the Dapp. in italic, you can check the formatted Dapp URL (which will be used by the Ethereum browser)
+(ex: eth/user1/app1).
+ - `Web Application Resources URL` is the URL where the front resources (html/js/...) will be stored.
+ - 1 button to start the deployment process (The checkbox `Deploy Contract(s)` is disabled and checked if this is the first time the contract is deployed. If not you can choose to repackage the resources without redeploying the contract by unchecking this option).
+
+Click on `Deploy contract(s) and Package resources files` (last button) and the deployment is executed.
+Then many options/actions will be enabled: 
+ - `Open Package Folder`, `Copy Base64 conversion to ClipBoard`, `Deploy Contract(s)` 
+ - All inputs associated with the second step.
+
+**Host your web application**
+
+There are many places where to host front end resources, you just need to find a web server. One other way (and very easy way) could be to use the pastebin.com service:
+ - Follow the first deployment step to deploy contract(s). 
+ - The `Copy Base64 conversion to ClipBoard` icon will be enable (on top of the modal dialog), click on this icon to copy the Base64 content into the clipboard.
+ - Go to pastebin.com and paste the content into the `New Paste` input. Then click on `Submit'.
+ - Go through the Captcha.
+ - Copy the address targeted by the link `Raw` (on the top of the page).
+ - Use this address in the `Web Application Resources URL` field.
+ 
+**Registration of front end resources**
+ - `URL Hint contract address` is the address of the contract which is used to store the URL where the resources are.
+ - `Web Application Resources URL` is the URL from where the Ethereum browser will retrieve resources.
+
+Click on `Register hosted Web Application` and Mix will register the front end resources on the Ethereum network.
+
+Users can now use  Mist or AlethZero to access to the Dapp, using the Ethereum URL (ex: eth/user1/app1).
+
