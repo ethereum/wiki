@@ -1,5 +1,3 @@
-**Note:** *The JS API is currently under heavy development, therefore not everything whats written here will work as expected with the latest develop branch. Please stay tuned while we fix that.*
-
 # Introduction
 
 To make your ÐApp work with on Ethereum, you can use the `web3` object provided by the [ethereum.js library](https://github.com/ethereum/ethereum.js). ethereumjs communicates to a local node through RPC calls which can be found [here](https://github.com/ethereum/wiki/wiki/JSON-RPC). ethereum.js works with AlethZero and Mist, and also in an external browser if one of the former nodes are running locally.
