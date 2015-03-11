@@ -228,6 +228,7 @@ namespace.
  - `msg.gas` (`uint`): remaining gas
  - `msg.sender` (`address`): sender of the message (current call)
  - `msg.value` (`uint`): number of wei sent with the message
+ - `now` (`uint`): current block timestamp (alias for `block.timestamp`)
  - `tx.gasprice` (`uint`): gas price of the transaction
  - `tx.origin` (`address`): sender of the transaction (full call chain)
 
