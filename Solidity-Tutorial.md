@@ -368,6 +368,26 @@ contract, but it contains the basic concepts necessary to understand structs.
 Struct types can be used as value types for mappings and they can itself
 contain mappings (even the struct itself can be the value type of the mapping, although it is not possible to include a struct as is inside of itself). Note how in all the functions, a struct type is assigned to a local variable. This does not copy the struct but only store a reference so that assignments to members of the local variable actually write to the state.
 
+## Enums
+
+Enums are another way to create a user-defined type in Solidity. They are explicitly convertible
+to and from all integer types but implicit conversion is not allowed.
+
+```
+contract test {
+    enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill };
+    ActionChoices choices;
+    function setGoStraight()
+    {
+        choices = ActionChoices.GoStraight;
+    }
+    function getChoice() returns (uint)
+    {
+        return uint(choices);
+    }
+}
+```
+
 ## Interfacing with other Contracts
 
 There are two ways to interface with other contracts: Either call a method of a contract whose address is known or create a new contract. Both uses are shown in the example below. Note that (obviously) the source code of a contract to be created needs to be known, which means that it has to come before the contract that creates it (and cyclic dependencies are not possible since the bytecode of the new contract is actually contained in the bytecode of the creating contract).
