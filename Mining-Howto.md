@@ -2,7 +2,7 @@
 
 ## The Algorithm
 
-Our algorithm, Dashimoto (Dagger-Hashimoto), is based around the provision of a large, transient, randomly generated dataset which forms a DAG (the Dagger-part), and attempting to solve a particular constraint on it, partly determined through a block's header-hash.
+Our algorithm, Ethash (previously known as Dagger-Hashimoto), is based around the provision of a large, transient, randomly generated dataset which forms a DAG (the Dagger-part), and attempting to solve a particular constraint on it, partly determined through a block's header-hash.
 
 It is designed to hash a fast verifiability time within a slow CPU-only environment, yet provide vast speed-ups for mining when provided with a large amount of memory with high-bandwidth. The large memory requirements mean that large-scale miners get comparatively little super-linear benefit. The high bandwidth requirement means that a speed-up from piling on many super-fast processing units sharing the same memory gives little benefit over a single unit.
 
@@ -18,7 +18,7 @@ TODO: Content from design decisions doc.
 
 Mining will be accomplished in one of two ways: either on CPU (and possibly the GPU, to be confirmed) with the Mist client or on the GPU though a combination of the Ethereum daemon and [sgminer](https://github.com/sgminer-dev/sgminer).
 
-An sgminer module for Dashimoto is expected to be released by the 1st of March.
+An sgminer module for Dashimoto is expected to be released at some point during, but not necessarily before the Frontier Genesis.
 
 ### JSON-RPC
 
