@@ -417,6 +417,8 @@ contract OwnedToken {
     if (msg.sender != owner) return;
     // We also want to ask the creator if the transfer is fine.
     // Note that this calls a function of the contract defined below.
+    // If the call fails (e.g. due to out-of-gas), the execution here stops
+    // immediately (the ability to catch this will be added later).
     if (creator.isTokenTransferOK(owner, newOwner))
       owner = newOwner;
   }
