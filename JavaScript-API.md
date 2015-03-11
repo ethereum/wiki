@@ -878,8 +878,6 @@ web3.eth.filter(contractObject [, options])
    * `options`
        * `fromBlock`: The number of the earliest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
        * `toBlock`: The number of the latest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
-       * `limit`: The maximum number of messages to return.
-       * `offset`: The number of messages to skip before the list is constructed. May be used with `max` to paginate messages into multiple calls.
        * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
        * `topics`: An array of values which must each appear in the log entries.
    * `eventArguments` is an object with keys of one or more indexed arguments for the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
