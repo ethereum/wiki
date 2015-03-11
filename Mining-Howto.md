@@ -18,7 +18,7 @@ TODO: Content from design decisions doc.
 
 Mining will be accomplished in one of two ways: either on CPU (and possibly the GPU, to be confirmed) with the Mist client or on the GPU though a combination of the Ethereum daemon and [sgminer](https://github.com/sgminer-dev/sgminer).
 
-An sgminer module for Dashimoto is expected to be released at some point during, but not necessarily before the Frontier Genesis.
+An sgminer module for Ethash is expected to be released at some point during, but not necessarily before the Frontier Genesis.
 
 ### JSON-RPC
 
