@@ -990,7 +990,6 @@ params: [{
   "fromBlock": "0x1", (optional) // 1
   "toBlock": "0x2", (optional) // 2
   "limit": "0x3", (optional) // 3
-  "offset": "0x0", (optional) // 0
   "address": "0x01231f12a..", (optional) // to filtercame from account
   "topics": ['0x1234fa1234...'] (optional) // array of topic strings
 }]
