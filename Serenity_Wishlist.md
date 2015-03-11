@@ -31,3 +31,7 @@ Currently, secp256k1 ECDSA + SHA3 exists as a privileged signature verification 
 2. The top-level message execution by default has a limit of 25000 gas, and within that time must either exit with an error, or run an `ACCEPT` opcode, paying for the full amount of gas from that contract's account. If the message exits with an error before ACCEPTing, the transaction is invalid. If it ACCEPTs, then it has the full amount of gas to run any other computation, send sub-messages, etc. The intent is for the first 25000 gas to be spent verifying a signature placed inside of the transaction data, and exiting with an error if the signature is invalid.
 
 Ideally, the initial limit would be large enough to support many kinds of signatures, but still small enough to be DDoS-proof. An alternative would be to require PoW on transactions, and scale the PoW difficulty with a verification gas limit set in the transaction; ASIC-resistant PoW can be used for this, though it would need to be carefully designed to be more CPU-friendly rather than GPU-friendly as is the case for Ethash.
+
+### Compression
+
+Currently, wire and database compression is done with a fairly crude algorithm that run-length-encodes zeroes but otherwise leaves data unchanged. Substantial gains can probably be made by applying either a pre-generated Hamming code or some separate encryption algorithm such as [http://lloyd.github.io/easylzma/](http://lloyd.github.io/easylzma/).
