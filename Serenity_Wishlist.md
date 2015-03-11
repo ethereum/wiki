@@ -35,3 +35,9 @@ Ideally, the initial limit would be large enough to support many kinds of signat
 ### Compression
 
 Currently, wire and database compression is done with a fairly crude algorithm that run-length-encodes zeroes but otherwise leaves data unchanged. Substantial gains can probably be made by applying either a pre-generated Hamming code or some separate encryption algorithm such as [http://lloyd.github.io/easylzma/](http://lloyd.github.io/easylzma/).
+
+### Opcodes
+
+Currently, one problem that contract authors have is that it is difficult to determine whether or not there is enough space left on the call stack to make a particular sub-call (which leads to an execution tree with a compile-time-known depth); the only approach is to deliberately call a contract which recursively calls itself N times in order to determine if you have N levels of breathing room. An explicit opcode `DEPTH` for determining the call stack depth would make things much easier.
+
+Also, returning ether value to the sender in the case of an exception would make it easier to write unexploitable code.
