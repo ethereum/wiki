@@ -11,8 +11,6 @@ The general route that the algorithm takes is as follows:
 
 The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it.
 
-The specification for the algorithm is written in python to give a balance between clarity and exactness. If you are interested in actually running the spec as code, then you can; simply prepend the code given at the start of the appendix, or alternatively see the pyethereum files [here](https://github.com/ethereum/pyethereum/blob/develop/pyethereum/ethash.py) and [here](https://github.com/ethereum/pyethereum/blob/develop/pyethereum/ethash_utils.py)
-
 See [https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale](https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale) for design rationale considerations for this algorithm.
 
 ### Definitions
@@ -38,7 +36,7 @@ ACCESSES = 64                     # number of accesses in hashimoto loop
 
 The parameters for Ethash's cache and dataset depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we compute tables using the following functions (tabulated with Mathematica):
 
-```python
+```mathematica
 GetDataSizes[n_] := Module[{
        DataSetSizeBytesInit = 2^30,
        MixBytes = 128,
