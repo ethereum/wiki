@@ -41,6 +41,8 @@ You can also specify JSON-RPC port (default is 8080):
 The following RPC messages should be accepted by the RPC-backend:
 
 * [web3_sha3](#web3_sha3)
+* [web3_clientVersion](#web3_clientversion)
+* [net_version](#net_version)
 * [net_peerCount](#net_peercount)
 * [net_listening](#net_listening)
 * [eth_coinbase](#eth_coinbase)
@@ -129,6 +131,52 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 "id":64,
 "jsonrpc":"2.0",
 "result":"0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+}
+```
+
+***
+
+#### `web3_clientVersion`
+*returns the current client version*
+
+
+##### Request Example
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'
+```
+
+##### Parameters
+none
+
+##### Response
+```json
+{
+"id":67,
+"jsonrpc":"2.0",
+"result": 'AlethZero/0.0.1'
+}
+```
+
+***
+
+#### `net_version`
+*returns the current network protocol version*
+
+
+##### Request Example
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67}'
+```
+
+##### Parameters
+none
+
+##### Response
+```json
+{
+"id":67,
+"jsonrpc":"2.0",
+"result": '0.0.1'
 }
 ```
 
