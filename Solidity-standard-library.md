@@ -13,6 +13,34 @@ Here is solidity tutorial prepared by Eris team. [Click](https://eng.erisindustr
 - [owned](#owned)
 - [mortal](#mortal)
 
+
+#### owned
+```
+contract owned{
+  function owned() {
+    owner = msg.sender;
+  }
+  
+  modifier onlyowner() {
+    if(msg.sender==owner) _
+  }
+  
+  address owner;
+}
+```
+
+#### mortal
+
+```
+import "owned";
+
+contract mortal is owned {
+  function kill() {
+    if (msg.sender == owner) suicide(owner); 
+  }
+}
+```
+
 ### poc_contracts
 - [Coin](#coin1)
 - [Config](#config)
@@ -77,18 +105,6 @@ contract Config {
 }
 ```
 
-#### mortal
-
-```
-import "owned";
-
-contract mortal is owned {
-  function kill() {
-    if (msg.sender == owner) suicide(owner); 
-  }
-}
-```
-
 #### configUser
 ```
 import "Config";
@@ -111,20 +127,6 @@ contract NameReg {
 }
 ```
 
-#### owned
-```
-contract owned{
-  function owned() {
-    owner = msg.sender;
-  }
-  
-  modifier onlyowner() {
-    if(msg.sender==owner) _
-  }
-  
-  address owner;
-}
-```
 
 #### service
 ```
