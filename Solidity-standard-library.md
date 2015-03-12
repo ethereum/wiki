@@ -9,15 +9,18 @@ Here is solidity tutorial prepared by Eris team. [Click](https://eng.erisindustr
 
 
 ### contracts
+
+- [owned](#owned)
+- [mortal](#mortal)
+
+### poc_contracts
 - [Coin](#coin1)
 - [Config](#config)
 - [CoinReg](#coinreg)
 - [configUser](#configuser)
 - [Config](#config)
-- [mortal](#mortal)
 - [named](#named)
 - [NameReg](#namereg)
-- [owned](#owned)
 - [service](#service)
 - [std](#std)
 
