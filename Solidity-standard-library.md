@@ -1,5 +1,14 @@
 # Solidity standard library
 
+### overview
+
+This is poc of solidity standard library.
+Probably all of the contracts, but `owned` && `mortal` will be removed soon.
+
+Here is solidity tutorial prepared by Eris team. [Click](https://eng.erisindustries.com/tutorials/2015/03/11/solidity-1/)
+
+
+### contracts
 - [Coin](#coin1)
 - [Config](#config)
 - [CoinReg](#coinreg)
