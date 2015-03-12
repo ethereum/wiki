@@ -29,6 +29,6 @@ Swarm Hash interpreted less strictly may allow for different tree structures, im
 However, it might open the door for different applications where this does not constitute a vulnerability. For example, accepting single-leaf hashes in addition to strict Swarm hashes allows for referencing files without having to implement the whole thing.
 
 # References
-http://en.wikipedia.org/wiki/Merkle_tree
-http://en.wikipedia.org/wiki/Length_extension_attack
-https://tools.ietf.org/html/rfc4880
+- http://en.wikipedia.org/wiki/Merkle_tree
+- http://en.wikipedia.org/wiki/Length_extension_attack
+- https://tools.ietf.org/html/rfc4880
