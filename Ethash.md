@@ -62,7 +62,7 @@ GetDataSizes[n_] := Module[{
              Sow[i*HashBytes]; j++]]]][[2]][[1]]
 ```
 
-A tabulated version is provided in the appendix.
+Tables of cache size values are provided in the appendix.
 
 ### Cache Generation
 
