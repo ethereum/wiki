@@ -79,8 +79,10 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_getLogs](#eth_getlogs)
 * [eth_getWork](#eth_getWork)
 * [eth_submitWork](#eth_submitwork)
-* [db_put](#db_put) // was db_putString
-* [db_get](#db_get) // was db_getString
+* [db_putString](#db_putstring)
+* [db_getString](#db_getstring)
+* [db_putHex](#db_puthex)
+* [db_getHex](#db_gethex) 
 * [shh_post](#shh_post)
 * [shh_newIdentity](#shh_newidentity)
 * [shh_hasIdentity](#shh_hasidentity)
@@ -930,7 +932,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["
 
 ```js
 params: [
-   '0x636f6e74726163742074657374207b2066756...', // "contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"
+   "contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }",
 ]
 ```
 
@@ -1190,12 +1192,12 @@ params: ["0x1234567890abcdef1234567890abcdef"]
 
 ***
 
-#### `db_put`
-*stores a string in local database.*
+#### `db_putString`
+*stores a string in the local database.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["0x74657374","0x6b6579","0x6d79537472696e67"],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["testDB","myKey","myString"],"id":73}'
 ```
 
 ##### Parameters
@@ -1206,9 +1208,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_put","params":["0x74657374","
 
 ```js
 params: [
-  "0x74657374", // 'test'
-  "0x6b6579", // 'key'
-  "0x6d79537472696e67" // 'myString'
+  "testDB",
+  "myKey",
+  "myString"
 ]
 ```
 
@@ -1223,12 +1225,12 @@ params: [
 
 ***
 
-#### `db_get`
-*returns string from local database.*
+#### `db_getString`
+*returns string from the local database.*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["0x74657374","0x6b6579"],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["testDB","myKey"],"id":73}'
 ```
 
 ##### Parameters
@@ -1238,8 +1240,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_get","params":["0x74657374","
 
 ```js
 params: [
-  "0x74657374", // 'test'
-  "0x6b6579", // 'key'
+  "testDB",
+  "myKey",
 ]
 ```
 
@@ -1248,7 +1250,71 @@ params: [
 {
 "id":1,
 "jsonrpc":"2.0",
-"result": "0x6d79537472696e67" // myString
+"result": "myString"
+}
+```
+
+***
+
+#### `db_putHex`
+*stores a string in local the database.*
+
+##### Request Example
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_putHex","params":["testDB","myKey","0x68656c6c6f20776f726c64"],"id":73}'
+```
+
+##### Parameters
+
+0. database name
+1. key name
+2. hex string to store
+
+```js
+params: [
+  "testDB",
+  "myKey",
+  "0x68656c6c6f20776f726c64"
+]
+```
+
+##### Response
+```json
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": true
+}
+```
+
+***
+
+#### `db_getHex`
+*returns a hex string from the local database.*
+
+##### Request Example
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getHex","params":["testDB","myKey"],"id":73}'
+```
+
+##### Parameters
+
+0. database name
+1. key name
+
+```js
+params: [
+  "testDB",
+  "myKey",
+]
+```
+
+##### Response
+```js
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": "0x68656c6c6f20776f726c64"
 }
 ```
 
