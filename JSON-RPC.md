@@ -79,7 +79,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_getFilterChanges](#eth_getfilterchanges)
 * [eth_getFilterLogs](#eth_getfilterlogs)
 * [eth_getLogs](#eth_getlogs)
-* [eth_getWork](#eth_getWork)
+* [eth_getWork](#eth_getwork)
 * [eth_submitWork](#eth_submitwork)
 * [db_putString](#db_putstring)
 * [db_getString](#db_getstring)
