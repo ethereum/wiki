@@ -126,7 +126,7 @@ The 'latest' refers to the latest block in the current canonical chain, 'pending
 curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c6f20776f726c64"],"id":64}'
 ```
 ##### Response
-```json
+```js
 {
 "id":64,
 "jsonrpc":"2.0",
@@ -149,7 +149,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],
 none
 
 ##### Response
-```json
+```js
 {
 "id":67,
 "jsonrpc":"2.0",
