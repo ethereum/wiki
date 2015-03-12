@@ -2,7 +2,7 @@
 
 **step 1 && 2 will not required once we test && merge new jsonrpc into develop branch**
 
-### 1. clone cpp-ethereum from this new_jsonrpc branch
+#### 1. clone cpp-ethereum from this new_jsonrpc branch
 
 ```bash
 https://github.com/debris/cpp-ethereum/tree/new_jsonrpc
@@ -16,7 +16,7 @@ git fetch debris
 git checkout new_jsonrpc
 ```
 
-### 2. build ethereum (build instructions are [here](https://github.com/ethereum/cpp-ethereum/wiki/Installing-clients))
+#### 2. build ethereum (build instructions are [here](https://github.com/ethereum/cpp-ethereum/wiki/Installing-clients))
 
 ```bash
 cd cpp-ethereum
@@ -26,7 +26,7 @@ cmake ..
 make -j 4
 ```
 
-### 3. run eth (headless client)
+#### 3. run eth (headless client)
 
 ```bash
 eth -j
@@ -42,7 +42,7 @@ type in console to check if everything is working fine
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}' http://localhost:8080
 ```
 
-### 4. mine and connect to the network
+#### 4. mine and connect to the network
 
 try running
 
@@ -57,7 +57,7 @@ where:
 
 *with latest version of cpp-ethereum it may take some time to connect to network. If you see any delays with jsonrpc responses, or crashes contant us. We are probably aware of them, but it's good to know about any possible vulnerability*
 
-### 5. json-rpc methods, that you might be intrested in:
+#### 5. json-rpc methods, that you might be intrested in:
 
 - [eth_sendTransaction](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendtransaction) - used to send transaction / create contract 
 - [eth_newBlockFilter](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newblockfilter) - be notified any time there is new block on the chain
