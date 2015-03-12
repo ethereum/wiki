@@ -20,7 +20,9 @@ We employ the following definitions:
 ```
 WORD_BYTES = 4                    # bytes in word
 DATASET_BYTES_INIT = 2**30        # bytes in dataset at genesis
-DATASET_BYTES_GROWTH = 2**23      # growth per epoch
+DATASET_BYTES_GROWTH = 2**23      # dataset growth per epoch
+CACHE_SIZE_BYTES_INIT = 2**24     # bytes of cache at genesis
+CACHE_GROWTH = 2**17              # cache size growth per epoch
 CACHE_BYTES_INIT = 2**24          # bytes in dataset at genesis
 CACHE_BYTES_GROWTH = 2**17        # cache growth per epoch
 CACHE_MULTIPLIER=1024             # Size of the DAG relative to the cache
