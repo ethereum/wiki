@@ -153,7 +153,7 @@ none
 {
 "id":67,
 "jsonrpc":"2.0",
-"result": 'AlethZero/0.0.1'
+"result": "AlethZero/0.0.1"
 }
 ```
 
@@ -172,11 +172,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67
 none
 
 ##### Response
-```json
+```js
 {
 "id":67,
 "jsonrpc":"2.0",
-"result": '0.0.1'
+"result": "0.0.1"
 }
 ```
 
