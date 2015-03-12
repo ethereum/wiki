@@ -32,3 +32,4 @@ However, it might open the door for different applications where this does not c
 - http://en.wikipedia.org/wiki/Merkle_tree
 - http://en.wikipedia.org/wiki/Length_extension_attack
 - https://tools.ietf.org/html/rfc4880
+- https://github.com/ethersphere/go-ethereum/tree/bzz/bzz/bzzhash
