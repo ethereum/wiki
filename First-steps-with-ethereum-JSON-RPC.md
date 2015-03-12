@@ -16,7 +16,7 @@ make -j 4
 
 ##### automatic installation 
 
-build instructions are [here](https://github.com/ethereum/cpp-ethereum/wiki/Installing-clients
+build instructions are [here](https://github.com/ethereum/cpp-ethereum/wiki/Installing-clients)
 
 
 #### 2. run eth (headless client)
