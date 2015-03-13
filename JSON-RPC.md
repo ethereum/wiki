@@ -1309,7 +1309,7 @@ params: [
 ***
 
 #### `db_putHex`
-*stores a string in local the database.*
+*stores binary data in the local database.*
 
 ##### Request Example
 ```bash
@@ -1342,7 +1342,7 @@ params: [
 ***
 
 #### `db_getHex`
-*returns a hex string from the local database.*
+*returns binary data from the local database.*
 
 ##### Request Example
 ```bash
