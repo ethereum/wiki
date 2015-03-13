@@ -33,28 +33,27 @@
 メッセージは64Kバイト未満であり、一般的には約256バイトである。
 
 既存の解決策
-UDP: APIレベルでよく似ていて、ネイティブのマルチキャスティング。生存時間は設定されておらず、セキュリティや、プライバシーの保護もない。
-0MQ: 分散形のメッセージシステム。何もプライバシーの保護機能は備わっていない。
-Bitmessage: P2Pのネットワーク上でのメッセージ交換システムと似ている。
+* UDP: APIレベルでよく似ていて、ネイティブのマルチキャスティング。生存時間は設定されておらず、セキュリティや、プライバシーの保護もない。
+* [0MQ](http://zeromq.org/): 分散形のメッセージシステム。何もプライバシーの保護機能は備わっていない。
+* [Bitmessage](https://bitmessage.org/wiki/Main_Page): P2Pのネットワーク上でのメッセージ交換システムと似ている。
 高位のプロトコルで、決まった生存期間(TTL)を持ち、スループットに対しての調整機能を持たない。
-Telehash: 安全な通信を目指したRTC通信。Bittorrentの方法と似ている。（修正版Kademila Techを使用),
+* [TeleHash](https://github.com/telehash/telehash.org/blob/master/network.md#paths): 安全な通信を目指したRTC通信。Bittorrentの方法と似ている。（修正版Kademila Techを使用),
 だが与えられたハッシュのピアーを見つけるよりも、与えられたハッシュの受信者を見つける。
 DHTを使って決定論的なルーティングを行うため、それゆえに大規模な攻撃に対しての単純で解析的なパケット解析攻撃に脆弱である、
-
 接続を主目的としているため、生存期間(TTL）や、非同期的な通信の公開のために作られていない。
-Tox: 高位(IM & AV チャット)の補完を目的として作られた。
+* [Tox](https://github.com/irungentoo/toxcore/blob/master/docs/updates/DHT.md): 高位(IM & AV チャット)の補完を目的として作られた。
 
-Similar in the basic approach of P2P network exchanging messages with baseline PKI for dark comms. Higher-level (e-mail replacement, only "several thousand/day", larger mails), fixed TTL and no hinting to optimise for throughput. Unclear incentivisation.
-TeleHash: Secure connection-orientated RTC comms. Similar in approach to BitTorrent (uses modified Kademila tech), but rather than discovering peers for a given hash, it routes to the recipient given its hash. Uses DHT to do deterministic routing therefore insecure against simple statistical packet-analysis attacks against a large-scale attacker. Connection oriented, so no TTL and not designed for asynchronous data publication.
-Tox: Higher-level (IM & AV chat) replacement.
+### 基本的なデザイン
 
+Uses the `"shh"` protocol string of ÐΞVP2P.
 
-残りはもうじき公開される。一度プロトタイピングは完了した。
-トラフィック解析を出来なくするように考えられている。
+残りはもうじき公開される。一度プロトタイピングは完了した。by Gav 
+### トラフィック解析を出来なくすることが考慮されている。
 
 （Lokiverloren より）既に存在する全てのプロトコルは、位置情報が覆い隠されているインスタントメッセージサービスを目的として作られているが、ルーティングに対しての複雑な問題を抱えている。
 
-Bitmessageプロトコルでは、メッセージを匿名でネットワークに公開するが、適切な受信者がどうやって復号化して受け取るのかを知る必要がある（他のメッセージツールと丁度同じように）。
+Bitmessageプロトコルでは、メッセージを匿名でネットワークに公開するが、
+適切な受信者がどうやって復号化して受け取るのかを知る必要がある（他のメッセージツールと丁度同じように）。
 
 だが、メッセージを保存後、ユーザーが新しいメッセージを得られたことを知る事が出来る。
 問題は全体のネットワークに公開される情報量が著しく増えるに連れて、暗号化された通信に簡単にアクセス出来なくなることだ。
