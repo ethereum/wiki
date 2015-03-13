@@ -25,8 +25,8 @@ Where `fixed(a_i)` is the actual value of the argument for fixed-size elements (
 The following fixed-size elementary types exist:
 - `uint<N>`: unsigned integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`. e.g. `uint32`, `uint8`, `uint256`.
 - `int<N>`: two's complement signed integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`.
-- `address`: equivalent to `hash160`, except for the assumed interpretation and language typing.
-- `uint`, `int`, `hash`: equivalent to `uint256`, `int256`, `hash256`, respectively.
+- `address`: equivalent to `bytes20`, except for the assumed interpretation and language typing.
+- `uint`, `int`: equivalent to `uint256`, `int256` respectively.
 - `bool`: equivalent to `uint8` restricted to the values 0 and 1
 - `real<N>x<M>`: fixed-point signed number of `N+M` bits, `0 < N + M <= 256`, `N % 8 == M % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
 - `ureal<N>x<M>`: unsigned variant of `real<N>x<M>`.
@@ -146,10 +146,10 @@ For example,
 ```js
 contract Test {
 function Test(){ b = 0x12345678901234567890123456789012; }
-event Event(uint indexed a, hash b)
-event Event2(uint indexed a, hash b)
+event Event(uint indexed a, bytes32 b)
+event Event2(uint indexed a, bytes32 b)
 function foo(uint a) { Event(a, b); }
-hash b;
+bytes32 b;
 }
 ```
 
@@ -158,11 +158,11 @@ would result in the JSON:
 ```js
 [{
 "type":"event",
-"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
+"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
 "name":"Event"
 }, {
 "type":"event",
-"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
+"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
 "name":"Event2"
 }, {
 "type":"function",
@@ -178,11 +178,11 @@ would result in the JSON:
 var Test = eth.contract(
 [{
 "type":"event",
-"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
+"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
 "name":"Event"
 }, {
 "type":"event",
-"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"hash256","indexed":false}],
+"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
 "name":"Event2"
 }, {
 "type":"function",
@@ -233,7 +233,7 @@ web3.eth.filter({'max': 100, 'address': theTest.address, 'topics': [ [69, 42] ]}
 // except that the resultant data would need to be converted from the basic log entry format like:
 {
   'address': theTest.address,
-  'topics': [web3.sha3("Event(uint256,hash256)"), 0x00...0045 /* 69 in hex format */],
+  'topics': [web3.sha3("Event(uint256,bytes32)"), 0x00...0045 /* 69 in hex format */],
   'data': '0x12345678901234567890123456789012',
   'number': n
 }
