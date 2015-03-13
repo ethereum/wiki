@@ -24,8 +24,8 @@
 仕様
 
 * Low-level 低位のAPIは分散形アプリにのみ提供され、ユーザーには決して提供されない。
-* Low-bandwidth低位の通信帯は大きなデータの通信には利用されない。
-* Uncertaing-latency不確実な遅れはRTCには利用されない
+* Low-bandwidth 低位の通信帯は大きなデータの通信には利用されない。
+* Uncertaing-latency 不確実な遅れはRTCには利用されない
 * Dark　パケットを追跡するための方法は無い。
 * Typical Usage:
 ** Low-latency 遅延の少ないメッセージは1対1や、1対Nでのメッセージを送る際に使われる。
