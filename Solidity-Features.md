@@ -528,9 +528,8 @@ contract TimedContract {
 }
 ```
 
-## Hash(XX**) and String(XX) to bytes renaming
-[PT] (https://www.pivotaltracker.com/story/show/88146508) 
-
+## HashXX and StringXX to bytesXX
+[Link to PT] (https://www.pivotaltracker.com/story/show/88146508) 
 + We replace `hash(XX*8)` and `stringXX` by `bytesXX`.
 + `bytesXX` behaves as `hash(XX*8)` in terms of convertability and operators and as `stringXX` in terms of layout in memory (alignment, etc).
 
