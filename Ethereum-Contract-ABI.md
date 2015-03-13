@@ -67,7 +67,7 @@ Given the contract:
 contract Foo {
   function bar(real[2] xy) {}
   function baz(uint32 x, bool y) returns (bool r) { r = x > 32 || y; }
-  function sam(string name, uint[] data) {}
+  function sam(bytes name, uint[] data) {}
 }
 ```
 
@@ -94,8 +94,8 @@ In total:
 ```
 
 If we wanted to call `sam` with the arguments `"dave"` and `[1,2,3]`, we would pass 136 bytes total, broken down into:
-- `0xe4ae26d6`: the Method ID. This is derived from the signature `sam(string,uint256[])`. Note that `uint` is substituted for its canonical representation `uint256`.
-- `0x0000000000000000000000000000000000000000000000000000000000000004`: the size of the first dynamic parameter, measured as the string's length in bytes. In this case, 4.
+- `0x8FF261B0`: the Method ID. This is derived from the signature `sam(bytes,uint256[])`. Note that `uint` is substituted for its canonical representation `uint256`.
+- `0x0000000000000000000000000000000000000000000000000000000000000004`: the size of the first dynamic parameter, measured as the bytes type length in bytes. In this case, 4.
 - `0x0000000000000000000000000000000000000000000000000000000000000003`: the size of the second dynamic parameter, measured as the number of items in the array. In this case it has a size of 3 items.
 - `0x6461766500000000000000000000000000000000000000000000000000000000`: the first parameter: the UTF-8 (equal to ASCII in this case) encoding of `"dave"`.
 - `0x0000000000000000000000000000000000000000000000000000000000000001`: the first entry of the second parameter.
