@@ -527,3 +527,13 @@ contract TimedContract {
   uint timeout = now + 4 weeks;
 }
 ```
+
+## Hash(XX**) and String(XX) to bytes renaming
+[PT] (https://www.pivotaltracker.com/story/show/88146508) 
+
++ We replace `hash(XX*8)` and `stringXX` by `bytesXX`.
++ `bytesXX` behaves as `hash(XX*8)` in terms of convertability and operators and as `stringXX` in terms of layout in memory (alignment, etc).
+
++ `byte` is an alias for `bytes1`.
+
++ `string` is reserved for future use.
