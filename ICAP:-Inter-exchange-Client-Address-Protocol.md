@@ -18,7 +18,19 @@ For the UK, the BBAN is composed of:
 
 Introduce a new IBAN country code: *XE*, formulated as the Ethereum *E* prefixed with the "extended" *X*, as used in non-jurisdictional currencies (e.g. XRP, XCP).
 
-The BBAN for this code will comprise three fields:
+There will be two BBAN possibilities for this code; *direct* and *indirect*.
+
+#### Direct
+
+The BBAN for this code when direct will be 30 characters and will comprise one field:
+
+- Account identifier, 30 characters alphanumeric (< 155-bit). This will be interpreted as a big-endian encoded integer for the least significant bits of a 160-bit Ethereum address. As such, these Ethereum addresses will typically begin with a zero byte.
+
+e.g. XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS corresponds to the address `00c5496af02445bd74e10299513915755b7e4a88`.
+
+#### Indirect
+
+The BBAN for this code when indirect will be 16 characters and will comprise three fields:
 
 - Asset identifier, 3-character alphanumeric (< 16-bit);
 - Institution identifier, 4-character alphanumeric (< 21-bit);
