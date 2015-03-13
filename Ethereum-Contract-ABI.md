@@ -25,19 +25,18 @@ Where `fixed(a_i)` is the actual value of the argument for fixed-size elements (
 The following fixed-size elementary types exist:
 - `uint<N>`: unsigned integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`. e.g. `uint32`, `uint8`, `uint256`.
 - `int<N>`: two's complement signed integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`.
-- `hash<N>`: equivalent to `uint<N>` except for the assumed interpretation and language typing.
 - `address`: equivalent to `hash160`, except for the assumed interpretation and language typing.
 - `uint`, `int`, `hash`: equivalent to `uint256`, `int256`, `hash256`, respectively.
 - `bool`: equivalent to `uint8` restricted to the values 0 and 1
 - `real<N>x<M>`: fixed-point signed number of `N+M` bits, `0 < N + M <= 256`, `N % 8 == M % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
 - `ureal<N>x<M>`: unsigned variant of `real<N>x<M>`.
 - `real`, `ureal`: equivalent to `real128x128`, `ureal128x128`
-- `string<N>`: binary type of `N` bytes, `N >= 0`. Unicode strings are assumed to be UTF-8 encoded.
+- `bytes<N>`: binary type of `N` bytes, `N >= 0`. Unicode strings are assumed to be UTF-8 encoded.
 
 They are all encoded in big-endian, padded to a multiple of 32 bytes. Negative values
-(for signed types) are padded with ones on the higher-oder side, non-negative values
+(for signed types) are padded with ones on the higher-order side, non-negative values
 and unsigned types with zeros.
-String types are padded with zeros on the lower-order side.  A `real<N>x<M>`
+Byte types are padded with zeros on the lower-order side.  A `real<N>x<M>`
 number `x` is encoded as the uint/int number `x * 2^M`. The behaviour is
 unspecified for incorrect padding or values that are out of range.
 
@@ -48,12 +47,12 @@ Each of its elements is encoded according to the above rules, which means that
 the type `uint8[10]` takes `32 * 10 = 320` bytes.
 
 The following non-fixed-size types exist: 
-- `string`: dynamic sized string. Unicode strings are assumed to be UTF-8 encoded.
+- `bytes`: dynamic sized string. Unicode strings are assumed to be UTF-8 encoded.
 - `<type>[]`: a variable-length array of the given fixed-length type.
 
-The number of elements (number of bytes for string, number of elements for
+The number of elements (number of bytes for the byres type, number of elements for
 arrays) is given before any actual data (as described above) as a 256 bit big endian integer.
-A `string` of length `N` is encoded the same way as `string<N>` and a `<type>[]` with exactly
+A `bytes` of length `N` is encoded the same way as `bytes<N>` and a `<type>[]` with exactly
 `N` elements is encoded the same way as `<type>[N]`.
 
 ### Signature
