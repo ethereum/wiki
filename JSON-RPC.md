@@ -58,7 +58,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_getBlockTransactionCountByNumber](#eth_getBlockTransactioncountbynumber)
 * [eth_getUncleCountByBlockHash](#eth_getunclecountbyblockhash)
 * [eth_getUncleCountByBlockNumber](#eth_getunclecountbyblocknumber)
-* [eth_getData](#eth_getdata)
+* [eth_getCode](#eth_getcode)
 * [eth_sendTransaction](#eth_sendtransaction)
 * [eth_call](#eth_call)
 * [eth_flush](#eth_flush)
@@ -101,7 +101,7 @@ The following RPC messages should be accepted by the RPC-backend:
 The following methods have a extra default block parameter:
 
 - [eth_getBalance](#eth_getbalance)
-- [eth_getData](#eth_getdata)
+- [eth_getCode](#eth_getcode)
 - [eth_getTransactionCount](#eth_gettransactioncount)
 - [eth_getStorage](#eth_getstorage)
 - [eth_getStorageAt](#eth_getstorageat)
@@ -604,12 +604,12 @@ params: [
 
 ***
 
-#### `eth_getData`
-*returns data at a given address*
+#### `eth_getCode`
+*returns code of the account at a given address*
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getData","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "-0x1"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "latest"],"id":1}'
 ```
 
 ##### Parameters
