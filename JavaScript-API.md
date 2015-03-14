@@ -763,8 +763,9 @@ var source = "" +
 
 var compiled = web3.eth.solidity(source);
 
-var address = web3.eth.sendTransaction({data: compiled});
-console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+web3.eth.sendTransaction({data: compiled}, function(err, address) {
+  if (!err) console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+});
 ```
 
 ***
