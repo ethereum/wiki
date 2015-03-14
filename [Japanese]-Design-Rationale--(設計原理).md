@@ -1,6 +1,4 @@
-デザインの論理的根拠
-
-Ethereum が5年前から既に試され、テストされてきたビットコインのような暗号通貨の様々なアイディアを借りて出来てきたとしても、
+Ethereum が既に試されテストされてきた5年前からのビットコインのような古くからの暗号通貨の様々なアイディアを借りて出来てきたとしても、
 Ethereumには現在のプロトコルの機能を司るための大半の一般的な方法から分岐した様々な点がある。
 それはEthereumが開発しなければならなかった全くもって新しい経済的なアプローチにおいての多くの状況も有る。
 何故ならば、既存の他のシステムによっては提案されてこなかった機能が提供されているのだから。
@@ -10,81 +8,117 @@ Ethereumには現在のプロトコルの機能を司るための大半の一般
 議論の的となる物事に対して為されてきた決定についての詳細を書き、
 同様に我々のアプローチと、その他の代替手段の可能性におけるリスクを示すことである。
 
-原理
+##原理
 Ethereumのプロトコルのデザインは幾つかの原理に基づいている。
 
-Sandwich Complexity Model: 
-我々はボトムレベルのEthereumの構造が出来る限りシンプルであるべきだと信じている。
-そして、そのEthereuのインターフェイスは（開発者にとっての高位のプログラミングの言語、そしてユーザーにとってユーザーインターフェイスを含めて）出来る限り理解しやすいものであるべきだと信じている。
+1. **Sandwich Complexity Model**: 
+我々はボトムレベルのEthereumの構造は出来る限りシンプルであるべきだと信じている。
+そして、そのEthereuのインターフェイスは
+（開発者にとっての高位のプログラミングの言語、そしてユーザーにとってユーザーインターフェイスを含めて）
+出来る限り理解しやすいものであるべきだと信じている。
 
 複雑であることが避けられないのであれば、それはプロトコルの"中間層"に押しやられるべきだ。
 核となるコンセンサスの一部ではなく、だがエンドユーザーからも見ることが出来ない場所である。
-高位の言語のコンパイラではシリアライゼーションとデシリアライゼーションを行うスクリプト、ストレージデータストラクチャーのモデルの引数である。
+高位の言語のコンパイラではシリアライゼーションとデシリアライゼーションを行うスクリプト、
+ストレージデータストラクチャーのモデルの引数である。
 leveldbストレージのインターフェースとワイヤプロトコルその他、しかしながらこれらの設定は絶対的なものではない。
 
-Freedom:ユーザーはEthereumのプロトコルを使う目的に縛られるべきではない、
+2. **Freedom**:ユーザーはEthereumのプロトコルを使う目的に縛られるべきではない、
 そして我々は優先的にEthereumの特定のコントラクトや、特定の意図を持って作られたトランザクションに対して、
-賛成か反対かを選択肢、述べようとするべきではない。
-
+賛成か反対かを選択的に述べようとするべきではない。
 これは"本質的な中立状態"のコンセプトに基づくガイドのための原則に似ている。
 
-この原理に従わない例を１つ上げると、ビットコインのトランザクションプロトコルの中でブロックチェーンを"off-level"の使い方のために使っていることが非難されること（例えばデータストレージや、メタープロトコル）や、ある種の使い方の中であからさまな外見上のプロトコルとして（例えばOP_RETURNの規制が40バイトのこと）がブロックチェーンを"認められていない”使われ方の中で使っているアプリケーションへの攻撃の目的のために成されることが上げられる。
+この原理に従わない例を１つ上げると、ビットコインのトランザクションプロトコルの中で
+ブロックチェーンを"一般的な使い方から外れた"の使い方のために使っていることが非難されることや、
+（例えばデータストレージや、メタープロトコル）ある種の使い方の中で、
+あからさまに外見上のプロトコルの変更が（例えばOP_RETURNの規制が40バイトのこと）
+ブロックチェーンを"認められていない”使われ方で使っているアプリケーションへの攻撃の目的のために作られることが上げられる。
 
-Ethereum では、我々はトランザクションのフィーをインセンティブと相性が良いものとするように設計する思想に強く賛成している。
+Ethereum では、我々はトランザクションのフィーをインセンティブと強く連動するように設計する思想に強く賛成している。
 それはブロックチェーンの肥大を生み出す使い方をしてブロックチェーンを使うユーザーが
 彼ら自身にかかるコストを内在化させるような使い方である。（例えば、Pigovian Taxation)
 
-一般化: Ethereum におけるプロトコルの使用とOpcodes は出来るだロウレベルのコンセプトを内包するべきである。それ故に
+3. **一般化**: Ethereum におけるプロトコルの使用とOpcodes は出来るだローレベルのコンセプトを内包するべきである。それ故に
 現在においては有用には見えないかもしれないが将来的には有用になりうる任意の使い方で組み合わされうるだろう。
-そしてそのために効率的に他の必要ではない機能を削ぎ落とすことに依って、
-ローレベルのコンセプトの設計は一層効率的になりうるだろう。
+そしてそのために効率的に他の必要ではない機能を削ぎ落とすことに依って、ローレベルのコンセプトの設計は一層効率的になりうるだろう。
 
 この原理に従う例は、DAPPSのフィードの情報（とりわけ軽いクライアント）を取るための、ログ用のLOG OPCODEの選択の例がある。
-シンプルに全てのトランザクションとメッセージのログを取ることとは対象的である。
-内包的には
+内部で早い頃から提案されたように、シンプルに全てのトランザクションとメッセージのログを取ることとは対象的な例だ、。
+”メッセージ”のコンセプトは、”関数の呼び出し”、"外部の観察者に対してのイベントリッスン"を含む、多くのコンセプトが集まっていて、メッセージと、トランザクションとは切り分けることが妥当であった。
 
-We Have No Features 我々は機能を持たない:一般化に対しての必然的な帰結として、
+4. **我々は機能を持たない**:一般化に対しての必然的な帰結として、
 我々は直感的にプロトコルのパーツとなるような非常にありふれたハイレベルのユースケースの構築を断る。
 もし人々が本当にそれを欲しているならば、常にサブのプロトコル（例えばEtherをベースとしたサブの貨幣や、bitcoin/litecoin/dogecoin/sidechain等）として契約の内部に作るだろう理解しているからだ。
 例をあげるとBitcoinのようなロックタイムの機能がEthereumの中には無い。
 そのような機能は、ユーザーがサインされたデータパケットを送ったり、
 そしてそのデータのパケットを特定の契約にプロトコルを通じてシミュレートされていくかもしれない。
 
-リスクを嫌悪しない: もしリスクが増大していくような変更がとても大きい利益をもたらすのであれば、我々は高いリスクを受け入れる。
-（例えば一般化された状態遷移や、50倍の速度のブロック承認時間、コンセンサスの合意性、等だ）
+5. **リスクを嫌悪しない**: もしリスクが増大していくような変更がとても大きい利益をもたらすのであれば、我々は高いリスクを受け入れる。（例えば一般化された状態遷移や、50倍の速度のブロック承認時間、コンセンサスの合意性、等だ）
 これらの理論は全てEthreumの開発の指南の中に含まれているが、絶対的ではない。
-開発の時間を減らし、またとても多くの急激な変更を一度に行わないようにしたいと思ったことが、とある変更を行うにあたって遅延をもたらしたことがある。明らかに将来のリリースに向けてメリットが有ることであったとしても。（例えば Ethereum1.1)
-
-Non-risk-aversion: we are okay with higher degrees of risk if a risk-increasing change provides very substantial benefits (eg. generalized state transitions, 50x faster block times, consensus efficiency, etc)
-These principles are all involved in guiding Ethereum development, but they are not absolute; in some cases, desire to reduce development time or not to try too many radical things at once has led us to delay certain changes, even some that are obviously beneficial, to a future release (eg. Ethereum 1.1).
-
-ブロックチェーンレベルでのプロトコル:
-これらのセクションでは
-This section provides a description of some of the blockchain-level protocol changes made in Ethereum, including how blocks and transactions work, how data is serialized and stored, and the mechanisms behind accounts.
-
-Accounts and not UTXOs
-
-Bitcoin, along with many of its derivatives, stores data about users' balances in a structure based on unspent transaction outputs (UTXOs): the entire state of the system consists of a set of "unspent outputs" (think, "coins"), such that each coin has an owner and a value, and a transaction spends one or more coins and creates one or more new coins, subject to the validity constraints:
-
-Every referenced input must be valid and not yet spent
-The transaction must have a signature matching the owner of the input for every input
-The total value of the inputs must equal or exceed the total value of the outputs
-A user's "balance" in the system is thus the total value of the set of coins for which the user has a private key capable of producing a valid signature.
+開発の時間を減らし、とても多くの急激な変更を一度に行わないようにしたいと思ったことがとある変更を行うにあたって遅延をもたらしたことがある。明らかに将来のリリースに向けてメリットが有ることであったとしても。（例えば Ethereum1.1)
 
 
-(Image from https://bitcoin.org/en/developer-guide)
+## ブロックチェーンレベルでのプロトコル:
+このセクションでは、Ethereumで為されたいくつかのブロックチェーンレベルでのプロトコルの変更についての詳細を記載する。
+どのようにしてトランザクションが機能しているのか、そしてどのようにしてデータがシリアライズされ保存されているのか、アカウントの背後にあるメカニズムについてだ。
 
-Ethereum jettisons this scheme in favor of a simpler approach: the state stores a list of accounts where each account has a balance, as well as Ethereum-specific data (code and internal storage), and a transaction is valid if the sending account has enough balance to pay for it, in which case the sending account is debited and the receiving account is credited with the value. If the receiving account has code, the code runs, and internal storage may also be changed, or the code may even create additional messages to other accounts which lead to further debits and credits.
+### アカウントと使われていないUTXOs
+ビットコイン、そしてビットコインに付帯する多くのデリバティブ、ユーザーのバランスについてのデータは、
+使われていないトランザクションのアウトプットに基づく構造の中にある。
+システム内のすべての状態は、"Unspent Outputs"（例：コイン)、ｓのようなそれぞれのコインが所持者と価値を持ち、トランザクションは1つかより多くのコインを使い、1つやより多くの新しいコインを作り出す、下記のような制約が有効であることのもとに。
 
-The benefits of UTXOs are:
+1.あらゆる参照されているインプットは正しく、そして未だ使われていない。
+2.トランザクションは署名を持っていなければならず、全てのインプットの場合において、
+　その署名はインプットの所持者のものと一致していなければならない。
+3. インプットの合計の価値は、アウトプットの合計の価値と等しいか、もしくは少ない。
 
-Higher degree of privacy: if a user uses a new address for each transaction that they receive then it will often be difficult to link accounts to each other. This applies greatly to currency, but less to arbitrary dapps, as arbitrary dapps often necessarily involve keeping track of complex bundled state of users and there may not exist such an easy user state partitioning scheme as in currency.
-Potential scalability paradigms: UTXOs are more theoretically compatible with certain kinds of scalability paradigms, as we can rely on only the owner of some coins maintaining a Merkle proof of ownership, and even if everyone including the owner decides to forget that data then only the owner is harmed. In an account paradigm, everyone losing the portion of a Merkle tree corresponding to an account would make it impossible to process messages that affect that account at all in any way, including sending to it. However, non-UTXO-dependent scalability paradigms do exist.
-The benefits of accounts are:
+![](https://bitcoin.org/img/dev/en-transaction-propagation.svg)  
+(Image from https://bitcoin.org/en/developer-guide)  
 
-Large space savings: for example, if an account has 5 UTXO, then switching from a UTXO model to an account model would reduce the space requirements from (20 + 32 + 8) * 5 = 300 bytes (20 for the address, 32 for the txid and 8 for the value) to 20 + 8 + 2 = 30 bytes (20 for the address, 8 for the value, 2 for a nonce(see below)). In reality savings are not nearly this massive because accounts need to be stored in a Patricia tree (see below) but they are nevertheless large. Additionally, transactions can be smaller (eg. 100 bytes in Ethereum vs. 200-250 bytes in Bitcoin) because every transaction need only make one reference and one signature and produces one output.
-Greater fungibility: because there is no blockchain-level concept of the source of a specific set of coins, it becomes less practical, both technically and legally, to institute a redlist/blacklisting scheme and to draw a distinction between coins depending on where they come from.
-Simplicity: easier to code and understand, especially once more complex scripts become involved. Although it is possible to shoehorn arbitrary decentralized applications into a UTXO paradigm, essentially by giving scripts the ability to restrict what kinds of UTXO a given UTXO can be spent to, and requiring spends to include Merkle tree proofs of change-of-application-state-root that scripts evaluate, such a paradigm is much more complicated and ugly than just using accounts.
+システムにおける有るユーザーの残高は、上記のようにして、
+プライベートキーをもっているユーザーが有効な署名を作り出すことが出来るコインの合計の価値に等しい。
+
+このスキームはより単純なアプローチに賛成である。
+ある状態はそれぞれのアカウントが残高を所持しているアカウントのリストを保持し、
+同様にEthereum特有のコードと内部のストレージデータを保持する。
+そして、もし送り手が、送る分の価値に値する十分な残高を持っているならば、
+送り手のアカウントから引き落とされ、受け取り手は送られた価値を受け取る。
+もし受取り手のアカウントがコードを持っていたならば、コードは実行され内部のストレージも同時に変更されるかもしれない。
+もしくは受け取り手のアカウントのコードは新たな追加のメッセージを生成し、
+引き落としや、受け取りのために他のアカウントに送ることに繋がるかもしれない。
+
+UTXOsのメリットは下記となる。:
+
+1. **高水準ののプライバシー**: 
+もしユーザーが各々のトランザクションで新しいアカウントを使うのであれば、
+アカウントとアドレスとを結びつけることは通常難しいだろう。
+これは通貨にとても適している性質だ。だが、任意のDapps(分散形のアプリ）としては適していない。
+何故なら任意の分散形のアプリは複雑な塊となった情報のユーザーの状態を追いかける必要がよくあるため、
+通貨システムのように、簡単なユーザーの状態の切り分けは存在しないかもしれないからだ。
+
+2. **潜在的にスケーラビリティのある仕組み**:
+UTXOsは理論的にある種のスケーラビリティがあるパラダイムとよく適合している。
+何故なら我々は、マークルツリー上で所有権を証明している幾つかのコインの所有者だけに依存しているため
+オーナーを含めた誰もがその所有権のデータを忘れると決めた場合でさえも、オーナーだけが損害を受けることで済むからだ。
+アカウントの考え方では、有るアカウントに対応するマークルツリーの一片を失った
+誰もがメッセージに依ってそのアカウントに影響を与えることが、そのアカウントに対してメッセージを送ることを含めて絶対にできなくなる。しかしながらUTXOに依存しないスケーラビリティの枠組みが確かに存在している。
+
+アカウントによるメリットは、
+大きなスペースの節約: 例えばひとつのアカウントが5つのUTXOを持っているとした時、UTXOモデルからアカウントモデルに切り替えれば、
+必要なスペースは(20 + 32 + 8) * 5 = 300 bytes (20 はアドレスに, 32 はトランザクションIDに and 8は送信する価値に）t 20 + 8 + 2 = 30 bytes (20 はアドレスに, 8 は送信する価値に、2 はNonce（1度だけ使われる番号）に)).となる。
+実際のスペースの節約はこれほど大きなものにはならない、何故ならアカウントはパトリシアツリー上に保存される必要があるためだ。
+しかしそうであったとしても大きな節約だ。
+加えて、トランザクションはより小さくすることが出来る（例えば、Ethereum上の100バイトと、Bitcoin上の200-250バイト）、何故ならばあらゆるトランザクションは1回の参照と1回の署名を行い、1つのアウトプットを出すだけを必要とするからだ。
+
+大きな代替性: 特定のコインの元となるブロックチェーンレベルでないコンセプトであるがために、それは一層実用的ではなく、技術的でも法的でもあるレッドリストやブラックリストの仕組みを構築するために、そして何に依拠しているコイン何かに判別を付けることは一層
+
+シンプルさ: より簡単に書いて、分かりやすく、とりわけ一旦一層複雑なスクリプトが含まれたときに。
+だが、任意の分散形のアプリケーションをUTXOの考え方という、狭い場所へと押しこむことも出来るが、
+根本的にスクリプトに対してどのようなUTXOに対して与えられたUTXOが使われる事が出来るかといったことを成約する能力を与え、
+スクリプトが判別できる「アプリケーションの状態のルートの変更」のマークルツリーによる証明、を含めることを必要とすることは
+そんな概念は、ただアカウントという概念を使うことよりも一層複雑で汚いものだ。
+
+定量のライトなクライアントの参照: ライトなクライアントは
 Constant light client reference: light clients can at any point access all data related to an account by scanning down the state tree in a specific direction. In a UTXO paradigm, the references change with each transaction, a particularly burdensome problem for long-running dapps that try to use the above mentioned state-root-in-UTXO propagation mechanism.
 We have decided that, particularly because we are dealing with dapps containing arbitrary state and code, the benefits of accounts massively outweigh the alternatives. Additionally, in the spirit of the We Have No Features principle, we note that if people really do care about privacy then mixers and coinjoin can be built via signed-data-packet protocols inside of contracts.
 
