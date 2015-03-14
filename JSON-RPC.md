@@ -51,7 +51,6 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_accounts](#eth_accounts)
 * [eth_blockNumber](#eth_blocknumber)
 * [eth_getBalance](#eth_getbalance)
-* [eth_getStorage](#eth_getStorage)
 * [eth_getStorageAt](#eth_getstorageat)
 * [eth_getTransactionCount](#eth_gettransactioncount)
 * [eth_getBlockTransactionCountByHash](#eth_getblocktransactioncountbyhash)
@@ -103,7 +102,6 @@ The following methods have a extra default block parameter:
 - [eth_getBalance](#eth_getbalance)
 - [eth_getCode](#eth_getcode)
 - [eth_getTransactionCount](#eth_gettransactioncount)
-- [eth_getStorage](#eth_getstorage)
 - [eth_getStorageAt](#eth_getstorageat)
 - [eth_call](#eth_call)
 
@@ -366,7 +364,7 @@ none
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "-0x1"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],"id":1}'
 ```
 
 ##### Parameters
@@ -390,38 +388,6 @@ params: [
 }
 ```
 
-
-***
-
-#### `eth_getStorage`
-*returns storage dumped to json*
-
-##### Request Example
-```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorage","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "-0x1"],"id":1}'
-```
-
-##### Parameters
-
-0. address as hex string
-1. block number or the string "latest" or "pending", see the [default block parameter](#the-default-block-parameter)
-
-```js
-params: [
-   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-   '0x2' // 2
-]
-```
-
-##### Response
-```json
-{
-"id":1,
-"jsonrpc":"2.0",
-"result":{"0x":"0x03"}
-}
-```
-
 ***
 
 #### `eth_getStorageAt`
@@ -429,14 +395,14 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "-0x1"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "latest"],"id":1}'
 ```
 
 ##### Parameters
 
 0. address as hex string
 1. the position in the storage
-3. block number or the string "latest" or "pending", see the [default block parameter](#the-default-block-parameter)
+2. block number or the string "latest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -462,7 +428,7 @@ params: [
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","-0x1"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","latest"],"id":1}'
 ```
 
 ##### Parameters
