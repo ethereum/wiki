@@ -9,7 +9,7 @@ Ethereumには現在のプロトコルの機能を司るための大半の一般
 同様に我々のアプローチと、その他の代替手段の可能性におけるリスクを示すことである。
 
 ##原理
-Ethereumのプロトコルのデザインは幾つかの原理に基づいている。
+Ethereumのプロトコルのデザインは幾つかの原理に基づいている。:
 
 1. **Sandwich Complexity Model**: 
 我々はボトムレベルのEthereumの構造は出来る限りシンプルであるべきだと信じている。
@@ -46,7 +46,7 @@ Ethereum では、我々はトランザクションのフィーをインセン�
 内部で早い頃から提案されたように、シンプルに全てのトランザクションとメッセージのログを取ることとは対象的な例だ、。
 ”メッセージ”のコンセプトは、”関数の呼び出し”、"外部の観察者に対してのイベントリッスン"を含む、多くのコンセプトが集まっていて、メッセージと、トランザクションとは切り分けることが妥当であった。
 
-4. **我々は機能を持たない**:一般化に対しての必然的な帰結として、
+4. **我々は機能を持たない**: 一般化に対しての必然的な帰結として、
 我々は直感的にプロトコルのパーツとなるような非常にありふれたハイレベルのユースケースの構築を断る。
 もし人々が本当にそれを欲しているならば、常にサブのプロトコル（例えばEtherをベースとしたサブの貨幣や、bitcoin/litecoin/dogecoin/sidechain等）として契約の内部に作るだろう理解しているからだ。
 例をあげるとBitcoinのようなロックタイムの機能がEthereumの中には無い。
@@ -62,7 +62,7 @@ Ethereum では、我々はトランザクションのフィーをインセン�
 このセクションでは、Ethereumで為されたいくつかのブロックチェーンレベルでのプロトコルの変更についての詳細を記載する。
 どのようにしてトランザクションが機能しているのか、そしてどのようにしてデータがシリアライズされ保存されているのか、アカウントの背後にあるメカニズムについてだ。
 
-### アカウントと使われていないUTXOs
+### アカウントと、非UTXOs
 ビットコイン、そしてビットコインに付帯する多くのデリバティブ、ユーザーのバランスについてのデータは、
 使われていないトランザクションのアウトプットに基づく構造の中にある。
 システム内のすべての状態は、"Unspent Outputs"（例：コイン)、ｓのようなそれぞれのコインが所持者と価値を持ち、トランザクションは1つかより多くのコインを使い、1つやより多くの新しいコインを作り出す、下記のような制約が有効であることのもとに。
@@ -87,7 +87,7 @@ Ethereum では、我々はトランザクションのフィーをインセン�
 もしくは受け取り手のアカウントのコードは新たな追加のメッセージを生成し、
 引き落としや、受け取りのために他のアカウントに送ることに繋がるかもしれない。
 
-UTXOsのメリットは下記となる。:
+UTXOsのメリットには下記がある。:
 
 1. **高水準ののプライバシー**: 
 もしユーザーが各々のトランザクションで新しいアカウントを使うのであれば、
@@ -103,27 +103,45 @@ UTXOsは理論的にある種のスケーラビリティがあるパラダイム
 アカウントの考え方では、有るアカウントに対応するマークルツリーの一片を失った
 誰もがメッセージに依ってそのアカウントに影響を与えることが、そのアカウントに対してメッセージを送ることを含めて絶対にできなくなる。しかしながらUTXOに依存しないスケーラビリティの枠組みが確かに存在している。
 
-アカウントによるメリットは、
-大きなスペースの節約: 例えばひとつのアカウントが5つのUTXOを持っているとした時、UTXOモデルからアカウントモデルに切り替えれば、
+アカウントによるメリットは下記がある:
+
+1. **大きなスペースの節約**: 例えばひとつのアカウントが5つのUTXOを持っているとした時、UTXOモデルからアカウントモデルに切り替えれば、
 必要なスペースは(20 + 32 + 8) * 5 = 300 bytes (20 はアドレスに, 32 はトランザクションIDに and 8は送信する価値に）t 20 + 8 + 2 = 30 bytes (20 はアドレスに, 8 は送信する価値に、2 はNonce（1度だけ使われる番号）に)).となる。
 実際のスペースの節約はこれほど大きなものにはならない、何故ならアカウントはパトリシアツリー上に保存される必要があるためだ。
 しかしそうであったとしても大きな節約だ。
 加えて、トランザクションはより小さくすることが出来る（例えば、Ethereum上の100バイトと、Bitcoin上の200-250バイト）、何故ならばあらゆるトランザクションは1回の参照と1回の署名を行い、1つのアウトプットを出すだけを必要とするからだ。
 
-大きな代替性: 特定のコインの元となるブロックチェーンレベルでないコンセプトであるがために、それは一層実用的ではなく、技術的でも法的でもあるレッドリストやブラックリストの仕組みを構築するために、そして何に依拠しているコイン何かに判別を付けることは一層
+2. **大きな代替性**: ある種のコインの元となるブロックチェーンレベルでないコンセプトがあるがために、
+レッドリストやブラックリストを行うための仕組みを構築し、何に依拠しているコインなのかに判別を付けることは
+一層技術的にも法的にも実用的な手段でなくなっている。
 
-シンプルさ: より簡単に書いて、分かりやすく、とりわけ一旦一層複雑なスクリプトが含まれたときに。
-だが、任意の分散形のアプリケーションをUTXOの考え方という、狭い場所へと押しこむことも出来るが、
+3. **シンプルさ**: より簡単に書いて、分かりやすく、とりわけ一旦一層複雑なスクリプトが含まれたときに。
+任意の分散形のアプリケーションをUTXOの考え方という、狭い場所へと押しこむことも出来るが、
 根本的にスクリプトに対してどのようなUTXOに対して与えられたUTXOが使われる事が出来るかといったことを成約する能力を与え、
 スクリプトが判別できる「アプリケーションの状態のルートの変更」のマークルツリーによる証明、を含めることを必要とすることは
 そんな概念は、ただアカウントという概念を使うことよりも一層複雑で汚いものだ。
 
-定量のライトなクライアントの参照: ライトなクライアントは
-Constant light client reference: light clients can at any point access all data related to an account by scanning down the state tree in a specific direction. In a UTXO paradigm, the references change with each transaction, a particularly burdensome problem for long-running dapps that try to use the above mentioned state-root-in-UTXO propagation mechanism.
-We have decided that, particularly because we are dealing with dapps containing arbitrary state and code, the benefits of accounts massively outweigh the alternatives. Additionally, in the spirit of the We Have No Features principle, we note that if people really do care about privacy then mixers and coinjoin can be built via signed-data-packet protocols inside of contracts.
+4. **定量で計量なクライアントの参照** : 
+軽量なクライアントは、あらゆる場所において有るアカウントに関連する全てのデータにアクセスすることが可能である。
+UTXOの考え方では、参照は各々のトランザクションごとに変更してしまうものであり、
+長期的に稼働し、上記に述べたUTXO上の状態のルートを伝播するメカニズムを用いようとするDAppsに対しては、
+とりわけ重荷となる問題である。
+我々はとりわけ任意の状態とコードを含んでいるDappsとやり取りしなければならないがために、そのアカウントの利益は大きく代替手段を超えている。
+加えて我々の"機能を持たない"という原理の志のもと、人々が本当にプライバシーを気にするのであれば、
+コインを混ぜるミキサーや、コインジョインの仕組みを
+コントラクトの内側のプロトコルの署名されたデータパケットを通じて設計出来るだろうと考えている。
 
-One weakness of the account paradigm is that in order to prevent replay attacks, every transaction must have a "nonce", such that the account keeps track of the nonces used and only accepts a transaction if its nonce is 1 after the last nonce used. This means that even no-longer-used accounts can never be pruned from the account state. A simple solution to this problem is to require transactions to contain a block number, making them un-replayable after some period of time, and reset nonces once every period. Miners or other users will need to "ping" unused accounts in order to delete them from the state, as it would be too expensive to do a full sweep as part of the blockchain protocol itself. We did not go with this mechanism only to speed up development for 1.0; 1.1 and beyond will likely use such a system.
+１つのアカウントの思想の弱点は、リプレイアタックを防ぐために、全てのトランザクションは"nonce"一度だけ使う数値を持たなければならないことだ。そのようなアカウントはnonec を追いかけ、nonceが最後のnonceが使われた丁度一回後の場合にのみトランザクションを老け入れるようにする。
+これは、もはや使われなくなったアカウントでさえも、決してアカウントの状態から切り取られることが出来ないということを意味する。
+この問題の簡単な解決策は、トランザクションがブロックの番号を保持することを求めるようにすることだ。
+一定の時間の後にリプレイが出来ないようにして、一定期間ごちに一度nonceをリセットする。
+マイナーや、他のユーザーは使われていないアカウントを状態から取り除くために、"ping"使われていないアカウントへのを必要とするだろう。あまりにも高価なためブロックチェーンプロトコル全体の一部を消し去ることは出来ないからだ。
+Ethereum のバージョン1.0では開発の加速のためにこのメカニズムを採用しなかったが、1.1ではこのようなシステムを使うだろう。
 
+マークルパトリシアツリー
+マークルパトリシアツリーでは、今までアランレイナーによって想像され、Rippleのプロトコルの中に実装された概念だ。
+それはEthereumの基礎となるデータの構造であり、全てのアカウントの状態の保存に使われ、同様にトランザクションや、それぞれのブロックのレシートにも使われる。
+そのMPTは
 Merkle Patricia Trees
 
 The Merkle Patricia tree/trie, previously envisioned by Alan Reiner and implemented in the Ripple protocol, is the primary data structure of Ethereum, and is used to store all account state, as well as transactions and receipts in each block. The MPT is a combination of a Merkle tree and Patricia tree, taking the elements of both to create a structure that has both of the following properties:
