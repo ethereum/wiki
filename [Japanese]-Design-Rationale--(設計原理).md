@@ -277,7 +277,6 @@ Ethereumでは、もしブロックが不当な場合には、不当な状態の
 Bitcoinの言葉でいうと、ログは純粋な"Proof of publication"のopcode として考えられる。
 
 Uncleへのインセンティブ
-The fourth protocol is useful in cases where a dapp wants to keep track of some kind of events that need to be efficiently verifiable, but which do not need to be part of the permanent state; an example is a decentralized exchange logging trades or a wallet logging transactions (note that the light client protocol will need to be augmented with header-level coinbase and uncle checks for this to work fully with mining accounts). In Bitcoin terminology, LOG can be viewed as a pure "proof of publication" opcode.
 The 強欲で最も重い監視されているサブツリー"(GHOST)プロトコルは、最初にYonatan Sompolinsky とAvivZoharによって2013年12月に導入されたイノベーションだ。そしてもっと早いブロックの時間を防ぐための問題解決策としての最初の重大な試みでもある。
 GHOSTのモチベーションは、承認時間の早いブロックチェーンが、古くなっていまう可能性が高いためにが現在セキュリティリスクを抱えていることだ。何故ならブロックはネットワークに伝播するまでに一定時間必要であり、
 もしマイナーAがを採掘してマイナーBが他のブロックをマイナーAのブロックが伝播するまでにほった場合には、
@@ -528,28 +527,81 @@ stack(通常の32バイト値のLIFOスタック）、そしてメモリー（�
 制限が無い場合にはが安全なgasのモデルを作るためにあまりに厳しい場合がある。
 只十分に多くの暗号の実装で共通している32バイトの値は、十分に大きいからである、、それはアドレスについてもあてはまる（アドレスをパックして、単独のストレージの値へと挿入する最適化の方法として）、だが究極的に非効率というほど大きくはない。
 
-自分自身のVMを持つこと:代替案はJavaを使うことや、幾つかのLispや、Luaの方言を使うことが考えられる。
+自分自身のVMを持つこと:代替案はJavaを使うことや、幾つかのLispや、Luaのプログラミング言語を使うことが考えられる。
 我々は特別なVMを持つことが適していると決定した。何故ならば
 (i)我々のVMのspecは他の多くのVMよりも大変シンプルだからである。
 何故なら他の仮想マシーンう大変安いコストを払わなければならない、一方で、我々の場合いはあらゆる追加のユニットの複雑さは
 開発が中央に集中している状況を作り出すエントリーとしての高いバリアに向かってのステップとなり、
 コンセンサスが出来ない事を含めて、セキュリティフローの潜在的な可能性となるからだ。
- the alternative is reusing Java, or some Lisp dialect, or Lua. We decided that having a specialized VM was appropriate because (i) our VM spec is much simpler than many other virtual machines, because other virtual machines have to pay a much lower cost for complexity, whereas in our case every additional unit of complexity is a step toward high barriers of entry creating development centralization and potential for security flaws including consensus failures, (ii) it allows us to specialize the VM much more, eg. by having a 32 byte word size, (iii) it allows us not to have a very complex external dependency which may lead to installation difficulties, and (iv) a full security review of Ethereum specific to our particular security needs would necessitate a security review of the external VM anyway, so the effort savings are not that large.
-Using a variable extendable memory size - we deemed a fixed memory size unnecessarily restrictive if the size is small and unnecessarily expensive if the size is large, and noted that if statements for memory access are necessary in any case to check for out-of-bounds access, so fixed size would not even make execution more efficient.
-Not having a stack size limit - no particular justification either way; note that limits are not strictly necessary in many cases as the combination of gas costs and a block-level gas limit will always act as a ceiling on the consumption of every resource.
-Having a 1024 call depth limit - many programing languages break at high stack depths much more quickly than they break at high levels of memory usage or computational load, so the implied limit from the block gas limit may not be sufficient.
-No types - done for simplicity. Instead, signed and unsigned opcodes for DIV, SDIV, MOD, SMOD are used instead (it turns out that for ADD and MUL the behavior of signed and unsigned opcodes is equivalent), and the transformations for fixed point arithmetic (high-depth fixed-point arithmetic is another benefit of 32-byte words) are in all cases simple, eg. at 32 bits of depth, a * b -> (a * b) / 2^32, a / b -> a * 2^32 / b, and +, - and * are unchanged from integer cases.
-The function and purpose of some opcodes in the VM is obvious, however other opcodes are less so. Some particular justifications are given below:
+(ii)より一層「VMを特殊に作る上げる事が出来る。例えば32バイトのサイズの言葉を持っている。
+(iii)インストール自体が難しくなってしまうというような、複雑な外部依存を持たないでいることが出来る
+(iv)我々の特定のセキュリティのニーズにEthereumに対しての全てのセキュリティのレビューを行うために外部のVMのセキュリティのレビューを行うことを余儀なくされてしまうだろう、そしてその努力で得られるものはあまり大きくない。
+様々な拡張可能なメモリーのサイズを使うこと。　もしサイズが小さく、もしサイズが大きければ不必要にコストが高くなるのであれば、我々は固定長のメモリーの長さの制約が必要無いと考えた。
+そしてもしメモリーアクセスのための宣言が必要無いのであれば、外部へのアクセスをチェックするどのような場合においても、固定長の長さは実行をより効率的にするだろう。
+スタックサイズの制限を持たない。　特定の理由が無い。多くの場合gasのコストと、ブロックレベルのgasの制限を組み合わせることに依って、制限は必ずしも必要ないことを心に留めて欲しい、
+これら2つの組み合わせによって、全てのリソースの消費に対して常に天井を設ける働きを実行できる。
+1024のコールの深さのリミットを持つ。　多くのプログラミング言語では、高いスタックの深さではメモリーの使用かコンピューター不可の高いレベルを破るよりも一層早く、そのためにブロック内ののgasの制限による暗黙的なリミットだけでは十分ではない。
 
-ADDMOD, MULMOD: in most cases, addmod(a, b, c) = a * b % c. However, in the specific case of many classes of elliptic curve cryptography, 32-byte modular arithmetic is used, and doing a * b % c directly is therefore actually doing ((a * b) % 2^256) % c, which gives a completely different result. A formula that calculates a * b % c with 32-byte values in 32 bytes of space is rather nontrivial and bulky.
-SIGNEXTEND: the purpose of SIGNEXTEND is to facilitate typecasting from a larger signed integer to a smaller signed integer. Small signed integers are useful because JIT-compiled virtual machines may in the future be able to detect long-running chunks of code that deals primarily with 32-byte integers and speed it up considerably.
-SHA3: SHA3 is very highly applicable in Ethereum code as secure infinite-sized hash maps that use storage will likely need to use a secure hash function so as to prevent malicious collisions, as well as for verifying Merkle trees and even verifying Ethereum-like data structures. A key point is that its companions SHA256, ECRECOVER and RIPEMD160 are included not as opcodes but as pseudo-contracts. The purpose of this is to place them into a separate category so that, if/when we come up with a proper "native extensions" system later, more such contracts can be added without filling up the opcode space.
-ORIGIN: the primary use of the ORIGIN opcode, which provides the sender of a transaction, is to allow contracts to make refund payments for gas.
-COINBASE: the primary uses of the COINBASE opcode are to (i) allow sub-currencies to contribute to network security if they so choose, and (ii) open up the use of miners as a decentralized economic set for sub-consensus-based applications like Schellingcoin.
-PREVHASH: used as a semi-secure source of randomness, and to allow contracts to evaluate Merkle tree proofs of state in the previous block without requiring a highly complex recursive "Ethereum light client in Ethereum" construction.
-EXTCODESIZE, EXTCODECOPY: the primary uses here are to allow contracts to check the code of other contracts against a template, or even simulating them, before interacting with them. See http://lesswrong.com/lw/aq9/decision_theories_a_less_wrong_primer/ for applications.
-JUMPDEST: JIT-compiled virtual machines become much easier to implement when jump destinations are restricted to a few indices (specifically, the computational complexity of a variable-destination jump is roughly O(log(number of valid jump destinations)), although static jumps are always constant-time). Hence, we need (i) a restriction on valid variable jump destinations, and (ii) an incentive to use static over dynamic jumps. To meet both goals, we have the rules that (i) jumps that are immediately preceded by a push can jump anywhere but another jump, and (ii) other jumps can only jump to a JUMPDEST. The restriction against jumping on jumps is needed so that the question of whether a jump is dynamic or static can be determined by simply looking at the previous operation in the code. The lack of a need for JUMPDEST operations for static jumps is the incentive to use them. The prohibition against jumping into push data also speeds up JIT VM compilation and execution.
-LOG: LOG is meant to log events, see trie usage section above.
-CALLCODE: the purpose of this is to allow contracts to call "functions" in the form of code stored in other contracts, with a separate stack and memory, but using the contract's own storage. This makes it much easier to scalably implement "standard libraries" of code on the blockchain.
-SUICIDE: an opcode which allows a contract to quickly delete itself if it is no longer needed. The fact that SUICIDES are processed at the end of transaction execution, and not immediately, is motivated by the fact that having the ability to revert suicides that were already executed would substantially increase the complexity of the cache that would be required in an efficient VM implementation.
-PC: although theoretically not necessary, as all instances of the PC opcode can be replaced by simply putting in the actual program counter at that index as a push, using PC in code allows for the creation of position-independent code (ie. compiled functions which can be copy/pasted into other contracts, and do not break if they end up at different indices). 
+タイプを持たない シンプルさのために行った。代わりに、署名されたか署名されていないDIV, SDIV,MOD,SMODを示すopcodeを使った、（それはADDとMULとのためにあり、署名されたものと署名されていないopcoceは同様のものだ。
+そして固定長の場所に対しての算数（深い、固定された場所、数学的に他のベネフィットのある32バイトの文字）は皆シンプルである。
+例えば32ビットの深さでは、a * b -> (a * b )/ 2^32 , a / b -> a * 2^32 / b and +, - and * are unchanged from integer 
+仮想マシーンにおいて、関数と幾つかのopcodeの目的は明らかである、しかしながら他のopcodeはあまり自明ではない。
+例えば特定の理由は下記のように上げられる。
+
+ADDMOD, MULMOD: 大半の場合において、addmod(a, b, c) =  a * b % cであるがしかしながら、
+楕円曲線暗号の多くのクラスは特定の場合ではそしてそのためにa * b % cを直接行うことで、それ故に実際に行っている。
+そして完全に異なる結果を生み出すこととなる。
+あるフォーミュラにおいて、a * b % c を32バイトの値と共に32バイトのスペースにて行うことはかなり重大で分厚い。
+SIGNEXTEND: SIGNEXTENDの目的はtypecastingを大きな署名して大きな符号付き整数から、小さな符号付き整数へと型変換するためだ。
+小さな符号付き整数は有用である、何故ならばJITに依ってコンパイルされた仮想マシーンの環境では、
+32バイトの整数を第一義に扱って長く走っているコードの塊を検出し、かなりの速度向上が見込むことが出来るかもしれないからだ。
+
+SHA3: Ethereumでは、SHA3はとても応用性が高く、セキュアで無限の大きさのハッシュのマップが出来る。
+ストレージを扱うハッシュのマップは悪意ある衝突を防ぐために、
+セキュアなハッシュのファンクションを使う必要が出てくるだろう、同様にマークルツリーを認証するためにもそしてEthereumのようなデータの構造を認証するためにも使われるだろう。
+鍵となる点は、SHA3はSHA256や、ECRECOVERやRIPEMD160の対であることであり、opcodeではなく、仮のコントラクトして含まれている。
+
+その目的は分割されたカテゴリーに暗号化の手段を分けることによって、
+もし、いつか正しい”ネイティブの拡張"によるシステムを考案した時に
+より多くのそんなコントラクトを、opcodeの空間を埋めること無く加える事が出来るようにするためだ。
+
+ORIGIN: トランザクションの送り手を与えるORIGINのopcodeを使う第一の目的は、コントラクトがgasのためにリファンドの支払いが出来るようにするためだ。
+
+COINBASE: COINBASEの第一義的な使い方は、
+(i) 補助貨幣がネットワークのセキュリティの向上に役立つようにするため。
+(ii) Schelling coinのような副次的な分散形のアプリケーションのための、分散形の経済のセットとして
+マイナーが使えるようにするようにするためだ。
+PREVHASH: 程々にセキュアなランダムさを生み出すソースとして利用される。
+コントラクトが、マークルツリーの以前のブロック内のproof of stateを、
+とても複雑で再帰的な"Ethereum内、Ethereumライトクライアント"の構造を必要とすること無く
+確かめる事が出来るようにするためにある。
+
+EXTCODESIZE, EXTCODECOPY: 第一義的な使い方はコントラクトが、他のコントラクトとやり取りを開始する前に、
+他のコントラクトのコードがテンプレートの定義に反していないかをチェックするか、
+模倣していないかさえもチェックする事が出来るようにするためにある。
+下記に使い方がある。http://lesswrong.com/lw/aq9/decision_theories_a_less_wrong_primer/ 　（アプリケーション用）
+
+JUMPDEST: jumpの行き先が制限されており、幾つかのインデックスに制限されていたときに、
+JITでコンパイルされた仮想マシーンがより一層簡単に実装でき、
+様々な行き先でのコンピュテーションの複雑さがおおまかにO(log(正しいjumpの行き先の数))、だが
+固定的なjumpは常に定数時間を要する。)
+それ故に、我々は
+(i)正当に認証された変数のjumpの行き先に対しての制約
+(ii)動的なjumpに対して静的なjumpを使うことのインセンティブ
+2つのゴールを満たすためには、我々は(i)直ぐにプッシュによって先行されるjumpは他のjumpにのみjumpすることが出来る。
+(ii)他のjumpはJUMPDESTにのみjumpを行う事が出来る。
+jumpに対してのjumpを制限することは、jumpは動的なのか静的なのかという質問がただコード内の以前のオペレーションを見るだけで判別することが出来るようになる。
+プッシュデータに対してのjumpを禁じることはJITの仮想マシーンのコンパイルと実行を早める事にも繋がる。
+LOG: LOGはイベントをログするためにある、上記のtrieの使い方のセクションを参照
+CALLCODE: 
+目的はコントラクトが他のコントラクトに保存されているコード形式となっているfunctionsを呼び出すことが出来るようにし、
+スタックとメモリーが分割されているが、コントラクトを自分のストレージ内で使うこと。
+これはスケール出来るような形で"標準的ライブラリー"のコードをブロックチェーン上に実装することをかなり容易にしている。
+SUICIDE: もしもう必要無いのであればｍこのopcodeはコントラクトがすぐに自分自身を消去する。
+最後に実行されるトランザクションにてSUICIDEは実行されるが、すぐに実行されるわけではない、
+なぜならば、既に実行されたsuicide（自殺)を差し戻すことが出来るようにするということは
+キャッシュの複雑さを著しく増大させ、仮想マシーンの効率的な実装において大変な困難が強いられるという事実があるためだ。
+
+PC: 理論的には必要ではないが、全てのPCのopcodeのインスタンスは、PC opcodesは単に実際のプログラムカウンターの中でPushとして
+pushとして、PCをコード中に用いることによって、位置に依存するコード（例えばコピー／ペーストされて他のコントラクトに入ったコンパイルされた関数、そして異なるインデックスになってしまったかもしれないが、ブレイクしないもの）
+as all instances of the PC opcode can be replaced by simply putting in the actual program counter at that index as a push, using PC in code allows for the creation of position-independent code (ie. compiled functions which can be copy/pasted into other contracts, and do not break if they end up at different indices). 
