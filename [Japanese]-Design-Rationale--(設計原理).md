@@ -601,7 +601,8 @@ SUICIDE: もしもう必要無いのであればｍこのopcodeはコントラ�
 最後に実行されるトランザクションにてSUICIDEは実行されるが、すぐに実行されるわけではない、
 なぜならば、既に実行されたsuicide（自殺)を差し戻すことが出来るようにするということは
 キャッシュの複雑さを著しく増大させ、仮想マシーンの効率的な実装において大変な困難が強いられるという事実があるためだ。
-
-PC: 理論的には必要ではないが、全てのPCのopcodeのインスタンスは、PC opcodesは単に実際のプログラムカウンターの中でPushとして
-pushとして、PCをコード中に用いることによって、位置に依存するコード（例えばコピー／ペーストされて他のコントラクトに入ったコンパイルされた関数、そして異なるインデックスになってしまったかもしれないが、ブレイクしないもの）
-as all instances of the PC opcode can be replaced by simply putting in the actual program counter at that index as a push, using PC in code allows for the creation of position-independent code (ie. compiled functions which can be copy/pasted into other contracts, and do not break if they end up at different indices). 
+PC: 理論的には必要ではないが、全てのPCのopcodeのインスタンスは、
+実際のプログラムカウンターの中のあるインデックスにpushとして挿入し、
+コードの中でPCが位置に依存するコードを生成することを認めることで置き換えることが出来る。。
+（例えばコピー／ペーストされて他のコントラクトに入ったコンパイルされた関数、
+そして異なるインデックスになってしまったかもしれないが、ブレイクしないもの）
