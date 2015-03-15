@@ -154,23 +154,48 @@ KVノードがあることでより効率的になる、何故ならばツリー
 我々は現在準最適な選択を行ってきた、そしてヘックスのツリーのルックアップの効率は
 一括化されたノードを保存することによるバイナリーでの構想においてもシミュレーション出来る。
 しかしながら、ツリーの構造を誤った形で構成することはとても簡単であるために、最低でもルートの状態が合わないことになってしまう。
-我々は1.1のバージョン迄にそのような採光性を行うことを決定した。
-空のバリューとメンバーシップの区別を行わない事：
+我々は1.1のバージョン迄にそのような再構成を審議することを決定した。
+空のバリューと、メンバーシップが無いことの区別を行わない事：
+シンプルさのために為された。組みになっていないバリューは一般的にゼロかか空のがゼロを表すために使われているという
+Ethereumのデフォルトの仕様とよく合っているからだ。
+しかしながら他の一般性と、このように僅かばかり準最適な方法を取っていると強く思っている。
+終了したノードと終了していないノードの区別: 技術的には、"ノードは終わりかけている"のフラグは必要が無い。
+何故ならEthereumの全てのツリーは固定長のキーを保存するために使われており、
+EthereumのMTPの実装が他の暗号プロトコルにそのまま使われるだろうことを思って
+兎に角一般性を高めるために付け加えたからだ。
+Sha3(k)を使うことに依って、そのキーは安全なツリーの中に保存され、（状態とアカウントを保存するツリーの中に使われている） 
+このことは、64層の深さのノードから派生した最大限望ましくないチェインを設定して、
+何度もSLOADとSSTOREを呼び出すことによって、DDoS攻撃をツリーに対して行うことを一層難しくしている。
+より一層ツリーを列挙することを難しくために、
+列挙出来る限界をクライアントに設けたいと思うかもしれない、
+そのための最もシンプルな方法はデータベースマッピングをsha3(k)->k.RLPに対して行うことだ。
 
-recognize that this choice was suboptimal, as the lookup efficiency of a hexary tree can be simulated in a binary paradigm by storing nodes batched. However, because the trie construction is so easy to implement incorrectly and end up with at the very least state root mismatches, we have decided to table such a reorganization until 1.1.
-No distinction between empty value and non-membership: this was done for simplicity, and because it works well with Ethereum's default that values that are unset (eg. balances) generally mean zero and the empty string is used to represent zero. However, we do note that it sacrifices some generality and is thus slightly suboptimal.
-Distinction between terminating and non-terminating nodes: technically, the "is this node terminating" flag is unnecessary, as all tries in Ethereum are used to store static key lengths, but we added it anyway to increase generality, hoping that the Ethereum MPT implementations will be used as-is by other cryptographic protocols.
-Using sha3(k) as the key in the "secure tree" (used in the state and account storage tries): this makes it much more difficult to DDoS the trie by setting up maximally unfavorable chains of diverge nodes 64 levels deep and repeatedly calling SLOAD and SSTORE on them. Note that this makes it more difficult to enumerate the tree; if you want to have enumeration capability in your client, the simplest approach is to maintain a database mapping sha3(k) -> k.
-RLP
+RLP(Recursive Length Prefix: 再帰的な長さの接頭辞)エンコーディングは、
+Ethereumで使われている主要なシリアライゼーションの形式だ。
+そして、Block,Transaction,アカウントの状態のデータ、そして配線プロトコルのメッセージといっった全ての場所で使われている。
+RLPは正式に下記にて述べられている。https://github.com/ethereum/wiki/wiki/RLP
 
-RLP ("recursive length prefix") encoding is the main serialization format used in Ethereum, and is used everywhere - for blocks, transactions, account state data and wire protocol messages. RLP is formally described here: https://github.com/ethereum/wiki/wiki/RLP
+RLPは高度に最小主義なシリアライゼーションのフォーマットを意図している。
+単独の目的はネストされたバイトアレイを保存するためのみにある。
+Protobufや、BSONや既存の他の解決策と違って、RLPはbooleanやfloatやdoubleや、integerさえも定義しようとしない。
+代わりに只シンプルに、ネストされたアレイの形で構造を保存するために存在し、
+アレイの意味を決定することはプロトコルに任せて、保存状態を残している。
+Key Valueのマップは明示的にサポートされてはいないが、準公式なKeyValueのマッピングのサポートのための提案は、
+k1, k2がある場所において、 [[k1, v1], [k2, v2], ...] をストリングに対する通常の順番を使ってソートすることだ。
 
-RLP is intended to be a highly minimalistic serialization format; its sole purpose is to store nested arrays of bytes. Unlike protobuf, BSON and other existing solutions, RLP does not attempt to define any specific data types such as booleans, floats, doubles or even integers; instead, it simply exists to store structure, in the form of nested arrays, and leaves it up to the protocol to determine the meaning of the arrays. Key/value maps are also not explicitly supported; the semi-official suggestion for supporting key/value maps is to represent such maps as [[k1, v1], [k2, v2], ...] where k1, k2... are sorted using the standard ordering for strings.
+RLPの代替手段として、ProtobufやBSONのような現在のアルゴリズムに使われていたかもしれないが、
+しかしながら(1)実装のシンプルさ、(2)バイトが完全に一貫していることを保証するために我々はRLPを使うことが良いと考えている。
+多くの言語におけるキーバリューのマップは明らかなオーダーを持たない、そしてフロートのポイントのフォーマットについて多くの特別な場合を持ち、潜在的に同じデータが違うコーディングとなることに繋がっている。そしてそのようにして違うハッシュ値となる。
+プロトコルを内製することによって、我々はこれらのゴールを念頭に置いたデザインを保証することが出来る。（これは例えばVMのようなコードの一部にも当てはまる一般的な原理である。）
+BitTorrent にて使われているbencodeは、RLPに代わって通用する代替手段を持つかもしれない、
+だがバイナリーのRLPに比べると長さを表すための小数のエンコーディングはやや準最適である。
 
-The alternative to RLP would have been using an existing algorithm such as protobuf or BSON; however, we prefer RLP because of (1) simplicity of implementation, and (2) guaranteed absolute byte-perfect consistency. Key/value maps in many languages don't have an explicit ordering, and floating point formats have many special cases, potentially leading to the same data leading to different encodings and thus different hashes. By developing a protocol in-house we can be assured that it is designed with these goals in mind (this is a general principle that applies also to other parts of the code, eg. the VM). Note that bencode, used by BitTorrent, may have provided a passable alternative for RLP, although its use of decimal encoding for lengths makes it slightly suboptimal compared to the binary RLP.
+圧縮のアルゴリズム
 
-Compression algorithm
+Wire protocolとそのデータベースはどちらもカスタムの圧縮理論をデータを保存するために持っている。
+そのアルゴリズムはrun-length-encodeding zero
 
+例えば
 The wire protocol and the database both use a custom compression algorithm to store data. The algorithm can best be described as run-length-encoding zeroes and leaving other values as they are, with the exception of a few special cases for common values like sha3(''). For example:
 
 >>> compress('horse')
@@ -181,124 +206,335 @@ The wire protocol and the database both use a custom compression algorithm to st
 '\xf8\xaf\xf8\xab\xa0\xfe\x9e\xbe{b\xd5\xcd\x8d\x87\x97'
 >>> compress("\xc5\xd2F\x01\x86\xf7#<\x92~}\xb2\xdc\xc7\x03\xc0\xe5\x00\xb6S\xca\x82';{\xfa\xd8\x04]\x85\xa4p")
 '\xfe\x01'
-Before the compression algorithm existed, many parts of the Ethereum protocol had a number of special cases; for example, sha3 was often overridden so that sha3('') = '', as that would save 64 bytes from not needing to store code or storage in accounts. However, a change was made recently where all of these special cases were removed, making Ethereum data structures much bulkier by default, instead adding the data saving functionality to a layer outside the blockchain protocol by putting it on the wire protocol and seamlessly inserting it into users' database implementations. This adds modularity, simplifying the consensus layer, and also allows continued upgrades to the compression algorithm to be deployed relatively easily (eg. via network protocol versions).
 
-Trie Usage
+この圧縮のアルゴリズムが存在する前には、多くのEthereum protocol 上の部分では数多くの特別な場合があった。
+例えばsha3が良くsha3('') = ''としてオーバーライドされ, 
+アカウント内にコードやストレージを保存する必要が無かったことから64バイトを保存しただろう。
+しかしながら最近全ての特別な場合が取り除かれた変更が加えられ、Ethereumのデータ構造はデフォルトで一層束となった形になった。
+データを機能的にブロックチェーンのプロトコルの外側に加える代わりにwire protocolに加える事に依って、
+断続無くEthereumのデータをユーザーのデータベースに挿入することが出来る実装
+これはコンセンサスのレイヤーにおいて、モジュラリティを追加し、単純化する。
+そして比較的簡単にデプロイが行われるために圧縮アルゴリズムが継続的に更新されることを可能としている。
+(例えばネットワークのプロトコルのバージョン更新)
 
-Warning: this section assumes knowledge of how bloom filters work. For an introduction, see http://en.wikipedia.org/wiki/Bloom_filter
+ツリーの使い方
+警告:このセクションではどのようにしてブルームのフィルターが働くかの知識を前提としている。
+導入として下記を参照　http://en.wikipedia.org/wiki/Bloom_filter
 
-Every block header in the Ethereum blockchain contains pointers to three tries: the state trie, representing the entire state after accessing the block, the transaction trie, representing all transactions in the block keyed by index (ie. key 0: the first transaction to execute, key 1: the second transaction, etc), and the receipt tree, representing the "receipts" corresponding to each transaction. A receipt for a transaction is an RLP-encoded data structure:
+全てのEthereumのブロックチェーン上のブロックのヘッダーは、3つの樹に対してのポインターを含んでいる。
+ブロックにアクセスした後の全体のツリー状態を示す、状態のツリー
+インデックスに依ってキーとされたブロック上の全てのトランザクションを示している、トランザクションのツリー
+(例えば key0: 実行される最初のトランザクション、key1 :2番目のトランザクション、等 )
+そしてあらゆるトランザクションの"お釣り"に対応している、お釣りのツリーだ。
+トランザクションのお釣りはRLPエンコードされた下記のデータの構造となっている。
+[medstate, gas_used, logbloom, logs]
+medstateは、トランザクションが執行された後のステートツリーのルートである。
+gas_usedは、トランザクションのプロセスのために使われたgas の量である。
+logsは、[address, [topic1, topic2... ],data]の形式のデーターのリストを表しており、
+トランザクションの執行の間のLOG0 ... LOG4のopcodeによって作られている。（主要コールとサブのコールを含めて）
+addressは、そのログを生成したコントラクト上のアドレスを示している。
+topicは4 32バイトの値にまでなり、データは任意のサイズのバイトのアレイだ。
 
-[ medstate, gas_used, logbloom, logs ]
-Where:
+logbloom は、トランザクション内の全てのログが基づくアドレスとトピックから構成されるbloom filterである。
+ブロックのヘッダー内のbloomもあり、それはブロックに対するトランザクションに対しての全てのbloomのORである。
+この構造の目的はEthereumのプロトコルをライトクライアントに対して様々な方法で出来るだけ使いやすい形にするためである。
+Ethereumにおいてライトクライアントは、デフォルトでブロックのヘッダーをダウンロードし、
+DHTをローカルのハードドライブ上のツリーのノードのデータベースとして使うことに依って、わずかな断片だけを承認していくと考えている。
+幾つかの下記の使い方を含む:
+ライトクライアントはアカウントの状態を特定の時間において知ることを望んでいる
+（nonce, balance, code, 又はstorage のインデックス)
+そのライトクライアントは単純に再帰的に状態のルートからツリーのノードをダウンロード出来る、任意の値に達する迄。
+ライトクライアントは、トランザクションが承認されたかを確認したい。
+ライトクライアントは単純にトランザクションのインデックスとブロックの番号についてネットワークに問い合わせることが出来る。
+そして再帰的にトランザクションのツリーをダウンロードして利用可能かどうかを確かめることが出来る。
+ライトクライアントは合計でデータの有効性を確かめたい。
+それぞれのライトクライアントが、c[i]は1つのトランザクションのindex iをトランザクション T[i]（R[i]のお釣りに対応する。)
+そして下記のように作動する。
+R[i-1].medstate、 R[i-1].gas_used(if i = 0 use the parent endstate and 0 gas_used)を生成
+T[i]のトランザクションの実行
+結果として生じるState Root が R[i].medstateであり、その gas_used がR[i].gas_usedであることを確認
+ログと、出来上がったbloomの組みが R[i].logsとR[i].logbloomと合うことを確認
+bloomがブロックヘッダーレベルのbloomのサブ集合(これはブロックヘッダーレベルのBloomが間違っている事を検出する）であることを確認。そして幾つかのランダムのブロックヘッダーレベルのインデックスを取得し、
+ブルームが1つか他のトランザクションレベルのブルームを持ち、
+もしレスポンスが与えられていなかった場合には、ブロックを拒絶する。
+ライトクライアントは記録されるイベントを"watch"したいと思う。
+その場合のプロトコルは下記である。
+ライトクライアントは全てのブロックのヘッダーを取得し、
+ライトクライアントが求めるアドレスかトピックのリストの1つと適合するbloom filterを、
+ブロックヘッダーが含んでいるかを確認する。
+最初の3つのライトクライアントのプロトコルでは対数量のデータ・アクセスとコンピュテーションが必要となる。
+最初の4つ目では~0(Nの平方根)ブルームフィルターから只2階層だけ、だがこのことは0(log(N))に対して改善が為される。
+もしライトクライアントが様々なプロバイダーに依拠しようとするのであれば、"興味を持っている”トランザクションのインデックスを指し示し、もし間違ったトランザクションを所持していることが公開されれば、プロバイダーへの依存を解除うｓる。
+その最初のプロトコルは単純に状態を確認するために有用であｒ，2爪のプロトコルは、消費者と承認のようなシナリオにおいて、トランザクションが認証されたどうかを確認するために有用である。
+3つ目のプロトコルは、Ethereuのライトクライアントがブロックをとても少ない量のトラストによって承認出来るようにしている。
+ビットコインでは、例えばマイナーはマイナーに対して多大な料のトランザクションの費用を払うブロックを生成することが出来る。
+そして軽量ノードにとってこのことを知る術はない、また、正直な全てのノードが検知することが出来た場合にも
+その不当性を証明しなければならない
+Ethereumでは、もしブロックが不当な場合には、不当な状態の遷移をどこかのindexで含んでいなければならない、そして
+ライトクライアントは、何か間違っていることは無いかindex が見つけられるように認証することとなる。もしくは、データが使用不可能なためにその証明のステップが終わらないからだ、そしてクライアントは警告を上げることが出来る。
+4つ目のプロトコルはDAPPが効率的に証明される必要のあるある種のイベントを追跡したい場合に有用である。
+例えば分散形の交換所でトレードのログを取るか、もしくはウォレットがトランザクションのログを取る（ライトクライアントが高いレベルのコインベースとアンクルのチェックがマイナーのアカウントに対して十分に働いた場合)
+Bitcoinの言葉でいうと、ログは純粋な"Proof of publication"のopcode として考えられる。
 
-medstate is the state trie root after processing the transaction
-gas_used is the amount of gas used after processing the transaction
-logs is a list of items of the form [address, [topic1, topic2...], data] that are produced by the LOG0 ... LOG4 opcodes during the execution of the transaction (including by the main call and sub-calls). address is the address of the contract that produced the log, the topics are up to 4 32-byte values, and the data is an arbitrarily sized byte array.
-logbloom is a bloom filter made up of the addresses and topics of all logs in the transaction.
-There is also a bloom in the block header, which is the OR of all of the blooms for the transactions in the block. The purpose of this construction is to make the Ethereum protocol light-client friendly in as many ways as possible. In Ethereum, a light client can be viewed as a client that downloads block headers by default, and verifies only a small portion of what needs to be verified, using a DHT as a database for trie nodes in place of its local hard drive. Some use cases include:
-
-A light client wants to know the state of an account (nonce, balance, code or storage index) at a particular time. The light client can simply recursively download trie nodes from the state root until it gets to the desired value.
-A light client wants to check that a transaction was confirmed. The light client can simply ask the network for the index and block number of that transaction, and recursively download transaction trie nodes to check for availability.
-Light clients want to collectively validate a block. Each light client C[i] chooses one transaction index i with transaction T[i] (with corresponding receipt R[i]) and does the following:
-Initiate the state with state root R[i-1].medstate and R[i-1].gas_used (if i = 0 use the parent endstate and 0 gas_used)
-Process transaction T[i]
-Check that the resulting state root is R[i].medstate and the gas_used is R[i].gas_used
-Check that the set of logs and bloom produced matches R[i].logs and R[i].logbloom
-Checks that the bloom is a subset of the block header-level bloom (this detects block header-level blooms with false negatives); then pick a few random indices of the block header-level bloom where that bloom contains a 1 and ask other nodes for a transaction-level bloom that contains a 1 at that index, rejecting the block if no response is given (this detects block header-level blooms with false positives)
-Light clients want to "watch" for events that are logged. The protocol here is the following:
-A light client gets all block headers, checks for block headers that contain bloom filters that match one of a desired list of addresses or topics that the light client is interested in
-Upon finding a potentially matching block header, the light client downloads all transaction receipts, checks them for transactions whose bloom filters match
-Upon finding a potentially matching transaction, the light client checks its actual log RLP, and sees if it actually matches
-The first three light client protocols require a logarithmic amount of data access and computation; the fourth requires ~O(sqrt(N)) since bloom filters are only a two-level structure, although this can be improved to O(log(N)) if the light client is willing to rely on multiple providers to point to "interesting" transaction indices and decommission providers if they are revealed to have missed a transaction. The first protocol is useful to simply check up on state, and the second in consumer-merchant scenarios to check that a transaction was validated. The third protocol allows Ethereum light clients to collectively validate blocks with a very low degree of trust. In Bitcoin, for example, a miner can create a block that gives the miner an excessive amount of transaction fees, and there would be no way for light nodes to detect this themselves, or upon seeing an honest full node detect it verify a proof of invalidity. In Ethereum, if a block is invalid, it must contain an invalid state transition at some index, and so a light client that happens to be verifying that index can see that something is wrong, either because the proof step does not check out, or because data is unavailable, and that client can then raise the alarm.
-
+Uncleへのインセンティブ
 The fourth protocol is useful in cases where a dapp wants to keep track of some kind of events that need to be efficiently verifiable, but which do not need to be part of the permanent state; an example is a decentralized exchange logging trades or a wallet logging transactions (note that the light client protocol will need to be augmented with header-level coinbase and uncle checks for this to work fully with mining accounts). In Bitcoin terminology, LOG can be viewed as a pure "proof of publication" opcode.
+The 強欲で最も重い監視されているサブツリー"(GHOST)プロトコルは、最初にYonatan Sompolinsky とAvivZoharによって2013年12月に導入されたイノベーションだ。そしてもっと早いブロックの時間を防ぐための問題解決策としての最初の重大な試みでもある。
+GHOSTのモチベーションは、承認時間の早いブロックチェーンが、古くなっていまう可能性が高いためにが現在セキュリティリスクを抱えていることだ。何故ならブロックはネットワークに伝播するまでに一定時間必要であり、
+もしマイナーAがを採掘してマイナーBが他のブロックをマイナーAのブロックが伝播するまでにほった場合には、
+マイナーBのブロックは結局無駄（"stale"）してしまい、その仕事はネットワークのセキュリティの改善に寄与しないためだ。
+更に言えば、そこには中央集権の問題がある。:
+もしマイナ-Aがマイニングプール上で30%のハッシュパワーを持ち、Bは10%のハッシュパワーを持っているならば、
+Aは70%の時間無駄になるブロックを生み出すリスクをもっており、（Aが最後のブロックを生成した他の30%の時間から、そしてマイニングのデータをすぐに手に入れることになるだろう。)一方でBは90%の時間において無駄になるブロックを生成するリスクを取っている。
+このようにして、ブロックのインターバルがブロックが無駄になる確立が十分に高くなるほどに短ければ、
+Aはそのサイズのお陰で大変効率的でシンプルに採掘を行うことが出来る。
 
-Uncle incentivization
+これらの2津の効果を組み合わせると、ブロックチェーンはブロックを早く生成し、
+1
+早くブロックを作り出していくブロックチェーンが存在することで、
+1つのマイニングプールが、マイニングのプロセスに対してネットワーク全体のハッシュパワーの十分に大きな割合を持つことで
+デファクトのコントロールを持つことに繋がって行きやすくなるだろう。
 
-The "Greedy Heaviest Observed Subtree" (GHOST) protocol is an innovation first introduced by Yonatan Sompolinsky and Aviv Zohar in December 2013, and is the first serious attempt at solving the issues preventing much faster block times. The motivation behind GHOST is that blockchains with fast confirmation times currently suffer from reduced security due to a high stale rate - because blocks take a certain time to propagate through the network, if miner A mines a block and then miner B happens to mine another block before miner A's block propagates to B, miner B's block will end up wasted ("stale") and will not contribute to network security. Furthermore, there is a centralization issue: if miner A is a mining pool with 30% hashpower and B has 10% hashpower, A will have a risk of producing a stale block 70% of the time (since the other 30% of the time A produced the last block and so will get mining data immediately) whereas B will have a risk of producing a stale block 90% of the time. Thus, if the block interval is short enough for the stale rate to be high, A will be substantially more efficient simply by virtue of its size. With these two effects combined, blockchains which produce blocks quickly are very likely to lead to one mining pool having a large enough percentage of the network hashpower to have de facto control over the mining process.
+Sompolinsky とZoharによって述べられたように、GHOSTはネットワークのセキュリティロスの最初の問題を、
+どのブロックが"最長"のブロックかを計算する中で、無駄となってしまったブロックを含める事によって改善した。
+即ち、只ブロックの親と先祖だけでなく、無駄になった先祖のブロック（Ethereumの隠語で、"uncles"）もが
+どのブロックが合計で最も長いproof of workのための計算に加えられることだ。
 
-As described by Sompolinsky and Zohar, GHOST solves the first issue of network security loss by including stale blocks in the calculation of which chain is the "longest"; that is to say, not just the parent and further ancestors of a block, but also the stale descendants of the block's ancestor (in Ethereum jargon, "uncles") are added to the calculation of which block has the largest total proof of work backing it.
+2つめの中央集権による偏りの問題を解決するために我々は2つの異なる戦略を採用した:
+我々はブロックに対しての報酬を無駄となったブロックに付与した。:
+無駄となったブロックが7/8(87.5 %)のリワードを受け取る事が出来、
+そして無駄となったブロックの甥が1/32(3.125 %)の通常の報酬をブロックを含めた報酬として受け取る事が出来る。
+トランザクションの費用は甥にもおじにも与えられることはない。
 
-To solve the second issue of centralization bias, we adopt a different strategy: we provide block rewards to stales: a stale block receives 7/8 (87.5%) of its base reward, and the nephew that includes the stale block receives 1/32 (3.125%) of the base reward as an inclusion bounty. Transaction fees, however, are not awarded to uncles or nephews.
+Ethereuでは、無駄となったブロックはおじによってのみ含まれる事ができ、7代目迄のその直接の兄弟の子孫が含まれ、
+そして一層の関係のブロックは含まれない
+これはいくつかの理由によって為されている。
+初めに、無限のGHOSTはどのおじが与えられたブロックが有効かという計算を行うに当たって大変複雑となるからだ。
+2つ目には、無限のおじに対してのインセンティブがEthereuで使われることで、
+チェーンへの公衆の攻撃者ではなく、
+メインチェーンのマイナーにとって採掘するインセンティブを失わせることに繋がるからだ。
+最後に、多くのネガティブな影響無しに、7段階目迄に制限していることが大半の望ましい影響を及ぼしていることについての計算を示す。
+中央集権のリスクを測ったシミュレーターはこちらで利用可能だ。
+https://github.com/ethereum/economic-modeling/blob/master/ghost.py
 
-In Ethereum, stale block can only be included as an uncle by up to the seventh-generation descendant of one of its direct siblings, and not any block with a more distant relation. This was done for several reasons. First, unlimited GHOST would include too many complications into the calculation of which uncles for a given block are valid. Second, unlimited uncle incentivization as used in Ethereum removes the incentive for a miner to mine on the main chain and not the chain of a public attacker. Finally, calculations show that restricting to seven levels provides most of the desired effect without many of the negative consequences.
+高度なレベルの議論はこちらで行われている。
+https://blog.ethereum.org/2014/07/11/toward-a-12-second-block-time/
 
-A simulator that measures centralization risks is available at https://github.com/ethereum/economic-modeling/blob/master/ghost.py
-A high-level discussion can be found at https://blog.ethereum.org/2014/07/11/toward-a-12-second-block-time/
-Design decisions in our block time algorithm include:
+ブロックの承認時間のアルゴリズムについてのデザインの決定は下記となる。
+12病のブロック時間: 出来るだけ早い時間として12秒が選ばれた。
+だが同時に、ネットワークの遅れよりもかなり長い時間である。
+2013年のDecker とWattenhoferによる論文では、Bitcoinのネットワークの遅れが計算されており、
+それは12.6秒が新しいブロックが残りの95％のノードに伝播する迄に必要なためだ。
+しかしながらその文書で指摘されていた伝播に掛かる全体の時間はブロックのサイズに比例するとも指摘されている。
+そのようにして、速い通貨において、伝播のための時間は、劇的に減少することが期待される。
+伝播に掛かる待機時間は凡そ2秒だが、安全のために我々の分析では12秒が伝播のために掛かると考えている。
+7ブロックの子孫の制限: これは幾つかのブロックの後、ブロックの履歴をすぐに"忘れやすい"ものへとするためのデザインだ、
+そして7ブロックが最も良い影響を与えることが証明された。
+1ブロックの子孫のリミット（例: c(c(p(p(p(head))))), where c = chile and p = parent, is invalid):
+このパートではシンプルさをデザインの目標とし、上記のシミュレーターでは大きな中央集権型のリスクを持たないことを示す。
+Uncleの正しさの要求: Uncle（おじ）は認証されたブロックではなく、認証されたブロックヘッダーでなければならない。
+これはシンプルさを達成するためであり、ブロックチェーンのモデルを維持するために線形のデータ構造を取る（block-DAGではなく、SompolinskyとZoharの新しいモデル）
+おじが正しいブロックであることを求めるのは同様に正しいアプローチである。
+報酬の分散: 7/8のベースマイニングの報酬はおじにいき、残りの1/32は甥にいき、0%のトランザクション費用が双方に渡る。
+もし費用が独占されているならば、中央集権的な考え方からみるとおじに対してのインセンティブが有効でないだろう。
+しかしながらこれはEthereumで、出来るだけProof of Work を使い、
+どうしてEtherを発行し続けようとしているのかという一つの理由である。
 
-12 second block time: 12 seconds was chosen as a time that is as fast as possible, but is at the same time substantially longer than network latency. A 2013 paper by Decker and Wattenhofer in Zurich measures Bitcoin network latency, and determines that 12.6 seconds is the time it takes for a new block to propagate to 95% of nodes; however, the paper also points out that the bulk of the propagation time is proportional to block size, and thus in a faster currency we can expect the propagation time to be drastically reduced. The constant portion of the propagation interval is about 2 seconds; however, for safety we assume that blocks take 12 seconds to propagate in our analysis.
-7 block ancestor limit: this is part of a design goal of wanting to make block history very quickly "forgettable" after a small number of blocks, and 7 blocks has been proven to provide most of the desired effect
-1 block descendant limit (eg. c(c(p(p(p(head))))), where c = child and p = parent, is invalid): this is part of a design goal of simplicity, and the simulator above shows that it does not pose large centralization risks.
-Uncle validity requirements: uncles have to be valid headers, not valid blocks. This is done for simplicity, and to maintain the model of a blockchain as being a linear data structure (and not a block-DAG, as in Sompolinsky and Zohar's newer models). Requiring uncles to be valid blocks is also a valid approach.
-Reward distribution: 7/8 of the base mining reward to the uncle, 1/32 to the nephew, 0% of transaction fees to either. This will make uncle incentivization ineffective from a centralization perspective if fees dominate; however, this is one of the reasons why Ethereum is meant to continue issuing ether for as long as we continue using PoW.
-Difficulty Update Algorithm
+困難さをアップデートするアルゴリズム
+
+Ethereumにおいての困難さのアップデートは下記のルールに従って行われる:
+diff(genesis) = 2^32
+diff(block) - diff.block.parent + floor(diff.block.parent/1024)* 
 
 The difficulty in Ethereum is currently updated according to the following rule:
 
 diff(genesis) = 2^32
+1 if block.timestamp - block.parent.timestamp < 9 else
+-1 if block.timestamp - block.parent.timestamp >= 9 
 
 diff(block) = diff.block.parent + floor(diff.block.parent / 1024) *
     1 if block.timestamp - block.parent.timestamp < 9 else
     -1 if block.timestamp - block.parent.timestamp >= 9
 The design goals behind the difficulty update rule are:
 
-Fast updating: the time between blocks should readjust quickly given increasing or decreasing hashpower
-Low volatility: the difficulty should not bounce excessively if the hashpower is constant
-Simplicity: the algorithm should be relatively simple to implement
-Low memory: the algorithm should not rely on more than a few blocks of history, and should include as few "memory variables" as possible. Assume that the last ten blocks, plus all memory variables placed in the block headers of the last ten blocks, are all that is available for the algorithm to work with
-Non-exploitability: the algorithm should not excessively encourage miners to fiddle with timestamps, or mining pools to repeatedly add and remove hashpower, in an attempt to maximize their revenue
-We have already determined that our current algorithm is highly suboptimal on low volatility and non-exploitability, and at the very least we plan to switch the timestamps compares to be the parent and grandparent, so that miners only have the incentive to modify timestamps if they are mining two blocks in a row. Another more powerful formula with simulations is located at https://github.com/ethereum/economic-modeling/blob/master/diffadjust/blkdiff.py (the simulator uses Bitcoin mining power, but uses the per-day average for the entire day; it at one point simulates a 95% crash in a single day).
+このdifficulty のアップデートのデザインは下記である。
+速いアップデート: ブロック同士の間での読込が早ければ速いほど与えられたハッシュパワーの増大と現象にフィットする物となる。
+低いボラティリティ: Difficulty はハッシュパワーがもし定数であるならば大きく変動するべきではない。
+シンプルさ: アルゴリズムは比較的シンプルに実装できるべきである。
+メモリーを食わない: アルゴリズムは幾つかのブロックの履歴に依拠するべきでなない、
+それは幾つかのメモリーの変数を出来る限り含むべきである。
+最後の10ブロックを考えると、最後の10ブロックのブロックのヘッダーに全てのメモリーの変数が置かれる。
+それはアルゴリズムが作用するために利用可能な全てのデータである。
+セキュリティーホールをなくす: アルゴリズムはマイナーに対して
+彼らのレベニューを最大化させようという意図で、
+タイムスタンプや、マイニングプールでのハッシュパワーの増減の繰り返しをさせることを過度に奨励すべきではない。
+我々の現在のアルゴリズムは、高い副次的適合性を低いボラティリティと、セキュリティホールの防止策に対して準最適な方法として
+既に決定している。そしてタイムスタンプを親や、祖父母のブロックとタイムスタンプを比べるように変更し
+もしマイナーが2つの列になったブロックのマイニングを行っているならば、
+マイナーがタイムスタンプの書き換えに対してのみインセンティブを持つようにしようとは全く考えていない。
+もう一つのシミュレーションを伴う強力な定式はこちらにある。
+https://github.com/ethereum/economic-modeling/blob/master/diffadjust/blkdiff.py (シミュレーターはビットコインのマイニングパワーを用いているが、日ごとの平均を全体に対して使っている。1つのポイントでのシミュレーションは95%1日の内にクラッシュする。）
 
-Gas and Fees
+GasとFee
 
-Whereas all transactions in Bitcoin are roughly the same, and thus their cost to the network can be modeled to a single unit, transactions in Ethereum are more complex, and so a transaction fee system needs to take into account many ingredients, including cost of bandwidth, cost of storage and cost of computation. Of particular importance is the fact that the Ethereum programming language is Turing-complete, and so transactions may use bandwidth, storage and computation in arbitrary quantities, and the latter may end up being used in quantities that due to the halting problem cannot even be reliably predicted ahead of time. Preventing denial-of-service attacks via infinite loops is a key objective.
+全てのビットコイン内のトランザクションが殆ど同じであるとしても、ネットワークに対するコストは一つのユニットの中で形作られているために、Ethereumのトランザクションはより複雑である。そして、トランザクションのFeeのシステムは、ストレージのコストと、コンピュテーションのコストを含めて様々な要素を考慮に入れて設計されている。
+とりわけ重要な事は Ethereumのプログラミング言語はチューリング完全であることだ。
+そしてトランザクションはbandwidthを使っているかもしれず、ストレージは任意の量のコンピュテーションｗ行っているかもしれない。
+そして後半では先行して確かにわかったかもしれないが
+先行して知ることは決して出来ないコンピューターの停止問題があるが故に、
+無限ループによるサービス妨害攻撃を防ぐために鍵となる目的である。
 
-The basic mechanism behind transaction fees is as follows:
+トランザクションの費用の背後にある基本となる作用は下記のとおりだ。
+全てのトランザクションは必ず"gas"の量を定義しなければならない。"gas"は(startgasと呼ばれる)使われようとし、
+そのフィーはgasの大きさに応じて支払われる(gasprice).
+プログラム開始時に、startgas* gasprice 分のetherが送り手のアカウントのトランザクションから取り除かれる。
+トランザクションが実行されている際に、全てのオペレーション、databaseの読み書き、メッセージ、全てのコンピューテーションは、
+仮想マシーンによって 一定量のgas を消費することによって行われる。
+もしトランザクションの実行プロセスが完全に、一定量の限界よりも少ない量のガスを消費するのであれば、gas_rem(gasの残り)とともに行われる。そしてトランザクションが通常どおり執行されて、トランザクションの最後には、トランザクションの送り手はga_rem* gasprice分の返金を受け取る。
+そしてブロックのマイナーは(startgas-gas_rem)*gasprice分の報酬を受け取る。
+もしトランザクションが"ガス切れ"に実行の最中でなった場合には、全ての実行プロセスは逆転し、
+トランザクション自体は正しいトランザクションであったにもかかわらず、トランザクションの影響は、
+ただ合計のstartgas*gasprice がマイナーに行き渡るだけとなる。
+あるコントラクトがメッセージを他のコントラクトに送るときには、
+それはメッセージから現れたsub実行に対してのgaslimitを設定するオプションを持っている。
+もしsubの実行プロセスがgas切れになった際には、subの実行プロセスは以前の状態に戻され、
+そうであったにも拘らず、gasは消費される。
+これらのコンポーネント必須要素である・例えば:
 
-Every transaction must specify a quantity of "gas" that it is willing to consume (called startgas), and the fee that it is willing to pay per unit gas (gasprice). At the start of execution, startgas * gasprice ether are removed from the transaction sender's account.
-All operations during transaction execution, including database reads and writes, messages, and every computational step taken by the virtual machine consumes a certain quantity of gas.
-If a transaction execution processes fully, consuming less gas than its specified limit, say with gas_rem gas remaining, then the transaction executes normally, and at the end of the execution the transaction sender receives a refund of gas_rem * gasprice and the miner of the block receives a reward of (startgas - gas_rem) * gasprice.
-If a transaction "runs out of gas" mid-execution, then all execution reverts, but the transaction is nevertheless valid, and the only effect of the transaction is to transfer the entire sum startgas * gasprice to the miner.
-When a contract sends a message to the other contract, it also has the option to set a gas limit specifically on the sub-execution arising out of that message. If the sub-execution runs out of gas, then the sub-execution is reverted, but the gas is nevertheless consumed.
-Each of the above components is necessary. For example:
+もしトランザクションがgasの上限を定めなくて良い場合には、悪意あるユーザーは何10億というループを作り出すトランザクションを送り、
+そのようなプロセスがブロックの同士の間隔よりも長くなってしまうことで、誰もプロセスを行うことが出来なくなる。
+だが、マイナーが事前にわからないんのであれば、サービス妨害攻撃に対する脆弱性へと繋がる。
 
-If transactions did not need to specify a gas limit, then a malicious user could send a transaction that makes a multi-billion round loop, and no one would be able to process it since processing such a transaction would take longer than a block interval, but miners would not be able to tell beforehand, leading to a denial-of-service vulnerability.
-The alternative to strict gas-counting, time-limiting, does not work because it is too highly subjective (some machines are faster than others, and even among identical machines close-calls will always exist)
-The entire value startgas * gasprice has to be taken out at the start as a deposit so that there arise no situations where an account "bankrupts" itself mid-execution and becomes unable to pay for its gas costs. Note that balance checking is not sufficient, because an account can send its balance somewhere else.
-If execution did not revert in the event of an insufficient gas error, then contracts would need to take strong and difficult security measures to prevent themselves from being exploited by transactions or messages that provide only enough gas halfway through, thereby leading to some of the changes in a contract execution being executed but not others.
-If sub-limits did not exist, then hostile accounts could enact a denial-of-service attack against other contracts by entering into agreements with them, and then inserting an infinite loop at the beginning of computation so that any attempts by the victim contract to compensate the attack contract or send a message to it would starve the entire transaction execution.
-Requiring transaction senders to pay for gas instead of contracts substantially increases developer usability. Very early versions of Ethereum had contracts pay for gas, but this led to the rather ugly problem that every contract had to implement "guard" code that would make sure that every incoming message compensated the contract with enough ether to pay for the gas that it consumed.
-Note the following particular features in gas costs:
+gas-countingを規制する他の選択肢は、時間制限である。
+何故ならばあまりにも他の（有るマシーンが他のマシーンよりも早い場合には同一するマシーンのクローズコールが常に存在する。）
+Startgas * gaspriceの全体の価値は最初の時点でデポジットとして取り除かれるべきである、それによって
+有るアカウントが自身の動作の実行によって、gasのコストが払えなくなって"破産する"こともなくなるような
+シチュエーションが起こることを防ぐ事が出来る。
+もし実行がgas が足りないためにやり直す事ができない場合には、コントラクトはより強固で難しいセキュリティの手段を
+只十分なガスが途中までしか足りていないトランザクションやメッセージによって
+それによってコントラクトの実行における幾つかの変更に繋がるが他にはつながらない。
+もしサブのリミットが存在しない場合には、敵対的なアカウントが、
+他のアカウントに対して合意を導入することによって、最初のコンピュテーションにおいて無限ループを導入し、
+被害者のコントラクトによるどんな攻撃社のコントラクトや、コントラクトに対してメッセージを送ることが全てのトランザクションの実行を枯れさせてしまうかもしれない。
+トランザクションの送りてがgas を送ることを要求することは、コントラクトの代わりに開発者の使い勝手をかなり大きく改善した。
+まさにEthereumが始まったばかりのころ、gasに対して費用を払うコントラクトがあったが、
+全てのコントラクトが"guard"するためのコード、
+即ち全ての受信するメッセージが、消費されるgasに対して支払うための十分なetherがあるかどうかををするための
+コードを持たなければならないということはむしろ汚い問題に遭遇した。
 
-21000 gas is charged for any transaction as a "base fee". This covers the cost of an elliptic curve operation to recover the sender address from the signature as well as the disk and bandwidth space of storing the transaction.
-A transaction can include an unlimited amount of "data", and there exist opcodes in the virtual machine which allow the contract receiving a transaction to access this data. The gas fee for data is 1 gas per zero byte and 5 gas per nonzero byte. This formula arose because we saw that most transaction data in contracts written by users was organized into a series of 32-byte arguments, most of which had many leading zero bytes, and given that such constructions seem inefficient but are actually efficient due to compression algorithms, we wanted to encourage their use in place of more complicated mechanisms which would try to tightly pack arguments according to the expected number of bytes, leading to very substantial complexity increase at compiler level. This is an exception to the sandwich complexity model, but a justified one due to the ratio of cost to benefit.
-The cost of the SSTORE opcode, which sets values in account storage, is either: (i) 20000 gas when changing a zero value to a nonzero value, (ii) 5000 gas when changing a zero value to a zero value or a nonzero value to a nonzero value, or (iii) 5000 gas when changing a nonzero value to a zero value, plus a 20000 gas refund to be given at the end of successful transaction execution (ie. NOT an execution leading to an out-of-gas exception). Refunds are capped at 50% of the total gas spent by a transaction. This provides a small incentive to clear storage, as we noticed that lacking such an incentive many contracts would leave storage unused, leading to quickly increasing bloat, providing most of the benefits of "charging rent" for storage without the cost of losing the assurance that a contract once placed will continue to exist forever. The delayed refund mechanism is necessary to prevent denial-of-service attacks where the attacker sends a transaction with a low amount of gas that repeatedly clears a large number of storage slots as part of a long-running loop, and then runs out of gas, consuming a large amount of verifiers' computing power without actually clearing storage or spending a lot of gas. The 50% cap is needed to ensure that a miner given a transaction with some quantity of gas can still determine an upper bound on the computational time to execute the transaction.
-There is no gas cost to data in messages provided by contracts. This is because there is no need to actually "copy" any data during a message call, as the call data can simply be viewed as a pointer to the parent contract's memory which will not change while the child execution is in progress.
-Memory is an infinitely expandable array. However, there is a gas cost of 1 per 32 bytes of memory expansion, rounding up.
-Some opcodes, whose computation time is highly argument-dependent, have variable gas costs. For example, the gas cost of EXP is 10 + 10 per byte in the exponent (ie. x^0 = 1 gas, x^1 ... x^255 = 2 gas, x^256 ... x^65535 = 3 gas, etc), and the gas cost of the copy opcodes (CALLDATACOPY, CODECOPY, EXTCODECOPY) is 1 + 1 per 32 bytes copies, rounding up (LOG also has a similar rule). The memory expansion gas cost is not sufficient to cover this, as it opens up a quadratic attack (50000 rounds of CALLDATACOPY of 50000 gas ~= 50000^2 computing effort, but only ~50000 gas before the variable gas cost was introduced)
-The CALL opcode (and CALLCODE for symmetry) costs an additional 9000 gas if the value is nonzero. This is because any value transfer causes significant bloat to history storage for an archival node. Note that the actual fee charged is 6700; on top of this we add a mandatory 2300 gas minimum that is automatically given to the recipient. This is in order to ensure that wallets that receive transactions to at least have enough gas to make a log of the transaction.
-The other important part of the gas mechanism is the economics of the gas price itself. The default approach, used in Bitcoin, is to have purely voluntary fees, relying on miners to act as the gatekeepers and set dynamic minimums; the equivalent in Ethereum would be allowing transaction senders to set arbitrary gas costs. This approach has been received very favorably in the Bitcoin community particularly because it is "market-based", allowing supply and demand between miners and transaction senders determine the price. The problem with this line of reasoning is, however, that transaction processing is not a market; although it is intuitively attractive to construe transaction processing as a service that the miner is offering to the sender, in reality every transaction that a miner includes will need to be processed by every node in the network, so the vast majority of the cost of transaction processing is borne by third parties and not the miner that is making the decision of whether or not to include it. Hence, tragedy-of-the-commons problems are very likely to occur.
+下記がgasのコストについての仕様である。
+21000gas が全てのトランザクションに対して”base fee"としてチャージされる。
+これは楕円曲線のオペレーションを、送り手の署名からアドレスを再現し、
+同様に、トランザクションを保存しておくディスクと一定時間に処理できる情報量の空間を確保しておくための費用である。
+トランザクションは無限の量のデータを含んでいる、そして仮想マシーンの中にはopcodeが存在している。
+仮想マシーンはコントラクトがデータにアクセスするためのトランザクションを受け取ることを可能としている。
+データに対してのgasの費用はゼロバイトに対して1gas、ノンゼロバイトに対して5 gasである。
+ユーザーによって書かれたコントラクト中の大半のトランザクションにおいて、
+32バイトの引数の列に構成されるとわかったため、この計算式とした。
+大半のコントラクトはゼロバイトになり、そのようなコンストラクションは不十分のように見えるが、
+実際には圧縮アルゴリズムのおかげによって、効率的なものである。
+我々はより複雑な期待されるバイト数に基づいて引数を厳しくパック仕様とするメカニズムのかわりとなる使い方を奨励したいと思っていて、
+まさにかなりの複雑さをコンパイラのレベルで増大させることへと繋がった。
+これは、Sandwich Complexity modelの例外であるが、コストに対するベネフィットが大きいために行われるべきと考えられたことである。
+SSTOREのopcodeのコストは、アカウントのストレージのバリュ0、どちらかである
+(i)20000gasがゼロバリューからノンゼロのバリューに変わる時に掛かる。
+(ii)5000gas がゼロバリューからノンゼロのバリューに変わるときに掛かる。
+(iii)5000gas がノンゼロのバリューからゼロバリューに代わる時に掛かる、加えて20000gasのりファンドが成功したトランザクションの最後尾に与えられる。（例えば 実行gas切れの例外にならないような実行）
+Refundsはトランザクションによって消費される全体のガスの50%の部分に制限され、
+このことはストレージを消去するために少ないながらのインセンティブを提供する。
+インセンティブの仕組みが欠けているために、多くのコントラクトがstorageを使わない状態で残すだろうと我々は気づいた。
+我々がそのようなインセンティブのシステムが欠けていることに築き、ストレージが使われないままで残っていると、
+早くブロックチェーンの肥大へと繋がるだろう、そして大半のベネフィットを"利子を徴収する"。
+そして遅れたrefund のメカニズムは、アタッカーによって僅かな量のgasと共にトランザクションが送られ、何度も大きな量のストレージのスロットがクリアーされる類の攻撃に対して
+ サービスの否定攻撃を防ぐために必要である、
+長いループの一端となる、そしてgas切れとなることで、大量の承認者のコンピューターパワーを実際にはストレージをクリアすることもgas を消費することも無く行わせてしまう。
+この50％のcapは、マイナーに対して定量のガスト共に与えられたトランザクションを、
+マイナーが、トランザクションを実行するためのコンピューターパワーに対して課された上限を図るために必要である。
 
-Currently, due to a lack of clear information about how miners will behave in reality, we are going with a fairly simple approach: a voting system. Miners have the right to set the gas limit for the current block to be within ~0.0975% (1/1024) of the gas limit of the last block, and so the resulting gas limit should be the median of miners' preferences. The hope is that in the future we will be able to soft-fork this into a more precise algorithm.
+コントラクトによって与えられたメッセージの中のデータに掛かるgasのコストは無い。
+これはメッセージコールの最中に、呼ばれたデータをコピーする必要は無いからだ、
+何故なら呼ばれたデータは、子の実行が進行中であった最中でも変わることのない
+親のコントラクトのメモリーへのポインタとしてシンプルに考えることが出来るためである。
+メモリーは無限に拡張可能なアレイだ。しかしながら32バイトのメモリーごとのメモリーの拡大に対してgasが掛かる。(切り上げ）
+幾つかのopcodeではコンピュテーションの時間は大きく引数に依存する、様々なgasのコストを持ちうる。
+例えば、gasのコストとなるEXPが10+10バイトの指数であるとして（例, x^0 = 1 gas, x^1 ....x^255=2gas, x^256 ... x^65535 = 3gas, etc)
+Copuするためのopcodesに掛かる(CALLDATACOPY, CODECOPY, EXTCODECOPY)gasのコストは 32バイトのコピー毎に対して、1 + 1掛かる。（切り上げ）（LOGも同様のに似ているルール).
+メモリーの拡大に対してのgas残すとは、カバーするために十分ではない、quadraticな攻撃に対して開いている状態であるからである。
+(50000 回の 50000gasを消費するCALLDATACOPYを行い 50000^2のコンピューティングの費用だが、50000以内のgasしかgasのコストの変数が導入される前に提供されていないからだ。）
+CALLのopcode(そしてCALLCODEも同様に)そのバリューがノンゼロの場合には追加の9000gasを消費する。
+その理由はあらゆる価値の以降は、書庫となっているノードのための履歴のストレージに対して大変大きな肥大を招くためだ。
+実際のフィーは6700しかかかっていないが、我々は2300の人工的なgasを追加している、これは自動的に受信者に与えられるものだ。
+これはトランザクションを受け取るウォレットがトランザクションのログを作るために十分がgasを持っていることを保証するためだ。
 
-Virtual Machine
+gasのメカニズムについての他に重要な点は、gasの値段自体が経済となっていることだ。
+デフォルトの方法では、bitcoinで使われているように、純粋にボランティアの費用を落ち、
+マイナーがゲートキーパーとして働くことに依拠しており、ダイナミックな最低限の費用を設定することだ。
+Ethereumにおける同様の手段は、トランザクションの送り手が、自由にgasのコストを設定することを許すことだ。
+この方法では、Bitcoinのコミュニティに対して大きく賛同された、とりわけそれが"市場に基づいていて”、
+供給と需要が存在し、マイナー同士とトランザクションの送り手同士で値段を決定することを可能としているからだ。
 
-The Ethereum virtual machine is the engine in which transaction code gets executed, and is the core differentiating feature between Ethereum and other systems. Note that the virtual machine should be considered separately from the contract and message model - for example, the SIGNEXTEND opcode is a feature of the VM, but the fact that contracts can call other contracts and specify gas limits to sub-calls is part of the contract and message model. Design goals in the EVM include:
+この原理の問題は、しかしながらトランザクションのプロセスは市場には無いことだ、
+マイナーがセンダーに提供するサービスとしてトランザクションのプロセスに対して構文解析を行うことは直感的に魅力的だが、
+実際には全てのマイナーが含むトランザクションはネットワーク全体によって行われる必要がある。それ故にトランザクションに掛かるコストの殆ど大半は第三者に対して生じるものであり、トランザクションがブロックチェーンに含まれるかどうかを決定するマイナーに対してではない。それ故に、こうした一般的な問題はとても良く起こるのだ。
 
-Simplicity: as few and as low-level opcodes as possible, as few data types as possible and as few virtual-machine-level constructs as possible
-Total determinism: there should be absolutely no room for ambiguity in any part of the VM specification, and the results should be completely deterministic. Additionally, there should be a precise concept of computational step which can be measured so as to compute gas consumption.
-Space savings: EVM assembly should be as compact as possible (eg. the 4000 byte base size of default C programs is NOT acceptable)
-Specialization to expected applications: the ability to handle 20-byte addresses and custom cryptography with 32-byte values, modular arithmetic used in custom cryptography, read block and transaction data, interact with state, etc
-Simple security: it should be easy to come up with a gas cost model for operations that makes the VM non-exploitable
-Optimization-friendliness: it should be easy to apply optimizations so that JIT-compiled and otherwise sped-up versions of the VM can be built.
-Some particular design decisions that were made:
+現在、現実にはどのようにしてマイナーが作業しているのかについての情報が欠如しているために、私達は大変シンプルなアプローチを行おうとしている。それは投票システムである。
+マイナーはgas のlimitを現在のブロックに対して設定する権利を持っており、
+最後のブロックの中の1/1024のgasの限界の中に現在のブロックは存在している。
+そして結果となるgasのリミットはマイナーの設定の中央値となるべきである。
+この期待は将来我々がソフトフォークを可能にしてより正確なアルゴリズムとするだろう。
 
-Temporary/permanent storage distinction - a distinction exists between temporary storage, which exists within each instance of the VM and disappears when VM execution finishes, and permanent storage, which exists on the blockchain state level on a per-account basis. For example, suppose the following tree of execution takes place (using S for permanent storage and M for temporary): (i) A calls B, (ii) B sets B.S[0] = 5, B.M[0] = 9, (iii) B calls C, (iv) C calls B. At this point, if B tries to read B.S[0], it will receive the value stored in B earlier, 5, but is B tries to read B.M[0] it will receive 0 because it is a new instance of the virtual machine with fresh temporary storage. If B now sets B.M[0] = 13 and B.S[0] = 17 in this inner call, and then both this inner call and C's call terminate, bringing the execution back to B's outer call, then B reading M will see B.M[0] = 9 (since the last time this value was set was in the same VM execution instance) and B.S[0] = 17. If B's outer call ends and A calls B again, then B will ses B.M[0] = 0 and B.S[0] = 17. The purpose of this distinction is to (1) provide each execution instance with its own memory that is not subject to corruption by recursive calls, making secure programming easier, and (2) to provide a form of memory which can be manipulated very quickly, as storage updates are necessarily slow due to the need to modify the trie.
-Stack/memory model - the decision was made early on to have three types of computational state (aside from the program counter which points to the next instruction): stack (a standard LIFO stack of 32-byte values), memory (an infinitely expandable temporary byte array) and storage (permanent storage). On the temporary storage side, the alternative to stack and memory is a memory-only paradigm, or some hybrid of registers and memory (not very different, as registers basically are a kind of memory). In such a case, every instruction would have three arguments, eg. ADD R1 R2 R3: M[R1] = M[R2] + M[R3]. The stack paradigm was chosen for the obvious reason that it makes the code four times smaller.
-32 byte word size - the alternative is 4 or 8 byte words, as in most other architectures, or unlimited, as in Bitcoin. 4 or 8 byte words are too restrictive to store addresses and big values for crypto computations, and unlimited values are too hard to make a secure gas model around. 32 bytes is ideal because it is just large enough to store 32 byte values common in many crypto implementations, as well as addresses (and provides the ability to pack address and value into a single storage index as an optimization), but not so large as to be extremely inefficient.
-Having our own VM at all - the alternative is reusing Java, or some Lisp dialect, or Lua. We decided that having a specialized VM was appropriate because (i) our VM spec is much simpler than many other virtual machines, because other virtual machines have to pay a much lower cost for complexity, whereas in our case every additional unit of complexity is a step toward high barriers of entry creating development centralization and potential for security flaws including consensus failures, (ii) it allows us to specialize the VM much more, eg. by having a 32 byte word size, (iii) it allows us not to have a very complex external dependency which may lead to installation difficulties, and (iv) a full security review of Ethereum specific to our particular security needs would necessitate a security review of the external VM anyway, so the effort savings are not that large.
+仮想マシーン
+
+Ethereumの仮想マシーンは、トランザクションのコードを実行させるエンジンである。
+それはEthereumと他のシステムの根本的な違いだ。
+仮想マシーンがコントラクトとメッセージのモデルを分割したものとして考えるべきであることに注意して欲しい。
+例えば、SIGNEXTENDのopcodeはVMの機能の機能だが、実
+際にはコントラクトは他のコントラクトを呼び出し、サブコールに対してのgasの限界を定める事ができ、
+コントラクトとメッセージのモデルの一部におけるsub-callを行う事が出来る。
+
+EVM内のデザインのゴールは下記である。
+シンプルさ: 少なく、そしてローレベルのopcodeで出来るだけ行う。なるべく少ないデータ型でなるべく少ない仮想マシーンレベルの設計を行う。
+統合的な決定性: 絶対的なVMの仕様のどの部分においても曖昧な部分は許されない、そしてその結果として
+完全に決定的なものとなる。加えて、gasの消費量を計算するために正確なコンピュテーションの段階のコンセプトがあるべきである。
+SpaceのSavings: EVMのアセンブルは出来るだけコンパクトでなければならない。（例; 4000バイトの基本サイズを持つCプログラムは受け入れられない）
+期待されるアプリケーションに対しての特化性: 20バイトのアドレスと、32バイトの値を持つカスタムの暗号を取扱うための能力、
+カスタムの暗号化を行うための数学的なモジュール、ブロックとトランザクションのデータを読み込むこと、状態とやりとりする能力
+シンプルなセキュリティ: VMをセキュリティホールが無いものにするためのgasコストを利用するモデルを思いつくことは簡単だろう。
+最適化に対して使い勝手が良いこと: 
+最適化を導入するために簡単であること。JITでコンパイルされたものや、その他の方法で速度が改善されたバージョンのVMが構築出来るようにするためだ。
+幾つかの特定の使用に対する決定がなされてきた。
+一時的/永続的なストレージの分け方ー　
+仮想マシーンのインスタンスの中に存在し、VMの実行が終わると同時に消滅する一時的なストレージと、アカウント毎にブロックチェーンに刻まれる状態のレベルで存在する永続的なストレージには区別が存在する。
+例えば、下記のようなツリー型の実行が行われることを考えてみよう。（Sは永続的なストレージに対して、そしてMは一時的なストレージに対してである。）: 
+(i) AはBを呼び出す。
+(ii)Bは B.S[0] = 5, B.M[0] = 9 
+(iii) B はCを呼び出す
+(iv)CはBを呼び出す、ここでBがB.S[0]を呼びだそうとすれば、Bには以前から保存されていた値を受け取る。
+(v)だがｍBがBを呼びだそうとし、この点において、もしBがB.M[0]を呼び出せば0を受け取る、なぜならば仮想マシーンの新しいインスタンスは新しい一時的なストレージを持つからだ。
+もし、BがB.M[0] ＝ 13 とB.S[0] = 17 を内部のコールの中で行うと、この内部のコールもCのコールも終了し、
+Bの外部コールへと実行が戻される。
+この区別の目的は、
+（1)互いの実行うインスタンスが再帰的な呼び出しにより破壊されることのない自身のメモリーを与えるため。セキュアとし、プログラミングを簡単にするため。
+(2)とても早くメモリーを操作できる形式を提供すること、何故ならストレージの更新はツリーを変更する必要があるため、遅い必要があるからだ。
+スタック／メモリーモデル -この決定が早くから為されたのは3つのタイプのコンピューターの状態を持つためだ。
+(プログラムのカウンターが次のインストラクションを指していることを脇においてだ。）
+
+stack(通常の32バイト値のLIFOスタック）、そしてメモリー（無限に拡張可能な一時的なバイトアレイ）とストレージ（永続的なストレージ)
+一時的なストレージについては、スタックとメモリーの構成の代替として、メモリーだけの構成もしくは
+いくつかのレジスタとメモリーのハイブリッドだ（あまり違わない、通常はレジスタは一種のメモリのため）
+そのような状況において、あらゆるインストラクションは3つの引数を取っている、例えばADD R1 R2 R3: M[R1] = M[R2] + M[R3]. 
+スタックの考え方に従えば明らかな理由のために選ばれ、4倍以上コードを小さくする事が出来る。
+32バイトの文字のサイズ 4か8バイトの単語の代替として、大半の他の構造で使われているように、もしくは無数にビットコインで使われているように。
+4　or 8 バイトの単語ではあまりにも制限が厳しくアドレスや、暗号の計算のための値を保存することが出来なかったり、
+制限が無い場合にはが安全なgasのモデルを作るためにあまりに厳しい場合がある。
+只十分に多くの暗号の実装で共通している32バイトの値は、十分に大きいからである、、それはアドレスについてもあてはまる（アドレスをパックして、単独のストレージの値へと挿入する最適化の方法として）、だが究極的に非効率というほど大きくはない。
+
+自分自身のVMを持つこと:代替案はJavaを使うことや、幾つかのLispや、Luaの方言を使うことが考えられる。
+我々は特別なVMを持つことが適していると決定した。何故ならば
+(i)我々のVMのspecは他の多くのVMよりも大変シンプルだからである。
+何故なら他の仮想マシーンう大変安いコストを払わなければならない、一方で、我々の場合いはあらゆる追加のユニットの複雑さは
+開発が中央に集中している状況を作り出すエントリーとしての高いバリアに向かってのステップとなり、
+コンセンサスが出来ない事を含めて、セキュリティフローの潜在的な可能性となるからだ。
+ the alternative is reusing Java, or some Lisp dialect, or Lua. We decided that having a specialized VM was appropriate because (i) our VM spec is much simpler than many other virtual machines, because other virtual machines have to pay a much lower cost for complexity, whereas in our case every additional unit of complexity is a step toward high barriers of entry creating development centralization and potential for security flaws including consensus failures, (ii) it allows us to specialize the VM much more, eg. by having a 32 byte word size, (iii) it allows us not to have a very complex external dependency which may lead to installation difficulties, and (iv) a full security review of Ethereum specific to our particular security needs would necessitate a security review of the external VM anyway, so the effort savings are not that large.
 Using a variable extendable memory size - we deemed a fixed memory size unnecessarily restrictive if the size is small and unnecessarily expensive if the size is large, and noted that if statements for memory access are necessary in any case to check for out-of-bounds access, so fixed size would not even make execution more efficient.
 Not having a stack size limit - no particular justification either way; note that limits are not strictly necessary in many cases as the combination of gas costs and a block-level gas limit will always act as a ceiling on the consumption of every resource.
 Having a 1024 call depth limit - many programing languages break at high stack depths much more quickly than they break at high levels of memory usage or computational load, so the implied limit from the block gas limit may not be sufficient.
