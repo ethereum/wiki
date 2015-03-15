@@ -1,10 +1,10 @@
-Ethereum が既に試されテストされてきた5年前からのビットコインのような古くからの暗号通貨の様々なアイディアを借りて出来てきたとしても、
-Ethereumには現在のプロトコルの機能を司るための大半の一般的な方法から分岐した様々な点がある。
-それはEthereumが開発しなければならなかった全くもって新しい経済的なアプローチにおいての多くの状況も有る。
-何故ならば、既存の他のシステムによっては提案されてこなかった機能が提供されているのだから。
-
-この文書の目的は潜在的に自明ではない全てのことや、
-もしくはその他のケースでEthereumのプロトコルを創りあげていく経過において、
+Ethereum が既に試されテストされてきた5年前からあるビットコインのような
+古くからある暗号通貨の様々なアイディアを借りて出来てきたとしても、
+Ethereumには現在のプロトコルの機能を提供するための大半の一般的な方法から分岐した様々な点がある。
+そこにはEthereumが全くもって新しい経済的なアプローチを開発しなければならなかった多くの状況も有る。
+何故ならば、既存の他のシステムによっては提供されて来なかった機能をEthereumは提供しているためだ。
+この文書の目的は潜在的に自明ではないこと、
+もしくはEthereumのプロトコルを創りあげていく経過において、
 議論の的となる物事に対して為されてきた決定についての詳細を書き、
 同様に我々のアプローチと、その他の代替手段の可能性におけるリスクを示すことである。
 
@@ -131,22 +131,33 @@ UTXOの考え方では、参照は各々のトランザクションごとに変�
 マイナーや、他のユーザーは使われていないアカウントを状態から取り除くために、"ping"使われていないアカウントへのを必要とするだろう。あまりにも高価なためブロックチェーンプロトコル全体の一部を消し去ることは出来ないからだ。
 Ethereum のバージョン1.0では開発の加速のためにこのメカニズムを採用しなかったが、1.1ではこのようなシステムを使うだろう。
 
-マークルパトリシアツリー
+## マークルパトリシアツリー
 マークルパトリシアツリーでは、今までアランレイナーによって想像され、Rippleのプロトコルの中に実装された概念だ。
-それはEthereumの基礎となるデータの構造であり、全てのアカウントの状態の保存に使われ、同様にトランザクションや、それぞれのブロックのレシートにも使われる。
-そのMPTは
-Merkle Patricia Trees
+それはEthereumの基礎となるデータの構造であり、全てのアカウントの状態の保存に使われ、
+同様にトランザクションや、それぞれのブロック内のお釣りの保存にも使われる。
+そのMPTは[マークルツリー](https://en.wikipedia.org/wiki/Merkle_tree) と [パトリシアツリー](https://en.wikipedia.org/wiki/Radix_tree), 
+の組み合わせであり、両方の要素を取って、下記の要素に従う形で構造を作り出している。
 
-The Merkle Patricia tree/trie, previously envisioned by Alan Reiner and implemented in the Ripple protocol, is the primary data structure of Ethereum, and is used to store all account state, as well as transactions and receipts in each block. The MPT is a combination of a Merkle tree and Patricia tree, taking the elements of both to create a structure that has both of the following properties:
+1. 全てのユニークなKeyValueの組みは、独自のルートハッシュにマッピングされる。
+そしてツリー上のKeyVelueの組みのメンバーシップを偽装することは不可能である。(攻撃者が2^128以上のコンピューターパワーを持たない限り)
+2. 変更すること、追加すること、削除することは対数的な時間の中で可能だ。
+このことは私達に効率的で更新が簡単な全体の状態を記載した我々のツリー上の"フィンガープリント"の方法を提供してくれる。
+EthererumのMPTは正式に下記に示されている。 https://github.com/ethereum/wiki/wiki/Patricia-Tree
 
-Every unique set of key/value pairs maps uniquely to a root hash, and it is not possible to spoof membership of a key/value pair in a trie (unless an attacker has ~2^128 computing power)
-It is possible to change, add or delete key/value pairs in logarithmic time
-This gives us a way of providing an efficient, easily updateable, "fingerprint" of our entire state tree. The Ethereum MPT is formally described here: https://github.com/ethereum/wiki/wiki/Patricia-Tree
+MPTの上のデザインは下記の決定事項を含む:
 
-Specific design decisions in the MPT include:
+1. **2つのクラスのノードを持つ**、KV(キーバリュー)のノードとそこから派生したノード（更なる詳細についてのMPTの仕様を見て欲しい）
+KVノードがあることでより効率的になる、何故ならばツリーが特定のエリアにまばらに存在することで、KVのノードがショートカットとしての役割を持つため、64層の深さのツリーを保つ必要が無くなるからだ。
 
-Having two classes of nodes, kv nodes and diverge nodes (see MPT spec for more details). The presence of kv nodes increases efficiency because if a tree is sparse in a particular area the kv node will serve as a "shortcut" removing the need to have a tree of depth 64.
-Making diverge nodes hexary and not binary: this was done to improve lookup efficiency. We now recognize that this choice was suboptimal, as the lookup efficiency of a hexary tree can be simulated in a binary paradigm by storing nodes batched. However, because the trie construction is so easy to implement incorrectly and end up with at the very least state root mismatches, we have decided to table such a reorganization until 1.1.
+2. **派生ノードはヘックスによって生成され、バイナリではない。**:
+これはルックアップの効率を改善するために為された。
+我々は現在準最適な選択を行ってきた、そしてヘックスのツリーのルックアップの効率は
+一括化されたノードを保存することによるバイナリーでの構想においてもシミュレーション出来る。
+しかしながら、ツリーの構造を誤った形で構成することはとても簡単であるために、最低でもルートの状態が合わないことになってしまう。
+我々は1.1のバージョン迄にそのような採光性を行うことを決定した。
+空のバリューとメンバーシップの区別を行わない事：
+
+recognize that this choice was suboptimal, as the lookup efficiency of a hexary tree can be simulated in a binary paradigm by storing nodes batched. However, because the trie construction is so easy to implement incorrectly and end up with at the very least state root mismatches, we have decided to table such a reorganization until 1.1.
 No distinction between empty value and non-membership: this was done for simplicity, and because it works well with Ethereum's default that values that are unset (eg. balances) generally mean zero and the empty string is used to represent zero. However, we do note that it sacrifices some generality and is thus slightly suboptimal.
 Distinction between terminating and non-terminating nodes: technically, the "is this node terminating" flag is unnecessary, as all tries in Ethereum are used to store static key lengths, but we added it anyway to increase generality, hoping that the Ethereum MPT implementations will be used as-is by other cryptographic protocols.
 Using sha3(k) as the key in the "secure tree" (used in the state and account storage tries): this makes it much more difficult to DDoS the trie by setting up maximally unfavorable chains of diverge nodes 64 levels deep and repeatedly calling SLOAD and SSTORE on them. Note that this makes it more difficult to enumerate the tree; if you want to have enumeration capability in your client, the simplest approach is to maintain a database mapping sha3(k) -> k.
