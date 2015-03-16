@@ -1007,8 +1007,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic
 
 ```js
 params: [{
-  "fromBlock": "0x1", (optional) // 1
-  "toBlock": "0x2", (optional) // 2
+  "fromBlock": "0x1", (optional) // 1, or "latest" for the last mined block
+  "toBlock": "0x2", (optional) // 2, or "latest" or "pending" including pending transactions
   "address": "0x01231f12a..", (optional) // to filtercame from account
   "topics": ['0x1234fa1234...'] (optional) // array of topic strings
 }]
