@@ -17,10 +17,10 @@ In the IDE, choose `File > New Project`. Enter the contract name "MovieRaings" a
 Select Contract and enter the text for the rating contract:
 
 	contract Rating {
-		function setRating(string32 _key, uint256 _value) {
+		function setRating(bytes32 _key, uint256 _value) {
 			ratings[_key] = _value;
 		}
-		mapping (string32 => uint256) public ratings;
+		mapping (bytes32 => uint256) public ratings;
 	}
 
 Check [Solidity tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial) for solidity reference.
@@ -146,4 +146,3 @@ There are many places where to host front end resources, you just need to find a
 Click on `Register hosted Web Application` and Mix will register the front end resources on the Ethereum network.
 
 Users can now use  Mist or AlethZero to access to the Dapp, using the Ethereum URL (ex: eth/user1/app1).
-
