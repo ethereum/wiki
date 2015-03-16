@@ -543,11 +543,11 @@ contract TimedContract {
 New magic type `msg.sig` that will provide the hash of the current function signature as `bytes4` type.
 
 ```
-		contract test {
-			function foo(uint256 a) returns (bytes4 value) {
-				return msg.sig;
-			}
-		}
+contract test {
+	function foo(uint256 a) returns (bytes4 value) {
+		return msg.sig;
+	}
+}
 ```
 
 Calling that function will return `2FBEBD38` which is the hash of the signature of `foo(uint256)`.
