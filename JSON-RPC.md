@@ -1156,7 +1156,7 @@ See [eth_getFilterChanges](#eth_getfilterchanges)
 ***
 
 #### `eth_getWork`
-*returns the hash of current block and difficulty to be met.*
+*returns the hash of current block, the seedHash, and the difficulty to be met.*
 
 ##### Request Example
 ```bash
@@ -1173,13 +1173,17 @@ none
 "jsonrpc":"2.0",
 "result": [
     "0x1234567890abcdef1234567890abcdef",
-    "0xd1ffic017i0000000000000000000000"
+    "0x5EED0000000000000000000000000000",
+    "0xd1ff1c01710000000000000000000000"
 ]
 }
 ```
 
-// TODO better explanation?
-The hash first of the two result values is the header hash without the nonce (the first part of the proof-of-work pair), the second of the two result values is the difficulty required to solve.
+The hash first of the result value is the header hash without the nonce (the first part of the proof-of-work pair)
+
+The second is the seed hash used for the DAG.
+
+The third is the difficulty required to solve.
 
 ***
 
@@ -1188,12 +1192,19 @@ The hash first of the two result values is the header hash without the nonce (th
 
 ##### Request Example
 ```bash
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_submitWork","params":"0x1234567890abcdef1234567890abcdef"],"id":73}'
+curl -X POST --data '{
+  "jsonrpc":"2.0",
+  "method":"eth_submitWork",
+  "params":["0x0000000000000001",
+            "0x1234567890abcdef1234567890abcdef",
+            "0xD1GE5700000000000000000000000000"]],"id":73}'
 ```
 
 ##### Parameters
 
-0. the proof of work
+0. The nonce found (64 bits)
+1. The header (256 bits)
+2. The mix digest (256 bits)
 
 ```js
 params: ["0x1234567890abcdef1234567890abcdef"]
