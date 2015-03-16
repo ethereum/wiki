@@ -538,7 +538,7 @@ contract TimedContract {
 + `string` is reserved for future use.
 
 
-## msg.sig return function signature hash
+## `msg.sig` returns the function's signature hash
 [Link to PT] (https://www.pivotaltracker.com/story/show/86896308) 
 New magic type `msg.sig` that will provide the hash of the current function signature as `bytes4` type.
 
