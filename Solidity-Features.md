@@ -536,3 +536,18 @@ contract TimedContract {
 + `byte` is an alias for `bytes1`.
 
 + `string` is reserved for future use.
+
+
+## msg.sig return function signature hash
+[Link to PT] (https://www.pivotaltracker.com/story/show/86896308) 
+New magic type `msg.sig` that will provide the hash of the current function signature as `bytes4` type.
+
+```
+		contract test {
+			function foo(uint256 a) returns (bytes4 value) {
+				return msg.sig;
+			}
+		}
+```
+
+Calling that function will return `2FBEBD38` which is the hash of the signature of `foo(uint256)`.
