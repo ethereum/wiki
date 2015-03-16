@@ -79,24 +79,23 @@ comments (which are not covered here).
 
 ## Types
 
-The currently implemented (elementary) types are booleans (`bool`), integer and fixed-length string (string0 to string32) types.
+The currently implemented (elementary) types are booleans (`bool`), integer and fixed-length string/byte array (bytes0 to bytes32) types.
 The integer types are signed and unsigned integers of various bit widths
 (`int8`/`uint8` to `int256`/`uint256` in steps of 8 bits, where `uint`/`int` are
-aliases for `uint256`/`int256`), hashes (`hash8` to `hash256` again in 8 bit
-steps and `hash` is an alias for `hash256`) and addresses (of 160 bits).
+aliases for `uint256`/`int256`) and addresses (of 160 bits).
 
 Comparisons (`<=`, `!=`, `==`, etc.) always yield booleans which can be
 combined using `&&`, `||` and `!`. Note that the usual short-circuiting rules
 apply for `&&` and `||`, which means that for expressions of the form
 `(0 < 1 || fun())`, the function is actually never called.
 
-If an operator is applied to different integer types, the compiler tries to
+If an operator is applied to different types, the compiler tries to
 implicitly convert one of the operands to the type of the other (the same is
 true for assignments). In general, an implicit conversion is possible if it
 makes sense semantically and no information is lost: `uint8` is convertible to
 `uint16` and `int120` to `int256`, but `int8` is not convertible to `uint256`.
-Furthermore, unsigned integers can be converted to hashes of the same or larger
-size, but not vice-versa. Any type that can be converted to `hash160` can also
+Furthermore, unsigned integers can be converted to bytes of the same or larger
+size, but not vice-versa. Any type that can be converted to `uint160` can also
 be converted to `address`.
 
 If the compiler does not allow implicit conversion but you know what you are
@@ -114,10 +113,10 @@ For convenience, it is not always necessary to explicitly specify the type of a
 variable, the compiler automatically infers it from the type of the first
 expression that is assigned to the variable:
 ```
-hash x = 0x123;
+uint20 x = 0x123;
 var y = x;
 ```
-Here, the type of `y` will be `hash`. Using `var` is not possible for function
+Here, the type of `y` will be `uint20`. Using `var` is not possible for function
 parameters or return parameters.
 
 ## Integer Literals
@@ -222,7 +221,7 @@ namespace.
  - `block.difficulty` (`uint`): current block difficulty
  - `block.gaslimit` (`uint`): current block gaslimit
  - `block.number` (`uint`): current block number
- - `block.blockhash` (`function(uint) returns (hash)`): hash of the given block
+ - `block.blockhash` (`function(uint) returns (bytes32)`): hash of the given block
  - `block.timestamp` (`uint`): current block timestamp
  - `msg.data` (`bytes`): complete calldata
  - `msg.gas` (`uint`): remaining gas
@@ -234,10 +233,10 @@ namespace.
 
 ### Cryptographic Functions
 
- - `sha3(...) returns (hash)`: compute the SHA3 hash of the (tightly packed) arguments
- - `sha256(...) returns (hash)`: compute the SHA256 hash of the (tightly packed) arguments
- - `ripemd160(...) returns (hash160)`: compute RIPEMD of 256 the (tightly packed) arguments
- - `ecrecover(hash, hash8, hash, hash) returns (address)`: recover public key from elliptic curve signature
+ - `sha3(...) returns (bytes32)`: compute the SHA3 hash of the (tightly packed) arguments
+ - `sha256(...) returns (bytes32)`: compute the SHA256 hash of the (tightly packed) arguments
+ - `ripemd160(...) returns (bytes20)`: compute RIPEMD of 256 the (tightly packed) arguments
+ - `ecrecover(bytes32, byte, bytes32, bytes32) returns (address)`: recover public key from elliptic curve signature
 
 In the above, "tightly packed" means that the arguments are concatenated without padding, i.e.
 `sha3("ab", "c") == sha3("abc") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`. If padding is needed, explicit type conversions can be used.
@@ -265,7 +264,7 @@ the function `call` is provided which takes an arbitrary number of arguments of 
 ```
 address nameReg = 0x72ba7d8e73fe8eb666ea66babc8116a41bfb10e2;
 nameReg.call("register", "MyName");
-nameReg.call(string4(string32(sha3("fun(uint256)"))), a);
+nameReg.call(bytes4(sha3("fun(uint256)")), a);
 ```
 
 Note that contracts inherit all members of address, so it is possible to query the balance of the
@@ -399,17 +398,17 @@ contract OwnedToken {
   // as long as it is not used to create a new contract.
   TokenCreator creator;
   address owner;
-  string32 name;
-  function OwnedToken(string32 _name) {
+  bytes32 name;
+  function OwnedToken(bytes32 _name) {
     address nameReg = 0x72ba7d8e73fe8eb666ea66babc8116a41bfb10e2;
-    nameReg.callstring32string32("register", _name);
+    nameReg.call("register", _name);
     owner = msg.sender;
     // We do an explicit type conversion from `address` to `TokenCreator` and assume that the type of
     // the calling contract is TokenCreator, there is no real way to check.
     creator = TokenCreator(msg.sender);
     name = _name;
   }
-  function changeName(string32 newName) {
+  function changeName(bytes32 newName) {
     // Only the creator can alter the name -- contracts are explicitly convertible to addresses.
     if (msg.sender == address(creator)) name = newName;
   }
@@ -425,11 +424,11 @@ contract OwnedToken {
   }
 }
 contract TokenCreator {
-  function createToken(string32 name) returns (address tokenAddress) {
+  function createToken(bytes32 name) returns (address tokenAddress) {
     // Create a new Token contract and return its address.
     return address(new OwnedToken(name));
   }
-  function changeName(address tokenAddress, string32 name) {
+  function changeName(address tokenAddress, bytes32 name) {
     // We need an explicit type conversion because contract types are not part of the ABI.
     OwnedToken token = OwnedToken(tokenAddress);
     token.changeName(name);
@@ -437,7 +436,7 @@ contract TokenCreator {
   function isTokenTransferOK(address currentOwner, address newOwner) returns (bool ok) {
     // Check some arbitrary condition.
     address tokenAddress = msg.sender;
-    return (sha3(hash160(newOwner)) & 0xff) == (hash160(tokenAddress) & 0xff);
+    return (sha3(newOwner) & 0xff) == (bytes20(tokenAddress) & 0xff);
   }
 }
 ```
@@ -467,13 +466,13 @@ contract mortal is owned {
 
 // These are only provided to make the interface known to the compiler.
 contract Config { function lookup(uint id) returns (address adr) {} }
-contract NameReg { function register(string32 name) {} function unregister() {} }
+contract NameReg { function register(bytes32 name) {} function unregister() {} }
 
 // Multiple inheritance is possible. Note that "owned" is also a base class of
 // "mortal", yet there is only a single instance of "owned" (as for virtual
 // inheritance in C++).
 contract named is owned, mortal {
-    function named(string32 name) {
+    function named(bytes32 name) {
         address ConfigAddress = 0xd5f9d8d94886e70b06e474c3fb14fd43e2f23970;
         NameReg(Config(ConfigAddress).lookup(1)).register(name);
     }
@@ -589,14 +588,14 @@ The next example is a bit more complex:
 
 ```
 contract complex {
-  struct Data { uint a; string3 b; mapping(uint => uint) map; }
+  struct Data { uint a; bytes3 b; mapping(uint => uint) map; }
   mapping(uint => mapping(bool => Data)) public data;
 }
 ```
 
 It will generate a function of the following form:
 ```
-function data(uint arg1, bool arg2) returns (uint a, string3 b)
+function data(uint arg1, bool arg2) returns (uint a, bytes3 b)
 {
   a = data[arg1][arg2].a;
   b = data[arg1][arg2].b;
@@ -676,14 +675,14 @@ of data. The hash of the signature of the event is always one of the topics. All
 arguments will be stored in the data part of the log. Example:
 ```
 contract ClientReceipt {
-  event Deposit(address indexed _from, hash indexed _id, uint _value);
-  function deposit(hash _id) {
+  event Deposit(address indexed _from, bytes32 indexed _id, uint _value);
+  function deposit(bytes32 _id) {
     Deposit(msg.sender, _id, msg.value);
   }
 }
 ```
 Here, the call to `Deposit` will behave identical to
-`log3(msg.value, 0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20, sha3(msg.sender), _id);`. Note that the large hex number is equal to the sha3-hash of "Deposit(address,hash256,uint256)", the event's
+`log3(msg.value, 0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20, sha3(msg.sender), _id);`. Note that the large hex number is equal to the sha3-hash of "Deposit(address,bytes32,uint256)", the event's
 signature.
 
 ## Layout of Storage
