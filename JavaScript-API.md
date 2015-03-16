@@ -87,7 +87,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [getBalance(address)](#web3ethgetbalance) -> BigNumber
     * [getStorage(address)](#web3ethgetstorage) -> object
     * [getStorageAt(address, position)](#web3ethgetstorageat) -> hexString
-    * [getData(address)](#web3ethgetdata) -> hexString
+    * [getCode(address)](#web3ethgetcode) -> hexString
     * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
     * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount) -> Integer
     * [getUncle(hash/number)](#web3ethgetuncle) -> headerObject
@@ -453,7 +453,7 @@ web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 This default block is used for the following methods (optionally you can overwrite the defaultBlock by passing it as the last parameter):
 
 - [web3.eth.getBalance()](#web3ethgetbalance)
-- [web3.eth.getData()](#web3ethgetdata)
+- [web3.eth.getCode()](#web3ethgetcode)
 - [web3.eth.getTransactionCount()](#web3ethgettransactioncount)
 - [web3.eth.getStorage()](#web3ethgetstorage)
 - [web3.eth.getStorageAt()](#web3ethgetstorageat)
@@ -542,9 +542,9 @@ console.log(state); // "0x03"
 
 ***
 
-##### web3.eth.getData
+##### web3.eth.getCode
 
-    web3.eth.getData(addressHexString [, defaultBlock] [, callback])
+    web3.eth.getCode(addressHexString [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
@@ -552,8 +552,8 @@ console.log(state); // "0x03"
 **Returns** the data at given address `addressHexString`.
 
 ```javascript
-var data = web3.eth.getData("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
-console.log(data); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
+var code = web3.eth.getCode("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
+console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 ```
 
 ***
