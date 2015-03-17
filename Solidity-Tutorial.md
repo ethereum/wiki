@@ -118,6 +118,11 @@ var y = x;
 ```
 Here, the type of `y` will be `uint20`. Using `var` is not possible for function
 parameters or return parameters.
+State variables of integer and bytesXX types can be declared as constant.
+```
+uint constant x = 32;
+bytes3 constant text = "abc";
+```
 
 ## Integer Literals
 
