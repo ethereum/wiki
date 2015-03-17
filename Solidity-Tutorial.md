@@ -371,12 +371,13 @@ contain mappings (even the struct itself can be the value type of the mapping, a
 ## Enums
 
 Enums are another way to create a user-defined type in Solidity. They are explicitly convertible
-to and from all integer types but implicit conversion is not allowed.
+to and from all integer types but implicit conversion is not allowed. The variable of enum type can be declared as constant.
 
 ```
 contract test {
     enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill };
     ActionChoices choices;
+    ActionChoices constant defaultChoice = ActionChoices.GoStraight;
     function setGoStraight()
     {
         choices = ActionChoices.GoStraight;
@@ -384,6 +385,10 @@ contract test {
     function getChoice() returns (uint)
     {
         return uint(choices);
+    }
+    function getDefaultChoice() returns (uint)
+    {
+        return defaultChoice;
     }
 }
 ```
