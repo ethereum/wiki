@@ -595,7 +595,7 @@ contract C {
   }
   S structData; // 2 slots, slot 3, offset 0 bytes (does not really apply)
   uint8 alpha; // 1 byte, slot 4 (start new slot after struct)
-  uint16[3]; // 3*16 bytes, slots 5+6 (start new slot for array)
-  uint8 beta; // 1 byte, slot 7 (start new slot after array)
+  uint16[3] beta; // 3*16 bytes, slots 5+6 (start new slot for array)
+  uint8 gamma; // 1 byte, slot 7 (start new slot after array)
 }
 ```
