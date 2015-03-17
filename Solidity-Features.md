@@ -571,3 +571,15 @@ Added `anonymous` specifier for Event. For the event declared as anonymous the h
 event <name>([index list]) anonymous;
 ```
 Anonymous property is also visible for ABI document.
+
+## Tightly packed storage
+
+[PT](https://www.pivotaltracker.com/story/show/90011896)
+Items in storage are packed tighly as far as possible according to the following rules:
+
+ - The first item in a storage slot is stored lower-order aligned.
+ - Elementary types use only that many bytes that are necessary to store them.
+ - If an elementary type does not fit the remaining part of a storage slot, it is moved to the next storage slot.
+ - Structs and array data always start a new slot and occupy whole slots (but items inside a struct or array are packed tightly according to these rules).
+
+Examples: 
