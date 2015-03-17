@@ -562,3 +562,12 @@ contract Foo {
 	uint constant x = 56;
 }
 ```
+
+## Anonymous Events
+[PT](https://www.pivotaltracker.com/story/show/89518344) 
+Added `anonymous` specifier for Event. For the event declared as anonymous the hash of the signature of the event will not be added as a first topic. The format is
+
+```
+event <name>([index list]) anonymous;
+```
+Anonymous property is also visible for ABI document.
