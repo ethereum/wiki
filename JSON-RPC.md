@@ -1099,8 +1099,8 @@ params: ["0x16"] // 22
 "id":1,
 "jsonrpc":"2.0",
 "result": [{
-  "hash": ""0x5785ac562ff41e2dcfdf8216c5785ac562ff41e2dcfdf829c5a142f1fccd7d"",
-  "address":""0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d"",
+  "hash": "0x5785ac562ff41e2dcfdf8216c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
+  "address": "0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
   "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
   "blockNumber":"0x1b4" // 436
   "transactionHash":  "0x1e2dcfdf8216c5785ac562ff41e2dcf5785ac562ff4df829c5a142f1fccd7d"
