@@ -31,11 +31,11 @@ In cryptoeconomics, on the other hand, the basic security assumptions that we de
 
 There will also be additional security assumptions specific to certain problems. Thus, quite often it will not even be possible to definitively say that a certain protocol is secure or insecure or that a certain problem has been solved. Rather, it will be necessary to create solutions that are optimized for particular empirical and social realities, and continue further and further optimizing them over time.
 
-### Technology
+## Technology
 
 The decentralized consensus technology used in Bitcoin is impressive to a very large extent because of its simplicity. A 30-year-old problem in computer science was solved via a mechanism which is simple to implement, and so simple to understand that even some semi-technical teenagers can describe the entirety of how it works. However, at the same time the technology in its current form is very limited. The scalability in Bitcoin is very crude; the fact that every full node needs to process every transaction is a large roadblock to the future success of the platform, and a factor preventing its effective use in micropayments (arguably the one place where it is the most useful). Timestamping is flawed, and proof-of-computation algorithms are very limited in the types of computation that they can support. The fact that the original solution was so "easy", however, suggests that there is still a large opportunity to improve, and there are a number of directions in which improvement could be directed.
 
-**1. Blockchain Scalability**
+### 1. Blockchain Scalability
 
 One of the largest problems facing the cryptocurrency space today is the issue of scalability. It is an often repeated claim that, while mainstream payment networks process something like 2000 transactions per second, in its current form the Bitcoin network can only process seven. On a fundamental level, this is not strictly true; simply by changing the block size limit parameter, Bitcoin can easily be made to support 70 or even 7000 transactions per second. However, if Bitcoin does get to that scale, we run into a problem: it becomes impossible for the average user to run a full node, and full nodes become relegated only to that small collection of businesses that can afford the resources. Because mining only requires the block header, even miners can (and in practice most do) mine without downloading the blockchain.
 
@@ -53,7 +53,7 @@ Ideally, a blockchain design should exist that works, and has similar security p
 * Ideally, after some number of blocks (perhaps logarithmic in the total size of the network) every transaction should require 51% of network hashpower to reverse. However, solutions where transactions can pay very small fees for a lower "level" of security are acceptable, though one should take care to avoid situations where an attacker can profit by performing one attack to reverse very many small transactions at the same time
 * Ideally, the solution should work for and maintain as many properties as possible of a generalized account-based blockchain (eg. Ethereum), though solutions specific to currency, domain registrations or other specialized use caes are acceptable
 
-**2. Timestamping**
+### 2. Timestamping
 
 An important property that Bitcoin needs to keep is that there should be roughly one block generated every ten minutes; if a block is generated every day, the payment system becomes too slow, and if a block is generated every second there are serious centralization and network efficiency concerns that would make the consensus system essentially nonviable even assuming the absence of any attackers. To ensure this, the Bitcoin network adjusts difficulty so that if blocks are produced too quickly it becomes harder to mine a new block, and if blocks are produced too slowly it becomes easier.
 
@@ -70,7 +70,7 @@ However, this solution requires an important ingredient: the blockchain must be 
 * The system should exist without relying on any kind of proof-of-work.
 * External systems may end up relying on this system; hence, it should remain secure against attackers controlling < 25% of nodes regardless of incentives.
 
-**3. Arbitrary Proof of Computation**
+### 3. Arbitrary Proof of Computation
 
 Perhaps the holy grail of the study zero-knowledge proofs is the concept of an arbitrary proof of computation: given a program P with input I, the challenge is to create a zero-knowledge proof that you ran P with input I and received output O, such that the proof can be verified quickly (ie. in polylogarithmic or ideally constant time) even if the original computation took a very large number of steps to complete. In an ideal setup, the proof would even hide the value of I, just proving that you ran P with some output with result O, and if I needs to be made public it can be embedded into the program. Such a primitive, if possible, would have massive implications for cryptocurrency:
 
@@ -88,7 +88,7 @@ There is a large amount of existing research on this topic, including a protocol
 * The runtime of `POC_VERIFY` should be either constant or logarithmic in the number of steps, and at most linear in the maximum memory usage of the program.
 * The protocol should require no trusted third parties. If TTPs are required, the protocol should include a mechanism for simulating one efficiently using secure multiparty computation.
 
-**4. Code Obfuscation**
+### 4. Code Obfuscation
 
 For many years now we have known how to encrypt data. Simple, robust and well-tested algorithms exist for both symmetric key encryption, where the same key is needed to encrypt and decrypt, and public key encryption, where the encryption key and decryption key are different and one cannot be derived from the other. However, there is another kind of encryption that can potentially be very useful, but for which we currently have no viable algorithm: the encryption of programs. The holy grail is to create an obfuscator `O`, such that given any program P the obfuscator can produce a second program `O(P) = Q` such that `P` and `Q` return the same output if given the same input and, importantly, `Q` reveals no information whatsoever about the internals of `P`. One can hide inside of `Q` a password, a secret encryption key, or one can simply use `Q` to hide the proprietary workings of the algorithm itself.
 
@@ -107,7 +107,7 @@ If this construction can be made better, the potential benefits are massive. The
 * Successful attacks must have an expected runtime above 2^80
 * The algorithm should be sufficiently fast that a standard ECDSA signature or an AES encryption should be feasible within 10<sup>8</sup> computational steps (more specifically, 10<sup>8</sup> gas in the Ethereum VM)
 
-**5. Hash-Based Cryptography**
+### 5. Hash-Based Cryptography
 
 One of the looming threats on the horizon to cryptocurrency, and cryptography in general, is the issue of quantum computers. Currently, the problem does not seem too severe; all quantum computers are either "adiabatic quantum computers", effective at only an extremely limited set of problems and perhaps not even better than classical computers at all, or machines with a very small number of qubits not capable of factoring numbers higher than 35. In the future, however, quantum computers may become much more powerful, and the recent revelations around the activities of government agencies such as the NSA have sparked fears, however unlikely, that the US military may control a quantum computer already. With this in mind, the movement toward quantum-proof cryptography has become a somewhat higher priority.
 
@@ -124,7 +124,7 @@ The question is, can we do better? There is an approach known as hash ladders, a
 * The size of a public key should be as small as possible
 * The signature algorithm should be scalable to add any number of uses, although likely at the cost of adding a constant number of bytes per signature for every 2x increase in the maximum number of uses, and if possible the setup time should be sublinear in the number of uses.
 
-### Consensus
+## Consensus
 
 One of the key elements in the Bitcoin algorithm is the concept of "proof of work". In any Byzantine-fault-tolerant system, the security level is often defined as the minimum percentage of hostile nodes - for example, in the context of secret sharing, the Berlekamp-Welch algorithm with 2x redundancy is guaranteed to provide the correct output assuming that the total number of hostile nodes does not exceed 25% of the network, and in the context of Bitcoin mining the requirement is that the size of the set of honest nodes exceeds the size of any individual hostile coalition. However, all of these security guarantees have one important qualification: there must be some way to define what an individual node is. Before Bitcoin, most fault-tolerant algorithms had high computational complexity and assumed that the size of the network would be small, and so each node would be run by a known individual or organization and so it is possible to count each node individually.
 
@@ -149,7 +149,7 @@ Another related issue is mining pool centralization. Theoretically, the legitima
 
 The second problem is easy to alleviate; one simply creates a mining algorithm that forces every mining node to store the entire blockchain. The first problem, that of mining centralization, is much harder. There is the possibility that the problem will solve itself over time, and as the Bitcoin mining industry grows it will naturally become more decentralized as room emerges for more firms to participate. However, that is an empirical claim that may or may not come to pass, and we need to be prepared for the eventuality that it does not. Furthermore, the wasted energy and computation costs of proof of work as they stand today may prove to be entirely avoidable, and it is worth looking to see if that aspect of consensus algorithms can be alleviated.
 
-**6. ASIC-Resistant Proof of Work**
+### 6. ASIC-Resistant Proof of Work
 
 One approach at solving the problem is creating a proof-of-work algorithm based on a type of computation that is very difficult to specialize. One specific ideas involves creating a hash function that is "memory-hard", making it much more difficult to create an ASIC that achieves massive gains through parallelization. This idea is simple, but fundamentally limited - if a function is memory-hard to compute, it is also generally memory-hard to verify. Additionally, there may be ways to specialize hardware for an algorithm that have nothing to do with hyperparallelizing it. Another approach involves randomly generating new mining functions per block, trying to make specialization gains impossible because the ASIC ideally suited for performing arbitrary computations is by definition simply a CPU. There may also be other strategies aside from these two.
 
@@ -167,7 +167,7 @@ For a more in-depth discussion on ASIC-resistant hardware, see [https://blog.eth
 * `PoWProduce` must not be superlinear in computational power or time; that is to say, the expected number of successful `PoWProduce` computations for a node with `N` dollars worth of hardware after `t` seconds should be bounded by `kNt` for some `k`. Furthermore, the linearity should kick in quickly; ie. $1000 worth of mining hardware should function with over 90% efficiency.
 * It should be shown with reasonably rigorous technological and economic analysis that the algorithm is economically ASIC resistant.
 
-**7. Useful Proof of Work**
+### 7. Useful Proof of Work
 
 Another related economic issue, often pointed out by detractors of Bitcoin, is that the proof of work done in the Bitcoin network is essentially wasted effort. Miners spend 24 hours a day cranking out SHA256 (or in more advanced implementations Scrypt) computations with the hopes of producing a block that has a very low hash value, and ultimately all of this work has no value to society. Traditional centralized networks, like Paypal and the credit card network, manage to get by without performing any proof of work computations at all, whereas in the Bitcoin ecosystem about a million US dollars of electricity and manufacturing effort is essentially wasted every day to prop up the network.
 
@@ -186,7 +186,7 @@ Note that there is one major concern with this approach that has been identified
 * `PoWProduce` must produce a public good, such that the total value to everyone of the public good produced is greater than the cost of all resources invested into the mining process.
 * The system must be able to exist without a trusted third party, but it is reasonable to allow a trusted third party to serve as a data source for useful computations. If the trusted third party acts maliciously in any way, the public good may be negated but the blockchain mining should not be compromised.
 
-**8. Proof of Stake**
+### 8. Proof of Stake
 
 Another approach to solving the mining centralization problem is to abolish mining entirely, and move to some other mechanism for counting the weight of each node in the consensus. The most popular alternative under discussion to date is "proof of stake" - that is to say, instead of treating the consensus model as "one unit of CPU power, one vote" it becomes "one currency unit, one vote".
 
@@ -207,7 +207,7 @@ For a more in-depth discussion on proof of stake, see [https://blog.ethereum.org
 * The expected return from mining should be bounded by `k` times the miner's stake for some `k`, and assuming $1 billion total participating stake a stake of $1000 should be able to reach 90% of this maximum efficiency.
 * The algorithm should be fully incentive-compatible, addressing the double-voting issue defined above and the collusion issue defined above at both short and long range.
 
-**9. Proof of Storage**
+### 9. Proof of Storage
 
 A third approach to the problem is to use a scarce computational resource other than computational power or currency. In this regard, the two main alternatives that have been proposed are storage and bandwidth. There is no way in principle to provide an after-the-fact cryptographic proof that bandwidth was given or used, so proof of bandwidth should most accurately be considered a subset of social proof, discussed in later problems, but proof of storage is something that certainly can be done computationally. An advantage of proof-of-storage is that it is completely ASIC-resistant; the kind of storage that we have in hard drives is already close to optimal.
 
@@ -228,11 +228,11 @@ However, the problem with Permacoin is that it leaves unclear what files should 
 * The system should be secure against nothing-at-stake and long-range attacks.
 * The system should be secure against attacker involving users uploading specially formatted files or storing their own data.
 
-### Economics
+## Economics
 
 The second part of cryptoeconomics, and the part where solutions are much less easy to verify and quantify, is of course the economics. Cryptocurrencies are not just cryptographic systems, they are also economic systems, and both kinds of security need to be taken into account. Sometimes, cryptographic security may even be slightly compromised in favor of an economic approach - if a signature algorithm takes more effort to crack than one could gain from cracking it, that is often a reasonable substitute for true security. At the same time, economic problems are also much more difficult to define. One cannot usually definitively know whether or not a problem has been solved without extensive experimentation, and the result will often depend on cultural factors or the other organizational and social structures used by the individuals involved. However, if the economic problems can be solved, the solutions may often have reach far beyond just cryptocurrency.
 
-**10. Stable-value cryptoassets**
+### 10. Stable-value cryptoassets
 
 One of the main problems with Bitcoin is the issue of price volatility. The value of a bitcoin often experiences very large fluctuations, rising or falling by as much as 25% in a single day and 3x in a month. The main economic reason behind this is that the supply of bitcoins is fixed, so its price is directly proportional to demand (and therefore, by efficient market hypothesis, the expected discounted future demand), and demand is very unpredictable. It is not known if Bitcoin will be simply a niche payment method for transcations requiring a high degree of privacy, a replacement for Western Union, a mainstream consumer payment system or the reserve currency of the world, and the expected value of a bitcoin differs over a thousandfold between these various levels of adoption. Furthermore, the utility of the Bitcoin protocol is heavily dependent on the movements of the Bitcoin price (ie. people are interested in Bitcoin more if the price is going up), creating a positive feedback loop, which has arguably been responsible for both Bitcoin's great meteoric rises and its many-month-long periods of rapid decline.
 
@@ -251,7 +251,7 @@ Another approach is to attempt to create a currency which tracks a specific asse
 * The solution must come with a model, including parameters such as short-term-consumption purchases, medium-term purchases, speculative purchases, positive and negative media, adoption and regulatory events, irrational actors and actors with political motives, show that their model well fits the history of Bitcoin and potentially major altcoins without overfitting, and show that under the model the other two requirements hold
 * Zero-total-supply assets, ie. assets where each unit is balanced by a collateralized debt of a unit, are allowed, although such systems must include a robust margin-calling mechanism because it is assumed that most users are anonymous and can therefore trivially run away from debts
 
-**11. Decentralized Public Goods Incentivization**
+### 11. Decentralized Public Goods Incentivization
 
 One of the challenges in economic systems in general is the problem of "public goods". For example, suppose that there is a scientific research project which will cost $1 million to complete, and it is known that if it is completed the resulting research will save one million people $5 each. In total, the social benefit is clear: if everyone contributes $1, then each individual person will see a benefit of $5 - $1 = $4 for $4 million total. However, the problem is that from the point of view of each individual person contributing does not make sense - whether or not you contribute has close to zero bearing on whether enough money will be collected, so everyone has the incentive to sit out and let everyone else throw their money in, with the result that no one does.
 
@@ -275,7 +275,7 @@ Many of these approached can arguably be done in concert, or even simultaneously
 * No reliance on trusted parties or centralized parties should be required. Where some kind of "supernode" role does exist, the protocol should provide a way for anyone to participate in that function with a mechanism for rewarding those who do it well
 * The mechanism should ideally be able to handle both public goods which everyone values and public goods which are only valued by a small portion of the population (eg. the production of a freely available book or video on a specific topic)
 
-**12. Reputation systems** 
+### 12. Reputation systems
 
 A concept which can arguably be considered to be a mirror image of currency is a reputation system. A reputation system serves three functions. First of all, it provides a mechanism for filtering honest people from dishonest people. Different people have different moral preference profiles, and so individuals who cheat less in one context are less likely to cheat in another context. Second, it provides an incentive not to cheat. If an individual can be said to possess a reputation of value `R`, and he enters a business deal where he is receiving payment `V` in exchange for a product with cost-of-production `C`, then as long as `R > C` the reputation system removes the incentive to run away with the money because doing so would sacrifice the reputation. Finally, reputation can be thought of as a kind of point system that people value intrinsically, both in a private context and as a status good in comparison with others.
 
@@ -308,7 +308,7 @@ In the world of cryptoeconomics, in order for something to be rewarded it must b
 
 To some extent, proof of work consensus is itself a form of social proof. Transaction A happened before transaction B because the majority of users say it did, and there is an economic incentive to go with the majority opinion (specifically, if you generate a block on the incorrect chain, that block will get discarded and the miner will receive no reward). Assuming that most participants act truthfully, the incentive is to go along with the projected majority and tell the truth as well. This insight can be extended into [SchellingCoin](http://blog.ethereum.org/2014/03/28/schellingcoin-a-minimal-trust-universal-data-feed/), a generalized data feed protocol, protocols for proof of bandwidth, and anything else that can be quickly verified. The challenge is, however, what if verification has a cost? What if it takes some effort to determine whether or not a certain thing has happened, or what if the information is in principle only available to a few people? If there is too much gathering cost or secrecy, then centralization becomes necessary; the question is, how high can we go? How much can we measure without any social proof at all, and how much can we measure without a centralized verifier?
 
-**13. Proof of excellence**
+### 13. Proof of excellence
 
 One interesting, and largely unexplored, solution to the problem of distribution specifically (there are reasons why it cannot be so easily used for mining) is using tasks that are socially useful but require original human-driven creative effort and talent. For example, one can come up with a "proof of proof" currency that rewards players for coming up with mathematical proofs of certain theorems. There is no generic algorithm, aside from brute force, for proving theorems, and yet proofs of theorems are theoretically computationally easy to verify: one simply needs to write every step of the proof in a formal language, allowing the use of only one inference rule (eg. `a + b = b + a` or `a * (b + c) = a * b + a * c` but not `a * (b + c) = a * c + b * a`) between each step, and having a program verify the correctness of the inferences at each step.
 
@@ -336,7 +336,7 @@ Alternatives to proof-of-proof include proof-of-optimization, finding optimal in
 * The distribution should be maximally egalitarian, though this is a secondary concern.
 * The system should be secure against front-running attacks, ie. if an individual submits a solution, then it should not be practical for even a moderately powerful attacker to look at the solution and then resubmit his own transaction containing the same solution and thereby steal the reward.
 
-**15. Anti-Sybil systems**
+### 15. Anti-Sybil systems
 
 A problem that is somewhat related to the issue of a reputation system is the challenge of creating a "unique identity system" - a system for generating tokens that prove that an identity is not part of a Sybil attack. The naive form of anti-Sybil token is simple: a sacrifice or proof of deposit. In a sacrifice setup, such identities simply cost $X, and in a PoD system identities require a deposit of $Y in order to be active, where perhaps the deposit can be taken away or destroyed under certain circumstances. However, we would like to have a system that has nicer and more egalitarian features than "one-dollar-one-vote"; arguably, one-person-one-vote would be ideal.
 
@@ -356,7 +356,7 @@ The question is, can we use these mechanisms, either separately or together, and
 * The cost of obtaining anti-Sybil tokens for an automated system should be as high as possible (this is a more important criterion than high cost for multi-obtainment for humans)
 * The system should not create dependency on centralized parties (eg. government passport offices) that have the power to cheat the system
 
-**14. Decentralized contribution metrics**
+### 14. Decentralized contribution metrics
 
 Incentivizing the production of public goods is, unfortunately, not the only problem that centralization solves. The other problem is determining, first, which public goods are worth producing in the first place and, second, determining to what extent a particular effort actually accomplished the production of the public good. This challenge deals with the latter issue. Although in the case of computational tasks it's easy to come up with a proof of solution, for non-computational tasks the situation is much more difficult. If a cryptoeconomic system wants to incentivize users to build better graphical user interfaces to its own system, how would it rate people's contributions? [Even more problematically](http://en.wikipedia.org/wiki/Underhanded_C_Contest), what about potentially quasi-adversarial tasks like incentivizing updates to its own code? What about a DAO that funds healthcare, or tries to incentivize adopting renewable energy?
 
@@ -369,7 +369,7 @@ This is a subclass of the general "social proof" problem; here, the particular c
 * The agents involved can be a combination of individual humans, teams of humans, AIs, simple software programs and other DAOs
 * There is no cryptographically verifiable information about the completion of any task; the system must rely entirely on some form of social proof
 
-**16. Decentralized success metrics**
+### 16. Decentralized success metrics
 
 Another, related, problem to the problem of decentralized contribution metrics is the problem of decentralized success metrics. On the macroscopic scale, how do we know if, and to what extent, an organization has succeeded in accomplishing its objectives? In the case of something like Bitcoin, there is a simple, but imperfect, answer: success can be measured by the hashpower of the network. This setup is reasonably effective, but is flawed in two ways: first, hashpower is an imperfect proxy for price, because the development or nondevelopment of ASICs may skew the results, and second, price is an imperfect proxy for success, because the currency may have greater success as something with a lower market capitalization if it is more used in other ways. In the case of a DAO funding healthcare or anti-climate-change efforts, however, no such heuristic exists at all. Once again, some concept of social proof is the only option.
 
