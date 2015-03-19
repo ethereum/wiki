@@ -793,10 +793,11 @@ params: [
 "id":1,
 "jsonrpc":"2.0",
 "result": {
+    "status": "mined", // or "pending"
     "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
     "nonce":"0x",
-    "blockHash": "0x6fd9e2a26abeab0aa2411c6ef2fc5426d6adb7ab17f30a99d3cb96aed1d1055b",
-    "blockNumber": "0x15df", // 5599
+    "blockHash": "0x6fd9e2a26ab...", // or null if pending
+    "blockNumber": "0x15df", // 5599 // or null if pending
     "transactionIndex":  "0x1", // 1
     "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     "to":"0x85h43d8a49eeb85d32cf465507dd71d507100c1",
@@ -1099,12 +1100,13 @@ params: ["0x16"] // 22
 "id":1,
 "jsonrpc":"2.0",
 "result": [{
+  "status": "mined", // or "pending"
   "hash": "0x5785ac562ff41e2dcfdf8216c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
   "address": "0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
   "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  "blockNumber":"0x1b4" // 436
-  "transactionHash":  "0x1e2dcfdf8216c5785ac562ff41e2dcf5785ac562ff4df829c5a142f1fccd7d"
-  "blockHash": "0x62ff4df829c5a142f1fccd7d1e2dcfdf8216c5785ac562ff41e2dcf5785ac5"
+  "blockNumber":"0x1b4" // 436 // or null, if pending
+  "blockHash": "0x62ff4df829c5..." // or null, if pending
+  "transactionHash":  "0x1e2dcfdf821..."
   "transactionIndex": "0x0" // 0
   "logIndex": "0x1" // 1
   }]
