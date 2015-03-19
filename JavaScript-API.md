@@ -662,10 +662,11 @@ If you pass an optional callback the HTTP request is made asynchronous. See [thi
 
 **Returns** a transaction object its hash `transactionHash`:
 
+  * `status`: "mined" or "pending"
   * `hash` (32-byte hash): The hash of the transaction.
   * `nonce` (32-byte hash): The transaction nonce.
-  * `blockHash` (32-byte hash): the blocks hash, where this transaction appeared
-  * `blockNumber` (integer):  the blocks number, where this transaction appeared
+  * `blockHash` (32-byte hash): the blocks hash, where this transaction appeared, `null` when pending
+  * `blockNumber` (integer):  the blocks number, where this transaction appeared, `null` when pending
   * `transactionIndex` (integer):  the index a t which this transaction appeared in the block
   * `to` (20-byte address): The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction.
   * `from` (20-byte address): The cryptographically verified address from which the transaction was sent .
@@ -812,7 +813,7 @@ filter.watch(function (result) {
         address: '0x0123123121',
         topics: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
         data: "0x0000000000000000000000000000000000000000000000000000000000000001",
-        number: 2
+        ...
     }
     */
 });
@@ -894,22 +895,32 @@ web3.eth.filter(contractObject [, options])
 
 If its a log filter it returns a list of log entries; each includes the following fields:
 
+* `status`: "pending" or "mined"
 * `address`: The address of the account whose execution of the message resulted in the log entry being made.
 * `topics`: The topic(s) of the log.
 * `data`: The associated data of the log.
-* `number`: The block number from which this log is.
+* `blockNumber`: The block number from at which this event happened.
+* `blockHash`: The block hash from at which this event happened.
+* `transactionHash`: The transaction hash from at which this event happened.
+* `transactionIndex`: The transaction index from at which this event happened.
+* `logIndex`: The log index
 
 If its an event filter it returns a filter object with the return values of event:
 
+* `status`: "pending" or "mined"
 * `args`: The arguments coming from the event
 * `topics`: The topic(s) of the log.
-* `number`: The block number from at which this event happened.
+* `blockNumber`: The block number from at which this event happened.
+* `blockHash`: The block hash from at which this event happened.
+* `transactionHash`: The transaction hash from at which this event happened.
+* `transactionIndex`: The transaction index from at which this event happened.
+* `logIndex`: The log index
 
 ```javascript
 var filter = web3.eth.filter('pending');
 
 filter.watch(function (log) {
-  console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
+  console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000", ...}
 });
 
 var myResults = filter.get();
