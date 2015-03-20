@@ -697,11 +697,22 @@ signature.
 
 ## Layout of Storage
 
-Variables of finite size (everything except mapping types) are laid out contiguously in storage
-starting from position `0`. Due to their unpredictable size, mapping types use a `sha3`
-computation to find the position of the value in the following way: The mapping itself
+Statically-sized variables (everything except mapping and dynamically-sized array types) are laid out contiguously in storage starting from position `0`. Multiple items that need less than 32 bytes are packed into a single storage slot if possible, according to the following rules:
+
+- The first item in a storage slot is stored lower-order aligned.
+- Elementary types use only that many bytes that are necessary to store them.
+- If an elementary type does not fit the remaining part of a storage slot, it is moved to the next storage slot.
+- Structs and array data always start a new slot and occupy whole slots (but items inside a struct or array are packed tightly according to these rules).
+
+The elements of structs and arrays are stored after each other, just as if they were given explicitly.
+
+Due to their unpredictable size, mapping and dynamically-sized array types use a `sha3`
+computation to find the starting position of the value or the array data. These starting positions are always full stack slots.
+
+The mapping or the dynamic array itself
 occupies an (unfilled) slot in storage at some position `p` according to the above rule (or by
-recursively applying this rule for mappings to mappings). The value corresponding to key
+recursively applying this rule for mappings to mappings or arrays of arrays). For a dynamic array, this slot stores the number of elements in the array. For a mapping, the slot is unused (but it is needed so that two equal mappings after each other will use a different hash distribution).
+Array data is located at `sha3(p)` and the value corresponding to a mapping key
 `k` is located at `sha3(k . p)` where `.` is concatenation. If the value is again a
 non-elementary type, the positions are found by adding an offset of `sha3(k . p)`.
 
