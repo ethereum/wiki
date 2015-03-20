@@ -32,7 +32,7 @@ You can also specify JSON-RPC port (default is 8080):
 |-------|:------------:|:-----------:|
 | JSON-RPC 1.0 | &#x2713; | |
 | JSON-RPC 2.0 | &#x2713; | &#x2713; |
-| Batch requests | &#x2713; | | 
+| Batch requests | &#x2713; |  &#x2713; | 
 | HTTP | &#x2713; | &#x2713; |
 
 
