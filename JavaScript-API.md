@@ -101,6 +101,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [filter(array (, options) )](#web3ethfilter)
         - [watch(callback)](#web3ethfilter)
         - [stopWatching(callback)](#web3ethfilter)
+        - [uninstall(callback)](#web3ethfilter)
         - [get()](#web3ethfilter)
     * [getCompilers()](#web3ethgetcompilers) -> array of strings
     * [compile.lll(string)](#web3ethcompilelll) -> hexString
@@ -121,6 +122,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [filter(object/string)](#web3shhfilter)
       * [watch(callback)](#web3shhfilter)
       * [stopWatching(callback)](#web3shhfilter)
+      * [uninstall(callback)](#web3shhfilter)
       * [get(callback)](#web3shhfilter)
 
 # Usage
@@ -835,7 +837,9 @@ myEvent.watch(function(result){
 
 var myResults = myEvent.get();
 
-myEvent.stopWatching();
+...
+
+myEvent.stopWatching(); // or myEvent.uninstall() to remove the filter
 ```
 
 ***
@@ -887,9 +891,10 @@ web3.eth.filter(contractObject [, options])
 **Returns** a filter object with the following methods:
 
 #### Filter Methods:
+  * `filter.get()`: Returns all of the log entries that fit the filter.
   * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback.
   * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
-  * `filter.get()`: Returns all of the log entries that fit the filter.
+  * `filter.uninstall()`: Uninstalls the filter permanently
 
 #### Callback return values
 
@@ -925,7 +930,9 @@ filter.watch(function (log) {
 
 var myResults = filter.get();
 
-filter.stopWatching();
+...
+
+filter.stopWatching(); // or filter.uninstall(); to permanently remove the filter 
 
 ```
 
@@ -1208,7 +1215,11 @@ A simple HTML snippet that will display the user's primary account balance of Et
 web3.eth.filter('pending').watch(function() {
     var balance = web3.eth.getBalance(web3.eth.coinbase);
     document.getElementById("ether").innerText = balance.toString(10);
-  });
+});
+
+...
+
+filter.stopWatching(); // or filter.uninstall(); to permanently remove the filter 
 </script>
 </body></html>
 ```
