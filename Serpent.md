@@ -451,7 +451,7 @@ There are also special commands for a few crypto operations; particularly:
 * `x = sha256(a, items=4)` - returns the sha256 hash of the 128 bytes consisting of the 4-item array starting from `a`
 * `x = ripemd160(a, items=4)` - same as above but for ripemd160
 * To hash an arbitrary number of bytes, use chars syntax.  Example: `x = sha256([0xf1fc122bc7f5d74df2b9441a42a1469500000000000000000000000000000000], chars=16)` - returns the sha256 of the first 16 bytes.  Note: padding with trailing zeroes, otherwise the first 16 bytes will be zeroes, and the sha256 of it will be computed instead of the desired.
-* you can also use sha3 instead of sha256, e.g. sha3(a, items=4)
+* you can also use sha3 instead of sha256, e.g. `sha3(a, items=4)`
 ### Tips
 
 * If a function is not returning the result you expect, double-check that all variables are correct: there is no error/warning when using an undeclared variable.
