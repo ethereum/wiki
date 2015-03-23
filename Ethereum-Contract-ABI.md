@@ -117,7 +117,7 @@ Given an event name and series of event parameters, we split them into two sub-s
 In effect, a log entry using this ABI is described as:
 
 - `address`: the address of the contract (intrinsically provided by Ethereum);
-- `topics[0]`: `keccak(EVENT_NAME+"("+EVENT_ARGS.map(canonical_type_of).join(",")+")")` (`canonical_type_of` is a function that simply returns the canonical type of a given argument, e.g. for `uint indexed foo`, it would return `uint256`);
+- `topics[0]`: `keccak(EVENT_NAME+"("+EVENT_ARGS.map(canonical_type_of).join(",")+")")` (`canonical_type_of` is a function that simply returns the canonical type of a given argument, e.g. for `uint indexed foo`, it would return `uint256`). If the event is declared as `anonymous` the topic[0] is not generated;
 - `topics[n]`: `EVENT_INDEXED_ARGS[n - 1]` (`EVENT_INDEXED_ARGS` is the series of `EVENT_ARGS` that are indexed);
 - `data`: `abi_serialise(EVENT_NON_INDEXED_ARGS)` (`EVENT_NON_INDEXED_ARGS` is the series of `EVENT_ARGS` that are not indexed, `abi_serialise` is the ABI serialisation function used for returning a series of typed values from a function, as described above).
 
@@ -140,6 +140,7 @@ An event description is a JSON object with fairly similar fields:
 * `name`: the name of the parameter;
 * `type`: the canonical type of the parameter.
 * `indexed`: `true` if the field is part of the log's data segment, `false` if it one of the log's topics.
+* `anonymous`: `true` if the event was declared as `anonymous`.
 
 For example, 
 
@@ -160,6 +161,10 @@ would result in the JSON:
 "type":"event",
 "inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
 "name":"Event"
+}, {
+"type":"event",
+"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
+"name":"Event2"
 }, {
 "type":"event",
 "inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
