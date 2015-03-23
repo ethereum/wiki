@@ -32,9 +32,7 @@ Look at the following examples:
 // 1.0101010032432535e+38
 ```
 
-Ethereum.js depends on the [BigNumber Library](https://github.com/MikeMcl/bignumber.js/) dependency, so you need to add it to your project if not present.
-
-To make easy calculations with *wei* balances use the following:
+Ethereum.js depends on the [BigNumber Library](https://github.com/MikeMcl/bignumber.js/) and adds it automatically.
 
 ```js
 var balance = new BigNumber('131242344353464564564574574567456');
