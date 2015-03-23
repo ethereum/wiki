@@ -380,7 +380,7 @@ to and from all integer types but implicit conversion is not allowed. The variab
 
 ```
 contract test {
-    enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill };
+    enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
     ActionChoices choices;
     ActionChoices constant defaultChoice = ActionChoices.GoStraight;
     function setGoStraight()
@@ -393,10 +393,9 @@ contract test {
     }
     function getDefaultChoice() returns (uint)
     {
-        return defaultChoice;
+        return uint(defaultChoice);
     }
-}
-```
+}```
 
 ## Interfacing with other Contracts
 
