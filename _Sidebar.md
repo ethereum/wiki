@@ -20,8 +20,10 @@
 - [NatSpec Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format)
 - [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
 
-### Third-party Development
+### Infrastructure Development
 - [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
+- [URL Hint Protocol](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol)
+- [NatSpec Determination](https://github.com/ethereum/wiki/wiki/NatSpec-Determination)
 - [Exchange Integration](https://github.com/ethereum/wiki/wiki/Exchange-Integration)
 - [Mining Howto](https://github.com/ethereum/wiki/wiki/Mining-Howto)
 - [Licencing](https://github.com/ethereum/wiki/wiki/Licencing)
