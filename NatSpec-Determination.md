@@ -4,5 +4,5 @@ The former will ultimately be accomplished through a sophisticated reputation sy
 
 This will have a specific address on the PoC-9 & Frontier testnet, probably referenced from the Ethereum services contract.
 
-The latter, content publishing and distribution, will ultimately be accomplished through the "Swarm" subsystem or IPFS. Until then, we will piggy back on the existing workaround for content-based publication and distribution; the [URL Hint](https://github.com/ethereum/wiki/wiki/URL-Hint) system.
+The latter, content publishing and distribution, will ultimately be accomplished through the "Swarm" subsystem or IPFS. Until then, we will piggy back on the existing workaround for content-based publication and distribution; the [URL Hint](https://github.com/ethereum/wiki/wiki/URL-Hinting) system.
 
