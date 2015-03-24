@@ -395,7 +395,8 @@ contract test {
     {
         return uint(defaultChoice);
     }
-}```
+}
+```
 
 ## Interfacing with other Contracts
 
