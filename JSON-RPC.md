@@ -66,7 +66,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_getTransactionByHash](#eth_gettransactionbyhash)
 * [eth_getTransactionByBlockHashAndIndex](#eth_gettransactionbyblockhashandindex)
 * [eth_getTransactionByBlockNumberAndIndex](#eth_gettransactionbynumberandindex)
-* [eth_getUnclebyBlockHashAndIndex](#eth_getunclebyblockhashandindex)
+* [eth_getUncleByBlockHashAndIndex](#eth_getunclebyblockhashandindex)
 * [eth_getUncleByBlockNumberAndIndex](#eth_getunclebyblocknumberandindex)
 * [eth_getCompilers](#eth_getcompilers)
 * [eth_compileLLL](#eth_compileLLL)
