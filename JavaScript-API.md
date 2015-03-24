@@ -107,10 +107,10 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [compile.serpent(string)](#web3ethcompileserpent) -> hexString
     * [flush](#web3ethflush)
   * [db](#web3db)
-    * [put(name, key, value)](#web3dbput)
     * [putString(name, key, value)](#web3dbputstring)
-    * [get(name, key)](#web3dbget)
     * [getString(name, key)](#web3dbgetstring)
+    * [putHex(name, key, value)](#web3dbputhex)
+    * [getHex(name, key)](#web3dbgethex)
   * [shh](#web3shh)
     * [post(postObject)](#web3shhpost)
     * [newIdentity()](#web3shhnewidentity)
@@ -1022,54 +1022,43 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ***
 
-##### web3.db.put
-This method should be called, when we want to store number in local leveldb database.
-First param is db name, second is the key, and third is the value.
-```javascript
-var result = web3.db.put('test', 'key', "5");
-console.log(result); // true
-
-var value = web3.db.get('test', 'key');
-console.log(value); // "0x05"
-```
-
-***
-
 ##### web3.db.putString
-This method should be called, when we want to store string in local leveldb database.
+This method should be called, when we want to store a string in a local leveldb database.
 First param is db name, second is the key, and third is the string value.
 ```javascript
-var result = web3.db.putString('test', 'key', "5")
+var result = web3.db.putString('testDB', 'key', 'myString')
 console.log(result); // true
-
-var value = web3.db.get('test', 'key');
-console.log(value); // "5"
-```
-
-***
-
-##### web3.db.get
-This method should be called, when we want to get number value from local leveldb database.
-First param is db name and second is the key of value.
-```javascript
-var result = web3.db.put('test', 'key', "5");
-console.log(result); // true
-
-var value = web3.db.get('test', 'key');
-console.log(value); // "0x05"
 ```
 
 ***
 
 ##### web3.db.getString
-This method should be called, when we want to get string value from local leveldb database.
+This method should be called, when we want to get string from local leveldb database.
 First param is db name and second is the key of string value.
 ```javascript
-var result = web3.db.putString('test', 'key', "5")
+var value = web3.db.get('testDB', 'key');
+console.log(value); // "myString"
+```
+
+***
+
+##### web3.db.putHex
+This method should be called, when we want to store HEX in a local leveldb database.
+First param is db name, second is the key, and third is the value.
+```javascript
+var result = web3.db.put('testDB', 'key', '0x4f554b443');
 console.log(result); // true
 
-var value = web3.db.get('test', 'key');
-console.log(value); // "5"
+```
+
+***
+
+##### web3.db.getHex
+This method should be called, when we want to get a HEX value from a local leveldb database.
+First param is db name and second is the key of value.
+```javascript
+var value = web3.db.get('testDB', 'key');
+console.log(value); // "0x4f554b443"
 ```
 
 ***
