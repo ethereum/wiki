@@ -777,7 +777,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{see above}]
 
 #### eth_flush
 
-[not described yet]
+(?)
 
 
 ##### Parameters
@@ -820,7 +820,27 @@ params: [
 
 ##### Returns
 
-`Object` - A block object.
+`Object` - A block object:
+
+  - `number`: `HEX String` - integer of the block number.
+  - `hash`: `HEX String` - 32-byte hash of the block.
+  - `parentHash`: `HEX String` - 32-byte hash of the paretn block.
+  - `nonce`: `HEX String` - integer of the block nonce (?).
+  - `sha3Uncles`: `HEX String` - SHA3 of all uncle (?).
+  - `logsBloom`: `HEX String` - bloom (?).
+  - `transactionsRoot`: `HEX String` - (?).
+  - `stateRoot`: `HEX String` - (?).
+  - `miner`: `HEX String` - the address of the miner, who minded this block.
+  - `difficulty`: `HEX String` - integer of the difficulty for this block.
+  - `totalDifficulty`: `HEX String` - integer of the total difficulty up until this block (?).
+  - `extraData`: `HEX String` - byte array of extra data add to this block (?),
+  - `size`: `HEX String` - integer the size of this block in bytes.
+  - `gasLimit`: `HEX String` - integer of the maximum gas allowed in this block (?).
+  - `minGasPrice`: `HEX String` - the minimal (?).
+  - `gasUsed`: `HEX String` - the total used gas by all transactions in this block (?).
+  - `timestamp`: `HEX String` - the unix timestamp when the block was mined (?).
+  - `transactions`: `Array` - Array of transaction objects, or transaction hashes depending on the last parameter.
+  - `uncles`: `Array` - Array of uncle hashes.
 
 
 ##### Example
@@ -842,17 +862,15 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0
   "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
   "stateRoot": "0xd5855eb08b3387c0af375e9cdb6acfc05eb8f519e419b874b6ff2ffda7ed1dff",
   "miner": "0x4e65fda2159562a496f9f3522f89122a3088497a",
-  "difficulty": "0x027f07", // 163591 big int?
-  "totalDifficulty":  "0x027f07", // 163591 big int
-  "size":  "0x027f07", // 163591 big int? of bytes
+  "difficulty": "0x027f07", // 163591
+  "totalDifficulty":  "0x027f07", // 163591
   "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "gasLimit": "0x9f759", // 653145 big int?
-  "minGasPrice": "0x9f759", // 653145 big int
-  "gasUsed": "0x9f759", // 653145 big int?
+  "size":  "0x027f07", // 163591
+  "gasLimit": "0x9f759", // 653145
+  "minGasPrice": "0x9f759", // 653145
+  "gasUsed": "0x9f759", // 653145
   "timestamp": "0x54e34e8e" // 1424182926
-  "transactions": [{
-      // see eth_transaction objects
-   },{ ... }] // or array of hashes, if the last given parameter if is FALSE
+  "transactions": [{...},{ ... }] 
    "uncles": ["0x1606e5...", "0xd5145a9..."]
   }
 }
