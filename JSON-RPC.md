@@ -160,9 +160,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 
 // Result
 {
-"id":64,
-"jsonrpc": "2.0",
-"result": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+  "id":64,
+  "jsonrpc": "2.0",
+  "result": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
 }
 ```
 
@@ -186,9 +186,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],
 
 // Result
 {
-"id":67,
-"jsonrpc":"2.0",
-"result": "AlethZero/0.0.1"
+  "id":67,
+  "jsonrpc":"2.0",
+  "result": "AlethZero/0.0.1"
 }
 ```
 
@@ -212,9 +212,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67
 
 // Result
 {
-"id":67,
-"jsonrpc":"2.0",
-"result": "0.0.1"
+  "id":67,
+  "jsonrpc":"2.0",
+  "result": "0.0.1"
 }
 ```
 
@@ -238,9 +238,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":
 
 // Result
 {
-"id":67,
-"jsonrpc":"2.0",
-"result":true
+  "id":67,
+  "jsonrpc":"2.0",
+  "result":true
 }
 ```
 
@@ -264,9 +264,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":
 
 // Result
 {
-"id":74,
-"jsonrpc": "2.0",
-"result": "0x2" // 2
+  "id":74,
+  "jsonrpc": "2.0",
+  "result": "0x2" // 2
 }
 ```
 
@@ -291,9 +291,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":6
 
 // Result
 {
-"id":64,
-"jsonrpc": "2.0",
-"result": "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
+  "id":64,
+  "jsonrpc": "2.0",
+  "result": "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
 }
 ```
 
@@ -317,9 +317,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}
 
 // Result
 {
-"id":71,
-"jsonrpc": "2.0",
-"result": true
+  "id":71,
+  "jsonrpc": "2.0",
+  "result": true
 }
 
 ```
@@ -344,9 +344,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":7
 
 // Result
 {
-"id":73,
-"jsonrpc": "2.0",
-"result": "0x09184e72a000" // 10000000000000
+  "id":73,
+  "jsonrpc": "2.0",
+  "result": "0x09184e72a000" // 10000000000000
 }
 ```
 
@@ -371,9 +371,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1
 
 // Result
 {
-"id":1,
-"jsonrpc": "2.0",
-"result": ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
 }
 ```
 
@@ -397,9 +397,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id
 
 // Result
 {
-"id":83,
-"jsonrpc": "2.0",
-"result": "0x4b7" // 1207
+  "id":83,
+  "jsonrpc": "2.0",
+  "result": "0x4b7" // 1207
 }
 ```
 
@@ -433,9 +433,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407
 
 // Result
 {
-"id":1,
-"jsonrpc": "2.0",
-"result": "0x0234c8a3397aab58" // 158972490234375000
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x0234c8a3397aab58" // 158972490234375000
 }
 ```
 
@@ -473,9 +473,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x4
 
 // Result
 {
-"id":1,
-"jsonrpc": "2.0",
-"result": "0x03"
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x03"
 }
 ```
 
@@ -510,9 +510,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params
 
 // Result
 {
-"id":1,
-"jsonrpc": "2.0",
-"result": "0x1" // 1
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x1" // 1
 }
 ```
 
@@ -545,26 +545,22 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHa
 
 // Result
 {
-"id":1,
-"jsonrpc": "2.0",
-"result": "0xb" // 11
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0xb" // 11
 }
 ```
 
 ***
 
-#### `eth_getBlockTransactionCountByNumber`
-*returns the number of transactions in block of given number*
+#### eth_getBlockTransactionCountByNumber
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xe8"],"id":1}'
-```
+Returns the number of transactions in a block from a block matching the given block number.
+
 
 ##### Parameters
 
-0. number of a block
+1. `HEX String` - integer of a block number
 
 ```js
 params: [
@@ -572,29 +568,33 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
+`HEX String` - integer of the number of transactions in this block.
+
+##### Example
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xe8"],"id":1}'
+
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": "0x1"
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0xa" // 10
 }
 ```
 
 ***
 
-#### `eth_getUncleCountByBlockHash`
-*returns the number of uncles for block of given hash*
+#### eth_getUncleCountByBlockHash
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id"Block:1}'
-```
+Returns the number of uncles in a block from a block matching the given block hash.
+
 
 ##### Parameters
 
-0. hash of a block
+1. `HEX String` - hash of a block
 
 ```js
 params: [
@@ -602,29 +602,34 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
+`HEX String` - integer of the number of uncles in this block.
+
+
+##### Example
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id"Block:1}'
+
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": "0x1"
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x1" // 1
 }
 ```
 
 ***
 
-#### `eth_getUncleCountByBlockNumber`
-*returns the number of uncles for block of given number*
+#### eth_getUncleCountByBlockNumber
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockNumber","params":["0xe8"],"id":1}'
-```
+Returns the number of uncles in a block from a block matching the given block number.
+
 
 ##### Parameters
 
-0. number of a block
+1. `HEX String` - integer of a block number
 
 ```js
 params: [
@@ -632,31 +637,35 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
+`HEX String` - integer of the number of uncles in this block.
+
+
+##### Example
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockNumber","params":["0xe8"],"id":1}'
+
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": "0x1"
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x1" // 1
 }
 ```
 
 ***
 
-#### `eth_getCode`
-*returns code of the account at a given address*
+#### eth_getCode
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "latest"],"id":1}'
-```
+Returns code at a given address.
+
 
 ##### Parameters
 
-0. address as hex string
-1. `HEX String|String` - integer block number, or the string `"latest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
-
+1. address as hex string
+2. `HEX String|String` - integer block number, or the string `"latest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -665,102 +674,124 @@ params: [
 ]
 ```
 
-##### Response Example
-```json
+##### Returns
+
+`HEX String` - the code from the given address.
+
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "latest"],"id":1}'
+
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result":"0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 }
 ```
 
 ***
 
-#### `eth_sendTransaction`
-*creates new message call transaction.*
+#### eth_sendTransaction
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[see below],"id":1}'
-```
+Creates new message call transaction or a contract creation, if the data field contains code.
+
 ##### Parameters
 
-0. The transaction object
+1. `Object` - The transaction object
+  - `from`: `HEX String` - The address the transaction is send from.
+  - `to`: `HEX String`  - The address the transaction is directed to.
+  - `gas`: `HEX String`  - Integer of the gas provided for the transaction execution. It will return unused gas.
+  - `gasPrice`: `HEX String`  - Integer of the gasPrice used for each payed gas
+  - `value`: `HEX String`  - Integer of the value send with this transaction
+  - `data`: `HEX String`  - The compiled code of a contract
 
 ```js
 params: [{
   "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
   "to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
-  "gas": "0x76c0",// 30400,
-  "gasPrice": "0x9184e72a000", // hex of a big int
-  "value": "0x9184e72a000", // hex of a big int
+  "gas": "0x76c0", // 30400,
+  "gasPrice": "0x9184e72a000", // 10000000000000
+  "value": "0x9184e72a", // 2441406250
   "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
 }]
 ```
 
-##### Response Example
-```json
-{
-"id":1,
-"jsonrpc":"2.0",
-"result":"0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
-}
-```
+##### Returns
 
-***
-
-#### `eth_call`
-*executes new message call immediately without creating a transaction on the block chain.*
+`HEX String` - the address of the newly created contract, or the transaction hash.
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[see below],"id":1}'
-```
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[{see above}],"id":1}'
 
-##### Parameters
-
-0. The call object
-1. `HEX String|String` - integer block number, or the string `"latest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
-
-
-
-```js
-params: [{
-  "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155", (optional)
-  "to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675", (optional)
-  "gas": "0x76c0", (optional) // 30400,
-  "gasPrice": "0x9184e72a000", (optional) // hex of a big int
-  "value": "0x9184e72a000", (optional) // hex of a big int
-  "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675" (optional)
-}, 'latest']
-```
-
-##### Response Example
-```json
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result":"0x0000000000000000000000000000000000000000000000000000000000000015"
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 }
 ```
 
 ***
 
-#### `eth_flush`
+#### eth_call
+
+Executes a new message call immediately without creating a transaction on the block chain.
+
+
+##### Parameters
+
+1. `Object` - The transaction call object
+  - `from`: `HEX String` - The address the transaction is send from.
+  - `to`: `HEX String`  - The address the transaction is directed to.
+  - `gas`: `HEX String`  - Integer of the gas provided for the transaction execution. It will return unused gas.
+  - `gasPrice`: `HEX String`  - Integer of the gasPrice used for each payed gas
+  - `value`: `HEX String`  - Integer of the value send with this transaction
+  - `data`: `HEX String`  - The compiled code of a contract
+2. `HEX String|String` - integer block number, or the string `"latest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+
+See: [eth_sendTransaction Parameters](#eth_sendtransaction)
+
+##### Returns
+
+`HEX String` - the return value of executed contract.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{see above}],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x0"
+}
+```
+
+***
+
+#### eth_flush
+
+[not described yet]
+
+
+##### Parameters
+none
+
+##### Returns
+none
 
 ##### Example
 ```js
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_flush","params":[],"id":64}'
-```
 
-##### Parameters
-none
-
-##### Response Example
-```json
+// Result
 {
 "id":1,
 "jsonrpc":"2.0",
@@ -770,19 +801,15 @@ none
 
 ***
 
-#### `eth_getBlockByHash`
-*returns block info for block with given hash.*
+#### eth_getBlockByHash
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", true],"id":1}'
-```
+Returns information about a block by hash.
+
 
 ##### Parameters
 
-0. hash of a block
-1. include transaction objects (If FALSE it only includes the hashes in an array)
+1. `HEX String` - Hash of a block.
+2. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
 params: [
@@ -791,8 +818,17 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
+`Object` - A block object.
+
+
+##### Example
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", true],"id":1}'
+
+// Result
 {
 "id":1,
 "jsonrpc":"2.0",
@@ -824,7 +860,7 @@ params: [
 
 ***
 
-#### `eth_getBlockByNumber`
+#### eth_getBlockByNumber
 *returns block info for block with given number.*
 
 ##### Example
@@ -850,7 +886,7 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
-#### `eth_getTransactionByHash`
+#### eth_getTransactionByHash
 *returns transaction with hash*
 
 ##### Example
@@ -893,7 +929,7 @@ params: [
 
 ***
 
-#### `eth_getTransactionByBlockHashAndIndex`
+#### eth_getTransactionByBlockHashAndIndex
 *returns transaction with number[0] from the block with hash["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"]*
 
 ##### Example
@@ -919,7 +955,7 @@ See [eth_getTransactionByHash](#eth_gettransactionbyhash)
 
 ***
 
-#### `eth_getTransactionByBlockNumberAndIndex`
+#### eth_getTransactionByBlockNumberAndIndex
 *returns transaction from the block with number[668] at positon number[0]*
 
 ##### Example
@@ -945,7 +981,7 @@ See [eth_getTransactionByHash](#eth_gettransactionbyhash)
 
 ***
 
-#### `eth_getUncleByBlockHashAndIndex`
+#### eth_getUncleByBlockHashAndIndex
 *returns uncle from the block with hash  "0xc6ef2fc5426d6ad6fd9e2a..." at index positon 0*
 
 ##### Example
@@ -973,7 +1009,7 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
-#### `eth_getUncleByBlockNumberAndIndex`
+#### eth_getUncleByBlockNumberAndIndex
 *returns uncle from the block with number 668 at index position 0*
 
 ##### Example
@@ -1001,7 +1037,7 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
-#### `eth_getCompilers`
+#### eth_getCompilers
 *returns list of available compilers for the client*
 
 ##### Example
@@ -1024,7 +1060,7 @@ none
 
 ***
 
-#### `eth_compileSolidity`
+#### eth_compileSolidity
 *returns compiled solidity code*
 
 ##### Example
@@ -1054,7 +1090,7 @@ params: [
 
 ***
 
-#### `eth_compileLLL`
+#### eth_compileLLL
 *returns compiled lll code*
 
 ##### Example
@@ -1069,7 +1105,7 @@ params: [
 
 ***
 
-#### `eth_compileSerpent`
+#### eth_compileSerpent
 *returns compiled serpent code*
 
 ##### Example
@@ -1084,7 +1120,7 @@ params: [
 
 ***
 
-#### `eth_newFilter`
+#### eth_newFilter
 *creates watch object to notify, when state changes in particular way, defined by given filter object. Returns new filter id.*
 
 ##### Example
@@ -1115,7 +1151,7 @@ params: [{
 
 ***
 
-#### `eth_newBlockFilter`
+#### eth_newBlockFilter
 *creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new watch id. To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges)*
 
 ##### Example
@@ -1143,7 +1179,7 @@ params: ["pending"]
 
 ***
 
-#### `eth_uninstallFilter`
+#### eth_uninstallFilter
 *uninstalls a filter with given id. Should always be called when watch is no longer needed.*
 
 ##### Example
@@ -1171,7 +1207,7 @@ params: ["0x1"] // 1
 
 ***
 
-#### `eth_getFilterChanges`
+#### eth_getFilterChanges
 *polling method for a filter, which returns an array of logs which occurred since last poll*
 
 ##### Example
@@ -1209,7 +1245,7 @@ params: ["0x16"] // 22
 
 ***
 
-#### `eth_getFilterLogs`
+#### eth_getFilterLogs
 *returns an array of all logs matching filter with given id*
 
 ##### Example
@@ -1231,7 +1267,7 @@ See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ***
 
-#### `eth_getLogs`
+#### eth_getLogs
 *returns an array of all logs matching filter object*
 
 ##### Example
@@ -1253,7 +1289,7 @@ See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ***
 
-#### `eth_getWork`
+#### eth_getWork
 *returns the hash of current block, the seedHash, and the difficulty to be met.*
 
 ##### Example
@@ -1286,7 +1322,7 @@ The third is the difficulty required to solve.
 
 ***
 
-#### `eth_submitWork`
+#### eth_submitWork
 *Used for submitting a solution to the proof-of-work. The return value is true if the submission is valid.*
 
 ##### Example
@@ -1321,7 +1357,7 @@ params: ["0x1234567890abcdef1234567890abcdef"]
 
 ***
 
-#### `db_putString`
+#### db_putString
 *stores a string in the local database.*
 
 ##### Example
@@ -1355,7 +1391,7 @@ params: [
 
 ***
 
-#### `db_getString`
+#### db_getString
 *returns string from the local database.*
 
 ##### Example
@@ -1387,7 +1423,7 @@ params: [
 
 ***
 
-#### `db_putHex`
+#### db_putHex
 *stores binary data in the local database.*
 
 ##### Example
@@ -1421,7 +1457,7 @@ params: [
 
 ***
 
-#### `db_getHex`
+#### db_getHex
 *returns binary data from the local database.*
 
 ##### Example
@@ -1453,7 +1489,7 @@ params: [
 
 ***
 
-#### `shh_post`
+#### shh_post
 *sends whisper message*
 
 ##### Example
@@ -1487,7 +1523,7 @@ params: [{
 
 ***
 
-#### `shh_newIdentinty`
+#### shh_newIdentinty
 *creates new whisper identity*
 
 ##### Example
@@ -1510,7 +1546,7 @@ none
 
 ***
 
-#### `shh_hasIdentity`
+#### shh_hasIdentity
 *returns true if client has given identity*
 
 ##### Example
@@ -1538,7 +1574,7 @@ params: ["0xc931d93e97ab07fe42d9234..."]
 
 ***
 
-#### `shh_newGroup`
+#### shh_newGroup
 
 ##### Example
 ```js
@@ -1552,7 +1588,7 @@ params: ["0xc931d93e97ab07fe42d9234..."]
 
 ***
 
-#### `shh_addToGroup`
+#### shh_addToGroup
 
 ##### Example
 ```js
@@ -1566,7 +1602,7 @@ params: ["0xc931d93e97ab07fe42d9234..."]
 
 ***
 
-#### `shh_newFilter`
+#### shh_newFilter
 *creates filter object to notify, when client receives whisper message matching particular format, defined by filter. Returns new filter id.*
 
 ##### Example
@@ -1597,7 +1633,7 @@ params: [{
 
 ***
 
-#### `shh_uninstallFilter`
+#### shh_uninstallFilter
 *uninstalls watch with given id. Should always be called when watch is no longer needed.*
 
 ##### Example
@@ -1625,7 +1661,7 @@ params: ["0x7"] // 7
 
 ***
 
-#### `shh_getFilterChanges`
+#### shh_getFilterChanges
 *polling method, which returns array of messages which are received since last poll*
 
 ##### Example
@@ -1663,7 +1699,7 @@ params: ["0x7"] // 7
 
 ***
 
-#### `shh_getMessages`
+#### shh_getMessages
 *returns array of whisper messages received by filter with given id.*
 
 ##### Example
