@@ -571,7 +571,7 @@ If you pass an optional callback the HTTP request is made asynchronous.
   * `number` (integer): The number of this block.
   * `hash` (32-byte hash): The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header).
   * `parentHash` (32-byte hash): The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header).
-  * `nonce`: (32-byte hash)
+  * `nonce`: the nonce of the block.
   * `sha3Uncles` (32-byte hash): The SHA3 of the RLP-encoded dump of the uncles portion of the block.
   * `logsBloom` (32-byte hash): The bloom filter of this block.  
   * `stateRoot` (32-byte hash): The root of the state trie.
