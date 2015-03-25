@@ -16,6 +16,23 @@ CPP: http://localhost:8080
 GO: http://localhost:8545
 ```
 
+##### Go
+
+You can start the HTTP JSON-RPC with the `--rpc` flag
+```bash
+ethereum --rpc
+```
+
+change the default port (8545) and listing address (localhost) with:
+
+```bash
+ethereum --rpc --rpcaddr <ip> --rpcport <portno>
+```
+
+The RPC can also be started from the CLI using the `admin.startRPC(addr, port)` command.
+
+##### C++
+
 You can start it by running `eth` application with `-j` option:
 ```bash
 ./eth -j
