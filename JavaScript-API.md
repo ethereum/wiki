@@ -83,7 +83,6 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [defaultBlock](#web3ethdefaultblock) -> Integer
     * [blockNumber](#web3ethblocknumber) -> Integer
     * [getBalance(address)](#web3ethgetbalance) -> BigNumber
-    * [getStorage(address)](#web3ethgetstorage) -> object
     * [getStorageAt(address, position)](#web3ethgetstorageat) -> hexString
     * [getCode(address)](#web3ethgetcode) -> hexString
     * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
@@ -455,7 +454,6 @@ This default block is used for the following methods (optionally you can overwri
 - [web3.eth.getBalance()](#web3ethgetbalance)
 - [web3.eth.getCode()](#web3ethgetcode)
 - [web3.eth.getTransactionCount()](#web3ethgettransactioncount)
-- [web3.eth.getStorage()](#web3ethgetstorage)
 - [web3.eth.getStorageAt()](#web3ethgetstorageat)
 - [web3.eth.call()](#web3ethcall)
 
@@ -506,22 +504,6 @@ var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(balance); // instanceof BigNumber
 console.log(balance.toString(10)); // '1000000000000'
 console.log(balance.toNumber()); // 1000000000000
-```
-
-***
-
-##### web3.eth.getStorage
-
-    web3.eth.getStorage(addressHexString [, defaultBlock] [, callback])
-
-- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
-**Returns** the storage as a json object.
-
-```javascript
-var storage = web3.eth.getStorage("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
-console.log(storage); // { "0x" : "0x03" }
 ```
 
 ***
