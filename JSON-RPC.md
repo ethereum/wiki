@@ -58,11 +58,12 @@ You can also specify JSON-RPC port (default is 8080):
 
 The following RPC messages should be accepted by the RPC-backend:
 
-* [web3_sha3](#web3_sha3)
 * [web3_clientVersion](#web3_clientversion)
+* [web3_sha3](#web3_sha3)
 * [net_version](#net_version)
 * [net_peerCount](#net_peercount)
 * [net_listening](#net_listening)
+* [eth_version](#eth_version)
 * [eth_coinbase](#eth_coinbase)
 * [eth_mining](#eth_mining)
 * [eth_gasPrice](#eth_gasprice)
@@ -103,6 +104,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [db_putHex](#db_puthex)
 * [db_getHex](#db_gethex) 
 * [shh_post](#shh_post)
+* [shh_version](#shh_version)
 * [shh_newIdentity](#shh_newidentity)
 * [shh_hasIdentity](#shh_hasidentity)
 * [shh_newGroup](#shh_newgroup)
@@ -132,6 +134,32 @@ The following options are possible for the defaultBlock parameter:
 - `String "pending"` - for the pending state/transactions
 
 ### API
+
+***
+
+#### web3_clientVersion
+
+Returns the current client version.
+
+##### Parameters
+none
+
+##### Returns
+
+`String` - The current client version
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'
+
+// Result
+{
+  "id":67,
+  "jsonrpc":"2.0",
+  "result": "Mist/v0.9.3/darwin/go1.4.1"
+}
+```
 
 ***
 
@@ -203,7 +231,7 @@ none
 
 ##### Returns
 
-`String` - The current network version
+`HEX String` - Integer of the current network protocol version
 
 ##### Example
 ```js
@@ -213,8 +241,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67
 // Result
 {
   "id":67,
-  "jsonrpc":"2.0",
-  "result": "0.0.1"
+  "jsonrpc": "2.0",
+  "result": "0x36" // 54
 }
 ```
 
@@ -267,6 +295,32 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":
   "id":74,
   "jsonrpc": "2.0",
   "result": "0x2" // 2
+}
+```
+
+***
+
+#### eth_version
+
+Returns the current ethereum protocol version.
+
+##### Parameters
+none
+
+##### Returns
+
+`HEX String` - Integer of the current ethereum protocol version
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_version","params":[],"id":67}'
+
+// Result
+{
+  "id":67,
+  "jsonrpc": "2.0",
+  "result": "0x36" // 54
 }
 ```
 
@@ -1659,6 +1713,32 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_getHex","params":["testDB","m
   "id":1,
   "jsonrpc":"2.0",
   "result": "0x68656c6c6f20776f726c64"
+}
+```
+
+***
+
+#### shh_version
+
+Returns the current whisper protocol version.
+
+##### Parameters
+none
+
+##### Returns
+
+`HEX String` - Integer of the current whisper protocol version
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_version","params":[],"id":67}'
+
+// Result
+{
+  "id":67,
+  "jsonrpc": "2.0",
+  "result": "0x16" // 22
 }
 ```
 
