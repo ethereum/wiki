@@ -1233,7 +1233,7 @@ To check if the state has changed, call [eth_getFilterChanges](#eth_getfiltercha
   - `fromBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
   - `toBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
   - `address`: `HEX String|Array` - (optional) Contract address or a list of addresses from which logs should originate.
-  - `topics`: `HEX String` - (optional) Array of topics.
+  - `topics`: `Array` - (optional) Array of `HEX Strings` topics.
 
 ```js
 params: [{
@@ -1348,7 +1348,7 @@ params: [
 
 ##### Returns
 
-`Object` - The log object:
+`Array` - Array of log objects, or an empty array:
 
   - `status`: `HEX String` - `"mined"` when the transaction was already add to the blockchain and `"pending"` if its not yet mined.
   - `hash`: `HEX String` - 32-byte hash of the log.
@@ -1367,26 +1367,44 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":[
 
 // Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": [{
-  "status": "mined", // or "pending"
-  "hash": "0x5785ac562ff41e2dcfdf8216c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
-  "logIndex": "0x1" // 1
-  "blockNumber":"0x1b4" // 436 // or null, if pending
-  "blockHash": "0x62ff4df829c5..." // or null, if pending
-  "transactionHash":  "0x1e2dcfdf821..."
-  "transactionIndex": "0x0" // 0
-  "address": "0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
-  "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
-  }]
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": [{
+    "status": "mined",
+    "hash": "0x5785ac562ff41e2dcfdf8216c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
+    "logIndex": "0x1", // 1
+    "blockNumber":"0x1b4" // 436
+    "blockHash": "0x8216c5785ac562ff41e2dcfdf5785ac562ff41e2dcfdf829c5a142f1fccd7d",
+    "transactionHash":  "0xdf829c5a142f1fccd7d8216c5785ac562ff41e2dcfdf5785ac562ff41e2dcf",
+    "transactionIndex": "0x0", // 0
+    "address": "0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
+    "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    },{
+      ...
+    }]
 }
 ```
 
 ***
 
 #### eth_getFilterLogs
-*returns an array of all logs matching filter with given id*
+
+Returns an array of all logs matching filter with given id.
+
+
+##### Parameters
+
+1. `HEX String` - The filter id.
+
+```js
+params: [
+  "0x16" // 22
+]
+```
+
+##### Returns
+
+See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ##### Example
 ```js
@@ -1394,21 +1412,27 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":[
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterLogs","params":["0x16"],"id":74}'
 ```
 
-##### Parameters
-
-0. the filter id
-
-```js
-params: ["0x16"] // 22
-```
-
-##### Response Example
-See [eth_getFilterChanges](#eth_getfilterchanges)
+Result see [eth_getFilterChanges](#eth_getfilterchanges)
 
 ***
 
 #### eth_getLogs
-*returns an array of all logs matching filter object*
+
+Returns an array of all logs matching a given filter object.
+
+##### Parameters
+
+1. `Object` - the filter object, see [eth_getFilterChanges parameters](#eth_getfilterchanges).
+
+```js
+params: [{
+  "topics": ["0x12341234"]
+}]
+```
+
+##### Returns
+
+See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ##### Example
 ```js
@@ -1416,101 +1440,91 @@ See [eth_getFilterChanges](#eth_getfilterchanges)
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topics":["0x12341234"]}],"id":74}'
 ```
 
-##### Parameters
-
-0. the filter object
-
-```js
-params: [{"topics": ["0x12341234"] }]
-```
-
-##### Response Example
-See [eth_getFilterChanges](#eth_getfilterchanges)
+Result see [eth_getFilterChanges](#eth_getfilterchanges)
 
 ***
 
 #### eth_getWork
-*returns the hash of current block, the seedHash, and the difficulty to be met.*
+
+Returns the hash of the current block, the seedHash, and the difficulty to be met.
+
+##### Parameters
+none
+
+##### Returns
+
+`Array` - Arrway with the following properties:
+  1. `HEX String` - current block header hash without the nonce (the first part of the proof-of-work pair) (?).
+  2. `HEX String` - the seed hash used for the DAG.
+  3. `HEX String` - integer of the difficulty required to solve.
 
 ##### Example
 ```js
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getWork","params":[],"id":73}'
-```
 
-##### Parameters
-none
-
-##### Response Example
-```json
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": [
-    "0x1234567890abcdef1234567890abcdef",
-    "0x5EED0000000000000000000000000000",
-    "0xd1ff1c01710000000000000000000000"
-]
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": [
+      "0x1234567890abcdef1234567890abcdef",
+      "0x5EED0000000000000000000000000000",
+      "0xd1ff1c01710000000000000000000000"
+    ]
 }
 ```
-
-The hash first of the result value is the header hash without the nonce (the first part of the proof-of-work pair)
-
-The second is the seed hash used for the DAG.
-
-The third is the difficulty required to solve.
 
 ***
 
 #### eth_submitWork
-*Used for submitting a solution to the proof-of-work. The return value is true if the submission is valid.*
+
+Used for submitting a proof-of-work solution.
+
+
+##### Parameters
+
+1. `HEX String` - The nonce found (64 bits)
+2. `HEX String` - The header (256 bits)
+3. `HEX String` - The mix digest (256 bits)
+
+```js
+params: [
+  "0x0000000000000001",
+  "0x1234567890abcdef1234567890abcdef",
+  "0xD1GE5700000000000000000000000000"
+]
+```
+
+##### Returns
+
+`Boolean` - returns `true` if the provided solution is valid, otherwise `false`.
+
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{
-  "jsonrpc":"2.0",
-  "method":"eth_submitWork",
-  "params":["0x0000000000000001",
-            "0x1234567890abcdef1234567890abcdef",
-            "0xD1GE5700000000000000000000000000"]],"id":73}'
-```
+curl -X POST --data '{"jsonrpc":"2.0", "method":"eth_submitWork", "params":["0x0000000000000001", "0x1234567890abcdef1234567890abcdef", "0xD1GE5700000000000000000000000000"]],"id":73}'
 
-##### Parameters
-
-0. The nonce found (64 bits)
-1. The header (256 bits)
-2. The mix digest (256 bits)
-
-```js
-params: ["0x1234567890abcdef1234567890abcdef"]
-```
-
-##### Response Example
-```json
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": true
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
 }
 ```
 
 ***
 
 #### db_putString
-*stores a string in the local database.*
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["testDB","myKey","myString"],"id":73}'
-```
+Stores a string in the local database.
 
 ##### Parameters
 
-0. database name
-1. key name
-2. string to store
+1. `String` - Database name.
+2. `String` - Key name.
+3. `String` - String to store.
 
 ```js
 params: [
@@ -1520,30 +1534,33 @@ params: [
 ]
 ```
 
-##### Response Example
-```json
+##### Returns
+
+`Boolean` - returns `true` if the value was stored, otherwise `false`.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["testDB","myKey","myString"],"id":73}'
+
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": true
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
 }
 ```
 
 ***
 
 #### db_getString
-*returns string from the local database.*
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["testDB","myKey"],"id":73}'
-```
+Returns string from the local database.
 
 ##### Parameters
 
-0. database name
-1. key name
+1. `String` - Database name.
+2. `String` - Key name.
 
 ```js
 params: [
@@ -1552,31 +1569,36 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
+`String` - The previously stored string.
+
+
+##### Example
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["testDB","myKey"],"id":73}'
+
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": "myString"
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": "myString"
 }
 ```
 
 ***
 
 #### db_putHex
-*stores binary data in the local database.*
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_putHex","params":["testDB","myKey","0x68656c6c6f20776f726c64"],"id":73}'
-```
+Stores binary data in the local database.
+
 
 ##### Parameters
 
-0. database name
-1. key name
-2. hex string to store
+1. `String` - Database name.
+2. `String` - Key name.
+3. `HEX String` - HEX string to store.
 
 ```js
 params: [
@@ -1586,30 +1608,34 @@ params: [
 ]
 ```
 
-##### Response Example
-```json
+##### Returns
+
+`Boolean` - returns `true` if the value was stored, otherwise `false`.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_putHex","params":["testDB","myKey","0x68656c6c6f20776f726c64"],"id":73}'
+
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": true
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
 }
 ```
 
 ***
 
 #### db_getHex
-*returns binary data from the local database.*
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_getHex","params":["testDB","myKey"],"id":73}'
-```
+Returns binary data from the local database.
+
 
 ##### Parameters
 
-0. database name
-1. key name
+1. `String` - Database name.
+2. `String` - Key name.
 
 ```js
 params: [
@@ -1618,69 +1644,92 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
+`HEX String` - The previously stored HEX string.
+
+
+##### Example
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getHex","params":["testDB","myKey"],"id":73}'
+
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": "0x68656c6c6f20776f726c64"
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": "0x68656c6c6f20776f726c64"
 }
 ```
 
 ***
 
 #### shh_post
-*sends whisper message*
 
-##### Example
-```js
-// Request
-"0x68656c6c6f20776f726c64"
-curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f2..","topics": ["0x68656c6c6f20776f726c64"],"payload":"0x68656c6c6f20776f726c64","ttl":0x64,"priority":0x64}],"id":73}'
-```
+Sends a whisper message.
+
 ##### Parameters
 
-0. the shh post object
+1. `Object` - The whisper post object:
+  - `from`: `HEX String` - (optional) The identity of the sender.
+  - `to`: `HEX String` - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
+  - `topics`: `Array` - Array of `HEX String` topics, so that receiver can identify messages.
+  - `payload`: `HEX String` - The payload of the message.
+  - `priority`: `HEX String` - The integer of the priority in a rang from ... (?).
+  - `ttl`: `HEX String` - integer of the time to live in seconds.
 
 ```js
 params: [{
-  from: "0x0424406a...",
+  from: "0x0487bc1d6bf3aa84d8a2c24865f83cd7bcfd11ccd8cb18d9dead364e...",
+  to: "0x742d636c69656e776869737065bb722d63686174...",
   topics: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
   payload: "0x7b2274797065223a226d6...",
-  priority: "0x64", // TODO or workToProve?
+  priority: "0x64",
   ttl: "0x64",
 }]
 ```
 
-##### Response Example
-```json
+##### Returns
+
+`Boolean` - returns `true` if the message was send, otherwise `false`.
+
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f2..","topics": ["0x68656c6c6f20776f726c64"],"payload":"0x68656c6c6f20776f726c64","ttl":0x64,"priority":0x64}],"id":73}'
+
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": true
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
 }
 ```
 
 ***
 
 #### shh_newIdentinty
-*creates new whisper identity*
+
+Creates new whisper identity in the client.
+
+##### Parameters
+none
+
+##### Returns
+
+`HEX String` - the addresss of the new identiy.
 
 ##### Example
 ```js
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentinty","params":[],"id":73}'
-```
 
-##### Parameters
-none
-
-##### Response Example
-```json
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result":"0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
+  "id":1,
+  "jsonrpc":"2.0",
+  "result":"0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
 }
 ```
 
