@@ -1297,65 +1297,88 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["p
 ***
 
 #### eth_uninstallFilter
-*uninstalls a filter with given id. Should always be called when watch is no longer needed.*
+
+Uninstalls a filter with given id. Should always be called when watch is no longer needed.
+Additonally Filters timeout when they aren't requested with [eth_getFilterChanges](#eth_getfilterchanges) for a period of time.
+
+
+##### Parameters
+
+1. `HEX String` - The filter id.
+
+```js
+params: [
+  "0xb" // 11
+]
+```
+
+##### Returns
+
+`Boolean` - `true` if the filter was successfully uninstalled, otherwise `false`.
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":["0x1"],"id":73}'
-```
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":["0xb"],"id":73}'
 
-##### Parameters
-
-0. the filter id
-
-```js
-params: ["0x1"] // 1
-```
-
-##### Response Example
-```json
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": true
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": true
 }
 ```
 
 ***
 
 #### eth_getFilterChanges
-*polling method for a filter, which returns an array of logs which occurred since last poll*
+
+Polling method for a filter, which returns an array of logs which occurred since last poll.
+
+
+##### Parameters
+
+1. `HEX String` - Integer of the filter id.
+
+```js
+params: [
+  "0x16" // 22
+]
+```
+
+##### Returns
+
+`Object` - The log object:
+
+  - `status`: `HEX String` - `"mined"` when the transaction was already add to the blockchain and `"pending"` if its not yet mined.
+  - `hash`: `HEX String` - 32-byte hash of the log.
+  - `logIndex`: `HEX String` - integer of the log index position in the block.
+  - `transactionIndex`: `HEX String` - integer of the transactions index position log was created from.
+  - `transactionHash`: `HEX String` - hash of the transactions this log was created from.
+  - `blockHash`: `HEX String` - 32-byte hash of the block where this log was in. `null` when the log is pending.
+  - `blockNumber`: `HEX String` - integer of the block number where this log was in. `null` when the log is pending.
+  - `address`: `HEX String` - address from which this log originated.
+  - `data`: `HEX String` - the data from this log.
 
 ##### Example
 ```js
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0x16"],"id":73}'
-```
 
-##### Parameters
-
-0. the filter id
-
-```js
-params: ["0x16"] // 22
-```
-
-##### Response Example
-```js
+// Result
 {
 "id":1,
 "jsonrpc":"2.0",
 "result": [{
   "status": "mined", // or "pending"
   "hash": "0x5785ac562ff41e2dcfdf8216c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
-  "address": "0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
-  "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
+  "logIndex": "0x1" // 1
   "blockNumber":"0x1b4" // 436 // or null, if pending
   "blockHash": "0x62ff4df829c5..." // or null, if pending
   "transactionHash":  "0x1e2dcfdf821..."
   "transactionIndex": "0x0" // 0
-  "logIndex": "0x1" // 1
+  "address": "0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
+  "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
   }]
 }
 ```
