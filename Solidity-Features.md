@@ -618,7 +618,7 @@ contract test {
 ```
 contract test {
   function f(uint x, uint y) returns (uint z) {
-    return 7;
+    return 10;
   }
 }
 ```
