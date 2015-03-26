@@ -1718,7 +1718,7 @@ none
 
 ##### Returns
 
-`HEX String` - the addresss of the new identiy.
+`HEX String` - the address of the new identiy.
 
 ##### Example
 ```js
@@ -1728,36 +1728,43 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentinty","params":[],"i
 // Result
 {
   "id":1,
-  "jsonrpc":"2.0",
-  "result":"0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
+  "jsonrpc": "2.0",
+  "result": "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
 }
 ```
 
 ***
 
 #### shh_hasIdentity
-*returns true if client has given identity*
+
+Checks if the client hold the private keys for a given identity.
+
+
+##### Parameters
+
+1. `HEX String` - The identity address to check.
+
+```js
+params: [
+  "0xc931d93e97ab07fe42d9234..."
+]
+```
+
+##### Returns
+
+`Boolean` - returns `true` if the client holds the privatekey for that identity, otherwise `false`.
+
 
 ##### Example
 ```js
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283..."],"id":73}'
-```
 
-##### Parameters
-
-0. the identity to check
-
-```js
-params: ["0xc931d93e97ab07fe42d9234..."]
-```
-
-##### Response Example
-```json
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": true
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": true
 }
 ```
 
@@ -1765,86 +1772,130 @@ params: ["0xc931d93e97ab07fe42d9234..."]
 
 #### shh_newGroup
 
+(?)
+
+##### Parameters
+none
+
+##### Returns
+
+`HEX String` - the address of the new group.
+
 ##### Example
 ```js
 // Request
-// TODO: not implemented yet
-```
-##### Response Example
-```json
-// TODO: not implemented yet
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentinty","params":[],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0xc65f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca90931d93e97ab07fe42d923478ba2407d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
+}
 ```
 
 ***
 
 #### shh_addToGroup
 
+(?)
+
+##### Parameters
+
+1. `HEX String` - The identity address to add to a group (?).
+
+```js
+params: [
+  "0xc931d93e97ab07fe42d9234..."
+]
+```
+
+##### Returns
+
+`Boolean` - returns `true` if the identity was successfully added to the group, otherwise `false` (?).
+
 ##### Example
 ```js
 // Request
-// TODO: not implemented yet
-```
-##### Response Example
-```json
-// TODO: not implemented yet
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283..."],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": true
+}
 ```
 
 ***
 
 #### shh_newFilter
-*creates filter object to notify, when client receives whisper message matching particular format, defined by filter. Returns new filter id.*
+
+Creates filter to notify, when client receives whisper message matching the filter options.
+
+
+##### Parameters
+
+1. `Object` - The filter options:
+  - `to`: `HEX String` - Identity of the receiver. When present it will try to decrypt any incoming message if the client holds the private key to this identity.
+  - `topics`: `Array` - Array of `HEX String` topics which the message has to have. 
+
+```js
+params: [{
+   "topics": ['0x12341234bf4b564f'],
+   "to": "0x2341234bf4b2341234bf4b564f..."
+}]
+```
+
+##### Returns
+
+`HEX String` - Integer of the newly created filter.
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topics": ["0x68656c6c6f20776f726c64"], "to": "0x34kh345k34kjh5k34"}],"id":73}'
-```
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topics": ['0x12341234bf4b564f'],"to": "0x2341234bf4b2341234bf4b564f..."}],"id":73}'
 
-##### Parameters
-
-0. the filter object
-
-```js
-params: [{
-   "topics": ['0x12341234...'],
-   "to": "0x34kh345k34kjh5k34"
-}]
-```
-
-##### Response Example
-```js
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": "0x7" // 7
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": "0x7" // 7
 }
 ```
 
 ***
 
 #### shh_uninstallFilter
-*uninstalls watch with given id. Should always be called when watch is no longer needed.*
+
+Uninstalls a filter with given id. Should always be called when watch is no longer needed.
+Additonally Filters timeout when they aren't requested with [shh_getFilterChanges](#shh_getfilterchanges) for a period of time.
+
+
+##### Parameters
+
+1. `HEX String` - The filter id.
+
+```js
+params: [
+  "0x7" // 7
+]
+```
+
+##### Returns
+
+`Boolean` - `true` if the filter was successfully uninstalled, otherwise `false`.
 
 ##### Example
 ```js
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":["0x7"],"id":73}'
-```
 
-##### Parameters
-
-0. the filter id
-
-```js
-params: ["0x7"] // 7
-```
-
-##### Response Example
-```json
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": true
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
 }
 ```
 
