@@ -1902,45 +1902,76 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":["
 ***
 
 #### shh_getFilterChanges
-*polling method, which returns array of messages which are received since last poll*
+
+Polling method for whisper filters.
+
+
+##### Parameters
+
+`. `HEX String` - The filter id.
+
+```js
+params: [
+  "0x7" // 7
+]
+```
+
+##### Returns
+
+`Array` - Array of messages received since last poll:
+
+  - `hash`: `HEX String` - The hash of the message.
+  - `from`: `HEX String` - The sender of the message, if a sender was specified.
+  - `to`: `HEX String` - The receiver of the message, if a receiver was specified.
+  - `expiry`: `HEX String` - Integer of the time in seconds when this message should expire (?).
+  - `ttl`: `HEX String` -  Integer of the time the message should float in the system in seconds (?).
+  - `sent`: `HEX String` -  Integer of the unix timestamp when the message was sent.
+  - `topics`: `Array` - Array of `HEX String` topics the message contained.
+  - `payload`: `HEX String` - The payload of the message.
+  - `workProved`: `HEX String` - Integer of the work this message required before it was send (?).
 
 ##### Example
 ```js
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getFilterChanges","params":["0x7"],"id":73}'
-```
 
-##### Parameters
-
-0. the filter id
-
-```js
-params: ["0x7"] // 7
-```
-
-##### Response Example
-```js
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": [{
-  "hash":"0x33eb2da77bf3527e28f8bf493650b1879b08c4f2a362beae4ba2f71bafcd91f9",
-  "from":"0x3ec052fc33..",
-  "to":"0x87gdf76g8d7fgdfg...",
-  "expiry": "0x54caa50a", // 1422566666
-  "sent": "0x54ca9ea2", // 1422565026
-  "ttl": "0x64" // 100
-  "topics":["0x6578616d"],
-  "payload":"0x7b2274797065223a226d657373616765222c2263686..",
-  "workProved":0 // TODO or priority?
-  }]
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": [{
+    "hash": "0x33eb2da77bf3527e28f8bf493650b1879b08c4f2a362beae4ba2f71bafcd91f9",
+    "from": "0x3ec052fc33..",
+    "to": "0x87gdf76g8d7fgdfg...",
+    "expiry": "0x54caa50a", // 1422566666
+    "sent": "0x54ca9ea2", // 1422565026
+    "ttl": "0x64" // 100
+    "topics": ["0x6578616d"],
+    "payload": "0x7b2274797065223a226d657373616765222c2263686...",
+    "workProved": "0x0"
+    }]
 }
 ```
 
 ***
 
 #### shh_getMessages
-*returns array of whisper messages received by filter with given id.*
+
+Get all messages matching a filter, which are still existing in the node.
+
+##### Parameters
+
+1. `HEX String` - The filter id.
+
+```js
+params: [
+  "0x7" // 7
+]
+```
+
+##### Returns
+
+See [shh_getFilterChanges](#shh_getfilterchanges)
 
 ##### Example
 ```js
@@ -1948,13 +1979,4 @@ params: ["0x7"] // 7
 curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getMessages","params":["0x7"],"id":73}'
 ```
 
-##### Parameters
-
-0. the filter id
-
-```js
-params: ["0x7"] // 7
-```
-
-##### Response Example
-See [shh_getFilterChanges](#shh_getfilterchanges)
+Result see [shh_getFilterChanges](#shh_getfilterchanges)
