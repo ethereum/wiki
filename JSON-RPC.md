@@ -1230,8 +1230,8 @@ To check if the state has changed, call [eth_getFilterChanges](#eth_getfiltercha
 ##### Parameters
 
 1. `Object` - The filter options:
-  - `fromBlock`: `HEX String|String` - (optional, default: `"mined"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
-  - `toBlock`: `HEX String` - (optional, default: `"mined"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
+  - `fromBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
+  - `toBlock`: `HEX String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
   - `address`: `HEX String|Array` - (optional) Contract address or a list of addresses from which logs should originate.
   - `topics`: `HEX String` - (optional) Array of topics.
 
