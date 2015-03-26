@@ -1224,14 +1224,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["
 
 #### eth_newFilter
 
-Creates a filter object to notify, when the state changes in particular way, defined by a given filter object.
+Creates a filter object, based on filter options, to notify when the state changes (logs).
 To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
 
 ##### Parameters
 
 1. `Object` - The filter options:
   - `fromBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
-  - `toBlock`: `HEX String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
+  - `toBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
   - `address`: `HEX String|Array` - (optional) Contract address or a list of addresses from which logs should originate.
   - `topics`: `HEX String` - (optional) Array of topics.
 
@@ -1239,10 +1239,14 @@ To check if the state has changed, call [eth_getFilterChanges](#eth_getfiltercha
 params: [{
   "fromBlock": "0x1",
   "toBlock": "0x2",
-  "address": "0x01231f12a..",
+  "address": "0x01231f12a01231f12a01ff231f12a0123101231f12a",
   "topics": ['0x1234fa1234']
 }]
 ```
+
+##### Returns
+
+`HEX String` - The integer of a filter id.
 
 ##### Example
 ```js
@@ -1261,17 +1265,21 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic
 
 #### eth_newBlockFilter
 
-Creates a filter object to notify, when state changes in particular way defined by the given filter string.
+Creates a filter object, based on an option string, to notify when state changes (logs).
 To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
 
 
 ##### Parameters
 
-0. the string "pending" or "latest" for changes in the latest block
+1. `String` - The string `"latest"` for logs from the latest block and `"pending"` for pending logs.
 
 ```js
 params: ["pending"]
 ```
+
+##### Returns
+
+`HEX String` - The integer of a filter id.
 
 ##### Example
 ```js
@@ -1280,9 +1288,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["p
 
 // Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": "0x1" // 1
+  "id":1,
+  "jsonrpc":  "2.0",
+  "result": "0x1" // 1
 }
 ```
 
