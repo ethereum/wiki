@@ -599,3 +599,28 @@ contract C {
   uint8 gamma; // 1 byte, slot 7 (start new slot after array)
 }
 ```
+
+## Common Subexpression Elimination Excluding Memory and Storage
+
+[PT](https://www.pivotaltracker.com/story/show/89148380)
+The optimizer splits code into blocks (at all operations that have non-local side effects like JUMP, CALL, CREATE and for also all instructions that access or modify memory or storage), analyses these blocks by creating an expression graph and establishes equivalences in a bottom-up way, simplifying expressions that e.g. involve constants. In the following code-generation phase, it re-creates the set of instructions that transform a given initial stack configuration into a given target stack configuration utilizing the simplest representatives of these equivalence classes.
+In conjunction with the already present jump-optimization, the two code snippets given below should be compiled into the same sequence of instructions:
+```
+contract test {
+  function f(uint x, uint y) returns (uint z) {
+    if (x + 1 != x + 1) return 1;
+    var c = x + 3;
+    var b = 7 + (c * (8 - 7)) - x;
+    return -(-b | 0);
+  }
+}
+```
+```
+contract test {
+  function f(uint x, uint y) returns (uint z) {
+    return 7;
+  }
+}
+```
+
+```
