@@ -853,25 +853,25 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0
 "id":1,
 "jsonrpc":"2.0",
 "result": {
-  "number": "0x1b4", // 436
-  "hash": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
-  "parentHash": "0x9646252be9520f6e71339a8df9c55e4d7619deeb018d2a3f2d21fc165dde5eb5",
-  "nonce": "0xe04d296d2460cfb8472af2c5fd05b5a214109c25688d3704aed5484f9a7792f2",
-  "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-  "logsBloom": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
-  "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-  "stateRoot": "0xd5855eb08b3387c0af375e9cdb6acfc05eb8f519e419b874b6ff2ffda7ed1dff",
-  "miner": "0x4e65fda2159562a496f9f3522f89122a3088497a",
-  "difficulty": "0x027f07", // 163591
-  "totalDifficulty":  "0x027f07", // 163591
-  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "size":  "0x027f07", // 163591
-  "gasLimit": "0x9f759", // 653145
-  "minGasPrice": "0x9f759", // 653145
-  "gasUsed": "0x9f759", // 653145
-  "timestamp": "0x54e34e8e" // 1424182926
-  "transactions": [{...},{ ... }] 
-   "uncles": ["0x1606e5...", "0xd5145a9..."]
+    "number": "0x1b4", // 436
+    "hash": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
+    "parentHash": "0x9646252be9520f6e71339a8df9c55e4d7619deeb018d2a3f2d21fc165dde5eb5",
+    "nonce": "0xe04d296d2460cfb8472af2c5fd05b5a214109c25688d3704aed5484f9a7792f2",
+    "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+    "logsBloom": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
+    "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+    "stateRoot": "0xd5855eb08b3387c0af375e9cdb6acfc05eb8f519e419b874b6ff2ffda7ed1dff",
+    "miner": "0x4e65fda2159562a496f9f3522f89122a3088497a",
+    "difficulty": "0x027f07", // 163591
+    "totalDifficulty":  "0x027f07", // 163591
+    "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "size":  "0x027f07", // 163591
+    "gasLimit": "0x9f759", // 653145
+    "minGasPrice": "0x9f759", // 653145
+    "gasUsed": "0x9f759", // 653145
+    "timestamp": "0x54e34e8e" // 1424182926
+    "transactions": [{...},{ ... }] 
+    "uncles": ["0x1606e5...", "0xd5145a9..."]
   }
 }
 ```
@@ -969,18 +969,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","param
 ***
 
 #### eth_getTransactionByBlockHashAndIndex
-*returns transaction with number[0] from the block with hash["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"]*
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, "0x0"],"id":1}'
-```
+Returns information about a transaction by block hash and transaction index position.
+
 
 ##### Parameters
 
-0. hash of a block
-1. index of the transaction
+1. `HEX String` - hash of a block.
+2. `HEX String` - integer of the transaction index position.
 
 ```js
 params: [
@@ -989,24 +985,29 @@ params: [
 ]
 ```
 
-##### Response Example
-See [eth_getTransactionByHash](#eth_gettransactionbyhash)
+##### Returns
 
-***
-
-#### eth_getTransactionByBlockNumberAndIndex
-*returns transaction from the block with number[668] at positon number[0]*
+See [eth_getBlockByHash](#eth_gettransactionbyhash)
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, "0x0"],"id":1}'
 ```
+
+Result see [eth_getTransactionByHash](#eth_gettransactionbyhash)
+
+***
+
+#### eth_getTransactionByBlockNumberAndIndex
+
+Returns information about a transaction by block number and transaction index position.
+
 
 ##### Parameters
 
-0. number of the block
-1. index number of the transaction
+1. `HEX String` - integer of a block number.
+2. `HEX String` - integer of the transaction index position.
 
 ```js
 params: [
@@ -1015,25 +1016,31 @@ params: [
 ]
 ```
 
-##### Response Example
-See [eth_getTransactionByHash](#eth_gettransactionbyhash)
+##### Returns
 
-***
-
-#### eth_getUncleByBlockHashAndIndex
-*returns uncle from the block with hash  "0xc6ef2fc5426d6ad6fd9e2a..." at index positon 0*
+See [eth_getBlockByHash](#eth_gettransactionbyhash)
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
 ```
+
+Result see [eth_getTransactionByHash](#eth_gettransactionbyhash)
+
+***
+
+#### eth_getUncleByBlockHashAndIndex
+
+Returns information about a uncle of a block by hash and uncle index position.
+
 
 ##### Parameters
 
-0. hash of the block
-1. index number of the uncle
-2. include transaction objects (If FALSE it only includes the hashes in an array)
+
+1. `HEX String` - hash a block.
+2. `HEX String` - integer of the uncle index position.
+3. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
 params: [
@@ -1043,25 +1050,30 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
 See [eth_getBlockByHash](#eth_getblockbyhash)
-
-***
-
-#### eth_getUncleByBlockNumberAndIndex
-*returns uncle from the block with number 668 at index position 0*
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0", true],"id":1}'
 ```
+
+Result see [eth_getBlockByHash](#eth_getblockbyhash)
+
+***
+
+#### eth_getUncleByBlockNumberAndIndex
+
+Returns information about a uncle of a block by number and uncle index position.
+
 
 ##### Parameters
 
-0. number of the block
-1. index number of the uncle
-2. include transaction objects (If FALSE it only includes the hashes in an array)
+1. `HEX String` - integer a block number.
+2. `HEX String` - integer of the uncle index position.
+3. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
 params: [
@@ -1071,46 +1083,53 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
 See [eth_getBlockByHash](#eth_getblockbyhash)
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0", true],"id":1}'
+```
+
+Result see [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
 #### eth_getCompilers
-*returns list of available compilers for the client*
+
+Returns a list of available compilers in the client.
+
+##### Parameters
+none
+
+##### Returns
+
+`Array` - Array of available compilers.
 
 ##### Example
 ```js
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCompilers","params":[],"id":1}'
-```
 
-##### Parameters
-none
-
-##### Response Example
-```json
+// Result
 {
-"id":1,
-"jsonrpc":"2.0",
-"result": ["lll", "solidity", "serpent"]
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": ["solidity", "lll", "serpent"]
 }
 ```
 
 ***
 
 #### eth_compileSolidity
-*returns compiled solidity code*
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}'
-```
+Returns compiled solidity code.
 
 ##### Parameters
 
-0. the source code as string
+1. `String` - The source code.
 
 ```js
 params: [
@@ -1118,43 +1137,87 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
+`HEX String` - The compiled source code.
+
+##### Example
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}'
+
+// Result
 {
   "id":1,
-  "jsonrpc":"2.0",
-  "result":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056" // the compiled source code
+  "jsonrpc": "2.0",
+  "result": "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056" // the compiled source code
 }
 ```
 
 ***
 
 #### eth_compileLLL
-*returns compiled lll code*
+
+Returns compiled LLL code.
+
+##### Parameters
+
+1. `String` - The source code.
+
+```js
+params: [
+   "(?)",
+]
+```
+
+##### Returns
+
+`HEX String` - The compiled source code.
 
 ##### Example
 ```js
 // Request
-// TODO
-```
-##### Response Example
-```json
-// TODO
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["(?)"],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056" // the compiled source code
+}
 ```
 
 ***
 
 #### eth_compileSerpent
-*returns compiled serpent code*
+
+Returns compiled serpent code.
+
+##### Parameters
+
+1. `String` - The source code.
+
+```js
+params: [
+   "(?)",
+]
+```
+
+##### Returns
+
+`HEX String` - The compiled source code.
 
 ##### Example
 ```js
 // Request
-// TODO
-```
-##### Response Example
-```json
-// TODO
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["(?)"],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056" // the compiled source code
+}
 ```
 
 ***
