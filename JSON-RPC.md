@@ -469,7 +469,7 @@ params: [
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "latest"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "0x2"],"id":1}'
 
 // Result
 {
@@ -682,7 +682,7 @@ params: [
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "latest"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "0x2"],"id":1}'
 
 // Result
 {
@@ -879,18 +879,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0
 ***
 
 #### eth_getBlockByNumber
-*returns block info for block with given number.*
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}'
-```
+Returns information about a block by block number.
 
 ##### Parameters
 
-0. number of a block
-1. include transaction objects (If FALSE it only includes the hashes in an array)
+1. `HEX String` - integer of a block number.
+2. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
 params: [
@@ -899,23 +894,28 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
 See [eth_getBlockByHash](#eth_getblockbyhash)
-
-***
-
-#### eth_getTransactionByHash
-*returns transaction with hash*
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}'
 ```
+
+Result see [eth_getBlockByHash](#eth_getblockbyhash)
+
+***
+
+#### eth_getTransactionByHash
+
+Returns the information about a transaction requested by transaction hash.
+
 
 ##### Parameters
 
-0. hash of a transaction
+1. `HEX String` - hash of a transaction
 
 ```js
 params: [
@@ -923,24 +923,45 @@ params: [
 ]
 ```
 
-##### Response Example
+##### Returns
+
+`Object` - A transaction object:
+
+  - `status`: `String` - `"mined"` when the transaction was already add to the blockchain and `"pending"` if its not yet mined.
+  - `hash`: `HEX String` - 32-byte hash of the transaction.
+  - `nonce`: `HEX String` - integer of the transaction nonce (?).
+  - `blockHash`: `HEX String` - 32-byte hash of the block where this transaction was in. `null` when the transaction is pending.
+  - `blockNumber`: `HEX String` - integer of the block number where this transaction was in. `null` when the transaction is pending.
+  - `transactionIndex`: `HEX String` - integer of the transactions index position in the block.
+  - `from`: `HEX String` - 20-byte address of the sender.
+  - `to`: `HEX String` - 20-byte address of the receiver.
+  - `value`: `HEX String` - integer of the value transfered in wei.
+  - `gasPrice`: `HEX String` - integer of the price payed per gas in wei.
+  - `gas`: `HEX String` - integer of the gas used.
+  - `input`: `HEX String` - the data send along with the transaction.
+
+##### Example
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"],"id":1}'
+
+// Result
 {
 "id":1,
 "jsonrpc":"2.0",
 "result": {
-    "status": "mined", // or "pending"
+    "status": "mined",
     "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
     "nonce":"0x",
-    "blockHash": "0x6fd9e2a26ab...", // or null if pending
-    "blockNumber": "0x15df", // 5599 // or null if pending
+    "blockHash": "0xbeab0aa2411b7ab17f30a99d3cb9c6ef2fc5426d6ad6fd9e2a26a6aed1d1055b",
+    "blockNumber": "0x15df", // 5599
     "transactionIndex":  "0x1", // 1
     "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     "to":"0x85h43d8a49eeb85d32cf465507dd71d507100c1",
-    "value":"0x7f110" // 520464 big int
+    "value":"0x7f110" // 520464
     "gas": "0x7f110" // 520464
     "gasPrice":"0x09184e72a000",
-    "input":"0x603880600c6000396000f30060...",
+    "input":"0x603880600c6000396000f300603880600c6000396000f3603880600c6000396000f360",
   }
 }
 ```
