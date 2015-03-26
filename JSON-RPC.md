@@ -1223,44 +1223,47 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["
 ***
 
 #### eth_newFilter
-*creates watch object to notify, when state changes in particular way, defined by given filter object. Returns new filter id.*
+
+Creates a filter object to notify, when the state changes in particular way, defined by a given filter object.
+To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
+
+##### Parameters
+
+1. `Object` - The filter options:
+  - `fromBlock`: `HEX String|String` - (optional, default: `"mined"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
+  - `toBlock`: `HEX String` - (optional, default: `"mined"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
+  - `address`: `HEX String|Array` - (optional) Contract address or a list of addresses from which logs should originate.
+  - `topics`: `HEX String` - (optional) Array of topics.
+
+```js
+params: [{
+  "fromBlock": "0x1",
+  "toBlock": "0x2",
+  "address": "0x01231f12a..",
+  "topics": ['0x1234fa1234']
+}]
+```
 
 ##### Example
 ```js
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topics":["0x12341234"]}],"id":73}'
-```
 
-##### Parameters
-
-0. the filter object
-
-```js
-params: [{
-  "fromBlock": "0x1", (optional) // integer block number, "latest" for the last mined block or "pending" for transactions not yet mined.
-  "toBlock": "0x2", (optional) // integer block number, "latest" or "pending".
-  "address": "0x01231f12a..", (optional) // to filter from account
-  "topics": ['0x1234fa1234...'] (optional) // array of topic strings
-}]
-```
-
-##### Response Example
-```js
-"id":1,
-"jsonrpc":"2.0",
-"result": "0x1" // 1
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x1" // 1
+}
 ```
 
 ***
 
 #### eth_newBlockFilter
-*creates watch object to notify, when state changes in particular way, defined by a filter string. Returns new watch id. To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges)*
 
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["pending"],"id":73}'
-```
+Creates a filter object to notify, when state changes in particular way defined by the given filter string.
+To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
+
 
 ##### Parameters
 
@@ -1270,8 +1273,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["p
 params: ["pending"]
 ```
 
-##### Response Example
+##### Example
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["pending"],"id":73}'
+
+// Result
 {
 "id":1,
 "jsonrpc":"2.0",
