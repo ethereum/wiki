@@ -53,12 +53,12 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 # API
 
 * [web3](#web3)
-  * [version](#) (not available yet)
-     * [api](#) -> string e.g. '0.2.0' (the ethereum.js version)
-     * [client](#) -> string e.g. 'AlethZero/1.0.0' (the client ID)
-     * [network](#) -> number e.g. 58 (the network version)
-     * [ethereum](#) -> number e.g. 60 (the ethereum protocol version)
-     * [whisper](#) -> number e.g. 20 (the shh version)
+  * [version](#web3versionapi) (not available yet)
+     * [api](#web3versionapi) -> string e.g. '0.2.0' (the ethereum.js version)
+     * [client](#web3versionclient) -> string e.g. 'AlethZero/1.0.0' (the client ID)
+     * [network](#web3versionnetwork) -> number e.g. 58 (the network version)
+     * [ethereum](#web3versionethereum) -> number e.g. 60 (the ethereum protocol version)
+     * [whisper](#web3versionwhisper) -> number e.g. 20 (the shh version)
   * [port](#) -> number e.g. 8080 (not available yet)
   * [setProvider(provider)](#web3setprovider)
   * [reset()](#web3reset)
@@ -130,6 +130,19 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 The `web3` object can be used for general data handling.
 ```javascript
 var web3 = require('web3')
+```
+
+***
+
+##### web3.version.api
+
+    web3.version.api
+
+**Returns** the ethereum js api version.
+
+```javascript
+var version = web3.api;
+console.log(api); // "0.2.0"
 ```
 
 ***
