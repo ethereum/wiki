@@ -54,9 +54,11 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 
 * [web3](#web3)
   * [version](#) (not available yet)
-     * [network](#) -> string e.g. '0.0.1' (the node version)
-     * [api](#) -> string e.g. '0.0.1' (the ethereum.js version)
+     * [api](#) -> string e.g. '0.2.0' (the ethereum.js version)
      * [client](#) -> string e.g. 'AlethZero/1.0.0' (the client ID)
+     * [network](#) -> number e.g. 58 (the network version)
+     * [ethereum](#) -> number e.g. 60 (the ethereum protocol version)
+     * [whisper](#) -> number e.g. 20 (the shh version)
   * [port](#) -> number e.g. 8080 (not available yet)
   * [setProvider(provider)](#web3setprovider)
   * [reset()](#web3reset)
@@ -132,20 +134,54 @@ var web3 = require('web3')
 
 ***
 
-##### web3.sha3
+##### web3.version.client
 
-    web3.sha3(string [, callback])
+    web3.version.client
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
-**Returns** the SHA3 of the given data.
+**Returns** the client/node version.
 
 ```javascript
-var str = web3.sha3("Some ASCII string to be hashed");
-console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
+var version = web3.client;
+console.log(version); // "Mist/v0.9.3/darwin/go1.4.1"
+```
 
-var hash = web3.sha3(str);
-console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
+***
+
+##### web3.version.network
+
+    web3.version.network
+
+**Returns** the network protocol version.
+
+```javascript
+var version = web3.network;
+console.log(version); // 54
+```
+
+***
+
+##### web3.version.ethereum
+
+    web3.version.ethereum
+
+**Returns** the ethereum protocol version.
+
+```javascript
+var version = web3.ethereum;
+console.log(version); // 60
+```
+
+***
+
+##### web3.version.whisper
+
+    web3.version.whisper
+
+**Returns** the whisper protocol version.
+
+```javascript
+var version = web3.whisper;
+console.log(version); // 20
 ```
 
 ***
@@ -174,6 +210,24 @@ web3.setProvider(new web3.providers.QtSyncProvider());
 Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
 ```javascript
 web3.reset();
+```
+
+***
+
+##### web3.sha3
+
+    web3.sha3(string [, callback])
+
+If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+**Returns** the SHA3 of the given data.
+
+```javascript
+var str = web3.sha3("Some ASCII string to be hashed");
+console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
+
+var hash = web3.sha3(str);
+console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
 ```
 
 ***
