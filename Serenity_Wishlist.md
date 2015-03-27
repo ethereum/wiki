@@ -41,3 +41,7 @@ Currently, wire and database compression is done with a fairly crude algorithm t
 Currently, one problem that contract authors have is that it is difficult to determine whether or not there is enough space left on the call stack to make a particular sub-call (which leads to an execution tree with a compile-time-known depth); the only approach is to deliberately call a contract which recursively calls itself N times in order to determine if you have N levels of breathing room. An explicit opcode `DEPTH` for determining the call stack depth would make things much easier.
 
 Also, returning ether value to the sender in the case of an exception would make it easier to write unexploitable code.
+
+### Sending funds
+
+Currently, there is no way to send _all_ of one's funds to a contract from an externally owned account, unless one can exactly estimate the amount of gas that will be consumed. This adds some inconvenience to the process of emptying accounts. A possible solution is a "keep the change" opcode, by which a contract can (i) absorb all remaining gas in a message, (ii) claim `gas * gasprice` as ether for itself, and (iii) have that gas NOT count toward the miner's revenue or the block's gas limit. 
