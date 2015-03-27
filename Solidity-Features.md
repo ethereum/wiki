@@ -608,7 +608,6 @@ In conjunction with the already present jump-optimization, the two code snippets
 ```
 contract test {
   function f(uint x, uint y) returns (uint z) {
-    if (x + 1 != x + 1) return 1;
     var c = x + 3;
     var b = 7 + (c * (8 - 7)) - x;
     return -(-b | 0);
@@ -621,6 +620,4 @@ contract test {
     return 10;
   }
 }
-```
-
 ```
