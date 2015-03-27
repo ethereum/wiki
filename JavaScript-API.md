@@ -6,7 +6,7 @@ To make your Ðapp work with on Ethereum, you can use the `web3` object provided
 
 ## Using callbacks
 
-As this API is designed to work with a local RPC node all its functions are by default use synchronous HTTP requests.
+As this API is designed to work with a local RPC node and all its functions are by default use synchronous HTTP requests.
 
 If you want to make asynchronous request, you can pass an optional callback as the last parameter to most functions.
 All callbacks are using an error first callback style:
