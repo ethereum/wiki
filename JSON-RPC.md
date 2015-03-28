@@ -20,13 +20,13 @@ Go: http://localhost:8545
 
 You can start the HTTP JSON-RPC with the `--rpc` flag
 ```bash
-ethereum --rpc
+geth --rpc
 ```
 
 change the default port (8545) and listing address (localhost) with:
 
 ```bash
-ethereum --rpc --rpcaddr <ip> --rpcport <portno>
+geth --rpc --rpcaddr <ip> --rpcport <portno>
 ```
 
 The RPC can also be started from the CLI using the `admin.startRPC(addr, port)` command.
