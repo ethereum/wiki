@@ -2,7 +2,23 @@
 
 [JSON](http://json.org/) is a lightweight data-interchange format. It can represent numbers, strings, ordered sequences of values, and collections of name/value pairs.
 
-[JSON-RPC](http://www.jsonrpc.org/specification) is a stateless, light-weight remote procedure call (RPC) protocol. Primarily this specification defines several data structures and the rules around their processing. It is transport agnostic in that the concepts can be used within the same process, over sockets, over http, or in many various message passing environments. It uses JSON ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt)) as data format. Hex output is preferred to be prefixed with `0x` and left-padded with 0 to an even number of bytes. Input hex should be an even number of bytes, but can be left-padded with 0 to an even number of byes before decoding.
+[JSON-RPC](http://www.jsonrpc.org/specification) is a stateless, light-weight remote procedure call (RPC) protocol. Primarily this specification defines several data structures and the rules around their processing. It is transport agnostic in that the concepts can be used within the same process, over sockets, over HTTP, or in many various message passing environments. It uses JSON ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt)) as data format.
+
+At present there are two key datatypes that are passed over JSON: unformatted byte arrays and quantities. Both are passed with a hex encoding, however with different requirements to formatting:
+
+When encoding **UNFORMATTED DATA** ("byte arrays"): encode as hex, prefix with "0x", two hex digits per byte. Examples:
+- 0x41 (size 1, "A")
+- 0x004200 (size 3, "\0B\0")
+- 0x (size 0, "")
+- WRONG: 0xf0f0f (must be even number of digits)
+- WRONG: 004200 (must be prefixed 0x)
+
+When encoding **QUANTITIES** ("integers", "numbers"): encode as hex, prefix with "0x", the most compact representation (slight exception: zero should be represented as "0x0"). Examples:
+- 0x41 (65 in decimal)
+- 0x400 (1024 in decimal)
+- WRONG: 0x (should always have at least one digit - zero is "0x0")
+- WRONG: 0x0400 (no leading zeroes)
+- WRONG: ff (must be prefixed 0x)
 
 Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ethereum](https://github.com/ethereum/go-ethereum) provides JSON-RPC communication only over http.
 
