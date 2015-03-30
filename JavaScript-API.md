@@ -53,7 +53,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 # API
 
 * [web3](#web3)
-  * [version](#web3versionapi) (not available yet)
+  * [version](#web3versionapi)
      * [api](#web3versionapi) -> string e.g. '0.2.0' (the ethereum.js version)
      * [client](#web3versionclient) -> string e.g. 'AlethZero/1.0.0' (the client ID)
      * [network](#web3versionnetwork) -> number e.g. 58 (the network version)
