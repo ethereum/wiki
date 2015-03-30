@@ -1404,7 +1404,10 @@ params: [
 ##### Returns
 
 `Array` - Array of log objects, or an empty array (if nothing has changed since last poll).
-For filters created with `eth_newBlockFilter` log objects is null. For filters created with `eth_newFilter` it is an object with following params:
+
+For filters created with `eth_newBlockFilter` log objects are `null`.
+
+For filters created with `eth_newFilter` logs are objects with following params:
 
   - `status`: `HEX String` - `"mined"` when the transaction was already add to the blockchain and `"pending"` if its not yet mined.
   - `hash`: `HEX String` - 32-byte hash of the log.
