@@ -16,6 +16,7 @@
 - [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
 - [Ethash](https://github.com/ethereum/wiki/wiki/Ethash)
+- [Ethash C API](https://github.com/ethereum/wiki/wiki/Ethash-C-API)
 - [Solidity, Docs & ABI](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI)
 - [NatSpec Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format)
 - [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
