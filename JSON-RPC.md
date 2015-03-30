@@ -131,6 +131,7 @@ The following options are possible for the defaultBlock parameter:
 
 - `HEX String` - an integer block number
 - `String "latest"` - for the latest minded block
+- `String "earliest"` for the earliest/genesis block
 - `String "pending"` - for the pending state/transactions
 
 ### API
@@ -466,7 +467,7 @@ Returns the balance of the account of given address.
 ##### Parameters
 
 1. `HEX String` - address to check for balance.
-2. `HEX String|String` - integer block number, or the string `"latest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+2. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -504,7 +505,7 @@ Returns the value from a storage position at a given address.
 
 1. `HEX String` - address of the storage.
 2. `HEX String` - integer of the position in the storage.
-3. `HEX String|String` - integer block number, or the string `"latest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+3. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 
 ```js
@@ -543,7 +544,7 @@ Returns the number of transactions *send* from a address.
 ##### Parameters
 
 1. `HEX String` - address.
-2. `HEX String|String` - integer block number, or the string `"latest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+2. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -719,7 +720,7 @@ Returns code at a given address.
 ##### Parameters
 
 1. address as hex string
-2. `HEX String|String` - integer block number, or the string `"latest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+2. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -806,7 +807,7 @@ Executes a new message call immediately without creating a transaction on the bl
   - `gasPrice`: `HEX String`  - Integer of the gasPrice used for each payed gas
   - `value`: `HEX String`  - Integer of the value send with this transaction
   - `data`: `HEX String`  - The compiled code of a contract
-2. `HEX String|String` - integer block number, or the string `"latest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+2. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 See: [eth_sendTransaction Parameters](#eth_sendtransaction)
 
@@ -1284,8 +1285,8 @@ To check if the state has changed, call [eth_getFilterChanges](#eth_getfiltercha
 ##### Parameters
 
 1. `Object` - The filter options:
-  - `fromBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
-  - `toBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"` for not yet mined transactions.
+  - `fromBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
+  - `toBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
   - `address`: `HEX String|Array` - (optional) Contract address or a list of addresses from which logs should originate.
   - `topics`: `Array` - (optional) Array of `HEX Strings` topics.
 
