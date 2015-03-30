@@ -982,7 +982,6 @@ params: [
 
 `Object` - A transaction object:
 
-  - `status`: `String` - `"mined"` when the transaction was already add to the blockchain and `"pending"` if its not yet mined.
   - `hash`: `HEX String` - 32-byte hash of the transaction.
   - `nonce`: `HEX String` - integer of the transaction nonce (?).
   - `blockHash`: `HEX String` - 32-byte hash of the block where this transaction was in. `null` when the transaction is pending.
@@ -1005,7 +1004,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","param
 "id":1,
 "jsonrpc":"2.0",
 "result": {
-    "status": "mined",
     "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
     "nonce":"0x",
     "blockHash": "0xbeab0aa2411b7ab17f30a99d3cb9c6ef2fc5426d6ad6fd9e2a26a6aed1d1055b",
@@ -1409,7 +1407,6 @@ For filters created with `eth_newBlockFilter` log objects are `null`.
 
 For filters created with `eth_newFilter` logs are objects with following params:
 
-  - `status`: `HEX String` - `"mined"` when the transaction was already add to the blockchain and `"pending"` if its not yet mined.
   - `hash`: `HEX String` - 32-byte hash of the log.
   - `logIndex`: `HEX String` - integer of the log index position in the block.
   - `transactionIndex`: `HEX String` - integer of the transactions index position log was created from.
@@ -1430,7 +1427,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":[
   "id":1,
   "jsonrpc":"2.0",
   "result": [{
-    "status": "mined",
     "hash": "0x5785ac562ff41e2dcfdf8216c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
     "logIndex": "0x1", // 1
     "blockNumber":"0x1b4" // 436
