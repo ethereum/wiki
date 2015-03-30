@@ -743,3 +743,26 @@ contract FunctionSelector {
 ```
 
 Calling `select(false, x)` will compute `x * x` and `select(true, x)` will compute `2 * x`.
+
+
+## Internals - the Optimizer
+
+The Solidity optimizer operates on the assembly, so it can be and also is used by other languages. It splits the sequence of instructions into basic blocks at points that are hard to move. These are basically all instructions that modify change the control flow (jumps, calls, etc), instructions that have side effects apart from `MSTORE` and `SSTORE` (like `LOGi`, `EXTCODECOPY`, but also `CALLDATALOAD` and others). Inside of such a block, the instructions are analysed and every modification to the stack, to memory or storage is recorded as an expression which consists of an instruction and a list of arguments which are essentially pointers to other expressions. The main idea is now to find expressions that are always equal (or every input) and combine them into an expression class. The optimizer first tries to find each new expression in a list of already known expressions. If this does not work, the expression is simplified according to rules like `constant` + `constant` = `sum_of_constants` or `X` * 1 = `X`. Since this is done recursively, we can also apply the latter rule if the second factor is a more complex expression where we know that it will always evaluate to one. Modifications to storage and memory locations have to erase knowledge about storage and memory locations which are not known to be different: If we first write to location x and then to location y and both are input variables, the second could overwrite the first, so we actually do not know what is stored at x after we wrote to y. On the other hand, if a simplification of the expression x - y evaluates to a non-zero constant, we know that we can keep our knowledge about what is stored at x.
+
+At the end of this process, we know which expressions have to be on the stack in the end and have list of modifications to memory and storage. From these expressions which are actually needed, a dependency graph is created and every operation that is not part of this graph is essentially dropped. Now new code is generated that applies the modifications to memory and storage in the order they were made in the original code (dropping modifications which were found not to be needed) and finally, generates all values that are required to be on the stack in the correct place.
+
+These steps are applied to each basic block and the newly generated code is used as replacement if it is smaller. If a basic block is split at a JUMPI and during the analysis, the condition evaluates to a constant, the JUMPI is replaced depending on the value of the constant, and thus code like
+```
+var x = 7;
+data[7] = 9;
+if (data[x] != x + 2) 
+  return 2;
+else
+  return 1;
+```
+is simplified to code which can also be compiled from
+```
+data[7] = 9;
+return 1;
+```
+even though the instructions contained a jump in the beginning.
