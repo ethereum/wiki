@@ -761,7 +761,7 @@ Creates new message call transaction or a contract creation, if the data field c
   - `gas`: `HEX String`  - Integer of the gas provided for the transaction execution. It will return unused gas.
   - `gasPrice`: `HEX String`  - Integer of the gasPrice used for each payed gas
   - `value`: `HEX String`  - Integer of the value send with this transaction
-  - `data`: `HEX String`  - The compiled code of a contract
+  - `data`: `HEX String`  - (optional) The compiled code of a contract
 
 ```js
 params: [{
@@ -801,11 +801,11 @@ Executes a new message call immediately without creating a transaction on the bl
 ##### Parameters
 
 1. `Object` - The transaction call object
-  - `from`: `HEX String` - The address the transaction is send from.
+  - `from`: `HEX String` - (optional) The address the transaction is send from.
   - `to`: `HEX String`  - The address the transaction is directed to.
-  - `gas`: `HEX String`  - Integer of the gas provided for the transaction execution. It will return unused gas.
-  - `gasPrice`: `HEX String`  - Integer of the gasPrice used for each payed gas
-  - `value`: `HEX String`  - Integer of the value send with this transaction
+  - `gas`: `HEX String`  - (optional) Integer of the gas provided for the transaction execution. It will return unused gas.
+  - `gasPrice`: `HEX String`  - (optional) Integer of the gasPrice used for each payed gas
+  - `value`: `HEX String`  - (optional) Integer of the value send with this transaction
   - `data`: `HEX String`  - The compiled code of a contract
 2. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
