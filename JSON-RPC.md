@@ -988,7 +988,7 @@ params: [
   - `blockNumber`: `HEX String` - integer of the block number where this transaction was in. `null` when the transaction is pending.
   - `transactionIndex`: `HEX String` - integer of the transactions index position in the block.
   - `from`: `HEX String` - 20-byte address of the sender.
-  - `to`: `HEX String` - 20-byte address of the receiver.
+  - `to`: `HEX String` - 20-byte address of the receiver. `null` when its a contract creation transaction.
   - `value`: `HEX String` - integer of the value transfered in wei.
   - `gasPrice`: `HEX String` - integer of the price payed per gas in wei.
   - `gas`: `HEX String` - integer of the gas used.
