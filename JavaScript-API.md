@@ -349,7 +349,7 @@ console.log(value); // "0.021"
 
 **Returns** either a number string, or a BigNumber object, depending on the given `number` parameter.
 
-Converts a number a ethereum unit into wei. Possible units are:
+Converts a ethereum unit into wei. Possible units are:
 
 - kwei/ada
 - mwei/babbage
