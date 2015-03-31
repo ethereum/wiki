@@ -29,9 +29,9 @@ int callback(unsigned _progress)
 void main()
 {
   ethash_params p;
-  uint8_t const* cache;
-  uint8_t seed[32];
-  // TODO: populate p, seed, cache
+  ethash_light_t light;
+  ethash_seed_t seed;
+  // TODO: populate p, seed, light
   ethash_full_t dag = ethash_new_full(&p, cache, seed, &callback);
   if (!dag)
   {
