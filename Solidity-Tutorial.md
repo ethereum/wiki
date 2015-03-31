@@ -564,7 +564,7 @@ A simple rule to remember is to specify the base classes in the order from "most
 
 ## Visibility Specifiers
 
-Functions and storage variables can be specified as being `public`, `inherited` or `private`, where the default for functions is `public` and `inherited` for storage variables. In addition, functions can also be specified as `external`.
+Functions and storage variables can be specified as being `public`, `internal` or `private`, where the default for functions is `public` and `internal` for storage variables. In addition, functions can also be specified as `external`.
 
 External: External functions are part of the contract interface and they can be called from other contracts and via transactions. An external function `f` cannot be called internally (i.e. `f()` does not work, but `this.f()` works). Furthermore, all function parameters are immutable.
 
