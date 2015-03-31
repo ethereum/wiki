@@ -1340,7 +1340,7 @@ To check if the state has changed, call [eth_getFilterChanges](#eth_getfiltercha
 
 ##### Parameters
 
-1. `String` - The string `"latest"` for logs from the latest block and `"pending"` for pending logs.
+1. `String` - The string `"latest"` for notifications about new block and `"pending"` for notifications about pending transactions.
 
 ```js
 params: ["pending"]
