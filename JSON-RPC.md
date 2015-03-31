@@ -6,6 +6,8 @@
 
 At present there are two key datatypes that are passed over JSON: unformatted byte arrays and quantities. Both are passed with a hex encoding, however with different requirements to formatting:
 
+### Output HEX values
+
 When encoding **QUANTITIES** ("integers", "numbers"): encode as hex, prefix with "0x", the most compact representation (slight exception: zero should be represented as "0x0"). Examples:
 - 0x41 (65 in decimal)
 - 0x400 (1024 in decimal)
