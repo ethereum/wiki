@@ -127,7 +127,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 # Usage
 
 ##### web3
-The `web3` object can be used for general data handling.
+The `web3` object provides all methods.
 ```javascript
 var web3 = require('web3')
 ```
