@@ -901,7 +901,7 @@ params: [
   - `number`: `HEX String` - integer of the block number.
   - `hash`: `HEX String` - 32-byte hash of the block.
   - `parentHash`: `HEX String` - 32-byte hash of the paretn block.
-  - `nonce`: `HEX String` - integer of the block nonce (?).
+  - `nonce`: `HEX String` - 8-byte hash of the generated proof-of-work.
   - `sha3Uncles`: `HEX String` - SHA3 of all uncle (?).
   - `logsBloom`: `HEX String` - bloom (?).
   - `transactionsRoot`: `HEX String` - (?).
