@@ -105,7 +105,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_getBlockByNumber](#eth_getblockbynumber)
 * [eth_getTransactionByHash](#eth_gettransactionbyhash)
 * [eth_getTransactionByBlockHashAndIndex](#eth_gettransactionbyblockhashandindex)
-* [eth_getTransactionByBlockNumberAndIndex](#eth_gettransactionbynumberandindex)
+* [eth_getTransactionByBlockNumberAndIndex](#eth_gettransactionbyblocknumberandindex)
 * [eth_getUncleByBlockHashAndIndex](#eth_getunclebyblockhashandindex)
 * [eth_getUncleByBlockNumberAndIndex](#eth_getunclebyblocknumberandindex)
 * [eth_getCompilers](#eth_getcompilers)
