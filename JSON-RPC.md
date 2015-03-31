@@ -94,7 +94,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [eth_getStorageAt](#eth_getstorageat)
 * [eth_getTransactionCount](#eth_gettransactioncount)
 * [eth_getBlockTransactionCountByHash](#eth_getblocktransactioncountbyhash)
-* [eth_getBlockTransactionCountByNumber](#eth_getblockTransactioncountbynumber)
+* [eth_getBlockTransactionCountByNumber](#eth_getblocktransactioncountbynumber)
 * [eth_getUncleCountByBlockHash](#eth_getunclecountbyblockhash)
 * [eth_getUncleCountByBlockNumber](#eth_getunclecountbyblocknumber)
 * [eth_getCode](#eth_getcode)
