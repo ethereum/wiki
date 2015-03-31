@@ -100,7 +100,6 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [filter(array (, options) )](#web3ethfilter)
         - [watch(callback)](#web3ethfilter)
         - [stopWatching(callback)](#web3ethfilter)
-        - [uninstall(callback)](#web3ethfilter)
         - [get()](#web3ethfilter)
     * [getCompilers()](#web3ethgetcompilers) -> array of strings
     * [compile.lll(string)](#web3ethcompilelll) -> hexString
@@ -121,7 +120,6 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [filter(object/string)](#web3shhfilter)
       * [watch(callback)](#web3shhfilter)
       * [stopWatching(callback)](#web3shhfilter)
-      * [uninstall(callback)](#web3shhfilter)
       * [get(callback)](#web3shhfilter)
 
 # Usage
@@ -886,7 +884,7 @@ var myResults = myEvent.get();
 
 ...
 
-myEvent.stopWatching(); // or myEvent.uninstall() to remove the filter
+myEvent.stopWatching();
 ```
 
 ***
@@ -941,7 +939,6 @@ web3.eth.filter(contractObject [, options])
   * `filter.get()`: Returns all of the log entries that fit the filter.
   * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback.
   * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
-  * `filter.uninstall()`: Uninstalls the filter permanently
 
 #### Callback return values
 
@@ -979,7 +976,7 @@ var myResults = filter.get();
 
 ...
 
-filter.stopWatching(); // or filter.uninstall(); to permanently remove the filter 
+filter.stopWatching();
 
 ```
 
@@ -1255,7 +1252,7 @@ web3.eth.filter('pending').watch(function() {
 
 ...
 
-filter.stopWatching(); // or filter.uninstall(); to permanently remove the filter 
+filter.stopWatching();
 </script>
 </body></html>
 ```
