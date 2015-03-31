@@ -84,7 +84,7 @@ The following RPC messages should be accepted by the RPC-backend:
 * [net_version](#net_version)
 * [net_peerCount](#net_peercount)
 * [net_listening](#net_listening)
-* [eth_version](#eth_version)
+* [eth_protocolVersion](#eth_protocolversion)
 * [eth_coinbase](#eth_coinbase)
 * [eth_mining](#eth_mining)
 * [eth_gasPrice](#eth_gasprice)
@@ -322,7 +322,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":
 
 ***
 
-#### eth_version
+#### eth_protocolVersion
 
 Returns the current ethereum protocol version.
 
@@ -336,7 +336,7 @@ none
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_version","params":[],"id":67}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_protocolVersion","params":[],"id":67}'
 
 // Result
 {
