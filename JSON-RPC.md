@@ -870,7 +870,7 @@ params: [
 
 ##### Returns
 
-`Object` - A block object:
+`Object` - A block object, or `null` when no transaction was found:
 
   - `number`: `HEX String` - integer of the block number.
   - `hash`: `HEX String` - 32-byte hash of the block.
@@ -975,7 +975,7 @@ params: [
 
 ##### Returns
 
-`Object` - A transaction object:
+`Object` - A transaction object, or `null` when no transaction was found:
 
   - `hash`: `HEX String` - 32-byte hash of the transaction.
   - `nonce`: `HEX String` - integer of the transaction nonce (?).
