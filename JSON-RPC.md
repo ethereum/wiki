@@ -50,6 +50,12 @@ change the default port (8545) and listing address (localhost) with:
 geth --rpc --rpcaddr <ip> --rpcport <portno>
 ```
 
+If accessing the RPC from a browser, CORS will need to be enabled with the appropriate domain set. Otherwise, JavaScript calls are limit by the same-origin policy and requests will fail:
+
+```bash
+geth --rpc --rpccorsdomain "http://localhost:3000"
+```
+
 The RPC can also be started from the CLI using the `admin.startRPC(addr, port)` command.
 
 
