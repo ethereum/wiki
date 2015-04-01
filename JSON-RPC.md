@@ -218,32 +218,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 
 ***
 
-#### web3_clientVersion
-
-Returns the current client version.
-
-##### Parameters
-none
-
-##### Returns
-
-`String` - The current clients version
-
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'
-
-// Result
-{
-  "id":67,
-  "jsonrpc":"2.0",
-  "result": "AlethZero/0.0.1"
-}
-```
-
-***
-
 #### net_version
 
 Returns the current network protocol version.
@@ -253,7 +227,7 @@ none
 
 ##### Returns
 
-`HEX String` - Integer of the current network protocol version
+`String` - The current network protocol version
 
 ##### Example
 ```js
@@ -264,7 +238,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67
 {
   "id":67,
   "jsonrpc": "2.0",
-  "result": "0x36" // 54
+  "result": "59"
 }
 ```
 
@@ -331,7 +305,7 @@ none
 
 ##### Returns
 
-`HEX String` - Integer of the current ethereum protocol version
+`String` - The current ethereum protocol version
 
 ##### Example
 ```js
@@ -342,7 +316,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_protocolVersion","params":[]
 {
   "id":67,
   "jsonrpc": "2.0",
-  "result": "0x36" // 54
+  "result": "54"
 }
 ```
 
@@ -1750,7 +1724,7 @@ none
 
 ##### Returns
 
-`HEX String` - Integer of the current whisper protocol version
+`String` - The current whisper protocol version
 
 ##### Example
 ```js
@@ -1761,7 +1735,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_version","params":[],"id":67
 {
   "id":67,
   "jsonrpc": "2.0",
-  "result": "0x16" // 22
+  "result": "2"
 }
 ```
 
