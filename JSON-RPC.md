@@ -82,8 +82,6 @@ Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ether
 
 ### JSON-RPC methods
 
-The following RPC messages should be accepted by the RPC-backend:
-
 * [web3_clientVersion](#web3_clientversion)
 * [web3_sha3](#web3_sha3)
 * [net_version](#net_version)
