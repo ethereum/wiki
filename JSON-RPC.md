@@ -27,7 +27,7 @@ geth --rpc
 change the default port (8545) and listing address (localhost) with:
 
 ```bash
-geth --rpc --rpcaddr <ip> --rpcport <portno>
+geth --rpc --rpcaddr <ip> --rpcport <portnumber>
 ```
 
 If accessing the RPC from a browser, CORS will need to be enabled with the appropriate domain set. Otherwise, JavaScript calls are limit by the same-origin policy and requests will fail:
