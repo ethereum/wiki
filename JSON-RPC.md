@@ -1110,7 +1110,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex"
 
 Result see [eth_getBlockByHash](#eth_getblockbyhash)
 
-NOTE: being an uncle this contains no individual transactions.
+**Note**: A uncle doesn't contain individual transactions.
 
 ***
 
@@ -1135,7 +1135,7 @@ params: [
 
 See [eth_getBlockByHash](#eth_getblockbyhash)
 
-NOTE: being an uncle this contains no individual transactions.
+**Note**: A uncle doesn't contain individual transactions.
 
 ##### Example
 ```js
