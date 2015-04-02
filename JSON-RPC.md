@@ -56,7 +56,7 @@ If accessing the RPC from a browser, CORS will need to be enabled with the appro
 geth --rpc --rpccorsdomain "http://localhost:3000"
 ```
 
-The RPC can also be started from the [geth console](https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console) using the `admin.startRPC(addr, port)` command.
+The JSON RPC can also be started from the [geth console](https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console) using the `admin.startRPC(addr, port)` command.
 
 
 ##### C++
