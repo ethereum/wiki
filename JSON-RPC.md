@@ -80,6 +80,25 @@ When encoding **UNFORMATTED DATA** ("byte arrays", account addresses, hashes, by
 
 Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ethereum](https://github.com/ethereum/go-ethereum) provides JSON-RPC communication only over http.
 
+### The default block parameter
+
+The following methods have a extra default block parameter:
+
+- [eth_getBalance](#eth_getbalance)
+- [eth_getCode](#eth_getcode)
+- [eth_getTransactionCount](#eth_gettransactioncount)
+- [eth_getStorageAt](#eth_getstorageat)
+- [eth_call](#eth_call)
+
+When requests are made that act on the state of ethereum, the last default block parameter determines the height of the block.
+
+The following options are possible for the defaultBlock parameter:
+
+- `HEX String` - an integer block number
+- `String "latest"` - for the latest minded block
+- `String "earliest"` for the earliest/genesis block
+- `String "pending"` - for the pending state/transactions
+
 ### JSON-RPC methods
 
 * [web3_clientVersion](#web3_clientversion)
@@ -137,26 +156,6 @@ Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ether
 * [shh_uninstallFilter](#shh_uninstallfilter)
 * [shh_getFilterChanges](#shh_getfilterchanges)
 * [shh_getMessages](#shh_getmessages)
-
-
-### The default block parameter
-
-The following methods have a extra default block parameter:
-
-- [eth_getBalance](#eth_getbalance)
-- [eth_getCode](#eth_getcode)
-- [eth_getTransactionCount](#eth_gettransactioncount)
-- [eth_getStorageAt](#eth_getstorageat)
-- [eth_call](#eth_call)
-
-When requests are made that act on the state of ethereum, the last default block parameter determines the height of the block.
-
-The following options are possible for the defaultBlock parameter:
-
-- `HEX String` - an integer block number
-- `String "latest"` - for the latest minded block
-- `String "earliest"` for the earliest/genesis block
-- `String "pending"` - for the pending state/transactions
 
 ### API
 
