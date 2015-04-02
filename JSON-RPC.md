@@ -1090,13 +1090,11 @@ Returns information about a uncle of a block by hash and uncle index position.
 
 1. `HEX String` - hash a block.
 2. `HEX String` - integer of the uncle index position.
-3. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
 params: [
    '0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b',
-   '0x0', // 0
-   true
+   '0x0' // 0
 ]
 ```
 
@@ -1107,10 +1105,12 @@ See [eth_getBlockByHash](#eth_getblockbyhash)
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0", true],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}'
 ```
 
 Result see [eth_getBlockByHash](#eth_getblockbyhash)
+
+NOTE: being an uncle this contains no individual transactions.
 
 ***
 
@@ -1123,13 +1123,11 @@ Returns information about a uncle of a block by number and uncle index position.
 
 1. `HEX String` - integer a block number.
 2. `HEX String` - integer of the uncle index position.
-3. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
 params: [
    '0x29c', // 668
-   '0x0', // 0
-   true
+   '0x0' // 0
 ]
 ```
 
@@ -1137,10 +1135,12 @@ params: [
 
 See [eth_getBlockByHash](#eth_getblockbyhash)
 
+NOTE: being an uncle this contains no individual transactions.
+
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0", true],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
 ```
 
 Result see [eth_getBlockByHash](#eth_getblockbyhash)
