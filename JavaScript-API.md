@@ -792,12 +792,11 @@ Creates a new message-call transaction.
   * `transactionObject`, an anonymous object specifying the parameters of the transaction.
     * `from` (hexString), the address for the sending account;
     * `to` (hexString), the destination address of the message, left undefined for a contract-creation transaction
-    * `value (number|hexString|BigNumber)`, the value transferred for the transaction in Wei, also the endowment if it's a contract-creation transaction;
-    * `endowment`, synonym for `value`;
-    * `gas (number|hexString|BigNumber)`, the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
-    * `gasPrice (number|hexString|BigNumber)`, the price of gas for this transaction in wei, defaults to the mean network gasPrice.
-    * `data`  (hexString), either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
-    * `code`, a synonym for `data`;
+    * `value (number|hexString|BigNumber)`, (optional) the value transferred for the transaction in Wei, also the endowment if it's a contract-creation transaction;
+    * `gas (number|hexString|BigNumber)`, (optional, default: To-Be-Determined) the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
+    * `gasPrice (number|hexString|BigNumber)`, (optional, default: To-Be-Determined) the price of gas for this transaction in wei, defaults to the mean network gasPrice.
+    * `data  (hexString)`, (optional) either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
+    * `code`, (optional) a synonym for `data`;
   * `callback`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
 ```javascript
 
