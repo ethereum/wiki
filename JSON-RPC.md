@@ -1916,7 +1916,7 @@ Creates filter to notify, when client receives whisper message matching the filt
 ##### Parameters
 
 1. `Object` - The filter options:
-  - `to`: `HEX String` - Identity of the receiver. When present it will try to decrypt any incoming message if the client holds the private key to this identity.
+  - `to`: `HEX String` - (optional) Identity of the receiver. When present it will try to decrypt any incoming message if the client holds the private key to this identity.
   - `topics`: `Array` - Array of `HEX String` topics which the message has to have. 
 
 ```js
