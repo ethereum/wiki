@@ -142,7 +142,6 @@ If we wanted to encode the transaction data for that first call, we would do:
 > serpent encode_abi register ii 0x67656f726765 45
 d66d6c10000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d
 ```
-
 ### Including files, and calling other contracts
 
 Once your projects become larger, you will not want to put everything into the same file; things become particularly inconvenient when one piece of code needs to create a contract. Fortunately, the process for splitting code into multiple files is quite simple. Make the following two files:
@@ -154,11 +153,11 @@ mul2.se:
 
 returnten.se:
 
-    extern mul2: [double]
+    extern mul2.se: [double:i:i]
     
     MUL2 = create('mul2.se')
     def returnten():
-        return(MUL2.double(5, as=mul2))
+        return(MUL2.double(5))
 
 And open Python:
 
@@ -174,7 +173,13 @@ Note that here we introduced several new features. Particularly:
 * The `extern` keyword to declare a class of contract for which we know the names of the functions
 * The interface for calling other contracts
 
-`create` is self-explanatory; it creates a contract and returns the address to the contract. The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. From there, given any variable containing an address, you can do `x.double(arg1, as=mul2)` to call the address stored by that variable. The `as` keyword provides the class that we're using (to determine which function ID `double` corresponds to; there may be another class where `double` corresponds to 7). You do have the option of omitting the `as` keyword, but this comes at the peril of ambiguity if you are using two classes that have the same function name. The arguments are the values provided to the function. If you provide too few arguments, the rest are filled to zero, and if you provide too many the extra ones are ignored. Function calling also has some other optional arguments:
+`create` is self-explanatory; it creates a contract and returns the address to the contract. 
+
+The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. To generate `extern mul2.se: [double:i:i]` use
+	
+	serpent mk_signature mul2.se
+
+From there, given any variable containing an address, you can do `x.double(arg1)` to call the address stored by that variable. The arguments are the values provided to the function. If you provide too few arguments, the rest are filled to zero, and if you provide too many the extra ones are ignored. Function calling also has some other optional arguments:
 
 * `gas=12414` - call the function with 12414 gas instead of the default (all gas)
 * `value=10^19` - send 10^19 wei (10 ether) along with the message
