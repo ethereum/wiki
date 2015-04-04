@@ -186,7 +186,14 @@ From there, given any variable containing an address, you can do `x.double(arg1)
 * `data=x`, `datasz=5` - call the function with 5 values from the array `x`; note that this replaces other function arguments. `data` without `datasz` is illegal
 * `outsz=7` - by default, Serpent processes the output of a function by taking the first 32 bytes and returning it as a value. However, if `outsz` is used as here, the function will instead return an array containing 7 values; if you type `y = x.fun(arg1, outsz=7)` then you will be able to access the output via `y[0]`, `y[1]`, etc.
 
-Another, similar, operation to `create` is `inset('filename')`, which simply puts code into a particular place without adding a separate contract.
+Another similar operation to `create` is `inset('filename')`, which simply puts code into a particular place without adding a separate contract.
+
+returnten.se
+
+	inset('mul2.se')
+	
+	def returnten():
+	    return(self.double(5))
 
 ### Storage data structures
 
