@@ -177,7 +177,7 @@ Note that here we introduced several new features. Particularly:
 
 The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. To generate `extern mul2.se: [double:i:i]` use
 	
-	serpent mk_signature mul2.se
+	> serpent mk_signature mul2.se
 
 From there, given any variable containing an address, you can do `x.double(arg1)` to call the address stored by that variable. The arguments are the values provided to the function. If you provide too few arguments, the rest are filled to zero, and if you provide too many the extra ones are ignored. Function calling also has some other optional arguments:
 
