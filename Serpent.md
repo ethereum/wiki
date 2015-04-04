@@ -100,10 +100,10 @@ Now, what if you want to actually run the contract? That is where [pyethereum](h
 
 The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `c.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
 
-Note that if you want to send a transaction to such a contract in the testnet or livenet, you will need to package up the transaction data for "call function double with an integer as an input with data 42". The command line instruction for this is:
+Note that if you want to send a transaction to such a contract in the testnet or livenet, you will need to package up the transaction data for "call function double with an integer as an input with data 42". The command line instruction for this is *deprecated*:
 
-    > serpent encode_abi double i 42
-    eee97206000000000000000000000000000000000000000000000000000000000000002a
+<del>    > serpent encode_abi double i 42
+    eee97206000000000000000000000000000000000000000000000000000000000000002a</del>
 
 ### Example: Name Registry
 
@@ -138,10 +138,10 @@ Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opc
 
 If we wanted to encode the transaction data for that first call, we would do: 
 
-```
-> serpent encode_abi register ii 0x67656f726765 45
-d66d6c10000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d
-```
+
+<del>	 > serpent encode_abi register ii 0x67656f726765 45
+	d66d6c10000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d</del>
+
 ### Including files, and calling other contracts
 
 Once your projects become larger, you will not want to put everything into the same file; things become particularly inconvenient when one piece of code needs to create a contract. Fortunately, the process for splitting code into multiple files is quite simple. Make the following two files:
@@ -453,9 +453,9 @@ Serpent also gives you access to many "special variables"; the full list is:
 
 Serpent recognises the following "special functions":
 
-* `init` - executed upon contract creation
-* `shared` - executed before running `init` and user functions
-* `any` - executed before any user functions
+* `def init():` - executed upon contract creation, accepts no parameters
+* `def shared():"` - executed before running `init` and user functions
+* `def code():` - executed before any user functions
 
 There are also special commands for a few crypto operations; particularly:
 
