@@ -15,11 +15,14 @@
 - [Wire protocol](https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol)
 - [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
-- [Ethash](https://github.com/ethereum/wiki/wiki/Ethash)
-- [Ethash C API](https://github.com/ethereum/wiki/wiki/Ethash-C-API)
 - [Solidity, Docs & ABI](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI)
 - [NatSpec Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format)
 - [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
+
+### Ethash/Dashimoto
+- [Ethash](https://github.com/ethereum/wiki/wiki/Ethash)
+- [Ethash C API](https://github.com/ethereum/wiki/wiki/Ethash-C-API)
+- [Ethash DAG](https://github.com/ethereum/wiki/wiki/Ethash-DAG)
 
 ### Infrastructure Development
 - [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
