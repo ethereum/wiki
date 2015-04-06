@@ -19,14 +19,14 @@ The important differences between Serpent and Python are:
 
 In order to install the Serpent python library and executable do:
 
-    sudo pip install ethereum-serpent
+    $ sudo pip install ethereum-serpent
 
 If you want a library you can directly call from C++, instead do:
 
-    git clone http://github.com/ethereum/serpent
-    cd serpent
-    make
-    sudo make install
+    $ git clone http://github.com/ethereum/serpent
+    $ cd serpent
+    $ make
+    $ sudo make install
 
 ### Tutorial
 
@@ -42,19 +42,19 @@ Additionally, the Pyethereum testing environment that we will be using simply as
 Now, let's try actually compiling the code. Type:
 
 ```
-> serpent compile mul2.se
+$ serpent compile mul2.se
 604380600b600039604e567c01000000000000000000000000000000000000000000000000000000006000350463eee9720681141560415760043560405260026040510260605260206060f35b505b6000f3
 ```
 
 And there we go, that's the hexadecimal form of the code that you can put into transactions. Or, if you want to see opcodes:
 
-    > serpent pretty_compile mul2.se
+    $ serpent pretty_compile mul2.se
     [PUSH1, 67, DUP1, PUSH1, 11, PUSH1, 0, CODECOPY, PUSH1, 78, JUMP, PUSH29, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, PUSH1, 0, CALLDATALOAD, DIV, PUSH4, 238, 233, 114, 6, DUP2, EQ, ISZERO, PUSH1, 65, JUMPI, PUSH1, 4, CALLDATALOAD, PUSH1, 64, MSTORE, PUSH1, 2, PUSH1, 64, MLOAD, MUL, PUSH1, 96, MSTORE, PUSH1, 32, PUSH1, 96, RETURN, JUMPDEST, POP, JUMPDEST, PUSH1, 0, RETURN]
 
 Alternatively, you can compile to LLL to get an intermediate representation:
 
 ```
-> serpent compile_to_lll mul2.se
+$ serpent compile_to_lll mul2.se
 (return 0 
   (lll 
     (with '__funid 
@@ -80,29 +80,29 @@ This shows you the machinery that is going on inside. As with most contracts, th
 
 The function ID is calculated by computing a hash based on the function name and arguments and taking the first four bytes. In this case we have a function named "double" with a single integer as an argument; on the command line we can do:
 
-    > serpent get_prefix double i
+    $ serpent get_prefix double i
     4008276486
 
 Note that you can have multiple functions with the same name, if they take different combinations of inputs. For instance, a hypothetical function double that takes three integers as input (and, say, returns an array consisting of 2x each one) would have a different prefix:
 
-    > serpent get_prefix double iii
+    $ serpent get_prefix double iii
     1142360101
 
 The letter `i` is meant for integers, and for fixed-length (up to 32 byte) strings (which are treated the same as integers in Serpent and EVM). Use the letter `s` for variable-length string arguments, and `a` for arrays; more on these later.
 
 Now, what if you want to actually run the contract? That is where [pyethereum](https://github.com/ethereum/pyethereum) comes in. Open up a Python console in the same directory, and run:
 
-    > from pyethereum import tester as t
-    > s = t.state()
-    > c = s.abi_contract('mul2.se')
-    > c.double(42)
+    >>> from ethereum import tester as t
+    >>> s = t.state()
+    >>> c = s.abi_contract('mul2.se')
+    >>> c.double(42)
     [84]
 
 The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `c.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
 
 Note that if you want to send a transaction to such a contract in the testnet or livenet, you will need to package up the transaction data for "call function double with an integer as an input with data 42". The command line instruction for this is *deprecated*:
 
-<del>    > serpent encode_abi double i 42
+<del>    $ serpent encode_abi double i 42
     eee97206000000000000000000000000000000000000000000000000000000000000002a</del>
 
 ### Example: Name Registry
@@ -124,22 +124,22 @@ Here, we see a few parts in action. First, we have the `key` and `value` variabl
 
 Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opcodes or EVM, and let's try it out in the pyethereum tester environment:
 
-    > from pyethereum import tester as t
-    > s = t.state()
-    > c = s.abi_contract('namecoin.se')
-    > c.register(0x67656f726765, 45)
+    >>> from ethereum import tester as t
+    >>> s = t.state()
+    >>> c = s.abi_contract('namecoin.se')
+    >>> c.register(0x67656f726765, 45)
     [1]
-    > c.register(0x67656f726765, 20)
+    >>> c.register(0x67656f726765, 20)
     [0]
-    > c.register(0x6861727279, 65)
+    >>> c.register(0x6861727279, 65)
     [1]
-    > c.ask(0x6861727279)
+    >>> c.ask(0x6861727279)
     [65]
 
 If we wanted to encode the transaction data for that first call, we would do: 
 
 
-<del>	 > serpent encode_abi register ii 0x67656f726765 45
+<del>	 $ serpent encode_abi register ii 0x67656f726765 45
 	d66d6c10000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d</del>
 
 ### Including files, and calling other contracts
@@ -161,10 +161,10 @@ returnten.se:
 
 And open Python:
 
-    > from pyethereum import tester as t
-    > s = t.state()
-    > c = s.abi_contract('returnten.se')
-    > c.returnten()
+    >>> from ethereum import tester as t
+    >>> s = t.state()
+    >>> c = s.abi_contract('returnten.se')
+    >>> c.returnten()
     [10]
 
 Note that here we introduced several new features. Particularly:
@@ -177,7 +177,7 @@ Note that here we introduced several new features. Particularly:
 
 The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. To generate `extern mul2.se: [double:i:i]` use
 	
-	> serpent mk_signature mul2.se
+	$ serpent mk_signature mul2.se
 
 From there, given any variable containing an address, you can do `x.double(arg1)` to call the address stored by that variable. The arguments are the values provided to the function. If you provide too few arguments, the rest are filled to zero, and if you provide too many the extra ones are ignored. Function calling also has some other optional arguments:
 
