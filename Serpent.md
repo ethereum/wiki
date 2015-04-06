@@ -33,7 +33,7 @@ If you want a library you can directly call from C++, instead do:
 Now, let's write our first contract. Paste the following into a file called "mul2.se":
 
     def double(x):
-         return(x * 2)
+        return(x * 2)
 
 This contract is a simple two lines of code, and defines a function. Functions can be called either by transactions or by other contracts, and are the way that Serpent contracts provide an "interface" to other contracts and to transactions; for example, a contract defining a currency might have functions `send(to, value)` and `check_balance(address)`. 
 
