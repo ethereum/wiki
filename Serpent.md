@@ -30,7 +30,7 @@ If you want a library you can directly call from C++, instead do:
 
 ### Tutorial
 
-Now, let's write our first contract. Paste the following into a file called "mul2.se":
+Now, let's write our first contract. Paste the following into a file called `mul2.se`:
 
     def double(x):
         return(x * 2)
@@ -78,7 +78,7 @@ $ serpent compile_to_lll mul2.se
 
 This shows you the machinery that is going on inside. As with most contracts, the outermost layer of code exists only to copy the data of the inner code during initialization and return it, since the code returned during initialization is the code that will be executed every time the contract is called; in the EVM you can see this with the `CODECOPY` opcode, and in LLL this corresponds to the `lll` meta-operation. Inside of the LLL, we have a wrapper whose purpose it is to grab the first four bytes of the contract data, (that's the `(div (calldataload 0) 26959946667150639794667015087019630673637144422540572481103610249216)`; we grab four bytes by grabbing the first 32 bytes and dividing it by 2^224) to get the function ID that is being called, and then inside of that we have a series of functions (in this case only one function) that checks the function ID provided against all function IDs supported by the contract. If the function ID is 4008276486, then it sets a variable `'x` to the message data bytes 4-35 (that's `(calldataload 4)`), sets a temporary variable to equal to `2 * x`, and returns the 32 byte memory slice that contains that variable.
 
-The function ID is calculated by computing a hash based on the function name and arguments and taking the first four bytes. In this case we have a function named "double" with a single integer as an argument; on the command line we can do:
+The function ID is calculated by computing a hash based on the function name and arguments and taking the first four bytes. In this case we have a function named `double` with a single integer as an argument; on the command line we can do:
 
     $ serpent get_prefix double i
     4008276486
@@ -122,7 +122,7 @@ Having a multiply-by-two function on the blockchain is kind of boring. So let's 
 
 Here, we see a few parts in action. First, we have the `key` and `value` variables that the function takes as arguments. The second line is a comment; it does not get compiled and only serves to remind you what the code does. Then, we have a standard if/else clause, which checks if `self.storage[key]` is zero (ie. unclaimed), and if it is then it sets `self.storage[key] = value` and returns 1. Otherwise, it returns zero. `self.storage` is also a pseudo-array, acting like an array but without any particular memory location.
 
-Now, paste the code into "namecoin.se", if you wish try compiling it to LLL, opcodes or EVM, and let's try it out in the pyethereum tester environment:
+Now, paste the code into `namecoin.se`, if you wish try compiling it to LLL, opcodes or EVM, and let's try it out in the pyethereum tester environment:
 
     >>> from ethereum import tester as t
     >>> s = t.state()
@@ -472,11 +472,11 @@ There are also special commands for a few crypto operations; particularly:
 
 * Sometimes you may be intending to use unsigned operators. eg div() and lt() instead of '/' and '<'.
 
-* To upgrade Serpent, you may need to do `pip uninstall ethereum-serpent` and `python setup.py install`.  (Avoid `pip install ethereum-serpent` since it will get from pypi which is probably old.)
+* To upgrade Serpent, you may need to do `pip uninstall ethereum-serpent` and `python setup.py install`.  (Avoid `pip install ethereum-serpent` since it will get from PyPI which is probably old.)
 
 * When calling abi_contract(), if you get this type of error `Exception: Error (file "main", line 1, char 5): Invalid object member (ie. a foo.bar not mapped to anything)` make sure you are specifying correct path to the file you are compiling.
 
-* If you get a core dump when calling abi_contract(), check that you do not have functions with the same name.
+* If you get a core dump when calling `abi_contract()`, check that you do not have functions with the same name.
 
 * Constants need to be be defined inside shared, example:
 ```
