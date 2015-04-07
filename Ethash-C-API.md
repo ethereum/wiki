@@ -4,13 +4,13 @@ This is just a documentation of the request of the C API described in [this PR](
 typedef int(*Callback)(unsigned);
 typedef void const* ethash_light_t;
 typedef void const* ethash_full_t;
-typedef uint8_t ethash_seed_t[32];
+typedef struct ethash_blockhash { uint8_t b[32]; } ethash_blockhash_t;
 
-ethash_light_t ethash_new_light(ethash_params const* params, ethash_seed_t seed);
+ethash_light_t ethash_new_light(ethash_params const* params, ethash_blockhash_t *seed);
 void ethash_compute_light(ethash_return_value *ret, ethash_light_t light, ethash_params const *params, const uint8_t header_hash[32], const uint64_t nonce);
 void ethash_delete_light(ethash_light_t light);
 
-ethash_full_t ethash_new_full(ethash_params const* params, void const* cache, const uint8_t seed[32], CallBack c);
+ethash_full_t ethash_new_full(ethash_params const* params, void const* cache, const ethash_blockhash_t *seed, CallBack c);
 void ethash_compute_full(ethash_return_value *ret, ethash_full_t full, ethash_params const *params, const uint8_t header_hash[32], const uint64_t nonce);
 void ethash_delete_full(ethash_full_t full);
 ```
@@ -30,9 +30,9 @@ void main()
 {
   ethash_params p;
   ethash_light_t light;
-  ethash_seed_t seed;
+  ethash_blockhash_t seedl
   // TODO: populate p, seed, light
-  ethash_full_t dag = ethash_new_full(&p, cache, seed, &callback);
+  ethash_full_t dag = ethash_new_full(&p, cache, &seed, &callback);
   if (!dag)
   {
     printf("Failed generating DAG :-(\n");
