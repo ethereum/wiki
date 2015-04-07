@@ -1,6 +1,6 @@
 This is just a documentation of the request of the C API described in [this PR](https://github.com/ethereum/ethash/pull/11).
 
-```
+```c
 typedef int(*Callback)(unsigned);
 typedef void const* ethash_light_t;
 typedef void const* ethash_full_t;
@@ -20,7 +20,7 @@ non-zero return from Callback means "cancel DAG creation" - this should cause an
 an object of type ethash_full_t may be tested for validity with != 0
 
 ### Example usage:
-```
+```c
 int callback(unsigned _progress)
 {
   printf("\rGenerating DAG. %d%% done...", _progress);
