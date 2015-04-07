@@ -4,14 +4,14 @@ This is just a documentation of the request of the C API described in [this PR](
 typedef int(*Callback)(unsigned);
 typedef void const* ethash_light_t;
 typedef void const* ethash_full_t;
-typedef struct ethash_blockhash { uint8_t b[32]; } ethash_blockhash_t;
+typedef struct ethash_h256 { uint8_t b[32]; } ethash_h256_t;
 
-ethash_light_t ethash_new_light(ethash_params const* params, ethash_blockhash_t *seed);
-void ethash_compute_light(ethash_return_value *ret, ethash_light_t light, ethash_params const *params, const uint8_t header_hash[32], const uint64_t nonce);
+ethash_light_t ethash_new_light(ethash_params const* params, ethash_h256_t *seed);
+void ethash_compute_light(ethash_return_value *ret, ethash_light_t light, ethash_params const *params, const ethash_h256_t *header_hash, const uint64_t nonce);
 void ethash_delete_light(ethash_light_t light);
 
-ethash_full_t ethash_new_full(ethash_params const* params, void const* cache, const ethash_blockhash_t *seed, CallBack c);
-void ethash_compute_full(ethash_return_value *ret, ethash_full_t full, ethash_params const *params, const uint8_t header_hash[32], const uint64_t nonce);
+ethash_full_t ethash_new_full(ethash_params const* params, void const* cache, const ethash_h256_t *seed, CallBack c);
+void ethash_compute_full(ethash_return_value *ret, ethash_full_t full, ethash_params const *params, const ethash_h256_t *header_hash, const uint64_t nonce);
 void ethash_delete_full(ethash_full_t full);
 ```
 
@@ -30,7 +30,7 @@ void main()
 {
   ethash_params p;
   ethash_light_t light;
-  ethash_blockhash_t seedl
+  ethash_h256_t seed;
   // TODO: populate p, seed, light
   ethash_full_t dag = ethash_new_full(&p, cache, &seed, &callback);
   if (!dag)
@@ -40,12 +40,12 @@ void main()
   }
   printf("DAG Generated OK!\n");
 
-  uint8_t headerHash[32];
+  ethash_h256_t headerHash;
   // TODO: populate headerHash
   uint64_t nonce = time(0);
   ethash_return_value ret;
   for (; !isWinner(ret); nonce++)
-    ethash_compute_full(&ret, dag, &p, headerHash, nonce);
+    ethash_compute_full(&ret, dag, &p, &headerHash, nonce);
   printf("Got winner! nonce is %d\n", nonce);
   ethash_delete_full(dag);
 }
