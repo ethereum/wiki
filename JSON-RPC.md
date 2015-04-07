@@ -1432,6 +1432,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":[
     "transactionIndex": "0x0", // 0
     "address": "0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
     "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "topics": ["0x59ebeb90bc63057b6515673c3ecf9438e5058bca0f92585014eced636878c9a5"]
     },{
       ...
     }]
