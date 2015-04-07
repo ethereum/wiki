@@ -31,6 +31,7 @@
 - [Exchange Integration](https://github.com/ethereum/wiki/wiki/Exchange-Integration)
 - [Mining Howto](https://github.com/ethereum/wiki/wiki/Mining-Howto)
 - [Licencing](https://github.com/ethereum/wiki/wiki/Licencing)
+- [Network Status](https://github.com/ethereum/wiki/wiki/Network-Status)
 
 ### Ethereum Clients
 - [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
