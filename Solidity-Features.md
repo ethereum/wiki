@@ -653,3 +653,18 @@ contract Test {
 }
 ```
 the ABI interface for Poo is Poo(address) when the Solidity interface is still Poo(Foo).
+
+## Accessor for Arrays
+[PT](https://www.pivotaltracker.com/story/show/88500646) 
+For Arrays the accessor is generated which accepts the index as parameter and returns an array element
+```
+contract test {
+    uint[4] public data;
+    function test() {
+        data[0] = 0;
+        data[1] = 1;
+        data[2] = 2;
+    }
+}
+```
+In the above contract if you tried to call the data(1) method of the test you would obtain the result 1.
