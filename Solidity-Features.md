@@ -659,7 +659,7 @@ the ABI interface for Poo is Poo(address) when the Solidity interface is still P
 For Arrays the accessor is generated which accepts the index as parameter and returns an array element
 ```
 contract test {
-    uint[4] public data;
+    uint[3] public data;
     function test() {
         data[0] = 0;
         data[1] = 1;
