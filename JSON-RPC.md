@@ -1476,7 +1476,7 @@ Returns an array of all logs matching a given filter object.
 
 ##### Parameters
 
-1. `Object` - the filter object, see [eth_getFilterChanges parameters](#eth_getfilterchanges).
+1. `Object` - the filter object, see [eth_newFilter parameters](#eth_newfilter).
 
 ```js
 params: [{
