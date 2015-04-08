@@ -637,3 +637,19 @@ contract test {
   }
 }
 ```
+## External Types
+[PT](https://www.pivotaltracker.com/story/show/88772706) 
+All functions with visibility more than internal should have external types (ABI types) otherwise raise an error.
+For Contract type external type is address type.
+```
+contract Foo {}
+contract Test {
+    function func() {
+        Foo arg;
+        this.Poo(arg);
+        Poo(arg);
+    }
+    function Poo(Foo c) external {}
+}
+```
+the ABI interface for Poo is Poo(address) when the Solidity interface is still Poo(Foo).
