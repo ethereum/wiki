@@ -33,8 +33,8 @@ Several commands are available:
 - `pm2 stop node-app` to stop the app;
 - `pm2 kill` to kill the daemon.
 
-
-  
+   
+   
 
 ## Auto-installation on a fresh Ubuntu install
 
