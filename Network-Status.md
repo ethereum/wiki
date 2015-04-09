@@ -32,3 +32,47 @@ Several commands are available:
 - `pm2 gracefulReload node-app` for a soft reload;
 - `pm2 stop node-app` to stop the app;
 - `pm2 kill` to kill the daemon.
+
+
+## Auto-installation on a fresh Ubuntu install
+
+Fetch and run the build shell. This will install everything you need: latest ethereum - CLI from develop branch (you can choose between eth or geth), node.js, npm & pm2.
+
+```bash
+bash <(curl https://raw.githubusercontent.com/cubedro/eth-net-intelligence-api/master/bin/build.sh)
+```
+
+## Configuration
+
+Configure the app modifying [processes.json](/eth-net-intelligence-api/blob/master/processes.json). Note that you have to modify the backup processes.json file located in `./bin/processes.json` (to allow you to set your env vars without being rewritten when updating).
+
+```json
+"env":
+	{
+		"NODE_ENV"        : "production", // tell the client we're in production environment
+		"RPC_HOST"        : "localhost", // eth JSON-RPC host
+		"RPC_PORT"        : "8080", // eth JSON-RPC port
+		"INSTANCE_NAME"   : "", // whatever you wish to name your node
+		"WS_SERVER"       : "wss://eth-netstats.herokuapp.com", // path to eth-netstats WebSockets api server
+		"WS_SECRET"       : "", // WebSockets api server secret used for login
+	}
+```
+
+## Run
+
+Run it using pm2:
+
+```bash
+cd ~/bin
+pm2 start processes.json
+```
+
+## Updating
+
+To update the API client use the following command:
+
+```bash
+~/bin/www/bin/update.sh
+```
+
+It will stop the current netstats client processes, automatically detect your ethereum implementation and version, update it to the latest develop build, update netstats client and reload the processes.
