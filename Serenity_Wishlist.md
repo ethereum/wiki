@@ -36,11 +36,14 @@ Ideally, the initial limit would be large enough to support many kinds of signat
 
 Currently, wire and database compression is done with a fairly crude algorithm that run-length-encodes zeroes but otherwise leaves data unchanged. Substantial gains can probably be made by applying either a pre-generated Hamming code or some separate encryption algorithm such as [http://lloyd.github.io/easylzma/](http://lloyd.github.io/easylzma/).
 
-### Opcodes
+### Virtual machine
 
-Currently, one problem that contract authors have is that it is difficult to determine whether or not there is enough space left on the call stack to make a particular sub-call (which leads to an execution tree with a compile-time-known depth); the only approach is to deliberately call a contract which recursively calls itself N times in order to determine if you have N levels of breathing room. An explicit opcode `DEPTH` for determining the call stack depth would make things much easier.
+The Ethereum virtual machine has a number of suboptimalities at present, and so there are plenty of features that can be added or impoved. Particular possibilities include:
 
-~~Also, returning ether value to the sender in the case of an exception would make it easier to write unexploitable code.~~ (implemented in Frontier)
+1. The addition of opcodes specialized for 64-bit arithmetic, which can be done on machines much more quickly.
+2. The addition of `MCOPY` as an opcode and not a contract.
+3. Replacement of DUP1...DUP16 and SWAP1...SWAP16 with `DUP <n>` (where `<n>` is stored similarly to pushdata). This allows for unlimited depth in stack variables.
+4. The addition of a `DEPTH` opcode to determine the current call stack depth, useful or determining whether or not there is enough stack space to make a particular sub-call with a compile-time-known depth.
 
 ### Sending funds
 
