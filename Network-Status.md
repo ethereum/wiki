@@ -1,6 +1,6 @@
 The [Ethereum (centralised) network status monitor](http://eth-netstats.herokuapp.com) (known sometimes as "eth-netstats") is a web-based application to monitor the health of the testnet/mainnet through a group of nodes.
 
-### Listing
+## Listing
 
 To list your node, you must install the client-side information relay, a node module. Instructions given here work on Ubuntu. Other platforms vary.
 
@@ -32,6 +32,8 @@ Several commands are available:
 - `pm2 gracefulReload node-app` for a soft reload;
 - `pm2 stop node-app` to stop the app;
 - `pm2 kill` to kill the daemon.
+
+
 
 
 ## Auto-installation on a fresh Ubuntu install
