@@ -34,7 +34,7 @@ Several commands are available:
 - `pm2 kill` to kill the daemon.
 
 
-
+  
 
 ## Auto-installation on a fresh Ubuntu install
 
@@ -44,7 +44,7 @@ Fetch and run the build shell. This will install everything you need: latest eth
 bash <(curl https://raw.githubusercontent.com/cubedro/eth-net-intelligence-api/master/bin/build.sh)
 ```
 
-## Configuration
+### Configuration
 
 Configure the app modifying [processes.json](/eth-net-intelligence-api/blob/master/processes.json). Note that you have to modify the backup processes.json file located in `./bin/processes.json` (to allow you to set your env vars without being rewritten when updating).
 
@@ -60,7 +60,7 @@ Configure the app modifying [processes.json](/eth-net-intelligence-api/blob/mast
 	}
 ```
 
-## Run
+### Run
 
 Run it using pm2:
 
@@ -69,7 +69,7 @@ cd ~/bin
 pm2 start processes.json
 ```
 
-## Updating
+### Updating
 
 To update the API client use the following command:
 
