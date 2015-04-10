@@ -754,7 +754,7 @@ Creates new message call transaction or a contract creation, if the data field c
 
 1. `Object` - The transaction object
   - `from`: `HEX String` - The address the transaction is send from.
-  - `to`: `HEX String`  - The address the transaction is directed to.
+  - `to`: `HEX String`  - (optional when creating new contract) The address the transaction is directed to.
   - `gas`: `HEX String`  - (optional, default: To-Be-Determined) Integer of the gas provided for the transaction execution. It will return unused gas.
   - `gasPrice`: `HEX String`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each payed gas
   - `value`: `HEX String`  - (optional) Integer of the value send with this transaction
