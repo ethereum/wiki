@@ -1081,7 +1081,7 @@ console.log(result); // true
 This method should be called, when we want to get string from local leveldb database.
 First param is db name and second is the key of string value.
 ```javascript
-var value = web3.db.get('testDB', 'key');
+var value = web3.db.getString('testDB', 'key');
 console.log(value); // "myString"
 ```
 
@@ -1091,7 +1091,7 @@ console.log(value); // "myString"
 This method should be called, when we want to store HEX in a local leveldb database.
 First param is db name, second is the key, and third is the value.
 ```javascript
-var result = web3.db.put('testDB', 'key', '0x4f554b443');
+var result = web3.db.putHex('testDB', 'key', '0x4f554b443');
 console.log(result); // true
 
 ```
@@ -1102,7 +1102,7 @@ console.log(result); // true
 This method should be called, when we want to get a HEX value from a local leveldb database.
 First param is db name and second is the key of value.
 ```javascript
-var value = web3.db.get('testDB', 'key');
+var value = web3.db.getHex('testDB', 'key');
 console.log(value); // "0x4f554b443"
 ```
 
