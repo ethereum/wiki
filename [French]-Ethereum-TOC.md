@@ -57,8 +57,15 @@ Satoshi innova en proposant l'association d'un protocol de consensus décentrali
 
 From a technical standpoint, the Bitcoin ledger can be thought of as a state transition system, where there is a "state" consisting of the ownership status of all existing bitcoins and a "state transition function" that takes a state and a transaction and outputs a new state which is the result. In a standard banking system, for example, the state is a balance sheet, a transaction is a request to move $X from A to B, and the state transition function reduces the value in A's account by $X and increases the value in B's account by $X. If A's account has less than $X in the first place, the state transition function returns an error. Hence, one can formally define:
 
-D'un point de vue technique, le "grand livre" du Bitcoin peut être perçu comme un système d'états transitoires. 
+D'un point de vue technique, le registre de Bitcoin peut être perçu comme un système de transition d'états, où:
+- Chaque "état" représente le statut de propriété de toutes les bitcoins qui existent.
+- Une fonction de transition d'états prenant un état et une transaction, et produisant un nouvel état comme résultat.
+Dans un système bancaire traditionnel par exemple:
+- L'état a un instant t serait un bilan financier
+- Une transaction serait une requête de transfert de $X de A vers B
+- La fonction de transition d'états réduirait le compte de A de $X et augmenterait celui de B de $X. Si A n'avait pas suffisamment de fonds, la fonction retournerait une erreur.
 
+WIP (translating https://github.com/ethereum/wiki/wiki/White-Paper#bitcoin-as-a-state-transition-system)
 
 Signature Aveugle de Chaum :
 http://www.hit.bme.hu/~buttyan/courses/BMEVIHIM219/2009/Chaum.BlindSigForPayment.1982.PDF
