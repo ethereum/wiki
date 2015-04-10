@@ -60,6 +60,7 @@ From a technical standpoint, the Bitcoin ledger can be thought of as a state tra
 D'un point de vue technique, le registre de Bitcoin peut être perçu comme un système de transition d'états, où:
 - Chaque "état" représente le statut de propriété de toutes les bitcoins qui existent.
 - Une fonction de transition d'états prenant un état et une transaction, et produisant un nouvel état comme résultat.
+
 Dans un système bancaire traditionnel par exemple:
 - L'état a un instant t serait un bilan financier
 - Une transaction serait une requête de transfert de $X de A vers B
