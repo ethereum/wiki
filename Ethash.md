@@ -34,32 +34,22 @@ ACCESSES = 64                     # number of accesses in hashimoto loop
 
 ### Parameters
 
-The parameters for Ethash's cache and dataset depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we compute tables using the following functions (tabulated with Mathematica):
+The parameters for Ethash's cache and dataset depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we compute tables using the following functions:
 
-```mathematica
-GetDataSizes[n_] := Module[{
-       DataSetSizeBytesInit = 2^30,
-       MixBytes = 128,
-       DataSetGrowth = 2^23,
-       j = 0},
-       Reap[
-         While[j < n,
-           Module[{i =
-             Floor[(DataSetSizeBytesInit + DataSetGrowth * j) / MixBytes]},
-             While[! PrimeQ[i], i--];
-             Sow[i*MixBytes]; j++]]]][[2]][[1]]
+```python
+def get_cache_size(block_number):
+    sz = CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * (block_number // EPOCH_LENGTH)
+    sz -= HASH_BYTES
+    while not isprime(sz / HASH_BYTES):
+        sz -= 2 * HASH_BYTES
+    return sz
 
- GetCacheSizes[n_] := Module[{
-        CacheSizeBytesInit = 2^24,
-        CacheGrowth = 2^17,
-        HashBytes = 64,
-        j = 0},
-       Reap[
-         While[j < n,
-           Module[{i =
-             Floor[(CacheSizeBytesInit + CacheGrowth * j) / HashBytes]},
-             While[! PrimeQ[i], i--];
-             Sow[i*HashBytes]; j++]]]][[2]][[1]]
+def get_full_size(block_number):
+    sz = DATASET_BYTES_INIT + DATASET_BYTES_GROWTH * (block_number // EPOCH_LENGTH)
+    sz -= MIX_BYTES
+    while not isprime(sz / MIX_BYTES):
+        sz -= 2 * MIX_BYTES
+    return sz
 ```
 
 Tables of dataset and cache size values are provided in the appendix.
