@@ -34,7 +34,7 @@ ACCESSES = 64                     # number of accesses in hashimoto loop
 
 ### Parameters
 
-The parameters for Ethash's cache and dataset depend on the block number. In order to compute the size of the dataset and the cache at a given block number, we compute tables using the following functions:
+The parameters for Ethash's cache and dataset depend on the block number. The cache size and dataset size both grow linearly; however, we always take the highest prime below the linearly growing threshold in order to reduce the risk of accidental regularities leading to cyclic behavior.
 
 ```python
 def get_cache_size(block_number):
