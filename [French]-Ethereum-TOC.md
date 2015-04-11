@@ -66,6 +66,20 @@ Dans un système bancaire traditionnel par exemple:
 - Une transaction serait une requête de transfert de $X de A vers B
 - La fonction de transition d'états réduirait le compte de A de $X et augmenterait celui de B de $X. Si A n'avait pas suffisamment de fonds, la fonction retournerait une erreur.
 
+Par conséquent, on peut formellement définir:
+
+    APPLIQUER(S,TX) -> S' ou ERREUR
+
+Dans l'exemple précédent:
+
+    APPLIQUER({ Alice: $50, Bob: $50 },"envoyer $20 de Alice vers Bob") = { Alice: $30, Bob: $70 }
+
+Mais
+
+    APPLIQUER({ Alice: $50, Bob: $50 },"envoyer $70 de Alice vers Bob") = ERREUR
+
+L'"état" global dans Bitcoin est l'ensemble de toutes les "pièces" (bitcoins, en termes techniques ce sont des "Données de sorties de transactions non-depensées" ou unspent transaction outputs/UTXO en anglais). Chaque pièce a une valeur et un propriétaire (définie par une adresse de 20 octets qui correspond essentiellement a une clé publique de cryptographie). Une transaction contient une ou plusieurs données en entrée, avec chaque données contenant une référence a une UTXO existante et une signature cryptographique produite par la clé privée associée au propriétaire de l'adresse, et une ou plusieurs données de sortie telles que chacune contient une nouvelle UTXO a rajouter a l'état global.
+
 WIP (translating https://github.com/ethereum/wiki/wiki/White-Paper#bitcoin-as-a-state-transition-system)
 
 Signature Aveugle de Chaum :
