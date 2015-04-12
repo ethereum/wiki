@@ -128,7 +128,7 @@ A block header will (for now) consist of an RLP list of four components:
 8. Check that the state trie root is equal to the `endstate`. If not, return 0
 9. Return 1
 
-### INTERPRET_COLLATIOn
+### INTERPRET_COLLATION
 
 `INTERPRET_COLLATION` is in fact more complicated, as it handles actual transaction logic at the bottom level. A collation will be in the following format:
 
