@@ -122,7 +122,6 @@ The following options are possible for the defaultBlock parameter:
 * [eth_getCode](#eth_getcode)
 * [eth_sendTransaction](#eth_sendtransaction)
 * [eth_call](#eth_call)
-* [eth_flush](#eth_flush)
 * [eth_getBlockByHash](#eth_getblockbyhash)
 * [eth_getBlockByNumber](#eth_getblockbynumber)
 * [eth_getTransactionByHash](#eth_gettransactionbyhash)
@@ -822,32 +821,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{see above}]
   "id":1,
   "jsonrpc": "2.0",
   "result": "0x0"
-}
-```
-
-***
-
-#### eth_flush
-
-(?)
-
-
-##### Parameters
-none
-
-##### Returns
-none
-
-##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_flush","params":[],"id":64}'
-
-// Result
-{
-"id":1,
-"jsonrpc":"2.0",
-"result":true
 }
 ```
 
