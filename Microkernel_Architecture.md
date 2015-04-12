@@ -6,7 +6,7 @@ The basic design is the culmination of a year of ongoing thinking and evolution 
 
 One of the major design goals for the final product of this roadmap is for as much of the consensus logic as possible to be abstracted away and itself written in EVM code; this makes it much easier to deliver upgrades to specific features such as the consensus algorithm in the future, and also means that the amount of work needed to implement Ethereum in multiple languages will decrease drastically as only one implementation is effectively required. The goal is to take the fundamental primitive of an Ethereum execution environment, consisting of the EVM and calling semantics, as a given, and use it as the building block of all other features of Ethereum, including logs, events, and even block execution and validation, including in a scalable context. Each feature will generally be implemented via a specific contract.
 
-### The Microkernel
+## The Microkernel
 
 The microkernel is the code that each individual Ethereum implementation will actually have to implement. Everything other than the microkernel code can be written in EVM code.
 
@@ -88,7 +88,7 @@ It then creates and runs a child VM instance with the desired code, input, outpu
 
 The `INTERRUPT` opcode takes a start memory index and slice length for where to get interrupt data and a start memory index and slice length for output. It creates a VM instance with the interrupt code supplied into the VM execution instance, empty input and _the parent's permissions_ and returns output into the provided slice length.
 
-### Wire protocol block structure
+## Wire protocol block structure
 
 We can establish a (potentially mutable) convention that the wire protocol-level block structure will look like the following, in RLP form:
 
@@ -105,7 +105,7 @@ The first step upon receiving a block will always be to load the hashed values a
 
 For collations, we use the same format, except that we only add hashed values which represent trie/heap nodes.
 
-### INTERPRET_BLOCK
+## INTERPRET_BLOCK
 
 `INTERPRET_BLOCK` is the "master contract" of the top-level consensus. `INTERPRET_BLOCK` takes a block header root as input, and returns 1 if the header is valid and 0 if the header is invalid. This is the only immutable component of the top-level consensus; every "full" validator node will run it.
 
@@ -128,7 +128,7 @@ A block header will (for now) consist of an RLP list of four components:
 8. Check that the state trie root is equal to the `endstate`. If not, return 0
 9. Return 1
 
-### INTERPRET_COLLATION
+## INTERPRET_COLLATION
 
 `INTERPRET_COLLATION` is in fact more complicated, as it handles actual transaction logic at the bottom level. A collation will be in the following format:
 
