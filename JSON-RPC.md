@@ -1473,7 +1473,7 @@ Result see [eth_getFilterChanges](#eth_getfilterchanges)
 
 #### eth_getWork
 
-Returns the hash of the current block, the seedHash, and the difficulty to be met.
+Returns the hash of the current block, the seedHash, and the boundary condition to be met ("target").
 
 ##### Parameters
 none
@@ -1483,7 +1483,7 @@ none
 `Array` - Arrway with the following properties:
   1. `HEX String` - current block header hash without the nonce (the first part of the proof-of-work pair) (?).
   2. `HEX String` - the seed hash used for the DAG.
-  3. `HEX String` - integer of the difficulty required to solve.
+  3. `HEX String` - the boundary condition ("target"), 2^256 / difficulty.
 
 ##### Example
 ```js
@@ -1512,7 +1512,7 @@ Used for submitting a proof-of-work solution.
 ##### Parameters
 
 1. `HEX String` - The nonce found (64 bits)
-2. `HEX String` - The header (256 bits)
+2. `HEX String` - The header's hash (256 bits)
 3. `HEX String` - The mix digest (256 bits)
 
 ```js
