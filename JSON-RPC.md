@@ -1377,7 +1377,6 @@ For filters created with `eth_newBlockFilter` log objects are `null`.
 
 For filters created with `eth_newFilter` logs are objects with following params:
 
-  - `hash`: `HEX String` - 32-byte hash of the log.
   - `logIndex`: `HEX String` - integer of the log index position in the block.
   - `transactionIndex`: `HEX String` - integer of the transactions index position log was created from.
   - `transactionHash`: `HEX String` - hash of the transactions this log was created from.
