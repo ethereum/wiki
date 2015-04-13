@@ -6,6 +6,26 @@ The basic design is the culmination of a year of ongoing thinking and evolution 
 
 One of the major design goals for the final product of this roadmap is for as much of the consensus logic as possible to be abstracted away and itself written in EVM code; this makes it much easier to deliver upgrades to specific features such as the consensus algorithm in the future, and also means that the amount of work needed to implement Ethereum in multiple languages will decrease drastically as only one implementation is effectively required. The goal is to take the fundamental primitive of an Ethereum execution environment, consisting of the EVM and calling semantics, as a given, and use it as the building block of all other features of Ethereum, including logs, events, and even block execution and validation, including in a scalable context. Each feature will generally be implemented via a specific contract.
 
+### Summary and EVM Alterations
+
+With the introduction of the notion of the EVM (prior to February 2014 it had been only through its instruction set: "Ethereum Script") and its evolution early 2014, it had always been designed towards three specific directions:
+
+- domain specific for crypto, and specifically ECDSA and SHA3-256 (word-size 256-bit);
+- ease of implementation: simple, minimalist architecture (e.g. stack over registers);
+- no duplication of functionality (e.g. reuse DIV & MUL over bit-shifts).
+
+This work proposes to take the EVM in a wholly new direction. Roughly speaking, our goals are:
+
+- maximal generality;
+- maximal efficiency;
+- ability to be utilised as the only fundamentally irreplaceable part of a consensus system.
+
+As such, the specific EVM architecture is likely to take a very different shape: SSTORE, SLOAD and CREATE will be gone, as will SHA3, and CALL will be stripped to essentials, essentially providing only a basic ability for call stacks. Interrupt handlers will be introduced and a number of base-level permissions will be introduced to the EVM itself, loosely following from CPU "protection rings".
+
+Hard-wired "virtual peripherals" will manage all crypto operations and database (trie/leveldb) I/O. Interrupt handlers in validated base-level consensus code will allow the highest-level "user" contracts to, through specific "system-level consensus APIs", access these services and live in an environment very similar to that provided by the 1.0 EVM.
+
+The specific instruction set will be modelled closely following a real hardware CPU, possibly to the point of being exactly equivalent; this will depend on our research and how easily our "virtual peripheral" I/O mechanism can be made to work with a piece of real hardware.
+
 ## The Microkernel
 
 The microkernel is the code that each individual Ethereum implementation will actually have to implement. Everything other than the microkernel code can be written in EVM code.
