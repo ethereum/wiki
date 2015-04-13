@@ -12,7 +12,6 @@ JSON RPC Standard errors:
 |-32602 | Invalid params    | Invalid method parameter(s). |
 |-32603 | Internal error    | Internal JSON-RPC error. |
 |-32000 to -32099             | `Server error`. Reserved for implementation-defined server-errors. |
----–––––––-
 
 Custom error codes:
 
