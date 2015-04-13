@@ -152,7 +152,7 @@ The first step upon receiving a block will always be to load the hashed values a
 
 For collations, we use the same format, except that we only add hashed values which represent trie/heap nodes.
 
-## INTERPRET_BLOCK
+## INTERPRET_BLOCK (level-0 kernel)
 
 `INTERPRET_BLOCK` is the "master contract" of the top-level consensus. `INTERPRET_BLOCK` takes a block header root as input, and returns 1 if the header is valid and 0 if the header is invalid. This is the only immutable component of the top-level consensus; every "full" validator node will run it.
 
@@ -175,7 +175,7 @@ A block header will (for now) consist of an RLP list of four components:
 8. Check that the state trie root is equal to the `endstate`. If not, return 0
 9. Return 1
 
-## INTERPRET_COLLATION
+## INTERPRET_COLLATION (level-1 kernel)
 
 `INTERPRET_COLLATION` is in fact more complicated, as it handles actual transaction logic at the bottom level. A collation will be in the following format:
 
