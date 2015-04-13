@@ -20,7 +20,7 @@ This work proposes to take the EVM in a wholly new direction. Roughly speaking, 
 - maximal efficiency;
 - ability to be utilised as the only fundamentally irreplaceable part of a consensus system.
 
-As such, the specific EVM∞ architecture is likely to take a very different shape: `SSTORE`, `SLOAD` and `CREATE` will be gone, as will `SHA3`. CALL will be replaced by `EVAL`, a version of it stripped to essentials, providing only a basic ability for an execution environment stack. Interrupt handlers will be introduced and a number of base-level permissions will be introduced to the EVM∞ itself, loosely following from CPU "protection rings".
+As such, the specific EVM∞ architecture is likely to take a very different shape: `SSTORE`, `SLOAD` and `CREATE` will be gone, as will `SHA3`. `CALL` will be replaced by `EVAL`, a version of it stripped to essentials, providing only a basic ability for an execution environment stack. Interrupt handlers will be introduced and a number of base-level permissions will be introduced to the EVM∞ itself, loosely following from CPU "protection rings".
 
 Hard-wired "virtual peripherals" will manage all crypto operations and database (trie/leveldb) I/O. Interrupt handlers in validated base-level consensus code will allow the highest-level "user" contracts to, through specific "system-level consensus APIs", access these services and live in an environment very similar to that provided by the 1.0 EVM.
 
