@@ -33,7 +33,7 @@ Because contracts can play such different roles, we expect that contracts will b
 
 The betting contract itself needs to fetch data about the San Francisco weather from some contract, and it also needs to talk to the GavCoin contract when it wants to actually send the GavCoin to either Alice or Bob (or, more precisely, Alice or Bob's forwarding contract). We can show the relationships between the accounts thus:
 
-![img](http://vitalik.ca/files/contract_relationship.png)
+![img](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/contract_relationship.png)
 
 When Bob wants to finalize the bet, the following steps happen:
 
@@ -46,7 +46,7 @@ When Bob wants to finalize the bet, the following steps happen:
 
 Note that the GavCoin is all "stored" as entries in the GavCoin contract's database; the word "account" in the context of step 6 simply means that there is a data entry in the GavCoin contract storage with a key for the bet contract's address and a value for its balance. After receiving this message, the GavCoin contract decreases this value by some amount and increases the value in the entry corresponding to Bob's forwarding contract's address. We can see these steps in the following diagram:
 
-![img](http://vitalik.ca/files/contract_relationship2.png?1)
+![img](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/contract_relationship2.png?1)
 
 ### State Machine
 
@@ -136,7 +136,7 @@ A complete listing of the opcodes in the EVM can be found in the [yellow paper](
 
 The Ethereum blockchain (or "ledger") is the decentralized, massively replicated database in which the current state of all accounts is stored. The blockchain uses a database called a [Patricia tree](https://github.com/ethereum/wiki/wiki/Patricia-Tree) (or "trie") to store all accounts; this is essentially a specialized kind of Merkle tree that acts as a generic key/value store. Like a standard Merkle tree, a Patricia tree has a "root hash" that can be used to refer to the entire tree, and the contents of the tree cannot be modified without changing the root hash. For each account, the tree stores a 4-tuple containing `[account_nonce, ether_balance, code_hash, storage_root]`, where `account_nonce` is the number of transactions sent from the account (kept to prevent replay attacks), `ether_balance` is the balance of the account, `code_hash` the hash of the code if the account is a contract and "" otherwise, and `storage_root` is the root of yet another Patricia tree which stores the storage data.
 
-![we](http://vitalik.ca/files/chaindiag.png)
+![we](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/chaindiag.png)
 
 Every minute, a miner produces a new block (the concept of mining in Ethereum is exactly the same as in Bitcoin; see any Bitcoin tutorial for more info on this), and that block contains a list of transactions that happened since the last block and the root hash of the Patricia tree representing the new state ("state tree") after applying those transactions and giving the miner an ether reward for creating the block.
 
