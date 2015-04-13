@@ -12,7 +12,7 @@ With the introduction of the notion of the EVM (prior to February 2014 it had be
 
 - domain specific for crypto, and specifically ECDSA and SHA3-256 (word-size 256-bit);
 - ease of implementation: simple, minimalist architecture (e.g. stack over registers);
-- no duplication of functionality (e.g. reuse DIV & MUL over bit-shifts).
+- no duplication of functionality (e.g. reuse `DIV` & `MUL` over bit-shifts).
 
 This work proposes to take the EVM in a wholly new direction. Roughly speaking, our goals are:
 
