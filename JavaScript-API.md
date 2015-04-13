@@ -124,87 +124,115 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 
 # Usage
 
-##### web3
+#### web3
 The `web3` object provides all methods.
-```javascript
+
+##### Example
+
+```js
 var web3 = require('web3')
 ```
 
 ***
 
-##### web3.version.api
+#### web3.version.api
 
     web3.version.api
 
-**Returns** the ethereum js api version.
+##### Returns
 
-```javascript
+The ethereum js api version.
+
+##### Example
+
+```js
 var version = web3.api;
 console.log(api); // "0.2.0"
 ```
 
 ***
 
-##### web3.version.client
+#### web3.version.client
 
     web3.version.client
 
-**Returns** the client/node version.
+##### Returns
 
-```javascript
+The client/node version.
+
+##### Example
+
+```js
 var version = web3.client;
 console.log(version); // "Mist/v0.9.3/darwin/go1.4.1"
 ```
 
 ***
 
-##### web3.version.network
+#### web3.version.network
 
     web3.version.network
 
-**Returns** the network protocol version.
+##### Returns
 
-```javascript
+The network protocol version.
+
+##### Example
+
+```js
 var version = web3.network;
 console.log(version); // 54
 ```
 
 ***
 
-##### web3.version.ethereum
+#### web3.version.ethereum
 
     web3.version.ethereum
 
-**Returns** the ethereum protocol version.
+##### Returns
 
-```javascript
+The ethereum protocol version.
+
+##### Example
+
+```js
 var version = web3.ethereum;
 console.log(version); // 60
 ```
 
 ***
 
-##### web3.version.whisper
+#### web3.version.whisper
 
     web3.version.whisper
 
-**Returns** the whisper protocol version.
+##### Returns
 
-```javascript
+The whisper protocol version.
+
+##### Example
+
+```js
 var version = web3.whisper;
 console.log(version); // 20
 ```
 
 ***
 
-##### web3.setProvider
+#### web3.setProvider
 
     web3.setProvider(providor)
 
-**Returns** undefined
+##### Returns
+
+undefined
 
 Should be called to set provider.
-```javascript
+
+##### Example
+
+```js
 web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545')); // 8080 for cpp/AZ, 8545 for go/mist
 // or
 web3.setProvider(new web3.providers.QtSyncProvider());
@@ -212,28 +240,37 @@ web3.setProvider(new web3.providers.QtSyncProvider());
 
 ***
 
-##### web3.reset
+#### web3.reset
 
     web3.reset()
 
-**Returns** undefined
+##### Returns
+
+undefined
 
 Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
-```javascript
+
+##### Example
+
+```js
 web3.reset();
 ```
 
 ***
 
-##### web3.sha3
+#### web3.sha3
 
     web3.sha3(string [, callback])
 
 If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** the SHA3 of the given data.
+##### Returns
 
-```javascript
+The SHA3 of the given data.
+
+##### Example
+
+```js
 var str = web3.sha3("Some ASCII string to be hashed");
 console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
 
@@ -243,11 +280,13 @@ console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37
 
 ***
 
-##### web3.toHex
+#### web3.toHex
 
     web3.toHex(mixed);
 
-**Returns** the hex string of `mixed`.
+##### Returns
+
+The hex string of `mixed`.
 
 Following input values are possible:
 
@@ -258,30 +297,43 @@ Following input values are possible:
 - array (will be stringified before)
 - object (will be stringified before)
 
-```javascript
+##### Example
+
+```js
 var str = web3.toHex({test: 'test'});
 console.log(str); // '0x7b2274657374223a2274657374227d'
 ```
 
 ***
-##### web3.toAscii
+
+#### web3.toAscii
 
     web3.toAscii(hexString);
 
-**Returns** an ASCII string made from the data `hexString`.
-```javascript
+##### Returns
+
+An ASCII string made from the data `hexString`.
+
+##### Example
+
+```js
 var str = web3.toAscii("0x657468657265756d000000000000000000000000000000000000000000000000");
 console.log(str); // ethereum
 ```
 
 ***
 
-##### web3.fromAscii
+#### web3.fromAscii
 
     web3.fromAscii(string[, padding]);
 
-**Returns** data of the ASCII string `string` and padded to `padding` bytes (default to 32) and left-aligned.
-```javascript
+##### Returns
+
+data of the ASCII string `string` and padded to `padding` bytes (default to 32) and left-aligned.
+
+##### Example
+
+```js
 var str = web3.fromAscii('ethereum');
 console.log(str); // "0x657468657265756d000000000000000000000000000000000000000000000000"
 
@@ -291,35 +343,47 @@ console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000
 
 ***
 
-##### web3.toDecimal
+#### web3.toDecimal
 
     web3.toDecimal(hexString);
 
-**Returns** the decimal string representing the data `hexString` (when interpreted as a big-endian integer).
-```javascript
+##### Returns
+
+The decimal string representing the data `hexString` (when interpreted as a big-endian integer).
+
+##### Example
+
+```js
 var value = web3.toDecimal('0x15');
 console.log(value === "21"); // true
 ```
 
 ***
 
-##### web3.fromDecimal
+#### web3.fromDecimal
 
     web3.fromDecimal(number);
 
-**Returns** the HEX string representing the decimal integer `number`.
-```javascript
+##### Returns
+
+The HEX string representing the decimal integer `number`.
+
+##### Example
+
+```js
 var value = web3.fromDecimal('21');
 console.log(value === "0x15"); // true
 ```
 
 ***
 
-##### web3.fromWei
+#### web3.fromWei
 
     web3.fromWei([String,BigNumber] number, [String] unit)
 
-**Returns** either a number string, or a BigNumber object, depending on the given `number` parameter.
+##### Returns
+
+either a number string, or a BigNumber object, depending on the given `number` parameter.
 
 Converts a number of wei into the following ethereum units:
 
@@ -334,18 +398,22 @@ Converts a number of wei into the following ethereum units:
 - gether
 - tether
 
-```javascript
+##### Example
+
+```js
 var value = web3.fromWei('21000000000000', 'finney');
 console.log(value); // "0.021"
 ```
 
 ***
 
-##### web3.toWei
+#### web3.toWei
 
     web3.toWei([String,BigNumber] number, [String] unit)
 
-**Returns** either a number string, or a BigNumber object, depending on the given `number` parameter.
+##### Returns
+
+either a number string, or a BigNumber object, depending on the given `number` parameter.
 
 Converts a ethereum unit into wei. Possible units are:
 
@@ -361,22 +429,28 @@ Converts a ethereum unit into wei. Possible units are:
 - tether
 
 
-```javascript
+##### Example
+
+```js
 var value = web3.toWei('1', 'ether');
 console.log(value); // "1000000000000000000"
 ```
 
 ***
 
-##### web3.toBigNumber
+#### web3.toBigNumber
 
     web3.toBigNumber(numberOrHexString);
 
-**Returns** a BigNumber object representing the given value
+##### Returns
+
+a BigNumber object representing the given value
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
-```javascript
+##### Example
+
+```js
 var value = web3.toBigNumber('200000000000000000000001');
 console.log(value); // instanceOf BigNumber
 console.log(value.toNumber()); // 2.0000000000000002e+23
@@ -385,70 +459,88 @@ console.log(value.toString(10)); // '200000000000000000000001'
 
 ***
 
-##### web3.net.listening
+#### web3.net.listening
 
     web3.net.listening
 
-**Returns** `true` if and only if the client is actively listening for network connections, otherwise `false`.
+##### Returns
 
-```javascript
+`true` if and only if the client is actively listening for network connections, otherwise `false`.
+
+##### Example
+
+```js
 var listening = web3.net.listening;
 console.log(listening); // true of false
 ```
 
 ***
 
-##### web3.net.peerCount
+#### web3.net.peerCount
 
     web3.net.peerCount
 
-**Returns** the number of peers currently connected to the client.
+##### Returns
 
-```javascript
+The number of peers currently connected to the client.
+
+##### Example
+
+```js
 var peerCount = web3.net.peerCount;
 console.log(peerCount); // 4
 ```
 
 ***
 
-##### web3.eth
+#### web3.eth
 Contains the ethereum blockchain related methods.
 
-```javascript
+##### Example
+
+```js
 var eth = web3.eth;
 ```
 
 ***
 
-##### web3.eth.coinbase
+#### web3.eth.coinbase
 
     web3.eth.coinbase
 
-**Returns** the coinbase address of the client.
-
 The coinbase is the address were the mining rewards go into.
 
-```javascript
+##### Returns
+
+The coinbase address of the client.
+
+##### Example
+
+```js
 var coinbase = web3.eth.coinbase;
 console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
 ```
 
 ***
 
-##### web3.eth.mining
+#### web3.eth.mining
 
     web3.eth.mining
 
-**Returns** `true` if the client is mining, otherwise `false`.
+##### Returns
 
-```javascript
+`true` if the client is mining, otherwise `false`.
+
+##### Example
+
+```js
 var mining = web3.eth.mining;
 console.log(mining); // true or false
 ```
 
 ***
 
-##### web3.eth.gasPrice
+#### web3.eth.gasPrice
 
     web3.eth.gasPrice
 
@@ -458,61 +550,77 @@ The gas price is determined by the x latest blocks median gas price.
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
-```javascript
+##### Example
+
+```js
 var gasPrice = web3.eth.gasPrice;
 console.log(gasPrice.toString(10)); // "10000000000000"
 ```
 
 ***
 
-##### web3.eth.accounts
+#### web3.eth.accounts
 
     web3.eth.accounts
 
-**Returns** an array of the addresses owned by client.
+##### Returns
 
-```javascript
+An array of the addresses owned by client.
+
+##### Example
+
+```js
 var accounts = web3.eth.accounts;
 console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
 ```
 
 ***
 
-##### web3.eth.register
+#### web3.eth.register
 
     web3.eth.register(addressHexString)
 
-**Returns** ?
+##### Returns
+
+?
 
 Registers the given address to be included in `web3.eth.accounts`. This allows non-private-key owned accounts to be associated as an owned account (e.g., contract wallets).
 
-```javascript
+##### Example
+
+```js
 web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
 
 ***
 
-##### web3.eth.unRegister
+#### web3.eth.unRegister
 
      web3.eth.unRegister(addressHexString [, callback])
 
 If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** ?
+##### Returns
+
+?
 
 Unregisters a given address.
 
-```javascript
+##### Example
+
+```js
 web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 ```
 
 ***
 
-##### web3.eth.defaultBlock
+#### web3.eth.defaultBlock
 
     web3.eth.defaultBlock
 
-**Returns** the default block number/age to use when querying a state.
+##### Returns
+
+The default block number/age to use when querying a state.
 
 This default block is used for the following methods (optionally you can overwrite the defaultBlock by passing it as the last parameter):
 
@@ -528,9 +636,11 @@ default block can be
 - `'latest'`, which would be the latest minded block
 - `'pending'`, which would the currently minded block including pending transactions
 
-*Default is `latest`*
+*Default is* `latest`
 
-```javascript
+##### Example
+
+```js
 var defaultBlock = web3.eth.defaultBlock;
 console.log(defaultBlock); // 'latest'
 
@@ -540,31 +650,39 @@ web3.eth.defaultBlock = 231;
 
 ***
 
-##### web3.eth.blockNumber
+#### web3.eth.blockNumber
 
     web3.eth.blockNumber
 
-**Returns** the number of the most recent block.
+##### Returns
 
-```javascript
+The number of the most recent block.
+
+##### Example
+
+```js
 var number = web3.eth.blockNumber;
 console.log(number); // 2744
 ```
 
 ***
 
-##### web3.eth.getBalance
+#### web3.eth.getBalance
 
     web3.eth.getBalance(addressHexString [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** a BigNumber object of the current balance for the given address in wei.
+##### Returns
+
+a BigNumber object of the current balance for the given address in wei.
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
-```javascript
+##### Example
+
+```js
 var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(balance); // instanceof BigNumber
 console.log(balance.toString(10)); // '1000000000000'
@@ -573,39 +691,47 @@ console.log(balance.toNumber()); // 1000000000000
 
 ***
 
-##### web3.eth.getStorageAt
+#### web3.eth.getStorageAt
 
     web3.eth.getStorageAt(addressHexString, position [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** the value in storage at position `position` of the address `addressHexString`.
+##### Returns
 
-```javascript
+The value in storage at position `position` of the address `addressHexString`.
+
+##### Example
+
+```js
 var state = web3.eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
 console.log(state); // "0x03"
 ```
 
 ***
 
-##### web3.eth.getCode
+#### web3.eth.getCode
 
     web3.eth.getCode(addressHexString [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** the data at given address `addressHexString`.
+##### Returns
 
-```javascript
+The data at given address `addressHexString`.
+
+##### Example
+
+```js
 var code = web3.eth.getCode("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
 console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 ```
 
 ***
 
-##### web3.eth.getBlock
+#### web3.eth.getBlock
 
      web3.eth.getBlock(hashHexStringOrBlockNumber[, returnTransactionObjects] [, callback])
 
@@ -613,7 +739,9 @@ If the `returnTransactionObjects` parameter is `true` it returns all the transac
 
 If you pass an optional callback the HTTP request is made asynchronous.
 
-**Returns** a block object with number or hash `hashHexStringOrBlockNumber`:
+##### Returns
+
+a block object with number or hash `hashHexStringOrBlockNumber`:
 
   * `number` (integer): The number of this block.
   * `hash` (32-byte hash): The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header).
@@ -636,7 +764,9 @@ If you pass an optional callback the HTTP request is made asynchronous.
   * `transactions` (array) transaction objects or hashes, depending on the `returnTransactionObjects` parameter
   * `uncles` (array) hashes of uncles
 
-```javascript
+##### Example
+
+```js
 var info = web3.eth.block(3150);
 console.log(info);
  /*{
@@ -663,22 +793,26 @@ console.log(info);
 
 ***
 
-##### web3.eth.getBlockTransactionCount
+#### web3.eth.getBlockTransactionCount
 
     web3.eth.getBlockTransactionCount(hashStringOrBlockNumber [, callback])
 
 If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** the number of transactions in a given block `hashStringOrBlockNumber`.
+##### Returns
 
-```javascript
+The number of transactions in a given block `hashStringOrBlockNumber`.
+
+##### Example
+
+```js
 var number = web3.eth.getBlockTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(number); // 1
 ```
 
 ***
 
-##### web3.eth.getUncle
+#### web3.eth.getUncle
 
     web3.eth.getUncle(blockHashStringOrNumber, uncleNumber[, returnTransactionObjects] [, callback])
 
@@ -689,6 +823,8 @@ If you pass an optional callback the HTTP request is made asynchronous. See [thi
 Returns the uncle with number `uncleNumber` from the block with number or hash `blockHashStringOrNumber`.
 
 Return value see [web3.eth.getBlock()](#web3ethgetblock)
+
+##### Example
 
 ```js
 var blockNumber = 500;
@@ -707,7 +843,9 @@ console.log(uncle); // see web3.eth.getBlock
 
 If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** a transaction object its hash `transactionHash`:
+##### Returns
+
+a transaction object its hash `transactionHash`:
 
   * `status`: "mined" or "pending"
   * `hash` (32-byte hash): The hash of the transaction.
@@ -722,6 +860,7 @@ If you pass an optional callback the HTTP request is made asynchronous. See [thi
   * `value` (BigNumber): The amount of ETH to be transferred to the recipient with the transaction in wei.
   * `input` (byte array): The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation.
 
+##### Example
 
 ```js
 var blockNumber = 668;
@@ -750,13 +889,15 @@ console.log(transaction);
 
 ***
 
-##### web3.eth.getTransactionFromBlock
+#### web3.eth.getTransactionFromBlock
 
     getTransactionFromBlock(hashStringOrNumber, indexNumber [, callback])
 
 If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** a transaction object by block number or hash `hashStringOrNumber` with transaction index `indexNumber`:
+##### Returns
+
+a transaction object by block number or hash `hashStringOrNumber` with transaction index `indexNumber`:
 
 ```js
 var transaction = web3.eth.getTransactionFromBlock('0x4534534534', 2);
@@ -766,23 +907,27 @@ console.log(transaction); // see web3.eth.getTransaction
 
 ***
 
-##### web3.eth.getTransactionCount
+#### web3.eth.getTransactionCount
 
     web3.eth.getTransactionCount(addressHexString [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** the number of transactions send from the given address `addressHexString`.
+##### Returns
 
-```javascript
+The number of transactions send from the given address `addressHexString`.
+
+##### Example
+
+```js
 var number = web3.eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 console.log(number); // 1
 ```
 
 ***
 
-##### web3.eth.sendTransaction
+#### web3.eth.sendTransaction
 
     web3.eth.sendTransaction(transactionObject [, callback])
 
@@ -798,7 +943,10 @@ Creates a new message-call transaction.
     * `data  (hexString)`, (optional) either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
     * `code`, (optional) a synonym for `data`;
   * `callback`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
-```javascript
+
+##### Example
+
+```js
 
 // compile solidity source code
 var source = "" + 
@@ -817,18 +965,21 @@ web3.eth.sendTransaction({data: compiled}, function(err, address) {
 
 ***
 
-##### web3.eth.contract
+#### web3.eth.contract
 
     web3.eth.contract(abiArray)
 
-**Returns** a contract object, which can be used to initiate use contracts on an address.
+##### Returns
+
+a contract object, which can be used to initiate use contracts on an address.
 
 This method creates a contract object for a solidity contract. It has the same methods available as solidity contract description itself.
 
 You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
 
-usage example:
-```javascript
+##### Example
+
+```js
 // contract abi
 var abi = [{
      name: 'myMethod',
@@ -888,18 +1039,22 @@ myEvent.stopWatching();
 
 ***
 
-##### web3.eth.call
+#### web3.eth.call
 
     web3.eth.call(callObject [, defaultBlock] [, callback])
 
 - If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** the data which matches the call.
+##### Returns
+
+The data which matches the call.
 
 Executes a new message-call immediately without creating a transaction on the block chain. `callObject` is an object specifying the parameters of the transaction.
 
-```javascript
+##### Example
+
+```js
 var options = {
     to: "0xc4abd0339eb8d57087278718986382264244252f", 
     data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
@@ -910,7 +1065,7 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
 
 ***
 
-##### web3.eth.filter
+#### web3.eth.filter
 
 ```js
 // can be 'latest' or 'pending'
@@ -932,14 +1087,16 @@ web3.eth.filter(contractObject [, options])
        * `topics`: An array of values which must each appear in the log entries.
    * `eventArguments` is an object with keys of one or more indexed arguments for the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
 
-**Returns** a filter object with the following methods:
+##### Returns
 
-#### Filter Methods:
+a filter object with the following methods:
+
+##### Filter Methods:
   * `filter.get()`: Returns all of the log entries that fit the filter.
   * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback.
   * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
 
-#### Callback return values
+##### Callback return values
 
 If its a log filter it returns a list of log entries; each includes the following fields:
 
@@ -964,7 +1121,9 @@ If its an event filter it returns a filter object with the return values of even
 * `transactionIndex`: The transaction index from at which this event happened.
 * `logIndex`: The log index
 
-```javascript
+##### Example
+
+```js
 var filter = web3.eth.filter('pending');
 
 filter.watch(function (log) {
@@ -981,32 +1140,41 @@ filter.stopWatching();
 
 ***
 
-##### web3.eth.getCompilers
+#### web3.eth.getCompilers
 
     web3.eth.getCompilers([callback])
 
 If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** an array of available compilers.
+##### Returns
+
+An array of available compilers.
 
 
-```javascript
+##### Example
+
+```js
 var number = web3.eth.getCompilers();
 console.log(number); // ["lll", "solidity", "serpent"]
 ```
 
 ***
 
-##### web3.eth.compile.solidity
+#### web3.eth.compile.solidity
 
     web3.eth.compile.solidity(sourceString [, callback])
 
 If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** the compiled solidity code as HEX string.
+##### Returns
+
+The compiled solidity code as HEX string.
 
 
 Compiles the solidity source code `sourceString` and returns the output data.
+
+##### Example
+
 ```js
 var source = "" + 
     "contract test {\n" +
@@ -1020,17 +1188,22 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ***
 
-##### web3.eth.compile.lll
+#### web3.eth.compile.lll
 
     web3. eth.compile.lll(sourceString [, callback])
 
 If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** the compiled lll code as HEX string.
+##### Returns
+
+The compiled lll code as HEX string.
 
 
 Compiles the LLL source code `sourceString` and returns the output data.
-```javascript
+
+##### Example
+
+```js
 var source = "...";
 
 var code = web3.eth.compile.lll(source);
@@ -1039,13 +1212,15 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ***
 
-##### web3.eth.compile.serpent
+#### web3.eth.compile.serpent
 
     web3.eth.compile.serpent(sourceString [, callback])
 
 If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-**Returns** the compiled serpent code as HEX string.
+##### Returns
+
+The compiled serpent code as HEX string.
 
 
 Compiles the serpent source code `sourceString ` and returns the output data.
@@ -1059,38 +1234,49 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ***
 
-#####web3.eth.flush
+#### web3.eth.flush
 
-```javascript
+##### Example
+
+```js
 // TODO:
 ```
 
 ***
 
-##### web3.db.putString
+#### web3.db.putString
 This method should be called, when we want to store a string in a local leveldb database.
-First param is db name, second is the key, and third is the string value.
-```javascript
+First
+
+##### Example
+ param is db name, second is the key, and third is the string value.
+```js
 var result = web3.db.putString('testDB', 'key', 'myString')
 console.log(result); // true
 ```
 
 ***
 
-##### web3.db.getString
+#### web3.db.getString
 This method should be called, when we want to get string from local leveldb database.
-First param is db name and second is the key of string value.
-```javascript
+First
+
+##### Example
+ param is db name and second is the key of string value.
+```js
 var value = web3.db.getString('testDB', 'key');
 console.log(value); // "myString"
 ```
 
 ***
 
-##### web3.db.putHex
+#### web3.db.putHex
 This method should be called, when we want to store HEX in a local leveldb database.
-First param is db name, second is the key, and third is the value.
-```javascript
+First
+
+##### Example
+ param is db name, second is the key, and third is the value.
+```js
 var result = web3.db.putHex('testDB', 'key', '0x4f554b443');
 console.log(result); // true
 
@@ -1098,25 +1284,31 @@ console.log(result); // true
 
 ***
 
-##### web3.db.getHex
+#### web3.db.getHex
 This method should be called, when we want to get a HEX value from a local leveldb database.
-First param is db name and second is the key of value.
-```javascript
+First
+
+##### Example
+ param is db name and second is the key of value.
+```js
 var value = web3.db.getHex('testDB', 'key');
 console.log(value); // "0x4f554b443"
 ```
 
 ***
 
-##### web3.shh
+#### web3.shh
 [Whisper  Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
-```javascript
+
+##### Example
+
+```js
 var shh = web3.shh;
 ```
 
 ***
 
-##### web3.shh.post
+#### web3.shh.post
 
    web3.shh.post(object [, callback])
 
@@ -1147,7 +1339,7 @@ web3.shh.post(message);
 
 ***
 
-##### web3.shh.newIdentity
+#### web3.shh.newIdentity
 
     web3.shh.newIdentity([callback])
 
@@ -1155,7 +1347,9 @@ If you pass an optional callback the HTTP request is made asynchronous. See [thi
 
 Should be called to create new identity.
 
-**Returns** a new identity hex string.
+##### Returns
+
+a new identity hex string.
 
 ```js
 var identity = web3.shh.newIdentity();
@@ -1164,7 +1358,7 @@ console.log(identity); // "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7
 
 ***
 
-##### web3.shh.hasIdentity
+#### web3.shh.hasIdentity
 
     web3.shh.hasIdentity([callback])
 
@@ -1172,10 +1366,14 @@ If you pass an optional callback the HTTP request is made asynchronous. See [thi
 
 Should be called, if we want to check if user has given identity. Accepts one param. Returns true if he has, otherwise false.
 
-**Returns** a boolean whether or not the identity exists.
+##### Returns
+
+a boolean whether or not the identity exists.
 
 
-```javascript
+##### Example
+
+```js
 var identity = web3.shh.newIdentity();
 var result = web3.shh.hasIdentity(identity);
 console.log(result); // true
@@ -1186,21 +1384,25 @@ console.log(result2); // false
 
 ***
 
-##### web3.shh.newGroup
-```javascript
+#### web3.shh.newGroup
+
+##### Example
+```js
 // TODO: not implemented yet
 ```
 
 ***
 
-##### web3.shh.addToGroup
-```javascript
+#### web3.shh.addToGroup
+
+##### Example
+```js
 // TODO: not implemented yet
 ```
 
 ***
 
-##### web3.shh.filter
+#### web3.shh.filter
 
     wev3.shh.filter(options)
 
@@ -1209,7 +1411,9 @@ Available filter options are:
 * `topics`: array of strings. filter messages with by this topic(s)
 * `to`: filter the identity of receiver of the message
 
-```javascript
+##### Example
+
+```js
 var topic = 'example';
 
 var options = {
