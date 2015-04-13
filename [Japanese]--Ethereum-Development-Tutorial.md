@@ -28,7 +28,7 @@
 　アリスとボブが、「来年サンフランシスコの気温が35度を超えることはない」ということに１００Gavcoin（開発者の名前が付けられた仮想通貨）の賭けをしたとしよう。しかし、アリスは危険回避思考の持ち主で、アリスの第一アカウントは、マルチシグをかけた「前進型契約」を保持している。ボブは量子暗号に猜疑的で（疑い深く）、伝統的な楕円曲線アルゴリズムに沿ったランポート署名を施したメッセージを転送する「前進型契約」を保持している（訳略）。この賭博を管理する契約アカウントはそれ自身サンフランシスコの気象データをあるコントラクトから呼び出してこないといけない。（以後、契約アカウントの呼び名として、プログラマであるわれわれがmethodのことをメソッドと呼ぶように、コントラクトと呼ぶことにする。コンストラクタ等と混同しないように別名がほしいところだが。）またGavCoinコントラクトともやりとりしなくてはならない。・・・
 　以下に図を示す。
 
-![img](http://www.github.com/ethereumbuilders/GitBook/en/vitalik-diagrams/contract_relationship.png)
+![img](https://github.com/ethereumbuilders/GitBook/blob/master/en/vitalik-diagrams/contract_relationship.png)
 
 　スタック上に積み上がっていくメソッドの呼び出し（コールスタック）を頭に思い描くことができれば、
 ここでの説明は容易であろう。なので翻訳を割愛し、原文を載せておく。
@@ -43,7 +43,7 @@ When Bob wants to finalize the bet, the following steps happen:
 
 Note that the GavCoin is all "stored" as entries in the GavCoin contract's database; the word "account" in the context of step 6 simply means that there is a data entry in the GavCoin contract storage with a key for the bet contract's address and a value for its balance. After receiving this message, the GavCoin contract decreases this value by some amount and increases the value in the entry corresponding to Bob's forwarding contract's address. We can see these steps in the following diagram:
 
-![img](http://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/contract_relationship2.png?1)
+![img](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/contract_relationship2.png?1)
 
 ### State Machine
 
