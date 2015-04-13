@@ -1384,8 +1384,8 @@ For filters created with `eth_newFilter` logs are objects with following params:
   - `blockHash`: `HEX String` - 32-byte hash of the block where this log was in. `null` when the log is pending.
   - `blockNumber`: `HEX String` - integer of the block number where this log was in. `null` when the log is pending.
   - `address`: `HEX String` - address from which this log originated.
-  - `data`: `HEX String` - the data from this log. (?)
-  - `topics`: `Array` - Array of `HEX Strings` topics.
+  - `data`: `HEX String` - contains the non-indexed arguments of the log.
+  - `topics`: `Array` - Array of `HEX Strings` topics. Contains indexed arguments of the logs. The first one is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.
 
 ##### Example
 ```js
