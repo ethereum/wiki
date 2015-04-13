@@ -41,7 +41,7 @@ The EVM can be modelled as a CPU:
 
 At present there is only one permission that will likely make it to the final specification of the EVM∞ architecture:
 
-- **Alter Gas Table** The ability to alter the gas pricing table.
+- **Alter Gas Table** The ability to alter the gas pricing table. Through excessive gas pricing, this allows certain instructions to be blocked completely.
 
 ## The Microkernel
 
