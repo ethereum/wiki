@@ -227,7 +227,7 @@ Note that high-level languages will often have their own wrappers for these opco
 * storage_root 　：アカウントの保持するストレージ内を格納した
 　　　　　　　　新たなパトリシア木データ構造のルート
 
-![we](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/chaindiag.png)
+![img](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/chaindiag.png)
 
 　毎分、マイナーは新しいブロックを生成し、（イーサリアムのマイニングの概念はビットコインにおける概念と全く同じである。より情報が必要ならばそこらのビットコインのチュートリアルを見るとよい。）新しいブロックは、「一番最近生成されたブロック以降に生成され、かつパトリシア木が、これらのトランザクションを一つのブロックとして適用しマイナーに報酬を与えたのち、そのルートのハッシュ値を新しい状態（状態木）にしてから、新たに生成されたトランザクションのリスト」を含んでいる。
 
