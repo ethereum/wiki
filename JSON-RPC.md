@@ -1385,7 +1385,7 @@ For filters created with `eth_newFilter` logs are objects with following params:
   - `blockNumber`: `HEX String` - integer of the block number where this log was in. `null` when the log is pending.
   - `address`: `HEX String` - address from which this log originated.
   - `data`: `HEX String` - contains the non-indexed arguments of the log.
-  - `topics`: `Array` - Array of 0 to 4 `HEX Strings` topics. Contains up to three indexed arguments of the logs. The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.
+  - `topics`: `Array` - Array of 0 to 4 `HEX Strings` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
 
 ##### Example
 ```js
