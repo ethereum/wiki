@@ -146,7 +146,7 @@ The ethereum js api version.
 ##### Example
 
 ```js
-var version = web3.api;
+var version = web3.version.api;
 console.log(api); // "0.2.0"
 ```
 
@@ -163,7 +163,7 @@ The client/node version.
 ##### Example
 
 ```js
-var version = web3.client;
+var version = web3.version.client;
 console.log(version); // "Mist/v0.9.3/darwin/go1.4.1"
 ```
 
@@ -180,7 +180,7 @@ The network protocol version.
 ##### Example
 
 ```js
-var version = web3.network;
+var version = web3.version.network;
 console.log(version); // 54
 ```
 
@@ -197,7 +197,7 @@ The ethereum protocol version.
 ##### Example
 
 ```js
-var version = web3.ethereum;
+var version = web3.version.ethereum;
 console.log(version); // 60
 ```
 
@@ -214,7 +214,7 @@ The whisper protocol version.
 ##### Example
 
 ```js
-var version = web3.whisper;
+var version = web3.version.whisper;
 console.log(version); // 20
 ```
 
