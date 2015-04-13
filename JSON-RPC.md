@@ -1384,7 +1384,7 @@ For filters created with `eth_newFilter` logs are objects with following params:
   - `blockHash`: `HEX String` - 32-byte hash of the block where this log was in. `null` when the log is pending.
   - `blockNumber`: `HEX String` - integer of the block number where this log was in. `null` when the log is pending.
   - `address`: `HEX String` - address from which this log originated.
-  - `data`: `HEX String` - the data from this log.
+  - `data`: `HEX String` - the data from this log. (?)
   - `topics`: `Array` - Array of `HEX Strings` topics.
 
 ##### Example
