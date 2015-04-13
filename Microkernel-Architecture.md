@@ -43,6 +43,16 @@ At present there is only one permission that will likely make it to the final sp
 
 - **Alter Gas Table** The ability to alter the gas pricing table. Through excessive gas pricing, this allows certain instructions to be blocked completely.
 
+#### Implementing the EVM 1.0 Environment
+
+The EVM 1.0 environment had a number of assumptions and services embedded in its opcode set. These will be replaced, largely through the judicious use of `INT` (interrupt) and `EVAL` (push new execution environment frame).
+
+This is modelled through the well-understood and mechanisms that take place in operating systems to provide curated system-level accesses through user-level APIs.
+
+Essentially, an EVM 1.0 execution environment would be set up by a module which is part of the consensus system. It would `EVAL` the contract code deriving it from a database lookup, a service provided through a "virtual hardware" interrupt available at the top-level "kernel" code only. The execution environment would have relatively few permissions and a normal-looking gas pricing table, however, it would include an interrupt handler providing routines to implement any EVM 1.0 concepts such as system state-specific information like `BALANCE`, `CALL`, `CREATE`, `SSTORE` & `SLOAD`.
+
+Access to such EVM 1.0 era information would be similar to the original code lookup, utilising trie & RLP algorithms (either through the kernel-level interrupts or, preferably, as an EVM coded portion of the kernel) and storing/retrieving data through the data I/O service available through the kernel interrupting.
+
 ## The Microkernel
 
 The microkernel is the code that each individual Ethereum implementation will actually have to implement. Everything other than the microkernel code can be written in EVM code.
