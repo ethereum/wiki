@@ -26,7 +26,7 @@ Hard-wired "virtual peripherals" will manage all crypto operations and database 
 
 The specific instruction set will be modelled closely following a real hardware CPU, possibly to the point of being exactly equivalent; this will depend on our research and how easily our "virtual peripheral" I/O mechanism can be made to work with a piece of real hardware.
 
-#### Anatomy of EVM Architecture
+#### Anatomy of EVM∞ Architecture
 
 The EVM can be modelled as a CPU:
 
