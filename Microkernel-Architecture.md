@@ -26,6 +26,23 @@ Hard-wired "virtual peripherals" will manage all crypto operations and database 
 
 The specific instruction set will be modelled closely following a real hardware CPU, possibly to the point of being exactly equivalent; this will depend on our research and how easily our "virtual peripheral" I/O mechanism can be made to work with a piece of real hardware.
 
+#### Anatomy of EVM Architecture
+
+The EVM can be modelled as a CPU:
+
+- **ALU**: standard ALU component of a CPU.
+- **CMU**: the CPU should have call management capabilities, effectively allowing it to efficiently switch between hardware "call frames"; each frame is its own execution environment and is otherwise isolated. The CMU is able to report exceptional behaviour in callees to the caller. An exception may be synthesised through a privileged opcode and a non-exceptional return contain data. 
+- **MMU**: the execution environment includes a portion of pre-allocated RAM, also a code and input ROM.  Access outside protected bounds are considered exceptional behaviour.
+- **Gas Counter**: the CPU maintains an accumulator of all computation done; this will be done in terms most efficiently implementable in hardware without sacrificing determinism. Continued processing on 0 gas is considered exceptional behaviour.
+- **Interrupt manager**: the CPU may create an interrupt which immediately executes code in the caller's frame with the caller's permissions. Data may be passed into and out of this piece of code. After non-exceptional execution, control is returned to the interrupter's execution environment. The base level code's interrupt handler includes *real* I/O like storage resource management and time, and depending on the potential efficiency of the EVM∞, precompiled but deterministic algorithms for Trie management, SHA3 hashing, RLP encoding.
+- **Permission set**: the set of permissions a CPU has; this may affect the instructions available for usage.
+
+#### Permissions
+
+At present there is only one permission that will likely make it to the final specification of the EVM∞ architecture:
+
+- **Alter Gas Table** The ability to alter the gas pricing table.
+
 ## The Microkernel
 
 The microkernel is the code that each individual Ethereum implementation will actually have to implement. Everything other than the microkernel code can be written in EVM code.
