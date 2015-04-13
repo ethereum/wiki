@@ -64,8 +64,12 @@ The microkernel will have the following components.
 The VM will have memory, stack, static code and program counter as before, except that special-purpose opcodes like `PREVHASH`, `GASPRICE`, `SLOAD`, etc, will be gone; instead, there will be:
 
 * An `INTERRUPT` opcode which takes a memory start and end index, and creates an interrupt event with that data (see below)
-* A set of opcodes for dealing with data structures: `INVSHA3`, `MKTRIE`, `TRIE_SETROOT`, `TRIE_GETROOT`, `TRIE_SET`, `TRIE_GET`, `TRIE_MKREVERT_POINT`, `TRIE_REVERT`, `MKHEAP`, `HEAP_SETROOT`, `HEAP_GETROOT`, `HEAP_SET`, `HEAP_GET`, `HEAP_MKREVERT_POINT`, `HEAP_REVERT`
-* Other subjective externality opcodes (eg. `CURTIME`, which returns the current time as viewed from the executing machine's point of view)
+
+For dealing with data structures, there are several possibilities. The decision largely revolves around precisely the level of slowdown inherent in the EVM∞ implementation. At this stage, the options are:
+
+* A set of opcodes for dealing with data structures: `INVSHA3`, `MKTRIE`, `TRIE_SETROOT`, `TRIE_GETROOT`, `TRIE_SET`, `TRIE_GET`, `TRIE_MKREVERT_POINT`, `TRIE_REVERT`, `MKHEAP`, `HEAP_SETROOT`, `HEAP_GETROOT`, `HEAP_SET`, `HEAP_GET`, `HEAP_MKREVERT_POINT`, `HEAP_REVERT` and other subjective externality opcodes (eg. `CURTIME`, which returns the current time as viewed from the executing machine's point of view).
+* A set of kernel-level interrupts doing similar operations.
+* A set of kernel-level interrupts implementing only the I/O and subjective functionality; kernel-level algorithms for all other functionality.
 
 There is no first-class notion of accounts, addresses or state, all that exists are [VM execution instances and void](http://en.wikipedia.org/wiki/Democritus). Note that all VM instances have permission sets (eg. hard drive modification, subjective information access); doing anything that one does not have permission to do leads to an immediate zero response.
 
