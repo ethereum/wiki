@@ -27,7 +27,7 @@ contract SimpleStorage {
     }
 }
 ```
-`uint storedData` は、`uint`型の `storedData`という呼び名の状態変数を宣言  
+`uint storedData` は、`uint`型の `storedData`という呼び名の状態変数を宣言します。   
 (`uint`: unsigned integer of 256 bits)  
 この変数のアドレスはコンパイラにより自動検知されます。  
 `set`関数と`get`関数はこの値を引用したり修正したりするのに使われます。  
@@ -57,30 +57,32 @@ contract Coin {
 }
 ```
 このcontractでは少し新しい概念が出てきます。  
-一つ目は、`address`型です。これは 160 bitの値で、論理数値演算できません。    
-二つ目は、状態変数`balance`を見て欲しいのですが、これは複雑なデータ型から成り立っており、    
-すこし難しい言葉で言うと、`address`型から`uint`型への射(写像) ということになります。    
-Mapping(写像)はハッシュテーブルのようなもので、自動的に初期化され、    
-どんなkeyに対しても、初期値0(byte表記)を与えます。  
-三つ目は、`Coin`という関数を見てみましょう。  
-コードをよく見ると、`contract Code`の中に`function Code`が定義されており、  
-コンストラクタであることが見て取れます。
-コンスタラクタでありますから当然、あとでこの関数を呼び出すことはできません。  
-
-It permanently stores the address of the person creating the
-contract: Together with `tx` and `block`, `msg` is a magic global variable that
-contains some properties which allow access to the world outside of the contract.
-The function `queryBalance` is declared `constant` and thus is not allowed to
-modify the state of the contract (note that this is not yet enforced, though).
-In Solidity, return "parameters" are named and essentially create a local
-variable. So to return the balance, we could also just use `balance =
-balances[addr];` without any return statement.
+1. まず `address`型です。これは 160 bitの値で、論理数値演算できません。    
+2. 状態変数`balance`を見て欲しいのですが、これは複雑なデータ型から成り立っており、    
+難しい言葉で言うと、`address`型から`uint`型への射(写像) ということになります。    
+Mapping(写像)はハッシュテーブルのようなもので、自動的に初期化され、      
+どんなkeyに対しても、初期値0(byte表記)を与えます。    
+3. `Coin`という関数を見てみましょう。    
+コードをよく見ると、`contract Code`の中に`function Code`が定義されており、    
+コンストラクタであることが見て取れます。  
+コンスタラクタでありますから当然、あとでこの関数を呼び出すことはできません。    
+この例では、コンストラクタにより、contract 作成者のアドレスが永久的に保存されます。  
+  
+`tx`、`block`、`msg`はグローバル変数で魔法のように場所を選びません。  
+  
+この３種類の魔法変数の保持するオブジェクトにより contract の外部にアクセスすることが可能です。  
+最後に、`queryBalance`関数は`constant`宣言がされており、このようにしてcontractの状態を修正できないようにします。
+（まだ完全に修正不可能というわけではない、ということに注意してください）
+Solidity 言語では、戻り値は、必ず名前の付いていなければならず、そのためのローカル変数を作ってあげる必要があります。
+なので、balance を戻り値とするには、`balance = balances[addr];`としてやらなければなりません。
 
 ## Comments
 
+省略  
 Single-line comments (`//`) and multi-line comments (`/*...*/`) are possible, while
 triple-slash comments (`///`) right in front of function declarations introduce NatSpec
 comments (which are not covered here).
+
 
 ## Types
 
