@@ -1,13 +1,15 @@
-Solidity は、構文がJavaScriptとよく似た高級言語で、EVM(イーサリアム仮想マシン)上で動くコードへコンパイルするために設計されました。
-この項では、Solidityの基礎事項を抑え、EVMの知識を深めます。
-より詳細な事項については[Solidity 特記事項(建設中)]()を参照して下さい。
-また、この項では、非開発者向けの言語で書かれておらず、さらに安定版を確約するものでもありません。
+Solidity は、構文がJavaScriptとよく似た高級言語で、  
+EVM(イーサリアム仮想マシン)上で動くコードへコンパイルするために設計されました。  
+この項では、Solidityの基礎事項を抑え、EVMの知識を深めます。  
+より詳細な事項については[Solidity 特記事項(建設中)]()を参照して下さい。  
+また、この項では、非開発者向けの言語で書かれておらず、さらに安定版を確約するものでもありません。  
+  
 
 
-オンライン・エミュレーターはこちら：
- [Solidity in your browser](http://chriseth.github.io/cpp-ethereum),
-このリンクはコンパイルのみをサポートしています。
-Contract を実際に走らせたり、Blockchain 上に埋め込んだりするには、
+オンライン・エミュレーターはこちら：  
+ [Solidity in your browser](http://chriseth.github.io/cpp-ethereum),  
+このリンクはコンパイルのみをサポートしています。  
+Contract を実際に走らせたり、Blockchain 上に埋め込んだりするには、  
 Alethzero (cpp-client) 等をご使用ください。
 
 
