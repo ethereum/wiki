@@ -13,7 +13,7 @@ Tali nuove applicazioni, includono l'utilizzo di risorse digitali sulla blockcha
     * [Bitcoin come un Sistema di Transizione di Stato](#Bitcoin-come-un-Sistema-di-Transizione-di-Stato)
     * [Mining](#mining)
     * [Merkle Trees](#merkle-trees)
-    * [Applicazioni Alternative della blockchain](#Applicazioni-Alternative-della-blockchain)
+    * [Applicazioni Alternative della blockchain](#Applicazioni-Alternative-della-Blockchain)
     * [Scripting](#scripting)
 * [Ethereum](#ethereum)
     * [Portafogli Ethereum](#Portafogli-Ethereum)
@@ -46,7 +46,7 @@ Da decenni sta circolando l'idea di una moneta digitale decentralizzata, così c
 
 Poichè la moneta è un'applicazione first-to-file, dove l'ordine delle transazioni è spesso di cruciale importanza, le monete decentralizzate richiedono una soluzione al consenso decentralizzato. L'innovazione fornita da Satoshi è l'idea di riuscire a combinare un protocollo molto semplice basato su dei nodi su cui avvengono le transazioni, che danno vita ad una sempre crescente blockchain attraverso la creazione di "blocchi" ogni 10 minuti, con il proof of work come meccanismo attraverso cui i nodi guadagnano il diritto di partecipare al sistema. Mentre i nodi con una grande quantità di potenza di calcolo hanno proporzionalmente maggiore influenza, raggiungere più potenza computazionale rispetto l'intero network è più difficile rispetto al simulare milioni di nodi. Nonostante la crudezza e la semplicità del modello blockchain del Bitcoin, esso ha dimostrato di essere abbastanza valido, e nel corso dei successivi cinque anni sarebbe diventato il fondamento di oltre duecento monete e protocolli di tutto il mondo.
 
-### Il Bitcoin come un Sistema di Transizione di Stato
+### Bitcoin come un Sistema di Transizione di Stato
 
 ![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
 
