@@ -70,7 +70,7 @@ Mapping(写像)はハッシュテーブルのようなもので、自動的に�
   
 `tx`、`block`、`msg`はグローバル変数で魔法のように場所を選びません。  
   
-この３種類の魔法変数の保持するオブジェクトにより contract の外部にアクセスすることが可能です。  
+この３種類の魔法変数によって保持されるメンバにより contract の外部にアクセスすることが可能です。  
 4. 最後に、`queryBalance`関数は`constant`宣言がされており、contractの状態を修正できないようにします。  
 （まだ完全に修正不可能というわけではない、ということに注意してください）  
 Solidity 言語では、戻り値は、必ず名前が付いていなければならず、そのためのローカル変数を作ってあげる必要があります。  
@@ -86,10 +86,15 @@ comments (which are not covered here).
 
 ## Types
 
-The currently implemented (elementary) types are booleans (`bool`), integer and fixed-length string/byte array (bytes0 to bytes32) types.
-The integer types are signed and unsigned integers of various bit widths
-(`int8`/`uint8` to `int256`/`uint256` in steps of 8 bits, where `uint`/`int` are
-aliases for `uint256`/`int256`) and addresses (of 160 bits).
+現段階で開発済みの 基本型 は　
+* ブーリアン型`bool` 
+* integer
+* 固定長string / byte配列(bytes0 ~ bytes32)  
+
+の３つです。
+integer は`int8`/`uint8`から8刻みで、`int256`/`uint256`まであります。
+`uint`/`int`は`uint256`/`int256`のaliasなので、同じ型です。
+address型は `uint160`です。
 
 Comparisons (`<=`, `!=`, `==`, etc.) always yield booleans which can be
 combined using `&&`, `||` and `!`. Note that the usual short-circuiting rules
