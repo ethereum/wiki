@@ -42,7 +42,7 @@ They will be contained in the `data` field of the RPC error message as follows:
 ```
 
 | Code    | Reson values | Possible Return message | Description |
-| --------|-------------------------|-------------|
+| --------|--------------|-------------------------|-------------|
 |100 | ? | X doesn't exist    | Should be used when something which should be there is not found. (Doesn't apply for not found transactions or blocks. They return a success with value `null`)
 |101 | `ETHER` ? | Requires X         | Should be used for actions which require somethin else, e.g. gas or a value.
 |102 | `GAS`, `ETHER` | X to low           | Should be used when a to low value of something was given, e.g. an to low gas amount.
