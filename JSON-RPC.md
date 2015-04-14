@@ -1480,9 +1480,9 @@ none
 ##### Returns
 
 `Array` - Arrway with the following properties:
-  1. `HEX String` - current block header hash without the nonce (the first part of the proof-of-work pair) (?).
-  2. `HEX String` - the seed hash used for the DAG.
-  3. `HEX String` - the boundary condition ("target"), 2^256 / difficulty.
+  1. `UNFORMATTED`, 32 bytes - current block header hash without the nonce (the first part of the proof-of-work pair) (?).
+  2. `UNFORMATTED`, 32 bytes - the seed hash used for the DAG.
+  3. `UNFORMATTED`, 32 bytes - the boundary condition ("target"), 2^256 / difficulty.
 
 ##### Example
 ```js
@@ -1510,9 +1510,9 @@ Used for submitting a proof-of-work solution.
 
 ##### Parameters
 
-1. `HEX String` - The nonce found (64 bits)
-2. `HEX String` - The header's hash (256 bits)
-3. `HEX String` - The mix digest (256 bits)
+1. `UNFORMATTED`, 8 bytes - The nonce found (64 bits)
+2. `UNFORMATTED`, 32 bytes - The header's hash (256 bits)
+3. `UNFORMATTED`, 32 bytes - The mix digest (256 bits)
 
 ```js
 params: [
