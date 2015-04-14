@@ -13,7 +13,7 @@ Tali nuove applicazioni, includono l'utilizzo di risorse digitali sulla blockcha
     * [Bitcoin come un Sistema di Transizione di Stato](#Bitcoin-come-un-Sistema-di-Transizione-di-Stato)
     * [Mining](#mining)
     * [Merkle Trees](#merkle-trees)
-    * [Applicazioni Alternative della blockchain](#Applicazioni-Alternative-della-Blockchain)
+    * [Applicazioni Alternative della Blockchain](#Applicazioni-Alternative-della-Blockchain)
     * [Scripting](#scripting)
 * [Ethereum](#ethereum)
     * [Portafogli Ethereum](#Portafogli-Ethereum)
