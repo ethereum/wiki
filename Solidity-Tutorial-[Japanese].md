@@ -27,11 +27,11 @@ contract SimpleStorage {
     }
 }
 ```
-`uint storedData` は、`uint`型の `storedData`という呼び名の状態変数を宣言
-(`uint`: unsigned integer of 256 bits)
-この変数のアドレスはコンパイラにより自動検知されます。
-`set`関数と`get`関数はこの値を引用したり修正したりするのに使われます。
-
+`uint storedData` は、`uint`型の `storedData`という呼び名の状態変数を宣言  
+(`uint`: unsigned integer of 256 bits)  
+この変数のアドレスはコンパイラにより自動検知されます。  
+`set`関数と`get`関数はこの値を引用したり修正したりするのに使われます。  
+  
 
 ## Subcurrency Example
 
@@ -56,19 +56,18 @@ contract Coin {
     }
 }
 ```
-このcontractでは少し新しい概念が出てきます。
-一つ目は、`address`型です。これは 160 bitの値で、論理数値演算できません。
-二つ目は、状態変数`balance`を見て欲しいのですが、これは複雑なデータ型から成り立っており、
-難しい言葉で言うと、`address`型から`uint`型への射(写像) ということになります。
+このcontractでは少し新しい概念が出てきます。  
+一つ目は、`address`型です。これは 160 bitの値で、論理数値演算できません。    
+二つ目は、状態変数`balance`を見て欲しいのですが、これは複雑なデータ型から成り立っており、    
+すこし難しい言葉で言うと、`address`型から`uint`型への射(写像) ということになります。    
+Mapping(写像)はハッシュテーブルのようなもので、自動的に初期化され、    
+どんなkeyに対しても、初期値0(byte表記)を与えます。  
+三つ目は、`Coin`という関数を見てみましょう。  
+コードをよく見ると、`contract Code`の中に`function Code`が定義されており、  
+コンストラクタであることが見て取れます。
+コンスタラクタでありますから当然、あとでこの関数を呼び出すことはできません。  
 
-This contract introduces some new concepts. One of them is the `address` type,
-which is a 160 bit value that does not allow any arithmetic operations.
-Furthermore, the state variable `balance` is of a complex datatype that maps
-addresses to unsigned integers. Mappings can be seen as hashtables which are
-virtually initialized such that every possible key exists and is mapped to a
-value whose byte-representation is all zeros. The special function `Coin` is the
-constructor which is run during creation of the contract and
-cannot be called afterwards. It permanently stores the address of the person creating the
+It permanently stores the address of the person creating the
 contract: Together with `tx` and `block`, `msg` is a magic global variable that
 contains some properties which allow access to the world outside of the contract.
 The function `queryBalance` is declared `constant` and thus is not allowed to
