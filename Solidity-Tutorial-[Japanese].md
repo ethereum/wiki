@@ -29,7 +29,7 @@ contract SimpleStorage {
 ```
 `uint storedData` は、`uint`型の `storedData`という呼び名の状態変数を宣言します。   
 (`uint`: unsigned integer of 256 bits)  
-この変数のアドレス領域はコンパイラにより自動生成されます。  
+この変数のアドレス領域はコンパイラによって自動生成されます。  
 `set`関数と`get`関数はこの値を引用したり修正したりするのに使われます。  
   
 
