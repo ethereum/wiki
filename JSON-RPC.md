@@ -64,14 +64,14 @@ You can also specify JSON-RPC port (default is 8080):
 
 At present there are two key datatypes that are passed over JSON: unformatted byte arrays and quantities. Both are passed with a hex encoding, however with different requirements to formatting:
 
-When encoding **QUANTITIES** ("integers", "numbers"): encode as hex, prefix with "0x", the most compact representation (slight exception: zero should be represented as "0x0"). Examples:
+When encoding **QUANTITIES** (integers, numbers): encode as hex, prefix with "0x", the most compact representation (slight exception: zero should be represented as "0x0"). Examples:
 - 0x41 (65 in decimal)
 - 0x400 (1024 in decimal)
 - WRONG: 0x (should always have at least one digit - zero is "0x0")
 - WRONG: 0x0400 (no leading zeroes allowed)
 - WRONG: ff (must be prefixed 0x)
 
-When encoding **UNFORMATTED DATA** ("byte arrays", account addresses, hashes, bytecode arrays): encode as hex, prefix with "0x", two hex digits per byte. Examples:
+When encoding **UNFORMATTED DATA** (byte arrays, account addresses, hashes, bytecode arrays): encode as hex, prefix with "0x", two hex digits per byte. Examples:
 - 0x41 (size 1, "A")
 - 0x004200 (size 3, "\0B\0")
 - 0x (size 0, "")
@@ -202,7 +202,7 @@ params: [
 
 ##### Returns
 
-`String` - The SHA3 result of the given string.
+`DATA` - The SHA3 result of the given string.
 
 ##### Example
 ```js
@@ -280,7 +280,7 @@ none
 
 ##### Returns
 
-`HEX String` - integer of the number of connected peers.
+`QUANTITY` - integer of the number of connected peers.
 
 ##### Example
 ```js
@@ -333,7 +333,7 @@ none
 
 ##### Returns
 
-`HEX String` - the current coinbase address.
+`DATA`, 20 bytes - the current coinbase address.
 
 ##### Example
 ```js
@@ -386,7 +386,7 @@ none
 
 ##### Returns
 
-`HEX String` - integer of the current gas price in wei.
+`QUANTITY` - integer of the current gas price in wei.
 
 ##### Example
 ```js
@@ -413,7 +413,7 @@ none
 
 ##### Returns
 
-`Array of HEX Strings` - addresses owned by the client.
+`Array of DATA`, 20 Bytes - addresses owned by the client.
 
 ##### Example
 ```js
@@ -439,7 +439,7 @@ none
 
 ##### Returns
 
-`HEX String` - integer of the current block number the client is on.
+`QUANTITY` - integer of the current block number the client is on.
 
 ##### Example
 ```js
@@ -462,8 +462,8 @@ Returns the balance of the account of given address.
 
 ##### Parameters
 
-1. `HEX String` - address to check for balance.
-2. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+1. `DATA`, 20 Bytes - address to check for balance.
+2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -474,7 +474,7 @@ params: [
 
 ##### Returns
 
-`HEX String` - integer of the current balance in wei.
+`QUANTITY` - integer of the current balance in wei.
 
 
 ##### Example
@@ -499,9 +499,9 @@ Returns the value from a storage position at a given address.
 
 ##### Parameters
 
-1. `HEX String` - address of the storage.
-2. `HEX String` - integer of the position in the storage.
-3. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+1. `DATA`, 20 Bytes - address of the storage.
+2. `QUANTITY` - integer of the position in the storage.
+3. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 
 ```js
@@ -514,7 +514,7 @@ params: [
 
 ##### Returns
 
-`HEX String` - the value at this storage position.
+`DATA` - the value at this storage position.
 
 
 ##### Example
@@ -539,8 +539,8 @@ Returns the number of transactions *send* from a address.
 
 ##### Parameters
 
-1. `HEX String` - address.
-2. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+1. `DATA`, 20 Bytes - address.
+2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -551,7 +551,7 @@ params: [
 
 ##### Returns
 
-`HEX String` - integer of the number of transactions send from this address.
+`QUANTITY` - integer of the number of transactions send from this address.
 
 
 ##### Example
@@ -576,23 +576,23 @@ Returns the number of transactions in a block from a block matching the given bl
 
 ##### Parameters
 
-1. `HEX String` - hash of a block
+1. `DATA`, 32 Bytes - hash of a block
 
 ```js
 params: [
-   '0x407d73d8a49eeb85d32cf465507dd71d507100c1'
+   '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238'
 ]
 ```
 
 ##### Returns
 
-`HEX String` - integer of the number of transactions in this block.
+`QUANTITY` - integer of the number of transactions in this block.
 
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"],"id":1}'
 
 // Result
 {
@@ -611,7 +611,7 @@ Returns the number of transactions in a block from a block matching the given bl
 
 ##### Parameters
 
-1. `HEX String` - integer of a block number, or the string "latest", "earliest" or "pending", see the [default block parameter](#the-default-block-parameter)
+1. `QUANTITY` - integer of a block number, or the string "latest", "earliest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -621,7 +621,7 @@ params: [
 
 ##### Returns
 
-`HEX String` - integer of the number of transactions in this block.
+`QUANTITY` - integer of the number of transactions in this block.
 
 ##### Example
 ```js
@@ -645,23 +645,23 @@ Returns the number of uncles in a block from a block matching the given block ha
 
 ##### Parameters
 
-1. `HEX String` - hash of a block
+1. `DATA`, 32 Bytes - hash of a block
 
 ```js
 params: [
-   '0x407d73d8a49eeb85d32cf465507dd71d507100c1'
+   '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238'
 ]
 ```
 
 ##### Returns
 
-`HEX String` - integer of the number of uncles in this block.
+`QUANTITY` - integer of the number of uncles in this block.
 
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"],"id"Block:1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"],"id"Block:1}'
 
 // Result
 {
@@ -680,7 +680,7 @@ Returns the number of uncles in a block from a block matching the given block nu
 
 ##### Parameters
 
-1. `HEX String` - integer of a block number, or the string "latest", "earliest" or "pending", see the [default block parameter](#the-default-block-parameter)
+1. `QUANTITY` - integer of a block number, or the string "latest", "earliest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -690,7 +690,7 @@ params: [
 
 ##### Returns
 
-`HEX String` - integer of the number of uncles in this block.
+`QUANTITY` - integer of the number of uncles in this block.
 
 
 ##### Example
@@ -715,25 +715,25 @@ Returns code at a given address.
 
 ##### Parameters
 
-1. address as hex string
-2. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+1. `DATA`, 20 Bytes - address
+2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
-   '0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8',
+   '0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b',
    '0x2'  // 2
 ]
 ```
 
 ##### Returns
 
-`HEX String` - the code from the given address.
+`DATA` - the code from the given address.
 
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8", "0x2"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b", "0x2"],"id":1}'
 
 // Result
 {
@@ -752,12 +752,12 @@ Creates new message call transaction or a contract creation, if the data field c
 ##### Parameters
 
 1. `Object` - The transaction object
-  - `from`: `HEX String` - The address the transaction is send from.
-  - `to`: `HEX String`  - (optional when creating new contract) The address the transaction is directed to.
-  - `gas`: `HEX String`  - (optional, default: To-Be-Determined) Integer of the gas provided for the transaction execution. It will return unused gas.
-  - `gasPrice`: `HEX String`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each payed gas
-  - `value`: `HEX String`  - (optional) Integer of the value send with this transaction
-  - `data`: `HEX String`  - (optional) The compiled code of a contract
+  - `from`: `DATA`, 20 Bytes - The address the transaction is send from.
+  - `to`: `DATA`, 20 Bytes - (optional when creating new contract) The address the transaction is directed to.
+  - `gas`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gas provided for the transaction execution. It will return unused gas.
+  - `gasPrice`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each payed gas
+  - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
+  - `data`: `DATA`  - (optional) The compiled code of a contract
 
 ```js
 params: [{
@@ -772,7 +772,7 @@ params: [{
 
 ##### Returns
 
-`HEX String` - the address of the newly created contract, or the transaction hash.
+`DATA`, 20 Bytes - the address of the newly created contract, or the 32 Bytes transaction hash.
 
 ##### Example
 ```js
@@ -797,19 +797,19 @@ Executes a new message call immediately without creating a transaction on the bl
 ##### Parameters
 
 1. `Object` - The transaction call object
-  - `from`: `HEX String` - The address the transaction is send from.
-  - `to`: `HEX String`  - The address the transaction is directed to.
-  - `gas`: `HEX String`  - (optional) Integer of the gas provided for the transaction execution. It will return unused gas.
-  - `gasPrice`: `HEX String`  - (optional) Integer of the gasPrice used for each payed gas
-  - `value`: `HEX String`  - (optional) Integer of the value send with this transaction
-  - `data`: `HEX String`  - (optional) The compiled code of a contract
-2. `HEX String|String` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+  - `from`: `DATA`, 20 Bytes - The address the transaction is send from.
+  - `to`: `DATA`, 20 Bytes  - The address the transaction is directed to.
+  - `gas`: `QUANTITY`  - (optional) Integer of the gas provided for the transaction execution. It will return unused gas.
+  - `gasPrice`: `QUANTITY`  - (optional) Integer of the gasPrice used for each payed gas
+  - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
+  - `data`: `DATA`  - (optional) The compiled code of a contract
+2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 See: [eth_sendTransaction Parameters](#eth_sendtransaction)
 
 ##### Returns
 
-`HEX String` - the return value of executed contract.
+`DATA` - the return value of executed contract.
 
 ##### Example
 ```js
@@ -833,7 +833,7 @@ Returns information about a block by hash.
 
 ##### Parameters
 
-1. `HEX String` - Hash of a block.
+1. `DATA`, 32 Bytes - Hash of a block.
 2. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
@@ -847,24 +847,24 @@ params: [
 
 `Object` - A block object, or `null` when no transaction was found:
 
-  - `number`: `HEX String` - integer of the block number.
-  - `hash`: `HEX String` - 32-byte hash of the block.
-  - `parentHash`: `HEX String` - 32-byte hash of the paretn block.
-  - `nonce`: `HEX String` - 8-byte hash of the generated proof-of-work.
-  - `sha3Uncles`: `HEX String` - SHA3 of all uncle (?).
-  - `logsBloom`: `HEX String` - bloom (?).
-  - `transactionsRoot`: `HEX String` - (?).
-  - `stateRoot`: `HEX String` - (?).
-  - `miner`: `HEX String` - the address of the miner, who minded this block.
-  - `difficulty`: `HEX String` - integer of the difficulty for this block.
-  - `totalDifficulty`: `HEX String` - integer of the total difficulty up until this block (?).
-  - `extraData`: `HEX String` - byte array of extra data add to this block (?),
-  - `size`: `HEX String` - integer the size of this block in bytes.
-  - `gasLimit`: `HEX String` - integer of the maximum gas allowed in this block (?).
-  - `minGasPrice`: `HEX String` - the minimal (?).
-  - `gasUsed`: `HEX String` - the total used gas by all transactions in this block (?).
-  - `timestamp`: `HEX String` - the unix timestamp when the block was mined (?).
-  - `transactions`: `Array` - Array of transaction objects, or transaction hashes depending on the last parameter.
+  - `number`: `QUANTITY` - the block number.
+  - `hash`: `DATA`, 32 Bytes - hash of the block.
+  - `parentHash`: `DATA`, 32 Bytes - hash of the parent block.
+  - `nonce`: `DATA`, 8 Bytes - hash of the generated proof-of-work.
+  - `sha3Uncles`: `DATA`, 32 Bytes - SHA3 of all uncles (?).
+  - `logsBloom`: `DATA` - bloom (?).
+  - `transactionsRoot`: `DATA`, 32 Bytes - (?).
+  - `stateRoot`: `DATA`, 32 Bytes - (?).
+  - `miner`: `DATA`, 20 Bytes - the address of the miner, who minded this block.
+  - `difficulty`: `QUANTITY` - integer of the difficulty for this block.
+  - `totalDifficulty`: `QUANTITY` - integer of the total difficulty up until this block (?).
+  - `extraData`: `DATA` - extra data add to this block (?),
+  - `size`: `QUANTITY` - integer the size of this block in bytes.
+  - `gasLimit`: `QUANTITY` - the maximum gas allowed in this block (?).
+  - `minGasPrice`: `QUANTITY` - the advertised minimum gas price for transactions (?).
+  - `gasUsed`: `QUANTITY` - the total used gas by all transactions in this block (?).
+  - `timestamp`: `QUANTITY` - the unix timestamp when the block was mined (?).
+  - `transactions`: `Array` - Array of transaction objects, or 32 Bytes transaction hashes depending on the last given parameter.
   - `uncles`: `Array` - Array of uncle hashes.
 
 
@@ -909,7 +909,7 @@ Returns information about a block by block number.
 
 ##### Parameters
 
-1. `HEX String` - integer of a block number.
+1. `QUANTITY` - integer of a block number.
 2. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
@@ -940,11 +940,11 @@ Returns the information about a transaction requested by transaction hash.
 
 ##### Parameters
 
-1. `HEX String` - hash of a transaction
+1. `DATA`, 32 Bytes - hash of a transaction
 
 ```js
 params: [
-   '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
+   "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"
 ]
 ```
 
@@ -952,22 +952,22 @@ params: [
 
 `Object` - A transaction object, or `null` when no transaction was found:
 
-  - `hash`: `HEX String` - 32-byte hash of the transaction.
-  - `nonce`: `HEX String` - integer of the transaction nonce (?).
-  - `blockHash`: `HEX String` - 32-byte hash of the block where this transaction was in. `null` when the transaction is pending.
-  - `blockNumber`: `HEX String` - integer of the block number where this transaction was in. `null` when the transaction is pending.
-  - `transactionIndex`: `HEX String` - integer of the transactions index position in the block.
-  - `from`: `HEX String` - 20-byte address of the sender.
-  - `to`: `HEX String` - 20-byte address of the receiver. `null` when its a contract creation transaction.
-  - `value`: `HEX String` - integer of the value transfered in wei.
-  - `gasPrice`: `HEX String` - integer of the price payed per gas in wei.
-  - `gas`: `HEX String` - integer of the gas used.
-  - `input`: `HEX String` - the data send along with the transaction.
+  - `hash`: `DATA`, 32 Bytes - hash of the transaction.
+  - `nonce`: `QUANTITY` - integer of the transaction nonce (?).
+  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this transaction was in. `null` when the transaction is pending.
+  - `blockNumber`: `QUANTITY` - block number where this transaction was in. `null` when the transaction is pending.
+  - `transactionIndex`: `QUANTITY` - integer of the transactions index position in the block.
+  - `from`: `DATA`, 20 Bytes - address of the sender.
+  - `to`: `DATA`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
+  - `value`: `QUANTITY` - value transfered in wei.
+  - `gasPrice`: `QUANTITY` - price payed per gas in wei.
+  - `gas`: `QUANTITY` - gas used.
+  - `input`: `DATA` - the data send along with the transaction.
 
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"],"id":1}'
 
 // Result
 {
@@ -998,8 +998,8 @@ Returns information about a transaction by block hash and transaction index posi
 
 ##### Parameters
 
-1. `HEX String` - hash of a block.
-2. `HEX String` - integer of the transaction index position.
+1. `DATA`, 32 Bytes - hash of a block.
+2. `QUANTITY` - integer of the transaction index position.
 
 ```js
 params: [
@@ -1029,8 +1029,8 @@ Returns information about a transaction by block number and transaction index po
 
 ##### Parameters
 
-1. `HEX String` - integer of a block number.
-2. `HEX String` - integer of the transaction index position.
+1. `QUANTITY` - a block number.
+2. `QUANTITY` - the transaction index position.
 
 ```js
 params: [
@@ -1061,8 +1061,8 @@ Returns information about a uncle of a block by hash and uncle index position.
 ##### Parameters
 
 
-1. `HEX String` - hash a block.
-2. `HEX String` - integer of the uncle index position.
+1. `DATA`, 32 Bytes - hash a block.
+2. `QUANTITY` - the uncle's index position.
 
 ```js
 params: [
@@ -1094,8 +1094,8 @@ Returns information about a uncle of a block by number and uncle index position.
 
 ##### Parameters
 
-1. `HEX String` - integer a block number.
-2. `HEX String` - integer of the uncle index position.
+1. `QUANTITY` - a block number.
+2. `QUANTITY` - the uncle's index position.
 
 ```js
 params: [
@@ -1162,7 +1162,7 @@ params: [
 
 ##### Returns
 
-`HEX String` - The compiled source code.
+`DATA` - The compiled source code.
 
 ##### Example
 ```js
@@ -1195,7 +1195,7 @@ params: [
 
 ##### Returns
 
-`HEX String` - The compiled source code.
+`DATA` - The compiled source code.
 
 ##### Example
 ```js
@@ -1228,7 +1228,7 @@ params: [
 
 ##### Returns
 
-`HEX String` - The compiled source code.
+`DATA` - The compiled source code.
 
 ##### Example
 ```js
@@ -1253,23 +1253,23 @@ To check if the state has changed, call [eth_getFilterChanges](#eth_getfiltercha
 ##### Parameters
 
 1. `Object` - The filter options:
-  - `fromBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
-  - `toBlock`: `HEX String|String` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
-  - `address`: `HEX String|Array` - (optional) Contract address or a list of addresses from which logs should originate.
-  - `topics`: `Array` - (optional) Array of `HEX Strings` topics.
+  - `fromBlock`: `QUANTITY|TAG` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
+  - `toBlock`: `QUANTITY|TAG` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
+  - `address`: `DATA|Array`, 20 Bytes - (optional) Contract address or a list of addresses from which logs should originate.
+  - `topics`: `Array of DATA`,  - (optional) Array of 32 Bytes `DATA` topics.
 
 ```js
 params: [{
   "fromBlock": "0x1",
   "toBlock": "0x2",
-  "address": "0x01231f12a01231f12a01ff231f12a0123101231f12a",
-  "topics": ['0x1234fa1234']
+  "address": "0x8888f1f195afa192cfee860698584c030f4c9db1",
+  "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]
 }]
 ```
 
 ##### Returns
 
-`HEX String` - The integer of a filter id.
+`QUANTITY` - A filter id.
 
 ##### Example
 ```js
@@ -1294,7 +1294,7 @@ To check if the state has changed, call [eth_getFilterChanges](#eth_getfiltercha
 
 ##### Parameters
 
-1. `String` - The string `"latest"` for notifications about new block and `"pending"` for notifications about pending transactions.
+1. `TAG` - The string `"latest"` for notifications about new block and `"pending"` for notifications about pending transactions.
 
 ```js
 params: ["pending"]
@@ -1302,7 +1302,7 @@ params: ["pending"]
 
 ##### Returns
 
-`HEX String` - The integer of a filter id.
+`QUANTITY` - A filter id.
 
 ##### Example
 ```js
@@ -1327,7 +1327,7 @@ Additonally Filters timeout when they aren't requested with [eth_getFilterChange
 
 ##### Parameters
 
-1. `HEX String` - The filter id.
+1. `QUANTITY` - The filter id.
 
 ```js
 params: [
@@ -1361,7 +1361,7 @@ Polling method for a filter, which returns an array of logs which occurred since
 
 ##### Parameters
 
-1. `HEX String` - Integer of the filter id.
+1. `QUANTITY` - the filter id.
 
 ```js
 params: [
@@ -1377,14 +1377,14 @@ For filters created with `eth_newBlockFilter` log objects are `null`.
 
 For filters created with `eth_newFilter` logs are objects with following params:
 
-  - `logIndex`: `HEX String` - integer of the log index position in the block.
-  - `transactionIndex`: `HEX String` - integer of the transactions index position log was created from.
-  - `transactionHash`: `HEX String` - hash of the transactions this log was created from.
-  - `blockHash`: `HEX String` - 32-byte hash of the block where this log was in. `null` when the log is pending.
-  - `blockNumber`: `HEX String` - integer of the block number where this log was in. `null` when the log is pending.
-  - `address`: `HEX String` - address from which this log originated.
-  - `data`: `HEX String` - contains the non-indexed arguments of the log.
-  - `topics`: `Array` - Array of 0 to 4 `HEX Strings` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
+  - `logIndex`: `QUANTITY` - integer of the log index position in the block.
+  - `transactionIndex`: `QUANTITY` - integer of the transactions index position log was created from.
+  - `transactionHash`: `DATA`, 32 Bytes - hash of the transactions this log was created from.
+  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
+  - `blockNumber`: `QUANTITY` - the block number where this log was in. `null` when the log is pending.
+  - `address`: `DATA`, 32 Bytes - address from which this log originated.
+  - `data`: `DATA` - contains one or more 32 Bytes non-indexed arguments of the log.
+  - `topics`: `Array of DATA` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
 
 ##### Example
 ```js
@@ -1420,7 +1420,7 @@ Returns an array of all logs matching filter with given id.
 
 ##### Parameters
 
-1. `HEX String` - The filter id.
+1. `QUANTITY` - The filter id.
 
 ```js
 params: [
@@ -1452,7 +1452,7 @@ Returns an array of all logs matching a given filter object.
 
 ```js
 params: [{
-  "topics": ["0x12341234"]
+  "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]
 }]
 ```
 
@@ -1463,7 +1463,7 @@ See [eth_getFilterChanges](#eth_getfilterchanges)
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topics":["0x12341234"]}],"id":74}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topics":["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]}],"id":74}'
 ```
 
 Result see [eth_getFilterChanges](#eth_getfilterchanges)
@@ -1479,10 +1479,10 @@ none
 
 ##### Returns
 
-`Array` - Arrway with the following properties:
-  1. `UNFORMATTED`, 32 bytes - current block header hash without the nonce (the first part of the proof-of-work pair) (?).
-  2. `UNFORMATTED`, 32 bytes - the seed hash used for the DAG.
-  3. `UNFORMATTED`, 32 bytes - the boundary condition ("target"), 2^256 / difficulty.
+`Array` - Array with the following properties:
+  1. `DATA`, 32 Bytes - current block header hash without the nonce (the first part of the proof-of-work pair) (?).
+  2. `DATA`, 32 Bytes - the seed hash used for the DAG.
+  3. `DATA`, 32 Bytes - the boundary condition ("target"), 2^256 / difficulty.
 
 ##### Example
 ```js
@@ -1510,9 +1510,9 @@ Used for submitting a proof-of-work solution.
 
 ##### Parameters
 
-1. `UNFORMATTED`, 8 bytes - The nonce found (64 bits)
-2. `UNFORMATTED`, 32 bytes - The header's hash (256 bits)
-3. `UNFORMATTED`, 32 bytes - The mix digest (256 bits)
+1. `DATA`, 8 Bytes - The nonce found (64 bits)
+2. `DATA`, 32 Bytes - The header's hash (256 bits)
+3. `DATA`, 32 Bytes - The mix digest (256 bits)
 
 ```js
 params: [
@@ -1624,7 +1624,7 @@ Stores binary data in the local database.
 
 1. `String` - Database name.
 2. `String` - Key name.
-3. `HEX String` - HEX string to store.
+3. `DATA` - The data to store.
 
 ```js
 params: [
@@ -1672,7 +1672,7 @@ params: [
 
 ##### Returns
 
-`HEX String` - The previously stored HEX string.
+`DATA` - The previously stored data.
 
 
 ##### Example
@@ -1723,19 +1723,19 @@ Sends a whisper message.
 ##### Parameters
 
 1. `Object` - The whisper post object:
-  - `from`: `HEX String` - (optional) The identity of the sender.
-  - `to`: `HEX String` - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
-  - `topics`: `Array` - Array of `HEX String` topics, so that receiver can identify messages.
-  - `payload`: `HEX String` - The payload of the message.
-  - `priority`: `HEX String` - The integer of the priority in a rang from ... (?).
-  - `ttl`: `HEX String` - integer of the time to live in seconds.
+  - `from`: `DATA`, 60 Bytes - (optional) The identity of the sender.
+  - `to`: `DATA`, 60 Bytes - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
+  - `topics`: `Array of DATA` - Array of `DATA` topics, for the receiver to identify messages. (?)
+  - `payload`: `DATA` - The payload of the message.
+  - `priority`: `QUANTITY` - The integer of the priority in a rang from ... (?).
+  - `ttl`: `QUANTITY` - integer of the time to live in seconds.
 
 ```js
 params: [{
-  from: "0x0487bc1d6bf3aa84d8a2c24865f83cd7bcfd11ccd8cb18d9dead364e...",
-  to: "0x742d636c69656e776869737065bb722d63686174...",
+  from: "0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1",
+  to: "0x3e245533f97284d442460f2998cd41858798ddf04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a0d4d661997d3940272b717b1",
   topics: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
-  payload: "0x7b2274797065223a226d6...",
+  payload: "0x7b2274797065223a226d6",
   priority: "0x64",
   ttl: "0x64",
 }]
@@ -1770,7 +1770,7 @@ none
 
 ##### Returns
 
-`HEX String` - the address of the new identiy.
+`DATA`, 60 Bytes - the address of the new identiy.
 
 ##### Example
 ```js
@@ -1794,11 +1794,11 @@ Checks if the client hold the private keys for a given identity.
 
 ##### Parameters
 
-1. `HEX String` - The identity address to check.
+1. `DATA`, 60 Bytes - The identity address to check.
 
 ```js
 params: [
-  "0xc931d93e97ab07fe42d9234..."
+  "0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"
 ]
 ```
 
@@ -1810,7 +1810,7 @@ params: [
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283..."],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"],"id":73}'
 
 // Result
 {
@@ -1831,7 +1831,7 @@ none
 
 ##### Returns
 
-`HEX String` - the address of the new group.
+`DATA`, 60 Bytes - the address of the new group. (?)
 
 ##### Example
 ```js
@@ -1854,11 +1854,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentinty","params":[],"i
 
 ##### Parameters
 
-1. `HEX String` - The identity address to add to a group (?).
+1. `DATA`, 60 Bytes - The identity address to add to a group (?).
 
 ```js
 params: [
-  "0xc931d93e97ab07fe42d9234..."
+  "0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"
 ]
 ```
 
@@ -1869,7 +1869,7 @@ params: [
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0xc931d93e97ab07fe42d923478ba2465f283..."],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"],"id":73}'
 
 // Result
 {
@@ -1889,19 +1889,19 @@ Creates filter to notify, when client receives whisper message matching the filt
 ##### Parameters
 
 1. `Object` - The filter options:
-  - `to`: `HEX String` - (optional) Identity of the receiver. When present it will try to decrypt any incoming message if the client holds the private key to this identity.
-  - `topics`: `Array` - Array of `HEX String` topics which the message has to have. 
+  - `to`: `DATA`, 60 Bytes - (optional) Identity of the receiver. *When present it will try to decrypt any incoming message if the client holds the private key to this identity.*
+  - `topics`: `Array of DATA` - Array of `DATA` topics which the incoming message's topics should match. 
 
 ```js
 params: [{
    "topics": ['0x12341234bf4b564f'],
-   "to": "0x2341234bf4b2341234bf4b564f..."
+   "to": "0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"
 }]
 ```
 
 ##### Returns
 
-`HEX String` - Integer of the newly created filter.
+`QUANTITY` - The newly created filter.
 
 ##### Example
 ```js
@@ -1926,7 +1926,7 @@ Additonally Filters timeout when they aren't requested with [shh_getFilterChange
 
 ##### Parameters
 
-1. `HEX String` - The filter id.
+1. `QUANTITY` - The filter id.
 
 ```js
 params: [
@@ -1960,7 +1960,7 @@ Polling method for whisper filters.
 
 ##### Parameters
 
-`. `HEX String` - The filter id.
+`. `QUANTITY` - The filter id.
 
 ```js
 params: [
@@ -1972,15 +1972,15 @@ params: [
 
 `Array` - Array of messages received since last poll:
 
-  - `hash`: `HEX String` - The hash of the message.
-  - `from`: `HEX String` - The sender of the message, if a sender was specified.
-  - `to`: `HEX String` - The receiver of the message, if a receiver was specified.
-  - `expiry`: `HEX String` - Integer of the time in seconds when this message should expire (?).
-  - `ttl`: `HEX String` -  Integer of the time the message should float in the system in seconds (?).
-  - `sent`: `HEX String` -  Integer of the unix timestamp when the message was sent.
-  - `topics`: `Array` - Array of `HEX String` topics the message contained.
-  - `payload`: `HEX String` - The payload of the message.
-  - `workProved`: `HEX String` - Integer of the work this message required before it was send (?).
+  - `hash`: `DATA`, 32 Bytes (?) - The hash of the message.
+  - `from`: `DATA`, 60 Bytes - The sender of the message, if a sender was specified.
+  - `to`: `DATA`, 60 Bytes - The receiver of the message, if a receiver was specified.
+  - `expiry`: `QUANTITY` - Integer of the time in seconds when this message should expire (?).
+  - `ttl`: `QUANTITY` -  Integer of the time the message should float in the system in seconds (?).
+  - `sent`: `QUANTITY` -  Integer of the unix timestamp when the message was sent.
+  - `topics`: `Array of DATA` - Array of `DATA` topics the message contained.
+  - `payload`: `DATA` - The payload of the message.
+  - `workProved`: `QUANTITY` - Integer of the work this message required before it was send (?).
 
 ##### Example
 ```js
@@ -2013,7 +2013,7 @@ Get all messages matching a filter, which are still existing in the node.
 
 ##### Parameters
 
-1. `HEX String` - The filter id.
+1. `QUANTITY` - The filter id.
 
 ```js
 params: [
