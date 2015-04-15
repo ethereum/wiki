@@ -124,6 +124,7 @@ Now, we specify the main "hashimoto"-like loop, where we aggregate data from the
 ```python
 def hashimoto(header, nonce, full_size, dataset_lookup):
     n = full_size / HASH_BYTES
+    w = MIX_BYTES // WORD_BYTES
     mixhashes = MIX_BYTES / HASH_BYTES
     # combine header+nonce into a 64 byte seed
     s = sha3_512(header + nonce[::-1])
