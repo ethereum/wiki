@@ -1,7 +1,7 @@
 ###Ethereum Wikiへようこそ。
 
-[Ethereum White Paper](https://github.com/ethereum/wiki/wiki/White-Paper)
-[Ethereum白書](https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-White-Paper)(非推奨：誤訳多し、直訳がきちんとなされていない2015/4)
+[Ethereum White Paper](https://github.com/ethereum/wiki/wiki/White-Paper)  
+[Ethereum白書](https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-White-Paper)(非推奨：直訳がきちんとされていない04/15)
 
 
 
