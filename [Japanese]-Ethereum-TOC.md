@@ -1,7 +1,7 @@
 ###Ethereum 次世代スマートコントラクトとディセントラルアプリケーションレイヤー へようこそ。
 
 [Ethereum White Paper](https://github.com/ethereum/wiki/wiki/White-Paper)  
-[Ethereum 白書](https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-White-Paper)(非推奨：直訳がきちんとされていない04/15)
+[Ethereum 白書](https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-White-Paper) ( 非推奨 2015/04/15 )
 
 
 
