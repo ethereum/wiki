@@ -1,7 +1,7 @@
 # Ethereum Wiki へようこそ
 
 この項は、ÐΞV によって開発された、次世代型 peer-to-peer テクノロジー基盤についての全情報を集約したwikiであり、Ethereum コミュニティによって維持されています。次世代型 peer-to-peer テクノロジー基盤とは以下を含みます。  
-* **Ethereum** : スマートコントラクト開発のために"一般化"がなされた blockchain   
+* **Ethereum** : スマートコントラクト開発のために一般化された ブロックチェイン   
 * **Whisper** : イーサリアムによる private low-level datagram コミュニケーション基盤
 
 どなたでも GitHubにサインインすることで [browser](https://help.github.com/articles/editing-wiki-pages-via-the-online-interface) あるいは [locally](https://help.github.com/articles/adding-and-editing-wiki-pages-locally) に記事を追加できます。
