@@ -1,6 +1,9 @@
-###Ethereum　次世代スマートコントラクトとディセントラルアプリケーションレイヤー　へようこそ。
+###Ethereum Wikiへようこそ。
 
-[Ethereum ホワイトペーパー](https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-White-Paper)
+[Ethereum White Paper](https://github.com/ethereum/wiki/wiki/White-Paper)
+[Ethereum白書](https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-White-Paper)(非推奨：誤訳多し、直訳がきちんとなされていない2015/4)
+
+
 
 [RLP](https://github.com/ethereum/wiki/wiki/%5BJapanese%5D-RLP), Ethereumのデータエンコードに使用される再帰的リニアプレフィックス仕様
 
