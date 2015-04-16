@@ -1,5 +1,5 @@
 [ [English](https://github.com/ethereum/wiki/wiki) 
-| [Japanese] (https://github.com/ethereum/wiki/wiki/日本語版) 
+| [日本語版 (Japanese)] (https://github.com/ethereum/wiki/wiki/日本語版) 
 | [Romanian](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Cuprins) 
 | [German](https://github.com/ethereum/wiki/wiki/%5BGerman%5D-Ethereum-TOC) 
 | [Chinese](https://github.com/ethereum/wiki/wiki/%5BChinese%5D-Ethereum-TOC) 
