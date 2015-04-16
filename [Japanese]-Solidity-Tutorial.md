@@ -96,22 +96,21 @@ integer は`int8`/`uint8`から8刻みで、`int256`/`uint256`まであります
 `uint`/`int`は`uint256`/`int256`のaliasなので、同じ型です。
 address型は `uint160`から派生した型です。
 
-Comparisons(比較演算子) (`<=`, `!=`, `==`, etc.) は、 
-booleans(真理値演算子) ( `&&`, `||` and `!`の組合せ) より常に弱い影響をもちます。
-真理値演算子 `&&` and `||` に対しては、short-circuiting rules(短回路優先の法則)が成立することに注意してください。
+Comparisons(比較演算子) (`<=`, `!=`, `==`, etc.) は、  
+booleans(真理値演算子) ( `&&`, `||` and `!`の組合せ) より常に弱い影響をもちます。  
+真理値演算子 `&&` and `||` に対しては、short-circuiting rules(短回路優先の法則)が成立することに注意してください。  
 わかりやすい例で言うと`(0 < 1 || fun())`では、func()関数は永遠に呼ばれることはありません。
 
-If an operator is applied to different types, the compiler tries to
-implicitly convert one of the operands to the type of the other (the same is
-true for assignments). In general, an implicit conversion is possible if it
-makes sense semantically and no information is lost: `uint8` is convertible to
-`uint16` and `int120` to `int256`, but `int8` is not convertible to `uint256`.
-Furthermore, unsigned integers can be converted to bytes of the same or larger
-size, but not vice-versa. Any type that can be converted to `uint160` can also
-be converted to `address`.
+もし、演算子が違う型の間で適用されたら、
+コンパイラは暗黙のうちに一方に対して、別の演算子への変換を試みます。 (代入演算子に関してもこれは真です)
+一般論としては、暗黙変換が適用されるのは、構文がしっかりとしているときで、これによって情報が失われません。
+: `uint8` は`uint16` ・ `int120` ・ `int256`に変換可能ですが `int8` から `uint256` へは不可と成ります。  
+さらに、unsigned integers は同じもしくはそれ以上のサイズの bytes (バイトコード)へ変換可能ですが、その逆変換は不可となります。
+ `uint160` へ変換可能な型は `address`型への変換も可能となります。
 
-If the compiler does not allow implicit conversion but you know what you are
-doing, an explicit type conversion is sometimes possible:
+コンパイラが暗黙変換を許さない状況であっても、
+あなたが何をしているのか把握している状況では、
+例えば以下のような型変換が可能です。
 
 ```
 int8 y = -3;
