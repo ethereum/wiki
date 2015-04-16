@@ -20,7 +20,7 @@ Ethereum の基本概念の理解といたしましては [ethereum whitepaper (
 [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) と[FAQ](https://github.com/ethereum/wiki/wiki/FAQ)は必ずご覧になってください。[C++言語](https://github.com/ethereum/cpp-ethereum/wiki) と [Go言語](https://github.com/ethereum/go-ethereum/wiki) による実装についてのwikiが集約されています ( Python と Javascript 言語につきましてはもうしばらくお待ちください)
 
 ## ダウンロード
-開発中ではありますが PoC-9 code は以下の git レポジトリの branch からダウンロード可能です:
+開発中ですが PoC-9 code は以下の git レポジトリの branch からダウンロード可能です:
 - https://github.com/ethereum/cpp-ethereum
 - https://github.com/ethereum/go-ethereum
 - https://github.com/ethereum/pyethereum
