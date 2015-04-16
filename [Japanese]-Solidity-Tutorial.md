@@ -94,7 +94,7 @@ comments (which are not covered here).
 の３つです。  
 integer は  
  `int8`/`uint8` から8刻みで、`int256`/`uint256` まで  
-`uint`/`int` は `uint256`/`int256` の alias なので、同じ型、
+`uint`/`int` は `uint256`/`int256` の alias なので、同じ型、  
 `address` 型は `uint160` から派生した型です。
 
 Comparisons (`<=`, `!=`, `==`, etc.) は、  
