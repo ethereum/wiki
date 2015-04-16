@@ -96,10 +96,10 @@ integer は`int8`/`uint8`から8刻みで、`int256`/`uint256`まであります
 `uint`/`int`は`uint256`/`int256`のaliasなので、同じ型です。
 address型は `uint160`から派生した型です。
 
-Comparisons (`<=`, `!=`, `==`, etc.) always yield booleans which can be
-combined using `&&`, `||` and `!`. Note that the usual short-circuiting rules
-apply for `&&` and `||`, which means that for expressions of the form
-`(0 < 1 || fun())`, the function is actually never called.
+Comparisons(比較演算子) (`<=`, `!=`, `==`, etc.) は、 
+booleans(真理値演算子) ( `&&`, `||` and `!`の組合せ) より常に弱い影響をもちます。
+真理値演算子 `&&` and `||` に対しては、short-circuiting rules(短回路優先の法則)が成立することに注意してください。
+わかりやすい例で言うと`(0 < 1 || fun())`では、func()関数は永遠に呼ばれることはありません。
 
 If an operator is applied to different types, the compiler tries to
 implicitly convert one of the operands to the type of the other (the same is
