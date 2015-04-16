@@ -92,14 +92,15 @@ comments (which are not covered here).
 * 固定長string / byte配列(bytes0 ~ bytes32)  
 
 の３つです。  
-integer は `int8`/`uint8` から8刻みで、`int256`/`uint256` まで  
-`uint`/`int` は `uint256`/`int256` の alias なので、同じ型  
+integer は  
+ `int8`/`uint8` から8刻みで、`int256`/`uint256` まで  
+`uint`/`int` は `uint256`/`int256` の alias なので、同じ型、
 `address` 型は `uint160` から派生した型です。
 
 Comparisons (`<=`, `!=`, `==`, etc.) は、  
 booleans ( `&&`, `||` and `!`の組合せ) より常に弱い影響をもちます。  
-真理値演算子 `&&` and `||` に対しては、short-circuiting rules(短回路優先の法則)が成立することに注意してください。  
-わかりやすい例で言うと`(0 < 1 || fun())`では、fun()関数は永遠に呼ばれることはありません。
+`&&` and `||` に対しては、short-circuiting rules が成立することに注意してください。  
+例えば、 `(0 < 1 || fun())` では、最初の命題が常に真なので、fun()関数は永遠に呼ばれません。
 
 もし、演算子が違う型に適用されたら、
 コンパイラは暗黙のうちに一方を別の演算子へ変換しようとします (代入演算子に関してもあてはまります)。  
