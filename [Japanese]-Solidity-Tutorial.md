@@ -91,10 +91,10 @@ comments (which are not covered here).
 * integer
 * 固定長string / byte配列(bytes0 ~ bytes32)  
 
-の３つです。
-integer は`int8`/`uint8`から8刻みで、`int256`/`uint256`まであります。
-`uint`/`int`は`uint256`/`int256`のaliasなので、同じ型です。
-address型は `uint160`から派生した型です。
+の３つです。  
+integer は `int8`/`uint8` から8刻みで、`int256`/`uint256` まで  
+`uint`/`int` は `uint256`/`int256` の alias なので、同じ型です。
+`address` 型は `uint160` から派生した型です。
 
 Comparisons (`<=`, `!=`, `==`, etc.) は、  
 booleans ( `&&`, `||` and `!`の組合せ) より常に弱い影響をもちます。  
