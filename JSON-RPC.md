@@ -1959,7 +1959,7 @@ Polling method for whisper filters.
 
 ##### Parameters
 
-`. `QUANTITY` - The filter id.
+1. `QUANTITY` - The filter id.
 
 ```js
 params: [
