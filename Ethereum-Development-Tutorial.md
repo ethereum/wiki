@@ -66,7 +66,7 @@ The instruction at position 0 is PUSH1, which pushes a one-byte value onto the s
 
     PC: 2 STACK: [0] MEM: [], STORAGE: {}
 
-The instruction at position 2 is CALLDATALOAD, which pops one value from the stack, loads the 32 bytes of message data starting from that index, and pushes that one the stack. Recall that the first 32 bytes here encode 54.
+The instruction at position 2 is CALLDATALOAD, which pops one value from the stack, loads the 32 bytes of message data starting from that index, and pushes that on to the stack. Recall that the first 32 bytes here encode 54.
 
     PC: 3 STACK: [54] MEM: [], STORAGE: {}
 
