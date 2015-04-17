@@ -16,7 +16,9 @@ sudo npm install -g pm2
 Then edit the `app.json` file in it to configure for your node:
 
 - alter the value to the right of `cwd` to the path of `eth-net-intelligence-api` (including the `eth-net-intelligence-api` part);
+- alter the value to the right of `LISTENING_PORT` to the ethereum listening port (default: 30303)
 - alter the value to the right of `INSTANCE_NAME` to whatever you wish to name your node;
+- alter the value to the right of `CONTACT_DETAILS` if you wish to share your contact details
 - alter the value to the right of `RPC_PORT` to the rpc port for your node (by default 8080 for cpp and 8545 for go);
 - and alter the value to the right of `WS_SECRET` to the secret (you'll have to get this off an ethÐΞV official if you don't have one).
 
@@ -55,7 +57,9 @@ Configure the app modifying [processes.json](/eth-net-intelligence-api/blob/mast
 		"NODE_ENV"        : "production", // tell the client we're in production environment
 		"RPC_HOST"        : "localhost", // eth JSON-RPC host
 		"RPC_PORT"        : "8080", // eth JSON-RPC port
+		"LISTENING_PORT"  : "30303", // eth listening port (only used for display)
 		"INSTANCE_NAME"   : "", // whatever you wish to name your node
+		"CONTACT_DETAILS" : "", // add your contact details here if you wish (email/skype)
 		"WS_SERVER"       : "wss://eth-netstats.herokuapp.com", // path to eth-netstats WebSockets api server
 		"WS_SECRET"       : "", // WebSockets api server secret used for login
 	}
