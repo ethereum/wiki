@@ -6,7 +6,7 @@
 
 ### JavaScript API
 
-To talk to an ethereum node from inside an JavaScript application use the [ethereum.js](https://github.com/ethereum/ethereum.js) library, which gives an convenient interface for the RPC methods.
+To talk to an ethereum node from inside a JavaScript application use the [ethereum.js](https://github.com/ethereum/ethereum.js) library, which gives an convenient interface for the RPC methods.
 See the [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API) for more.
 
 ### JSON-RPC Endpoint
