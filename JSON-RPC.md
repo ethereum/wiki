@@ -1479,7 +1479,7 @@ none
 ##### Returns
 
 `Array` - Array with the following properties:
-  1. `DATA`, 32 Bytes - current block header hash without the nonce (the first part of the proof-of-work pair).
+  1. `DATA`, 32 Bytes - current block header pow-hash
   2. `DATA`, 32 Bytes - the seed hash used for the DAG.
   3. `DATA`, 32 Bytes - the boundary condition ("target"), 2^256 / difficulty.
 
@@ -1510,7 +1510,7 @@ Used for submitting a proof-of-work solution.
 ##### Parameters
 
 1. `DATA`, 8 Bytes - The nonce found (64 bits)
-2. `DATA`, 32 Bytes - The header's hash (256 bits)
+2. `DATA`, 32 Bytes - The header's pow-hash (256 bits)
 3. `DATA`, 32 Bytes - The mix digest (256 bits)
 
 ```js
