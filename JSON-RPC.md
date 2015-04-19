@@ -1529,7 +1529,7 @@ params: [
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0", "method":"eth_submitWork", "params":["0x0000000000000001", "0x1234567890abcdef1234567890abcdef", "0xD1GE5700000000000000000000000000"]],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0", "method":"eth_submitWork", "params":["0x0000000000000001", "0x1234567890abcdef1234567890abcdef", "0xD1GE5700000000000000000000000000"],"id":73}'
 
 // Result
 {
