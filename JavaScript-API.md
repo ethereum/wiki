@@ -139,9 +139,13 @@ var web3 = require('web3')
 
     web3.version.api
 
+
+##### Parameters
+none
+
 ##### Returns
 
-The ethereum js api version.
+`String` - The ethereum js api version.
 
 ##### Example
 
@@ -156,9 +160,13 @@ console.log(api); // "0.2.0"
 
     web3.version.client
 
+
+##### Parameters
+none
+
 ##### Returns
 
-The client/node version.
+`String` - The client/node version.
 
 ##### Example
 
@@ -173,9 +181,13 @@ console.log(version); // "Mist/v0.9.3/darwin/go1.4.1"
 
     web3.version.network
 
+
+##### Parameters
+none
+
 ##### Returns
 
-The network protocol version.
+`String` - The network protocol version.
 
 ##### Example
 
@@ -190,9 +202,12 @@ console.log(version); // 54
 
     web3.version.ethereum
 
+##### Parameters
+none
+
 ##### Returns
 
-The ethereum protocol version.
+`String` - The ethereum protocol version.
 
 ##### Example
 
@@ -207,9 +222,12 @@ console.log(version); // 60
 
     web3.version.whisper
 
+##### Parameters
+none
+
 ##### Returns
 
-The whisper protocol version.
+`String` - The whisper protocol version.
 
 ##### Example
 
@@ -224,11 +242,14 @@ console.log(version); // 20
 
     web3.setProvider(providor)
 
+Should be called to set provider.
+
+##### Parameters
+none
+
 ##### Returns
 
-undefined
-
-Should be called to set provider.
+`undefined`
 
 ##### Example
 
@@ -244,11 +265,14 @@ web3.setProvider(new web3.providers.QtSyncProvider());
 
     web3.reset()
 
+Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
+
+##### Parameters
+none
+
 ##### Returns
 
-undefined
-
-Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
+`undefined`
 
 ##### Example
 
@@ -262,11 +286,15 @@ web3.reset();
 
     web3.sha3(string [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+##### Parameters
+
+1. `String` - The string to hash using the SHA3 algorithm
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
 
 ##### Returns
 
-The SHA3 of the given data.
+`String` - The SHA3 of the given data.
 
 ##### Example
 
@@ -284,18 +312,15 @@ console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37
 
     web3.toHex(mixed);
 
+Converts any value into HEX.
+
+##### Parameters
+
+1. `String|Number|Object|Array|BigNumber` - The value to parse to HEX. If its an object or array it will be `JSON.stringify` first. If its a BigNumber it will make it the HEX value of a number.
+
 ##### Returns
 
-The hex string of `mixed`.
-
-Following input values are possible:
-
-- string
-- number or string of number
-- BigNumber instance -> will be converted to a hex representation of a number
-- hex string
-- array (will be stringified before)
-- object (will be stringified before)
+`String` - The hex string of `mixed`.
 
 ##### Example
 
@@ -310,32 +335,45 @@ console.log(str); // '0x7b2274657374223a2274657374227d'
 
     web3.toAscii(hexString);
 
+Converts a HEX string into a ASCII string.
+
+##### Parameters
+
+1. `String` - A HEX string to be converted to ascii.
+
 ##### Returns
 
-An ASCII string made from the data `hexString`.
+`String` - An ASCII string made from the given `hexString`.
 
 ##### Example
 
 ```js
 var str = web3.toAscii("0x657468657265756d000000000000000000000000000000000000000000000000");
-console.log(str); // ethereum
+console.log(str); // "ethereum"
 ```
 
 ***
 
 #### web3.fromAscii
 
-    web3.fromAscii(string[, padding]);
+    web3.fromAscii(string [, padding]);
+
+Converts any ASCII string to a HEX string.
+
+##### Parameters
+
+1. `String` - An ASCII string to be converted to HEX.
+2. `Number` - The number of bytes the returned HEX string should have. 
 
 ##### Returns
 
-data of the ASCII string `string` and padded to `padding` bytes (default to 32) and left-aligned.
+`String` - The converted HEX string.
 
 ##### Example
 
 ```js
 var str = web3.fromAscii('ethereum');
-console.log(str); // "0x657468657265756d000000000000000000000000000000000000000000000000"
+console.log(str); // "0x657468657265756d"
 
 var str2 = web3.fromAscii('ethereum', 32);
 console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000000000000"
@@ -347,15 +385,22 @@ console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000
 
     web3.toDecimal(hexString);
 
+Converts a HEX string to its number representation.
+
+##### Parameters
+
+1. `String` - An HEX string to be converted to a number.
+
+
 ##### Returns
 
-The decimal string representing the data `hexString` (when interpreted as a big-endian integer).
+`Number` - The number representing the data `hexString`.
 
 ##### Example
 
 ```js
-var value = web3.toDecimal('0x15');
-console.log(value === "21"); // true
+var number = web3.toDecimal('0x15');
+console.log(number); // 21
 ```
 
 ***
@@ -364,15 +409,21 @@ console.log(value === "21"); // true
 
     web3.fromDecimal(number);
 
+Converts a number or number string to its HEX representation.
+
+##### Parameters
+
+1. `Number|String` - A number to be converted to a HEX string.
+
 ##### Returns
 
-The HEX string representing the decimal integer `number`.
+`String` - The HEX string representing of the given `number`.
 
 ##### Example
 
 ```js
 var value = web3.fromDecimal('21');
-console.log(value === "0x15"); // true
+console.log(value); // "0x15"
 ```
 
 ***
@@ -381,22 +432,27 @@ console.log(value === "0x15"); // true
 
     web3.fromWei([String,BigNumber] number, [String] unit)
 
-##### Returns
-
-either a number string, or a BigNumber object, depending on the given `number` parameter.
-
 Converts a number of wei into the following ethereum units:
 
-- kwei/ada
-- mwei/babbage
-- gwei/shannon
-- szabo
-- finney
-- ether
-- kether/grand/einstein
-- mether
-- gether
-- tether
+- `kwei`/`ada`
+- `mwei`/`babbage`
+- `gwei`/`shannon`
+- `szabo`
+- `finney`
+- `ether`
+- `kether`/`grand`/`einstein`
+- `mether`
+- `gether`
+- `tether`
+
+##### Parameters
+
+1. `Number|String|BigNumber` - A number or BigNumber instance.
+
+
+##### Returns
+
+`String|BigNumber` - Either a number string, or a BigNumber instance, depending on the given `number` parameter.
 
 ##### Example
 
@@ -411,23 +467,27 @@ console.log(value); // "0.021"
 
     web3.toWei([String,BigNumber] number, [String] unit)
 
+Converts an ethereum unit into wei. Possible units are:
+
+- `kwei`/`ada`
+- `mwei`/`babbage`
+- `gwei`/`shannon`
+- `szabo`
+- `finney`
+- `ether`
+- `kether`/`grand`/`einstein`
+- `mether`
+- `gether`
+- `tether`
+
+##### Parameters
+
+1. `Number|String|BigNumber` - A number or BigNumber instance.
+
+
 ##### Returns
 
-either a number string, or a BigNumber object, depending on the given `number` parameter.
-
-Converts a ethereum unit into wei. Possible units are:
-
-- kwei/ada
-- mwei/babbage
-- gwei/shannon
-- szabo
-- finney
-- ether
-- kether/grand/einstein
-- mether
-- gether
-- tether
-
+`String|BigNumber` - Either a number string, or a BigNumber instance, depending on the given `number` parameter.
 
 ##### Example
 
@@ -442,11 +502,19 @@ console.log(value); // "1000000000000000000"
 
     web3.toBigNumber(numberOrHexString);
 
-##### Returns
-
-a BigNumber object representing the given value
+Converts a given number into a BigNumber instance.
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
+
+##### Parameters
+
+1. `Number|String` - A number, number string or HEX string of a number.
+
+
+##### Returns
+
+`BigNumber` - A BigNumber instance representing the given value.
+
 
 ##### Example
 
@@ -463,9 +531,11 @@ console.log(value.toString(10)); // '200000000000000000000001'
 
     web3.net.listening
 
+This property is read only and says whether the node is actively listening for network connections or not.
+
 ##### Returns
 
-`true` if and only if the client is actively listening for network connections, otherwise `false`.
+`Boolean` - `true` if the client is actively listening for network connections, otherwise `false`.
 
 ##### Example
 
@@ -480,9 +550,11 @@ console.log(listening); // true of false
 
     web3.net.peerCount
 
+This property is read only and returns the number of connected peers.
+
 ##### Returns
 
-The number of peers currently connected to the client.
+`Number` - The number of peers currently connected to the client.
 
 ##### Example
 
@@ -494,6 +566,7 @@ console.log(peerCount); // 4
 ***
 
 #### web3.eth
+
 Contains the ethereum blockchain related methods.
 
 ##### Example
@@ -508,11 +581,11 @@ var eth = web3.eth;
 
     web3.eth.coinbase
 
-The coinbase is the address were the mining rewards go into.
+This property is read only and returns the coinbase address were the mining rewards go to.
 
 ##### Returns
 
-The coinbase address of the client.
+`String` - The coinbase address of the client.
 
 ##### Example
 
@@ -527,9 +600,13 @@ console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
 
     web3.eth.mining
 
+
+This property is read only and says whether the node is mining or not.
+
+
 ##### Returns
 
-`true` if the client is mining, otherwise `false`.
+`Boolean` - `true` if the client is mining, otherwise `false`.
 
 ##### Example
 
@@ -544,9 +621,13 @@ console.log(mining); // true or false
 
     web3.eth.gasPrice
 
-**Returns ->** a BigNumber object of the current gas price in wei.
 
+This property is read only and returns the current gas price.
 The gas price is determined by the x latest blocks median gas price.
+
+##### Returns
+
+`BigNumber` - A BigNumber instance of the current gas price in wei.
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
@@ -563,9 +644,11 @@ console.log(gasPrice.toString(10)); // "10000000000000"
 
     web3.eth.accounts
 
+This property is read only and returns a list of accounts the node controls.
+
 ##### Returns
 
-An array of the addresses owned by client.
+`Array` - An array of addresses controlled by client.
 
 ##### Example
 
@@ -578,13 +661,21 @@ console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
 
 #### web3.eth.register
 
-    web3.eth.register(addressHexString)
+    web3.eth.register(addressHexString [, callback])
+
+(Not Implemented yet)
+Registers the given address to be included in `web3.eth.accounts`. This allows non-private-key owned accounts to be associated as an owned account (e.g., contract wallets).
+
+##### Parameters
+
+1. `String` - The address to register
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
 
 ##### Returns
 
 ?
 
-Registers the given address to be included in `web3.eth.accounts`. This allows non-private-key owned accounts to be associated as an owned account (e.g., contract wallets).
 
 ##### Example
 
@@ -598,13 +689,20 @@ web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 
      web3.eth.unRegister(addressHexString [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+(Not Implemented yet)
+Unregisters a given address.
+
+##### Parameters
+
+1. `String` - The address to unregister.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
 
 ##### Returns
 
 ?
 
-Unregisters a given address.
 
 ##### Example
 
@@ -618,10 +716,6 @@ web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
 
     web3.eth.defaultBlock
 
-##### Returns
-
-The default block number/age to use when querying a state.
-
 This default block is used for the following methods (optionally you can overwrite the defaultBlock by passing it as the last parameter):
 
 - [web3.eth.getBalance()](#web3ethgetbalance)
@@ -630,13 +724,19 @@ This default block is used for the following methods (optionally you can overwri
 - [web3.eth.getStorageAt()](#web3ethgetstorageat)
 - [web3.eth.call()](#web3ethcall)
 
-default block can be
+##### Values
 
-- a block number
-- `'latest'`, which would be the latest minded block
-- `'pending'`, which would the currently minded block including pending transactions
+Default block parameters can be one of the following:
+
+- `Number` - a block number
+- `String - `'latest'`, which would be the latest minded block
+- `String` - `'pending'`, which would the currently minded block including pending transactions
 
 *Default is* `latest`
+
+##### Returns
+
+`Number|String` - The default block number to use when querying a state.
 
 ##### Example
 
@@ -654,9 +754,11 @@ web3.eth.defaultBlock = 231;
 
     web3.eth.blockNumber
 
+This property is read only and returns the current block number.
+
 ##### Returns
 
-The number of the most recent block.
+`Number` - The number of the most recent block.
 
 ##### Example
 
@@ -837,7 +939,7 @@ console.log(uncle); // see web3.eth.getBlock
 
 ***
 
-#####web3.eth.getTransaction
+##### web3.eth.getTransaction
 
     web3.eth.getTransaction(transactionHash [, callback])
 
@@ -942,7 +1044,6 @@ Creates a new message-call transaction.
     * `gasPrice (number|hexString|BigNumber)`, (optional, default: To-Be-Determined) the price of gas for this transaction in wei, defaults to the mean network gasPrice.
     * `data  (hexString)`, (optional) either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
     * `code`, (optional) a synonym for `data`;
-  * `callback`, the callback function, called on completion of the transaction. If the transaction was a contract-creation transaction, it is passed with a single argument; the address of the new account.
 
 ##### Example
 
@@ -1093,7 +1194,7 @@ a filter object with the following methods:
 
 ##### Filter Methods:
   * `filter.get()`: Returns all of the log entries that fit the filter.
-  * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback.
+  * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback. See [this note](#using-callbacks) for details.
   * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
 
 ##### Callback return values
@@ -1126,7 +1227,7 @@ If its an event filter it returns a filter object with the return values of even
 ```js
 var filter = web3.eth.filter('pending');
 
-filter.watch(function (log) {
+filter.watch(function (err, log) {
   console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000", ...}
 });
 
