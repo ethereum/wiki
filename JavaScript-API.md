@@ -908,11 +908,16 @@ console.log(info);
 
     web3.eth.getBlockTransactionCount(hashStringOrBlockNumber [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Returns the number of transaction in a given block.
+
+##### Parameters
+
+1. `String|Number` - The block number or hash.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-The number of transactions in a given block `hashStringOrBlockNumber`.
+`Number` - The number of transactions in the given block.
 
 ##### Example
 
@@ -925,23 +930,28 @@ console.log(number); // 1
 
 #### web3.eth.getUncle
 
-    web3.eth.getUncle(blockHashStringOrNumber, uncleNumber[, returnTransactionObjects] [, callback])
+    web3.eth.getUncle(blockHashStringOrNumber, uncleNumber [, returnTransactionObjects] [, callback])
 
-If the `returnTransactionObjects` parameter is `true` it returns all the transactions as objects in the `transactions` property, if `false` it only includes an array with transaction hashes. **Default is `false`**
+Returns a blocks uncle by a given uncle index position.
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+##### Parameters
 
-Returns the uncle with number `uncleNumber` from the block with number or hash `blockHashStringOrNumber`.
+1. `String|Number` - The block number or hash.
+2. `Number` - The index position of the uncle.
+3. `Boolean` - (optional, default `false`) If `true`, the returned block will contain all transactions as objects, if `false` it will only contains the transaction hashes.
+4. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-Return value see [web3.eth.getBlock()](#web3ethgetblock)
+
+##### Returns
+
+`Object` - the returned uncle. For a return value see [web3.eth.getBlock()](#web3ethgetblock).
+
+**Note**: An uncle doesn't contain individual transactions.
 
 ##### Example
 
 ```js
-var blockNumber = 500;
-var indexOfUncle = 0
-
-var uncle = web3.eth.getUncle(blockNumber, indexOfUncle);
+var uncle = web3.eth.getUncle(500, 0);
 console.log(uncle); // see web3.eth.getBlock
 
 ```
