@@ -838,62 +838,69 @@ console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565
 
 #### web3.eth.getBlock
 
-     web3.eth.getBlock(hashHexStringOrBlockNumber[, returnTransactionObjects] [, callback])
+     web3.eth.getBlock(blockHashOrBlockNumber [, returnTransactionObjects] [, callback])
 
-If the `returnTransactionObjects` parameter is `true` it returns all the transactions as objects in the `transactions` property, if `false` it only includes an array with transaction hashes. **Default is `false`**
+Returns a block matching the block number or block hash.
 
-If you pass an optional callback the HTTP request is made asynchronous.
+##### Parameters
+
+1. `String|Number` - The block number or hash.
+2. `Boolean` - (optional, default `false`) If `true`, the returned block will contain all transactions as objects, if `false` it will only contains the transaction hashes.
+3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-a block object with number or hash `hashHexStringOrBlockNumber`:
+`Object` - The block object:
 
-  * `number` (integer): The number of this block.
-  * `hash` (32-byte hash): The block hash (i.e. the SHA3 of the RLP-encoded dump of the block's header).
-  * `parentHash` (32-byte hash): The parent block's hash (i.e. the SHA3 of the RLP-encoded dump of the parent block's header).
-  * `nonce`: the nonce of the block.
-  * `sha3Uncles` (32-byte hash): The SHA3 of the RLP-encoded dump of the uncles portion of the block.
-  * `logsBloom` (32-byte hash): The bloom filter of this block.  
-  * `stateRoot` (32-byte hash): The root of the state trie.
-  * `transactionsRoot` (32-byte hash): The root of the block's transactions trie.
-  * `miner` (20-byte address): The address of the account that was rewarded for mining this block (né the coinbase address).
-  * `difficulty` (BigNumber): The PoW difficulty of this block.
-  * `totalDifficulty` (BigNumber): The total difficulty of the entire chain up and including this block.
-  * `size` (integer) the size in bytes of the block
-  * `minGasPrice` (BigNumber): The minimum price, in Wei per GAS, that the miner accepted for any transactions in this block.
-  * `gasLimit` (integer): The gas limit of this block.
-  * `gasUsed` (integer): The amount of gas used in this block.
-  * `timestamp` (integer): The timestamp of this block (an integer).
-  * `extraData` (byte array): Any extra data this block contains.
-  * `children` (array of 32-byte hashes): The hashes of any children this block has.
-  * `transactions` (array) transaction objects or hashes, depending on the `returnTransactionObjects` parameter
-  * `uncles` (array) hashes of uncles
+  - `number`: `Number` - the block number.
+  - `hash`: `String`, 32 Bytes - hash of the block.
+  - `parentHash`: `String`, 32 Bytes - hash of the parent block.
+  - `nonce`: `String`, 8 Bytes - hash of the generated proof-of-work.
+  - `sha3Uncles`: `String`, 32 Bytes - SHA3 of the uncles data in the block.
+  - `logsBloom`: `String`, 256 Bytes - the bloom filter for the logs of the block.
+  - `transactionsRoot`: `String`, 32 Bytes - the root of the transaction trie of the block
+  - `stateRoot`: `String`, 32 Bytes - the root of the final state trie of the block.
+  - `miner`: `String`, 20 Bytes - the address of the beneficiary to whom the mining rewards were given.
+  - `difficulty`: `BigNumber` - integer of the difficulty for this block.
+  - `totalDifficulty`: `BigNumber` - integer of the total difficulty of the chain until this block.
+  - `extraData`: `String` - the "extra data" field of this block.
+  - `size`: `Number` - integer the size of this block in bytes.
+  - `gasLimit`: `BigNumber` - the maximum gas allowed in this block.
+  - `gasUsed`: `Number` - the total used gas by all transactions in this block.
+  - `timestamp`: `Number` - the unix timestamp for when the block was collated.
+  - `transactions`: `Array` - Array of transaction objects, or 32 Bytes transaction hashes depending on the last given parameter.
+  - `uncles`: `Array` - Array of uncle hashes.
 
 ##### Example
 
 ```js
 var info = web3.eth.block(3150);
 console.log(info);
- /*{
-  "number": 3150,
-  "difficulty": 125000,
-  "totalDifficulty": 124334345000,
-  "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
-  "hash": "0x452e84d0d0599d779a4e466d0b70d50ca316499a8489604d5b9df436ccfeee",
-  "parentHash": "0xf9de6948d835ed5257229b5103f9421a7f70c3ccc65fd31c0db85324e05702f5",
-  "nonce": "0xed0c6a53777b15880fb359dfd9368d002c959243a19c35ca1ae2e97f9bf78a53",
+/*
+{
+  "number": 3,
+  "hash": "0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
+  "parentHash": "0x2302e1c0b972d00932deb5dab9eb2982f570597d9d42504c05d9c2147eaf9c88",
+  "nonce": "0xfb6e1a62d119228b",
   "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-  "logsBloom": "0xe84d0d0599d779a4e466d0b70d50ca316499a8489604d5b9df436ccfeee",
-  "stateRoot": "0xd878fcee309af964e8e70c66ec25b1e7de9eca9c4f49e90efddeea8f77a37e43",
-  "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "minGasPrice": instanceof BigNumber,
-  "gasLimit": 125000,
-  "gasUsed": 34345,
-  "miner": "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
-  "timestamp": 1416585210,
-  "transactions": [{...}, {...}],
-  "uncles": ["0xkj423h4kj23...", "0xlj4234k2..."]
-} */
+  "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "transactionsRoot": "0x3a1b03875115b79539e5bd33fb00d8f7b7cd61929d5a3c574f507b8acf415bee",
+  "stateRoot": "0xf1133199d44695dfa8fd1bcfe424d82854b5cebef75bddd7e40ea94cda515bcb",
+  "miner": "0x8888f1f195afa192cfee860698584c030f4c9db1",
+  "difficulty": "131200",
+  "totalDifficulty": "393408",
+  "size": 616,
+  "extraData": "0x",
+  "gasLimit": 3141592,
+  "minGasPrice": "0",
+  "gasUsed": 21662,
+  "timestamp": 1429287689,
+  "transactions": [
+    "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b"
+  ],
+  "uncles": []
+}
+*/
 ```
 
 ***
