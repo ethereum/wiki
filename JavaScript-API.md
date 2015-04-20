@@ -139,10 +139,6 @@ var web3 = require('web3')
 
     web3.version.api
 
-
-##### Parameters
-none
-
 ##### Returns
 
 `String` - The ethereum js api version.
@@ -159,10 +155,6 @@ console.log(api); // "0.2.0"
 #### web3.version.client
 
     web3.version.client
-
-
-##### Parameters
-none
 
 ##### Returns
 
@@ -182,9 +174,6 @@ console.log(version); // "Mist/v0.9.3/darwin/go1.4.1"
     web3.version.network
 
 
-##### Parameters
-none
-
 ##### Returns
 
 `String` - The network protocol version.
@@ -202,8 +191,6 @@ console.log(version); // 54
 
     web3.version.ethereum
 
-##### Parameters
-none
 
 ##### Returns
 
@@ -222,8 +209,6 @@ console.log(version); // 60
 
     web3.version.whisper
 
-##### Parameters
-none
 
 ##### Returns
 
@@ -430,7 +415,7 @@ console.log(value); // "0x15"
 
 #### web3.fromWei
 
-    web3.fromWei([String,BigNumber] number, [String] unit)
+    web3.fromWei(number, unit)
 
 Converts a number of wei into the following ethereum units:
 
@@ -448,6 +433,7 @@ Converts a number of wei into the following ethereum units:
 ##### Parameters
 
 1. `Number|String|BigNumber` - A number or BigNumber instance.
+2. `String` - One of the above ether units.
 
 
 ##### Returns
@@ -465,7 +451,7 @@ console.log(value); // "0.021"
 
 #### web3.toWei
 
-    web3.toWei([String,BigNumber] number, [String] unit)
+    web3.toWei(number, unit)
 
 Converts an ethereum unit into wei. Possible units are:
 
@@ -483,7 +469,7 @@ Converts an ethereum unit into wei. Possible units are:
 ##### Parameters
 
 1. `Number|String|BigNumber` - A number or BigNumber instance.
-
+2. `String` - One of the above ether units.
 
 ##### Returns
 
