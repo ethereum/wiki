@@ -1395,7 +1395,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":[
   "id":1,
   "jsonrpc":"2.0",
   "result": [{
-    "hash": "0x5785ac562ff41e2dcfdf8216c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
     "logIndex": "0x1", // 1
     "blockNumber":"0x1b4" // 436
     "blockHash": "0x8216c5785ac562ff41e2dcfdf5785ac562ff41e2dcfdf829c5a142f1fccd7d",
