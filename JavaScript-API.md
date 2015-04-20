@@ -1,6 +1,6 @@
 # Introduction
 
-To make your Ðapp work with on Ethereum, you can use the `web3` object provided by the [web3.js library](https://github.com/ethereum/web3.js). ethereumjs communicates to a local node through RPC calls which can be found [here](https://github.com/ethereum/wiki/wiki/JSON-RPC). web3.js works with AlethZero, geth and Mist, and also in an external browser if one of the former nodes are running locally.
+To make your Ðapp work with on Ethereum, you can use the `web3` object provided by the [web3.js library](https://github.com/ethereum/web3.js). Under the hood it communicates to a local node through [RPC calls](https://github.com/ethereum/wiki/wiki/JSON-RPC). web3.js works with AlethZero, geth and Mist, and also in an external browser if one of the former nodes are running locally.
 
 `web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
