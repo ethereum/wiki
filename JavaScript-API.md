@@ -759,12 +759,18 @@ console.log(number); // 2744
 
     web3.eth.getBalance(addressHexString [, defaultBlock] [, callback])
 
-- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+
+##### Parameters
+
+1. `String` - The address to get the balance of.
+2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web.eth.defaultBlock](#web3ethdefaultblock).
+3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-a BigNumber object of the current balance for the given address in wei.
+`String` - a BigNumber object of the current balance for the given address in wei.
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
