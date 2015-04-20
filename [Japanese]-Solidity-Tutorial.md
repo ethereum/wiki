@@ -118,8 +118,8 @@ int8 y = -3;
 uint x = uint(y);
 ```
 
-At the end of this code snippet, `x` will have the value `0xfffff..fd` (64 hex
-characters), which is -3 in two's complement representation of 256 bits.
+この断片的なソースコードにおける `x` の最終状態は、`0xfffff..fd` (64桁の16進コード) となります。
+これは 256 bit の2進数表現における -3 です。
 
 For convenience, it is not always necessary to explicitly specify the type of a
 variable, the compiler automatically infers it from the type of the first
