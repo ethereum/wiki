@@ -1,6 +1,6 @@
 # Introduction
 
-To make your Ðapp work with on Ethereum, you can use the `web3` object provided by the [ethereum.js library](https://github.com/ethereum/ethereum.js). ethereumjs communicates to a local node through RPC calls which can be found [here](https://github.com/ethereum/wiki/wiki/JSON-RPC). ethereum.js works with AlethZero and Mist, and also in an external browser if one of the former nodes are running locally.
+To make your Ðapp work with on Ethereum, you can use the `web3` object provided by the [web3.js library](https://github.com/ethereum/web3.js). ethereumjs communicates to a local node through RPC calls which can be found [here](https://github.com/ethereum/wiki/wiki/JSON-RPC). web3.js works with AlethZero, geth and Mist, and also in an external browser if one of the former nodes are running locally.
 
 `web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
 
@@ -9,7 +9,7 @@ To make your Ðapp work with on Ethereum, you can use the `web3` object provided
 As this API is designed to work with a local RPC node and all its functions are by default use synchronous HTTP requests.
 
 If you want to make asynchronous request, you can pass an optional callback as the last parameter to most functions.
-All callbacks are using an error first callback style:
+All callbacks are using an [error first callback](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/) style:
 
 ```js
 web3.eth.getBlock(48, function(error, result){
@@ -32,7 +32,7 @@ Look at the following examples:
 // 1.0101010032432535e+38
 ```
 
-Ethereum.js depends on the [BigNumber Library](https://github.com/MikeMcl/bignumber.js/) and adds it automatically.
+web3.js depends on the [BigNumber Library](https://github.com/MikeMcl/bignumber.js/) and adds it automatically.
 
 ```js
 var balance = new BigNumber('131242344353464564564574574567456');
@@ -54,7 +54,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 
 * [web3](#web3)
   * [version](#web3versionapi)
-     * [api](#web3versionapi) -> string e.g. '0.2.0' (the ethereum.js version)
+     * [api](#web3versionapi) -> string e.g. '0.2.0' (the web3.js version)
      * [client](#web3versionclient) -> string e.g. 'AlethZero/1.0.0' (the client ID)
      * [network](#web3versionnetwork) -> number e.g. 58 (the network version)
      * [ethereum](#web3versionethereum) -> number e.g. 60 (the ethereum protocol version)
@@ -1464,4 +1464,4 @@ To test it, just put it in file and save. Load it in AlethZero and point the URL
 
 Job done. Now go create.
 
-more examples can be found [here](https://github.com/ethereum/ethereum.js/tree/master/example)
+more examples can be found [here](https://github.com/ethereum/web3.js/tree/master/example)
