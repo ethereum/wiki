@@ -1954,7 +1954,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":["
 
 #### shh_getFilterChanges
 
-Polling method for whisper filters.
+Polling method for whisper filters. Returns new messages since the last call of this method.
+
+**Note** calling the [shh_getMessages](#shh_getmessages) method, will reset the buffer for this method, so that you won't receive duplicate messages.
 
 
 ##### Parameters
@@ -2008,7 +2010,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getFilterChanges","params":[
 
 #### shh_getMessages
 
-Get all messages matching a filter, which are still existing in the node.
+Get all messages matching a filter, which are still existing in the node's buffer.
+
+**Note** calling this method, will also reset the buffer for the [shh_getFilterChanges](#shh_getfilterchanges) method, so that you won't receive duplicate messages.
 
 ##### Parameters
 
