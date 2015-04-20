@@ -55,7 +55,7 @@ Configure the app modifying [processes.json](/eth-net-intelligence-api/blob/mast
 "env":
 	{
 		"NODE_ENV"        : "production", // tell the client we're in production environment
-		"RPC_HOST"        : "localhost", // eth JSON-RPC host
+		"RPC_HOST"        : "localhost", // eth JSON-RPC host the default is 8545
 		"RPC_PORT"        : "8080", // eth JSON-RPC port
 		"LISTENING_PORT"  : "30303", // eth listening port (only used for display)
 		"INSTANCE_NAME"   : "", // whatever you wish to name your node
@@ -73,6 +73,13 @@ Run it using pm2:
 cd ~/bin
 pm2 start processes.json
 ```
+
+ethereum (eth or geth) must be running with rpc enabled.
+
+```
+geth --rpc
+```
+the default port (if one is not specified) for rpc under geth is 8545
 
 ### Updating
 
