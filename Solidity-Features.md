@@ -706,3 +706,7 @@ contract c {
   mapping(uint => uint) data;
 }
 ```
+
+## Machine friendly output.
+[PT](https://www.pivotaltracker.com/story/show/91106050) 
+Now commandline compiler is providing assembly output in Json format. There is a new --asm-json flag for that.
