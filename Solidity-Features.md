@@ -706,3 +706,14 @@ contract c {
   mapping(uint => uint) data;
 }
 ```
+
+## Interface contracts
+
+[PT](https://www.pivotaltracker.com/story/show/88344782) Contracts can be marked as "not fully implemented" by containing at least one abstract function. A function is abstract if it does not have a body defined.
+
+```
+contract base { function foo(); }
+contract derived is base { function foo() {} }
+```
+
+For example in the above, foo is an abstract function and as such the base contract is an interface contract. All non-interface contracts that derive from it must implement its abstract functions.
