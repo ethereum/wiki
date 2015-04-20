@@ -865,7 +865,7 @@ Returns a block matching the block number or block hash.
   - `totalDifficulty`: `BigNumber` - integer of the total difficulty of the chain until this block.
   - `extraData`: `String` - the "extra data" field of this block.
   - `size`: `Number` - integer the size of this block in bytes.
-  - `gasLimit`: `BigNumber` - the maximum gas allowed in this block.
+  - `gasLimit`: `Number` - the maximum gas allowed in this block.
   - `gasUsed`: `Number` - the total used gas by all transactions in this block.
   - `timestamp`: `Number` - the unix timestamp for when the block was collated.
   - `transactions`: `Array` - Array of transaction objects, or 32 Bytes transaction hashes depending on the last given parameter.
@@ -887,12 +887,11 @@ console.log(info);
   "transactionsRoot": "0x3a1b03875115b79539e5bd33fb00d8f7b7cd61929d5a3c574f507b8acf415bee",
   "stateRoot": "0xf1133199d44695dfa8fd1bcfe424d82854b5cebef75bddd7e40ea94cda515bcb",
   "miner": "0x8888f1f195afa192cfee860698584c030f4c9db1",
-  "difficulty": "131200",
-  "totalDifficulty": "393408",
+  "difficulty": BigNumber,
+  "totalDifficulty": BigNumber,
   "size": 616,
   "extraData": "0x",
   "gasLimit": 3141592,
-  "minGasPrice": "0",
   "gasUsed": 21662,
   "timestamp": 1429287689,
   "transactions": [
