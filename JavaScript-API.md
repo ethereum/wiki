@@ -759,18 +759,17 @@ console.log(number); // 2744
 
     web3.eth.getBalance(addressHexString [, defaultBlock] [, callback])
 
-- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
+Get the balance of an address at a given block.
 
 ##### Parameters
 
 1. `String` - The address to get the balance of.
-2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web.eth.defaultBlock](#web3ethdefaultblock).
+2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
 3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-`String` - a BigNumber object of the current balance for the given address in wei.
+`String` - A BigNumber instance of the current balance for the given address in wei.
 
 See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
 
@@ -789,12 +788,19 @@ console.log(balance.toNumber()); // 1000000000000
 
     web3.eth.getStorageAt(addressHexString, position [, defaultBlock] [, callback])
 
-- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Get the storage at a specific position of an address.
+
+##### Parameters
+
+1. `String` - The address to get the storage from.
+2. `Number` - The index position of the storage.
+3. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
+4. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
 
 ##### Returns
 
-The value in storage at position `position` of the address `addressHexString`.
+`String` - The value in storage at the given position.
 
 ##### Example
 
@@ -809,12 +815,17 @@ console.log(state); // "0x03"
 
     web3.eth.getCode(addressHexString [, defaultBlock] [, callback])
 
-- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Get the code at a specific address.
+
+##### Parameters
+
+1. `String` - The address to get the code from.
+2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
+3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-The data at given address `addressHexString`.
+`String` - The data at given address `addressHexString`.
 
 ##### Example
 
@@ -1005,7 +1016,7 @@ console.log(transaction); // see web3.eth.getTransaction
 
     web3.eth.getTransactionCount(addressHexString [, defaultBlock] [, callback])
 
-- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
+- If you pass an optional defaultBlock it will not use the default [web3.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
@@ -1136,7 +1147,7 @@ myEvent.stopWatching();
 
     web3.eth.call(callObject [, defaultBlock] [, callback])
 
-- If you pass an optional defaultBlock it will not use the default [web.eth.defaultBlock](#web3ethdefaultblock).
+- If you pass an optional defaultBlock it will not use the default [web3.eth.defaultBlock](#web3ethdefaultblock).
 - If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
