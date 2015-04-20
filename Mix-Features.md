@@ -156,4 +156,12 @@ On the header are several actions:
  - Select which log type to display (4 buttons).
  - Use the text input to filter displayed logs.
 
+# Auto-completion for solidity source
+
+Auto-completion in Mix is based on the code mirror plugins show-hint.js and anyword-hint.js (Not semantic)
+It displays:
+  - Solidity token (currency, keywords, stdContract, Time, Types).
+  - Contract Name. 
+  - Functions Name.
+  - Words that are in the nearby code.  
 
