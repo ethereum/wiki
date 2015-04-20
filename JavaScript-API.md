@@ -962,24 +962,30 @@ console.log(uncle); // see web3.eth.getBlock
 
     web3.eth.getTransaction(transactionHash [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Returns a transaction from a transaction hash.
+
+##### Parameters
+
+1. `String` - The transaction hash.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
 
 ##### Returns
 
-a transaction object its hash `transactionHash`:
+`Object` - A transaction object its hash `transactionHash`:
 
-  * `status`: "mined" or "pending"
-  * `hash` (32-byte hash): The hash of the transaction.
-  * `nonce` (32-byte hash): The transaction nonce.
-  * `blockHash` (32-byte hash): the blocks hash, where this transaction appeared, `null` when pending
-  * `blockNumber` (integer):  the blocks number, where this transaction appeared, `null` when pending
-  * `transactionIndex` (integer):  the index a t which this transaction appeared in the block
-  * `to` (20-byte address): The address to which the transaction was sent. This may be the null address (address 0) if it was a contract-creation transaction.
-  * `from` (20-byte address): The cryptographically verified address from which the transaction was sent .
-  * `gas` (integer): The amount of GAS supplied for this transaction to happen.
-  * `gasPrice` (BigNumber): The price offered to the miner to purchase this amount of GAS, in Wei per GAS.
-  * `value` (BigNumber): The amount of ETH to be transferred to the recipient with the transaction in wei.
-  * `input` (byte array): The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation.
+  - `hash`: `String`, 32 Bytes - hash of the transaction.
+  - `nonce`: `Number` - the number of transactions made by the sender prior to this one.
+  - `blockHash`: `String`, 32 Bytes - hash of the block where this transaction was in. `null` when the transaction is pending.
+  - `blockNumber`: `Number` - block number where this transaction was in. `null` when the transaction is pending.
+  - `transactionIndex`: `Number` - integer of the transactions index position in the block.
+  - `from`: `String`, 20 Bytes - address of the sender.
+  - `to`: `String`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
+  - `value`: `BigNumber` - value transferred in Wei.
+  - `gasPrice`: `BigNumber` - price paid per gas in Wei.
+  - `gas`: `Number` - gas used.
+  - `input`: `String` - the data send along with the transaction.
+
 
 ##### Example
 
@@ -991,18 +997,17 @@ var transaction = web3.eth.getTransaction(blockNumber, indexOfTransaction);
 console.log(transaction);
 /*
 {
-    "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
-    "nonce":"0x",
-    "blockHash": "0x6fd9e2a26abeab0aa2411c6ef2fc5426d6adb7ab17f30a99d3cb96aed1d1055b",
-    "blockNumber": 5599
-    "transactionIndex":  1
-    "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
-    "gas":520464,
-    "gasPrice": instanceof BigNumber,
-    "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
-    "input":"0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056",
-    "to":"0x0000000000000000000000000000000000000000",
-    "value": instanceof BigNumber
+  "hash": "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
+  "nonce": 2,
+  "blockHash": "0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
+  "blockNumber": 3,
+  "transactionIndex": 0,
+  "from": "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+  "to": "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f",
+  "value": BigNumber,
+  "gas": 314159,
+  "gasPrice": BigNumber,
+  "input": "0x57cb2fc4"
 }
 */
 
