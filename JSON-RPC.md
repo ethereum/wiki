@@ -1,1552 +1,1746 @@
-# Introduction
+### Overview
 
-To make your Ðapp work with on Ethereum, you can use the `web3` object provided by the [web3.js library](https://github.com/ethereum/web3.js). Under the hood it communicates to a local node through [RPC calls](https://github.com/ethereum/wiki/wiki/JSON-RPC). web3.js works with AlethZero, geth and Mist, and also in an external browser if one of the former nodes are running locally.
+[JSON](http://json.org/) is a lightweight data-interchange format. It can represent numbers, strings, ordered sequences of values, and collections of name/value pairs.
 
-`web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols.
+[JSON-RPC](http://www.jsonrpc.org/specification) is a stateless, light-weight remote procedure call (RPC) protocol. Primarily this specification defines several data structures and the rules around their processing. It is transport agnostic in that the concepts can be used within the same process, over sockets, over HTTP, or in many various message passing environments. It uses JSON ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt)) as data format.
 
-## Using callbacks
+### JavaScript API
 
-As this API is designed to work with a local RPC node and all its functions are by default use synchronous HTTP requests.
+To talk to an ethereum node from inside a JavaScript application use the [web3.js](https://github.com/ethereum/web3.js) library, which gives an convenient interface for the RPC methods.
+See the [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API) for more.
 
-If you want to make asynchronous request, you can pass an optional callback as the last parameter to most functions.
-All callbacks are using an [error first callback](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/) style:
+### JSON-RPC Endpoint
 
-```js
-web3.eth.getBlock(48, function(error, result){
-    if(!error)
-        console.log(result)
-    else
-        console.error(error);
-})
+Default JSON-RPC endpoints:
+```
+C++: http://localhost:8080
+Go: http://localhost:8545
 ```
 
-## A note on big numbers in JavaScript
+##### Go
 
-You will always get a BigNumber object for balance values as JavaScript is not able to handle big numbers correctly.
-Look at the following examples:
-
-```js
-"101010100324325345346456456456456456456"
-// "101010100324325345346456456456456456456"
-101010100324325345346456456456456456456
-// 1.0101010032432535e+38
+You can start the HTTP JSON-RPC with the `--rpc` flag
+```bash
+geth --rpc
 ```
 
-web3.js depends on the [BigNumber Library](https://github.com/MikeMcl/bignumber.js/) and adds it automatically.
+change the default port (8545) and listing address (localhost) with:
 
-```js
-var balance = new BigNumber('131242344353464564564574574567456');
-// or var balance = web3.eth.getBalance(someAddress);
-
-balance.plus(21).toString(10); // toString(10) converts it to a number string
-// "131242344353464564564574574567477"
+```bash
+geth --rpc --rpcaddr <ip> --rpcport <portnumber>
 ```
 
-The next example wouldn't work as we have more than 20 floating points, therefore it is recommended to keep you balance always in *wei* and only transform it to other units when presenting to the user:
-```js
-var balance = new BigNumber('13124.234435346456466666457455567456');
+If accessing the RPC from a browser, CORS will need to be enabled with the appropriate domain set. Otherwise, JavaScript calls are limit by the same-origin policy and requests will fail:
 
-balance.plus(21).toString(10); // toString(10) converts it to a number string, but can only show max 20 floating points 
-// "13145.23443534645646666646" // you number would be cut after the 20 floating point
+```bash
+geth --rpc --rpccorsdomain "http://localhost:3000"
 ```
 
-# API
+The JSON RPC can also be started from the [geth console](https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console) using the `admin.startRPC(addr, port)` command.
 
-* [web3](#web3)
-  * [version](#web3versionapi)
-     * [api](#web3versionapi)
-     * [client](#web3versionclient)
-     * [network](#web3versionnetwork)
-     * [ethereum](#web3versionethereum)
-     * [whisper](#web3versionwhisper)
-  * [port](#)
-  * [setProvider(provider)](#web3setprovider)
-  * [reset()](#web3reset)
-  * [sha3(string)](#web3sha3)
-  * [toHex(stringOrNumber)](#web3tohex)
-  * [toAscii(hexString)](#web3toascii)
-  * [fromAscii(textString, [padding])](#web3fromascii)
-  * [toDecimal(hexString)](#web3todecimal)
-  * [fromDecimal(number)](#web3fromdecimal)
-  * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei)
-  * [toWei(numberStringOrBigNumber, unit)](#web3toWei)
-  * [toBigNumber(numberOrHexString)](#web3tobignumber)
-  * [isAddress(hexString)](#web3isAddress)
-  * [net](#)
-    * [listening](#web3netlistening)
-    * [peerCount](#web3ethpeercount)
-  * [eth](#web3eth)
-    * [coinbase](#web3ethcoinbase)
-    * [gasPrice](#web3ethgasprice)
-    * [accounts](#web3ethaccounts)
-    * [mining](#web3ethmining)
-    * [register(hexString)](#web3ethregister)
-    * [unRegister(hexString)](#web3ethunregister)
-    * [defaultBlock](#web3ethdefaultblock)
-    * [blockNumber](#web3ethblocknumber)
-    * [getBalance(address)](#web3ethgetbalance)
-    * [getStorageAt(address, position)](#web3ethgetstorageat)
-    * [getCode(address)](#web3ethgetcode)
-    * [getBlock(hash/number)](#web3ethgetblock)
-    * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount)
-    * [getUncle(hash/number)](#web3ethgetuncle)
-    * [getBlockUncleCount(hash/number)](#web3ethgetblockunclecount)
-    * [getTransaction(hash)](#web3ethgettransaction)
-    * [getTransactionFromBlock(hashOrNumber, indexNumber)](#web3ethgettransactionfromblock)
-    * [getTransactionCount(address)](#web3ethgettransactioncount)
-    * [sendTransaction(object)](#web3ethsendtransaction)
-    * [call(object)](#web3ethcall)
-    * [filter(array (, options) )](#web3ethfilter)
-        - [watch(callback)](#web3ethfilter)
-        - [stopWatching(callback)](#web3ethfilter)
-        - [get()](#web3ethfilter)
-    * [contract(abiArray)](#web3ethcontract)
-    * [contract.event()](#contract-events)
-    * [getCompilers()](#web3ethgetcompilers)
-    * [compile.lll(string)](#web3ethcompilelll)
-    * [compile.solidity(string)](#web3ethcompilesolidity)
-    * [compile.serpent(string)](#web3ethcompileserpent)
-  * [db](#web3db)
-    * [putString(name, key, value)](#web3dbputstring)
-    * [getString(name, key)](#web3dbgetstring)
-    * [putHex(name, key, value)](#web3dbputhex)
-    * [getHex(name, key)](#web3dbgethex)
-  * [shh](#web3shh)
-    * [post(postObject)](#web3shhpost)
-    * [newIdentity()](#web3shhnewidentity)
-    * [hasIdentity(hexString)](#web3shhhaveidentity)
-    * [newGroup(_id, _who)](#web3shhnewgroup)
-    * [addToGroup(_id, _who)](#web3shhaddtogroup)
-    * [filter(object/string)](#web3shhfilter)
-      * [watch(callback)](#web3shhfilter)
-      * [stopWatching(callback)](#web3shhfilter)
-      * [get(callback)](#web3shhfilter)
 
-# Usage
+##### C++
 
-#### web3
-The `web3` object provides all methods.
-
-##### Example
-
-```js
-var web3 = require('web3')
+You can start it by running `eth` application with `-j` option:
+```bash
+./eth -j
 ```
+
+You can also specify JSON-RPC port (default is 8080):
+```bash
+./eth -j --json-rpc-port 8079
+```
+
+### JSON-RPC support
+
+| | cpp-ethereum | go-ethereum |
+|-------|:------------:|:-----------:|
+| JSON-RPC 1.0 | &#x2713; | |
+| JSON-RPC 2.0 | &#x2713; | &#x2713; |
+| Batch requests | &#x2713; |  &#x2713; | 
+| HTTP | &#x2713; | &#x2713; |
+
+### Output HEX values
+
+At present there are two key datatypes that are passed over JSON: unformatted byte arrays and quantities. Both are passed with a hex encoding, however with different requirements to formatting:
+
+When encoding **QUANTITIES** (integers, numbers): encode as hex, prefix with "0x", the most compact representation (slight exception: zero should be represented as "0x0"). Examples:
+- 0x41 (65 in decimal)
+- 0x400 (1024 in decimal)
+- WRONG: 0x (should always have at least one digit - zero is "0x0")
+- WRONG: 0x0400 (no leading zeroes allowed)
+- WRONG: ff (must be prefixed 0x)
+
+When encoding **UNFORMATTED DATA** (byte arrays, account addresses, hashes, bytecode arrays): encode as hex, prefix with "0x", two hex digits per byte. Examples:
+- 0x41 (size 1, "A")
+- 0x004200 (size 3, "\0B\0")
+- 0x (size 0, "")
+- WRONG: 0xf0f0f (must be even number of digits)
+- WRONG: 004200 (must be prefixed 0x)
+
+Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ethereum](https://github.com/ethereum/go-ethereum) provides JSON-RPC communication only over http.
+
+### The default block parameter
+
+The following methods have a extra default block parameter:
+
+- [eth_getBalance](#eth_getbalance)
+- [eth_getCode](#eth_getcode)
+- [eth_getTransactionCount](#eth_gettransactioncount)
+- [eth_getStorageAt](#eth_getstorageat)
+- [eth_call](#eth_call)
+
+When requests are made that act on the state of ethereum, the last default block parameter determines the height of the block.
+
+The following options are possible for the defaultBlock parameter:
+
+- `HEX String` - an integer block number
+- `String "latest"` - for the latest minded block
+- `String "earliest"` for the earliest/genesis block
+- `String "pending"` - for the pending state/transactions
+
+### JSON-RPC methods
+
+* [web3_clientVersion](#web3_clientversion)
+* [web3_sha3](#web3_sha3)
+* [net_version](#net_version)
+* [net_peerCount](#net_peercount)
+* [net_listening](#net_listening)
+* [eth_protocolVersion](#eth_protocolversion)
+* [eth_coinbase](#eth_coinbase)
+* [eth_mining](#eth_mining)
+* [eth_gasPrice](#eth_gasprice)
+* [eth_accounts](#eth_accounts)
+* [eth_blockNumber](#eth_blocknumber)
+* [eth_getBalance](#eth_getbalance)
+* [eth_getStorageAt](#eth_getstorageat)
+* [eth_getTransactionCount](#eth_gettransactioncount)
+* [eth_getBlockTransactionCountByHash](#eth_getblocktransactioncountbyhash)
+* [eth_getBlockTransactionCountByNumber](#eth_getblocktransactioncountbynumber)
+* [eth_getUncleCountByBlockHash](#eth_getunclecountbyblockhash)
+* [eth_getUncleCountByBlockNumber](#eth_getunclecountbyblocknumber)
+* [eth_getCode](#eth_getcode)
+* [eth_sendTransaction](#eth_sendtransaction)
+* [eth_call](#eth_call)
+* [eth_getBlockByHash](#eth_getblockbyhash)
+* [eth_getBlockByNumber](#eth_getblockbynumber)
+* [eth_getTransactionByHash](#eth_gettransactionbyhash)
+* [eth_getTransactionByBlockHashAndIndex](#eth_gettransactionbyblockhashandindex)
+* [eth_getTransactionByBlockNumberAndIndex](#eth_gettransactionbyblocknumberandindex)
+* [eth_getUncleByBlockHashAndIndex](#eth_getunclebyblockhashandindex)
+* [eth_getUncleByBlockNumberAndIndex](#eth_getunclebyblocknumberandindex)
+* [eth_getCompilers](#eth_getcompilers)
+* [eth_compileLLL](#eth_compilelll)
+* [eth_compileSolidity](#eth_compilesolidity)
+* [eth_compileSerpent](#eth_compileserpent)
+* [eth_newFilter](#eth_newfilter)
+* [eth_newBlockFilter](#eth_newblockfilter)
+* [eth_uninstallFilter](#eth_uninstallfilter)
+* [eth_getFilterChanges](#eth_getfilterchanges)
+* [eth_getFilterLogs](#eth_getfilterlogs)
+* [eth_getLogs](#eth_getlogs)
+* [eth_getWork](#eth_getwork)
+* [eth_submitWork](#eth_submitwork)
+* [db_putString](#db_putstring)
+* [db_getString](#db_getstring)
+* [db_putHex](#db_puthex)
+* [db_getHex](#db_gethex) 
+* [shh_post](#shh_post)
+* [shh_version](#shh_version)
+* [shh_newIdentity](#shh_newidentity)
+* [shh_hasIdentity](#shh_hasidentity)
+* [shh_newGroup](#shh_newgroup)
+* [shh_addToGroup](#shh_addtogroup)
+* [shh_newFilter](#shh_newfilter)
+* [shh_uninstallFilter](#shh_uninstallfilter)
+* [shh_getFilterChanges](#shh_getfilterchanges)
+* [shh_getMessages](#shh_getmessages)
+
+### API
 
 ***
 
-#### web3.version.api
+#### web3_clientVersion
 
-    web3.version.api
-
-##### Returns
-
-`String` - The ethereum js api version.
-
-##### Example
-
-```js
-var version = web3.version.api;
-console.log(api); // "0.2.0"
-```
-
-***
-
-#### web3.version.client
-
-    web3.version.client
-
-##### Returns
-
-`String` - The client/node version.
-
-##### Example
-
-```js
-var version = web3.version.client;
-console.log(version); // "Mist/v0.9.3/darwin/go1.4.1"
-```
-
-***
-
-#### web3.version.network
-
-    web3.version.network
-
-
-##### Returns
-
-`String` - The network protocol version.
-
-##### Example
-
-```js
-var version = web3.version.network;
-console.log(version); // 54
-```
-
-***
-
-#### web3.version.ethereum
-
-    web3.version.ethereum
-
-
-##### Returns
-
-`String` - The ethereum protocol version.
-
-##### Example
-
-```js
-var version = web3.version.ethereum;
-console.log(version); // 60
-```
-
-***
-
-#### web3.version.whisper
-
-    web3.version.whisper
-
-
-##### Returns
-
-`String` - The whisper protocol version.
-
-##### Example
-
-```js
-var version = web3.version.whisper;
-console.log(version); // 20
-```
-
-***
-
-#### web3.setProvider
-
-    web3.setProvider(providor)
-
-Should be called to set provider.
+Returns the current client version.
 
 ##### Parameters
 none
 
 ##### Returns
 
-`undefined`
+`String` - The current client version
 
 ##### Example
-
 ```js
-web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545')); // 8080 for cpp/AZ, 8545 for go/mist
-// or
-web3.setProvider(new web3.providers.QtSyncProvider());
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'
+
+// Result
+{
+  "id":67,
+  "jsonrpc":"2.0",
+  "result": "Mist/v0.9.3/darwin/go1.4.1"
+}
 ```
 
 ***
 
-#### web3.reset
+#### web3_sha3
 
-    web3.reset()
+Returns SHA3 of the given data.
 
-Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
+##### Parameters
+
+1. `String` - the data to convert into a SHA3 hash
+
+```js
+params: [
+  '0x68656c6c6f20776f726c64'
+]
+```
+
+##### Returns
+
+`DATA` - The SHA3 result of the given string.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c6f20776f726c64"],"id":64}'
+
+// Result
+{
+  "id":64,
+  "jsonrpc": "2.0",
+  "result": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+}
+```
+
+***
+
+#### net_version
+
+Returns the current network protocol version.
 
 ##### Parameters
 none
 
 ##### Returns
 
-`undefined`
+`String` - The current network protocol version
 
 ##### Example
-
 ```js
-web3.reset();
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67}'
+
+// Result
+{
+  "id":67,
+  "jsonrpc": "2.0",
+  "result": "59"
+}
 ```
 
 ***
 
-#### web3.sha3
+#### net_listening
 
-    web3.sha3(string [, callback])
+Returns `true` if client is actively listening for network connections.
+
+##### Parameters
+none
+
+##### Returns
+
+`Boolean` - `true` when listening, otherwise `false`.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":67}'
+
+// Result
+{
+  "id":67,
+  "jsonrpc":"2.0",
+  "result":true
+}
+```
+
+***
+
+#### net_peerCount
+
+Returns number of peers currenly connected to the client.
+
+##### Parameters
+none
+
+##### Returns
+
+`QUANTITY` - integer of the number of connected peers.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":74}'
+
+// Result
+{
+  "id":74,
+  "jsonrpc": "2.0",
+  "result": "0x2" // 2
+}
+```
+
+***
+
+#### eth_protocolVersion
+
+Returns the current ethereum protocol version.
+
+##### Parameters
+none
+
+##### Returns
+
+`String` - The current ethereum protocol version
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_protocolVersion","params":[],"id":67}'
+
+// Result
+{
+  "id":67,
+  "jsonrpc": "2.0",
+  "result": "54"
+}
+```
+
+***
+
+#### eth_coinbase
+
+Returns the client coinbase address.
+
+
+##### Parameters
+none
+
+##### Returns
+
+`DATA`, 20 bytes - the current coinbase address.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_coinbase","params":[],"id":64}'
+
+// Result
+{
+  "id":64,
+  "jsonrpc": "2.0",
+  "result": "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
+}
+```
+
+***
+
+#### eth_mining
+
+Returns `true` if client is actively mining new blocks.
+
+##### Parameters
+none
+
+##### Returns
+
+`Boolean` - returns `true` of the client is mining, otherwise `false`.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}'
+
+// Result
+{
+  "id":71,
+  "jsonrpc": "2.0",
+  "result": true
+}
+
+```
+
+***
+
+#### eth_gasPrice
+
+Returns the current price per gas in wei.
+
+##### Parameters
+none
+
+##### Returns
+
+`QUANTITY` - integer of the current gas price in wei.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}'
+
+// Result
+{
+  "id":73,
+  "jsonrpc": "2.0",
+  "result": "0x09184e72a000" // 10000000000000
+}
+```
+
+***
+
+#### eth_accounts
+
+Returns a list of addresses owned by client.
+
+
+##### Parameters
+none
+
+##### Returns
+
+`Array of DATA`, 20 Bytes - addresses owned by the client.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
+}
+```
+
+***
+
+#### eth_blockNumber
+
+Returns the number of most recent block.
+
+##### Parameters
+none
+
+##### Returns
+
+`QUANTITY` - integer of the current block number the client is on.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}'
+
+// Result
+{
+  "id":83,
+  "jsonrpc": "2.0",
+  "result": "0x4b7" // 1207
+}
+```
+
+***
+
+#### eth_getBalance
+
+Returns the balance of the account of given address.
 
 ##### Parameters
 
-1. `String` - The string to hash using the SHA3 algorithm
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `DATA`, 20 Bytes - address to check for balance.
+2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+   'latest'
+]
+```
 
 ##### Returns
 
-`String` - The SHA3 of the given data.
+`QUANTITY` - integer of the current balance in wei.
+
 
 ##### Example
-
 ```js
-var str = web3.sha3("Some ASCII string to be hashed");
-console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],"id":1}'
 
-var hash = web3.sha3(str);
-console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x0234c8a3397aab58" // 158972490234375000
+}
 ```
 
 ***
 
-#### web3.toHex
+#### eth_getStorageAt
 
-    web3.toHex(mixed);
+Returns the value from a storage position at a given address.
 
-Converts any value into HEX.
 
 ##### Parameters
 
-1. `String|Number|Object|Array|BigNumber` - The value to parse to HEX. If its an object or array it will be `JSON.stringify` first. If its a BigNumber it will make it the HEX value of a number.
+1. `DATA`, 20 Bytes - address of the storage.
+2. `QUANTITY` - integer of the position in the storage.
+3. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+
+
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+   '0x0', // storage position at 0
+   '0x2' // state at block number 2
+]
+```
 
 ##### Returns
 
-`String` - The hex string of `mixed`.
+`DATA` - the value at this storage position.
+
 
 ##### Example
-
 ```js
-var str = web3.toHex({test: 'test'});
-console.log(str); // '0x7b2274657374223a2274657374227d'
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "0x2"],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x03"
+}
 ```
 
 ***
 
-#### web3.toAscii
+#### eth_getTransactionCount
 
-    web3.toAscii(hexString);
+Returns the number of transactions *send* from a address.
 
-Converts a HEX string into a ASCII string.
 
 ##### Parameters
 
-1. `String` - A HEX string to be converted to ascii.
+1. `DATA`, 20 Bytes - address.
+2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+
+```js
+params: [
+   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+   'latest' // state at the latest block
+]
+```
 
 ##### Returns
 
-`String` - An ASCII string made from the given `hexString`.
+`QUANTITY` - integer of the number of transactions send from this address.
+
 
 ##### Example
-
 ```js
-var str = web3.toAscii("0x657468657265756d000000000000000000000000000000000000000000000000");
-console.log(str); // "ethereum"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1","latest"],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x1" // 1
+}
 ```
 
 ***
 
-#### web3.fromAscii
+#### eth_getBlockTransactionCountByHash
 
-    web3.fromAscii(string [, padding]);
+Returns the number of transactions in a block from a block matching the given block hash.
 
-Converts any ASCII string to a HEX string.
 
 ##### Parameters
 
-1. `String` - An ASCII string to be converted to HEX.
-2. `Number` - The number of bytes the returned HEX string should have. 
+1. `DATA`, 32 Bytes - hash of a block
+
+```js
+params: [
+   '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238'
+]
+```
 
 ##### Returns
 
-`String` - The converted HEX string.
+`QUANTITY` - integer of the number of transactions in this block.
+
 
 ##### Example
-
 ```js
-var str = web3.fromAscii('ethereum');
-console.log(str); // "0x657468657265756d"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"],"id":1}'
 
-var str2 = web3.fromAscii('ethereum', 32);
-console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000000000000"
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0xb" // 11
+}
 ```
 
 ***
 
-#### web3.toDecimal
+#### eth_getBlockTransactionCountByNumber
 
-    web3.toDecimal(hexString);
+Returns the number of transactions in a block from a block matching the given block number.
 
-Converts a HEX string to its number representation.
 
 ##### Parameters
 
-1. `String` - An HEX string to be converted to a number.
+1. `QUANTITY` - integer of a block number, or the string "latest", "earliest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
+```js
+params: [
+   '0xe8', // 232
+]
+```
 
 ##### Returns
 
-`Number` - The number representing the data `hexString`.
+`QUANTITY` - integer of the number of transactions in this block.
 
 ##### Example
-
 ```js
-var number = web3.toDecimal('0x15');
-console.log(number); // 21
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xe8"],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0xa" // 10
+}
 ```
 
 ***
 
-#### web3.fromDecimal
+#### eth_getUncleCountByBlockHash
 
-    web3.fromDecimal(number);
+Returns the number of uncles in a block from a block matching the given block hash.
 
-Converts a number or number string to its HEX representation.
 
 ##### Parameters
 
-1. `Number|String` - A number to be converted to a HEX string.
+1. `DATA`, 32 Bytes - hash of a block
+
+```js
+params: [
+   '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238'
+]
+```
 
 ##### Returns
 
-`String` - The HEX string representing of the given `number`.
+`QUANTITY` - integer of the number of uncles in this block.
+
 
 ##### Example
-
 ```js
-var value = web3.fromDecimal('21');
-console.log(value); // "0x15"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"],"id"Block:1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x1" // 1
+}
 ```
 
 ***
 
-#### web3.fromWei
+#### eth_getUncleCountByBlockNumber
 
-    web3.fromWei(number, unit)
+Returns the number of uncles in a block from a block matching the given block number.
 
-Converts a number of wei into the following ethereum units:
-
-- `kwei`/`ada`
-- `mwei`/`babbage`
-- `gwei`/`shannon`
-- `szabo`
-- `finney`
-- `ether`
-- `kether`/`grand`/`einstein`
-- `mether`
-- `gether`
-- `tether`
 
 ##### Parameters
 
-1. `Number|String|BigNumber` - A number or BigNumber instance.
-2. `String` - One of the above ether units.
+1. `QUANTITY` - integer of a block number, or the string "latest", "earliest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
+```js
+params: [
+   '0xe8', // 232
+]
+```
 
 ##### Returns
 
-`String|BigNumber` - Either a number string, or a BigNumber instance, depending on the given `number` parameter.
+`QUANTITY` - integer of the number of uncles in this block.
+
 
 ##### Example
-
 ```js
-var value = web3.fromWei('21000000000000', 'finney');
-console.log(value); // "0.021"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockNumber","params":["0xe8"],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x1" // 1
+}
 ```
 
 ***
 
-#### web3.toWei
+#### eth_getCode
 
-    web3.toWei(number, unit)
+Returns code at a given address.
 
-Converts an ethereum unit into wei. Possible units are:
-
-- `kwei`/`ada`
-- `mwei`/`babbage`
-- `gwei`/`shannon`
-- `szabo`
-- `finney`
-- `ether`
-- `kether`/`grand`/`einstein`
-- `mether`
-- `gether`
-- `tether`
 
 ##### Parameters
 
-1. `Number|String|BigNumber` - A number or BigNumber instance.
-2. `String` - One of the above ether units.
+1. `DATA`, 20 Bytes - address
+2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
+
+```js
+params: [
+   '0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b',
+   '0x2'  // 2
+]
+```
 
 ##### Returns
 
-`String|BigNumber` - Either a number string, or a BigNumber instance, depending on the given `number` parameter.
+`DATA` - the code from the given address.
+
 
 ##### Example
-
 ```js
-var value = web3.toWei('1', 'ether');
-console.log(value); // "1000000000000000000"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b", "0x2"],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
+}
 ```
 
 ***
 
-#### web3.toBigNumber
+#### eth_sendTransaction
 
-    web3.toBigNumber(numberOrHexString);
-
-Converts a given number into a BigNumber instance.
-
-See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
+Creates new message call transaction or a contract creation, if the data field contains code.
 
 ##### Parameters
 
-1. `Number|String` - A number, number string or HEX string of a number.
+1. `Object` - The transaction object
+  - `from`: `DATA`, 20 Bytes - The address the transaction is send from.
+  - `to`: `DATA`, 20 Bytes - (optional when creating new contract) The address the transaction is directed to.
+  - `gas`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gas provided for the transaction execution. It will return unused gas.
+  - `gasPrice`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each payed gas
+  - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
+  - `data`: `DATA`  - (optional) The compiled code of a contract
 
+```js
+params: [{
+  "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
+  "to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
+  "gas": "0x76c0", // 30400,
+  "gasPrice": "0x9184e72a000", // 10000000000000
+  "value": "0x9184e72a", // 2441406250
+  "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
+}]
+```
 
 ##### Returns
 
-`BigNumber` - A BigNumber instance representing the given value.
-
+`DATA`, 20 Bytes - the address of the newly created contract, or the 32 Bytes transaction hash.
 
 ##### Example
-
 ```js
-var value = web3.toBigNumber('200000000000000000000001');
-console.log(value); // instanceOf BigNumber
-console.log(value.toNumber()); // 2.0000000000000002e+23
-console.log(value.toString(10)); // '200000000000000000000001'
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[{see above}],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+}
 ```
 
 ***
 
-#### web3.net.listening
+#### eth_call
 
-    web3.net.listening
+Executes a new message call immediately without creating a transaction on the block chain.
 
-This property is read only and says whether the node is actively listening for network connections or not.
-
-##### Returns
-
-`Boolean` - `true` if the client is actively listening for network connections, otherwise `false`.
-
-##### Example
-
-```js
-var listening = web3.net.listening;
-console.log(listening); // true of false
-```
-
-***
-
-#### web3.net.peerCount
-
-    web3.net.peerCount
-
-This property is read only and returns the number of connected peers.
-
-##### Returns
-
-`Number` - The number of peers currently connected to the client.
-
-##### Example
-
-```js
-var peerCount = web3.net.peerCount;
-console.log(peerCount); // 4
-```
-
-***
-
-#### web3.eth
-
-Contains the ethereum blockchain related methods.
-
-##### Example
-
-```js
-var eth = web3.eth;
-```
-
-***
-
-#### web3.eth.coinbase
-
-    web3.eth.coinbase
-
-This property is read only and returns the coinbase address were the mining rewards go to.
-
-##### Returns
-
-`String` - The coinbase address of the client.
-
-##### Example
-
-```js
-var coinbase = web3.eth.coinbase;
-console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
-```
-
-***
-
-#### web3.eth.mining
-
-    web3.eth.mining
-
-
-This property is read only and says whether the node is mining or not.
-
-
-##### Returns
-
-`Boolean` - `true` if the client is mining, otherwise `false`.
-
-##### Example
-
-```js
-var mining = web3.eth.mining;
-console.log(mining); // true or false
-```
-
-***
-
-#### web3.eth.gasPrice
-
-    web3.eth.gasPrice
-
-
-This property is read only and returns the current gas price.
-The gas price is determined by the x latest blocks median gas price.
-
-##### Returns
-
-`BigNumber` - A BigNumber instance of the current gas price in wei.
-
-See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
-
-##### Example
-
-```js
-var gasPrice = web3.eth.gasPrice;
-console.log(gasPrice.toString(10)); // "10000000000000"
-```
-
-***
-
-#### web3.eth.accounts
-
-    web3.eth.accounts
-
-This property is read only and returns a list of accounts the node controls.
-
-##### Returns
-
-`Array` - An array of addresses controlled by client.
-
-##### Example
-
-```js
-var accounts = web3.eth.accounts;
-console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"] 
-```
-
-***
-
-#### web3.eth.register
-
-    web3.eth.register(addressHexString [, callback])
-
-(Not Implemented yet)
-Registers the given address to be included in `web3.eth.accounts`. This allows non-private-key owned accounts to be associated as an owned account (e.g., contract wallets).
 
 ##### Parameters
 
-1. `String` - The address to register
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `Object` - The transaction call object
+  - `from`: `DATA`, 20 Bytes - The address the transaction is send from.
+  - `to`: `DATA`, 20 Bytes  - The address the transaction is directed to.
+  - `gas`: `QUANTITY`  - (optional) Integer of the gas provided for the transaction execution. It will return unused gas.
+  - `gasPrice`: `QUANTITY`  - (optional) Integer of the gasPrice used for each payed gas
+  - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
+  - `data`: `DATA`  - (optional) The compiled code of a contract
+2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
+See: [eth_sendTransaction Parameters](#eth_sendtransaction)
 
 ##### Returns
 
-?
-
+`DATA` - the return value of executed contract.
 
 ##### Example
-
 ```js
-web3.eth.register("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{see above}],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x0"
+}
 ```
 
 ***
 
-#### web3.eth.unRegister
+#### eth_getBlockByHash
 
-     web3.eth.unRegister(addressHexString [, callback])
+Returns information about a block by hash.
 
-
-(Not Implemented yet)
-Unregisters a given address.
 
 ##### Parameters
 
-1. `String` - The address to unregister.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
-
-##### Returns
-
-?
-
-
-##### Example
+1. `DATA`, 32 Bytes - Hash of a block.
+2. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
-web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
+params: [
+   '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331',
+   true
+]
 ```
-
-***
-
-#### web3.eth.defaultBlock
-
-    web3.eth.defaultBlock
-
-This default block is used for the following methods (optionally you can overwrite the defaultBlock by passing it as the last parameter):
-
-- [web3.eth.getBalance()](#web3ethgetbalance)
-- [web3.eth.getCode()](#web3ethgetcode)
-- [web3.eth.getTransactionCount()](#web3ethgettransactioncount)
-- [web3.eth.getStorageAt()](#web3ethgetstorageat)
-- [web3.eth.call()](#web3ethcall)
-
-##### Values
-
-Default block parameters can be one of the following:
-
-- `Number` - a block number
-- `String - `'latest'`, which would be the latest minded block
-- `String` - `'pending'`, which would the currently minded block including pending transactions
-
-*Default is* `latest`
 
 ##### Returns
 
-`Number|String` - The default block number to use when querying a state.
+`Object` - A block object, or `null` when no transaction was found:
 
-##### Example
-
-```js
-var defaultBlock = web3.eth.defaultBlock;
-console.log(defaultBlock); // 'latest'
-
-// set the default block
-web3.eth.defaultBlock = 231;
-```
-
-***
-
-#### web3.eth.blockNumber
-
-    web3.eth.blockNumber
-
-This property is read only and returns the current block number.
-
-##### Returns
-
-`Number` - The number of the most recent block.
-
-##### Example
-
-```js
-var number = web3.eth.blockNumber;
-console.log(number); // 2744
-```
-
-***
-
-#### web3.eth.getBalance
-
-    web3.eth.getBalance(addressHexString [, defaultBlock] [, callback])
-
-Get the balance of an address at a given block.
-
-##### Parameters
-
-1. `String` - The address to get the balance of.
-2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
-3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
-##### Returns
-
-`String` - A BigNumber instance of the current balance for the given address in wei.
-
-See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
-
-##### Example
-
-```js
-var balance = web3.eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
-console.log(balance); // instanceof BigNumber
-console.log(balance.toString(10)); // '1000000000000'
-console.log(balance.toNumber()); // 1000000000000
-```
-
-***
-
-#### web3.eth.getStorageAt
-
-    web3.eth.getStorageAt(addressHexString, position [, defaultBlock] [, callback])
-
-Get the storage at a specific position of an address.
-
-##### Parameters
-
-1. `String` - The address to get the storage from.
-2. `Number` - The index position of the storage.
-3. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
-4. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
-
-##### Returns
-
-`String` - The value in storage at the given position.
-
-##### Example
-
-```js
-var state = web3.eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 0);
-console.log(state); // "0x03"
-```
-
-***
-
-#### web3.eth.getCode
-
-    web3.eth.getCode(addressHexString [, defaultBlock] [, callback])
-
-Get the code at a specific address.
-
-##### Parameters
-
-1. `String` - The address to get the code from.
-2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
-3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
-##### Returns
-
-`String` - The data at given address `addressHexString`.
-
-##### Example
-
-```js
-var code = web3.eth.getCode("0xd5677cf67b5aa051bb40496e68ad359eb97cfbf8");
-console.log(code); // "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
-```
-
-***
-
-#### web3.eth.getBlock
-
-     web3.eth.getBlock(blockHashOrBlockNumber [, returnTransactionObjects] [, callback])
-
-Returns a block matching the block number or block hash.
-
-##### Parameters
-
-1. `String|Number` - The block number or hash.
-2. `Boolean` - (optional, default `false`) If `true`, the returned block will contain all transactions as objects, if `false` it will only contains the transaction hashes.
-3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
-##### Returns
-
-`Object` - The block object:
-
-  - `number`: `Number` - the block number.
-  - `hash`: `String`, 32 Bytes - hash of the block.
-  - `parentHash`: `String`, 32 Bytes - hash of the parent block.
-  - `nonce`: `String`, 8 Bytes - hash of the generated proof-of-work.
-  - `sha3Uncles`: `String`, 32 Bytes - SHA3 of the uncles data in the block.
-  - `logsBloom`: `String`, 256 Bytes - the bloom filter for the logs of the block.
-  - `transactionsRoot`: `String`, 32 Bytes - the root of the transaction trie of the block
-  - `stateRoot`: `String`, 32 Bytes - the root of the final state trie of the block.
-  - `miner`: `String`, 20 Bytes - the address of the beneficiary to whom the mining rewards were given.
-  - `difficulty`: `BigNumber` - integer of the difficulty for this block.
-  - `totalDifficulty`: `BigNumber` - integer of the total difficulty of the chain until this block.
-  - `extraData`: `String` - the "extra data" field of this block.
-  - `size`: `Number` - integer the size of this block in bytes.
-  - `gasLimit`: `Number` - the maximum gas allowed in this block.
-  - `gasUsed`: `Number` - the total used gas by all transactions in this block.
-  - `timestamp`: `Number` - the unix timestamp for when the block was collated.
+  - `number`: `QUANTITY` - the block number.
+  - `hash`: `DATA`, 32 Bytes - hash of the block.
+  - `parentHash`: `DATA`, 32 Bytes - hash of the parent block.
+  - `nonce`: `DATA`, 8 Bytes - hash of the generated proof-of-work.
+  - `sha3Uncles`: `DATA`, 32 Bytes - SHA3 of the uncles data in the block.
+  - `logsBloom`: `DATA`, 256 Bytes - the bloom filter for the logs of the block.
+  - `transactionsRoot`: `DATA`, 32 Bytes - the root of the transaction trie of the block
+  - `stateRoot`: `DATA`, 32 Bytes - the root of the final state trie of the block.
+  - `miner`: `DATA`, 20 Bytes - the address of the beneficiary to whom the mining rewards were given.
+  - `difficulty`: `QUANTITY` - integer of the difficulty for this block.
+  - `totalDifficulty`: `QUANTITY` - integer of the total difficulty of the chain until this block.
+  - `extraData`: `DATA` - the "extra data" field of this block.
+  - `size`: `QUANTITY` - integer the size of this block in bytes.
+  - `gasLimit`: `QUANTITY` - the maximum gas allowed in this block.
+  - `gasUsed`: `QUANTITY` - the total used gas by all transactions in this block.
+  - `timestamp`: `QUANTITY` - the unix timestamp for when the block was collated.
   - `transactions`: `Array` - Array of transaction objects, or 32 Bytes transaction hashes depending on the last given parameter.
   - `uncles`: `Array` - Array of uncle hashes.
 
-##### Example
 
+##### Example
 ```js
-var info = web3.eth.block(3150);
-console.log(info);
-/*
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", true],"id":1}'
+
+// Result
 {
-  "number": 3,
-  "hash": "0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
-  "parentHash": "0x2302e1c0b972d00932deb5dab9eb2982f570597d9d42504c05d9c2147eaf9c88",
-  "nonce": "0xfb6e1a62d119228b",
-  "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-  "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  "transactionsRoot": "0x3a1b03875115b79539e5bd33fb00d8f7b7cd61929d5a3c574f507b8acf415bee",
-  "stateRoot": "0xf1133199d44695dfa8fd1bcfe424d82854b5cebef75bddd7e40ea94cda515bcb",
-  "miner": "0x8888f1f195afa192cfee860698584c030f4c9db1",
-  "difficulty": BigNumber,
-  "totalDifficulty": BigNumber,
-  "size": 616,
-  "extraData": "0x",
-  "gasLimit": 3141592,
-  "gasUsed": 21662,
-  "timestamp": 1429287689,
-  "transactions": [
-    "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b"
-  ],
-  "uncles": []
+"id":1,
+"jsonrpc":"2.0",
+"result": {
+    "number": "0x1b4", // 436
+    "hash": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
+    "parentHash": "0x9646252be9520f6e71339a8df9c55e4d7619deeb018d2a3f2d21fc165dde5eb5",
+    "nonce": "0xe04d296d2460cfb8472af2c5fd05b5a214109c25688d3704aed5484f9a7792f2",
+    "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+    "logsBloom": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331",
+    "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+    "stateRoot": "0xd5855eb08b3387c0af375e9cdb6acfc05eb8f519e419b874b6ff2ffda7ed1dff",
+    "miner": "0x4e65fda2159562a496f9f3522f89122a3088497a",
+    "difficulty": "0x027f07", // 163591
+    "totalDifficulty":  "0x027f07", // 163591
+    "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "size":  "0x027f07", // 163591
+    "gasLimit": "0x9f759", // 653145
+    "minGasPrice": "0x9f759", // 653145
+    "gasUsed": "0x9f759", // 653145
+    "timestamp": "0x54e34e8e" // 1424182926
+    "transactions": [{...},{ ... }] 
+    "uncles": ["0x1606e5...", "0xd5145a9..."]
+  }
 }
-*/
 ```
 
 ***
 
-#### web3.eth.getBlockTransactionCount
+#### eth_getBlockByNumber
 
-    web3.eth.getBlockTransactionCount(hashStringOrBlockNumber [, callback])
-
-Returns the number of transaction in a given block.
+Returns information about a block by block number.
 
 ##### Parameters
 
-1. `String|Number` - The block number or hash.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
-##### Returns
-
-`Number` - The number of transactions in the given block.
-
-##### Example
+1. `QUANTITY` - integer of a block number.
+2. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
-var number = web3.eth.getBlockTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
-console.log(number); // 1
+params: [
+   '0x1b4', // 436
+   true
+]
+```
+
+##### Returns
+
+See [eth_getBlockByHash](#eth_getblockbyhash)
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}'
+```
+
+Result see [eth_getBlockByHash](#eth_getblockbyhash)
+
+***
+
+#### eth_getTransactionByHash
+
+Returns the information about a transaction requested by transaction hash.
+
+
+##### Parameters
+
+1. `DATA`, 32 Bytes - hash of a transaction
+
+```js
+params: [
+   "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"
+]
+```
+
+##### Returns
+
+`Object` - A transaction object, or `null` when no transaction was found:
+
+  - `hash`: `DATA`, 32 Bytes - hash of the transaction.
+  - `nonce`: `QUANTITY` - the number of transactions made by the sender prior to this one.
+  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this transaction was in. `null` when the transaction is pending.
+  - `blockNumber`: `QUANTITY` - block number where this transaction was in. `null` when the transaction is pending.
+  - `transactionIndex`: `QUANTITY` - integer of the transactions index position in the block.
+  - `from`: `DATA`, 20 Bytes - address of the sender.
+  - `to`: `DATA`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
+  - `value`: `QUANTITY` - value transferred in Wei.
+  - `gasPrice`: `QUANTITY` - price paid per gas in Wei.
+  - `gas`: `QUANTITY` - gas used.
+  - `input`: `DATA` - the data send along with the transaction.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"],"id":1}'
+
+// Result
+{
+"id":1,
+"jsonrpc":"2.0",
+"result": {
+    "hash":"0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b",
+    "nonce":"0x",
+    "blockHash": "0xbeab0aa2411b7ab17f30a99d3cb9c6ef2fc5426d6ad6fd9e2a26a6aed1d1055b",
+    "blockNumber": "0x15df", // 5599
+    "transactionIndex":  "0x1", // 1
+    "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+    "to":"0x85h43d8a49eeb85d32cf465507dd71d507100c1",
+    "value":"0x7f110" // 520464
+    "gas": "0x7f110" // 520464
+    "gasPrice":"0x09184e72a000",
+    "input":"0x603880600c6000396000f300603880600c6000396000f3603880600c6000396000f360",
+  }
+}
 ```
 
 ***
 
-#### web3.eth.getUncle
+#### eth_getTransactionByBlockHashAndIndex
 
-    web3.eth.getUncle(blockHashStringOrNumber, uncleNumber [, returnTransactionObjects] [, callback])
+Returns information about a transaction by block hash and transaction index position.
 
-Returns a blocks uncle by a given uncle index position.
 
 ##### Parameters
 
-1. `String|Number` - The block number or hash.
-2. `Number` - The index position of the uncle.
-3. `Boolean` - (optional, default `false`) If `true`, the returned block will contain all transactions as objects, if `false` it will only contains the transaction hashes.
-4. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `DATA`, 32 Bytes - hash of a block.
+2. `QUANTITY` - integer of the transaction index position.
 
+```js
+params: [
+   '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331',
+   '0x0' // 0
+]
+```
 
 ##### Returns
 
-`Object` - the returned uncle. For a return value see [web3.eth.getBlock()](#web3ethgetblock).
+See [eth_getBlockByHash](#eth_gettransactionbyhash)
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":[0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b, "0x0"],"id":1}'
+```
+
+Result see [eth_getTransactionByHash](#eth_gettransactionbyhash)
+
+***
+
+#### eth_getTransactionByBlockNumberAndIndex
+
+Returns information about a transaction by block number and transaction index position.
+
+
+##### Parameters
+
+1. `QUANTITY` - a block number.
+2. `QUANTITY` - the transaction index position.
+
+```js
+params: [
+   '0x29c', // 668
+   '0x0' // 0
+]
+```
+
+##### Returns
+
+See [eth_getBlockByHash](#eth_gettransactionbyhash)
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
+```
+
+Result see [eth_getTransactionByHash](#eth_gettransactionbyhash)
+
+***
+
+#### eth_getUncleByBlockHashAndIndex
+
+Returns information about a uncle of a block by hash and uncle index position.
+
+
+##### Parameters
+
+
+1. `DATA`, 32 Bytes - hash a block.
+2. `QUANTITY` - the uncle's index position.
+
+```js
+params: [
+   '0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b',
+   '0x0' // 0
+]
+```
+
+##### Returns
+
+See [eth_getBlockByHash](#eth_getblockbyhash)
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}'
+```
+
+Result see [eth_getBlockByHash](#eth_getblockbyhash)
+
+**Note**: An uncle doesn't contain individual transactions.
+
+***
+
+#### eth_getUncleByBlockNumberAndIndex
+
+Returns information about a uncle of a block by number and uncle index position.
+
+
+##### Parameters
+
+1. `QUANTITY` - a block number.
+2. `QUANTITY` - the uncle's index position.
+
+```js
+params: [
+   '0x29c', // 668
+   '0x0' // 0
+]
+```
+
+##### Returns
+
+See [eth_getBlockByHash](#eth_getblockbyhash)
 
 **Note**: An uncle doesn't contain individual transactions.
 
 ##### Example
-
 ```js
-var uncle = web3.eth.getUncle(500, 0);
-console.log(uncle); // see web3.eth.getBlock
-
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
 ```
+
+Result see [eth_getBlockByHash](#eth_getblockbyhash)
 
 ***
 
-##### web3.eth.getTransaction
+#### eth_getCompilers
 
-    web3.eth.getTransaction(transactionHash [, callback])
-
-Returns a transaction matching the given transaction hash.
+Returns a list of available compilers in the client.
 
 ##### Parameters
-
-1. `String` - The transaction hash.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
+none
 
 ##### Returns
 
-`Object` - A transaction object its hash `transactionHash`:
-
-  - `hash`: `String`, 32 Bytes - hash of the transaction.
-  - `nonce`: `Number` - the number of transactions made by the sender prior to this one.
-  - `blockHash`: `String`, 32 Bytes - hash of the block where this transaction was in. `null` when the transaction is pending.
-  - `blockNumber`: `Number` - block number where this transaction was in. `null` when the transaction is pending.
-  - `transactionIndex`: `Number` - integer of the transactions index position in the block.
-  - `from`: `String`, 20 Bytes - address of the sender.
-  - `to`: `String`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
-  - `value`: `BigNumber` - value transferred in Wei.
-  - `gasPrice`: `BigNumber` - price paid per gas in Wei.
-  - `gas`: `Number` - gas used.
-  - `input`: `String` - the data send along with the transaction.
-
+`Array` - Array of available compilers.
 
 ##### Example
-
 ```js
-var blockNumber = 668;
-var indexOfTransaction = 0
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCompilers","params":[],"id":1}'
 
-var transaction = web3.eth.getTransaction(blockNumber, indexOfTransaction);
-console.log(transaction);
-/*
+// Result
 {
-  "hash": "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
-  "nonce": 2,
-  "blockHash": "0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
-  "blockNumber": 3,
-  "transactionIndex": 0,
-  "from": "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-  "to": "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f",
-  "value": BigNumber,
-  "gas": 314159,
-  "gasPrice": BigNumber,
-  "input": "0x57cb2fc4"
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": ["solidity", "lll", "serpent"]
 }
-*/
-
 ```
 
 ***
 
-#### web3.eth.getTransactionFromBlock
+#### eth_compileSolidity
 
-    getTransactionFromBlock(hashStringOrNumber, indexNumber [, callback])
-
-Returns a transaction based on a block hash or number and the transactions index position.
+Returns compiled solidity code.
 
 ##### Parameters
 
-1. `String` - A block hash or number.
-2. `Number` - The transactions index position.
-3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `String` - The source code.
+
+```js
+params: [
+   "contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }",
+]
+```
 
 ##### Returns
 
-`Object` - A transaction object, see [web3.eth.getTransaction](#web3ethgettransaction):
-
+`DATA` - The compiled source code.
 
 ##### Example
-
 ```js
-var transaction = web3.eth.getTransactionFromBlock('0x4534534534', 2);
-console.log(transaction); // see web3.eth.getTransaction
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["contract test { function multiply(uint a) returns(uint d) {   return a * 7;   } }"],"id":1}'
 
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056" // the compiled source code
+}
 ```
 
 ***
 
-#### web3.eth.getTransactionCount
+#### eth_compileLLL
 
-    web3.eth.getTransactionCount(addressHexString [, defaultBlock] [, callback])
-
-Get the numbers of transactions send from this address.
+Returns compiled LLL code.
 
 ##### Parameters
 
-1. `String` - The address to get the numbers of transactions from.
-2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
-3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `String` - The source code.
+
+```js
+params: [
+   "(returnlll (suicide (caller)))",
+]
+```
 
 ##### Returns
 
-`Number` - The number of transactions send from the given address.
+`DATA` - The compiled source code.
 
 ##### Example
-
 ```js
-var number = web3.eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
-console.log(number); // 1
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["(returnlll (suicide (caller)))"],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056" // the compiled source code
+}
 ```
 
 ***
 
-#### web3.eth.sendTransaction
+#### eth_compileSerpent
 
-    web3.eth.sendTransaction(transactionObject [, callback])
-
-Sends a transaction to the network.
+Returns compiled serpent code.
 
 ##### Parameters
 
-1. `Object` - The transaction object to send:
-  * `from`: `String` - The address for the sending account.
-  * `to`: `String` - (optional) The destination address of the message, left undefined for a contract-creation transaction.
-  * `value`: `Number|String|BigNumber` - (optional) The value transferred for the transaction in Wei, also the endowment if it's a contract-creation transaction.
-  * `gas`: `Number|String|BigNumber` - (optional, default: To-Be-Determined) The amount of gas to use for the transaction (unused gas is refunded).
-  * `gasPrice`: `Number|String|BigNumber` - (optional, default: To-Be-Determined) The price of gas for this transaction in wei, defaults to the mean network gas price.
-  * `data`: `String` - (optional) Either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code.
-2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
-3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `String` - The source code.
+
+```js
+params: [
+   "/* some serpent */",
+]
+```
 
 ##### Returns
 
-`String` - The address of the newly created contract, or the 32 Bytes transaction hash as HEX string.
+`DATA` - The compiled source code.
 
 ##### Example
-
 ```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["/* some serpent */"],"id":1}'
 
-// compiled solidity source code using https://chriseth.github.io/cpp-ethereum/
-var code = "603d80600c6000396000f3007c01000000000000000000000000000000000000000000000000000000006000350463c6888fa18114602d57005b600760043502
-8060005260206000f3";
-
-web3.eth.sendTransaction({data: code}, function(err, address) {
-  if (!err)
-    console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
-});
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056" // the compiled source code
+}
 ```
 
 ***
 
-#### web3.eth.call
+#### eth_newFilter
 
-    web3.eth.call(callObject [, defaultBlock] [, callback])
-
-Executes a message call transaction, which is directly executed in the VM of the node, but never mined into the blockchain.
+Creates a filter object, based on filter options, to notify when the state changes (logs).
+To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
 
 ##### Parameters
 
-1. `Object` - A transaction object see [web3.eth.sendTransaction](#web3ethsendtransaction), with the difference that for calls the `from` property is optional as well.
-2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
-3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `Object` - The filter options:
+  - `fromBlock`: `QUANTITY|TAG` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
+  - `toBlock`: `QUANTITY|TAG` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
+  - `address`: `DATA|Array`, 20 Bytes - (optional) Contract address or a list of addresses from which logs should originate.
+  - `topics`: `Array of DATA`,  - (optional) Array of 32 Bytes `DATA` topics.
+
+```js
+params: [{
+  "fromBlock": "0x1",
+  "toBlock": "0x2",
+  "address": "0x8888f1f195afa192cfee860698584c030f4c9db1",
+  "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]
+}]
+```
 
 ##### Returns
 
-`String` - The returned data of the call, e.g. a codes functions return value.
+`QUANTITY` - A filter id.
 
 ##### Example
-
 ```js
-var result = web3.eth.call({
-    to: "0xc4abd0339eb8d57087278718986382264244252f", 
-    data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
-});
-console.log(result); // "0x0000000000000000000000000000000000000000000000000000000000000015"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topics":["0x12341234"]}],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x1" // 1
+}
 ```
 
 ***
 
-#### web3.eth.filter
+#### eth_newBlockFilter
 
-```js
-// can be 'latest' or 'pending'
-var filter = web3.eth.filter(filterString);
-// OR object are log filter options
-var filter = web3.eth.filter(options);
+Creates a filter object, based on an option string, to notify when state changes (logs).
+To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
 
-// watch for changes
-filter.watch(function(error, result){
-  if (!error)
-    console.log(result);
-});
-```
 
 ##### Parameters
 
-1. `String|Object` - The string `"latest"` or `"pending"` to watch for changes in the latest block or pending transactions respectively. Or a filter options object as follows:
-  * `fromBlock`: `Number|String` - The number of the earliest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
-  * `toBlock`: `Number|String` - The number of the latest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
-  * `address`: `String` - An address or a list of addresses to only get logs from particular account(s).
-  * `topics`: `Array of Strings` - An array of values which must each appear in the log entries. The order is important, if you want to leave topics use `null`, e.g. `[null, '0x00...']`.
+1. `TAG` - The string `"latest"` for notifications about new block and `"pending"` for notifications about pending transactions.
+
+```js
+params: ["pending"]
+```
 
 ##### Returns
 
-`Object` - A filter object with the following methods:
-
-  * `filter.get()`: Returns all of the log entries that fit the filter.
-  * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback. See [this note](#using-callbacks) for details.
-  * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
-
-##### Callback return
-
-`Object` - A log object as follows:
-
-- `logIndex`: `Number` - integer of the log index position in the block.
-- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
-- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
-- `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
-- `blockNumber`: `Number` - the block number where this log was in. `null` when the log is pending.
-- `address`: `String`, 32 Bytes - address from which this log originated.
-- `data`: `String` - contains one or more 32 Bytes non-indexed arguments of the log.
-- `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
-
-**Note** For event filter return values see [Contract Events](#contract-events)
+`QUANTITY` - A filter id.
 
 ##### Example
-
 ```js
-var filter = web3.eth.filter('pending');
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["pending"],"id":73}'
 
-filter.watch(function (error, log) {
-  console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000", ...}
-});
-
-// get all past logs again.
-var myResults = filter.get();
-
-...
-
-// stops and uninstalls the filter
-filter.stopWatching();
-
+// Result
+{
+  "id":1,
+  "jsonrpc":  "2.0",
+  "result": "0x1" // 1
+}
 ```
 
 ***
 
-#### web3.eth.contract
+#### eth_uninstallFilter
 
-    web3.eth.contract(abiArray)
+Uninstalls a filter with given id. Should always be called when watch is no longer needed.
+Additonally Filters timeout when they aren't requested with [eth_getFilterChanges](#eth_getfilterchanges) for a period of time.
 
-Creates a contract object for a solidity contract, which can be used to initiate contracts on an address.
-You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
 
 ##### Parameters
 
-1. `Array` - ABI array with descriptions of functions and events of the contract.
+1. `QUANTITY` - The filter id.
+
+```js
+params: [
+  "0xb" // 11
+]
+```
 
 ##### Returns
 
-`Object` - A contract object, which can be initiated using `var myContract = new ReturnedContractObject(myContractAddress)`.
-
+`Boolean` - `true` if the filter was successfully uninstalled, otherwise `false`.
 
 ##### Example
-
 ```js
-// contract abi
-var abi = [{
-     name: 'myMethod',
-     type: 'function',
-     inputs: [{ name: 'a', type: 'string' }],
-     outputs: [{name: 'd', type: 'string' }]
-}, {
-     name: 'myEvent',
-     type: 'event',
-     inputs: [{name: 'a', type: 'int', indexed: true},{name: 'b', type: 'bool', indexed: false]
-}];
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_uninstallFilter","params":["0xb"],"id":73}'
 
-// creation of contract object
-var MyContract = web3.eth.contract(abi);
-
-// initiate contract for an address
-var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
-
-myContractInstance.myMethod('this is test string param for call'); // myMethod call (implicit, default)
-myContractInstance.call().myMethod('this is test string param for call'); // myMethod call (explicit)
-myContractInstance.sendTransaction().myMethod('this is test string param for transact'); // myMethod sendTransaction
-
-var filter = myContractInstance.myEvent({a: 5});
-filter.watch(function (error, result) {
-  if (!error)
-    console.log(result);
-    /*
-    {
-        address: '0x0123123121',
-        topics: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
-        data: "0x0000000000000000000000000000000000000000000000000000000000000001",
-        ...
-    }
-    */
-});
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": true
+}
 ```
 
 ***
 
-#### Contract Events
+#### eth_getFilterChanges
 
-```js
-var event = myContractInstance.MyEvent({valueA: 23}, additionalFilterObject)
+Polling method for a filter, which returns an array of logs which occurred since last poll.
 
-// watch for changes
-event.watch(function(error, result){
-  if (!error)
-    console.log(result);
-});
-```
-
-You can use events like [filters](#web3ethfilter) and they have the same methods, but you pass different objects to create the event filter.
 
 ##### Parameters
 
-1. `Object` - Indexed return values you want to filter the logs by, e.g. `{'valueA': 1, 'valueB': [myFirstAddress, mySecondAddress]}`.
-2. `Object` - Additional filter options, see [filters](#web3ethfilter) parameter 1 for more.
-
-##### Callback return
-
-
-`Object` - An event object as follows:
-
-- `args`: `Object` - The arguments coming from the event.
-- `event`: `String` - The event name.
-- `logIndex`: `Number` - integer of the log index position in the block.
-- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
-- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
-- `address`: `String`, 32 Bytes - address from which this log originated.
-- `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
-- `blockNumber`: `Number` - the block number where this log was in. `null` when the log is pending.
-
-
-##### Example
+1. `QUANTITY` - the filter id.
 
 ```js
-var MyContract = web3.eth.contract(abi);
-var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
-
-// watch for an event
-var myEvent = myContractInstance.MyEvent({some: 'args'}, additionalFilterObject);
-myEvent.watch(function(error, result){
-   ...
-});
-
-// would get all past logs again.
-var myResults = myEvent.get();
-
-...
-
-// would stop and uninstall the filter
-myEvent.stopWatching();
+params: [
+  "0x16" // 22
+]
 ```
-
-***
-
-#### web3.eth.getCompilers
-
-    web3.eth.getCompilers([callback])
-
-Gets a list of available compilers.
-
-##### Parameters
-
-1. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-`Array` - An array of strings of available compilers.
+`Array` - Array of log objects, or an empty array (if nothing has changed since last poll).
+
+For filters created with `eth_newBlockFilter` log objects are `null`.
+
+For filters created with `eth_newFilter` logs are objects with following params:
+
+  - `logIndex`: `QUANTITY` - integer of the log index position in the block.
+  - `transactionIndex`: `QUANTITY` - integer of the transactions index position log was created from.
+  - `transactionHash`: `DATA`, 32 Bytes - hash of the transactions this log was created from.
+  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
+  - `blockNumber`: `QUANTITY` - the block number where this log was in. `null` when the log is pending.
+  - `address`: `DATA`, 32 Bytes - address from which this log originated.
+  - `data`: `DATA` - contains one or more 32 Bytes non-indexed arguments of the log.
+  - `topics`: `Array of DATA` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
 
 ##### Example
-
 ```js
-var number = web3.eth.getCompilers();
-console.log(number); // ["lll", "solidity", "serpent"]
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0x16"],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": [{
+    "logIndex": "0x1", // 1
+    "blockNumber":"0x1b4" // 436
+    "blockHash": "0x8216c5785ac562ff41e2dcfdf5785ac562ff41e2dcfdf829c5a142f1fccd7d",
+    "transactionHash":  "0xdf829c5a142f1fccd7d8216c5785ac562ff41e2dcfdf5785ac562ff41e2dcf",
+    "transactionIndex": "0x0", // 0
+    "address": "0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d",
+    "data":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "topics": ["0x59ebeb90bc63057b6515673c3ecf9438e5058bca0f92585014eced636878c9a5"]
+    },{
+      ...
+    }]
+}
 ```
 
 ***
 
-#### web3.eth.compile.solidity
+#### eth_getFilterLogs
 
-    web3.eth.compile.solidity(sourceString [, callback])
+Returns an array of all logs matching filter with given id.
 
-Compiles solidity source code.
 
 ##### Parameters
 
-1. `String` - The solidity source code.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `QUANTITY` - The filter id.
+
+```js
+params: [
+  "0x16" // 22
+]
+```
 
 ##### Returns
 
-`String` - The compiled solidity code as HEX string.
-
+See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ##### Example
-
 ```js
-var source = "" + 
-    "contract test {\n" +
-    "   function multiply(uint a) returns(uint d) {\n" +
-    "       return a * 7;\n" +
-    "   }\n" +
-    "}\n";
-var code = web3.eth.compile.solidity(source);
-console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getFilterLogs","params":["0x16"],"id":74}'
 ```
+
+Result see [eth_getFilterChanges](#eth_getfilterchanges)
 
 ***
 
-#### web3.eth.compile.lll
+#### eth_getLogs
 
-    web3. eth.compile.lll(sourceString [, callback])
-
-Compiles LLL source code.
+Returns an array of all logs matching a given filter object.
 
 ##### Parameters
 
-1. `String` - The LLL source code.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `Object` - the filter object, see [eth_newFilter parameters](#eth_newfilter).
+
+```js
+params: [{
+  "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]
+}]
+```
 
 ##### Returns
 
-`String` - The compiled LLL code as HEX string.
-
+See [eth_getFilterChanges](#eth_getfilterchanges)
 
 ##### Example
-
 ```js
-var source = "...";
-
-var code = web3.eth.compile.lll(source);
-console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topics":["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]}],"id":74}'
 ```
+
+Result see [eth_getFilterChanges](#eth_getfilterchanges)
 
 ***
 
-#### web3.eth.compile.serpent
+#### eth_getWork
 
-    web3.eth.compile.serpent(sourceString [, callback])
-
-Compiles serpent source code.
+Returns the hash of the current block, the seedHash, and the boundary condition to be met ("target").
 
 ##### Parameters
-
-1. `String` - The serpent source code.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+none
 
 ##### Returns
 
-`String` - The compiled serpent code as HEX string.
+`Array` - Array with the following properties:
+  1. `DATA`, 32 Bytes - current block header pow-hash
+  2. `DATA`, 32 Bytes - the seed hash used for the DAG.
+  3. `DATA`, 32 Bytes - the boundary condition ("target"), 2^256 / difficulty.
 
-
+##### Example
 ```js
-var source = "...";
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getWork","params":[],"id":73}'
 
-var code = web3.eth.compile.serpent(source);
-console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": [
+      "0x1234567890abcdef1234567890abcdef",
+      "0x5EED0000000000000000000000000000",
+      "0xd1ff1c01710000000000000000000000"
+    ]
+}
 ```
 
 ***
 
-#### web3.db.putString
+#### eth_submitWork
 
-    web3.db.putString(db, key, value)
+Used for submitting a proof-of-work solution.
 
-This method should be called, when we want to store a string in the local leveldb database.
 
 ##### Parameters
 
-1. `String` - The database to store to.
-2. `String` - The name of the store.
-3. `String` - The string value to store.
+1. `DATA`, 8 Bytes - The nonce found (64 bits)
+2. `DATA`, 32 Bytes - The header's pow-hash (256 bits)
+3. `DATA`, 32 Bytes - The mix digest (256 bits)
+
+```js
+params: [
+  "0x0000000000000001",
+  "0x1234567890abcdef1234567890abcdef",
+  "0xD1FE5700000000000000000000000000"
+]
+```
 
 ##### Returns
 
-`Boolean` - `true` if successfull, otherwise `false`.
+`Boolean` - returns `true` if the provided solution is valid, otherwise `false`.
+
 
 ##### Example
-
- param is db name, second is the key, and third is the string value.
 ```js
-web3.db.putString('testDB', 'key', 'myString') // true
+// Request
+curl -X POST --data '{"jsonrpc":"2.0", "method":"eth_submitWork", "params":["0x0000000000000001", "0x1234567890abcdef1234567890abcdef", "0xD1GE5700000000000000000000000000"],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
+}
 ```
 
 ***
 
-#### web3.db.getString
+#### db_putString
 
-    web3.db.getString(db, key)
-
-This method should be called, when we want to get string from the local leveldb database.
+Stores a string in the local database.
 
 ##### Parameters
 
-1. `String` - The database to store to.
-2. `String` - The name of the store.
+1. `String` - Database name.
+2. `String` - Key name.
+3. `String` - String to store.
+
+```js
+params: [
+  "testDB",
+  "myKey",
+  "myString"
+]
+```
 
 ##### Returns
 
-`String` - The stored value.
+`Boolean` - returns `true` if the value was stored, otherwise `false`.
 
 ##### Example
- param is db name and second is the key of string value.
 ```js
-var value = web3.db.getString('testDB', 'key');
-console.log(value); // "myString"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["testDB","myKey","myString"],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
+}
 ```
 
 ***
 
-#### web3.db.putHex
+#### db_getString
 
-    web3.db.putHex(db, key, value)
-
-This method should be called, when we want to store binary data in HEX form in the local leveldb database.
+Returns string from the local database.
 
 ##### Parameters
 
-1. `String` - The database to store to.
-2. `String` - The name of the store.
-3. `String` - The HEX string to store.
+1. `String` - Database name.
+2. `String` - Key name.
+
+```js
+params: [
+  "testDB",
+  "myKey",
+]
+```
 
 ##### Returns
 
-`Boolean` - `true` if successfull, otherwise `false`.
+`String` - The previously stored string.
+
 
 ##### Example
 ```js
-web3.db.putHex('testDB', 'key', '0x4f554b443'); // true
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["testDB","myKey"],"id":73}'
 
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": "myString"
+}
 ```
 
 ***
 
-#### web3.db.getHex
+#### db_putHex
 
-    web3.db.getHex(db, key)
+Stores binary data in the local database.
 
-This method should be called, when we want to get a binary data in HEX form from the local leveldb database.
 
 ##### Parameters
 
-1. `String` - The database to store to.
-2. `String` - The name of the store.
+1. `String` - Database name.
+2. `String` - Key name.
+3. `DATA` - The data to store.
+
+```js
+params: [
+  "testDB",
+  "myKey",
+  "0x68656c6c6f20776f726c64"
+]
+```
 
 ##### Returns
 
-`String` - The stored HEX value.
-
+`Boolean` - returns `true` if the value was stored, otherwise `false`.
 
 ##### Example
- param is db name and second is the key of value.
 ```js
-var value = web3.db.getHex('testDB', 'key');
-console.log(value); // "0x4f554b443"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_putHex","params":["testDB","myKey","0x68656c6c6f20776f726c64"],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
+}
 ```
 
 ***
 
-#### web3.shh
+#### db_getHex
 
-[Whisper  Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
+Returns binary data from the local database.
 
-##### Example
-
-```js
-var shh = web3.shh;
-```
-
-***
-
-#### web3.shh.post
-
-   web3.shh.post(object [, callback])
-
-This method should be called, when we want to post whisper message to teh network.
 
 ##### Parameters
 
-1. `Object` - The post object:
-  - `from`: `String`, 60 Bytes HEX - (optional) The identity of the sender.
-  - `to`: `String`, 60 Bytes  HEX - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
-  - `topics`: `Array of Strings` - Array of topics `Strings`, for the receiver to identify messages.
-  - `payload`: `String|Number|Object` - The payload of the message. Will be autoconverted to a HEX string before.
-  - `priority`: `Number` - The integer of the priority in a rang from ... (?).
-  - `ttl`: `Number` - integer of the time to live in seconds.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `String` - Database name.
+2. `String` - Key name.
+
+```js
+params: [
+  "testDB",
+  "myKey",
+]
+```
+
+##### Returns
+
+`DATA` - The previously stored data.
+
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getHex","params":["testDB","myKey"],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": "0x68656c6c6f20776f726c64"
+}
+```
+
+***
+
+#### shh_version
+
+Returns the current whisper protocol version.
+
+##### Parameters
+none
+
+##### Returns
+
+`String` - The current whisper protocol version
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_version","params":[],"id":67}'
+
+// Result
+{
+  "id":67,
+  "jsonrpc": "2.0",
+  "result": "2"
+}
+```
+
+***
+
+#### shh_post
+
+Sends a whisper message.
+
+##### Parameters
+
+1. `Object` - The whisper post object:
+  - `from`: `DATA`, 60 Bytes - (optional) The identity of the sender.
+  - `to`: `DATA`, 60 Bytes - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
+  - `topics`: `Array of DATA` - Array of `DATA` topics, for the receiver to identify messages.  You can use the following combinations:
+    - `[A, B] = A && B`
+    - `[A, [B, C]] = A && (B || C)`
+    - `[null, A, B] = ANYTHING && A && B` `null` works as a wildcard
+  - `payload`: `DATA` - The payload of the message.
+  - `priority`: `QUANTITY` - The integer of the priority in a rang from ... (?).
+  - `ttl`: `QUANTITY` - integer of the time to live in seconds.
+
+```js
+params: [{
+  from: "0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1",
+  to: "0x3e245533f97284d442460f2998cd41858798ddf04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a0d4d661997d3940272b717b1",
+  topics: ["0x776869737065722d636861742d636c69656e74", "0x4d5a695276454c39425154466b61693532"],
+  payload: "0x7b2274797065223a226d6",
+  priority: "0x64",
+  ttl: "0x64",
+}]
+```
 
 ##### Returns
 
@@ -1554,132 +1748,292 @@ This method should be called, when we want to post whisper message to teh networ
 
 
 ##### Example
-
 ```js
-var identity = web3.shh.newIdentity();
-var topic = 'example';
-var payload = 'hello whisper world!';
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":[{"from":"0xc931d93e97ab07fe42d923478ba2465f2..","topics": ["0x68656c6c6f20776f726c64"],"payload":"0x68656c6c6f20776f726c64","ttl":0x64,"priority":0x64}],"id":73}'
 
-var message = {
-  from: identity,
-  topics: [topic],
-  payload: payload,
-  ttl: 100,
-  workToProve: 100 // or priority TODO
-};
-
-web3.shh.post(message);
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
+}
 ```
 
 ***
 
-#### web3.shh.newIdentity
+#### shh_newIdentinty
 
-    web3.shh.newIdentity([callback])
-
-Should be called to create new identity.
+Creates new whisper identity in the client.
 
 ##### Parameters
-
-1. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
+none
 
 ##### Returns
 
-`String` - A new identity HEX string.
-
+`DATA`, 60 Bytes - the address of the new identiy.
 
 ##### Example
-
 ```js
-var identity = web3.shh.newIdentity();
-console.log(identity); // "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentinty","params":[],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca9007d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
+}
 ```
 
 ***
 
-#### web3.shh.hasIdentity
+#### shh_hasIdentity
 
-    web3.shh.hasIdentity(identity, [callback])
+Checks if the client hold the private keys for a given identity.
 
-Should be called, if we want to check if user has given identity.
 
 ##### Parameters
 
-1. `String` - The identity to check.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+1. `DATA`, 60 Bytes - The identity address to check.
+
+```js
+params: [
+  "0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"
+]
+```
 
 ##### Returns
 
-`Boolean` - returns `true` if the identity exists, otherwise `false`.
+`Boolean` - returns `true` if the client holds the privatekey for that identity, otherwise `false`.
 
 
 ##### Example
-
 ```js
-var identity = web3.shh.newIdentity();
-var result = web3.shh.hasIdentity(identity);
-console.log(result); // true
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"],"id":73}'
 
-var result2 = web3.shh.hasIdentity(identity + "0");
-console.log(result2); // false
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": true
+}
 ```
 
 ***
 
-#### web3.shh.newGroup
+#### shh_newGroup
+
+(?)
+
+##### Parameters
+none
+
+##### Returns
+
+`DATA`, 60 Bytes - the address of the new group. (?)
 
 ##### Example
 ```js
-// TODO: not implemented yet
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentinty","params":[],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0xc65f283f440fd6cabea4dd7a2c807108f651b7135d1d6ca90931d93e97ab07fe42d923478ba2407d5b68aa497e4619ac10aa3b27726e1863c1fd9b570d99bbaf"
+}
 ```
 
 ***
 
-#### web3.shh.addToGroup
+#### shh_addToGroup
+
+(?)
+
+##### Parameters
+
+1. `DATA`, 60 Bytes - The identity address to add to a group (?).
+
+```js
+params: [
+  "0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"
+]
+```
+
+##### Returns
+
+`Boolean` - returns `true` if the identity was successfully added to the group, otherwise `false` (?).
 
 ##### Example
 ```js
-// TODO: not implemented yet
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_hasIdentity","params":["0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": true
+}
 ```
 
 ***
 
-#### web3.shh.filter
+#### shh_newFilter
 
-```js
-var filter = web3.shh.filter(options)
+Creates filter to notify, when client receives whisper message matching the filter options.
 
-// watch for changes
-event.watch(function(error, result){
-  if (!error)
-    console.log(result);
-});
-```
-
-Watch for incoming whisper messages.
 
 ##### Parameters
 
 1. `Object` - The filter options:
-  * `topics`: `Array of Strings` - Filters messages by this topic(s). You can use the following combinations:
-    - `['topic1', 'topic2'] == 'topic1' && 'topic2'`
-    - `['topic1', ['topic2', 'topic3']] == 'topic1' && ('topic2' || 'topic3')`
-    - `[null, 'topic1', 'topic2'] == ANYTHING && 'topic1' && 'topic2'` -> `null` works as a wildcard
-  * `to`: Filter by identity of receiver of the message. If provided and the node has this identity, it will decrypt incoming encrypted messages.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+  - `to`: `DATA`, 60 Bytes - (optional) Identity of the receiver. *When present it will try to decrypt any incoming message if the client holds the private key to this identity.*
+  - `topics`: `Array of DATA` - Array of `DATA` topics which the incoming message's topics should match. 
 
-##### Callback return
+```js
+params: [{
+   "topics": ['0x12341234bf4b564f'],
+   "to": "0x04f96a5e25610293e42a73908e93ccc8c4d4dc0edcfa9fa872f50cb214e08ebf61a03e245533f97284d442460f2998cd41858798ddfd4d661997d3940272b717b1"
+}]
+```
 
-`Object` - The incoming message:
+##### Returns
 
-  - `from`: `String`, 60 Bytes - The sender of the message, if a sender was specified.
-  - `to`: `String`, 60 Bytes - The receiver of the message, if a receiver was specified.
-  - `expiry`: `Number` - Integer of the time in seconds when this message should expire (?).
-  - `ttl`: `Number` -  Integer of the time the message should float in the system in seconds (?).
-  - `sent`: `Number` -  Integer of the unix timestamp when the message was sent.
-  - `topics`: `Array of String` - Array of `String` topics the message contained.
-  - `payload`: `String` - The payload of the message.
-  - `workProved`: `Number` - Integer of the work this message required before it was send (?).
+`QUANTITY` - The newly created filter.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topics": ['0x12341234bf4b564f'],"to": "0x2341234bf4b2341234bf4b564f..."}],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": "0x7" // 7
+}
+```
+
+***
+
+#### shh_uninstallFilter
+
+Uninstalls a filter with given id. Should always be called when watch is no longer needed.
+Additonally Filters timeout when they aren't requested with [shh_getFilterChanges](#shh_getfilterchanges) for a period of time.
 
 
+##### Parameters
+
+1. `QUANTITY` - The filter id.
+
+```js
+params: [
+  "0x7" // 7
+]
+```
+
+##### Returns
+
+`Boolean` - `true` if the filter was successfully uninstalled, otherwise `false`.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_uninstallFilter","params":["0x7"],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": true
+}
+```
+
+***
+
+#### shh_getFilterChanges
+
+Polling method for whisper filters. Returns new messages since the last call of this method.
+
+**Note** calling the [shh_getMessages](#shh_getmessages) method, will reset the buffer for this method, so that you won't receive duplicate messages.
+
+
+##### Parameters
+
+1. `QUANTITY` - The filter id.
+
+```js
+params: [
+  "0x7" // 7
+]
+```
+
+##### Returns
+
+`Array` - Array of messages received since last poll:
+
+  - `hash`: `DATA`, 32 Bytes (?) - The hash of the message.
+  - `from`: `DATA`, 60 Bytes - The sender of the message, if a sender was specified.
+  - `to`: `DATA`, 60 Bytes - The receiver of the message, if a receiver was specified.
+  - `expiry`: `QUANTITY` - Integer of the time in seconds when this message should expire (?).
+  - `ttl`: `QUANTITY` -  Integer of the time the message should float in the system in seconds (?).
+  - `sent`: `QUANTITY` -  Integer of the unix timestamp when the message was sent.
+  - `topics`: `Array of DATA` - Array of `DATA` topics the message contained.
+  - `payload`: `DATA` - The payload of the message.
+  - `workProved`: `QUANTITY` - Integer of the work this message required before it was send (?).
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getFilterChanges","params":["0x7"],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc":"2.0",
+  "result": [{
+    "hash": "0x33eb2da77bf3527e28f8bf493650b1879b08c4f2a362beae4ba2f71bafcd91f9",
+    "from": "0x3ec052fc33..",
+    "to": "0x87gdf76g8d7fgdfg...",
+    "expiry": "0x54caa50a", // 1422566666
+    "sent": "0x54ca9ea2", // 1422565026
+    "ttl": "0x64" // 100
+    "topics": ["0x6578616d"],
+    "payload": "0x7b2274797065223a226d657373616765222c2263686...",
+    "workProved": "0x0"
+    }]
+}
+```
+
+***
+
+#### shh_getMessages
+
+Get all messages matching a filter, which are still existing in the node's buffer.
+
+**Note** calling this method, will also reset the buffer for the [shh_getFilterChanges](#shh_getfilterchanges) method, so that you won't receive duplicate messages.
+
+##### Parameters
+
+1. `QUANTITY` - The filter id.
+
+```js
+params: [
+  "0x7" // 7
+]
+```
+
+##### Returns
+
+See [shh_getFilterChanges](#shh_getfilterchanges)
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getMessages","params":["0x7"],"id":73}'
+```
+
+Result see [shh_getFilterChanges](#shh_getfilterchanges)
