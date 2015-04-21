@@ -1723,7 +1723,10 @@ Sends a whisper message.
 1. `Object` - The whisper post object:
   - `from`: `DATA`, 60 Bytes - (optional) The identity of the sender.
   - `to`: `DATA`, 60 Bytes - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
-  - `topics`: `Array of DATA` - Array of `DATA` topics, for the receiver to identify messages. (?)
+  - `topics`: `Array of DATA` - Array of `DATA` topics, for the receiver to identify messages.  You can use the following combinations:
+    - `[A, B] = A && B`
+    - `[A, [B, C]] = A && (B || C)`
+    - `[NULL, A, B] = ANYTHING && A && B` `null` works as a wildcard
   - `payload`: `DATA` - The payload of the message.
   - `priority`: `QUANTITY` - The integer of the priority in a rang from ... (?).
   - `ttl`: `QUANTITY` - integer of the time to live in seconds.
