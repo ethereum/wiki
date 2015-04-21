@@ -962,7 +962,7 @@ console.log(uncle); // see web3.eth.getBlock
 
     web3.eth.getTransaction(transactionHash [, callback])
 
-Returns a transaction from a transaction hash.
+Returns a transaction matching the given transaction hash.
 
 ##### Parameters
 
@@ -1019,11 +1019,20 @@ console.log(transaction);
 
     getTransactionFromBlock(hashStringOrNumber, indexNumber [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Returns a transaction based on a block hash or number and the transactions index position.
+
+##### Parameters
+
+1. `String` - A block hash or number.
+2. `Number` - The transactions index position.
+3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-a transaction object by block number or hash `hashStringOrNumber` with transaction index `indexNumber`:
+`Object` - A transaction object, see [web3.eth.getTransaction](#web3ethgettransaction):
+
+
+##### Example
 
 ```js
 var transaction = web3.eth.getTransactionFromBlock('0x4534534534', 2);
@@ -1037,12 +1046,17 @@ console.log(transaction); // see web3.eth.getTransaction
 
     web3.eth.getTransactionCount(addressHexString [, defaultBlock] [, callback])
 
-- If you pass an optional defaultBlock it will not use the default [web3.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Get the numbers of transactions send from this address.
+
+##### Parameters
+
+1. `String` - The address to get the numbers of transactions from.
+2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
+3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-The number of transactions send from the given address `addressHexString`.
+`Number` - The number of transactions send from the given address.
 
 ##### Example
 
@@ -1057,33 +1071,33 @@ console.log(number); // 1
 
     web3.eth.sendTransaction(transactionObject [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Sends a transaction to the network.
 
-Creates a new message-call transaction.
-  * `transactionObject`, an anonymous object specifying the parameters of the transaction.
-    * `from` (hexString), the address for the sending account;
-    * `to` (hexString), the destination address of the message, left undefined for a contract-creation transaction
-    * `value (number|hexString|BigNumber)`, (optional) the value transferred for the transaction in Wei, also the endowment if it's a contract-creation transaction;
-    * `gas (number|hexString|BigNumber)`, (optional, default: To-Be-Determined) the amount of gas to purchase for the transaction (unused gas is refunded), defaults to the most gas your ether balance allows; and
-    * `gasPrice (number|hexString|BigNumber)`, (optional, default: To-Be-Determined) the price of gas for this transaction in wei, defaults to the mean network gasPrice.
-    * `data  (hexString)`, (optional) either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code;
-    * `code`, (optional) a synonym for `data`;
+##### Parameters
+
+1. `Object` - The transaction object to send:
+  * `from`: `String` - The address for the sending account.
+  * `to`: `String` - (optional) The destination address of the message, left undefined for a contract-creation transaction.
+  * `value`: `Number|String|BigNumber` - (optional) The value transferred for the transaction in Wei, also the endowment if it's a contract-creation transaction.
+  * `gas`: `Number|String|BigNumber` - (optional, default: To-Be-Determined) The amount of gas to use for the transaction (unused gas is refunded).
+  * `gasPrice`: `Number|String|BigNumber` - (optional, default: To-Be-Determined) The price of gas for this transaction in wei, defaults to the mean network gas price.
+  * `data`: `String` - (optional) Either a [byte string](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI) containing the associated data of the message, or in the case of a contract-creation transaction, the initialisation code.
+2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
+3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+##### Returns
+
+`String` - The address of the newly created contract, or the 32 Bytes transaction hash as HEX string.
 
 ##### Example
 
 ```js
 
-// compile solidity source code
-var source = "" + 
-"contract test {\n" +
-"   function multiply(uint a) returns(uint d) {\n" +
-"       return a * 7;\n" +
-"   }\n" +
-"}\n";
+// compiled solidity source code using https://chriseth.github.io/cpp-ethereum/
+var code = "603d80600c6000396000f3007c01000000000000000000000000000000000000000000000000000000006000350463c6888fa18114602d57005b600760043502
+8060005260206000f3";
 
-var compiled = web3.eth.solidity(source);
-
-web3.eth.sendTransaction({data: compiled}, function(err, address) {
+web3.eth.sendTransaction({data: code}, function(err, address) {
   if (!err) console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 });
 ```
