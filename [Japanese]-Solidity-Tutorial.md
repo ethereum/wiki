@@ -97,8 +97,8 @@ integer は
 `uint`/`int` は `uint256`/`int256` の alias なので、同じ型  
 `address` 型は `uint160` から派生した型です。
 
-Comparisons (`<=`, `!=`, `==`, etc.) は、booleans ( `&&`, `||` and `!`の組合せ) より常に弱い影響をもちます。  
-`&&` and `||` に対しては、short-circuiting rules (短回路優先の法則) が成立することに注意してください。  
+Comparisons (`<=`, `!=`, `==`, etc.) の影響力は、booleans ( `&&`, `||` and `!`の組合せ) より常に小さく、
+また、`&&` and `||` に対しては、short-circuiting rules (短回路優先の法則) が成立することに注意してください。  
 たとえば `(0 < 1 || fun())` では最初の命題が常に真で、fun()関数は永遠に呼ばれません。
 
 もし、演算子が違う型に適用されたら、
@@ -121,16 +121,17 @@ uint x = uint(y);
 この断片的なソースコードにおける `x` の最終状態は、`0xfffff..fd` (64桁の16進コード) となります。
 これは 256 bit の2進数表現における -3 です。
 
-For convenience, it is not always necessary to explicitly specify the type of a
-variable, the compiler automatically infers it from the type of the first
-expression that is assigned to the variable:
+変数の型を常に外部で特定する必要はなく、コンパイラが自動的に、その変数が最初にでてくる代入文から、決定します。
+
 ```
 uint20 x = 0x123;
 var y = x;
 ```
-Here, the type of `y` will be `uint20`. Using `var` is not possible for function
-parameters or return parameters.
-State variables of integer and bytesXX types can be declared as constant.
+
+ここでは、`y` の型は `uint20` となります。
+ただし関数の引数や、戻り値に `var` は使用できません。 
+integer 型と byte 型は定数として宣言できます。
+
 ```
 uint constant x = 32;
 bytes3 constant text = "abc";
@@ -138,31 +139,34 @@ bytes3 constant text = "abc";
 
 ## Integer Literals
 
-The type of integer literals is not determined as long as integer literals are
-combined with themselves. This is probably best explained with examples:
+integer 式 の型は、式の計算がされたのちに、さいごに決定されます。
+次の例を見てみましょう。
 
 ```
 var x = 1 - 2;
 ```
-The value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives
-the type `int8` -- the smallest type that contains `-1`. The following code
-snippet behaves differently, though:
+`1 - 2` の値は `-1` です。 これが `x` に代入され、`x` の型は `-1` を含みうる最小の型である `int8` となります。
+次にいきましょう。
+今度は少し結果が違います。
+
 ```
 var one = 1;
 var two = 2;
 var x = one - two;
 ```
 
-Here, `one` and `two` both have type `uint8` which is also propagated to `x`. The
-subtraction inside the type `uint8` causes wrapping and thus the value of
-`x` will be `255`.
+ここでは、`one` と `two` は `uint8`となり、`x` に対しても同じ型が遺伝しています。
+`uint8` 型の内部での引き算は、wrapping (`uint8`として処理) されるため、`x` の値は、`255` となります。
 
-It is even possible to temporarily exceed the maximum of 256 bits as long as
-only integer literals are used for the computation:
+integer のみで表された式であるならば、
+一時的には、256bit で表される型の最大の値すら超えて計算することもできます。
+
 ```
 var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;
 ```
-Here, `x` will have the value `0` and thus the type `uint8`.
+
+ここでは、`x` は `uint` 型の `0` となります。
+
 
 ## Ether and Time Units
 
