@@ -54,57 +54,58 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 
 * [web3](#web3)
   * [version](#web3versionapi)
-     * [api](#web3versionapi) -> string e.g. '0.2.0' (the web3.js version)
-     * [client](#web3versionclient) -> string e.g. 'AlethZero/1.0.0' (the client ID)
-     * [network](#web3versionnetwork) -> number e.g. 58 (the network version)
-     * [ethereum](#web3versionethereum) -> number e.g. 60 (the ethereum protocol version)
-     * [whisper](#web3versionwhisper) -> number e.g. 20 (the shh version)
-  * [port](#) -> number e.g. 8080 (not available yet)
+     * [api](#web3versionapi)
+     * [client](#web3versionclient)
+     * [network](#web3versionnetwork)
+     * [ethereum](#web3versionethereum)
+     * [whisper](#web3versionwhisper)
+  * [port](#)
   * [setProvider(provider)](#web3setprovider)
   * [reset()](#web3reset)
-  * [sha3(string)](#web3sha3) -> hexString
-  * [toHex(stringOrNumber)](#web3tohex) -> textString
-  * [toAscii(hexString)](#web3toascii) -> textString
-  * [fromAscii(textString, [padding])](#web3fromascii) -> hexString
-  * [toDecimal(hexString)](#web3todecimal) -> number
-  * [fromDecimal(number)](#web3fromdecimal) -> hexString
-  * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei) -> string|BigNumber (depending on the input)
-  * [toWei(numberStringOrBigNumber, unit)](#web3toWei) -> string|BigNumber (depending on the input)
-  * [toBigNumber(numberOrHexString)](#web3tobignumber) -> BigNumber
-  * [isAddress(hexString)](#web3isAddress) -> boolean
+  * [sha3(string)](#web3sha3)
+  * [toHex(stringOrNumber)](#web3tohex)
+  * [toAscii(hexString)](#web3toascii)
+  * [fromAscii(textString, [padding])](#web3fromascii)
+  * [toDecimal(hexString)](#web3todecimal)
+  * [fromDecimal(number)](#web3fromdecimal)
+  * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei)
+  * [toWei(numberStringOrBigNumber, unit)](#web3toWei)
+  * [toBigNumber(numberOrHexString)](#web3tobignumber)
+  * [isAddress(hexString)](#web3isAddress)
   * [net](#)
-    * [listening](#web3netlistening) -> boolean
-    * [peerCount](#web3ethpeercount) -> Integer
+    * [listening](#web3netlistening)
+    * [peerCount](#web3ethpeercount)
   * [eth](#web3eth)
-    * [coinbase](#web3ethcoinbase) -> hexString
-    * [gasPrice](#web3ethgasprice) -> BigNumber
-    * [accounts](#web3ethaccounts) -> array of hexStrings
-    * [mining](#web3ethmining) -> boolean
+    * [coinbase](#web3ethcoinbase)
+    * [gasPrice](#web3ethgasprice)
+    * [accounts](#web3ethaccounts)
+    * [mining](#web3ethmining)
     * [register(hexString)](#web3ethregister)
     * [unRegister(hexString)](#web3ethunregister)
-    * [defaultBlock](#web3ethdefaultblock) -> Integer
-    * [blockNumber](#web3ethblocknumber) -> Integer
-    * [getBalance(address)](#web3ethgetbalance) -> BigNumber
-    * [getStorageAt(address, position)](#web3ethgetstorageat) -> hexString
-    * [getCode(address)](#web3ethgetcode) -> hexString
-    * [getBlock(hash/number)](#web3ethgetblock) -> headerObject
-    * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount) -> Integer
-    * [getUncle(hash/number)](#web3ethgetuncle) -> headerObject
-    * [getBlockUncleCount(hash/number)](#web3ethgetblockunclecount) -> Integer
-    * [getTransaction(hash)](#web3ethgettransaction) -> transactionObject
-    * [getTransactionFromBlock(hashOrNumber, indexNumber)](#web3ethgettransactionfromblock) -> transactionObject
-    * [getTransactionCount(address)](#web3ethgettransactioncount) -> Integer
+    * [defaultBlock](#web3ethdefaultblock)
+    * [blockNumber](#web3ethblocknumber)
+    * [getBalance(address)](#web3ethgetbalance)
+    * [getStorageAt(address, position)](#web3ethgetstorageat)
+    * [getCode(address)](#web3ethgetcode)
+    * [getBlock(hash/number)](#web3ethgetblock)
+    * [getBlockTransactionCount(hash/number)](#web3ethgetblocktransactioncount)
+    * [getUncle(hash/number)](#web3ethgetuncle)
+    * [getBlockUncleCount(hash/number)](#web3ethgetblockunclecount)
+    * [getTransaction(hash)](#web3ethgettransaction)
+    * [getTransactionFromBlock(hashOrNumber, indexNumber)](#web3ethgettransactionfromblock)
+    * [getTransactionCount(address)](#web3ethgettransactioncount)
     * [sendTransaction(object)](#web3ethsendtransaction)
-    * [contract(abiArray)](#web3ethcontract) -> contractObject
-    * [call(object)](#web3ethcall) -> hexString
+    * [call(object)](#web3ethcall)
     * [filter(array (, options) )](#web3ethfilter)
         - [watch(callback)](#web3ethfilter)
         - [stopWatching(callback)](#web3ethfilter)
         - [get()](#web3ethfilter)
-    * [getCompilers()](#web3ethgetcompilers) -> array of strings
-    * [compile.lll(string)](#web3ethcompilelll) -> hexString
-    * [compile.solidity(string)](#web3ethcompilesolidity) -> hexString
-    * [compile.serpent(string)](#web3ethcompileserpent) -> hexString
+    * [contract(abiArray)](#web3ethcontract)
+    * [contract.event()](#contract-events)
+    * [getCompilers()](#web3ethgetcompilers)
+    * [compile.lll(string)](#web3ethcompilelll)
+    * [compile.solidity(string)](#web3ethcompilesolidity)
+    * [compile.serpent(string)](#web3ethcompileserpent)
   * [db](#web3db)
     * [putString(name, key, value)](#web3dbputstring)
     * [getString(name, key)](#web3dbgetstring)
@@ -1104,96 +1105,6 @@ web3.eth.sendTransaction({data: code}, function(err, address) {
 
 ***
 
-#### web3.eth.contract
-
-    web3.eth.contract(abiArray)
-
-Creates a contract object for a solidity contract, which can be used to initiate contracts on an address.
-You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
-
-##### Parameters
-
-1. `Array` - ABI array with descriptions of functions and events of the contract.
-
-##### Returns
-
-`Object` - A contract object, which can be initiated using `var myContract = new ReturnedContractObject(myContractAddress)`.
-
-
-##### Example
-
-```js
-// contract abi
-var abi = [{
-     name: 'myMethod',
-     type: 'function',
-     inputs: [{ name: 'a', type: 'string' }],
-     outputs: [{name: 'd', type: 'string' }]
-}, {
-     name: 'myEvent',
-     type: 'event',
-     inputs: [{name: 'a', type: 'int', indexed: true},{name: 'b', type: 'bool', indexed: false]
-}];
-
-// creation of contract object
-var MyContract = web3.eth.contract(abi);
-
-// initiate contract for an address
-var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
-
-myContractInstance.myMethod('this is test string param for call'); // myMethod call (implicit, default)
-myContractInstance.call().myMethod('this is test string param for call'); // myMethod call (explicit)
-myContractInstance.sendTransaction().myMethod('this is test string param for transact'); // myMethod sendTransaction
-
-var filter = myContractInstance.myEvent({a: 5});
-filter.watch(function (error, result) {
-  if (!error)
-    console.log(result);
-    /*
-    {
-        address: '0x0123123121',
-        topics: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
-        data: "0x0000000000000000000000000000000000000000000000000000000000000001",
-        ...
-    }
-    */
-});
-```
-
-#### Contract Events
-
-    myContractInstance.MyEvent({valueA: 23}, additionalFilterObject)
-
-You can use events like [filters](#web3ethfilter) and they have the same methods, but you pass different objects to create the event filter.
-
-##### Parameters
-
-1. `Object` - Indexed return values you want to filter the logs by, e.g. `{'valueA': 1, 'valueB': [myFirstAddress, mySecondAddress]}`.
-2. `Object` - Additional filter options, see [filters](#web3ethfilter) parameter 1 for more.
-
-##### Example
-
-```js
-var MyContract = web3.eth.contract(abi);
-var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
-
-// watch for an event
-var myEvent = myContractInstance.MyEvent({some: 'args'}, additionalFilterObject);
-myEvent.watch(function(error, result){
-   ...
-});
-
-// would get all past logs again.
-var myResults = myEvent.get();
-
-...
-
-// would stop and uninstall the filter
-myEvent.stopWatching();
-```
-
-***
-
 #### web3.eth.call
 
     web3.eth.call(callObject [, defaultBlock] [, callback])
@@ -1255,7 +1166,7 @@ filter.watch(function(error, result){
 
 ##### Callback return
 
-`Object` - If its a log filter it returns a log entry:
+`Object` - A log object as follows:
 
 - `logIndex`: `Number` - integer of the log index position in the block.
 - `transactionIndex`: `Number` - integer of the transactions index position log was created from.
@@ -1266,17 +1177,7 @@ filter.watch(function(error, result){
 - `data`: `String` - contains one or more 32 Bytes non-indexed arguments of the log.
 - `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
 
-
-`Object` - If its an event filter it returns a event object:
-
-- `args`: `Object` - The arguments coming from the event.
-- `event`: `String` - The event name.
-- `logIndex`: `Number` - integer of the log index position in the block.
-- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
-- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
-- `address`: `String`, 32 Bytes - address from which this log originated.
-- `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
-- `blockNumber`: `Number` - the block number where this log was in. `null` when the log is pending.
+**Note** For event filter return values see [Contract Events](#contract-events)
 
 ##### Example
 
@@ -1295,6 +1196,121 @@ var myResults = filter.get();
 // stops and uninstalls the filter
 filter.stopWatching();
 
+```
+
+***
+
+#### web3.eth.contract
+
+    web3.eth.contract(abiArray)
+
+Creates a contract object for a solidity contract, which can be used to initiate contracts on an address.
+You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
+
+##### Parameters
+
+1. `Array` - ABI array with descriptions of functions and events of the contract.
+
+##### Returns
+
+`Object` - A contract object, which can be initiated using `var myContract = new ReturnedContractObject(myContractAddress)`.
+
+
+##### Example
+
+```js
+// contract abi
+var abi = [{
+     name: 'myMethod',
+     type: 'function',
+     inputs: [{ name: 'a', type: 'string' }],
+     outputs: [{name: 'd', type: 'string' }]
+}, {
+     name: 'myEvent',
+     type: 'event',
+     inputs: [{name: 'a', type: 'int', indexed: true},{name: 'b', type: 'bool', indexed: false]
+}];
+
+// creation of contract object
+var MyContract = web3.eth.contract(abi);
+
+// initiate contract for an address
+var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
+
+myContractInstance.myMethod('this is test string param for call'); // myMethod call (implicit, default)
+myContractInstance.call().myMethod('this is test string param for call'); // myMethod call (explicit)
+myContractInstance.sendTransaction().myMethod('this is test string param for transact'); // myMethod sendTransaction
+
+var filter = myContractInstance.myEvent({a: 5});
+filter.watch(function (error, result) {
+  if (!error)
+    console.log(result);
+    /*
+    {
+        address: '0x0123123121',
+        topics: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
+        data: "0x0000000000000000000000000000000000000000000000000000000000000001",
+        ...
+    }
+    */
+});
+```
+
+***
+
+#### Contract Events
+
+```js
+var event = myContractInstance.MyEvent({valueA: 23}, additionalFilterObject)
+
+// watch for changes
+event.watch(function(error, result){
+  if (!error)
+    console.log(result);
+});
+```
+
+You can use events like [filters](#web3ethfilter) and they have the same methods, but you pass different objects to create the event filter.
+
+##### Parameters
+
+1. `Object` - Indexed return values you want to filter the logs by, e.g. `{'valueA': 1, 'valueB': [myFirstAddress, mySecondAddress]}`.
+2. `Object` - Additional filter options, see [filters](#web3ethfilter) parameter 1 for more.
+
+##### Callback return
+
+
+`Object` - An event object as follows:
+
+- `args`: `Object` - The arguments coming from the event.
+- `event`: `String` - The event name.
+- `logIndex`: `Number` - integer of the log index position in the block.
+- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
+- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
+- `address`: `String`, 32 Bytes - address from which this log originated.
+- `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
+- `blockNumber`: `Number` - the block number where this log was in. `null` when the log is pending.
+
+
+##### Example
+
+```js
+var MyContract = web3.eth.contract(abi);
+var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
+
+// watch for an event
+var myEvent = myContractInstance.MyEvent({some: 'args'}, additionalFilterObject);
+myEvent.watch(function(error, result){
+   ...
+});
+
+// would get all past logs again.
+var myResults = myEvent.get();
+
+...
+
+// would stop and uninstall the filter
+myEvent.stopWatching();
 ```
 
 ***
