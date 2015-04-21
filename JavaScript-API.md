@@ -1098,7 +1098,8 @@ var code = "603d80600c6000396000f3007c010000000000000000000000000000000000000000
 8060005260206000f3";
 
 web3.eth.sendTransaction({data: code}, function(err, address) {
-  if (!err) console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+  if (!err)
+    console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 });
 ```
 
@@ -1108,13 +1109,17 @@ web3.eth.sendTransaction({data: code}, function(err, address) {
 
     web3.eth.contract(abiArray)
 
+Creates a contract object for a solidity contract, which can be used to initiate contracts on an address.
+You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
+
+##### Parameters
+
+1. `Array` - ABI array with descriptions of functions and events of the contract.
+
 ##### Returns
 
-a contract object, which can be used to initiate use contracts on an address.
+`Object` - A contract object, which can be initiated using `var myContract = new ReturnedContractObject(myContractAddress)`.
 
-This method creates a contract object for a solidity contract. It has the same methods available as solidity contract description itself.
-
-You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#example-javascript-usage).
 
 ##### Example
 
@@ -1142,7 +1147,8 @@ myContractInstance.call().myMethod('this is test string param for call'); // myM
 myContractInstance.sendTransaction().myMethod('this is test string param for transact'); // myMethod sendTransaction
 
 var filter = myContractInstance.myEvent({a: 5});
-filter.watch(function (result) {
+filter.watch(function (error, result) {
+  if (!error)
     console.log(result);
     /*
     {
@@ -1157,22 +1163,24 @@ filter.watch(function (result) {
 
 ##### Contract Events
 
-You can use events like [filters](#web3ethfilter) and they have the same methods. Though the first parameter for an event are the indexed arguments as an object:
+You can use events like [filters](#web3ethfilter) and they have the same methods, though the first parameter for an event are the indexed arguments as an object you want to filter by:
 
 ```js
 var MyContract = web3.eth.contract(abi);
 var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
 
 // watch for an event
-var myEvent = myContractInstance.MyEvent({some: 'args'}, filterObject);
-myEvent.watch(function(result){
+var myEvent = myContractInstance.MyEvent({some: 'args'}, additionalFilterObject);
+myEvent.watch(function(error, result){
    ...
 });
 
+// would get all past logs again.
 var myResults = myEvent.get();
 
 ...
 
+// would stop and uninstall the filter
 myEvent.stopWatching();
 ```
 
@@ -1182,23 +1190,25 @@ myEvent.stopWatching();
 
     web3.eth.call(callObject [, defaultBlock] [, callback])
 
-- If you pass an optional defaultBlock it will not use the default [web3.eth.defaultBlock](#web3ethdefaultblock).
-- If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Executes a message call transaction, which is directly executed in the VM of the node, but never mined into the blockchain.
+
+##### Parameters
+
+1. `Object` - A transaction object see [web3.eth.sendTransaction](#web3ethsendtransaction), with the difference that for calls the `from` property is optional as well.
+2. `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
+3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-The data which matches the call.
-
-Executes a new message-call immediately without creating a transaction on the block chain. `callObject` is an object specifying the parameters of the transaction.
+`String` - The returned data of the call, e.g. a codes functions return value.
 
 ##### Example
 
 ```js
-var options = {
+var result = web3.eth.call({
     to: "0xc4abd0339eb8d57087278718986382264244252f", 
     data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
-};
-var result = web3.eth.call(options);
+});
 console.log(result); // "0x0000000000000000000000000000000000000000000000000000000000000015"
 ```
 
