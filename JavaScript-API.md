@@ -1406,21 +1406,44 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 ***
 
 #### web3.db.putString
-This method should be called, when we want to store a string in a local leveldb database.
-First
+
+    web3.db.putString(db, key, value)
+
+This method should be called, when we want to store a string in the local leveldb database.
+
+##### Parameters
+
+1. `String` - The database to store to.
+2. `String` - The name of the store.
+3. `String` - The string value to store.
+
+##### Returns
+
+`Boolean` - `true` if successfull, otherwise `false`.
 
 ##### Example
+
  param is db name, second is the key, and third is the string value.
 ```js
-var result = web3.db.putString('testDB', 'key', 'myString')
-console.log(result); // true
+web3.db.putString('testDB', 'key', 'myString') // true
 ```
 
 ***
 
 #### web3.db.getString
-This method should be called, when we want to get string from local leveldb database.
-First
+
+    web3.db.getString(db, key)
+
+This method should be called, when we want to get string from the local leveldb database.
+
+##### Parameters
+
+1. `String` - The database to store to.
+2. `String` - The name of the store.
+
+##### Returns
+
+`String` - The stored value.
 
 ##### Example
  param is db name and second is the key of string value.
@@ -1432,22 +1455,44 @@ console.log(value); // "myString"
 ***
 
 #### web3.db.putHex
-This method should be called, when we want to store HEX in a local leveldb database.
-First
+
+    web3.db.putHex(db, key, value)
+
+This method should be called, when we want to store binary data in HEX form in the local leveldb database.
+
+##### Parameters
+
+1. `String` - The database to store to.
+2. `String` - The name of the store.
+3. `String` - The HEX string to store.
+
+##### Returns
+
+`Boolean` - `true` if successfull, otherwise `false`.
 
 ##### Example
- param is db name, second is the key, and third is the value.
 ```js
-var result = web3.db.putHex('testDB', 'key', '0x4f554b443');
-console.log(result); // true
+web3.db.putHex('testDB', 'key', '0x4f554b443'); // true
 
 ```
 
 ***
 
 #### web3.db.getHex
-This method should be called, when we want to get a HEX value from a local leveldb database.
-First
+
+    web3.db.getHex(db, key)
+
+This method should be called, when we want to get a binary data in HEX form from the local leveldb database.
+
+##### Parameters
+
+1. `String` - The database to store to.
+2. `String` - The name of the store.
+
+##### Returns
+
+`String` - The stored HEX value.
+
 
 ##### Example
  param is db name and second is the key of value.
