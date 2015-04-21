@@ -105,7 +105,6 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [compile.lll(string)](#web3ethcompilelll) -> hexString
     * [compile.solidity(string)](#web3ethcompilesolidity) -> hexString
     * [compile.serpent(string)](#web3ethcompileserpent) -> hexString
-    * [flush](#web3ethflush)
   * [db](#web3db)
     * [putString(name, key, value)](#web3dbputstring)
     * [getString(name, key)](#web3dbgetstring)
@@ -1161,9 +1160,18 @@ filter.watch(function (error, result) {
 });
 ```
 
-##### Contract Events
+#### Contract Events
 
-You can use events like [filters](#web3ethfilter) and they have the same methods, though the first parameter for an event are the indexed arguments as an object you want to filter by:
+    myContractInstance.MyEvent({valueA: 23}, additionalFilterObject)
+
+You can use events like [filters](#web3ethfilter) and they have the same methods, but you pass different objects to create the event filter.
+
+##### Parameters
+
+1. `Object` - Indexed return values you want to filter the logs by, e.g. `{'valueA': 1, 'valueB': [myFirstAddress, mySecondAddress]}`.
+2. `Object` - Additional filter options, see [filters](#web3ethfilter) parameter 1 for more.
+
+##### Example
 
 ```js
 var MyContract = web3.eth.contract(abi);
@@ -1218,71 +1226,73 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
 
 ```js
 // can be 'latest' or 'pending'
-web3.eth.filter(filterString)
-// object is a log filter 
-web3.eth.filter(options)
-// object is an event object 
-web3.eth.filter(eventObject [, eventArguments [, options]])
-// an array of events object belonging to specific contract objects (not implemented yet)
-web3.eth.filter(eventArray [, options])
-// object is a contract object (not implemented yet)
-web3.eth.filter(contractObject [, options])
+var filter = web3.eth.filter(filterString);
+// OR object are log filter options
+var filter = web3.eth.filter(options);
+
+// watch for changes
+filter.watch(function(error, result){
+  if (!error)
+    console.log(result);
+});
 ```
-   * `filterString`:  `'latest'` or `'pending'` to watch for changes in the latest block or pending transactions respectively
-   * `options`
-       * `fromBlock`: The number of the earliest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
-       * `toBlock`: The number of the latest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
-       * `address`: An address or a list of addresses to restrict log entries by requiring them to be made from a particular account.
-       * `topics`: An array of values which must each appear in the log entries.
-   * `eventArguments` is an object with keys of one or more indexed arguments for the event(s) and values of either one (directly) or more (in an array) e.g. {'a': 1, 'b': [myFirstAddress, mySecondAddress]}.
+
+##### Parameters
+
+1. `String|Object` - The string `"latest"` or `"pending"` to watch for changes in the latest block or pending transactions respectively. Or a filter options object as follows:
+  * `fromBlock`: `Number|String` - The number of the earliest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
+  * `toBlock`: `Number|String` - The number of the latest block (`latest` may be given to mean the most recent and `pending` currently mining, block).
+  * `address`: `String` - An address or a list of addresses to only get logs from particular account(s).
+  * `topics`: `Array of Strings` - An array of values which must each appear in the log entries. The order is important, if you want to leave topics use `null`, e.g. `[null, '0x00...']`.
 
 ##### Returns
 
-a filter object with the following methods:
+`Object` - A filter object with the following methods:
 
-##### Filter Methods:
   * `filter.get()`: Returns all of the log entries that fit the filter.
   * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback. See [this note](#using-callbacks) for details.
   * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
 
-##### Callback return values
+##### Callback return
 
-If its a log filter it returns a list of log entries; each includes the following fields:
+`Object` - If its a log filter it returns a log entry:
 
-* `status`: "pending" or "mined"
-* `address`: The address of the account whose execution of the message resulted in the log entry being made.
-* `topics`: The topic(s) of the log.
-* `data`: The associated data of the log.
-* `blockNumber`: The block number from at which this event happened.
-* `blockHash`: The block hash from at which this event happened.
-* `transactionHash`: The transaction hash from at which this event happened.
-* `transactionIndex`: The transaction index from at which this event happened.
-* `logIndex`: The log index
+- `logIndex`: `Number` - integer of the log index position in the block.
+- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
+- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
+- `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
+- `blockNumber`: `Number` - the block number where this log was in. `null` when the log is pending.
+- `address`: `String`, 32 Bytes - address from which this log originated.
+- `data`: `String` - contains one or more 32 Bytes non-indexed arguments of the log.
+- `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
 
-If its an event filter it returns a filter object with the return values of event:
 
-* `status`: "pending" or "mined"
-* `args`: The arguments coming from the event
-* `topics`: The topic(s) of the log.
-* `blockNumber`: The block number from at which this event happened.
-* `blockHash`: The block hash from at which this event happened.
-* `transactionHash`: The transaction hash from at which this event happened.
-* `transactionIndex`: The transaction index from at which this event happened.
-* `logIndex`: The log index
+`Object` - If its an event filter it returns a event object:
+
+- `args`: `Object` - The arguments coming from the event.
+- `event`: `String` - The event name.
+- `logIndex`: `Number` - integer of the log index position in the block.
+- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
+- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
+- `address`: `String`, 32 Bytes - address from which this log originated.
+- `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
+- `blockNumber`: `Number` - the block number where this log was in. `null` when the log is pending.
 
 ##### Example
 
 ```js
 var filter = web3.eth.filter('pending');
 
-filter.watch(function (err, log) {
+filter.watch(function (error, log) {
   console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000", ...}
 });
 
+// get all past logs again.
 var myResults = filter.get();
 
 ...
 
+// stops and uninstalls the filter
 filter.stopWatching();
 
 ```
@@ -1293,12 +1303,15 @@ filter.stopWatching();
 
     web3.eth.getCompilers([callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Gets a list of available compilers.
+
+##### Parameters
+
+1. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-An array of available compilers.
-
+`Array` - An array of strings of available compilers.
 
 ##### Example
 
@@ -1313,14 +1326,17 @@ console.log(number); // ["lll", "solidity", "serpent"]
 
     web3.eth.compile.solidity(sourceString [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Compiles solidity source code.
+
+##### Parameters
+
+1. `String` - The solidity source code.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-The compiled solidity code as HEX string.
+`String` - The compiled solidity code as HEX string.
 
-
-Compiles the solidity source code `sourceString` and returns the output data.
 
 ##### Example
 
@@ -1341,14 +1357,17 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
     web3. eth.compile.lll(sourceString [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Compiles LLL source code.
+
+##### Parameters
+
+1. `String` - The LLL source code.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-The compiled lll code as HEX string.
+`String` - The compiled LLL code as HEX string.
 
-
-Compiles the LLL source code `sourceString` and returns the output data.
 
 ##### Example
 
@@ -1365,30 +1384,23 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
     web3.eth.compile.serpent(sourceString [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Compiles serpent source code.
+
+##### Parameters
+
+1. `String` - The serpent source code.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-The compiled serpent code as HEX string.
+`String` - The compiled serpent code as HEX string.
 
-
-Compiles the serpent source code `sourceString ` and returns the output data.
 
 ```js
 var source = "...";
 
 var code = web3.eth.compile.serpent(source);
 console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
-```
-
-***
-
-#### web3.eth.flush
-
-##### Example
-
-```js
-// TODO:
 ```
 
 ***
