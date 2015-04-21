@@ -1723,10 +1723,7 @@ Sends a whisper message.
 1. `Object` - The whisper post object:
   - `from`: `DATA`, 60 Bytes - (optional) The identity of the sender.
   - `to`: `DATA`, 60 Bytes - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
-  - `topics`: `Array of DATA` - Array of `DATA` topics, for the receiver to identify messages.  You can use the following combinations:
-    - `[A, B] = A && B`
-    - `[A, [B, C]] = A && (B || C)`
-    - `[null, A, B] = ANYTHING && A && B` `null` works as a wildcard
+  - `topics`: `Array of DATA` - Array of `DATA` topics, for the receiver to identify messages.
   - `payload`: `DATA` - The payload of the message.
   - `priority`: `QUANTITY` - The integer of the priority in a rang from ... (?).
   - `ttl`: `QUANTITY` - integer of the time to live in seconds.
@@ -1981,7 +1978,10 @@ params: [
   - `expiry`: `QUANTITY` - Integer of the time in seconds when this message should expire (?).
   - `ttl`: `QUANTITY` -  Integer of the time the message should float in the system in seconds (?).
   - `sent`: `QUANTITY` -  Integer of the unix timestamp when the message was sent.
-  - `topics`: `Array of DATA` - Array of `DATA` topics the message contained.
+  - `topics`: `Array of DATA` - Array of `DATA` topics the message contained. You can use the following combinations:
+    - `[A, B] = A && B`
+    - `[A, [B, C]] = A && (B || C)`
+    - `[null, A, B] = ANYTHING && A && B` `null` works as a wildcard
   - `payload`: `DATA` - The payload of the message.
   - `workProved`: `QUANTITY` - Integer of the work this message required before it was send (?).
 
