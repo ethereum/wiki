@@ -158,8 +158,8 @@ var x = one - two;
 ここでは、`one` と `two` は `uint8`となり、`x` に対しても同じ型が遺伝します。
 `uint8` 型の内部での引き算は、wrapping (`uint8`として処理) されるため、`x` の値は、`255` となります。
 
-integer のみで表された式であるならば、
-一時的には、256bit で表される型の最大の値すら超えて計算することもできます。
+integer のみで表された計算式であれば、
+一時的には、256bit で表される型の最大の値すら超えることが可能です。
 
 ```
 var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;
