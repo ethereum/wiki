@@ -1520,6 +1520,7 @@ console.log(value); // "0x4f554b443"
 ***
 
 #### web3.shh
+
 [Whisper  Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
 
 ##### Example
@@ -1534,15 +1535,26 @@ var shh = web3.shh;
 
    web3.shh.post(object [, callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+This method should be called, when we want to post whisper message to teh network.
 
-This method should be called, when we want to post whisper message. `_message` object may have following fields:
-  * `from`: identity of sender as hexString
-  * `to`: identity of receiver as hexString
-  * `payload`: message payload
-  * `ttl`: time to live in seconds
-  * `workToProve`: // or priority TODO
-  * `topics`: array of strings or hexStrings, with message topics
+##### Parameters
+
+1. `Object` - The post object:
+  - `from`: `String`, 60 Bytes HEX - (optional) The identity of the sender.
+  - `to`: `String`, 60 Bytes  HEX - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
+  - `topics`: `Array of Strings` - Array of topics `Strings`, for the receiver to identify messages.
+  - `payload`: `String|Number|Object` - The payload of the message. Will be autoconverted to a HEX string before.
+  - `priority`: `Number` - The integer of the priority in a rang from ... (?).
+  - `ttl`: `Number` - integer of the time to live in seconds.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+##### Returns
+
+`Boolean` - returns `true` if the message was send, otherwise `false`.
+
+
+##### Example
+
 ```js
 var identity = web3.shh.newIdentity();
 var topic = 'example';
@@ -1565,13 +1577,19 @@ web3.shh.post(message);
 
     web3.shh.newIdentity([callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
 Should be called to create new identity.
+
+##### Parameters
+
+1. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
 
 ##### Returns
 
-a new identity hex string.
+`String` - A new identity HEX string.
+
+
+##### Example
 
 ```js
 var identity = web3.shh.newIdentity();
@@ -1582,15 +1600,18 @@ console.log(identity); // "0xc931d93e97ab07fe42d923478ba2465f283f440fd6cabea4dd7
 
 #### web3.shh.hasIdentity
 
-    web3.shh.hasIdentity([callback])
+    web3.shh.hasIdentity(identity, [callback])
 
-If you pass an optional callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+Should be called, if we want to check if user has given identity.
 
-Should be called, if we want to check if user has given identity. Accepts one param. Returns true if he has, otherwise false.
+##### Parameters
+
+1. `String` - The identity to check.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-a boolean whether or not the identity exists.
+`Boolean` - returns `true` if the identity exists, otherwise `false`.
 
 
 ##### Example
@@ -1626,64 +1647,39 @@ console.log(result2); // false
 
 #### web3.shh.filter
 
-    wev3.shh.filter(options)
-
-This method should be used, when you want to watch whisper messages.
-Available filter options are:
-* `topics`: array of strings. filter messages with by this topic(s)
-* `to`: filter the identity of receiver of the message
-
-##### Example
-
 ```js
-var topic = 'example';
+var filter = web3.shh.filter(options)
 
-var options = {
-  topics: [topic],
-  to: '0x32jkh23kjh4j23h5j34h5j3464'
-};
-
-var filter = web3.shh.filter(options);
-
-filter.watch(function(res) {
-  console.log(res);
-  /* {
-  "expiry":1422565026,
-  "from":"0x3ec052fc3376f8a218b24b652803a5892038c39419a9a44923a61b113b7785d16ed1572df628859af3504670e4df31dcd8b3ee9a2110fd710c948690f0557394",
-  "hash":"0x33eb2da77bf3527e28f8bf493650b1879b08c4f2a362beae4ba2f71bafcd91f9",
-  "payload": 'The send message',
-  "payloadRaw": "0xjk5h34kj5h34kj6kj346456547trhfghfdgh",
-  "sent": 1422564926,
-  "to":"0x32jkh23kjh4j23h5j34h5j3464",
-  "topics":['myTopic'],
-  "ttl":100,
-  "workProved":0
-  } 
-  */
+// watch for changes
+event.watch(function(error, result){
+  if (!error)
+    console.log(result);
 });
 ```
 
-# Example
+Watch for incoming whisper messages.
 
-A simple HTML snippet that will display the user's primary account balance of Ether:
-```html
-<html><body>
-<div>You have <span id="ether">?</span> Weis</div>
-<script>
-web3.eth.filter('pending').watch(function() {
-    var balance = web3.eth.getBalance(web3.eth.coinbase);
-    document.getElementById("ether").innerText = balance.toString(10);
-});
+##### Parameters
 
-...
+1. `Object` - The filter options:
+  * `topics`: `Array of Strings` - Filters messages by this topic(s). You can use the following combinations:
+    - `['topic1', 'topic2'] == 'topic1' && 'topic2'`
+    - `['topic1', ['topic2', 'topic3']] == 'topic1' && ('topic2' || 'topic3')`
+    - `[null, 'topic1', 'topic2'] == ANYTHING && 'topic1' && 'topic2'` -> `null` works as a wildcard
+  * `to`: Filter by identity of receiver of the message. If provided and the node has this identity, it will decrypt incoming encrypted messages.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
-filter.stopWatching();
-</script>
-</body></html>
-```
+##### Callback return
 
-To test it, just put it in file and save. Load it in AlethZero and point the URL to file:///WHEREVER_YOU_SAVED_IT
+`Object` - The incoming message:
 
-Job done. Now go create.
+  - `from`: `String`, 60 Bytes - The sender of the message, if a sender was specified.
+  - `to`: `String`, 60 Bytes - The receiver of the message, if a receiver was specified.
+  - `expiry`: `Number` - Integer of the time in seconds when this message should expire (?).
+  - `ttl`: `Number` -  Integer of the time the message should float in the system in seconds (?).
+  - `sent`: `Number` -  Integer of the unix timestamp when the message was sent.
+  - `topics`: `Array of String` - Array of `String` topics the message contained.
+  - `payload`: `String` - The payload of the message.
+  - `workProved`: `Number` - Integer of the work this message required before it was send (?).
 
-more examples can be found [here](https://github.com/ethereum/web3.js/tree/master/example)
+
