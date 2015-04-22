@@ -1215,8 +1215,11 @@ You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethe
 
 ##### Returns
 
-`Object` - A contract object, which can be initiated using `var myContract = new ReturnedContractObject(myContractAddress)`.
+`Object` - A contract object, which can be initiated as follows:
 
+```js
+var myContract = new ReturnedContractObject(myContractAddress)
+```
 
 ##### Example
 
