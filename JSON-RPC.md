@@ -1888,7 +1888,10 @@ Creates filter to notify, when client receives whisper message matching the filt
 
 1. `Object` - The filter options:
   - `to`: `DATA`, 60 Bytes - (optional) Identity of the receiver. *When present it will try to decrypt any incoming message if the client holds the private key to this identity.*
-  - `topics`: `Array of DATA` - Array of `DATA` topics which the incoming message's topics should match. 
+  - `topics`: `Array of DATA` - Array of `DATA` topics which the incoming message's topics should match.  You can use the following combinations:
+    - `[A, B] = A && B`
+    - `[A, [B, C]] = A && (B || C)`
+    - `[null, A, B] = ANYTHING && A && B` `null` works as a wildcard
 
 ```js
 params: [{
@@ -1978,10 +1981,7 @@ params: [
   - `expiry`: `QUANTITY` - Integer of the time in seconds when this message should expire (?).
   - `ttl`: `QUANTITY` -  Integer of the time the message should float in the system in seconds (?).
   - `sent`: `QUANTITY` -  Integer of the unix timestamp when the message was sent.
-  - `topics`: `Array of DATA` - Array of `DATA` topics the message contained. You can use the following combinations:
-    - `[A, B] = A && B`
-    - `[A, [B, C]] = A && (B || C)`
-    - `[null, A, B] = ANYTHING && A && B` `null` works as a wildcard
+  - `topics`: `Array of DATA` - Array of `DATA` topics the message contained.
   - `payload`: `DATA` - The payload of the message.
   - `workProved`: `QUANTITY` - Integer of the work this message required before it was send (?).
 
