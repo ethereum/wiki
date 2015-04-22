@@ -562,6 +562,22 @@ The reason for this is that `C` requests `X` to override `A` (by specifying `A, 
 
 A simple rule to remember is to specify the base classes in the order from "most base-like" to "most derived".
 
+## Abstract Contracts
+
+Contract functions can lack an implementation as in the following example (note that the function declaration header is terminated by `;`).
+```
+contract feline {
+  function utterance() returns (bytes32);
+}
+```
+Such contracts cannot be compiled (even if they contain implemented functions alongside non-implemented functions), but they can be used as base contracts:
+```
+contract Cat is feline {
+  function utterance() returns (bytes32) { return "miaow"; }
+}
+```
+If a contract inherits from an abstract contract and does not implement all non-implemented functions by overriding, it will itself be abstract.
+
 ## Visibility Specifiers
 
 Functions and storage variables can be specified as being `public`, `internal` or `private`, where the default for functions is `public` and `internal` for storage variables. In addition, functions can also be specified as `external`.
