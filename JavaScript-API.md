@@ -76,14 +76,14 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [listening](#web3netlistening)
     * [peerCount](#web3ethpeercount)
   * [eth](#web3eth)
+    * [defaultBlock](#web3ethdefaultblock)
     * [coinbase](#web3ethcoinbase)
     * [gasPrice](#web3ethgasprice)
     * [accounts](#web3ethaccounts)
     * [mining](#web3ethmining)
-    * [register(hexString)](#web3ethregister)
-    * [unRegister(hexString)](#web3ethunregister)
-    * [defaultBlock](#web3ethdefaultblock)
     * [blockNumber](#web3ethblocknumber)
+    * [register(hexString)](#web3ethregister) (Not implemented yet)
+    * [unRegister(hexString)](#web3ethunregister) (Not implemented yet)
     * [getBalance(address)](#web3ethgetbalance)
     * [getStorageAt(address, position)](#web3ethgetstorageat)
     * [getCode(address)](#web3ethgetcode)
@@ -101,7 +101,8 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
         - [stopWatching(callback)](#web3ethfilter)
         - [get()](#web3ethfilter)
     * [contract(abiArray)](#web3ethcontract)
-    * [contract.event()](#contract-events)
+    * [contract.myMethod()](#contract-methods)
+    * [contract.myEvent()](#contract-events)
     * [getCompilers()](#web3ethgetcompilers)
     * [compile.lll(string)](#web3ethcompilelll)
     * [compile.solidity(string)](#web3ethcompilesolidity)
@@ -563,6 +564,45 @@ var eth = web3.eth;
 
 ***
 
+#### web3.eth.defaultBlock
+
+    web3.eth.defaultBlock
+
+This default block is used for the following methods (optionally you can overwrite the defaultBlock by passing it as the last parameter):
+
+- [web3.eth.getBalance()](#web3ethgetbalance)
+- [web3.eth.getCode()](#web3ethgetcode)
+- [web3.eth.getTransactionCount()](#web3ethgettransactioncount)
+- [web3.eth.getStorageAt()](#web3ethgetstorageat)
+- [web3.eth.call()](#web3ethcall)
+
+##### Values
+
+Default block parameters can be one of the following:
+
+- `Number` - a block number
+- `String` - `"earliest"`, the genisis block
+- `String` - `"latest"`, the latest block (current head of the blockchain)
+- `String` - `"pending"`, the currently mined block (including pending transactions)
+
+*Default is* `latest`
+
+##### Returns
+
+`Number|String` - The default block number to use when querying a state.
+
+##### Example
+
+```js
+var defaultBlock = web3.eth.defaultBlock;
+console.log(defaultBlock); // 'latest'
+
+// set the default block
+web3.eth.defaultBlock = 231;
+```
+
+***
+
 #### web3.eth.coinbase
 
     web3.eth.coinbase
@@ -645,6 +685,25 @@ console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
 
 ***
 
+#### web3.eth.blockNumber
+
+    web3.eth.blockNumber
+
+This property is read only and returns the current block number.
+
+##### Returns
+
+`Number` - The number of the most recent block.
+
+##### Example
+
+```js
+var number = web3.eth.blockNumber;
+console.log(number); // 2744
+```
+
+***
+
 #### web3.eth.register
 
     web3.eth.register(addressHexString [, callback])
@@ -694,64 +753,6 @@ Unregisters a given address.
 
 ```js
 web3.eth.unregister("0x407d73d8a49eeb85d32cf465507dd71d507100ca")
-```
-
-***
-
-#### web3.eth.defaultBlock
-
-    web3.eth.defaultBlock
-
-This default block is used for the following methods (optionally you can overwrite the defaultBlock by passing it as the last parameter):
-
-- [web3.eth.getBalance()](#web3ethgetbalance)
-- [web3.eth.getCode()](#web3ethgetcode)
-- [web3.eth.getTransactionCount()](#web3ethgettransactioncount)
-- [web3.eth.getStorageAt()](#web3ethgetstorageat)
-- [web3.eth.call()](#web3ethcall)
-
-##### Values
-
-Default block parameters can be one of the following:
-
-- `Number` - a block number
-- `String` - `"earliest"`, the genisis block
-- `String` - `"latest"`, the latest block (current head of the blockchain)
-- `String` - `"pending"`, the currently mined block (including pending transactions)
-
-*Default is* `latest`
-
-##### Returns
-
-`Number|String` - The default block number to use when querying a state.
-
-##### Example
-
-```js
-var defaultBlock = web3.eth.defaultBlock;
-console.log(defaultBlock); // 'latest'
-
-// set the default block
-web3.eth.defaultBlock = 231;
-```
-
-***
-
-#### web3.eth.blockNumber
-
-    web3.eth.blockNumber
-
-This property is read only and returns the current block number.
-
-##### Returns
-
-`Number` - The number of the most recent block.
-
-##### Example
-
-```js
-var number = web3.eth.blockNumber;
-console.log(number); // 2744
 ```
 
 ***
@@ -845,7 +846,7 @@ Returns a block matching the block number or block hash.
 
 ##### Parameters
 
-1. `String|Number` - The block number or hash. Or the string `"earliest"`, `"latest"` or `"pending"` as for the [default block parameter](#web3ethdefaultblock).
+1. `String|Number` - The block number or hash. Or the string `"earliest"`, `"latest"` or `"pending"` as in the [default block parameter](#web3ethdefaultblock).
 2. `Boolean` - (optional, default `false`) If `true`, the returned block will contain all transactions as objects, if `false` it will only contains the transaction hashes.
 3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
@@ -913,7 +914,7 @@ Returns the number of transaction in a given block.
 
 ##### Parameters
 
-1. `String|Number` - The block number or hash. Or the string `"earliest"`, `"latest"` or `"pending"` as for the [default block parameter](#web3ethdefaultblock).
+1. `String|Number` - The block number or hash. Or the string `"earliest"`, `"latest"` or `"pending"` as in the [default block parameter](#web3ethdefaultblock).
 2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
@@ -937,7 +938,7 @@ Returns a blocks uncle by a given uncle index position.
 
 ##### Parameters
 
-1. `String|Number` - The block number or hash. Or the string `"earliest"`, `"latest"` or `"pending"` as for the [default block parameter](#web3ethdefaultblock).
+1. `String|Number` - The block number or hash. Or the string `"earliest"`, `"latest"` or `"pending"` as in the [default block parameter](#web3ethdefaultblock).
 2. `Number` - The index position of the uncle.
 3. `Boolean` - (optional, default `false`) If `true`, the returned block will contain all transactions as objects, if `false` it will only contains the transaction hashes.
 4. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
@@ -1024,7 +1025,7 @@ Returns a transaction based on a block hash or number and the transactions index
 
 ##### Parameters
 
-1. `String` - A block number or hash. Or the string `"earliest"`, `"latest"` or `"pending"` as for the [default block parameter](#web3ethdefaultblock).
+1. `String` - A block number or hash. Or the string `"earliest"`, `"latest"` or `"pending"` as in the [default block parameter](#web3ethdefaultblock).
 2. `Number` - The transactions index position.
 3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
@@ -1238,9 +1239,10 @@ var MyContract = web3.eth.contract(abi);
 // initiate contract for an address
 var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
 
-myContractInstance.myMethod('this is test string param for call'); // myMethod call (implicit, default)
-myContractInstance.call().myMethod('this is test string param for call'); // myMethod call (explicit)
-myContractInstance.sendTransaction().myMethod('this is test string param for transact'); // myMethod sendTransaction
+var result = myContractInstance.myConstantMethod('myParam');
+console.log(result) // '0x25434534534'
+
+myContractInstance.myStateChangingMethod('someParam1', 23, {value: 200, gas: 2000});
 
 var filter = myContractInstance.myEvent({a: 5});
 filter.watch(function (error, result) {
@@ -1258,6 +1260,49 @@ filter.watch(function (error, result) {
 ```
 
 ***
+
+#### Contract Methods
+
+```js
+// Automatically determines the use of call or sendTransaction based on the method type
+myContractInstance.myMethod(param1 [, param2, ...] [, transactionObject]);
+
+// Explicitly calling this method
+myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject]);
+
+// Explicitly sending a transaction to this method
+myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject]);
+```
+
+The contract object exposes the contracts methods, which can be called using parameters and a transaction object.
+
+##### Parameters
+
+- `String|Number` - (optional) Zero or more parameters of the function.
+- `Object` - (optional) The last parameter can be a transaction object, see [web3.eth.sendTransaction](#web3ethsendtransaction) parameter 1 for more.
+
+##### Returns
+
+`String` - If its a call the result data, if its a send transaction a created contract address, or the transaction hash, see [web3.eth.sendTransaction](#web3ethsendtransaction) for details.
+
+
+##### Example
+
+```js
+// creation of contract object
+var MyContract = web3.eth.contract(abi);
+
+// initiate contract for an address
+var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
+
+var result = myContractInstance.myConstantMethod('myParam');
+console.log(result) // '0x25434534534'
+
+myContractInstance.myStateChangingMethod('someParam1', 23, {value: 200, gas: 2000});
+```
+
+***
+
 
 #### Contract Events
 
