@@ -95,8 +95,8 @@ When requests are made that act on the state of ethereum, the last default block
 The following options are possible for the defaultBlock parameter:
 
 - `HEX String` - an integer block number
-- `String "latest"` - for the latest minded block
 - `String "earliest"` for the earliest/genesis block
+- `String "latest"` - for the latest minded block
 - `String "pending"` - for the pending state/transactions
 
 ### JSON-RPC methods
@@ -611,7 +611,7 @@ Returns the number of transactions in a block from a block matching the given bl
 
 ##### Parameters
 
-1. `QUANTITY` - integer of a block number, or the string "latest", "earliest" or "pending", see the [default block parameter](#the-default-block-parameter)
+1. `QUANTITY|TAG` - integer of a block number, or the string `"earliest"`, `"latest"` or `"pending"`, as in the [default block parameter](#the-default-block-parameter).
 
 ```js
 params: [
@@ -908,7 +908,7 @@ Returns information about a block by block number.
 
 ##### Parameters
 
-1. `QUANTITY` - integer of a block number.
+1. `QUANTITY|TAG` - integer of a block number, or the string `"earliest"`, `"latest"` or `"pending"`, as in the [default block parameter](#the-default-block-parameter).
 2. `Boolean` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 
 ```js
@@ -1028,7 +1028,7 @@ Returns information about a transaction by block number and transaction index po
 
 ##### Parameters
 
-1. `QUANTITY` - a block number.
+1. `QUANTITY|TAG` - a block number, or the string `"earliest"`, `"latest"` or `"pending"`, as in the [default block parameter](#the-default-block-parameter).
 2. `QUANTITY` - the transaction index position.
 
 ```js
@@ -1093,7 +1093,7 @@ Returns information about a uncle of a block by number and uncle index position.
 
 ##### Parameters
 
-1. `QUANTITY` - a block number.
+1. `QUANTITY|TAG` - a block number, or the string `"earliest"`, `"latest"` or `"pending"`, as in the [default block parameter](#the-default-block-parameter).
 2. `QUANTITY` - the uncle's index position.
 
 ```js
