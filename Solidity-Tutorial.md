@@ -599,16 +599,16 @@ The next example is a bit more complex:
 ```
 contract complex {
   struct Data { uint a; bytes3 b; mapping(uint => uint) map; }
-  mapping(uint => mapping(bool => Data)) public data;
+  mapping(uint => mapping(bool => Data[])) public data;
 }
 ```
 
 It will generate a function of the following form:
 ```
-function data(uint arg1, bool arg2) returns (uint a, bytes3 b)
+function data(uint arg1, bool arg2, uint arg3) returns (uint a, bytes3 b)
 {
-  a = data[arg1][arg2].a;
-  b = data[arg1][arg2].b;
+  a = data[arg1][arg2][arg3].a;
+  b = data[arg1][arg2][arg3].b;
 }
 ```
 
