@@ -1218,7 +1218,8 @@ You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethe
 `Object` - A contract object, which can be initiated as follows:
 
 ```js
-var myContract = new ReturnedContractObject(myContractAddress)
+var MyContract = web3.eth.contract(abiArray);
+var myContractInstance = new MyContract(myContractAddress);
 ```
 
 ##### Example
