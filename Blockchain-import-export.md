@@ -1,3 +1,5 @@
+_**Note:** Binary format is concatenated RLP-encoded blocks_
+
 ## C++
 ### Import:
 ```
