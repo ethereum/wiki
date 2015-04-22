@@ -38,8 +38,8 @@ In this way we hope our initial version of Solidity and Mix lay down the foundat
 
 ### The Middleware
 
-Ethereum の middleware は、以下を含み、Affero licence のもとで配布予定です。LGPライセンスの一種のようなものです。
-* Javascriptで書かれた ethereum.jp 
+Ethereum の middleware は、以下の３つを含み、Affero licence のもとで配布予定です。これはLGPライセンスの一種のようなものです。
+* Javascriptで書かれた ethereum.js 
 * webthree libraries
 * eth (command line client) 
  
