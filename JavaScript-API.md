@@ -715,8 +715,8 @@ This default block is used for the following methods (optionally you can overwri
 Default block parameters can be one of the following:
 
 - `Number` - a block number
-- `String - `'latest'`, which would be the latest minded block
-- `String` - `'pending'`, which would the currently minded block including pending transactions
+- `String - `'latest'`, the latest block (current head of blockchain)
+- `String` - `'pending'`, the currently mined block (including pending transactions)
 
 *Default is* `latest`
 
@@ -844,7 +844,7 @@ Returns a block matching the block number or block hash.
 
 ##### Parameters
 
-1. `String|Number` - The block number or hash.
+1. `String|Number` - The block number or hash. Block number -1 refers to latest block, -2 to pending block.
 2. `Boolean` - (optional, default `false`) If `true`, the returned block will contain all transactions as objects, if `false` it will only contains the transaction hashes.
 3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
@@ -912,7 +912,7 @@ Returns the number of transaction in a given block.
 
 ##### Parameters
 
-1. `String|Number` - The block number or hash.
+1. `String|Number` - The block number or hash. Block number -1 refers to latest block, -2 to pending block.
 2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
@@ -936,7 +936,7 @@ Returns a blocks uncle by a given uncle index position.
 
 ##### Parameters
 
-1. `String|Number` - The block number or hash.
+1. `String|Number` - The block number or hash. Block number -1 refers to latest block, -2 to pending block.
 2. `Number` - The index position of the uncle.
 3. `Boolean` - (optional, default `false`) If `true`, the returned block will contain all transactions as objects, if `false` it will only contains the transaction hashes.
 4. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
@@ -1023,7 +1023,7 @@ Returns a transaction based on a block hash or number and the transactions index
 
 ##### Parameters
 
-1. `String` - A block hash or number.
+1. `String` - A block number or hash. Block number -1 refers to latest block, -2 to pending block.
 2. `Number` - The transactions index position.
 3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
