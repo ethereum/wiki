@@ -56,7 +56,7 @@ contract Coin {
     }
 }
 ```
-このcontractでは少し新しい概念が出てきます。　　  
+このコントラクトでは少し新しい概念が出てきます。　　  
 1. まず `address`型です。これは 160 bitの値で、論理数値演算できません。 　　   
 2. 状態変数`balance`を見て欲しいのですが、これは複雑なデータ型から成り立っており、  
 難しい言葉で言うと、`address`型から`uint`型への射(写像) ということになります。  
@@ -170,7 +170,8 @@ var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;
 
 ## Ether and Time Units
 
-A literal number can take a suffix of `wei`, `finney`, `szabo` or `ether` to convert between the subdenominations of ether, where Ether currency numbers without a postfix are assumed to be "wei", e.g. `2 ether == 2000 finney` evaluates to `true`.
+文字としての数値は `wei` , `finney` , `szabo` , `ether` といった単位を取ることができます。
+単位なしとすると、単位は "wei" となります。例を挙げると、 `2 ether == 2000 finney` は `true` を返します。
 
 Furthermore, suffixes of `seconds`, `minutes`, `hours`, `days`, `weeks` and `years` can be used to convert between units of time where seconds are the base unit and units are converted naively (i.e. a year is always exactly 365 days, etc.).
 
