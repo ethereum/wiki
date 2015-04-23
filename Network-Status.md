@@ -9,7 +9,7 @@ Clone the git repo, then install pm2:
 ```
 git clone https://github.com/cubedro/eth-net-intelligence-api
 cd eth-net-intelligence-api
-sudo npm install
+npm install
 sudo npm install -g pm2
 ```
 
