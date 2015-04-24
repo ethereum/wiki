@@ -59,6 +59,5 @@
 
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
-- [Blockchain based Proof of Work](https://github.com/ethereum/wiki/wiki/Blockchain-based-Proof-of-Work)
 - [Chain Fibers](https://github.com/ethereum/wiki/wiki/Chain-Fibers-Redux)
 - [Glossary](https://github.com/ethereum/wiki/wiki/Glossary)
