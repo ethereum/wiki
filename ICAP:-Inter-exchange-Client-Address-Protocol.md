@@ -72,9 +72,13 @@ A QR code may be generated directly from the URI using standard QR encodings. Fo
 
 # Transaction Semantics
 
-The mechanism for asset transfer over two routing protocols are specified, both of which are specific to the Ethereum domain (country-code of `XE`). One is for currency transfers directly to clients with the system address found through a Registry-lookup system of the client-ID, denoted by asset class `ETH`, whereas the other is for transfers to an intermediary with associated data to specify client, denoted by asset class `XET`.
+The mechanism for indirect asset transfer over three routing protocols are specified, all of which are specific to the Ethereum domain (country-code of `XE`). One is for currency transfers directly to an included address ("direct"), another is for clients with the system address found through a Registry-lookup system of the client-ID, denoted by asset class `ETH`, whereas the last is for transfers to an intermediary with associated data to specify client, denoted by asset class `XET` (the latter two are "indirect").
 
-## Direct transfers: ETH
+## Direct
+
+If the IBAN code is 34 characters, it is a direct address; a direct transfer is made to the address which, when base-36 encoded gives exactly the data segment (the last 30 characters) of the IBAN code.
+
+## Indirect ETH Asset: Simple transfers
 
 Within the ETH asset code of Ethereum's country-code (XE), i.e. as long as the code begins with `XE**ETH` (where `**` is the valid checksum), then we can define the required transaction to be the deposit address given by a call to the *registry contract* denoted by the institution code. For institutions not beginning with `X`, this corresponds to the primary address associated with the *Ethereum standard name*:
 
@@ -86,7 +90,7 @@ We define a *registry contract* as a contract fulfilling the Registry interface 
 
 **TODO**: JS code for specifying the transfer.
 
-## Institution transfers: XET
+## Indirect XET Asset: Institution transfers
 
 For the `XET` asset code within the Ethereum country code (i.e. while the code begins XE**XET), then we can derive the transaction that must be made through a lookup to the Ethereum `iban` registry contract. For a given institution, this contract specifies two values: the deposit call signature hash and the institution's Ethereum address.
 
