@@ -28,7 +28,7 @@ The BBAN for this code when direct will be 30 characters and will comprise one f
 
 e.g. XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS corresponds to the address `00c5496af02445bd74e10299513915755b7e4a88`.
 
-#### Indirect
+#### Indirect 
 
 The BBAN for this code when indirect will be 16 characters and will comprise three fields:
 
