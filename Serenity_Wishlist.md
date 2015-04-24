@@ -49,4 +49,16 @@ The Ethereum virtual machine has a number of suboptimalities at present, and so 
 
 ### Sending funds
 
-Currently, there is no way to send _all_ of one's funds to a contract from an externally owned account, unless one can exactly estimate the amount of gas that will be consumed. This adds some inconvenience to the process of emptying accounts. A possible solution is a "keep the change" opcode, by which a contract can (i) absorb all remaining gas in a message, (ii) claim `gas * gasprice` as ether for itself, and (iii) have that gas NOT count toward the miner's revenue or the block's gas limit. 
+Currently, there is no way to send _all_ of one's funds to a contract from an externally owned account, unless one can exactly estimate the amount of gas that will be consumed. This adds some inconvenience to the process of emptying accounts. A possible solution is a "keep the change" opcode, by which a contract can (i) absorb all remaining gas in a message, (ii) claim `gas * gasprice` as ether for itself, and (iii) have that gas NOT count toward the miner's revenue or the block's gas limit.
+
+### Currency Neutrality
+
+Allow any currency to be used for purposes of security deposits, paying rent, etc. One possible framework in which this could happen is as follows:
+
+1. Create a base protocol-level concept of "currency". An eligible currency should give the protocol the ability to print more units of it and should support the standard send/receive/allow withdrawal interface.
+2. Have (and subsidize liquidity on LMSR-style?) an on-protocol decentralized exchange to determine the price of each token relative to each other token.
+3. Anyone can set a security deposit of any size in any currency. The protocol keeps track of a minimum security deposit in every currency (adjusted to target some number of validators), and you cannot add a deposit unless you provide at least this quantity. A deposit ceases to be usable if it falls below 50% of the minimum.
+
+Alternatives include being more liberal with regard to the assets involved, but using some kind of preference-revelation scheme to determine the value of a maximally arbitrary asset (note: this is hard when you do not have a single "favored currency" which you are assuming will have higher liquidity than everything else).
+
+A third option is to have a demurrage-heavy (or otherwise ephemeral) pseudo-currency, similar to gas, which is in some way assigned to validators.
