@@ -10,8 +10,10 @@ This document outlines known flaws and missing features in Ethereum Frontier and
 In the process of designing Ethereum 1.0 we have done a thorough job of optimizing the Ethereum virtual machine's computational power, but a much less thorough job of optimizing the database. There exists the possibility for substantial space savings, for both full nodes and light clients, by reorganizing Merkle tree structures and accounts. One example model for a more optimized state tree is the following:
 
 1. Assign account numbers sequentially, not via `address = sha3(pubkey) % 2**160`. This means that the set of accounts is contiguous, allowing standard binary Merkle trees to be used in place of Patricia trees, saving substantial space in state, history and LOAD/SSTORE time due to the resulting tight-packing. 
-2. Charge rent for accounts. This entails expanding accounts by adding a `last_accessed` parameter, and then when an account is accessed we update the parameter to the current block timestamp and simultaneously subtract `rent * (block.timestamp - acct.last_accessed)` from the account balance, where `rent` is somehow dynamically adjusted. If the new balance is below zero, then the account is destroyed and a large gas refund is provided. We theorize that large miners and account holders will want to create transactions that destroy accounts that are lagging on rent in order to reduce storage bloat; alternatively we can incentivize it with an additional security deposit.
-3. Require transactions to include a timestamp, so that they can only be valid in `[timestamp, timestamp + 3600]`. This prevents replay attacks in the special case that accounts go down to zero balance, get deleted and then regain balance but with a nonce reset to zero.
+2. Where Patricia trees are required, switch from hex to binary (est. 10-50% savings)
+3. Where Patricia trees are required, note that currently a proof stores redundant info by storing a hash of a tree node in one node and then the other node separately. Create a special-purpose compression algorithm, either LZV style or placing nodes into each other directly when they refer to each other, to deduplicate (est. 35% savings).
+4. Charge rent for accounts. This entails expanding accounts by adding a `last_accessed` parameter, and then when an account is accessed we update the parameter to the current block timestamp and simultaneously subtract `rent * (block.timestamp - acct.last_accessed)` from the account balance, where `rent` is somehow dynamically adjusted. If the new balance is below zero, then the account is destroyed and a large gas refund is provided. We theorize that large miners and account holders will want to create transactions that destroy accounts that are lagging on rent in order to reduce storage bloat; alternatively we can incentivize it with an additional security deposit.
+5. Require transactions to include a timestamp, so that they can only be valid in `[timestamp, timestamp + 3600]`. This prevents replay attacks in the special case that accounts go down to zero balance, get deleted and then regain balance but with a nonce reset to zero.
 
 ### More expressive Merkle trees
 
@@ -34,7 +36,7 @@ Ideally, the initial limit would be large enough to support many kinds of signat
 
 ### Compression
 
-Currently, wire and database compression is done with a fairly crude algorithm that run-length-encodes zeroes but otherwise leaves data unchanged. Substantial gains can probably be made by applying either a pre-generated Hamming code or some separate encryption algorithm such as [http://lloyd.github.io/easylzma/](http://lloyd.github.io/easylzma/).
+Currently, wire and database compression is done with a fairly crude algorithm that run-length-encodes zeroes but otherwise leaves data unchanged. Substantial gains can probably be made by applying either a pre-generated Huffman code or some separate compression algorithm such as [http://lloyd.github.io/easylzma/](http://lloyd.github.io/easylzma/).
 
 ### Virtual machine
 
