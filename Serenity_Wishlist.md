@@ -46,6 +46,7 @@ The Ethereum virtual machine has a number of suboptimalities at present, and so 
 2. The addition of `MCOPY` as an opcode and not a contract.
 3. Replacement of DUP1...DUP16 and SWAP1...SWAP16 with `DUP <n>` (where `<n>` is stored similarly to pushdata). This allows for unlimited depth in stack variables.
 4. The addition of a `DEPTH` opcode to determine the current call stack depth, useful or determining whether or not there is enough stack space to make a particular sub-call with a compile-time-known depth.
+5. A more radical rearchitecture where the VM deals with 64-bit values only, and long-arithmetic is done directly over memory slices. This removes the 256-bit limit and allows easy crypto calculations at arbitrary sizes.
 
 ### Sending funds
 
