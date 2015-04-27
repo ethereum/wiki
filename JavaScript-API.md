@@ -514,7 +514,7 @@ console.log(value.toString(10)); // '200000000000000000000001'
 
 ***
 
-#### web3.net
+### web3.net
 
 #### web3.net.listening
 
@@ -554,7 +554,7 @@ console.log(peerCount); // 4
 
 ***
 
-#### web3.eth
+### web3.eth
 
 Contains the ethereum blockchain related methods.
 
@@ -1473,7 +1473,7 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ***
 
-#### web3.db
+### web3.db
 
 #### web3.db.putString
 
@@ -1573,7 +1573,7 @@ console.log(value); // "0x4f554b443"
 
 ***
 
-#### web3.shh
+### web3.shh
 
 [Whisper  Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
 
