@@ -72,7 +72,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [toWei(numberStringOrBigNumber, unit)](#web3toWei)
   * [toBigNumber(numberOrHexString)](#web3tobignumber)
   * [isAddress(hexString)](#web3isAddress)
-  * [net](#)
+  * [net](#web3net)
     * [listening](#web3netlistening)
     * [peerCount](#web3ethpeercount)
   * [eth](#web3eth)
@@ -513,6 +513,8 @@ console.log(value.toString(10)); // '200000000000000000000001'
 ```
 
 ***
+
+#### web3.net
 
 #### web3.net.listening
 
@@ -1731,5 +1733,4 @@ Watch for incoming whisper messages.
   - `topics`: `Array of String` - Array of `String` topics the message contained.
   - `payload`: `String` - The payload of the message.
   - `workProved`: `Number` - Integer of the work this message required before it was send (?).
-
 
