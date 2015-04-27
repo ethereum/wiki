@@ -6,12 +6,14 @@ typedef void const* ethash_light_t;
 typedef void const* ethash_full_t;
 typedef struct ethash_h256 { uint8_t b[32]; } ethash_h256_t;
 
-ethash_light_t ethash_new_light(ethash_params const* params, ethash_h256_t *seed);
-void ethash_compute_light(ethash_return_value *ret, ethash_light_t light, ethash_params const *params, const ethash_h256_t *header_hash, const uint64_t nonce);
+ethash_light_t ethash_new_light(ethash_h256_t const* seed);
+ethash_return_value ethash_compute_light(ethash_light_t light, ethash_h256_t header_hash, uint64_t nonce);
 void ethash_delete_light(ethash_light_t light);
 
-ethash_full_t ethash_new_full(ethash_params const* params, void const* cache, const ethash_h256_t *seed, CallBack c);
-void ethash_compute_full(ethash_return_value *ret, ethash_full_t full, ethash_params const *params, const ethash_h256_t *header_hash, const uint64_t nonce);
+ethash_full_t ethash_new_full(ethash_light_t cache, CallBack c);
+uint64_t ethash_dag_size(ethash_full_t full);
+void const* ethash_dag(ethash_full_t full);
+ethash_return_value ethash_compute_full(ethash_full_t full, ethash_h256_t header_hash, uint64_t nonce);
 void ethash_delete_full(ethash_full_t full);
 ```
 
@@ -28,11 +30,10 @@ int callback(unsigned _progress)
 }
 void main()
 {
-  ethash_params p;
   ethash_light_t light;
   ethash_h256_t seed;
   // TODO: populate p, seed, light
-  ethash_full_t dag = ethash_new_full(&p, cache, &seed, &callback);
+  ethash_full_t dag = ethash_new_full(light, seed, &callback);
   if (!dag)
   {
     printf("Failed generating DAG :-(\n");
@@ -45,7 +46,7 @@ void main()
   uint64_t nonce = time(0);
   ethash_return_value ret;
   for (; !isWinner(ret); nonce++)
-    ethash_compute_full(&ret, dag, &p, &headerHash, nonce);
+    ret = ethash_compute_full(dag, headerHash, nonce);
   printf("Got winner! nonce is %d\n", nonce);
   ethash_delete_full(dag);
 }
