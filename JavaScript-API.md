@@ -1473,6 +1473,8 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ***
 
+#### web3.db
+
 #### web3.db.putString
 
     web3.db.putString(db, key, value)
@@ -1733,4 +1735,3 @@ Watch for incoming whisper messages.
   - `topics`: `Array of String` - Array of `String` topics the message contained.
   - `payload`: `String` - The payload of the message.
   - `workProved`: `Number` - Integer of the work this message required before it was send (?).
-
