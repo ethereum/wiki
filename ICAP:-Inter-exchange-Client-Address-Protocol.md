@@ -39,7 +39,7 @@ The BBAN for this code when indirect will be 16 characters and will comprise thr
 Including the four initial characters, this leads to a final client-account address length of 20 characters, of the form:
 
 ```
-XE66ETHXREGGAVOFYORK
+XE81ETHXREGGAVOFYORK
 ```
 
 Split into:
@@ -61,14 +61,14 @@ Institution codes beginning with `X` are reserved for system use.
 General URIs can be formed though the URI scheme name `iban`, followed by the colon character `:`, followed by the 20-character alphanumeric identifier, thus for the example above, we would use:
 
 ```
-iban:XE66ETHXREGGAVOFYORK
+iban:XE81ETHXREGGAVOFYORK
 ```
 
 ### QR Code
 
-A QR code may be generated directly from the URI using standard QR encodings. For example, the example above `iban:XE66ETHXREGGAVOFYORK` would have the corresponding QR code:
+A QR code may be generated directly from the URI using standard QR encodings. For example, the example above `iban:XE81ETHXREGGAVOFYORK` would have the corresponding QR code:
 
-![QR code for iban:XE66ETHXREGGAVOFYORK](http://opensecrecy.com/qr-XE66ETHXREGGAVOFYORK.gif)
+![QR code for iban:XE81ETHXREGGAVOFYORK](http://opensecrecy.com/qr-XE81ETHXREGGAVOFYORK.gif)
 
 # Transaction Semantics
 
