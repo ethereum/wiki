@@ -6,7 +6,7 @@ typedef /*...*/ ethash_light_t;
 typedef /*...*/ ethash_full_t;
 typedef struct ethash_h256 { uint8_t b[32]; } ethash_h256_t;
 
-ethash_light_t ethash_new_light(ethash_h256_t const* seed);
+ethash_light_t ethash_new_light(ethash_h256_t seed);
 ethash_return_value ethash_compute_light(ethash_light_t light, ethash_h256_t header_hash, uint64_t nonce);
 void ethash_delete_light(ethash_light_t light);
 
