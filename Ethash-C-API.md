@@ -2,8 +2,8 @@ This is just a documentation of the request of the C API described in [this PR](
 
 ```c
 typedef int(*Callback)(unsigned);
-typedef void const* ethash_light_t;
-typedef void const* ethash_full_t;
+typedef /*...*/ ethash_light_t;
+typedef /*...*/ ethash_full_t;
 typedef struct ethash_h256 { uint8_t b[32]; } ethash_h256_t;
 
 ethash_light_t ethash_new_light(ethash_h256_t const* seed);
