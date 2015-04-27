@@ -292,7 +292,7 @@ functions:
 contract ArrayContract {
   uint[2**20] m_aLotOfIntegers;
   bool[2][] m_pairsOfFlags;
-  function setAllFlagPairs(bool[2][] newPairs) {
+  function setAllFlagPairs(bool[2][] newPairs) external {
     // assignment to array replaces the complete array
     m_pairsOfFlags = newPairs;
   }
