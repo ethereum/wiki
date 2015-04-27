@@ -7,11 +7,11 @@ typedef /*...*/ ethash_full_t;
 typedef struct ethash_h256 { uint8_t b[32]; } ethash_h256_t;
 typedef struct ethash_result { ethash_h256_t value; ethash_h256_t hixhash; } ethash_result_t;
 
-ethash_light_t ethash_new_light(ethash_h256_t seed);
+ethash_light_t ethash_new_light(unsigned number);
 ethash_result_t ethash_compute_light(ethash_light_t light, ethash_h256_t header_hash, uint64_t nonce);
 void ethash_delete_light(ethash_light_t light);
 
-ethash_full_t ethash_new_full(ethash_light_t cache, CallBack c);
+ethash_full_t ethash_new_full(ethash_light_t light, CallBack c);
 uint64_t ethash_dag_size(ethash_full_t full);
 void const* ethash_dag(ethash_full_t full);
 ethash_result_t ethash_compute_full(ethash_full_t full, ethash_h256_t header_hash, uint64_t nonce);
