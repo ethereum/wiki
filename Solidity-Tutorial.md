@@ -583,13 +583,13 @@ If a contract inherits from an abstract contract and does not implement all non-
 
 Functions and storage variables can be specified as being `public`, `internal` or `private`, where the default for functions is `public` and `internal` for storage variables. In addition, functions can also be specified as `external`.
 
-External: External functions are part of the contract interface and they can be called from other contracts and via transactions. An external function `f` cannot be called internally (i.e. `f()` does not work, but `this.f()` works). Furthermore, all function parameters are immutable.
+`external`: External functions are part of the contract interface and they can be called from other contracts and via transactions. An external function `f` cannot be called internally (i.e. `f()` does not work, but `this.f()` works). Furthermore, all function parameters are immutable.
 
-Public: Public functions are part of the contract interface and can be either called internally or via messages. For public storage variables, an automatic accessor function (see below) is generated.
+`public`: Public functions are part of the contract interface and can be either called internally or via messages. For public storage variables, an automatic accessor function (see below) is generated.
 
-Inherited: Those functions and storage variables can only be accessed internally.
+`internal`: Those functions and storage variables can only be accessed internally, i.e. from within the current contract or contracts deriving from it without using `this`.
 
-Private: Private functions and storage variables are only visible for the contract they are defined in and not in derived contracts.
+`private`: Private functions and storage variables are only visible for the contract they are defined in and not in derived contracts.
 
 ```js
 contract c {
