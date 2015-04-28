@@ -953,8 +953,8 @@ params: [
 
   - `hash`: `DATA`, 32 Bytes - hash of the transaction.
   - `nonce`: `QUANTITY` - the number of transactions made by the sender prior to this one.
-  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this transaction was in. `null` when the transaction is pending.
-  - `blockNumber`: `QUANTITY` - block number where this transaction was in. `null` when the transaction is pending.
+  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this transaction was in.
+  - `blockNumber`: `QUANTITY` - block number where this transaction was in.
   - `transactionIndex`: `QUANTITY` - integer of the transactions index position in the block.
   - `from`: `DATA`, 20 Bytes - address of the sender.
   - `to`: `DATA`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
@@ -1379,8 +1379,8 @@ For filters created with `eth_newFilter` logs are objects with following params:
   - `logIndex`: `QUANTITY` - integer of the log index position in the block.
   - `transactionIndex`: `QUANTITY` - integer of the transactions index position log was created from.
   - `transactionHash`: `DATA`, 32 Bytes - hash of the transactions this log was created from.
-  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
-  - `blockNumber`: `QUANTITY` - the block number where this log was in. `null` when the log is pending.
+  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this log was in.
+  - `blockNumber`: `QUANTITY` - the block number where this log was in.
   - `address`: `DATA`, 32 Bytes - address from which this log originated.
   - `data`: `DATA` - contains one or more 32 Bytes non-indexed arguments of the log.
   - `topics`: `Array of DATA` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
