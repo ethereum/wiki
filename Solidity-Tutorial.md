@@ -594,7 +594,7 @@ Functions and storage variables can be specified as being `public`, `internal` o
 ```js
 contract c {
   function f(uint a) private returns (uint b) { return a + 1; }
-  function setData(uint a) inherited { data = a; }
+  function setData(uint a) internal { data = a; }
   uint public data;
 }
 ```
