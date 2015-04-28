@@ -35,12 +35,17 @@ Several commands are available:
 - `pm2 gracefulReload node-app` for a soft reload;
 - `pm2 stop node-app` to stop the app;
 - `pm2 kill` to kill the daemon.
-
+   
+### Updating
+In order to update you have to do the following:
+- `git pull` to pull the latest version
+- `sudo npm update` to update the dependencies
+- `pm2 gracefulReload node-app` to reload the client   
    
    
+***   
 
 ## Auto-installation on a fresh Ubuntu install
-
 Fetch and run the build shell. This will install everything you need: latest ethereum - CLI from develop branch (you can choose between eth or geth), node.js, npm & pm2.
 
 ```bash
@@ -48,7 +53,6 @@ bash <(curl https://raw.githubusercontent.com/cubedro/eth-net-intelligence-api/m
 ```
 
 ### Configuration
-
 Configure the app modifying [processes.json](/eth-net-intelligence-api/blob/master/processes.json). Note that you have to modify the backup processes.json file located in `./bin/processes.json` (to allow you to set your env vars without being rewritten when updating).
 
 ```js
@@ -82,7 +86,6 @@ geth --rpc
 the default port (if one is not specified) for rpc under geth is 8545
 
 ### Updating
-
 To update the API client use the following command:
 
 ```bash
