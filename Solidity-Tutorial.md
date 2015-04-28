@@ -540,13 +540,14 @@ contract Base1 is mortal {
 contract Base2 is mortal {
     function kill() { /* do cleanup 2 */ super.kill(); }
 }
-contract Final is Base1, Base2 {
+contract Final is Base2, Base1 {
 }
 ```
 
 If `Base1` calls a function of `super`, it does not simply call this function on one of its
 base contracts, it rather calls this function on the next base contract in the final
-inheritance graph, so it will call `Base2.kill()`. Note that the actual function that
+inheritance graph, so it will call `Base2.kill()` (note that the final inheritance sequence is
+-- starting with the most derived contract: Final, Base1, Base2, mortal, owned). Note that the actual function that
 is called when using super is not known in the context of the class where it is used,
 although its type is known. This is similar for ordinary virtual method lookup.
 
