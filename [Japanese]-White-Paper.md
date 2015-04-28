@@ -3,7 +3,7 @@
 ### A Next-Generation Smart Contract and Decentralized Application Platform
 
 ナカモトサトシの論文により、2009年に開発された Bitcoin は通貨・貨幣における革新的な発明だと
-謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例である。 "[intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/)"
+謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例である ([intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/)) 。 
 しかし、その壮大なBitcoinの実験における、特筆すべき重要な部分というのは別にあります。
 それは分散型大衆決定のツールとして、まさにその基礎をなすBlockchainの技術であり、
 急速に人々の注目を集めつつあります。
