@@ -14,7 +14,7 @@ have to use a client like AlethZero.
 
 ## Simple Example
 
-```
+```js
 contract SimpleStorage {
     uint storedData;
     function set(uint x) {
@@ -33,7 +33,7 @@ or retrieve the value of the variable.
 
 ## Subcurrency Example
 
-```
+```js
 contract Coin {
     address minter;
     mapping (address => uint) balances;
@@ -101,7 +101,7 @@ be converted to `address`.
 If the compiler does not allow implicit conversion but you know what you are
 doing, an explicit type conversion is sometimes possible:
 
-```
+```js
 int8 y = -3;
 uint x = uint(y);
 ```
@@ -112,14 +112,14 @@ characters), which is -3 in two's complement representation of 256 bits.
 For convenience, it is not always necessary to explicitly specify the type of a
 variable, the compiler automatically infers it from the type of the first
 expression that is assigned to the variable:
-```
+```js
 uint20 x = 0x123;
 var y = x;
 ```
 Here, the type of `y` will be `uint20`. Using `var` is not possible for function
 parameters or return parameters.
 State variables of integer and bytesXX types can be declared as constant.
-```
+```js
 uint constant x = 32;
 bytes3 constant text = "abc";
 ```
@@ -129,13 +129,13 @@ bytes3 constant text = "abc";
 The type of integer literals is not determined as long as integer literals are
 combined with themselves. This is probably best explained with examples:
 
-```
+```js
 var x = 1 - 2;
 ```
 The value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives
 the type `int8` -- the smallest type that contains `-1`. The following code
 snippet behaves differently, though:
-```
+```js
 var one = 1;
 var two = 2;
 var x = one - two;
@@ -147,7 +147,7 @@ subtraction inside the type `uint8` causes wrapping and thus the value of
 
 It is even possible to temporarily exceed the maximum of 256 bits as long as
 only integer literals are used for the computation:
-```
+```js
 var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;
 ```
 Here, `x` will have the value `0` and thus the type `uint8`.
@@ -171,7 +171,7 @@ JavaScript, so `if (1) { ... }` is _not_ valid Solidity.
 Functions of the current contract can be called directly, also recursively, as seen in
 this nonsensical example:
 
-```
+```js
 contract c {
   function g(uint a) returns (uint ret) { return f(); }
   function f() returns (uint ret) { return g(7) + f(); }
@@ -181,7 +181,7 @@ contract c {
 The expression `this.g(8);` is also a valid function call, but this time, the function
 will be called via a message call and not directly via jumps. When calling functions
 of other contracts, the amount of Wei sent with the call and the gas can be specified:
-```
+```js
 contract InfoFeed {
   function info() returns (uint ret) { return 42; }
 }
@@ -198,7 +198,7 @@ only (locally) set the value and amount of gas sent with the function call and o
 parentheses at the end perform the actual call.
 
 Function call arguments can also be given by name, in any order:
-```
+```js
 contract c {
 function f(uint key, uint value) { ... }
 function g() {
@@ -207,7 +207,7 @@ function g() {
 }
 ```
 The names for function parameters and return parameters are optional.
-```
+```js
 contract test {
   function func(uint k, uint) returns(uint){
     return k;
@@ -258,7 +258,7 @@ Furthermore, all functions of the current contract are callable directly includi
 It is possible to query the balance of an address using the property `balance`
 and to send Ether (in units of wei) to an address using the `send` function:
 
-```
+```js
 address x = 0x123;
 if (x.balance < 10 && address(this).balance >= 10) x.send(10);
 ```
@@ -266,7 +266,7 @@ if (x.balance < 10 && address(this).balance >= 10) x.send(10);
 Furthermore, to interface with contracts that do not adhere to the ABI (like the classic NameReg contract),
 the function `call` is provided which takes an arbitrary number of arguments of any type. These arguments are ABI-serialized (i.e. also padded to 32 bytes). One exception is the case where the first argument is encoded to exactly four bytes. In this case, it is not padded to allow the use of function signatures here.
 
-```
+```js
 address nameReg = 0x72ba7d8e73fe8eb666ea66babc8116a41bfb10e2;
 nameReg.call("register", "MyName");
 nameReg.call(bytes4(sha3("fun(uint256)")), a);
@@ -288,7 +288,7 @@ boolean expressions is done.
 Both variably and fixed size arrays are supported in storage and as parameters of external
 functions:
 
-```
+```js
 contract ArrayContract {
   uint[2**20] m_aLotOfIntegers;
   bool[2][] m_pairsOfFlags;
@@ -329,7 +329,7 @@ contract ArrayContract {
 Solidity provides a way to define new types in the form of structs, which is
 shown in the following example:
 
-```
+```js
 contract CrowdFunding {
   struct Funder {
     address addr;
@@ -378,7 +378,7 @@ contain mappings (even the struct itself can be the value type of the mapping, a
 Enums are another way to create a user-defined type in Solidity. They are explicitly convertible
 to and from all integer types but implicit conversion is not allowed. The variable of enum type can be declared as constant.
 
-```
+```js
 contract test {
     enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
     ActionChoices choices;
@@ -402,7 +402,7 @@ contract test {
 
 There are two ways to interface with other contracts: Either call a method of a contract whose address is known or create a new contract. Both uses are shown in the example below. Note that (obviously) the source code of a contract to be created needs to be known, which means that it has to come before the contract that creates it (and cyclic dependencies are not possible since the bytecode of the new contract is actually contained in the bytecode of the creating contract).
 
-```
+```js
 contract OwnedToken {
   // TokenCreator is a contract type that is defined below. It is fine to reference it
   // as long as it is not used to create a new contract.
@@ -462,7 +462,7 @@ compiled bytes as returned by the compiler in the usual ABI format.
 Solidity supports multiple inheritance by copying code including polymorphism.
 Details are given in the following example.
 
-```
+```js
 contract owned {
     function owned() { owner = msg.sender; }
     address owner;
@@ -513,7 +513,7 @@ contract PriceFeed is owned, mortal, named("GoldFeed") {
 
 Note that above, we call `mortal.kill()` to "forward" the destruction request. The way this is done
 is problematic, as seen in the following example:
-```
+```js
 contract mortal is owned {
     function kill() { if (msg.sender == owner) suicide(owner); }
 }
@@ -530,7 +530,7 @@ contract Final is Base1, Base2 {
 A call to `Final.kill()` will call `Base2.kill` as the most derived override, but this
 function will bypass `Base1.kill`, basically because it does not even know about `Base1`.
 The way around this is to use `super`:
-```
+```js
 contract mortal is owned {
     function kill() { if (msg.sender == owner) suicide(owner); }
 }
@@ -553,7 +553,7 @@ although its type is known. This is similar for ordinary virtual method lookup.
 ### Multiple Inheritance and Linearization
 
 Languages that allow multiple inheritance have to deal with several problems, one of them being the [Diamond Problem](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem). Solidity follows the path of Python and uses "[C3 Linearization](https://en.wikipedia.org/wiki/C3_linearization)" to force a specific order in the DAG of base classes. This results in the desirable property of monotonicity but disallows some inheritance graphs. Especially, the order in which the base classes are given in the `is` directive is important. In the following code, Solidity will give the error "Linearization of inheritance graph impossible".
-```
+```js
 contract X {}
 contract A is X {}
 contract C is A, X {}
@@ -565,13 +565,13 @@ A simple rule to remember is to specify the base classes in the order from "most
 ## Abstract Contracts
 
 Contract functions can lack an implementation as in the following example (note that the function declaration header is terminated by `;`).
-```
+```js
 contract feline {
   function utterance() returns (bytes32);
 }
 ```
 Such contracts cannot be compiled (even if they contain implemented functions alongside non-implemented functions), but they can be used as base contracts:
-```
+```js
 contract Cat is feline {
   function utterance() returns (bytes32) { return "miaow"; }
 }
@@ -590,7 +590,7 @@ Inherited: Those functions and storage variables can only be accessed internally
 
 Private: Private functions and storage variables are only visible for the contract they are defined in and not in derived contracts.
 
-```
+```js
 contract c {
   function f(uint a) private returns (uint b) { return a + 1; }
   function setData(uint a) inherited { data = a; }
@@ -604,7 +604,7 @@ Other contracts can call `c.data()` to retrieve the value of data in storage, bu
 
 The compiler automatically creates accessor functions for all public state variables. The contract given below will have a function called `data` that does not take any arguments and returns a uint, the value of the state variable `data`. The initialization of state variables can be done at declaration.
 
-```
+```js
 contract test {
      uint public data = 42;
 }
@@ -612,7 +612,7 @@ contract test {
 
 The next example is a bit more complex:
 
-```
+```js
 contract complex {
   struct Data { uint a; bytes3 b; mapping(uint => uint) map; }
   mapping(uint => mapping(bool => Data[])) public data;
@@ -620,7 +620,7 @@ contract complex {
 ```
 
 It will generate a function of the following form:
-```
+```js
 function data(uint arg1, bool arg2, uint arg3) returns (uint a, bytes3 b)
 {
   a = data[arg1][arg2][arg3].a;
@@ -636,7 +636,7 @@ A contract can have exactly one unnamed
 function. This function cannot have arguments and is executed on a call to the contract if
 none of the other functions matches the given function identifier (or if no data was supplied at all).
 
-```
+```js
 contract Test {
   function() { x = 1; }
   uint x;
@@ -654,7 +654,7 @@ contract Caller {
 
 Modifiers can be used to easily change the behaviour of functions, for example to automatically check a condition prior to executing the function. They are inheritable properties of contracts and may be overridden by derived contracts.
 
-```
+```js
 contract owned {
   function owned() { owner = msg.sender; }
   address owner;
@@ -696,7 +696,7 @@ Multiple modifiers can be applied to a function by specifying them in a whitespa
 
 Events allow the convenient usage of the EVM logging facilities. Events are inheritable members of contracts. When they are called, they cause the arguments to be stored in the transaction's log. Up to three parameters can receive the attribute `indexed` which will cause the respective arguments to be treated as log topics instead of data. The hash of the signature of the event is one of the topics except you declared the event with `anonymous` specifier. All non-indexed arguments will be stored in the data part of the log. Example:
 
-```
+```js
 contract ClientReceipt {
   event Deposit(address indexed _from, bytes32 indexed _id, uint _value);
   function deposit(bytes32 _id) {
@@ -729,7 +729,7 @@ Array data is located at `sha3(p)` and the value corresponding to a mapping key
 non-elementary type, the positions are found by adding an offset of `sha3(k . p)`.
 
 So for the following contract snippet:
-```
+```js
 contract c {
   struct S { uint a; uint b; }
   uint x;
@@ -742,7 +742,7 @@ The position of `data[4][9].b` is at `sha3(uint256(9) . sha3(uint256(4) . uint(2
 
 There are some types in Solidity's type system that have no counterpart in the syntax. One of these types are the types of functions. But still, using `var` it is possible to have local variables of these types:
 
-```
+```js
 contract FunctionSelector {
   function select(bool useB, uint x) returns (uint z) {
     var f = a;
@@ -768,7 +768,7 @@ The Solidity optimizer operates on assembly, so it can be and also is used by ot
 At the end of this process, we know which expressions have to be on the stack in the end and have list of modifications to memory and storage. From these expressions which are actually needed, a dependency graph is created and every operation that is not part of this graph is essentially dropped. Now new code is generated that applies the modifications to memory and storage in the order they were made in the original code (dropping modifications which were found not to be needed) and finally, generates all values that are required to be on the stack in the correct place.
 
 These steps are applied to each basic block and the newly generated code is used as replacement if it is smaller. If a basic block is split at a JUMPI and during the analysis, the condition evaluates to a constant, the JUMPI is replaced depending on the value of the constant, and thus code like
-```
+```js
 var x = 7;
 data[7] = 9;
 if (data[x] != x + 2) 
@@ -777,7 +777,7 @@ else
   return 1;
 ```
 is simplified to code which can also be compiled from
-```
+```js
 data[7] = 9;
 return 1;
 ```
