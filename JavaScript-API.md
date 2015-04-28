@@ -78,6 +78,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [eth](#web3eth)
     * [defaultBlock](#web3ethdefaultblock)
     * [coinbase](#web3ethcoinbase)
+    * [hashrate](#web3ethhashrate)
     * [gasPrice](#web3ethgasprice)
     * [accounts](#web3ethaccounts)
     * [mining](#web3ethmining)
@@ -641,6 +642,27 @@ This property is read only and says whether the node is mining or not.
 ```js
 var mining = web3.eth.mining;
 console.log(mining); // true or false
+```
+
+***
+
+#### web3.eth.hashrate
+
+    web3.eth.hashrate
+
+
+This property is read only and returns the number of hashes per second that the node is mining with.
+
+
+##### Returns
+
+`Number` - number of hashes per second.
+
+##### Example
+
+```js
+var hashrate = web3.eth.hashrate;
+console.log(hashrate); // 493736
 ```
 
 ***
