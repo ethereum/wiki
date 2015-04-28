@@ -109,6 +109,7 @@ The following options are possible for the defaultBlock parameter:
 * [eth_protocolVersion](#eth_protocolversion)
 * [eth_coinbase](#eth_coinbase)
 * [eth_mining](#eth_mining)
+* [eth_hashrate](#eth_hashrate)
 * [eth_gasPrice](#eth_gasprice)
 * [eth_accounts](#eth_accounts)
 * [eth_blockNumber](#eth_blocknumber)
@@ -371,6 +372,33 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71}
   "id":71,
   "jsonrpc": "2.0",
   "result": true
+}
+
+```
+
+***
+
+#### eth_hashrate
+
+Returns the number of hashes per second that the node is mining with.
+
+##### Parameters
+none
+
+##### Returns
+
+`QUANTITY` - number of hashes per second.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_hashrate","params":[],"id":71}'
+
+// Result
+{
+  "id":71,
+  "jsonrpc": "2.0",
+  "result": "0x38a"
 }
 
 ```
