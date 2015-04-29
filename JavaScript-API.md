@@ -76,7 +76,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [listening](#web3netlistening)
     * [peerCount](#web3ethpeercount)
   * [eth](#web3eth)
-    * [defaultAddress](#web3ethdefaultaddress)
+    * [defaultAccount](#web3ethdefaultaccount)
     * [defaultBlock](#web3ethdefaultblock)
     * [coinbase](#web3ethcoinbase)
     * [hashrate](#web3ethhashrate)
@@ -568,9 +568,9 @@ var eth = web3.eth;
 
 ***
 
-#### web3.eth.defaultAddress
+#### web3.eth.defaultAccount
 
-    web3.eth.defaultAddress
+    web3.eth.defaultAccount
 
 This default address is used for the following methods (optionally you can overwrite it by specifying the `from` property):
 
@@ -590,11 +590,11 @@ This default address is used for the following methods (optionally you can overw
 ##### Example
 
 ```js
-var defaultAddress = web3.eth.defaultAddress;
-console.log(defaultAddress); // ''
+var defaultAccount = web3.eth.defaultAccount;
+console.log(defaultAccount); // ''
 
 // set the default block
-web3.eth.defaultAddress = '0x8888f1f195afa192cfee860698584c030f4c9db1';
+web3.eth.defaultAccount = '0x8888f1f195afa192cfee860698584c030f4c9db1';
 ```
 
 ***
