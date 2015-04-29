@@ -1315,7 +1315,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic
 
 #### eth_newBlockFilter
 
-Creates a filter object, based on an option string, to notify when state changes (logs).
+Creates a filter in the node, based on an option string, to notify when the state changes.
 To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
 
 
@@ -1398,11 +1398,10 @@ params: [
 
 ##### Returns
 
-`Array` - Array of log objects, or an empty array (if nothing has changed since last poll).
+`Array` - Array of log objects or `null`, or an empty array (if nothing has changed since last poll).
 
-For filters created with `eth_newBlockFilter` log objects are `null`.
-
-For filters created with `eth_newFilter` logs are objects with following params:
+- For filters created with `eth_newBlockFilter` the return is `[null]`.
+- For filters created with `eth_newFilter` logs are objects with following params:
 
   - `logIndex`: `QUANTITY` - integer of the log index position in the block.
   - `transactionIndex`: `QUANTITY` - integer of the transactions index position log was created from.
