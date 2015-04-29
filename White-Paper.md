@@ -101,7 +101,7 @@ Once step (1) has taken place, after a few minutes some miner will include the t
 
 ### Merkle Trees
 
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/spv_bitcoin.png)
+![SPV in bitcoin](https://raw.githubusercontent.com/ethereum/www/master-postsale/src/extras/gh_wiki/spv_bitcoin.png)
 
 _Left: it suffices to present only a small number of nodes in a Merkle tree to give a proof of the validity of a branch._
 
