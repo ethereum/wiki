@@ -581,7 +581,7 @@ This default address is used for the following methods (optionally you can overw
 
 `String`, 20 Bytes - Any address you own, or where you have the private key for.
 
-*Default is* none.
+*Default is* `undefined`.
 
 ##### Returns
 
