@@ -76,6 +76,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [listening](#web3netlistening)
     * [peerCount](#web3ethpeercount)
   * [eth](#web3eth)
+    * [defaultAddress](#web3ethdefaultaddress)
     * [defaultBlock](#web3ethdefaultblock)
     * [coinbase](#web3ethcoinbase)
     * [hashrate](#web3ethhashrate)
@@ -563,6 +564,37 @@ Contains the ethereum blockchain related methods.
 
 ```js
 var eth = web3.eth;
+```
+
+***
+
+#### web3.eth.defaultAddress
+
+    web3.eth.defaultAddress
+
+This default address is used for the following methods (optionally you can overwrite it by specifying the `from` property):
+
+- [web3.eth.getSendTransaction()](#web3ethgetsendtransaction)
+- [web3.eth.call()](#web3ethcall)
+
+##### Values
+
+`String`, 20 Bytes - Any address you own, or where you have the private key for.
+
+*Default is* none.
+
+##### Returns
+
+`String`, 20 Bytes - The currently set default address.
+
+##### Example
+
+```js
+var defaultAddress = web3.eth.defaultAddress;
+console.log(defaultAddress); // ''
+
+// set the default block
+web3.eth.defaultAddress = '0x8888f1f195afa192cfee860698584c030f4c9db1';
 ```
 
 ***
@@ -1243,7 +1275,13 @@ You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethe
 
 ```js
 var MyContract = web3.eth.contract(abiArray);
+
+// instantiate from an existing address
 var myContractInstance = new MyContract(myContractAddress);
+
+// create the contract by passing a transaction object
+var myContractInstance = new MyContract({data: myContractCode, gas: 300000, from: mySenderAddress});
+console.log(myContractInstance.address) // "0xc4abd0339eb8d57087278718986382264244252f"
 ```
 
 ##### Example
@@ -1265,7 +1303,7 @@ var abi = [{
 var MyContract = web3.eth.contract(abi);
 
 // initiate contract for an address
-var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
+var myContractInstance = new MyContract('0xc4abd0339eb8d57087278718986382264244252f');
 
 var result = myContractInstance.myConstantMethod('myParam');
 console.log(result) // '0x25434534534'
@@ -1278,7 +1316,7 @@ filter.watch(function (error, result) {
     console.log(result);
     /*
     {
-        address: '0x0123123121',
+        address: '0x8718986382264244252fc4abd0339eb8d5708727',
         topics: "0x12345678901234567890123456789012", "0x0000000000000000000000000000000000000000000000000000000000000005",
         data: "0x0000000000000000000000000000000000000000000000000000000000000001",
         ...
