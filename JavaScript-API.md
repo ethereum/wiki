@@ -1134,7 +1134,7 @@ Sends a transaction to the network.
 ##### Parameters
 
 1. `Object` - The transaction object to send:
-  * `from`: `String` - The address for the sending account. Uses the [web3.eth.defaultAccount property](#web3ethdefaultaccount) if not specified.
+  * `from`: `String` - The address for the sending account. Uses the [web3.eth.defaultAccount](#web3ethdefaultaccount) property, if not specified.
   * `to`: `String` - (optional) The destination address of the message, left undefined for a contract-creation transaction.
   * `value`: `Number|String|BigNumber` - (optional) The value transferred for the transaction in Wei, also the endowment if it's a contract-creation transaction.
   * `gas`: `Number|String|BigNumber` - (optional, default: To-Be-Determined) The amount of gas to use for the transaction (unused gas is refunded).
