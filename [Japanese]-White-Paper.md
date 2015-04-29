@@ -1,15 +1,15 @@
-# Ethereum Whitepaper
+# Ethereum 白書
 
 ### A Next-Generation Smart Contract and Decentralized Application Platform
 
 ナカモトサトシの論文により、2009年に開発された Bitcoin は通貨・貨幣における革新的な発明だと
-謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。 ([intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/))  
-しかし、その壮大なBitcoinの実験における、特筆すべき重要な部分というのは別にあります。
-それは分散型大衆決定のツールとして、まさにその基礎をなすBlockchainの技術であり、
+謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。 - see [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) 
+しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。
+それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、
 急速に人々の注目を集めつつあります。
 
 一般的に、
-blockchain テクノロジーを引用しているBitcoinの代替アプリで、
+blockchain テクノロジーを引用している Bitcoin の代替アプリで、
 blockchain 上の電子財産を実装したものとして:
 
 * 一定取引量のある通貨や金融商品をあらわすもの(["colored coins"](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit))
@@ -17,27 +17,27 @@ blockchain 上の電子財産を実装したものとして:
 * ドメインのような投資対象外の財産　(["Namecoin"](http://namecoin.org))  
 
 
-があり、より複雑なアプリケーションとして:
+があり、より複雑なアプリケーションとしては以下のものが挙げられます:
 
 * ( 役人や銀行員に取って代わり、)コーディングによってあらゆるルールを実装することで、個々の電子資産を管理しようというもの(["smart contracts"](http://szabo.best.vwh.net/smart_contracts_idea.html))
 * 上記のスマートコントラクトを blockchain 上で実装したもの"[decentralized autonomous organizations (分散型自動組織)](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/)" (DAOs)
 
 
 
-Ethereum が提供しようとしているものは、 チューリング完全なプログラミング言語の完成品を
+Ethereum が提供しようとしているものは、チューリング完全なプログラミング言語の完成品を
  blockchain に埋め込み提供することにあります。
-この言語は、"contracts"を生成するために使用され、
+この言語は、"contract" を生成するために使用され、
 "contract" とはあらゆる(状態遷移)関数をプログラムしたものです。
-これによって、ユーザーは、上記の全てのシステムを実装することが可能で、
+これにより、ユーザーは上記の全てのシステムを実装することが可能で、
 われわれがまだ想像すらしていない多くの可能性が、
 数行のコードに秘められる論理を書き上げるだけで実現できるようになります。
 
 
 ### Table of Contents
 
-* [History](#history)
-    * [Bitcoin As A State Transition System](#bitcoin-as-a-state-transition-system)
-    * [Mining](#mining)
+* [歴史](#history)
+    * [状態遷移システム としての Bitcoin](#bitcoin-as-a-state-transition-system)
+    * [採掘](#mining)
     * [Merkle Trees](#merkle-trees)
     * [Alternative Blockchain Applications](#alternative-blockchain-applications)
     * [Scripting](#scripting)
@@ -70,22 +70,21 @@ Ethereum が提供しようとしているものは、 チューリング完全�
 
 
 上述した資産登録マシンのような代替アプリや、
-分散型デジタル通貨のコンセプトが現れてきたのは、ここ数十年です。
-80〜90年代にかけて、Chaum による 「blinding 署名」 をよりどころとした
-匿名の電子通貨プロトコルがたくさん開発され、高いプライバシーをもつ通貨を提供しましたが、
+分散型デジタル通貨の概念が現れ始めたのは、ここ数十年です。
+80〜90年代にかけて、David Chaum の「ブラインディング署名 blinding sgnature」をよりどころとした
+匿名のデジタル通貨プロトコルがたくさん開発され、高いプライバシーをもつ通貨を提供しましたが、
 これらは中央集約型の媒体に依存していたため、広く注目を浴びるには至りませんでした。
 1998年に発表された、Wei Daiによる [b-money](http://www.weidai.com/bmoney.txt) が、
 現行の分散型のコンセンサスと同様の、計算問題を解くことによって
 お金を創造するというアイデアを、はじめて導入した事例となります。
 しかし、このプロポーザルの詳細は不十分であったため、実用的な分散型の大衆意思決定を実装することができませんでした。
 2005年、Hal Finney が、暗号通貨のコンセプトをつくりあげるために、
-ABCD Hashcash パズル と b-money からアイデアをしぼり作られたシステムである
-"[reusable proofs of work](http://www.finney.org/~hal/rpow/)"
-というコンセプトを発表しましたが、バックエンドとして信用のある計算機を使用しなければならなかったため、真に分散型とは呼べず、再び失敗しました。
+ABCD Hashcash パズル<sup>[-1]</sup> と b-money からアイデアをしぼり作られたシステムである "[reusable proofs of work](http://www.finney.org/~hal/rpow/)" というコンセプトを発表しましたが、バックエンドとして信用のある計算機を使用しなければならなかったため、真に分散型とは呼べず、再び失敗しました。
 2009年のナカモトサトシによる実用的な実装がはじめての分散型の通貨となりました。
 これは、昔からあった「公開鍵暗号（所有権を管理) 」と
-大衆意思決定アルゴリズムである「"proof of work" (誰がコインを所有しているのか追跡する)」
+大衆意思決定アルゴリズムである「 "proof of work" (誰がコインを所有しているのか追跡)」
 を結びあわせたものとなります。
+
 
 proof of work の背景にある技術は宇宙史に名を刻むほどの飛躍的進歩でありました。
 なぜなら proof of work は、同時に二つの難題を解決したのです。
@@ -103,7 +102,7 @@ proof of work の背景にある技術は宇宙史に名を刻むほどの飛躍
 
 
 
-### Bitcoin As A State Transition System
+### 状態遷移システム としての Bitcoin
 
 ![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
 
@@ -126,12 +125,15 @@ proof of work の背景にある技術は宇宙史に名を刻むほどの飛躍
 となります。
 
 
-Bitcoin における "state"「状態」とは、
-全コインの集合
+Bitcoin における "state"「状態」とは、全コインの集合 であり、
+技術的に説明いたしますと、
+発行されているコインのうちで「取引の未使用出力値 (以後 UTXO )」の全集合 となり、各 UTXO には、それぞれ「残高」と「所有者」が記録されています。
+「所有者」は、基本的に、暗号理論における公開鍵<sup>[1]</sup>である20バイト(160bit)のアドレスとなります。
+「トランザクション」は、状態遷移関数であり、一以上の入力値 と 一以上の出力値 をとります。
+各入力値は、「既存の UTXO(未使用出力値)への参照」と「所有者のアドレスと関連付けられた秘密鍵による暗号署名」 から構成され、
+各出力値は、「新しく生成された UTXO」を保持しています。
 
-The "state" in Bitcoin is the collection of all coins (technically, "unspent transaction outputs" or UTXO) that have been minted and not yet spent, with each UTXO having a denomination and an owner (defined by a 20-byte address which is essentially a cryptographic public key<sup>[1]</sup>). A transaction contains one or more inputs, with each input containing a reference to an existing UTXO and a cryptographic signature produced by the private key associated with the owner's address, and one or more outputs, with each output containing a new UTXO to be added to the state.
-
-The state transition function `APPLY(S,TX) -> S'` can be defined roughly as follows:
+状態遷移関数 `APPLY(S,TX) -> S'` を定義するプログラムの概略は以下となります。:
 
 1. For each input in `TX`:
     * If the referenced UTXO is not in `S`, return an error.
@@ -139,15 +141,48 @@ The state transition function `APPLY(S,TX) -> S'` can be defined roughly as foll
 2. If the sum of the denominations of all input UTXO is less than the sum of the denominations of all output UTXO, return an error.
 3. Return `S` with all input UTXO removed and all output UTXO added.
 
-The first half of the first step prevents transaction senders from spending coins that do not exist, the second half of the first step prevents transaction senders from spending other people's coins, and the second step enforces conservation of value. In order to use this for payment, the protocol is as follows. Suppose Alice wants to send 11.7 BTC to Bob. First, Alice will look for a set of available UTXO that she owns that totals up to at least 11.7 BTC. Realistically, Alice will not be able to get exactly 11.7 BTC; say that the smallest she can get is 6+4+2=12. She then creates a transaction with those three inputs and two outputs. The first output will be 11.7 BTC with Bob's address as its owner, and the second output will be the remaining 0.3 BTC "change", with the owner being Alice herself.
+ひとつめのステップにおける
+前半部により、トランザクションの送信者が、存在しないコインを不正に送ることを防止し、
+後半部により、トランザクションの送信者が、他人のコインを勝手に送ることを防止します。
+ふたつめのステップによって、トータルバリューの保存（入力値の総計 が 出力値の総計 と等しい）が執行されます。
+これを実用的な支払いに適用するための、プロトコルは以下のようになります。
 
-### Mining
+アリスがボブに 11.7BTC を送信したいとします。
+まずはじめに、アリスは、利用可能な UTXO を自分の持っているものの中からかき集め、
+少なくとも総計11.7BTCになるようにします。アリスの UTXO を集めてちょうど11.7BTCをつくることはできず、6+4+2=12 BTCがアリスの得る最小の値です。
+そして彼女は、３つの入力値と２つの出力値をもつトランザクションをつくります。
+ひとつめの出力値は11.7BTCでボブのアドレスが所有者として記録され、
+ふたつめの出力値は0.3BTCの"お釣り"がアリス自身を所有者として記録されます。
+
+
+
+### 採掘
 
 ![block_picture.jpg](http://vitalik.ca/files/block_picture.png)
 
-If we had access to a trustworthy centralized service, this system would be trivial to implement; it could simply be coded exactly as described, using a centralized server's hard drive to keep track of the state. However, with Bitcoin we are trying to build a decentralized currency system, so we will need to combine the state transaction system with a consensus system in order to ensure that everyone agrees on the order of transactions. Bitcoin's decentralized consensus process requires nodes in the network to continuously attempt to produce packages of transactions called "blocks". The network is intended to produce roughly one block every ten minutes, with each block containing a timestamp, a nonce, a reference to (ie. hash of) the previous block and a list of all of the transactions that have taken place since the previous block. Over time, this creates a persistent, ever-growing, "blockchain" that constantly updates to represent the latest state of the Bitcoin ledger.
+もし、アクセスの対象として、信用取引可能な中央集約型のサービスを使っているのであれば、
+このシステムの実装は至極簡単なものであったでしょう。
+単に上記のプログラムコードを記すのに、中央サーバーのハードディスクを使用し、「状態」を記録・維持すれば済む話であったでしょう。
+しかし、わたしたちが Bitcoin を用いてやろうとしているのは、分散型通貨システムの構築です。
+なので、トランザクションの順番をみんなが合意できることを確約するために、
+状態遷移システム と 大衆意思決定のシステム をくっつけてやらなくてはなりません。
+Bitcoin の分散型大衆決定プロセスでは、「ブロック」と呼ばれる「トランザクションを梱包したもの」を作り続けようとする、
+ネットワーク上のノードが必要です。 
+ネットワークは、だいたい10分毎にひとつの ブロック を生成するように設計されており、
+各々のブロックは、
 
-The algorithm for checking if a block is valid, expressed in this paradigm, is as follows:
+* 「タイムスタンプ」
+* 「ノンス」
+* 「直前のブロックへの参照値」
+* 「（直前のブロック生成後から現在までに遂行された）トランザクションのリスト」
+
+を保持します。（ ※ ノンス：(ブロック生成時にインクリメントされ続ける個体識別ハッシュ値で、マイナーがブロックを掘り当てることを目標にして独自にインクリメントする。)
+このブロックが時間発展することによって、
+Bitcoin の帳簿を最新状態に更新し続ける、
+永続的かつ恒久的成長をなす " blockchain " （ブロックの鎖）を生成します。
+
+
+現パラダイム下において、ブロックが有効かどうかをチェックするアルゴリズムは以下となります：
 
 1. Check if the previous block referenced by the block exists and is valid.
 2. Check that the timestamp of the block is greater than that of the previous block<sup>[2]</sup> and less than 2 hours into the future
@@ -156,20 +191,98 @@ The algorithm for checking if a block is valid, expressed in this paradigm, is a
 5. Suppose `TX` is the block's transaction list with `n` transactions. For all `i` in `0...n-1`, set `S[i+1] = APPLY(S[i],TX[i])` If any application returns an error, exit and return false.
 6. Return true, and register `S[n]` as the state at the end of this block.
 
-Essentially, each transaction in the block must provide a valid state transition from what was the canonical state before the transaction was executed to some new state. Note that the state is not encoded in the block in any way; it is purely an abstraction to be remembered by the validating node and can only be (securely) computed for any block by starting from the genesis state and sequentially applying every transaction in every block. Additionally, note that the order in which the miner includes transactions into the block matters; if there are two transactions A and B in a block such that B spends a UTXO created by A, then the block will be valid if A comes before B but not otherwise.
+基本的に
+ブロック内の各トランザクションは、
+トランザクション執行より前の、過去の状態をもとにして、
+有効な状態遷移を提供しなければなりません。
+「状態」はいかなる点においても、ブロック内に記述されないことに注意してください。（ブロックは状態遷移関数をつなげ合わせた関数そのものであり、入力値 である「状態」については何も書かれていません）；
+（このアルゴリズムは、ノードの有効化を説明するための簡単な抽象例であり、
+このアルゴリズムは、
+どんなブロックに対しても
+開始状態から、全ブロックの全トランザクションを順番に適用することによって、目的となるブロックの示す状態を計算するだけで事足ります。）
+さらに「採掘者 miner」がトランザクションをブロックに取り込む順番がとても重要だということに注意してください。
+（もし、A、Bという二つのトランザクションがあって、BはAの生成した UTXO(未使用出力値) を使う場合において、
+AのあとにBがきているブロックは有効ですが、そうでない場合は無効となってしまいます。）
 
-The one validity condition present in the above list that is not found in other systems is the requirement for "proof of work". The precise condition is that the double-SHA256 hash of every block, treated as a 256-bit number, must be less than a dynamically adjusted target, which as of the time of this writing is approximately 2<sup>187</sup>. The purpose of this is to make block creation computationally "hard", thereby preventing sybil attackers from remaking the entire blockchain in their favor. Because SHA256 is designed to be a completely unpredictable pseudorandom function, the only way to create a valid block is simply trial and error, repeatedly incrementing the nonce and seeing if the new hash matches.
 
-At the current target of ~2<sup>187</sup>, the network must make an average of ~2<sup>69</sup> tries before a valid block is found; in general, the target is recalibrated by the network every 2016 blocks so that on average a new block is produced by some node in the network every ten minutes. In order to compensate miners for this computational work, the miner of every block is entitled to include a transaction giving themselves 25 BTC out of nowhere. Additionally, if any transaction has a higher total denomination in its inputs than in its outputs, the difference also goes to the miner as a "transaction fee". Incidentally, this is also the only mechanism by which BTC are issued; the genesis state contained no coins at all.
+他のシステムでは見受けられない仕様として、
+上述のトランザクションリストにおいて「一有効性条件」（有効なものを一つ選ぶための条件）が
+ "proof of work" には必要となります。
+厳密な定義は、
+全てのブロックの double-SHA256 hash値（256bit の数値）が 
+動的に変化するように設計された「目的値 target」より小さくなること、であり、
+目的値は、これを執筆している当時では、約2<sup>187</sup>sup>でした。
+この目的は、ブロック生成を計算科学上 "難しく" することであり、
+その結果、Sybil Attack（ひとりでノードを多数生成し多数決的に攻撃する手法）による攻撃者がかれらの好きなように 全blockchain を改竄しまうことを防止いたします。
+SHA256(エスエイチエーにごろ) は、完全に予測不可能な擬似乱数関数として設計されており、
+有効なブロックをつくる唯一の方法は、単に ノンス をインクリメントしてはその新しい hash値 が適合するかを確かめるという、試行錯誤を繰り返すしかありません。
 
-In order to better understand the purpose of mining, let us examine what happens in the event of a malicious attacker. Since Bitcoin's underlying cryptography is known to be secure, the attacker will target the one part of the Bitcoin system that is not protected by cryptography directly: the order of transactions. The attacker's strategy is simple:
+
+
+現在における~2<sup>187</sup>の「目的値」では、
+ネットワークは~2<sup>69</sup> 回の試行錯誤をしてやっとブロックを見つけることができます。
+ふつう、目的値は、ネットワーク上で2016ブロック生成される毎に再設定され、
+ネットワーク上にあるノードによるブロックの発掘が平均して10分毎に生じるよう調整されます。
+採掘者に競わせてこの計算をさせるための設定として、
+ブロックを採掘したものは、どこからともなく湧いた自分への25BTCの報酬を、
+トランザクションとして最後に付け加えます。
+さらに、もしも、どんなトランザクションにおいても
+全入力値が全出力値よりも大きいような場合、
+その差額は「取引手数料 transaction fee」として、採掘者のもとへ行く仕組みです。
+ところで、これはBitcoinが発行される唯一のメカニズムとなります。
+つまり、初期状態においては、Bitcoin は皆無であったわけです。
+
+
+
+マイニングの目的をより深く理解するために、
+悪意ある攻撃者におこす事件で何がおこるのかを見ていきましょう。
+Bitcoin の基礎となる暗号理論はセキュリティの高いものと知られているので、
+攻撃者の狙い目としては、直接、暗号理論で守られていない部分 : トランザクションの順序 となるでしょう。
+
+攻撃者の戦略は簡単なものです:
 
 1. Send 100 BTC to a merchant in exchange for some product (preferably a rapid-delivery digital good)
 2. Wait for the delivery of the product
 3. Produce another transaction sending the same 100 BTC to himself
 4. Try to convince the network that his transaction to himself was the one that came first.
 
-Once step (1) has taken place, after a few minutes some miner will include the transaction in a block, say block number 270000. After about one hour, five more blocks will have been added to the chain after that block, with each of those blocks indirectly pointing to the transaction and thus "confirming" it. At this point, the merchant will accept the payment as finalized and deliver the product; since we are assuming this is a digital good, delivery is instant. Now, the attacker creates another transaction sending the 100 BTC to himself. If the attacker simply releases it into the wild, the transaction will not be processed; miners will attempt to run `APPLY(S,TX)` and notice that `TX` consumes a UTXO which is no longer in the state. So instead, the attacker creates a "fork" of the blockchain, starting by mining another version of block 270000 pointing to the same block 269999 as a parent but with the new transaction in place of the old one. Because the block data is different, this requires redoing the proof of work. Furthermore, the attacker's new version of block 270000 has a different hash, so the original blocks 270001 to 270005 do not "point" to it; thus, the original chain and the attacker's new chain are completely separate. The rule is that in a fork the longest blockchain is taken to be the truth, and so legitimate miners will work on the 270005 chain while the attacker alone is working on the 270000 chain. In order for the attacker to make his blockchain the longest, he would need to have more computational power than the rest of the network combined in order to catch up (hence, "51% attack").
+一度、ステップ(1) が履行されると
+数分後にとある採掘者がトランザクションをブロックに含め、採掘します。
+ブロック番号は270000とします。
+一時間後、５個以上のブロックが、そのブロックの後ろに追加され、
+この５つのブロックが間接的に、該当トランザクションを参照しているため、
+そのトランザクションは「承認 confirming」されたということになります。
+この時点で、
+商売人は、支払いが確定したものとみなし、商品を発送します。
+ここで考えるのはデジタル商品であり、商品がすぐに届くこととします。
+さて、いま攻撃者が、別のトランザクションで、自分宛に 100BTC 送るものとします。
+もし、攻撃者が単にそのトランザクションを野に放つだけならば、
+そのトランザクションは受理されないでしょう。
+採掘者は、`APPLY(S,TX)` を実行するとき、`TX` が、使用済みUTXO を使用しようとしていることに気づくでしょう。
+なので代わりに、
+攻撃者はブロックチェーンを分岐させ、
+親として同じ269999番目のブロックを参照する270000番目の新しいバージョンのブロックを生成します。
+ここでは、もとのブロックに含まれていたトランザクションは含まれず、新しいトランザクションが追加されていきます。
+ブロックのデータの中身が違うので、
+proof of work をやり直す必要があります。
+さらに、攻撃者の新しいバージョンのブロック270000 では、異なるハッシュ値を生成するので、
+もとのブロックチェーンにおけるブロック 270001 ~ 270005 は、この攻撃者のブロックを参照しません。
+このように、もとのブロックチェーンと攻撃者のチェーンは完全に分断されるのです。
+このとき適用されるルールは次のようになります。
+ブロックチェーンの分岐時は、
+一番長いブロックチェーンが "信用" あるものとして選択されます。
+なので、攻撃者が新しい 270000 のブロックチェーン上で採掘し続ける傍で、
+このシステムの法の番人である採掘者達はもとの 270005 のブロックチェーンを採掘し続けることになります。
+攻撃者が、自分のブロックチェーンを最長にするためには、
+ネットワーク上の残りのすべてのノードの総和より、高い計算能力を誇る必要があり、
+これを「51%攻撃」と呼びます。
+
+
+
+
+
+
+
 
 ### Merkle Trees
 
