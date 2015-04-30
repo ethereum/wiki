@@ -783,7 +783,7 @@ Creates new message call transaction or a contract creation, if the data field c
   - `from`: `DATA`, 20 Bytes - The address the transaction is send from.
   - `to`: `DATA`, 20 Bytes - (optional when creating new contract) The address the transaction is directed to.
   - `gas`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gas provided for the transaction execution. It will return unused gas.
-  - `gasPrice`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each payed gas
+  - `gasPrice`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each paid gas
   - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
   - `data`: `DATA`  - (optional) The compiled code of a contract
 
@@ -827,8 +827,8 @@ Executes a new message call immediately without creating a transaction on the bl
 1. `Object` - The transaction call object
   - `from`: `DATA`, 20 Bytes - The address the transaction is send from.
   - `to`: `DATA`, 20 Bytes  - The address the transaction is directed to.
-  - `gas`: `QUANTITY`  - (optional) Integer of the gas provided for the transaction execution. It will return unused gas.
-  - `gasPrice`: `QUANTITY`  - (optional) Integer of the gasPrice used for each payed gas
+  - `gas`: `QUANTITY`  - (optional) Integer of the gas provided for the transaction execution. eth_call consumes zero gas, but this parameter may be needed by some executions.
+  - `gasPrice`: `QUANTITY`  - (optional) Integer of the gasPrice used for each paid gas
   - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
   - `data`: `DATA`  - (optional) The compiled code of a contract
 2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
