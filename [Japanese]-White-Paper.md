@@ -5,40 +5,39 @@
 ナカモトサトシの論文により、2009年に開発された Bitcoin は通貨・貨幣における革新的な発明だと
 謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。 - see [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) 
 しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。
-それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、
-急速に人々の注目を集めつつあります。
+それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、急速に人々の注目を集めつつあります。
 
 一般的に、
 blockchain テクノロジーを引用している Bitcoin の代替アプリで、
 blockchain 上の電子財産を実装したものとして:
 
-* 一定取引量のある通貨や金融商品をあらわすもの(["colored coins"](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit))
-* 基礎となる物理デバイスの所有権  (["smart property"](https://en.bitcoin.it/wiki/Smart_Property))
-* ドメインのような投資対象外の財産　(["Namecoin"](http://namecoin.org))  
+* 一定取引量のある通貨や金融商品をあらわすもの([ colored coins ](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit))
+* 基礎となる物理デバイスの所有権  ([ smart property ](https://en.bitcoin.it/wiki/Smart_Property))
+* ドメインのような投資対象外の財産　([ Namecoin ](http://namecoin.org))  
 
 
 があり、より複雑なアプリケーションとしては以下のものが挙げられます:
 
-* ( 役人や銀行員に取って代わり、)コーディングによってあらゆるルールを実装することで、個々の電子資産を管理しようというもの(["smart contracts"](http://szabo.best.vwh.net/smart_contracts_idea.html))
-* 上記のスマートコントラクトを blockchain 上で実装したもの"[decentralized autonomous organizations (分散型自動組織)](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/)" (DAOs)
+* ( 役人や銀行員に取って代わり、)コーディングによってあらゆるルールを実装することで、個々の電子資産を管理しようというもの([ smart contracts ](http://szabo.best.vwh.net/smart_contracts_idea.html))
+* 上記のスマートコントラクトを blockchain 上で実装したもの ([ decentralized autonomous organizations (分散型自動組織) ](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAOs))
 
 
 
 Ethereum が提供しようとしているものは、チューリング完全なプログラミング言語の完成品を
  blockchain に埋め込み提供することにあります。
 この言語は、"contract" を生成するために使用され、
-"contract" とはあらゆる(状態遷移)関数をプログラムしたものです。
+"contract" とはあらゆる（状態遷移）関数をプログラムしたものです。
 これにより、ユーザーは上記の全てのシステムを実装することが可能で、
 われわれがまだ想像すらしていない多くの可能性が、
-数行のコードに秘められる論理を書き上げるだけで実現できるようになります。
+論理を秘めし数行のコードを書き上げるだけで実現できるようになります。
 
 
-### Table of Contents
+### 目次
 
 * [歴史](#history)
     * [状態遷移システム としての Bitcoin](#bitcoin-as-a-state-transition-system)
     * [採掘](#mining)
-    * [Merkle Trees](#merkle-trees)
+    * [マークル木](#merkle-trees)
     * [Alternative Blockchain Applications](#alternative-blockchain-applications)
     * [Scripting](#scripting)
 * [Ethereum](#ethereum)
@@ -79,7 +78,7 @@ Ethereum が提供しようとしているものは、チューリング完全�
 お金を創造するというアイデアを、はじめて導入した事例となります。
 しかし、このプロポーザルの詳細は不十分であったため、実用的な分散型の大衆意思決定を実装することができませんでした。
 2005年、Hal Finney が、暗号通貨のコンセプトをつくりあげるために、
-ABCD Hashcash パズル<sup>[-1]</sup> と b-money からアイデアをしぼり作られたシステムである "[reusable proofs of work](http://www.finney.org/~hal/rpow/)" というコンセプトを発表しましたが、バックエンドとして信用のある計算機を使用しなければならなかったため、真に分散型とは呼べず、再び失敗しました。
+ABCD Hashcash パズル<sup>[-1]</sup> と b-money からアイデアをしぼり作られたシステムである "[reusable proofs of work](http://www.finney.org/~hal/rpow/)" というコンセプトを発表しましたが、バックエンドに、信用のある計算機を使用しなければならなかったため、真に分散型とは呼べず、再び失敗しました。
 2009年のナカモトサトシによる実用的な実装がはじめての分散型の通貨となりました。
 これは、昔からあった「公開鍵暗号（所有権を管理) 」と
 大衆意思決定アルゴリズムである「 "proof of work" (誰がコインを所有しているのか追跡)」
@@ -110,27 +109,25 @@ proof of work の背景にある技術は宇宙史に名を刻むほどの飛躍
 一般的銀行のシステムでは、たとえば「状態」はバランスシートにあたり、
 「トランザクション」はAからBにXドル移動してくれ、というリクエストにあたり、
 この状態遷移関数は、XドルだけAの口座の残高を減らし、Bの残高を増やします。
-もし、Aの口座の残高がxドルに満たなかった場合には、
+もし、Aの口座の残高がXドルに満たなかった場合には、
 状態遷移関数はエラーを返します。
 このようして、定式化をすると
 
     APPLY(S,TX) -> S' or ERROR
 
-この銀行システムは以上で定義され:
+この銀行システムは以上で定義され、以下は適用例です。
 
     APPLY({ Alice: $50, Bob: $50 },"send $20 from Alice to Bob") = { Alice: $30, Bob: $70 }  
 
     APPLY({ Alice: $50, Bob: $50 },"send $70 from Alice to Bob") = ERROR
 
-となります。
 
-
-Bitcoin における "state"「状態」とは、全コインの集合 であり、
+Bitcoin における「状態 state」とは、全コインの集合 であり、
 技術的に説明いたしますと、
-発行されているコインのうちで「取引の未使用出力値 (以後 UTXO )」の全集合 となり、各 UTXO には、それぞれ「残高」と「所有者」が記録されています。
+発行されているコインのうちで「UTXO（未使用の取引出力値）」の全集合 となり、各 UTXO には、それぞれ「残高」と「所有者」が記録されています。
 「所有者」は、基本的に、暗号理論における公開鍵<sup>[1]</sup>である20バイト(160bit)のアドレスとなります。
 「トランザクション」は、状態遷移関数であり、一以上の入力値 と 一以上の出力値 をとります。
-各入力値は、「既存の UTXO(未使用出力値)への参照」と「所有者のアドレスと関連付けられた秘密鍵による暗号署名」 から構成され、
+各入力値は、「既存の UTXO への参照」と「所有者のアドレスと関連付けられた秘密鍵による暗号署名」 から構成され、
 各出力値は、「新しく生成された UTXO」を保持しています。
 
 状態遷移関数 `APPLY(S,TX) -> S'` を定義するプログラムの概略は以下となります。:
@@ -160,7 +157,7 @@ Bitcoin における "state"「状態」とは、全コインの集合 であり
 
 ![block_picture.jpg](http://vitalik.ca/files/block_picture.png)
 
-もし、アクセスの対象として、信用取引可能な中央集約型のサービスを使っているのであれば、
+もし、アクセス対象として信用取引可能な 中央集約型 のサービスを使っているのであれば、
 このシステムの実装は至極簡単なものであったでしょう。
 単に上記のプログラムコードを記すのに、中央サーバーのハードディスクを使用し、「状態」を記録・維持すれば済む話であったでしょう。
 しかし、わたしたちが Bitcoin を用いてやろうとしているのは、分散型通貨システムの構築です。
@@ -193,13 +190,10 @@ Bitcoin の帳簿を最新状態に更新し続ける、
 
 基本的に
 ブロック内の各トランザクションは、
-トランザクション執行より前の、過去の状態をもとにして、
-有効な状態遷移を提供しなければなりません。
+トランザクション執行前の 過去の状態 をもとにして、有効な状態遷移を提供しなければなりません。
 「状態」はいかなる点においても、ブロック内に記述されないことに注意してください。（ブロックは状態遷移関数をつなげ合わせた関数そのものであり、入力値 である「状態」については何も書かれていません）；
-（このアルゴリズムは、ノードの有効化を説明するための簡単な抽象例であり、
-このアルゴリズムは、
-どんなブロックに対しても
-開始状態から、全ブロックの全トランザクションを順番に適用することによって、目的となるブロックの示す状態を計算するだけで事足ります。）
+（このアルゴリズムは、「検証ノード」を説明する簡単な抽象例であり、
+どのブロックの検証においても、開始状態から、全ブロックの全トランザクションを順番に適用することによって、目的となるブロックの示す状態を計算するだけで十分となります。）
 さらに「採掘者 miner」がトランザクションをブロックに取り込む順番がとても重要だということに注意してください。
 （もし、A、Bという二つのトランザクションがあって、BはAの生成した UTXO(未使用出力値) を使う場合において、
 AのあとにBがきているブロックは有効ですが、そうでない場合は無効となってしまいます。）
@@ -247,26 +241,26 @@ Bitcoin の基礎となる暗号理論はセキュリティの高いものと知
 4. ネットワークが、後に作った方のトランザクションの順番が最初にくるようなブロックを、承認するように試みる
 
 一度、ステップ（1）が履行されると
-数分後にとある採掘者がトランザクションをブロックに含め、採掘します。
+数分後に採掘者がトランザクションをブロックに含めます。
 ブロック番号は 270000 とします。
 一時間後、５個以上のブロックが、そのブロックの後ろに追加され、
-この５つのブロックが間接的に、該当トランザクションを参照しているため、
-そのトランザクションは「承認 confirming」されたということになります。
+この５つのブロックが、間接的にそのトランザクションを参照しているため、
+トランザクションは「承認 confirming」されたということになります。
 この時点で、
 商売人は、支払いが確定したものとみなし、商品を発送します。
-ここで考えるのはデジタル商品であり、商品がすぐに届くこととします。
-さて、いま攻撃者が、別のトランザクションで、自分宛に 100BTC 送るものとします。
-もし、攻撃者が単にそのトランザクションを野に放つだけならば、
+ここではデジタル商品を考え、商品がすぐに届くこととします。
+さていま、攻撃者が、別のトランザクションを作成し、自分宛に 100BTC を送るものとします。
+攻撃者が、もし単にそれを野に放ったならば、
 そのトランザクションは受理されないでしょう。
-採掘者は、`APPLY(S,TX)` を実行するとき、`TX` が、使用済みUTXO を使用しようとしていることに気づくでしょう。
+法の番人である採掘者は、`APPLY(S,TX)` を実行するとき、`TX` が、使用済みUTXO を使用しようとしていることに気づくでしょう。
 なので代わりに、
 攻撃者はブロックチェーンを分岐させ、
 親として同じ 269999 番目のブロックを参照する 270000 番目の新しいバージョンのブロックを生成します。
-ここでは、もとのブロックに含まれていたトランザクションは含まれず、新しいトランザクションが追加されていきます。
+ここでは、もとのブロックに含まれていたトランザクションは含まれず、新しいトランザクションが追加されていくこととなります。
 ブロックのデータの中身が違うので、
-proof of work をやり直す必要があります。
-さらに、攻撃者の新しいバージョンのブロック 270000 では、異なるハッシュ値を生成するので、
-もとのブロックチェーンにおけるブロック 270001 ~ 270005 は、この攻撃者のブロックを参照しません。
+攻撃者は proof of work をやり直す必要があります。
+さらに、攻撃者の新しいブロック 270000 では、異なるハッシュ値を生成するので、
+もとのブロックチェーン上のブロック 270001 ~ 270005 は、このブロックを参照しません。
 このように、もとのブロックチェーンと攻撃者のチェーンは完全に分断されるのです。
 このとき適用されるルールは次のようになります。
 ブロックチェーンの分岐時は、
@@ -284,22 +278,59 @@ proof of work をやり直す必要があります。
 
 
 
-### Merkle Trees
+### マークル木
 
-[SPV in bitcoin]
 
-_Left: it suffices to present only a small number of nodes in a Merkle tree to give a proof of the validity of a branch._
+_革新　 : 　
+分岐の正当性を証明するには、ほんの少しのノードを与えてやるだけでよい_
 
-_Right: any attempt to change any part of the Merkle tree will eventually lead to an inconsistency somewhere up the chain._
+_伝統　 : 　
+どの部分にいかなる変化を加えたところで、その鎖の上方で必ず不一致を生み出す_
 
-An important scalability feature of Bitcoin is that the block is stored in a multi-level data structure. The "hash" of a block is actually only the hash of the block header, a roughly 200-byte piece of data that contains the timestamp, nonce, previous block hash and the root hash of a data structure called the Merkle tree storing all transactions in the block. A Merkle tree is a type of binary tree, composed of a set of nodes with a large number of leaf nodes at the bottom of the tree containing the underlying data, a set of intermediate nodes where each node is the hash of its two children, and finally a single root node, also formed from the hash of its two children, representing the "top" of the tree. The purpose of the Merkle tree is to allow the data in a block to be delivered piecemeal: a node can download only the header of a block from one source, the small part of the tree relevant to them from another source, and still be assured that all of the data is correct. The reason why this works is that hashes propagate upward: if a malicious user attempts to swap in a fake transaction into the bottom of a Merkle tree, this change will cause a change in the node above, and then a change in the node above that, finally changing the root of the tree and therefore the hash of the block, causing the protocol to register it as a completely different block (almost certainly with an invalid proof of work).
+Bitcoin の重要なスケーラビリティ特性は、ブロックは多層データ構造で保管される、ということです。
+「ブロックのハッシュ値」は実は、ブロックヘッダ（先頭部）のハッシュ値 に過ぎず、これは約 200byte のデータで以下を保持します。
 
-The Merkle tree protocol is arguably essential to long-term sustainability. A "full node" in the Bitcoin network, one that stores and processes the entirety of every block, takes up about 15 GB of disk space in the Bitcoin network as of April 2014, and is growing by over a gigabyte per month. Currently, this is viable for some desktop computers and not phones, and later on in the future only businesses and hobbyists will be able to participate. A protocol known as "simplified payment verification" (SPV) allows for another class of nodes to exist, called "light nodes", which download the block headers, verify the proof of work on the block headers, and then download only the "branches" associated with transactions that are relevant to them. This allows light nodes to determine with a strong guarantee of security what the status of any Bitcoin transaction, and their current balance, is while downloading only a very small portion of the entire blockchain.
+* タイムスタンプ
+* ノンス
+* 直前のブロックの ハッシュ値 
+* マークル木 の ルート（根の元となる部分）の ハッシュ値
+
+マークル木とは、ブロックの全トランザクションを保持するデータ構造の呼称です。  
+マークル木は、バイナリ木のひとつで、以下の三つから構成されます。
+
+* 基礎データを保持する木構造の最下層の「葉（リーフノード）」の集合
+* 二つの 子ノード のハッシュ値である「枝（中間ノード）」の集合 
+* 唯一の「根（ルートノード）」（二つの子ノードのハッシュ値で "頂上" にくるもの）
+
+マークル木は、ブロック中のデータをバラバラに運搬するためにつくられました。
+ノードは、ひとつのソース（ネットワーク上の自身とは別のノード）からブロックヘッダだけを、
+別のソースから、データ木の中の必要なトランザクションに関係する細かな部分を、ダウンロードすることができ、それでもなお全データが整合性を保証できるのです。
+これがうまく動作する所以は、ハッシュ値が上に伝播していくところ にあります。：
+もし悪意のあるユーザーが偽物のトランザクションをマークル木の底のノードに取り替えようとすると、この変化はその親のノードに変化させ、繰り返し伝播することで最終的にルートの値を変化させます。
+つまり、ブロックのハッシュ値が変化し、結果としてマークル木のプロトコルにより、全く別のブロックとして記録され、このブロックは十中八九 proof of work が無効となります。
+
+
+マークル木のプロトコルは、言うまでもなく長期にわたるアプリケーションの維持のために必要です。
+Bitcoin ネットワークにおける「完全ノード、フルノード」とは、「全ブロックの全トランザクションを保管・処理するノード」のことで、
+2014年4月の時点で 15GB の容量をとり、ひと月あたり１GB以上の速さで増え続けています。
+現在、これはデスクトップコンピュータ上で目視できますが、携帯電話では確認できません。
+容量的な観点から、後々の未来、完全ノード に参加できるのは、ビジネスや趣味の範疇に限られてくるでしょう。
+「SPV （簡素な支払検証）」として知られるプロトコルにより、「完全ノード」とは別タイプのノードが開発されました。
+「軽量ノード、ライトノード」と呼ばれ、このノードは、ブロックヘッダをダウンロードし、ブロックヘッダで proof of work を検証し、そして自身に関係のある トランザクションの「枝、ブランチ」だけをダウンロードします。
+軽量ノードは、セキュリティ保証を強く保ったまま、トランザクション履歴や残高を、状態遷移関数により決定することができるというのに、
+全ブロックチェーンの、ほんの小さな部分をダウンロードすればよい、というものなのです。
+
+
 
 ### Alternative Blockchain Applications
 
-The idea of taking the underlying blockchain idea and applying it to other concepts also has a long history. In 2005, Nick Szabo came out with the concept of "[secure property titles with owner authority](http://szabo.best.vwh.net/securetitle.html)", a document describing how "new advances in replicated database technology" will allow for a blockchain-based system for storing a registry of who owns what land, creating an elaborate framework including concepts such as homesteading, adverse possession and Georgian land tax. However, there was unfortunately no effective replicated database system available at the time, and so the protocol was never implemented in practice. After 2009, however, once Bitcoin's decentralized consensus was developed a number of alternative applications rapidly began to emerge.
-
+基礎技術である blockchain の他コンセプトへの応用は、これもまた、長い歴史があります。
+2005 年　Nick Szabo が "[secure property titles with owner authority（自己の権威によるセキュアな財産の獲得）](http://szabo.best.vwh.net/securetitle.html)" というコンセプトを発表しました。この論文は、複製データベースの技術の進歩により、いかにして
+blockchain 基調のシステムが、土地所有の登記 の保管を可能にするのかを記述し、
+「開拓 homesteading」「有害な所有 adverse possesion」「ジョージの土地課税 Georgian land tax」というコンセプトを含む枠組みを、苦労して築き上げました。
+しかし、残念ながら、当時利用できる、効果的な複製データシステムがなかったため、プロトコルが実際に実装されることはありませでした。
+とは言うものの、2009 年を過ぎ、Bitcoin の分散型コンセンサスが一度開発されてからは、急速に代替アプリが出現し始めました。
+ 
 * **Namecoin** - created in 2010, [Namecoin](https://namecoin.org/) is best described as a decentralized name registration database. In decentralized protocols like Tor, Bitcoin and BitMessage, there needs to be some way of identifying accounts so that other people can interact with them, but in all existing solutions the only kind of identifier available is a pseudorandom hash like `1LW79wp5ZBqaHW1jL5TCiBCrhQYtHagUWy`. Ideally, one would like to be able to have an account with a name like "george". However, the problem is that if one person can create an account named "george" then someone else can use the same process to register "george" for themselves as well and impersonate them. The only solution is a first-to-file paradigm, where the first registerer succeeds and the second fails - a problem perfectly suited for the Bitcoin consensus protocol. Namecoin is the oldest, and most successful, implementation of a name registration system using such an idea.
 * **Colored coins** - the purpose of [colored coins](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) is to serve as a protocol to allow people to create their own digital currencies - or, in the important trivial case of a currency with one unit, digital tokens, on the Bitcoin blockchain. In the colored coins protocol, one "issues" a new currency by publicly assigning a color to a specific Bitcoin UTXO, and the protocol recursively defines the color of other UTXO to be the same as the color of the inputs that the transaction creating them spent (some special rules apply in the case of mixed-color inputs). This allows users to maintain wallets containing only UTXO of a specific color and send them around much like regular bitcoins, backtracking through the blockchain to determine the color of any UTXO that they receive.
 * **Metacoins** - the idea behind a metacoin is to have a protocol that lives on top of Bitcoin, using Bitcoin transactions to store metacoin transactions but having a different state transition function, `APPLY'`. Because the metacoin protocol cannot prevent invalid metacoin transactions from appearing in the Bitcoin blockchain, a rule is added that if `APPLY'(S,TX)` returns an error, the protocol defaults to `APPLY'(S,TX) = S`. This provides an easy mechanism for creating an arbitrary cryptocurrency protocol, potentially with advanced features that cannot be implemented inside of Bitcoin itself, but with a very low development cost since the complexities of mining and networking are already handled by the Bitcoin protocol. Metacoins have been used to implement some classes of financial contracts, name registration and decentralized exchange.
