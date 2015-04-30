@@ -38,7 +38,7 @@ Ethereum が提供しようとしているものは、チューリング完全�
     * [状態遷移システム としての Bitcoin](#bitcoin-as-a-state-transition-system)
     * [採掘](#mining)
     * [マークル木](#merkle-trees)
-    * [Alternative Blockchain Applications](#alternative-blockchain-applications)
+    * [Blockchain を用いた代替アプリケーション](#alternative-blockchain-applications)
     * [Scripting](#scripting)
 * [Ethereum](#ethereum)
     * [Ethereum Accounts](#ethereum-accounts)
@@ -65,7 +65,7 @@ Ethereum が提供しようとしているものは、チューリング完全�
 
 ## Introduction to Bitcoin and Existing Concepts
 
-### History
+### 歴史
 
 
 上述した資産登録マシンのような代替アプリや、
@@ -279,24 +279,29 @@ Bitcoin の基礎となる暗号理論はセキュリティの高いものと知
 
 
 ### マークル木
+  
+![SPV in bitcoin](https://raw.githubusercontent.com/ethereum/www/master-postsale/src/extras/gh_wiki/spv_bitcoin.png)
 
 
 _革新　 : 　
-分岐の正当性を証明するには、ほんの少しのノードを与えてやるだけでよい_
+分岐の正当性の証明には、少しのノードを与えてやるだけでよい_
 
 _伝統　 : 　
-どの部分にいかなる変化を加えたところで、鎖の上方で必ず不一致を生む_
+どの部分にいかなる変化を付与しても、鎖の上方で必ず不一致を生む_
 
-Bitcoin の重要なスケーラビリティ特性は、ブロックは多層データ構造で保管される、ということです。
-「ブロックのハッシュ値」は実は、ブロックヘッダ（先頭部）のハッシュ値 に過ぎず、これは約 200byte のデータで以下を保持します。
+
+
+  
+
+Bitcoin の重要なスケーラビリティ特性は「ブロックは多層データ構造で保管される」ということです。
+ブロックの「ハッシュ値」とは実は、ブロックヘッダ（先頭部）のハッシュ値 に過ぎず、これは約 200byte のデータであり、
 
 * タイムスタンプ
 * ノンス
 * 直前のブロックの ハッシュ値 
-* マークル木 の ルート（根の元となる部分）の ハッシュ値
+* マークル木（ブロック内の全トランザクションを保持するデータ構造）の ルート（根の元となる部分）の ハッシュ値
 
-マークル木とは、ブロックの全トランザクションを保持するデータ構造の呼称です。  
-マークル木は、バイナリ木のひとつで、以下の三つから構成されます。
+を保持します。マークル木は、バイナリ木のひとつで、以下の三つから構成されます。
 
 * 基礎データを保持する木構造の最下層の「葉（リーフノード）」の集合
 * 二つの 子ノード のハッシュ値である「枝（中間ノード）」の集合 
@@ -304,9 +309,9 @@ Bitcoin の重要なスケーラビリティ特性は、ブロックは多層デ
 
 マークル木は、ブロック中のデータをバラバラに運搬するためにつくられました。
 ノードは、ひとつのソース（ネットワーク上の自身とは別のノード）からブロックヘッダだけを、
-別のソースから、データ木の中の必要なトランザクションに関係する細かな部分を、ダウンロードすることができ、それでもなお全データが整合性を保証できるのです。
-これがうまく動作する所以は、ハッシュ値が上に伝播していくところ にあります。：
-もし悪意のあるユーザーが偽物のトランザクションをマークル木の底のノードに取り替えようとすると、この変化はその親のノードに変化させ、繰り返し伝播することで最終的にルートの値を変化させます。
+別のソースから、データ木の中の必要なトランザクションに関係する細かな部分を、ダウンロードすることができ、それでもなお全データの整合性を保証できるのです。
+これがうまく動作する所以は、ハッシュ値が上に伝播していくところ です。：
+もし悪意のあるユーザーが偽物のトランザクションをマークル木の底のノードと取り替えようとすると、この変化はその親のノードに変化させ、繰り返し伝播することで最終的にルートの値を変化させます。
 つまり、ブロックのハッシュ値が変化し、結果としてマークル木のプロトコルにより、全く別のブロックとして記録され、このブロックは十中八九 proof of work が無効となります。
 
 
@@ -317,27 +322,79 @@ Bitcoin ネットワークにおける「完全ノード、フルノード」と
 容量的な観点から、後々の未来、完全ノード に参加できるのは、ビジネスや趣味の範疇に限られてくるでしょう。
 「SPV （簡素な支払検証）」として知られるプロトコルにより、「完全ノード」とは別タイプのノードが開発されました。
 「軽量ノード、ライトノード」と呼ばれ、このノードは、ブロックヘッダをダウンロードし、ブロックヘッダで proof of work を検証し、そして自身に関係のある トランザクションの「枝、ブランチ」だけをダウンロードします。
-軽量ノードは、セキュリティ保証を強く保ったまま、トランザクション履歴や残高を、状態遷移関数により決定することができるというのに、
-全ブロックチェーンの、ほんの小さな部分をダウンロードすればよい、というものなのです。
+軽量ノードは、セキュリティを強く保ったまま、トランザクション履歴や残高を、状態遷移関数により決定することができるというのに、
+全ブロックチェーンの小さな部分木をダウンロードすればよい、というものなのです。
 
 
 
-### Alternative Blockchain Applications
+### Blockchain を用いた代替アプリケーション
 
 基礎技術である blockchain の他コンセプトへの応用は、これもまた、長い歴史があります。
 2005 年　Nick Szabo が "[secure property titles with owner authority（自己の権威によるセキュアな財産の獲得）](http://szabo.best.vwh.net/securetitle.html)" というコンセプトを発表しました。この論文は、複製データベースの技術の進歩により、いかにして
 blockchain 基調のシステムが、土地所有の登記 の保管を可能にするのかを記述し、
-「開拓 homesteading」「有害な所有 adverse possesion」「ジョージの土地課税 Georgian land tax」というコンセプトを含む枠組みを、苦労して築き上げました。
+「開拓 homesteading」「不法占有 adverse possesion」「ジョージの土地課税 Georgian land tax」といったコンセプトを含む枠組みを、苦労して築き上げました。
 しかし、残念ながら、当時利用できる、効果的な複製データシステムがなかったため、プロトコルが実際に実装されることはありませでした。
-とは言うものの、2009 年を過ぎ、Bitcoin の分散型コンセンサスが一度開発されてからは、急速に代替アプリが出現し始めました。
- 
-* **Namecoin** - created in 2010, [Namecoin](https://namecoin.org/) is best described as a decentralized name registration database. In decentralized protocols like Tor, Bitcoin and BitMessage, there needs to be some way of identifying accounts so that other people can interact with them, but in all existing solutions the only kind of identifier available is a pseudorandom hash like `1LW79wp5ZBqaHW1jL5TCiBCrhQYtHagUWy`. Ideally, one would like to be able to have an account with a name like "george". However, the problem is that if one person can create an account named "george" then someone else can use the same process to register "george" for themselves as well and impersonate them. The only solution is a first-to-file paradigm, where the first registerer succeeds and the second fails - a problem perfectly suited for the Bitcoin consensus protocol. Namecoin is the oldest, and most successful, implementation of a name registration system using such an idea.
-* **Colored coins** - the purpose of [colored coins](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) is to serve as a protocol to allow people to create their own digital currencies - or, in the important trivial case of a currency with one unit, digital tokens, on the Bitcoin blockchain. In the colored coins protocol, one "issues" a new currency by publicly assigning a color to a specific Bitcoin UTXO, and the protocol recursively defines the color of other UTXO to be the same as the color of the inputs that the transaction creating them spent (some special rules apply in the case of mixed-color inputs). This allows users to maintain wallets containing only UTXO of a specific color and send them around much like regular bitcoins, backtracking through the blockchain to determine the color of any UTXO that they receive.
-* **Metacoins** - the idea behind a metacoin is to have a protocol that lives on top of Bitcoin, using Bitcoin transactions to store metacoin transactions but having a different state transition function, `APPLY'`. Because the metacoin protocol cannot prevent invalid metacoin transactions from appearing in the Bitcoin blockchain, a rule is added that if `APPLY'(S,TX)` returns an error, the protocol defaults to `APPLY'(S,TX) = S`. This provides an easy mechanism for creating an arbitrary cryptocurrency protocol, potentially with advanced features that cannot be implemented inside of Bitcoin itself, but with a very low development cost since the complexities of mining and networking are already handled by the Bitcoin protocol. Metacoins have been used to implement some classes of financial contracts, name registration and decentralized exchange.
+とは言うものの、2009 年に Bitcoin の分散型コンセンサス が一度開発されてからは、急速に代替アプリが出現し始めました。
 
-Thus, in general, there are two approaches toward building a consensus protocol: building an independent network, and building a protocol on top of Bitcoin. The former approach, while reasonably successful in the case of applications like Namecoin, is difficult to implement; each individual implementation needs to bootstrap an independent blockchain, as well as building and testing all of the necessary state transition and networking code. Additionally, we predict that the set of applications for decentralized consensus technology will follow a power law distribution where the vast majority of applications would be too small to warrant their own blockchain, and we note that there exist large classes of decentralized applications, particularly decentralized autonomous organizations, that need to interact with each other.
 
-The Bitcoin-based approach, on the other hand, has the flaw that it does not inherit the simplified payment verification features of Bitcoin. SPV works for Bitcoin because it can use blockchain depth as a proxy for validity; at some point, once the ancestors of a transaction go far enough back, it is safe to say that they were legitimately part of the state. Blockchain-based meta-protocols, on the other hand, cannot force the blockchain not to include transactions that are not valid within the context of their own protocols. Hence, a fully secure SPV meta-protocol implementation would need to backward scan all the way to the beginning of the Bitcoin blockchain to determine whether or not certain transactions are valid. Currently, all "light" implementations of Bitcoin-based meta-protocols rely on a trusted server to provide the data, arguably a highly suboptimal result especially when one of the primary purposes of a cryptocurrency is to eliminate the need for trust.
+* **Namecoin** - 2010年に作られた [Namecoin](https://namecoin.org/) は「分散型名前登録データベース」と表現されます。
+Tor や Bitcoin , BitMessage のような分散型プロトコルでは、個体識別に アカウント が必要で、そのため他人による干渉が可能ですが、
+どのようにしても利用可能な識別子は、`1LW79wp5ZBqaHW1jL5TCiBCrhQYtHagUWy`のような擬似乱数となります。
+できれば "ジョージ" のような名前をつけることができたらいいな、と考えるでしょう。
+しかしながら、問題なのは "ジョージ" という名前を誰でも、同じプロセスをたどることで登録でき、"ジョージ"として振舞えるのです。
+唯一の解決策は 「fist-to-file パラダイム」を用いることです。
+これは、最初（first）の登録者は登録（file）に成功し、二番目以降では失敗するというものです。
+この問題は Bitcoin の大衆意思決定のプロトコルに完全に合致し、 Namecoinは一早くにこの考えを使って名前登録のシステムを実装し、見事に成功しました。
+
+* **Colored coins** - [colored coins](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) の目的は、Bitcoin の blockchain 上に「自身で作ったデジタル通貨」や、
+通貨の重要な性質である少額使用の例としてユニットを採用した「デジタルトークン」を、構築できるプロトコルを提供することです。
+colored coins のプロトコルでは、
+特定の Bitcoin UTXO に「色」を設定することで、
+新しい通貨を "発行" します。
+プロトコルは、colered coins を生成するトランザクションの入力値に「色」が付いていれば、他の UTXO も同じ「色」であるものと再帰的に定義します。
+（様々な「色」の入力が混じった場合は、特別なルールが適用されます。）
+このことで、ユーザーは特別な色の UTXO だけを保持する財布を維持し、
+ほとんど Bitcoin と同じように周囲に対し送金することが可能で、
+受け取った UTXO の色を特定するには blockchain を遡ります。
+
+* **Metacoins** - 
+metacoins の背景となる思想は「 Bitcoin を土台として、その上で動作するプロトコルをもつ」であり、
+metacoins のトランザクションを保管に、Bitcoin のトランザクションを使用しますが、別の 状態遷移関数 `APPLY'` を保持します。
+metacoins のプロトコルは、無効な metacoins トランザクションが Bitcoin blockchain 上にでてくることを防止するために、
+規則「 if `APPLY'(S,TX)` returns an error, 
+the protocol defaults to `APPLY'(S,TX) = S
+」を加えます。
+metacoins は、任意の独自暗号通貨をつくるための 簡単なメカニズム を提供しており、
+Bitcoin 自体のシステム内部においては表面化することのない 独自の先進的な機能 を持たせることができます。
+採掘とネットワークのシステムといった複雑な部分がすでに Bitcoin プロトコルによって処理されているので、
+開発コストはとても低く済みます。
+metacoins はいくつかの金融契約や名前登録や分散型両替所を実装するのに使われています。
+
+
+一般的に言って、大衆意思決定プロトコルを構築する方法は二種類あります。
+「独自ネットワークをつくる方法」と「Bitcoin を土台とする方法」です。
+前者の方法は、namecoin では適度な成功を収めたものの、実装するのが難しいです。
+というのは、独自の実装はそれぞれにおいて、独自のブロックチェーンをつくる必要があり、
+同様に、それに必要な状態遷移とネットワークを構成するコードのあらゆるビルド・アンド・テストが必要となります。
+さらに、そうしてできた分散型大衆決定のアプリケーションの数々の集合は、
+採掘（power）と検証（law）の分散を招き、仮にアプリケーションの中では多数派であったとしても、
+規模が小さすぎて自分のブロックチェーンを公正なものとすることができない、といった事態を招きます。
+そして以下のことに気づきました。
+大きな種類の分散型アプリがあったとして、とりわけ分散型自動組織では、
+それらはお互いに手を取り合わなければなりません。
+
+一方で、「Bitcoin を土台とする方法」では、Bitcoin の SPV 特性 を継承しないという欠点があります。
+SPV は Bitcoin では動作しますが、それは blockchain におけるブロックの「深さ」が その正当性 を代弁するためです。
+一度、トランザクションの祖先が深いところへ行ってしまえば、
+そのトランザクションは「状態」を構成する正当な部分であると、安心して言うことができます。
+meta プロトコル では、一方で、そのコンテクスト内ではトランザクションが無効であっても、
+Bitcoin の blockchain において、それが組み込まれることを阻止する方法はありません。
+（Bitcoin のコンテクスト と Meta プロトコル のコンテクストは異なります。）
+このように、もし、完全にセキュアな SPV meta プロトコルの実装 が存在したならば、
+あるトランザクションが有効かどうかを決定するために、
+Bitcoin の blockchain の一番最初まで全過程を遡ってスキャンする必要があるでしょう。現在、Bitcoin ベースの meta プロトコル の軽量実装は、データを提供する信用機関としてのサーバーに依存しており、
+言うまでもなく、とりわけ暗号通貨の当初の目的の一つが「信用機関の必要性の消去」であるような状況下では、最良の結果であるとは到底言えません。
+
 
 ### Scripting
 
