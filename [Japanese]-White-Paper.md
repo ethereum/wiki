@@ -39,7 +39,7 @@ Ethereum が提供しようとしているものは、チューリング完全�
     * [採掘](#mining)
     * [マークル木](#merkle-trees)
     * [Blockchain を用いた代替アプリケーション](#alternative-blockchain-applications)
-    * [Scripting](#scripting)
+    * [スクリプト言語による記述](#scripting)
 * [Ethereum](#ethereum)
     * [Ethereum Accounts](#ethereum-accounts)
     * [Messages and Transactions](#messages-and-transactions)
@@ -206,8 +206,8 @@ AのあとにBがきているブロックは有効ですが、そうでない場
 全てのブロックの double-SHA256 hash値（256bit の数値）が 
 動的に変化するように設計された「目的値 target」より小さくなること、であり、
 目的値は、これを執筆している当時では、約2<sup>187</sup>でした。
-この目的は、ブロック生成を計算科学上 "難しく" することであり、
-その結果、Sybil Attack（ひとりでノードを多数生成し多数決的に攻撃する手法）による攻撃者がかれらの好きなように 全 blockchain を改竄してしまうことを防止いたします。
+これは、ブロック生成を計算科学上 "難しく" する為であり、
+その結果、Sybil Attack（ひとりでノードを多数生成し多数決的に攻撃する手法）による攻撃者が自身の好きなように 全 blockchain を改竄してしまうことを防止いたします。
 SHA256（エスエイチエーにごろ）は、完全に予測不可能な擬似乱数関数として設計されており、
 有効なブロックをつくる唯一の方法は、単に ノンス をインクリメントしてはその新しい hash値 が適合するかを確かめるという、試行錯誤を繰り返すしかありません。
 
@@ -240,7 +240,7 @@ Bitcoin の基礎となる暗号理論はセキュリティの高いものと知
 3. 自分自身に 100 BTC を送る別のトランザクションを生成する
 4. ネットワークが、後に作った方のトランザクションの順番が最初にくるようなブロックを、承認するように試みる
 
-一度、ステップ（1）が履行されると
+一度、ステップ 1 が履行されると
 数分後に採掘者がトランザクションをブロックに含めます。
 ブロック番号は 270000 とします。
 一時間後、５個以上のブロックが、そのブロックの後ろに追加され、
@@ -250,7 +250,7 @@ Bitcoin の基礎となる暗号理論はセキュリティの高いものと知
 商売人は、支払いが確定したものとみなし、商品を発送します。
 ここではデジタル商品を考え、商品がすぐに届くこととします。
 さていま、攻撃者が、別のトランザクションを作成し、自分宛に 100BTC を送るものとします。
-攻撃者が、もし単にそれを野に放ったならば、
+攻撃者が、もし単にそれを野に放っただけならば、
 そのトランザクションは受理されないでしょう。
 法の番人である採掘者は、`APPLY(S,TX)` を実行するとき、`TX` が、使用済みUTXO を使用しようとしていることに気づくでしょう。
 なので代わりに、
@@ -294,7 +294,7 @@ _伝統　 : 　
   
 
 Bitcoin の重要なスケーラビリティ特性は「ブロックは多層データ構造で保管される」ということです。
-ブロックの「ハッシュ値」とは実は、ブロックヘッダ（先頭部）のハッシュ値 に過ぎず、これは約 200byte のデータであり、
+ブロックの「ハッシュ値」とは実は、ブロックヘッダ（先頭部）のハッシュ値 に過ぎず、これは約 200 byte のデータであり、
 
 * タイムスタンプ
 * ノンス
@@ -309,10 +309,10 @@ Bitcoin の重要なスケーラビリティ特性は「ブロックは多層デ
 
 マークル木は、ブロック中のデータをバラバラに運搬するためにつくられました。
 ノードは、ひとつのソース（ネットワーク上の自身とは別のノード）からブロックヘッダだけを、
-別のソースから、データ木の中の必要なトランザクションに関係する細かな部分を、ダウンロードすることができ、それでもなお全データの整合性を保証できるのです。
+別のソースから、必要なトランザクションに関連する小さな部分木を、ダウンロードすることができ、それでもなお全データの整合性を保証できるのです。
 これがうまく動作する所以は、ハッシュ値が上に伝播していくところ です。：
 もし悪意のあるユーザーが偽物のトランザクションをマークル木の底のノードと取り替えようとすると、この変化はその親のノードに変化させ、繰り返し伝播することで最終的にルートの値を変化させます。
-つまり、ブロックのハッシュ値が変化し、結果としてマークル木のプロトコルにより、全く別のブロックとして記録され、このブロックは十中八九 proof of work が無効となります。
+つまり、ブロックのハッシュ値が変化し、マークル木のプロトコルにより、結果として、全く別のブロックとして記録され、このブロックは十中八九 proof of work が無効となります。
 
 
 マークル木のプロトコルは、言うまでもなく長期にわたるアプリケーションの維持のために必要です。
@@ -372,42 +372,104 @@ metacoins はいくつかの金融契約や名前登録や分散型両替所を�
 
 
 一般的に言って、大衆意思決定プロトコルを構築する方法は二種類あります。
-「独自ネットワークをつくる方法」と「Bitcoin を土台とする方法」です。
-前者の方法は、namecoin では適度な成功を収めたものの、実装するのが難しいです。
-というのは、独自の実装はそれぞれにおいて、独自のブロックチェーンをつくる必要があり、
+「独自のネットワークをつくる方法」と「Bitcoin を土台とする方法」です。
+前者の方法は、namecoin では適度な成功を収めたものの、実装するのが大変です。
+と言いますのは、独自の実装はそれぞれにおいて、独自のブロックチェーンをつくる必要があり、
 同様に、それに必要な状態遷移とネットワークを構成するコードのあらゆるビルド・アンド・テストが必要となります。
 さらに、そうしてできた分散型大衆決定のアプリケーションの数々の集合は、
 採掘（power）と検証（law）の分散を招き、仮にアプリケーションの中では多数派であったとしても、
 規模が小さすぎて自分のブロックチェーンを公正なものとすることができない、といった事態を招きます。
-そして以下のことに気づきました。
+そして次のことを認識するに至りました。
 大きな種類の分散型アプリがあったとして、とりわけ分散型自動組織では、
 それらはお互いに手を取り合わなければなりません。
 
-一方で、「Bitcoin を土台とする方法」では、Bitcoin の SPV 特性 を継承しないという欠点があります。
+一方で、「Bitcoin を土台とする方法」では、Bitcoin の SPV 特性 を継承しないという欠陥があります。
 SPV は Bitcoin では動作しますが、それは blockchain におけるブロックの「深さ」が その正当性 を代弁するためです。
 一度、トランザクションの祖先が深いところへ行ってしまえば、
-そのトランザクションは「状態」を構成する正当な部分であると、安心して言うことができます。
-meta プロトコル では、一方で、そのコンテクスト内ではトランザクションが無効であっても、
+そのトランザクションは、現在の「状態」を構成する正当な状態遷移関数であると、安心して言うことができます。
+一方、meta プロトコル では、そのコンテクスト内でトランザクションが無効であっても、
 Bitcoin の blockchain において、それが組み込まれることを阻止する方法はありません。
 （Bitcoin のコンテクスト と Meta プロトコル のコンテクストは異なります。）
 このように、もし、完全にセキュアな SPV meta プロトコルの実装 が存在したならば、
-あるトランザクションが有効かどうかを決定するために、
-Bitcoin の blockchain の一番最初まで全過程を遡ってスキャンする必要があるでしょう。現在、Bitcoin ベースの meta プロトコル の軽量実装は、データを提供する信用機関としてのサーバーに依存しており、
+あるトランザクションが有効かどうかを判定するために、
+Bitcoin の blockchain の一番最初まで全過程を遡ってスキャンする必要があるでしょう。現在、meta プロトコル の軽量実装は、データを提供する信用機関としてのサーバーに依存しており、
 言うまでもなく、とりわけ暗号通貨の当初の目的の一つが「信用機関の必要性の消去」であるような状況下では、最良の結果であるとは到底言えません。
 
 
-### Scripting
+### スクリプリト言語による記述
 
-Even without any extensions, the Bitcoin protocol actually does facilitate a weak version of a concept of "smart contracts". UTXO in Bitcoin can be owned not just by a public key, but also by a more complicated script expressed in a simple stack-based programming language. In this paradigm, a transaction spending that UTXO must provide data that satisfies the script. Indeed, even the basic public key ownership mechanism is implemented via a script: the script takes an elliptic curve signature as input, verifies it against the transaction and the address that owns the UTXO, and returns 1 if the verification is successful and 0 otherwise. Other, more complicated, scripts exist for various additional use cases. For example, one can construct a script that requires signatures from two out of a given three private keys to validate ("multisig"), a setup useful for corporate accounts, secure savings accounts and some merchant escrow situations. Scripts can also be used to pay bounties for solutions to computational problems, and one can even construct a script that says something like "this Bitcoin UTXO is yours if you can provide an SPV proof that you sent a Dogecoin transaction of this denomination to me", essentially allowing decentralized cross-cryptocurrency exchange.
+たとえまったく拡張をせずとも、実は、Bitcoin プロトコルは「 smart contracts 」コンセプトの 機能的に弱いバージョン を簡単に実装したものです。
+Bitcoin の UTXO は、「公開鍵」が保持するだけでなく、
+簡素なスタック・ベース・プログラミング言語で表現される少し複雑な「スクリプト」が、保持することもできます。
+このパラダイムの下で、
+トランザクションが、
+スクリプト保持の UTXO を 入力値 とすれば、
+スクリプトの記述内容を満たすデータが 出力値 となるように、
+トランザクションの記述がされなければなりません。
+さらには、
+基本的な 公開鍵保有メカニズム（その公開鍵を使用したトランザクションがブロック内にあるかどうかを検証するメカニズム）
+でさえ、スクリプトを通して実装されています。
+そのスクリプトは、
+ブロック生成の証である 楕円曲線署名 を入力値として受け取り、
+トランザクションとその UTXO を所有するアドレス（公開鍵）に対してその署名を検証し、
+検証が成功すれば 1 を返し、そうでなければ 0 を返します。
+他にも、より複雑なスクリプトが様々な使用場面のために存在します。
+例えば、
+トランザクション検証の際、与えられた三つの鍵の組のうち二つの署名を必要とする スクリプト（マルチシグ multisig）や、
+企業アカウントや、セキュリティの高い口座アカウント、商売におけるエスクローが必要な状況に役立つ 初期設定 を構築することができます。
+スクリプトは、計算問題の答えに対する懸賞金の支払いにおいても使用され、
+「もしあなたがこの額の Dogecoin のトランザクションを送信したという SPV proof を提供できるならば、この Bitcoin はあなたのものだ」といったようなことを記述したスクリプトでさえ構築可能です。
+そして基本的には、分散型のクロス暗号通貨の取引が可能です。
 
-However, the scripting language as implemented in Bitcoin has several important limitations:
+しかしながら、Bitcoin に実装されたようなスクリプト言語にはいくつかの重要な制限があります。：
 
-* **Lack of Turing-completeness** - that is to say, while there is a large subset of computation that the Bitcoin scripting language supports, it does not nearly support everything. The main category that is missing is loops. This is done to avoid infinite loops during transaction verification; theoretically it is a surmountable obstacle for script programmers, since any loop can be simulated by simply repeating the underlying code many times with an if statement, but it does lead to scripts that are very space-inefficient. For example, implementing an alternative elliptic curve signature algorithm would likely require 256 repeated multiplication rounds all individually included in the code.
-* **Value-blindness** - there is no way for a UTXO script to provide fine-grained control over the amount that can be withdrawn. For example, one powerful use case of an oracle contract would be a hedging contract, where A and B put in $1000 worth of BTC and after 30 days the script sends $1000 worth of BTC to A and the rest to B. This would require an oracle to determine the value of 1 BTC in USD, but even then it is a massive improvement in terms of trust and infrastructure requirement over the fully centralized solutions that are available now. However, because UTXO are all-or-nothing, the only way to achieve this is through the very inefficient hack of having many UTXO of varying denominations (eg. one UTXO of 2<sup>k</sup> for every k up to 30) and having O pick which UTXO to send to A and which to B.
-* **Lack of state** - UTXO can either be spent or unspent; there is no opportunity for multi-stage contracts or scripts which keep any other internal state beyond that. This makes it hard to make multi-stage options contracts, decentralized exchange offers or two-stage cryptographic commitment protocols (necessary for secure computational bounties). It also means that UTXO can only be used to build simple, one-off contracts and not more complex "stateful" contracts such as decentralized organizations, and makes meta-protocols difficult to implement. Binary state combined with value-blindness also mean that another important application, withdrawal limits, is impossible.
-* **Blockchain-blindness** - UTXO are blind to blockchain data such as the nonce, the timestamp and previous block hash. This severely limits applications in gambling, and several other categories, by depriving the scripting language of a potentially valuable source of randomness.
+* **チューリング完全性の欠如** - 
+つまるところ、Bitcoin スクリプト言語 は計算理論の大部分をサポートしていますが、ほぼ全てという訳ではありません。
+サポートしていない代表的なものとして ループ が挙げられます。
+これは、トランザクションの検証中に無限ループに陥る事を避けるために除外されました。
+理論的には、プログラマにとってはこれは簡単に克服できる障害で、if文と一緒に基本コードを繰り返せば、あらゆるループを模倣できますが、
+スクリプトを記録する（ブロックチェーン上の）スペースを極めて非効率に使用することになります。
+たとえば、楕円曲線署名の代替アルゴリズムをスクリプト上に実装したならば、
+全く同じである掛け算の命令セットが256回個別に記述されてしまいます。
 
-Thus, we see three approaches to building advanced applications on top of cryptocurrency: building a new blockchain, using scripting on top of Bitcoin, and building a meta-protocol on top of Bitcoin. Building a new blockchain allows for unlimited freedom in building a feature set, but at the cost of development time, bootstrapping effort and security. Using scripting is easy to implement and standardize, but is very limited in its capabilities, and meta-protocols, while easy, suffer from faults in scalability. With Ethereum, we intend to build an alternative framework that provides even larger gains in ease of development as well as even stronger light client properties, while at the same time allowing applications to share an economic environment and blockchain security.
+* **値が定まらない問題** - 
+UTXO を保持する スクリプトが、取引量をきめ細やかに管理する方法はありません。
+たとえば、
+もしも、神のみぞ知るような内容の契約の大きな取引だっとしたら、それは価格操作等の生じうるヘッジング契約となってしまうでしょう。
+それは次のような状況です。
+AとBがそれぞれ $1000 相当のBTC をスクリプトに提出し、スクリプトが30日後に$1000相当のBTCをAに残りをBに送るものとします。
+30日後の 1 BTC の USドル価格 を決定するのには神託が必要となり、しかし、これは、現在利用可能な完全な中央集約型の方法でさえ、信用とインフラの観点で大きな改良がひつようとなります。
+しかしながら、 UTXO は使うか使わないかの２択なので、
+極めて非効率な UTXO の"ハッキング"が必要で、神託が提示しうるすべての価格を UTXO で表すには、様々な残高の UTXO を用意する必要があります。
+たとえば、2<sup>k</sup> の値をもつ UTXO を k = 0 ,..., 30 まで 31個 つくれば良いでしょう。 
+
+* **状態の欠如** - UTXO は使うか、使われないかのどちらかを必ず決定してやらなければなりません。 
+このため、内部に「状態」を保持する多層形式の契約やスクリプトを記述することができません。
+このことにより、多分岐選択可能な契約や、分散型取引のオファー、２段階の暗号理論による決定プロトコル（セキュリティの高い計算問題の賞金を与える場合に必要です）をつくるのはとても困難となってしまいます。
+さらに、
+UTXO は単純な一度きりの契約をつくることにしか使用できず、分散型組織のような、より複雑な「状態を保持する」契約を記述ができず、
+meta プロトコルの実装を困難なものとします。
+値の定まらないバイナリ状態では、重要なアプリケーションである、引き出し制限が不可能となる弊害が生まれます。
+
+* **Blockchainが見えない問題** - 
+UTXO は、ノンス、タイムスタンプ、直前のブロックのハッシュといった blockchain のデータに対して盲目です。
+このことにより、スクリプト言語が、ランダム性の観点で潜在的価値のあるソースを参照するのを防いでしまい、
+ギャンブル・アプリケーションや他のカテゴリのいくつかを、厳しく制限してしまうことになります。
+
+このように、
+暗号通貨の上に進化型のアプリケーションを構築する方法を３つ見てきました。  
+ひとつめは、新しい blockchain を Bitcoin を土台とた上につくり、スクリプト言語を使用し、meta プロトコルを実装する方法です。
+ふたつめは、新しい blockchain をつくる方法で、その性質を決定するのに無限の自由が得られますが、
+開発時間に関するコスト問題、スタートアップに関する問題とセキュリティー面の問題も同様に得られます。
+みっつめは、Bitcoin のスクリプト言語を使用する方法で、開発や一般化は簡単ですが、
+可能性が限られてくることや、meta プロトコルの実装は簡単ですが、スケーラビリティの欠点に悩むことになります。
+
+Ethereum では、
+われわれは、代替となる骨格を築き上げ、
+簡単な開発であっても、大きな成果物が得られ、
+スマフォのようなライト・クライアントの財産に対しても強固なものを提供し、
+同時に、アプリケーションが 経済環境 と blockchain セキュリティ とを共有できるものを提供するつもりです。
+
 
 ## Ethereum
 
