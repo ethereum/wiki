@@ -14,10 +14,12 @@
 他の契約アカウントや外の世界のアカウントにとって役立つ何かを表すデータ貯蔵を維持する。一例として、通貨をシミュレートした「 contract 」がある。他の例としては、ある特定の機関の構成員を記録する「 contract 」がある。
 
 2. 「 EOアカウント 」に保持される。
-「 contract 」よりも複雑なアクセス制御がなされる「 EOアカウント 」に保持される。このコントラクトは「前進型契約」と呼ばれる。これの典型的なものとして、「ある条件が整えば受信した「メッセージ」を送りたい場所へただ単に転送する」というものがある。例として「3つある秘密鍵のうち2つが、ある今送りたいメッセージが確約（コンファーム）するのを待ってから、メッセージを転送する」といった前進型契約をもつものが考えられる（「 multisig 」）。より複雑な前進型契約は送られたメッセージの形態に基づいて違った状態を取るというもので、この機能の最もシンプルな例として、より複雑なアクセス手順によって上書きされうる「引き出し制限」がある。（つまり複雑な手順の親クラス・あるいはインターフェースとしてEOアカウントに保持される）
+「 contract 」よりも複雑なアクセス制御がなされる「 EOアカウント 」に保持される。このコントラクトは「 先渡契約 forwarding contract 」と呼ばれる。これの典型的なものとして、「ある条件が整えば受信した「メッセージ」を送りたい場所へただ単に転送する」というものがある。例として「3つある秘密鍵のうち2つが、ある今送りたいメッセージが確約（コンファーム）するのを待ってから、メッセージを転送する」といった前進型契約をもつものが考えられる（「 multisig 」）。より複雑な前進型契約は送られたメッセージの形態に基づいて違った状態を取るというもので、この機能の最もシンプルな例として、より複雑なアクセス手順によって上書きされうる「引き出し制限」がある。（つまり複雑な手順の親クラス・あるいはインターフェースとしてEOアカウントに保持される）
 
-3. ユーザー（ EOアカウント ）間の契約内容や関係性を管理する。
+3. 複数のユーザー（ EOAs ）間の契約内容や関係性を管理する
 　金融契約における「第3者認証」が例としてわかりやすい。
+Manage an ongoing contract or relationship between multiple users. Examples of this include a financial contract, an escrow with some particular set of mediators, or some kind of insurance. One can also have an open contract that one party leaves open for any other party to engage with at any time; one example of this is a contract that automatically pays a bounty to whoever submits a valid solution to some mathematical problem, or proves that it is providing some computational resource.
+
 
 4. ライブラリとして機能する。
 　他の契約によって呼び出される関数を格納しておく。
@@ -31,18 +33,20 @@
 ![img](https://github.com/ethereumbuilders/GitBook/blob/master/en/vitalik-diagrams/contract_relationship.png)
 
 　スタック上に積み上がっていくメソッドの呼び出し（コールスタック）を頭に思い描くことができれば、
-ここでの説明は容易であろう。なので翻訳を割愛し、原文を載せておく。  
+ここでの説明は容易であろう。 
 
-When Bob wants to finalize the bet, the following steps happen:
+ボブが賭けを終了させたいと思った時、次のことが起こる。:
 
-1. A transaction is sent, triggering a message from Bob's EOA to Bob's forwarding contract.
-2. Bob's forwarding contract sends the hash of the message and the Lamport signature to a contract which functions as a Lamport signature verification library.
-3. The Lamport signature verification library sees that Bob wants a SHA256-based Lamport sig, so it calls the SHA256 library many times as needed to verify the signature.
-4. Once the Lamport signature verification library returns 1, signifying that the signature has been verified, it sends a message to the contract representing the bet.
-5. The bet contract checks the contract providing the San Francisco price to see what the price is.
-6. The bet contract sees that the response to the messages shows that the price is above 35'C, so it sends a message to the GavCoin contract to move the GavCoin from its account to Bob's forwarding contract.
+1. トランザクションが送信され、それが有効になると、ボブの EOA からボブの forwading contract へ message が送信される
+2. ボブの forwading contract は message を受け取り、hash と ランポート署名 を「 ランポート署名検証 Library contract 」へ送信する
+3. 「 ランポート署名検証 Library contract 」はボブがSHA256のランポート署名が欲しいことをみて、 SHA256 のライブラリを検証に必要な回数にわたって呼び続ける。
+4. 「 ランポート署名検証 Library contract 」が 1 を返すと、署名が有効であると署名し、message を bet contract に送信する
+5. bet contract は サンフランシスコの気温を提供する contract に値を要求する
+6. bet contract は返事をみて、値が 35 度以上であることを確認する。そこで Gavcoin contract に、Gavcoin を その account から ボブの forwarding contract に移動するよう message を送信する。
 
-Note that the GavCoin is all "stored" as entries in the GavCoin contract's database; the word "account" in the context of step 6 simply means that there is a data entry in the GavCoin contract storage with a key for the bet contract's address and a value for its balance. After receiving this message, the GavCoin contract decreases this value by some amount and increases the value in the entry corresponding to Bob's forwarding contract's address. We can see these steps in the following diagram:
+GavCoin はすべて Gavcion contract データベースの項目として "貯蔵" されていることに注意して欲しい。
+ステップ 6 の内容にある単語 "account" が意味するところは単に Gavcoin cocntract の中に、bet contract の address のための key と 残高 とともに、データ項目 があるということだ。
+この message を受信したあと、Gavcoin contract は自身の残高からある量の値を減らし、同じ分だけボブの forwarding contract への送信項目の値を増やす。以下のdiagramにこれらのステップを示した:
 
 ![img](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/contract_relationship2.png?1)
 
