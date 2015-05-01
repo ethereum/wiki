@@ -16,10 +16,8 @@
 2. 「 EOアカウント 」に保持される。
 「 contract 」よりも複雑なアクセス制御がなされる「 EOアカウント 」に保持される。このコントラクトは「 先渡契約 forwarding contract 」と呼ばれる。これの典型的なものとして、「ある条件が整えば受信した「メッセージ」を送りたい場所へただ単に転送する」というものがある。例として「3つある秘密鍵のうち2つが、ある今送りたいメッセージが確約（コンファーム）するのを待ってから、メッセージを転送する」といった前進型契約をもつものが考えられる（「 multisig 」）。より複雑な前進型契約は送られたメッセージの形態に基づいて違った状態を取るというもので、この機能の最もシンプルな例として、より複雑なアクセス手順によって上書きされうる「引き出し制限」がある。（つまり複雑な手順の親クラス・あるいはインターフェースとしてEOアカウントに保持される）
 
-3. 複数のユーザー（ EOAs ）間の契約内容や関係性を管理する
+3. ユーザー間の契約内容や関係性を管理する。
 　金融契約における「第3者認証」が例としてわかりやすい。
-Manage an ongoing contract or relationship between multiple users. Examples of this include a financial contract, an escrow with some particular set of mediators, or some kind of insurance. One can also have an open contract that one party leaves open for any other party to engage with at any time; one example of this is a contract that automatically pays a bounty to whoever submits a valid solution to some mathematical problem, or proves that it is providing some computational resource.
-
 
 4. ライブラリとして機能する。
 　他の契約によって呼び出される関数を格納しておく。
