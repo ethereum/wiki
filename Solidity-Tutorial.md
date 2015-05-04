@@ -783,3 +783,41 @@ data[7] = 9;
 return 1;
 ```
 even though the instructions contained a jump in the beginning.
+
+## Cheatsheet
+
+### Global Variables
+
+ - `block.coinbase` (`address`): current block miner's address
+ - `block.difficulty` (`uint`): current block difficulty
+ - `block.gaslimit` (`uint`): current block gaslimit
+ - `block.number` (`uint`): current block number
+ - `block.blockhash` (`function(uint) returns (bytes32)`): hash of the given block
+ - `block.timestamp` (`uint`): current block timestamp
+ - `msg.data` (`bytes`): complete calldata
+ - `msg.gas` (`uint`): remaining gas
+ - `msg.sender` (`address`): sender of the message (current call)
+ - `msg.value` (`uint`): number of wei sent with the message
+ - `now` (`uint`): current block timestamp (alias for `block.timestamp`)
+ - `tx.gasprice` (`uint`): gas price of the transaction
+ - `tx.origin` (`address`): sender of the transaction (full call chain)
+ - `sha3(...) returns (bytes32)`: compute the SHA3 hash of the (tightly packed) arguments
+ - `sha256(...) returns (bytes32)`: compute the SHA256 hash of the (tightly packed) arguments
+ - `ripemd160(...) returns (bytes20)`: compute RIPEMD of 256 the (tightly packed) arguments
+ - `ecrecover(bytes32, byte, bytes32, bytes32) returns (address)`: recover public key from elliptic curve signature
+ - `this` (current contract's type): the current contract, explicitly convertible to `address`
+ - `super`: the contract one level higher in the inheritance hierarchy
+ - `suicide(address)`: suicide the current contract, sending its funds to the given address
+ - `<address>.balance`: balance of the address in Wei
+ - `<address>.send(uint256)`: send given amount of Wei to address.
+
+### Visibility Specifiers
+
+ - `external`: only visible externally (only for functions)
+ - `public`: visible externally and internally (creates accessor function for storage/state variables)
+ - `internal`: only visible internally
+ - `private`: only visible in the current contract
+
+### Types
+
+TODO
