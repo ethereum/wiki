@@ -30,7 +30,7 @@
 - [URL Hint Protocol](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol)
 - [NatSpec Determination](https://github.com/ethereum/wiki/wiki/NatSpec-Determination)
 - [Exchange Integration](https://github.com/ethereum/wiki/wiki/Exchange-Integration)
-- [Mining Howto](https://github.com/ethereum/wiki/wiki/Mining-Howto)
+- [Mining](https://github.com/ethereum/wiki/wiki/Mining)
 - [Licencing](https://github.com/ethereum/wiki/wiki/Licencing)
 - [Network Status](https://github.com/ethereum/wiki/wiki/Network-Status)
 
