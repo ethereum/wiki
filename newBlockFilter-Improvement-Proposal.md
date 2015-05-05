@@ -52,5 +52,3 @@ After discussing with Gavin we came up with the following improvement:
                      ...]
 	}
 ```
-
-**Note** This needs also a change in eth_getTransactionByHash, which is currently not returning pending transactions.
