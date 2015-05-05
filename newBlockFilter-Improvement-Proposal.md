@@ -14,3 +14,55 @@ The problem is that when a lot of blocks came in since the last time you polled 
 *It would be better if filters created with `eth_newBlockFilter` and calling `eth_getFilterLogs`, or `eth_getFilterChanges` will give back the mined/imported block, or pending block it was fired from.*
 
 This way you can be sure to receive the actual block which caused the callback and do something on them, or with its transactions.
+
+
+# Summary
+
+Filter created with `eth_newBlockFilter` should return the block, which caused the "log" when polled using `eth_getFilterChanges`. (currently its supposed to return `[null]`)
+
+e.g. using `"latest"`
+
+```js
+// create filter
+{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["latest"],"id":529}
+
+// poll
+{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0xb"],"id":530} // we assume the filter ID is "0xb"
+
+// should return one or more blocks, depending on how much arrived since the last poll
+{
+		"id": 530,
+		"jsonrpc": "2.0",
+		"result": [{ // block objects
+                    number: "0x2",
+                    ...
+                 },
+                 {
+                    number: "0x3",
+                    ...
+                 }]
+	}
+```
+
+```js
+// create filter
+{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["pending"],"id":529}
+
+// poll
+{"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0xb"],"id":530} // we assume the filter ID is "0xb"
+
+// should return one or more pending blocks, depending on how new transactions were added to the pending state since the last poll
+// i guess it should be one pending block per add transaction
+{
+		"id": 530,
+		"jsonrpc": "2.0",
+		"result": [{ // block objects
+                    number: "0x2",
+                    ...
+                 },
+                 {
+                    number: "0x3",
+                    ...
+                 }]
+	}
+```
