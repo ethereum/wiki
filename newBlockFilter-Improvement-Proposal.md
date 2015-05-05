@@ -11,14 +11,11 @@ web3.eth.filter('latest').watch(function(err, res){
 
 The problem is that when a lot of blocks came in since the last time you polled with a return of `[null, null, null, ...]`, your callback will fire multiple times accordingly, but using `eth.getBlock` inside will always give me the latest block, which is actually wrong.
 
-*It would be better if filters created with `eth_newBlockFilter` and calling `eth_getFilterLogs`, or `eth_getFilterChanges` will give back the mined/imported block, or pending block it was fired from.*
-
-This way you can be sure to receive the actual block which caused the callback and do something on them, or with its transactions.
 
 
-# Summary
+# Proposal
 
-After discussing with Gavin we cam up with the following improvement:
+After discussing with Gavin we came up with the following improvement:
 
 ```js
 // eth_newBlockFilter will receive no parameter
@@ -27,7 +24,8 @@ After discussing with Gavin we cam up with the following improvement:
 // poll
 {"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0xb"],"id":530} // we assume the filter ID is "0xb"
 
-// should return one or more blocks, depending on how much arrived since the last poll
+// should return one or more blocks,
+// depending on how much arrived since the last poll
 {
 		"id": 530,
 		"jsonrpc": "2.0",
@@ -49,7 +47,8 @@ After discussing with Gavin we cam up with the following improvement:
 // poll
 {"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0xb"],"id":530} // we assume the filter ID is "0xb"
 
-// should return one or more pending transactions, which were added to the pending state since the last poll
+// should return one or more pending transactions,
+// which were added to the pending state since the last poll
 {
 		"id": 530,
 		"jsonrpc": "2.0",
