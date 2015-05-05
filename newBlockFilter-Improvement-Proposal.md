@@ -18,7 +18,7 @@ This way you can be sure to receive the actual block which caused the callback a
 
 # Summary
 
-Filter created with `eth_newBlockFilter` should return the block, which caused the "log" when polled using `eth_getFilterChanges`. (currently its supposed to return `[null]`)
+Filters created with `eth_newBlockFilter` should return the block when polled using `eth_getFilterChanges`. (currently its supposed to return `[null]`)
 
 e.g. using `"latest"`
 
