@@ -13,7 +13,7 @@ The problem is that when a lot of blocks came in since the last time you polled 
 
 
 
-# Proposal
+# New Proposal
 
 After discussing with Gavin we came up with the following improvement:
 
@@ -29,14 +29,7 @@ After discussing with Gavin we came up with the following improvement:
 {
 		"id": 530,
 		"jsonrpc": "2.0",
-		"result": [{ // block objects
-                    number: "0x2",
-                    ...
-                 },
-                 {
-                    number: "0x3",
-                    ...
-                 }]
+		"result": ['0x234234234..','0x342342342..'] // block hashes of the incoming blocks
 	}
 ```
 
@@ -52,13 +45,8 @@ After discussing with Gavin we came up with the following improvement:
 {
 		"id": 530,
 		"jsonrpc": "2.0",
-		"result": [{ // tx objects
-                    value: "0x2",
-                    ...
-                 },
-                 {
-                    value: "0x3",
-                    ...
-                 }]
+		"result": ['0xf34234243','0x12312312'] // tx hashes of the add pending transactions
 	}
 ```
+
+**Note** This needs also a change in eth_getTransactionByHash, which is currently not returning pending transactions.
