@@ -45,7 +45,11 @@ After discussing with Gavin we came up with the following improvement:
 {
 		"id": 530,
 		"jsonrpc": "2.0",
-		"result": ['0xf34234243','0x12312312'] // tx hashes of the add pending transactions
+		"result": [{ // tx objects of new pending transactions
+                     value: '0xb',
+                     ...},{
+                     value: '0x12312312',
+                     ...]
 	}
 ```
 
