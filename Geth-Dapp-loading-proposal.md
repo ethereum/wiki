@@ -14,6 +14,6 @@ To have a simple way to load and start Dapps vinay and I came up with a great id
 
 - run `$ geth update mydapp.zip`, which will extract, and overwrites the old dapp files
 
-## Deploy dapp bundle
+## Bundle dapp
 
-- run `$ geth bundle myDappFolder/`, which will create a dapp bundle from a folder, to share with others.
+- run `$ geth bundle myDappFolder/dist/`, which will create a dapp bundle from a folder, to share with others.
