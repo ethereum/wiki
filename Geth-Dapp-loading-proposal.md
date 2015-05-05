@@ -18,3 +18,5 @@ To have a simple way to load and start Dapps vinay and I came up with a great id
 ## Bundle dapp
 
 - run `$ geth bundle myDappFolder/dist/`, which will create a dapp bundle from a folder, to share with others.
+
+- run `$ geth deploy myDappFolder/dist/` could save it to pastebin and register it in namereg.
