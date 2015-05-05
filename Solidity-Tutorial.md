@@ -57,7 +57,7 @@ contract Coin {
 
 This contract introduces some new concepts. One of them is the `address` type,
 which is a 160 bit value that does not allow any arithmetic operations.
-Furthermore, the state variable `balance` is of a complex datatype that maps
+Furthermore, the state variable `balances` is of a complex datatype that maps
 addresses to unsigned integers. Mappings can be seen as hashtables which are
 virtually initialized such that every possible key exists and is mapped to a
 value whose byte-representation is all zeros. The special function `Coin` is the
