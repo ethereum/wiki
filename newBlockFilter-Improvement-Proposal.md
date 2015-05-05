@@ -18,13 +18,11 @@ This way you can be sure to receive the actual block which caused the callback a
 
 # Summary
 
-Filters created with `eth_newBlockFilter` should return the block when polled using `eth_getFilterChanges`. (currently its supposed to return `[null]`)
-
-e.g. using `"latest"`
+After discussing with Gavin we cam up with the following improvement:
 
 ```js
-// create filter
-{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["latest"],"id":529}
+// eth_newBlockFilter will receive no parameter
+{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":[],"id":529}
 
 // poll
 {"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0xb"],"id":530} // we assume the filter ID is "0xb"
@@ -45,23 +43,22 @@ e.g. using `"latest"`
 ```
 
 ```js
-// create filter
-{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["pending"],"id":529}
+// eth_newTransactionFilter will receive no parameter
+{"jsonrpc":"2.0","method":"eth_newTransactionFilter","params":[],"id":529}
 
 // poll
 {"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0xb"],"id":530} // we assume the filter ID is "0xb"
 
-// should return one or more pending blocks, depending on how new transactions were added to the pending state since the last poll
-// i guess it should be one pending block per add transaction
+// should return one or more pending transactions, which were added to the pending state since the last poll
 {
 		"id": 530,
 		"jsonrpc": "2.0",
-		"result": [{ // block objects
-                    number: "0x2",
+		"result": [{ // tx objects
+                    value: "0x2",
                     ...
                  },
                  {
-                    number: "0x3",
+                    value: "0x3",
                     ...
                  }]
 	}
