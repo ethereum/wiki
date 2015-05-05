@@ -45,10 +45,8 @@ After discussing with Gavin we came up with the following improvement:
 {
 		"id": 530,
 		"jsonrpc": "2.0",
-		"result": [{ // tx objects of new pending transactions
-                     value: '0xb',
-                     ...},{
-                     value: '0x12312312',
-                     ...]
+		"result": ['0x234234234..','0x342342342..'] // tx hashes of new pending transactions
 	}
 ```
+
+**Note** This requires that `eth_getTransactionByHash` also return pending transactions!
