@@ -12,6 +12,5 @@ enode://6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec01293730764
 The enode url scheme is used by the Node discovery protocol and can be used in the `bootnodes` command line option of the client or as the argument to `suggestPeer(nodeURL)` function in the JSRE.
 
 See also 
-- https://github.com/ethereum/go-ethereum/wiki/RLPx-----Node-Discovery-Protocol
 - https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options
-- https://github.com/ethereum/go-ethereum/wiki/Frontier-Console
+- https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console
