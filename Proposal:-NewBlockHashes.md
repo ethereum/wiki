@@ -8,6 +8,9 @@ Much better would be a low-bandwidth full propagation of the hash. All nodes wou
 
 # Specification
 
-Introduce a new packet: `NewBlockHashesPacket`, into slot `+1` (original taken by `GetTransactions`, which is not defunct).
+Introduce a new packet: `NewBlockHashes`, into the slot `+0x01` (original taken by `GetTransactions`, which is not defunct).
+
+**NewBlockHashes**
+[`+0x01`: `P`, `hash1`: `B_32`, `hash2`: `B_32`, `...`] Specify one or more new blocks which have appeared on the network. Including hashes that the sending peer could reasonable be considered to know that the receiving node is aware of is considered Bad Form, and may reduce the reputation of the sending node.
 
 
