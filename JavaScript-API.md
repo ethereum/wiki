@@ -1223,7 +1223,7 @@ filter.watch(function(error, result){
   * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback. See [this note](#using-callbacks) for details.
   * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
 
-##### Callback return
+##### Watch callback return value
 
 - `String` - When using the `"latest"` parameter, it returns the block hash of the last incoming block.
 - `String` - When using the `"pending"` parameter, it returns a transaction hash of the last add pending transaction.
