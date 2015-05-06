@@ -1,4 +1,4 @@
-This proposes version 2 of the Web3 Key Storage Definition. It fixes several inconsistencies with the version 1 published [https://github.com/ethereum/go-ethereum/wiki/Passphrase-protected-key-store-spec](here). In brief these are:
+This proposes version 2 of the Web3 Key Storage Definition. It fixes several inconsistencies with the version 1 published [here](https://github.com/ethereum/go-ethereum/wiki/Passphrase-protected-key-store-spec). In brief these are:
 
 - Capitalisation is unjustified and inconsistent (`scrypt` lowercase, `Kdf` mixed-case, `MAC` uppercase).
 - `Address` unnecessary and compromises privacy.
