@@ -49,8 +49,8 @@ Another example, using the PBKDF algorithm for key derivation is:
         },
         "kdf": "pbkdf2",
         "kdfparams": {
-            "dklen": 32,
-            "n": 262144,
+            "prf": “hmac_sha256”,
+            "c": 262144,
             "salt": "06870e5e6a24e183a5c807bd1c43afd86d573f7db303ff4853d135cd0fd3fe91"
         },
         "mac": "8ccded24da2e99a11d48cda146f9cc8213eb423e2ea0d8427f41c3be414424dd",
