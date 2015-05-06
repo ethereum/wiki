@@ -34,5 +34,5 @@ Changes have been made to the format to give the following file:
 }
 ```
 
+The actual encoding and decoding of the file remains largely unchanged, except that the crypto algorithm is no longer fixed to AES-128-CBC.
 
---GAV
