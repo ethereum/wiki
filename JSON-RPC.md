@@ -786,6 +786,7 @@ Creates new message call transaction or a contract creation, if the data field c
   - `gasPrice`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each paid gas
   - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
   - `data`: `DATA`  - (optional) The compiled code of a contract
+  - `nonce`: `QUANTITY`  - (optional) Integer of the nonce. This allows to overwrite your own pending transactions that use the same nonce.
 
 ```js
 params: [{
