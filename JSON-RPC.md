@@ -136,6 +136,7 @@ The following options are possible for the defaultBlock parameter:
 * [eth_compileSerpent](#eth_compileserpent)
 * [eth_newFilter](#eth_newfilter)
 * [eth_newBlockFilter](#eth_newblockfilter)
+* [eth_newPendingTransactionFilter](#eth_newpendingtransactionfilter)
 * [eth_uninstallFilter](#eth_uninstallfilter)
 * [eth_getFilterChanges](#eth_getfilterchanges)
 * [eth_getFilterLogs](#eth_getfilterlogs)
@@ -1316,17 +1317,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topic
 
 #### eth_newBlockFilter
 
-Creates a filter in the node, based on an option string, to notify when the state changes.
+Creates a filter in the node, to notify when a new block arrives.
 To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
 
-
 ##### Parameters
-
-1. `TAG` - The string `"latest"` for notifications about new block and `"pending"` for notifications about pending transactions.
-
-```js
-params: ["pending"]
-```
+None
 
 ##### Returns
 
@@ -1335,7 +1330,34 @@ params: ["pending"]
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":["pending"],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newBlockFilter","params":[],"id":73}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc":  "2.0",
+  "result": "0x1" // 1
+}
+```
+
+***
+
+#### eth_newPendingTransactionFilter
+
+Creates a filter in the node, to notify when new pending transactions arrive.
+To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
+
+##### Parameters
+None
+
+##### Returns
+
+`QUANTITY` - A filter id.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newPendingTransactionFilter","params":[],"id":73}'
 
 // Result
 {
@@ -1401,7 +1423,8 @@ params: [
 
 `Array` - Array of log objects or `null`, or an empty array (if nothing has changed since last poll).
 
-- For filters created with `eth_newBlockFilter` the return is `[null]`.
+- For filters created with `eth_newBlockFilter` the return are block hashes (`DATA`, 32 Bytes), e.g. `["0x3454645634534..."]`.
+- For filters created with `eth_newPendingTransactionFilter ` the return are transaction hashes (`DATA`, 32 Bytes), e.g. `["0x6345343454645..."]`.
 - For filters created with `eth_newFilter` logs are objects with following params:
 
   - `logIndex`: `QUANTITY` - integer of the log index position in the block.
