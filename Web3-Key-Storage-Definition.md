@@ -30,7 +30,7 @@ Changes have been made to the format to give the following file, functionally eq
         "version": 1
     },
     "id": "0498f19a-59db-4d54-ac95-33901b4f1870",
-    "version": 1
+    "version": 2
 }
 ```
 
@@ -57,6 +57,6 @@ Another example, using the PBKDF algorithm for key derivation is:
         "version": 1
     },
     "id": "0498f19a-59db-4d54-ac95-33901b4f1870",
-    "version": 1
+    "version": 2
 }
 ```
