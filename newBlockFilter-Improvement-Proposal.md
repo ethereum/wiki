@@ -34,8 +34,8 @@ After discussing with Gavin we came up with the following improvement:
 ```
 
 ```js
-// eth_newTransactionFilter will receive no parameter
-{"jsonrpc":"2.0","method":"eth_newTransactionFilter","params":[],"id":529}
+// eth_newPendingTransactionFilter will receive no parameter
+{"jsonrpc":"2.0","method":"eth_newPendingTransactionFilter","params":[],"id":529}
 
 // poll
 {"jsonrpc":"2.0","method":"eth_getFilterChanges","params":["0xb"],"id":530} // we assume the filter ID is "0xb"
