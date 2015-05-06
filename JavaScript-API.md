@@ -1225,16 +1225,17 @@ filter.watch(function(error, result){
 
 ##### Callback return
 
-`Object` - A log object as follows:
-
-- `logIndex`: `Number` - integer of the log index position in the block.
-- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
-- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
-- `blockHash`: `String`, 32 Bytes - hash of the block where this log was in.
-- `blockNumber`: `Number` - the block number where this log was in.
-- `address`: `String`, 32 Bytes - address from which this log originated.
-- `data`: `String` - contains one or more 32 Bytes non-indexed arguments of the log.
-- `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
+- `String` - When using the `"latest"` parameter, it returns the block hash of the last incoming block.
+- `String` - When using the `"pending"` parameter, it returns a transaction hash of the last add pending transaction.
+- `Object` - When using manual filter options, it returns a log object as follows:
+    - `logIndex`: `Number` - integer of the log index position in the block.
+    - `transactionIndex`: `Number` - integer of the transactions index position log was created from.
+    - `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
+    - `blockHash`: `String`, 32 Bytes - hash of the block where this log was in.
+    - `blockNumber`: `Number` - the block number where this log was in.
+    - `address`: `String`, 32 Bytes - address from which this log originated.
+    - `data`: `String` - contains one or more 32 Bytes non-indexed arguments of the log.
+    - `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
 
 **Note** For event filter return values see [Contract Events](#contract-events)
 
@@ -1244,7 +1245,7 @@ filter.watch(function(error, result){
 var filter = web3.eth.filter('pending');
 
 filter.watch(function (error, log) {
-  console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000", ...}
+  console.log(log); //  {"address":"0x0000000000000000000000000000000000000000", "data":"0x0000000000000000000000000000000000000000000000000000000000000000", ...}
 });
 
 // get all past logs again.
