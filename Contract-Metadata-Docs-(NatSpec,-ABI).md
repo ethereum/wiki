@@ -10,7 +10,7 @@ This includes:
 
 These resources have their _standard specification_ in json format, ideally meant to be produced by IDE infrastructures or compilers directly.
 
-For instance, the [solidity](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial) compiler offers a `doxigen` style way of specifying natspec with inline smart comments. Upon compilation it creates both NatSpec user doc as well ABI definition. But note that there is nothing inherently solidity specific about these data, and other contract languages are encouraged to implement their NatSpec/ABI support potentially with IDE-s extending it.
+For instance, the [solidity](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial) compiler offers a `doxygen` style way of specifying natspec with inline smart comments. Upon compilation it creates both NatSpec user doc as well ABI definition. But note that there is nothing inherently solidity specific about these data, and other contract languages are encouraged to implement their NatSpec/ABI support potentially with IDE-s extending it.
 
 Since DAPPs and IDEs will typically want to interact with these resources, standardising their deployment and distribution is important for a smooth ethereum experience. 
 
@@ -41,7 +41,7 @@ The `cmd` file's content is hashed and content hash is registered on a name regi
 This provides a public immutable authentication for contract metadata, since:
 - the authenticity of the link between the contract and metadata is secured by ethereum consensus
 - the authenticity of actual metadata content is secured by content hashing
-- the binding is tamperproof 
+- the binding is tamper proof 
 
 
 DAPP IDE environments are supposed to support the functionality, that when you create a contract, all its standard metadata is 
@@ -62,7 +62,13 @@ https://github.com/ethereum/wiki/wiki/NatSpec-Example)
 
 In order to provide a robust (failure resistant, 100% uptime) service, decentralised file storage services can and will be used. In the case of content addressed systems like Swarm, accessing and fetching the resource you will only need the `cmd` content hash (using `BZZHASH(<cmdjson>`).
 
-Until this point is reached, we use a workaround, the [URL hint](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol) protocol. The URL hint protocol is simply an additional layer of the name registry: it provides a simple interface to link content hashes to arbitrary urls.
+Until that point is reached, we will fall back to using HTTP distribution. To enable this we will include one or many URLHint contracts, which provide hints of URLs that allow downloading of particular content hashes. Find the contract in dapp-bin.
+
+The content downloaded should be treated in many ways (and hashed) to discover what the content is. Possible ways include base 64 encoding, hex encoding and raw, and any content-cropping needed (e.g. a HTML page should have everything up to body tags removed).
+
+It will be up to the dapp/content uploader to keep URLHint entries updated.
+
+The address of the URLHint contract will be specified on an ad-hoc basis and users will be able to enter additional ones into their browser.
 
 This functionality of uploading and registering location is supposed to be also supported by IDE and dev infrastructures. Developers (or IDE) are encouraged to register cmd location _before_ content hash registration (and therefore before actual contract creation) in order to avoid metadata hijacking. Note that if content hash registration is correct, hijacking the location cannot allow malicious content (since content hash authenticates the `cmd`), however it can still prevent your metadata from being accessible. Therefore 
 - the url-hint contract storage should be by definition immutable
@@ -75,7 +81,7 @@ Read more [here](https://github.com/ethereum/wiki/wiki/NatSpec-Determination)
 ## Name registry contracts
 
 Interoperability requires that clients know where to look to resolve a contract's metadata, i.e., which name registry to use. Currently, we solve this by 
-- including the two registry contracts in the genesis block 
+- creating the two registry contracts after the genesis block 
 - and hardwiring their addresses in the client code (e.g., in the natspec transaction confirmation notice module on the client side and the deployment module on the dev/IDE side).
 
 
