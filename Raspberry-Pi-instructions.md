@@ -47,6 +47,7 @@ If you want to build all that yourself, you can do so by installing ArchLinux on
 For the Go client you can just get the newest executable with wget \<link will follow>.
 
 Resources:
+
 http://archlinuxarm.org/forum/viewtopic.php?f=60&t=8366
 http://archlinuxarm.org/forum/viewtopic.php?f=31&t=3119
 https://github.com/ethereum/cpp-ethereum/wiki/Building-on-ArchLinux
