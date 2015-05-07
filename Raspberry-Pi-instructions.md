@@ -1,4 +1,4 @@
-Download the image at : ...(link will follow)
+Download the image from : `gav.ethdev.com/ArchLinux2GbSwapCppEthGeth.img`
 
 After unzipping it, follow those guidelines to copy the image to your sd card: https://www.raspberrypi.org/documentation/installation/installing-images/
 
