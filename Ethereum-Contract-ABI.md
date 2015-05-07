@@ -11,16 +11,11 @@ This specification does not address contracts whose interface is dynamic or othe
 The first four bytes of the call data denotes the function to be called, it is the
 first (left, high-order in big-endian) four bytes of the Keccak (SHA-3) hash of the signature of the function. The signature is defined as the canonical expression of the basic prototype. Starting from the fifth byte, the encoded arguments follow. The return values are encoded in the same way, without the four bytes specifying the function.
 
-Next, a list of the values of each argument follows. For this, note that types can have a
-fixed size or their size can depend on the value. For a non-fixed-size types only the number of its
-elements (not the byte size) as a 32-byte big-endian number is used. The actual values of
-the non-fixed-size types are encoded after the list of fixed-size values.
+Types can have a fixed size or their size can depend on the value. For all
+non-fixed-size types, in the order of their occurrence, the number of its
+elements (not the byte size) as a 32-byte big-endian number follows.
 
-Formally:
-```
-enc(f(a_1, ..., a_n)) = signature_hash(f) fixed(a_1) ... fixed(a_n) variable(a_1) ... variable(a_n) 
-```
-Where `fixed(a_i)` is the actual value of the argument for fixed-size elements (for the encoding see below) and the number of elements for non-fixed-size types. `variable(a_i)` is the empty string for fixed-size types and the actual data for non-fixed size types (for the encoding see below).
+After that, the arguments themselves are encoded.
 
 The following fixed-size elementary types exist:
 - `uint<N>`: unsigned integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`. e.g. `uint32`, `uint8`, `uint256`.
