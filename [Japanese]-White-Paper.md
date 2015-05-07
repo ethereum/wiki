@@ -3,7 +3,8 @@
 ### A Next-Generation Smart Contract and Decentralized Application Platform
 
 ナカモトサトシの論文により、2009年に開発された Bitcoin は通貨・貨幣における革新的な発明だと
-謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。 - see [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) 
+謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。 
+- see [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/)　  
 しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。
 それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、急速に人々の注目を集めつつあります。
 
@@ -78,7 +79,7 @@ Ethereum が提供しようとしているものは、チューリング完全�
 お金を創造するというアイデアを、はじめて導入した事例となります。
 しかし、このプロポーザルの詳細は不十分であったため、実用的な分散型の大衆意思決定を実装することができませんでした。
 2005年、Hal Finney が、暗号通貨のコンセプトをつくりあげるために、
-ABCD Hashcash パズル<sup>[-1]</sup> と b-money からアイデアをしぼり作られたシステムである "[reusable proofs of work](http://www.finney.org/~hal/rpow/)" というコンセプトを発表しましたが、バックエンドに、信用のある計算機を使用しなければならなかったため、真に分散型とは呼べず、再び失敗しました。
+ABCD Hashcash パズル<sup>[jp-1]</sup> と b-money からアイデアをしぼり作られたシステムである "[reusable proofs of work](http://www.finney.org/~hal/rpow/)" というコンセプトを発表しましたが、バックエンドに、信用のある計算機を使用しなければならなかったため、真に分散型とは呼べず、再び失敗しました。
 2009年のナカモトサトシによる実用的な実装がはじめての分散型の通貨となりました。
 これは、昔からあった「公開鍵暗号（所有権を管理) 」と
 大衆意思決定アルゴリズムである「 "proof of work" (誰がコインを所有しているのか追跡)」
@@ -97,7 +98,7 @@ proof of work の背景にある技術は宇宙史に名を刻むほどの飛躍
 
 1. ノードに対し、特定リストにおける唯一性の証明書の提出を要求し、
 2. さらに「大衆意思決定のプロセスにおける単位ノードの重みは、ノードのもつ計算能力に応じて分配する」
-という エコノミックバリア(* 2) を採用する
+という エコノミックバリア<sup>[jp-2]</sup> を採用する
 
 
 
@@ -193,7 +194,7 @@ Bitcoin の帳簿を最新状態に更新し続ける、
 トランザクション執行前の 過去の状態 をもとにして、有効な状態遷移を提供しなければなりません。
 「状態」はいかなる点においても、ブロック内に記述されないことに注意してください。（ブロックは状態遷移関数をつなげ合わせた関数そのものであり、入力値 である「状態」については何も書かれていません）；
 （このアルゴリズムは、「検証ノード」を説明する簡単な抽象例であり、
-どのブロックの検証においても、開始状態から、全ブロックの全トランザクションを順番に適用することによって、目的となるブロックの示す状態を計算するだけで十分となります。）
+どのブロックの検証においても、開始状態から、全ブロックの全トランザクションを順番に適用することによって、目的となるブロックの示す状態を計算すれば十分となります。）
 さらに「採掘者 miner」がトランザクションをブロックに取り込む順番がとても重要だということに注意してください。
 （もし、A、Bという二つのトランザクションがあって、BはAの生成した UTXO(未使用出力値) を使う場合において、
 AのあとにBがきているブロックは有効ですが、そうでない場合は無効となってしまいます。）
@@ -229,7 +230,7 @@ SHA256（エスエイチエーにごろ）は、完全に予測不可能な擬�
 
 
 マイニングの目的をより深く理解するために、
-悪意ある攻撃者におこす事件で何がおこるのかを見ていきましょう。
+悪意ある攻撃者のおこす事件によって何がおこるのかを見ていきましょう。
 Bitcoin の基礎となる暗号理論はセキュリティの高いものと知られているので、
 攻撃者の狙い目としては、直接、暗号理論で守られていない部分 : トランザクションの順序 となるでしょう。
 
@@ -311,7 +312,7 @@ Bitcoin の重要なスケーラビリティ特性は「ブロックは多層デ
 ノードは、ひとつのソース（ネットワーク上の自身とは別のノード）からブロックヘッダだけを、
 別のソースから、必要なトランザクションに関連する小さな部分木を、ダウンロードすることができ、それでもなお全データの整合性を保証できるのです。
 これがうまく動作する所以は、ハッシュ値が上に伝播していくところ です。：
-もし悪意のあるユーザーが偽物のトランザクションをマークル木の底のノードと取り替えようとすると、この変化はその親のノードに変化させ、繰り返し伝播することで最終的にルートの値を変化させます。
+もし悪意のあるユーザーが偽物のトランザクションをマークル木の底のノードと取り替えようとすると、この変化はその親のノードを変化させ、繰り返し伝播することで最終的にルートの値を変化させます。
 つまり、ブロックのハッシュ値が変化し、マークル木のプロトコルにより、結果として、全く別のブロックとして記録され、このブロックは十中八九 proof of work が無効となります。
 
 
@@ -359,13 +360,13 @@ colored coins のプロトコルでは、
 
 * **Metacoins** - 
 metacoins の背景となる思想は「 Bitcoin を土台として、その上で動作するプロトコルをもつ」であり、
-metacoins のトランザクションを保管に、Bitcoin のトランザクションを使用しますが、別の 状態遷移関数 `APPLY'` を保持します。
+metacoins のトランザクションの保管に、Bitcoin のトランザクションを使用しますが、Bitcoin とは別の 状態遷移関数 `APPLY'` を保持します。
 metacoins のプロトコルは、無効な metacoins トランザクションが Bitcoin blockchain 上にでてくることを防止するために、
 規則「 if `APPLY'(S,TX)` returns an error, 
 the protocol defaults to `APPLY'(S,TX) = S
 」を加えます。
 metacoins は、任意の独自暗号通貨をつくるための 簡単なメカニズム を提供しており、
-Bitcoin 自体のシステム内部においては表面化することのない 独自の先進的な機能 を持たせることができます。
+Bitcoin 自体のシステム内部においては表面化することのない 先進的な独自機能 を持たせることができます。
 採掘とネットワークのシステムといった複雑な部分がすでに Bitcoin プロトコルによって処理されているので、
 開発コストはとても低く済みます。
 metacoins はいくつかの金融契約や名前登録や分散型両替所を実装するのに使われています。
@@ -398,8 +399,8 @@ Bitcoin の blockchain の一番最初まで全過程を遡ってスキャンす
 
 ### スクリプリト言語による記述
 
-たとえまったく拡張をせずとも、実は、Bitcoin プロトコルは「 smart contracts 」コンセプトの 機能的に弱いバージョン を簡単に実装したものです。
-Bitcoin の UTXO は、「公開鍵」が保持するだけでなく、
+たとえまったく拡張をせずとも、実は、Bitcoin プロトコルは「 smart contracts 」コンセプトの 機能的に弱いバージョン を簡単に実装したものなのです。
+Bitcoin の UTXO は、「公開鍵」に保持されるだけでなく、
 簡素なスタック・ベース・プログラミング言語で表現される少し複雑な「スクリプト」が、保持することもできます。
 このパラダイムの下で、
 トランザクションが、
@@ -440,16 +441,16 @@ UTXO を保持する スクリプトが、取引量をきめ細やかに管理�
 AとBがそれぞれ $1000 相当のBTC をスクリプトに提出し、スクリプトが30日後に$1000相当のBTCをAに残りをBに送るものとします。
 30日後の 1 BTC の USドル価格 を決定するのには神託が必要となり、しかし、これは、現在利用可能な完全な中央集約型の方法でさえ、信用とインフラの観点で大きな改良がひつようとなります。
 しかしながら、 UTXO は使うか使わないかの２択なので、
-極めて非効率な UTXO の"ハッキング"が必要で、神託が提示しうるすべての価格を UTXO で表すには、様々な残高の UTXO を用意する必要があります。
+神託が提示しうるすべての価格を UTXO で表すには、2進数計算しかなく、そのため極めて非効率な UTXO の"ハッキング"が必要で、様々な残高の UTXO を用意する必要があります。
 たとえば、2<sup>k</sup> の値をもつ UTXO を k = 0 ,..., 30 まで 31個 つくれば良いでしょう。 
 
 * **状態の欠如** - UTXO は使うか、使われないかのどちらかを必ず決定してやらなければなりません。 
 このため、内部に「状態」を保持する多層形式の契約やスクリプトを記述することができません。
 このことにより、多分岐選択可能な契約や、分散型取引のオファー、２段階の暗号理論による決定プロトコル（セキュリティの高い計算問題の賞金を与える場合に必要です）をつくるのはとても困難となってしまいます。
 さらに、
-UTXO は単純な一度きりの契約をつくることにしか使用できず、分散型組織のような、より複雑な「状態を保持する」契約を記述ができず、
+UTXO は単純な一度きりの契約をつくることにしか使用できず、分散型組織のような、より複雑な「状態」を保持する契約を記述できず、
 meta プロトコルの実装を困難なものとします。
-値の定まらないバイナリ状態では、重要なアプリケーションである、引き出し制限が不可能となる弊害が生まれます。
+また、値の定まらない2進数状態では、「引き出し制限」が不可能となります。これは重要なアプリケーションであり、大きな弊害であると言えるでしょう。
 
 * **Blockchainが見えない問題** - 
 UTXO は、ノンス、タイムスタンプ、直前のブロックのハッシュといった blockchain のデータに対して盲目です。
@@ -458,64 +459,116 @@ UTXO は、ノンス、タイムスタンプ、直前のブロックのハッシ
 
 このように、
 暗号通貨の上に進化型のアプリケーションを構築する方法を３つ見てきました。  
-ひとつめは、新しい blockchain を Bitcoin を土台とた上につくり、スクリプト言語を使用し、meta プロトコルを実装する方法です。
+ひとつめは、新しい blockchain を Bitcoin を土台とした上につくり、スクリプト言語を使用し、meta プロトコルを実装する方法です。
 ふたつめは、新しい blockchain をつくる方法で、その性質を決定するのに無限の自由が得られますが、
 開発時間に関するコスト問題、スタートアップに関する問題とセキュリティー面の問題も同様に得られます。
 みっつめは、Bitcoin のスクリプト言語を使用する方法で、開発や一般化は簡単ですが、
-可能性が限られてくることや、meta プロトコルの実装は簡単ですが、スケーラビリティの欠点に悩むことになります。
+可能性が限られてくること、meta プロトコルの実装は簡単ですが、スケーラビリティの欠点に悩むことになります。
 
 Ethereum では、
 われわれは、代替となる骨格を築き上げ、
 簡単な開発であっても、大きな成果物が得られ、
 スマフォのようなライト・クライアントの財産に対しても強固なものを提供し、
-同時に、アプリケーションが 経済環境 と blockchain セキュリティ とを共有できるものを提供するつもりです。
+同時に、アプリケーションが 経済環境 と blockchain セキュリティ とを共有できるものを提供することを意図しています。
 
 
 ## Ethereum
 
-The intent of Ethereum is to create an alternative protocol for building decentralized applications, providing a different set of tradeoffs that we believe will be very useful for a large class of decentralized applications, with particular emphasis on situations where rapid development time, security for small and rarely used applications, and the ability of different applications to very efficiently interact, are important. Ethereum does this by building what is essentially the ultimate abstract foundational layer: a blockchain with a built-in Turing-complete programming language, allowing anyone to write smart contracts and decentralized applications where they can create their own arbitrary rules for ownership, transaction formats and state transition functions. A bare-bones version of Namecoin can be written in two lines of code, and other protocols like currencies and reputation systems can be built in under twenty. Smart contracts, cryptographic "boxes" that contain value and only unlock it if certain conditions are met, can also be built on top of the platform, with vastly more power than that offered by Bitcoin scripting because of the added powers of Turing-completeness, value-awareness, blockchain-awareness and state.
+Ethereum の目的は、分散型アプリケーションのための代替プロトコルを創造し、
+大規模な分散型アプリケーションにとって、われわれが非常に役立つだろうと信じるところの、数々の修正を加え提供することであります。
+ここにおいて、アプリの高速開発にかかる時間、小規模かつ滅多に使われないアプリに対するセキュリティ、他アプリ間の効率のよい相互作用を可能とすること、が重要視されます。
+Ethereum は、基本的に究極の抽象基盤層となるものの構築により、以上の目的を果たします。
+究極の抽象基盤層とは、埋め込み型チューリング完全なプログラム言語を伴う blockchain であり、
+これにより、所有・トランザクションの形式・状態遷移関数に関する、任意の独自規則を創造することのできる機能を備えた
+ smart contracts と 分散型アプリ をだれでも記述することができます。
+Namecoin の骨格だけを抜き出した実装は、二行のコードで記述できます。
+通貨や評判を管理するシステムは２０行以下で構築可能です。
+「 Smart contracts 」と呼ばれる暗号理論で実装された「箱」は、値を保持し、ある条件が整った時にだけ、解錠できます。
+この　smart contracts は Ethereum プラットフォーム上に構築可能であり、
+チューリング完全性、値が定まる仕様、状態の保持および blockchain への参照が可能となるところから、
+Bitcoin スクリプトにはない、広大かつより強力なプラットフォームとなります。
 
-### Ethereum Accounts
 
-In Ethereum, the state is made up of objects called "accounts", with each account having a 20-byte address and state transitions being direct transfers of value and information between accounts. An Ethereum account contains four fields:
+### Ethereum アカウント
 
-* The **nonce**, a counter used to make sure each transaction can only be processed once
-* The account's current **ether balance**
-* The account's **contract code**, if present
-* The account's **storage** (empty by default)
+Ethereum では、「状態」は、「アカウント」と呼ばれるオブジェクトから作り上げられ、各「アカウント」は、20 byte の アドレス と、アカウント間における値や情報の直接的やりとりである 状態遷移 を保持します。Ethereum アカウントは４つのフィールドを含みます。
 
-"Ether" is the main internal crypto-fuel of Ethereum, and is used to pay transaction fees. In general, there are two types of accounts: **externally owned accounts**, controlled by private keys, and **contract accounts**, controlled by their contract code. An externally owned account has no code, and one can send messages from an externally owned account by creating and signing a transaction; in a contract account, every time the contract account receives a message its code activates, allowing it to read and write to internal storage and send other messages or create contracts in turn.
 
-Note that "contracts" in Ethereum should not be seen as something that should be "fulfilled" or "complied with"; rather, they are more like "autonomous agents" that live inside of the Ethereum execution environment, always executing a specific piece of code when "poked" by a message or transaction, and having direct control over their own ether balance and their own key/value store to keep track of persistent variables.
+* **nonce** 、各トランザクションの処理が一度きりであることを確約するためのカウンター
+* アカウントの現在の **ether balance**
+* アカウントの **contract code** （もし存在すれば）
+* アカウントの **storage** （デフォルトは空）
 
-### Messages and Transactions
+Ether は、Ethereum における主要な内部暗号燃料であり、トランザクション手数料を支払うために使用されます。
+一般的に、アカウントには二つの種類があります。
+秘密鍵により管理される**externally owned accounts** と自身のコントラクトコードにより管理される**contract account**です。
+EOA (externally owned account) はコードを持たず、EOAからトランザクションを生成し署名することによって メッセージ を送ることができます。contract (contract account) では、メッセージを受信した時はいつも保持コードをアクティベートし、内部ストレージを読み書き可能になり、メッセージを送信するもしくは新しいコントラクトを作る、といった内容のことが順番に実行されます。
 
-The term "transaction" is used in Ethereum to refer to the signed data package that stores a message to be sent from an externally owned account. Transactions contain:
+Ethereum における contract は履行されるべきあるいは一緒にコンパイルされるべきものというよりかはむしろ、
+Ethereum 実行環境を職場とする「自動金融エージェント」といったものに似ており、メッセージやトランザクションによって起動されたときには、いつもある特定のコードを実行し、自身の ether 残高と、なんども使う変数を把握するのに必要な key/value ストレージ を直接管理する権限を持っている、ということに注意してください。
 
-* The recipient of the message
-* A signature identifying the sender
-* The amount of ether to transfer from the sender to the recipient
-* An optional data field
-* A `STARTGAS` value, representing the maximum number of computational steps the transaction execution is allowed to take
-* A `GASPRICE` value, representing the fee the sender pays per computational step
 
-The first three are standard fields expected in any cryptocurrency. The data field has no function by default, but the virtual machine has an opcode using which a contract can access the data; as an example use case, if a contract is functioning as an on-blockchain domain registration service, then it may wish to interpret the data being passed to it as containing two "fields", the first field being a domain to register and the second field being the IP address to register it two. The contract would read these values from the message data and appropriately place them in storage.
+### メッセージ と トランザクション
 
-The `STARTGAS` and `GASPRICE` fields are crucial for Ethereum's anti-denial of service model. In order to prevent accidental or hostile infinite loops or other computational wastage in code, each transaction is required to set a limit to how many computational steps of code execution it can use. The fundamental unit of computation is "gas"; usually, a computational step costs 1 gas, but some operations cost higher amounts of gas because they are more computationally expensive, or increase the amount of data that must be stored as part of the state. There is also a fee of 5 gas for every byte in the transaction data. The intent of the fee system is to require an attacker to pay proportionately for every resource that they consume, including computation, bandwidth and storage; hence, any transaction that leads to the network consuming a greater amount of any of these resources must have a gas fee roughly proportional to the increment.
+Ethereum において、「トランザクション」は、
+EOA から送られたメッセージを貯蔵する 署名付データパッケージ を参照するために使用されます。 
+トランザクションは、以下を含みます。
+
+* メッセージの受領人
+* 送信者を特定する署名
+* 送信者から受領人へ送られる ether の量
+* オプショナルデータフィールド（署名付きデータパッケージ）
+* `STARTGAS` 値：トランザクションの実行にかかる 計算のステップ数 の最大値
+* `GASPRICE` 値：送信者が支払う、１計算ステップあたりの手数料
+
+最初の３つは、どんな暗号通貨にもある標準的な、トランザクションの「フィールド」です。
+４つ目のデータフィールドは、デフォルトでは関数を持ちません。
+しかし、Ethereum 仮想マシンは、contract が使用する opcode を保持する必要があり、その際このデータフィールドが使用されます。
+opcodeとは、「 contract がデータにアクセスするのに使用する opcode（オペレーションコード）」です。
+もし、contract が blockchain 上のドメイン登録サービスとして機能しているならば、
+contract は投げられたデータをふたつの「フィールド」を保持するものとして解釈したがることでありましょう。
+ひとつめのフィールドは、登録するドメインで、ふたつめのフィールドはIPアドレスです。
+コントラクトは、 opcode によって、メッセージに含まれるこれらの値を読み込むことで、適切にストレージの中に配置することが可能となるわけです。
+
+`STARTGAS` と `GASPRICE` のフィールドは Ethereum サービス に対するモデル拒否運動を封じ込める狙いがあります。
+偶発的あるいは故意による無限ループや他の計算理論的に無駄なコードの消費を避けるために、
+各トランザクションにはそれらが実行するコードの計算ステップ数の上限を設ける必要があります。
+計算の基本ユニットは「 gas 」と呼びます。
+たいてい、１計算ステップは 1 gas を消費します。
+しかし、幾つかの命令では、計算量的に見てより高価であるため、
+少しおおきな gas の量が必要とされます。
+また、状態の一部として保持しなければならないデータ量が増えたりします。
+トランザクションにデータを埋め込む際には、1 byte 毎に 5 gas の「手数料」もかかります。
+「手数料」システムの意図するところは、攻撃者に対し、計算資源や帯域、ストレージを含めた、
+彼らが消費する全リソースの量に比例した支払いを強要するためです。
+このようにして、ネットワークが消費するどんなリソースにも、それが大量消費とつながるような状況を生み出す、
+すべてのトランザクションに対して、消費量の増加に比例した gas の支払いを強要することとなります。
+
+
 
 ### Messages
 
-Contracts have the ability to send "messages" to other contracts. Messages are virtual objects that are never serialized and exist only in the Ethereum execution environment. A message contains:
+contract は他の contract に対して「メッセージ」を送信することが可能です。
+「メッセージ」はネットワークに対して配信されることがなく、
+Ethereum 実行環境内でのみ存在します。メッセージは以下を含みます。
 
-* The sender of the message (implicit)
-* The recipient of the message
-* The amount of ether to transfer alongside the message
-* An optional data field
-* A `STARTGAS` value
+* メッセージの送信者 (implicit)
+* メッセージの受信者
+* メッセージと一緒に送信されるetherの量
+* オプショナルデータフィールド
+* `STARTGAS` 値
 
-Essentially, a message is like a transaction, except it is produced by a contract and not an external actor. A message is produced when a contract currently executing code executes the `CALL` opcode, which produces and executes a message. Like a transaction, a message leads to the recipient account running its code. Thus, contracts can have relationships with other contracts in exactly the same way that external actors can.
+基本的には「メッセージ」はトランザクションのようなものですが、
+contract により生成され、外部での動作はしない、という点で異なります。
+メッセージは contract が `CALL` opcode を実行している時に生成され、
+この opcode は「メッセージ」を生成し、実行します。
+トランザクションのように、
+メッセージは、そこに記述されたコードを実行する 受信者のアカウント へと導かれます。
+このようにして、contract はEOAのやり方と全く同じ方法で、他の contract と関係性をもつことができます。
 
-Note that the gas allowance assigned by a transaction or contract applies to the total gas consumed by that transaction and all sub-executions. For example, if an external actor A sends a transaction to B with 1000 gas, and B consumes 600 gas before sending a message to C, and the internal execution of C consumes 300 gas before returning, then B can spend another 100 gas before running out of gas.
+ただし、以下のことに注意してください。
+トランザクションやコントラクトによって署名された gas の許容値は、そのトランザクションとトランザクション配下の実行ステップにおいて消費される gas の総量に適用されます。
+たとえば、もし、外部管理者である A が B に対し、1000 gas と一緒にトランザクションを送信し、B は、C にメッセージを送信する前に 600 gas を消費し、C の内部実行として戻り値を返すまでに 300 gas が消費されたとすると、 B は、「ガス欠」とならないためには、もう 100 gas を使用することが可能です。（ ガス欠 となってしまうとエラーを返し、トランザクションは実行されません。）
 
 ### Ethereum State Transition Function
 
