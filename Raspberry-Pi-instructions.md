@@ -7,8 +7,8 @@ Plugin the sd card, LAN connection and the power supply and lets start!
 In order to connect to your pi follow those instructions: https://www.raspberrypi.org/documentation/remote-access/ssh
 
 Currently there are two users, `root` and `pi`.
-The passwords are `root` and `raspberry`, respectivly. The first thing you should do is change that. Otherwise everyone can see your IP in netstats and just log into your Pi.
-Log in to your Raspberry and type `passwd <user>` to update the password for each user.
+The passwords are `root` and `raspberry`, respectivly. The first thing you should do is change that. Otherwise everyone can see your IP in netstats and just log into your Raspberry Pi.
+Log in and type `passwd <user>` to update the password for each user.
 
 The image is for a 8GB sd card. It allocates 2 GB as swap (needed for compiling and mining :-) ). If your sd card is larger than 8GB, then follow those instructions, otherwise you can start your client as described below:
 
