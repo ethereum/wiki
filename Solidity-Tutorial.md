@@ -1,3 +1,5 @@
+- [Cheat Sheet](#cheatsheet)
+
 Solidity is a high-level language whose syntax is similar to that of JavaScript and it is designed to compile to code for the Ethereum Virtual Machine. This
 tutorial provides a basic introduction to Solidity and assumes some knowledge of
 the Ethereum Virtual Machine and programming in general. For more details,
@@ -811,7 +813,13 @@ even though the instructions contained a jump in the beginning.
  - `<address>.balance`: balance of the address in Wei
  - `<address>.send(uint256)`: send given amount of Wei to address.
 
-### Visibility Specifiers
+### Function Visibility Specifiers
+
+```js
+function myFunction() <Visibility Specifiers> returns (bool) {
+    return true;
+}
+```
 
  - `external`: only visible externally (only for functions)
  - `public`: visible externally and internally (creates accessor function for storage/state variables)
