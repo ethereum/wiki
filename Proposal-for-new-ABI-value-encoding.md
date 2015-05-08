@@ -84,3 +84,32 @@ fixed-size arrays of length `n` and `k`, respectively. Note that strictly,
 `[a_1, ..., a_n]` can be an "array" with elements of different types, but the
 encoding is still well-defined as the assumed common type `T` (above) is not
 actually used.
+
+## Examples
+
+### Use of Dynamic Types
+
+A call to a function with the signature `f(uint,uint32[],bytes10,bytes)` with values `(0x123, [0x456, 0x789], "1234567890", "Hello, world!")` is encoded in the following way:
+
+The first four bytes are `sha3("f(uint256,uint32[],bytes10,bytes)")`, i.e. `0x8be65246`.
+Then we encode the head parts of all four arguments. For the static types `uint256` and `bytes10`, these are directly the values we want to pass, whereas for the dynamic types `uint32[]` and `bytes`, we use the offset in bytes to the start of their data area, measured from the start of the value encoding (i.e. not counting the first four bytes containing the hash of the function signature). These are:
+
+ - `0x0000000000000000000000000000000000000000000000000000000000000123` (`0x123` padded to 23 bytes)
+ - `0x0000000000000000000000000000000000000000000000000000000000000080` (offset to start of data part of second parameter, 4*32 bytes, exactly the size of the head part)
+ - `0x3132333435363738393000000000000000000000000000000000000000000000` (`"1234567890"` padded to 32 bytes on the right)
+ - `0x00000000000000000000000000000000000000000000000000000000000000e0` (offset to start of data part of fourth parameter = offset to start of data part of first dynamic parameter + size of data part of first dynamic parameter = 4*32 + 3*32 (see below))
+
+After this, the data part of the first dynamic argument, `[0x456, 0x789]` follows:
+
+ - `0x0000000000000000000000000000000000000000000000000000000000000002` (number of elements of the array, 2)
+ - `0x0000000000000000000000000000000000000000000000000000000000000456` (first element)
+ - `0x0000000000000000000000000000000000000000000000000000000000000789` (second element)
+
+Finally, we encode the data part of the second dynamic argument, `"Hello, world!"`:
+
+ - `0x000000000000000000000000000000000000000000000000000000000000000d` (number of elements (bytes in this case): 13)
+ - `0x48656c6c6f2c20776f726c642100000000000000000000000000000000000000` (`"Hello, world!"` padded to 32 bytes on the right)
+
+All together, the encoding is (spaces added for clarity):
+
+`0x8be65246 0000000000000000000000000000000000000000000000000000000000000123 0000000000000000000000000000000000000000000000000000000000000080 3132333435363738393000000000000000000000000000000000000000000000 00000000000000000000000000000000000000000000000000000000000000e0 0000000000000000000000000000000000000000000000000000000000000002 0000000000000000000000000000000000000000000000000000000000000456 0000000000000000000000000000000000000000000000000000000000000789 000000000000000000000000000000000000000000000000000000000000000d 48656c6c6f2c20776f726c642100000000000000000000000000000000000000`
