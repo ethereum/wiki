@@ -1421,7 +1421,7 @@ params: [
 
 ##### Returns
 
-`Array` - Array of log objects or `null`, or an empty array (if nothing has changed since last poll).
+`Array` - Array of log objects, or an empty array if nothing has changed since last poll.
 
 - For filters created with `eth_newBlockFilter` the return are block hashes (`DATA`, 32 Bytes), e.g. `["0x3454645634534..."]`.
 - For filters created with `eth_newPendingTransactionFilter ` the return are transaction hashes (`DATA`, 32 Bytes), e.g. `["0x6345343454645..."]`.
