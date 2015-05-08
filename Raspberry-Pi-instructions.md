@@ -1,5 +1,5 @@
 ## Get the "everything-is-ready" image
-Download the image from : link will follow
+Download the image from : http://gav.ethdev.com/ArchLinux2GbSwapCppEthGeth.img
 
 Follow those guidelines to copy the image to your sd card: https://www.raspberrypi.org/documentation/installation/installing-images/
 
