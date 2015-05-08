@@ -73,7 +73,7 @@ Now we install all necessary libaries as described here https://github.com/ether
 These are the required packages from the official repositories:
 ```
 sudo pacman -Sy
-sudo pacman -S base-devel cmake scons clang llvm boost leveldb crypto++ qt5-base qt5-webengine qt5-quick1 jsoncpp
+sudo pacman -S base-devel cmake scons clang llvm boost leveldb crypto++ jsoncpp
 ```
 
 These are packages that you can get from the [AUR(Arch User Repositories)](https://aur.archlinux.org/). I would suggest using [yaourt](https://wiki.archlinux.org/index.php/yaourt) or any other of the [AUR helpers](https://wiki.archlinux.org/index.php/AUR_helpers).
