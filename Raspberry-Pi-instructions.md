@@ -59,8 +59,8 @@ This has been tested on the Raspberry Pi 2 only.
 ## Just get the binaries
 
 Alternativly, you can use the linux system of your choice and and get the arm binaries here:
-<link will follow> (go)
-<link will follow> (cpp-ethereum) 
+* \<link will follow> (go)
+* \<link will follow> (cpp-ethereum) 
 
 ## Build it yourself
 If you want to build all that yourself, you can do so following those instructions:
