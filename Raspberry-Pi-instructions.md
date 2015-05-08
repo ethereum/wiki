@@ -1,7 +1,7 @@
 ## Get the "everything-is-ready" image
 Download the image from : http://gav.ethdev.com/ArchLinux2GbSwapCppEthGeth.img.zip
 
-Follow those guidelines to copy the image to your sd card: https://www.raspberrypi.org/documentation/installation/installing-images/
+Unzip it and follow those guidelines to copy the image to your sd card: https://www.raspberrypi.org/documentation/installation/installing-images/
 
 Plugin the sd card, LAN connection and the power supply and lets start!
 
