@@ -816,15 +816,15 @@ even though the instructions contained a jump in the beginning.
 ### Function Visibility Specifiers
 
 ```js
-function myFunction() <Visibility Specifiers> returns (bool) {
+function myFunction() <visibility specifier> returns (bool) {
     return true;
 }
 ```
 
- - `external`: only visible externally (only for functions)
  - `public`: visible externally and internally (creates accessor function for storage/state variables)
- - `internal`: only visible internally
  - `private`: only visible in the current contract
+ - `external`: only visible externally (only for functions)
+ - `internal`: only visible internally
 
 ### Types
 
