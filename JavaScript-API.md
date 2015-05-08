@@ -1034,8 +1034,8 @@ Returns a transaction matching the given transaction hash.
 
   - `hash`: `String`, 32 Bytes - hash of the transaction.
   - `nonce`: `Number` - the number of transactions made by the sender prior to this one.
-  - `blockHash`: `String`, 32 Bytes - hash of the block where this transaction was in.
-  - `blockNumber`: `Number` - block number where this transaction was in.
+  - `blockHash`: `String`, 32 Bytes - hash of the block where this transaction was in. `null` when its pending.
+  - `blockNumber`: `Number` - block number where this transaction was in. `null` when its pending.
   - `transactionIndex`: `Number` - integer of the transactions index position in the block.
   - `from`: `String`, 20 Bytes - address of the sender.
   - `to`: `String`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
@@ -1231,8 +1231,8 @@ filter.watch(function(error, result){
     - `logIndex`: `Number` - integer of the log index position in the block.
     - `transactionIndex`: `Number` - integer of the transactions index position log was created from.
     - `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
-    - `blockHash`: `String`, 32 Bytes - hash of the block where this log was in.
-    - `blockNumber`: `Number` - the block number where this log was in.
+    - `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when its pending.
+    - `blockNumber`: `Number` - the block number where this log was in. `null` when its pending.
     - `address`: `String`, 32 Bytes - address from which this log originated.
     - `data`: `String` - contains one or more 32 Bytes non-indexed arguments of the log.
     - `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
@@ -1402,8 +1402,8 @@ You can use events like [filters](#web3ethfilter) and they have the same methods
 - `transactionIndex`: `Number` - integer of the transactions index position log was created from.
 - `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
 - `address`: `String`, 32 Bytes - address from which this log originated.
-- `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when the log is pending.
-- `blockNumber`: `Number` - the block number where this log was in. `null` when the log is pending.
+- `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when its pending.
+- `blockNumber`: `Number` - the block number where this log was in. `null` when its pending.
 
 
 ##### Example
