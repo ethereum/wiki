@@ -44,8 +44,8 @@ Ethereum が提供しようとしているものは、チューリング完全�
 * [Ethereum](#ethereum)
     * [Ethereum アカウント](#ethereum-accounts)
     * [メッセージ と トランザクション](#messages-and-transactions)
-    * [Ethereum State Transition Function](#ethereum-state-transition-function)
-    * [Code Execution](#code-execution)
+    * [Ethereum の 状態遷移関数](#ethereum-state-transition-function)
+    * [コード実行](#code-execution)
     * [Blockchain and Mining](#blockchain-and-mining)
 * [Applications](#applications)
     * [Token Systems](#token-systems)
@@ -502,7 +502,7 @@ Ethereum では、「状態」は、「アカウント」と呼ばれるオブ�
 Ether は、Ethereum における主要な内部暗号燃料であり、トランザクション手数料を支払うために使用されます。
 一般的に、アカウントには二つの種類があります。
 秘密鍵により管理される**externally owned accounts** と自身のコントラクトコードにより管理される**contract account**です。
-EOA (externally owned account) はコードを持たず、EOAからトランザクションを生成し署名することによって メッセージ を送ることができます。contract (contract account) では、メッセージを受信した時はいつも保持コードをアクティベートし、内部ストレージを読み書き可能になり、メッセージを送信するもしくは新しいコントラクトを作る、といった内容のことが順番に実行されます。
+EOA (externally owned account) はコードを持たず、EOAからトランザクションを生成し署名することによって メッセージ を送ることができます。contract (contract account) では、メッセージを受信した時はいつも保持コードをアクティベートし、内部ストレージを読み書き可能にし、メッセージを送信するもしくは新しいコントラクトを作る、といった内容のことが順番に実行されます。
 
 Ethereum における contract は履行されるべきあるいは一緒にコンパイルされるべきものというよりかはむしろ、
 Ethereum 実行環境を職場とする「自動金融エージェント」といったものに似ており、メッセージやトランザクションによって起動されたときには、いつもある特定のコードを実行し、自身の ether 残高と、なんども使う変数を把握するのに必要な key/value ストレージ を直接管理する権限を持っている、ということに注意してください。
@@ -570,45 +570,82 @@ contract により生成され、外部での動作はしない、という点�
 トランザクションやコントラクトによって署名された gas の許容値は、そのトランザクションとトランザクション配下の実行ステップにおいて消費される gas の総量に適用されます。
 たとえば、もし、外部管理者である A が B に対し、1000 gas と一緒にトランザクションを送信し、B は、C にメッセージを送信する前に 600 gas を消費し、C の内部実行として戻り値を返すまでに 300 gas が消費されたとすると、 B は、「ガス欠」とならないためには、もう 100 gas を使用することが可能です。（ ガス欠 となってしまうとエラーを返し、トランザクションは実行されません。）
 
-### Ethereum State Transition Function
+### Ethereum の 状態遷移関数
 
 ![ethertransition.png](http://vitalik.ca/files/ethertransition.png?1)
 
-The Ethereum state transition function, `APPLY(S,TX) -> S'` can be defined as follows:
+Ethereum の 状態遷移関数, `APPLY(S,TX) -> S'` は次のように定義できます:
 
-1. Check if the transaction is well-formed (ie. has the right number of values), the signature is valid, and the nonce matches the nonce in the sender's account. If not, return an error.
-2. Calculate the transaction fee as `STARTGAS * GASPRICE`, and determine the sending address from the signature. Subtract the fee from the sender's account balance and increment the sender's nonce. If there is not enough balance to spend, return an error.
-3. Initialize `GAS = STARTGAS`, and take off a certain quantity of gas per byte to pay for the bytes in the transaction.
-4. Transfer the transaction value from the sender's account to the receiving account. If the receiving account does not yet exist, create it. If the receiving account is a contract, run the contract's code either to completion or until the execution runs out of gas.
-5. If the value transfer failed because the sender did not have enough money, or the code execution ran out of gas, revert all state changes except the payment of the fees, and add the fees to the miner's account.
-6. Otherwise, refund the fees for all remaining gas to the sender, and send the fees paid for gas consumed to the miner.
 
-For example, suppose that the contract's code is:
+1. トランンザクションが 「 well-formed 」であるか（例えば、値が正しい数値であるか）チェックし、
+署名が有効であれば、ノンスが送信者のアカウントのものと合致するかチェックします。もし、そうでなければ、エラーを返します。
+2. トランザクションの手数料を `STARTGAS * GASPRICE` として計算し、署名から送信アドレスを決定します。
+送信者のアカウントの残高から手数料を差し引き、送信者のノンスを次の値へとインクリメントします。
+もし、残高不足であれば、エラーを返します。
+3. `GAS = STARTGAS` として、`GAS` 値を初期化し、トランザクションにおける byteデータ量 のぶんだけ byte あたり一定量の gas を支払います。
+4. 送信者のアカウントから受信者のアカウントにトランザクションの値を転送します。もし、受信者のアカウントが存在しないものであったならば、あたらしくつくります。もし、受信者のアカウントが contract であれば、すべての実行が完了するか、あるいは ガス欠 になるまで contract のコードを実行します。
+5. もし、送信者が十分なお金を持っていなかったり、 ガス欠 のために、値の転送が失敗した場合には、手数料の支払いを除いて、全状態を元に戻し、手数料はマイナーのアカウントに加えます。
+6. そうでなければ、余った全ての gas を全て送信者に返し、消費した gas は採掘者に支払われる手数料として送信します。
+
+
+たとえば、contract コード が以下であるような場合を考えましょう。
 
     if !self.storage[calldataload(0)]:
         self.storage[calldataload(0)] = calldataload(32)
 
-Note that in reality the contract code is written in the low-level EVM code; this example is written in Serpent, one of our high-level languages, for clarity, and can be compiled down to EVM code. Suppose that the contract's storage starts off empty, and a transaction is sent with 10 ether value, 2000 gas, 0.001 ether gasprice, and 64 bytes of data, with bytes 0-31 representing the number `2` and bytes 32-63 representing the string `CHARLIE`. The process for the state transition function in this case is as follows:
+実際は、contract コードは低級EVM言語（アセンブラ）であることに注意してください。
+このコードは Ethereum における高級言語であるひとつである Serpent 言語で書かれており、コードを確約したものにするために、
+低級EVMコードへコンパイルすることが可能です。
+さらに次に記す状況を想定しましょう。
+この contract のストレージは空の状態から始まり、
+* 10 ether の値と、 
+* 0.001 ether / gas の gasprice で 2000 gas 、そして
+* 64バイトのデータ（0-31バイトが数字`2`を表し、32~63バイト番地が`CHARLIE`という string を表しているものとします。）
 
-1. Check that the transaction is valid and well formed.
-2. Check that the transaction sender has at least 2000 * 0.001 = 2 ether. If it is, then subtract 2 ether from the sender's account.
-3. Initialize gas = 2000; assuming the transaction is 170 bytes long and the byte-fee is 5, subtract 850 so that there is 1150 gas left.
-3. Subtract 10 more ether from the sender's account, and add it to the contract's account.
-4. Run the code. In this case, this is simple: it checks if the contract's storage at index `2` is used, notices that it is not, and so it sets the storage at index `2` to the value `CHARLIE`. Suppose this takes 187 gas, so the remaining amount of gas is 1150 - 187 = 963
-5. Add 963 * 0.001 = 0.963 ether back to the sender's account, and return the resulting state.
+の３つが、トランザクションとともに送信されるものとします。
+この場合、状態遷移関数のプロセスは以下のようになります。
 
-If there was no contract at the receiving end of the transaction, then the total transaction fee would simply be equal to the provided `GASPRICE` multiplied by the length of the transaction in bytes, and the data sent alongside the transaction would be irrelevant.
+1. トランザクションが有効かつ well-formed であるか確認する。
+2. トランザクション送信者が、最低限 2000 * 0.001 = 2 ether を所持しているか確認する。
+もし、所持していれば、2 ether を送信者のアカウントから差し引く。
+3. gas の量を gas = 2000; として初期化します。トランザクションのバイト長が 170 byte であるとすると、byte あたりの手数料が 5 であったことから、850 を差し引くことなり、1150 gas が残ります。
+4. 送信者のアカウントから 10 ether を差し引き、それを送信先である contract アカウントに加えます。 
+5. コードを走らせます。今回はとてもシンプルです。
+まず contract は自身のストレージにおける `2` 番目の項目が使われているか確認し、
+未使用であることを確認し、ストレージの `2` 番地に `CHARLIE` という値をセットします。
 
-Note that messages work equivalently to transactions in terms of reverts: if a message execution runs out of gas, then that message's execution, and all other executions triggered by that execution, revert, but parent executions do not need to revert. This means that it is "safe" for a contract to call another contract, as if A calls B with G gas then A's execution is guaranteed to lose at most G gas. Finally, note that there is an opcode, `CREATE`, that creates a contract; its execution mechanics are generally similar to `CALL`, with the exception that the output of the execution determines the code of a newly created contract.
+この操作で、187 gas を消費するとしましょう、すると残りの gas は 1150 - 187 = 963 となります。
 
-### Code Execution
+6. 963 * 0.001 = 0.963 ether を送信者のアカウントに返金し、結果として出てきた「状態」を返します。
 
-The code in Ethereum contracts is written in a low-level, stack-based bytecode language, referred to as "Ethereum virtual machine code" or "EVM code". The code consists of a series of bytes, where each byte represents an operation. In general, code execution is an infinite loop that consists of repeatedly carrying out the operation at the current program counter (which begins at zero) and then incrementing the program counter by one, until the end of the code is reached or an error or `STOP` or `RETURN` instruction is detected. The operations have access to three types of space in which to store data:
+もしも、トランザクションの受信側に contract がなかったら、当該トランザクションにおける全手数料は、たんに、トランザクションのバイト長に 与えられた `GASPRICE` の値をかけたものとなり、トランザクションと一緒に送られたデータは全く関係のないものとなってしまうでしょう。
 
-* The **stack**, a last-in-first-out container to which values can be pushed and popped
-* **Memory**, an infinitely expandable byte array
-* The contract's long-term **storage**, a key/value store. Unlike stack and memory, which reset after computation ends, storage persists for the long term.
 
+Note that messages work equivalently to transactions in terms of reverts: 
+もしメッセージが gas を使い果たしてしまったらば、そのメッセージあるいはそのメッセージが引き金となるすべての実行処理がもとにもどされてしまいますが、その「親」の実行に関しては、やり直しになる必要がありません。
+これは、contract が他の contract を呼ぶことに関して「安全」であることを意味し、これは、A が G gasもって B を呼び出すと、A による実行はたかだか G gas 分であることが保証されている、と捉えることができます。
+
+最後に、contract を生成する opcode である `CREATE` があることに注意してください。
+その実行メカニズムは一般的に言って `CALL` に似ていますが、実行結果があたらしく作られたコントラクトのコードを返すという点を除いて同じになります。
+
+補足：contract が実際に信用あるものとして、機能するかどうかについてですが、
+例として２人間の賭博をあげますと、二人のお金を預けることになるコントラクトはきちんと仕事をするという保証が必要です。
+片一方が作成し、騙し取るということが可能に思われます。しかし、これは簡単に解決できます。片方により作成されたコントラクトの公開鍵はわかっているので、そのコードが実行する内容は明るみにでており、エミュレーターを使って、きちんと動作することを確認することで、簡単にコントラクトの安全性を逐一確認することができます。
+
+
+### コード実行
+
+Ethereum contract コードは低級スタック・ベース・バイトコード言語で書かれており、「Ethereum 仮想マシンコード」や「EVM code」などと呼ばれております。
+そのコードは一連のbyte列から構成されており、各 byte はひとつの命令を表しております。
+一般的に、コード実行とは、プログラムカウンターが現在示すところの命令を実行してはプログラムカウンターを１つインクリメントする繰り返しにより構成される、無限ループであり、エラーや `STOP` あるいは `RETURN` といった命令が検出されるまで終わることがありません。
+
+命令はデータを貯蔵するために必要な 三種類の スペース にアクセスします。
+
+* **stack**, 後入れ先出しのコンテナで、push と pop という二つの命令により値を出し入れします。
+* **Memory**, 無限拡張可能なバイト配列
+* contract における長期保存用の **storage** であり、Key/value の貯蔵庫。スタックやメモリは、計算実行後リセットされるが、それらと異なり、storage は長期間、値が保持される。
+
+コードも、受信したメッセージにおける、値・送信者・データにアクセスできます。
 The code can also access the value, sender and data of the incoming message, as well as block header data, and the code can also return a byte array of data as an output.
 
 The formal execution model of EVM code is surprisingly simple. While the Ethereum virtual machine is running, its full computational state can be defined by the tuple `(block_state, transaction, message, code, memory, stack, pc, gas)`, where `block_state` is the global state containing all accounts and includes balances and storage. At the start of every round of execution, the current instruction is found by taking the `pc`th byte of `code` (or 0 if `pc >= len(code)`), and each instruction has its own definition in terms of how it affects the tuple. For example, `ADD` pops two items off the stack and pushes their sum, reduces `gas` by 1 and increments `pc` by 1, and `SSTORE` pushes the top two items off the stack and inserts the second item into the contract's storage at the index specified by the first item. Although there are many ways to optimize Ethereum virtual machine execution via just-in-time compilation, a basic implementation of Ethereum can be done in a few hundred lines of code.
