@@ -336,7 +336,7 @@ Alternatives to proof-of-proof include proof-of-optimization, finding optimal in
 * The distribution should be maximally egalitarian, though this is a secondary concern.
 * The system should be secure against front-running attacks, ie. if an individual submits a solution, then it should not be practical for even a moderately powerful attacker to look at the solution and then resubmit his own transaction containing the same solution and thereby steal the reward.
 
-### 15. Anti-Sybil systems
+### 14. Anti-Sybil systems
 
 A problem that is somewhat related to the issue of a reputation system is the challenge of creating a "unique identity system" - a system for generating tokens that prove that an identity is not part of a Sybil attack. The naive form of anti-Sybil token is simple: a sacrifice or proof of deposit. In a sacrifice setup, such identities simply cost $X, and in a PoD system identities require a deposit of $Y in order to be active, where perhaps the deposit can be taken away or destroyed under certain circumstances. However, we would like to have a system that has nicer and more egalitarian features than "one-dollar-one-vote"; arguably, one-person-one-vote would be ideal.
 
@@ -356,7 +356,7 @@ The question is, can we use these mechanisms, either separately or together, and
 * The cost of obtaining anti-Sybil tokens for an automated system should be as high as possible (this is a more important criterion than high cost for multi-obtainment for humans)
 * The system should not create dependency on centralized parties (eg. government passport offices) that have the power to cheat the system
 
-### 14. Decentralized contribution metrics
+### 15. Decentralized contribution metrics
 
 Incentivizing the production of public goods is, unfortunately, not the only problem that centralization solves. The other problem is determining, first, which public goods are worth producing in the first place and, second, determining to what extent a particular effort actually accomplished the production of the public good. This challenge deals with the latter issue. Although in the case of computational tasks it's easy to come up with a proof of solution, for non-computational tasks the situation is much more difficult. If a cryptoeconomic system wants to incentivize users to build better graphical user interfaces to its own system, how would it rate people's contributions? [Even more problematically](http://en.wikipedia.org/wiki/Underhanded_C_Contest), what about potentially quasi-adversarial tasks like incentivizing updates to its own code? What about a DAO that funds healthcare, or tries to incentivize adopting renewable energy?
 
