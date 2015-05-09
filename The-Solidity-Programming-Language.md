@@ -106,14 +106,14 @@ var y = 69.42;	// here, "var" is equivalent to "real".
 
 ## Literals
 
-Solidity includes four of types of literals; these are used for expressing specific, well-known values.
+Solidity includes three of types of literals; these are used for expressing specific, well-known values.
 
 # Integers
 
 Integer literals are formed from a sequence of numbers in the range 0-9. They are interpreted as decimals. Examples include `69` and `01000000`.
 
 
-In terms of literals, addresses are formed from the characters `0x` followed directly by a sequence of pairs of hexadecimal numbers, in the range 0-9 and a-f (not case sensitive). They are interpreted as hexadecimal-encoded bytes. Examples include::
+In terms of literals, addresses are formed from the characters `0x` followed directly by a sequence of pairs of hexadecimal numbers, in the range 0-9 and a-f (not case sensitive). They are interpreted as hexadecimal-encoded bytes. Examples include:
 
 ```
 address a = 0x0123456789abcdef0123;
