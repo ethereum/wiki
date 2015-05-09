@@ -60,7 +60,6 @@ Unlike in Javascript, all variables must be declared prior to use and typed. How
 
 The type system in Solidity revolves largely around the 256-bit word size of the EVM. To this end, there are 5 major types, each of which are specifically 256-bits wide:
 
-- `hash`: 256-bit, 32-byte data chunk, indexable into bytes and operable with bitwise operations.
 - `uint`: 256-bit unsigned integer, operable with bitwise and unsigned arithmetic operations.
 - `int`: 256-bit signed integer, operable with bitwise and signed arithmetic operations.
 - `real`: 256-bit signed fixed-point quantity, 127-bit left of the point, 128-bit right.
@@ -68,10 +67,10 @@ The type system in Solidity revolves largely around the 256-bit word size of the
 
 In addition to these, there is the intrinsic `address` type used for identifying specific accounts and a bool type for representing two and false:
 
-- `address`: account identifier, similar to a 160-bit hash type.
+- `address`: account identifier, 160-bits.
 - `bool`: two-state value.
 
-Most of the time, we'll tend to use `uint` and `hash`; the former if we intend to do arithmetic, the latter when we need to identify or refer to pieces of data, events, &c.
+Most of the time, we'll tend to use `uint`; the former if we intend to do arithmetic, the latter when we need to identify or refer to pieces of data, events, &c.
 
 So to declare a variable it is very similar to the C-like languages: we simply place the type, followed by the variable name and finish the expression with a `;`. For example to declare a uint named `x` we'd write:
 
@@ -113,15 +112,8 @@ Solidity includes four of types of literals; these are used for expressing speci
 
 Integer literals are formed from a sequence of numbers in the range 0-9. They are interpreted as decimals. Examples include `69` and `01000000`.
 
-# Hashes
 
-Hash literals are formed from the characters `0x` followed directly by a sequence of pairs of hexadecimal numbers, in the range 0-9 and a-f (not case sensitive). They are interpreted as hexadecimal-encoded bytes. Examples include:
-
-```
-hash h = 0x0123456789abcdef0123456789abcdef;
-```
-
-In terms of literals, addresses are treated similar to hashes:
+In terms of literals, addresses are formed from the characters `0x` followed directly by a sequence of pairs of hexadecimal numbers, in the range 0-9 and a-f (not case sensitive). They are interpreted as hexadecimal-encoded bytes. Examples include::
 
 ```
 address a = 0x0123456789abcdef0123;
