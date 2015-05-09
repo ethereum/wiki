@@ -61,3 +61,5 @@ Another example, using the PBKDF algorithm for key derivation is:
     "version": 2
 }
 ```
+
+Most of the meanings/algorithm are similar to the original spec, except `mac`, which is given as the SHA3 of the concatenation of the last 16 bytes of the derived key together with the full `ciphertext`.
