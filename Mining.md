@@ -1,4 +1,4 @@
-## So what is mining anyway?
+# So what is mining anyway?
 
 Ethereum Frontier like all blockchain technologies uses an incentive-driven model of security. Consensus is based on choosing the block with the highest total difficulty. 
 Miners produce blocks which the others check for validity. Among other well-formedness criteria, a block is only valid if it contains **proof of work** (PoW) of a given **difficulty**. 
@@ -14,17 +14,17 @@ Ethash PoW is memory hard, making it basically ASIC resistant. This basically me
 
 As a special case, when you start up your node from scratch, mining will only start once the DAG is built for the current epoch. 
 
-## The Algorithm
+# The Algorithm
 
 Our algorithm, [Ethash](https://github.com/ethereum/wiki/wiki/Ethash) (previously known as Dagger-Hashimoto), is based around the provision of a large, transient, randomly generated dataset which forms a DAG (the Dagger-part), and attempting to solve a particular constraint on it, partly determined through a block's header-hash.
 
 It is designed to hash a fast verifiability time within a slow CPU-only environment, yet provide vast speed-ups for mining when provided with a large amount of memory with high-bandwidth. The large memory requirements mean that large-scale miners get comparatively little super-linear benefit. The high bandwidth requirement means that a speed-up from piling on many super-fast processing units sharing the same memory gives little benefit over a single unit.
 
-### Formal Requirements
+## Formal Requirements
 
 TODO: Content from formal requirements doc.
 
-### Design Decisions Taken
+## Design Decisions Taken
 
 TODO: Content from design decisions doc.
 
@@ -34,7 +34,7 @@ Mining will be accomplished in one of two ways: either on CPU (and possibly the 
 
 An sgminer module for Ethash is expected to be released at some point during, but not necessarily before the Frontier Genesis.
 
-### JSON-RPC
+## JSON-RPC
 
 Communication between the external mining application and the Ethereum daemon for work provision and submission happens through the JSON-RPC API. Two RPC functions are provided; `eth_getWork` and `eth_submitWork`.
 
