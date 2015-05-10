@@ -59,7 +59,7 @@ on the type of `X` being
 
 - `uint<N>`: `enc(X)` is the big-endian encoding of `X`, padded on the higher-order side with zero-bytes such that the length is a multiple of 32 bytes.
 - `uint`: as in the `uint256` case
-- `address`: as in the `uint120` case
+- `address`: as in the `uint160` case
 - `int<N>`: `enc(X)` is the big-endian two's complement encoding of `X`, padded on the higher-oder side with `0xff` for negative `X` and with zero bytes for positive `X` such that the length is a multiple of 32 bytes.
 - `int`: as in the `int256` case
 - `bool`: as in the `uint8` case, where `1` is used for `true` and `0` for `false`
