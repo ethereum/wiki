@@ -27,7 +27,7 @@ blockchain 上の電子財産を実装したものとして:
 Ethereum が提供しようとしているものは、チューリング完全なプログラミング言語の完成品を
  blockchain に埋め込み提供することにあります。
 この言語は、"contract" を生成するために使用され、
-"contract" とはあらゆる（状態遷移）関数をプログラムしたものです。
+"contract" とはあらゆる 関数 をプログラムしたものです。
 これにより、ユーザーは上記の全てのシステムを実装することが可能で、
 われわれがまだ想像すらしていない多くの可能性が、
 論理を秘めし数行のコードを書き上げるだけで実現できるようになります。
@@ -46,7 +46,7 @@ Ethereum が提供しようとしているものは、チューリング完全�
     * [メッセージ と トランザクション](#messages-and-transactions)
     * [Ethereum の 状態遷移関数](#ethereum-state-transition-function)
     * [コード実行](#code-execution)
-    * [Blockchain and Mining](#blockchain-and-mining)
+    * [Blockchain と 採掘](#blockchain-and-mining)
 * [Applications](#applications)
     * [Token Systems](#token-systems)
     * [Financial derivatives](#financial-derivatives-and-stable-value-currencies)
@@ -642,8 +642,8 @@ Ethereum の contract コードは低級スタック・ベース・バイトコ�
 EVM における 命令 はデータを貯蔵するために必要な 三種類の スペース にアクセスします。
 
 * **stack**, 後入れ先出しのコンテナで、push と pop という二つの命令により値を出し入れします。
-* **Memory**, 無限拡張可能なバイト配列
-* contract における長期保存用の **storage** 、Key/value の貯蔵庫。スタックやメモリでは計算実行後毎にリセットされるのに対し、storage では長期間、値が保持される。
+* **Memory**, 無限拡張および無限展開可能なバイト配列
+* **storage**, contract が保持する長期保存用ストレージで 、Key/value の貯蔵庫。スタックやメモリでは計算実行後毎にリセットされるのに対し、storage では長期間、値が保持される。
 
 コードも、受信したメッセージにおける 値・送信者・データ にアクセス可能です。また ブロックヘッダ のデータにも同様にアクセスできます。コードは出力として byte 配列のデータ を戻り値として返すことも出来ます。
 
@@ -664,22 +664,40 @@ EVM コード における、形だけの実装が施された実行モデルは
 
 Ethereum の blockchain は多くの点で Bitcoin のそれと似ていますが、いくつか違う点があります。
 bockchain のアーキテクチャに関する Ethereum と Bitcoin の違いは、次のようになります。
-Bitcoin とは違い、Ethereum のブロックはトランザクションのリストとその時点での最新状態を
+Bitcoin とは違い Ethereum のブロックはトランザクションのリストとブロック生成時点の 状態 のコピーを内部に保持しています。
+脇道にそれますが、ブロック番号 と difficulty という、べつの二つの値もブロックに貯蔵されます。
+Ethereum における基本的な、ブロック有効化 アルゴリズム は以下となります。 
 
-Bitcoin, Ethereum blocks contain a copy of both the transaction list and the most recent state. Aside from that, two other values, the block number and the difficulty, are also stored in the block. The basic block validation algorithm in Ethereum is as follows:
+1. ブロックの参照する 直前のブロック が存在し、それが有効であるかをチェックします。
+2. タイムスタンプが 、直前のにおけるそれよりも値が大きく、15分さきの未来まで後出のものより値が小さいことを確認します。
+3. ブロック番号、難易度、トランザクションのルート、Uncle のルート および ガスの上限（様々な、低級Ethereumの仕様概念）が有効であるか確認します。
+4. ブロックの有効証である proof of work が有効であるか確認します。
+5. 直前のブロックの最後の状態を `S[0]` とする。 
+6. `TX` をトランザクション・リストとし、`n` 個のトランザクションを含むものとする。 
+`0...n-1` までの全ての数に対し、`S[i+1] = APPLY(S[i], TX[i])` とする。
+もし、アプリケーション群のどれか一つでもエラーを返したり、ブロックで消費される全 gas 量がこの段階で `GASLIMIT` を超過していたりすると、エラーを返します。
+7. `S[N]` を `S_FINAL` としますが、採掘者へのブロック採掘に対する報酬も加えます。
+8. 状態 `S_FINAL` の マークル木 の ルート がブロックヘッダにおいて与えられる 最終状態のルート と一致するか確かめます。
+もしそうであれば、ブロックは有効で、そうでなければ、ブロックは無効です。
 
-1. Check if the previous block referenced exists and is valid.
-2. Check that the timestamp of the block is greater than that of the referenced previous block and less than 15 minutes into the future
-3. Check that the block number, difficulty, transaction root, uncle root and gas limit (various low-level Ethereum-specific concepts) are valid.
-4. Check that the proof of work on the block is valid.
-5. Let `S[0]` be the state at the end of the previous block.
-6. Let `TX` be the block's transaction list, with `n` transactions. For all in in `0...n-1`, set `S[i+1] = APPLY(S[i],TX[i])`. If any applications returns an error, or if the total gas consumed in the block up until this point exceeds the `GASLIMIT`, return an error.
-7. Let `S_FINAL` be `S[n]`, but adding the block reward paid to the miner.
-8. Check if the Merkle tree root of the state `S_FINAL` is equal to the final state root provided in the block header. If it is, the block is valid; otherwise, it is not valid.
+さっと目を通しただけでは、このアプローチはとても非効率に思うかもしれません。
+なぜならば、このやり方では、各ブロックで 全ネットワークの状態 を保存する必要があるからです。
+しかし、現実的には、Etherum の効率は、Bitcoin のそれと比べなければなりません。
+というのは、ここで 保存される状態 は、そのデータ木構造に貯蔵され、ブロック毎に、その小さな部分木が変更される必要があります。
+このようにすると、一般的に、隣り合う二つのブロック間では、木の大部分は同じとなるはずであり、
+そうであるがゆえ、データは、一度貯蔵され、ポインタ（つまり部分木のハッシュ値）を使用して二度 引用符 が付加される、という形式をとります。
+この「状態」の保存方法を達成するために「 パトリシア木 」と呼ばれる 特別なデータ木 が使われ、
+パトリシア木は、マークル木のコンセプトに対して修正がなされており、ノードの挿入・削除が可能であり、
+ただ変わるだけでなく、効率が良くなります。
+さらに、全状態の情報が、最新のブロックに含まれますので、ブロックチェインの全履歴を保存する必要がありません。
+これは、Bitcoin に適用されたら、5 - 20倍のスペース節約になる 技術戦略 です。
 
-The approach may seem highly inefficient at first glance, because it needs to store the entire state with each block, but in reality efficiency should be comparable to that of Bitcoin. The reason is that the state is stored in the tree structure, and after every block only a small part of the tree needs to be changed. Thus, in general, between two adjacent blocks the vast majority of the tree should be the same, and therefore the data can be stored once and referenced twice using pointers (ie. hashes of subtrees). A special kind of tree known as a "Patricia tree" is used to accomplish this, including a modification to the Merkle tree concept that allows for nodes to be inserted and deleted, and not just changed, efficiently.  Additionally, because all of the state information is part of the last block, there is no need to store the entire blockchain history - a strategy which, if it could be applied to Bitcoin, can be calculated to provide 5-20x savings in space.
+ひろく尋ねられるのが、「どこで contract が実行されるのか」という質問で、物理デバイス上でどこか？ということです。
+この質問に対しては、シンプルな回答があります。
+「 contract の実行プロセスは、その状態遷移関数の定義の一部であり、それ故ブロックの有効化アルゴリズムの一部となります。
+なので、もしトランザクションがブロック `B` に付加されたならばそのトランザクションにより生まれるコード実行は全てのノードで実行されます。
+その時点より未来において、ブロック`B`をダウンロードした全てのノードということです。」
 
-A commonly asked question is "where" contract code is executed, in terms of physical hardware. This has a simple answer: the process of executing contract code is part of the definition of the state transition function, which is part of the block validation algorithm, so if a transaction is added into block `B` the code execution spawned by that transaction will be executed by all nodes, now and in the future, that download and validate block `B`.
 
 ## Applications
 
