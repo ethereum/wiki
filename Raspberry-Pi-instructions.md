@@ -60,7 +60,7 @@ This has been tested on the Raspberry Pi 2 only.
 
 Alternativly, you can use the linux system of your choice and and get the arm binaries here:
 * \<link will follow> (go)
-* \<link will follow> (cpp-ethereum) 
+* \<link will follow> (cpp-ethereum)
 
 ## Build it yourself
 If you want to build all that yourself, you can do so following those instructions:
@@ -68,7 +68,11 @@ If you want to build all that yourself, you can do so following those instructio
 We start with a ArchLinux system with 2 GB swap. Instructions on how to get there can be found here: 
 http://archlinuxarm.org/forum/viewtopic.php?f=60&t=8366
 
-Now we install all necessary libaries as described here https://github.com/ethereum/cpp-ethereum/wiki/Building-on-ArchLinux (but without the qt libs):
+### go-ethereum
+Install instructions can be found here: https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Arch
+
+### cpp-ethereum
+First we install all necessary libaries as described here https://github.com/ethereum/cpp-ethereum/wiki/Building-on-ArchLinux (but without the qt libs):
 
 These are the required packages from the official repositories:
 ```
@@ -96,7 +100,7 @@ tar -xvzf yaourt.tar.gz
 cd yaourt
 makepkg -si
 ```
-### Building the client
+#### Building the client
 
 The instructions for building the client from here and on are identical with Ubuntu so the reader should refer to the [relevant page](https://github.com/ethereum/cpp-ethereum/wiki/Building-on-Ubuntu#choose-your-source). but use `cmake .. -DBUNDLE=minimal` instead.
 
@@ -105,6 +109,5 @@ Resources:
 http://archlinuxarm.org/forum/viewtopic.php?f=60&t=8366
 http://archlinuxarm.org/forum/viewtopic.php?f=31&t=3119
 https://github.com/ethereum/cpp-ethereum/wiki/Building-on-ArchLinux
-
 
 
