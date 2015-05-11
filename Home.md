@@ -20,6 +20,6 @@ Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FA
 Bleeding edge PoC-9 code can be cloned from the develop branch of their git repositories:
 - https://github.com/ethereum/cpp-ethereum
 - https://github.com/ethereum/go-ethereum
-- https://github.com/ethereum/pyethereum
+- https://github.com/ethereum/pyethapp
 
 To see the state of the latest Ethereum builds, see the [build server](http://build.ethdev.com/console).
