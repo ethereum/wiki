@@ -635,26 +635,38 @@ Note that messages work equivalently to transactions in terms of reverts:
 
 ### コード実行
 
-Ethereum contract コードは低級スタック・ベース・バイトコード言語で書かれており、「Ethereum 仮想マシンコード」や「EVM code」などと呼ばれております。
+Ethereum の contract コードは低級スタック・ベース・バイトコード言語で書かれており、「 Ethereum 仮想マシンコード 」や「 EVM code 」などと呼ばれております。
 そのコードは一連のbyte列から構成されており、各 byte はひとつの命令を表しております。
 一般的に、コード実行とは、プログラムカウンターが現在示すところの命令を実行してはプログラムカウンターを１つインクリメントする繰り返しにより構成される、無限ループであり、エラーや `STOP` あるいは `RETURN` といった命令が検出されるまで終わることがありません。
 
-命令はデータを貯蔵するために必要な 三種類の スペース にアクセスします。
+EVM における 命令 はデータを貯蔵するために必要な 三種類の スペース にアクセスします。
 
 * **stack**, 後入れ先出しのコンテナで、push と pop という二つの命令により値を出し入れします。
 * **Memory**, 無限拡張可能なバイト配列
-* contract における長期保存用の **storage** であり、Key/value の貯蔵庫。スタックやメモリは、計算実行後リセットされるが、それらと異なり、storage は長期間、値が保持される。
+* contract における長期保存用の **storage** 、Key/value の貯蔵庫。スタックやメモリでは計算実行後毎にリセットされるのに対し、storage では長期間、値が保持される。
 
-コードも、受信したメッセージにおける、値・送信者・データにアクセスできます。
-The code can also access the value, sender and data of the incoming message, as well as block header data, and the code can also return a byte array of data as an output.
+コードも、受信したメッセージにおける 値・送信者・データ にアクセス可能です。また ブロックヘッダ のデータにも同様にアクセスできます。コードは出力として byte 配列のデータ を戻り値として返すことも出来ます。
 
-The formal execution model of EVM code is surprisingly simple. While the Ethereum virtual machine is running, its full computational state can be defined by the tuple `(block_state, transaction, message, code, memory, stack, pc, gas)`, where `block_state` is the global state containing all accounts and includes balances and storage. At the start of every round of execution, the current instruction is found by taking the `pc`th byte of `code` (or 0 if `pc >= len(code)`), and each instruction has its own definition in terms of how it affects the tuple. For example, `ADD` pops two items off the stack and pushes their sum, reduces `gas` by 1 and increments `pc` by 1, and `SSTORE` pushes the top two items off the stack and inserts the second item into the contract's storage at the index specified by the first item. Although there are many ways to optimize Ethereum virtual machine execution via just-in-time compilation, a basic implementation of Ethereum can be done in a few hundred lines of code.
+EVM コード における、形だけの実装が施された実行モデルは、驚くほどシンプルです。Ethereum 仮想マシン が動作しているとき、
+ネットワーク全体における、全仮想マシン計算状態 は次のタプルにより決定されます。`(block_state, transaction, message, code, memory, stack, pc, gas)`
+ここで、
+ `block_state` は、全アカウントを保持し、残高やストレージといったデータをひきこんだ「 global な状態 」を表します。
+実行の開始時毎に、「 命令 」は、変数`pc`番目の byte コードを取ってきます。`pc >= len(code)`の条件下では 0 となります。
+各命令はタプルに対して、どのように影響するのかという点に関して、独自の定義があります。
+例えば、
+`ADD` はスタックから、二つアイテムを引き出し(pop)、その合計をまたスタックへ押し込めます(push)。
+`SSTORE`は上部からふたつのアイテムを pop の上、二つ目のアイテムを contract のストレージにおける、一つ目のアイテムが示す番地に格納します。
+即時コンパイルによる EVM マシン実行最適化の方法はたくさんありにもかかわらず、Ethereum は基本的に、実装すると数百行ほどの byte コードスペースを費やします。
 
-### Blockchain and Mining
+### Blockchain と 採掘
 
 ![apply_block_diagram.png](http://vitalik.ca/files/apply_block_diagram.png)
 
-The Ethereum blockchain is in many ways similar to the Bitcoin blockchain, although it does have some differences. The main difference between Ethereum and Bitcoin with regard to the blockchain architecture is that, unlike Bitcoin, Ethereum blocks contain a copy of both the transaction list and the most recent state. Aside from that, two other values, the block number and the difficulty, are also stored in the block. The basic block validation algorithm in Ethereum is as follows:
+Ethereum の blockchain は多くの点で Bitcoin のそれと似ていますが、いくつか違う点があります。
+bockchain のアーキテクチャに関する Ethereum と Bitcoin の違いは、次のようになります。
+Bitcoin とは違い、Ethereum のブロックはトランザクションのリストとその時点での最新状態を
+
+Bitcoin, Ethereum blocks contain a copy of both the transaction list and the most recent state. Aside from that, two other values, the block number and the difficulty, are also stored in the block. The basic block validation algorithm in Ethereum is as follows:
 
 1. Check if the previous block referenced exists and is valid.
 2. Check that the timestamp of the block is greater than that of the referenced previous block and less than 15 minutes into the future
