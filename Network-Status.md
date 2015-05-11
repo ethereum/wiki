@@ -18,7 +18,7 @@ Then edit the `app.json` file in it to configure for your node:
 - alter the value to the right of `LISTENING_PORT` to the ethereum listening port (default: 30303)
 - alter the value to the right of `INSTANCE_NAME` to whatever you wish to name your node;
 - alter the value to the right of `CONTACT_DETAILS` if you wish to share your contact details
-- alter the value to the right of `RPC_PORT` to the rpc port for your node (by default 8080 for cpp and 8545 for go);
+- alter the value to the right of `RPC_PORT` to the rpc port for your node (by default 8545 for both cpp and go);
 - and alter the value to the right of `WS_SECRET` to the secret (you'll have to get this off an ethÐΞV official if you don't have one).
 
 Finally run the process with:
