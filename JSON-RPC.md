@@ -827,7 +827,7 @@ Executes a new message call immediately without creating a transaction on the bl
 ##### Parameters
 
 1. `Object` - The transaction call object
-  - `from`: `DATA`, 20 Bytes - The address the transaction is send from.
+  - `from`: `DATA`, 20 Bytes - (optional) The address the transaction is send from.
   - `to`: `DATA`, 20 Bytes  - The address the transaction is directed to.
   - `gas`: `QUANTITY`  - (optional) Integer of the gas provided for the transaction execution. eth_call consumes zero gas, but this parameter may be needed by some executions.
   - `gasPrice`: `QUANTITY`  - (optional) Integer of the gasPrice used for each paid gas
