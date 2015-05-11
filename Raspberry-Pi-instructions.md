@@ -18,7 +18,7 @@ Also eth-netstats is installed. You can find instructions in how to use it here:
 It is used to display your client on the centralized network server (https://eth-netstats.herokuapp.com/)
 
 For convenience there is start\<NameOfTheClient>ClientWithNetstat.sh script (execute it with bash) which starts the client and registers it on eth-netstats.
-For updating the cpp client you can just do `bash updateCppClient.sh` (this may take a while). The go client can be updated by getting the latest develop version with wget \<link will follow>.
+For updating the clients you can just do `bash update\<NameOfTheClient>Client.sh` (this may take a while).
 
 ## Resize you system to use large sd cards
 
