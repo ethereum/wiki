@@ -17,8 +17,8 @@ Currently the go client (geth) and the cpp client (eth) are preinstalled. You ca
 Also eth-netstats is installed. You can find instructions in how to use it here: https://github.com/ethereum/wiki/wiki/Network-Status.
 It is used to display your client on the centralized network server (https://eth-netstats.herokuapp.com/)
 
-For convenience there is start\<NameOfTheClient>ClientWithNetstat.sh script (execute it with bash) which starts the client and registers it on eth-netstats.
-For updating the clients you can just do `bash update\<NameOfTheClient>Client.sh` (this may take a while).
+For convenience there is `start<NameOfTheClient>ClientWithNetstat.sh` script (execute it with bash) which starts the client and registers it on eth-netstats.
+For updating the clients you can just do `bash update<NameOfTheClient>Client.sh` (this may take a while).
 
 ## Resize you system to use large sd cards
 
