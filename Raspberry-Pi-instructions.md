@@ -23,7 +23,7 @@ For updating the clients you can just do `bash update<NameOfTheClient>Client.sh`
 
 ## Resize you system to use large sd cards
 
-The image is for a 8GB sd card. It allocates 2 GB as swap (needed for compiling and mining :-) ). If your sd card is larger than 8GB, then follow those instructions, otherwise you can start your client as described below:
+The image is for a 8GB sd card. It allocates 2 GB as swap (needed for compiling and mining :-) ). If your sd card is larger than 8GB, then follow those instructions:
 
 As root execute
 ```
