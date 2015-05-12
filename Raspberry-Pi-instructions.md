@@ -20,6 +20,7 @@ It is used to display your client on the centralized network server (https://eth
 
 For convenience there is `start<NameOfTheClient>ClientWithNetstat.sh` script (execute it with bash) which starts the client and registers it on eth-netstats.
 (Note: Downloading the chain takes several hours up to a day, during that time the Raspberry Pi is so busy that netstats doesn't work properly, it may even crash. You may not see your client on netstats until the download is complete. If you don't see you client after one complete day, try a reboot and execute the script again.)
+
 For updating the clients you can just do `bash update<NameOfTheClient>Client.sh` (this may take a while).
 
 ## Resize you system to use large sd cards
