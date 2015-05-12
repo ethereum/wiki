@@ -73,17 +73,17 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [toBigNumber(numberOrHexString)](#web3tobignumber)
   * [isAddress(hexString)](#web3isAddress)
   * [net](#web3net)
-    * [listening](#web3netlistening)
-    * [peerCount](#web3ethpeercount)
+    * [listening/getListening](#web3netlistening)
+    * [peerCount/getPeerCount](#web3ethpeercount)
   * [eth](#web3eth)
     * [defaultAccount](#web3ethdefaultaccount)
     * [defaultBlock](#web3ethdefaultblock)
-    * [coinbase](#web3ethcoinbase)
-    * [hashrate](#web3ethhashrate)
-    * [gasPrice](#web3ethgasprice)
-    * [accounts](#web3ethaccounts)
-    * [mining](#web3ethmining)
-    * [blockNumber](#web3ethblocknumber)
+    * [coinbase/getCoinbase](#web3ethcoinbase)
+    * [hashrate/getHashrate](#web3ethhashrate)
+    * [gasPrice/getGasPrice](#web3ethgasprice)
+    * [accounts/getAccounts](#web3ethaccounts)
+    * [mining/getMining](#web3ethmining)
+    * [blockNumber/getBlockNumber](#web3ethblocknumber)
     * [register(hexString)](#web3ethregister) (Not implemented yet)
     * [unRegister(hexString)](#web3ethunregister) (Not implemented yet)
     * [getBalance(address)](#web3ethgetbalance)
@@ -141,6 +141,8 @@ var web3 = require('web3')
 #### web3.version.api
 
     web3.version.api
+    // or async
+    web3.version.getApi(callback(error, result){ ... })
 
 ##### Returns
 
@@ -158,6 +160,9 @@ console.log(api); // "0.2.0"
 #### web3.version.client
 
     web3.version.client
+    // or async
+    web3.version.getClient(callback(error, result){ ... })
+
 
 ##### Returns
 
@@ -175,6 +180,8 @@ console.log(version); // "Mist/v0.9.3/darwin/go1.4.1"
 #### web3.version.network
 
     web3.version.network
+    // or async
+    web3.version.getNetwork(callback(error, result){ ... })
 
 
 ##### Returns
@@ -193,6 +200,8 @@ console.log(version); // 54
 #### web3.version.ethereum
 
     web3.version.ethereum
+    // or async
+    web3.version.getEthereum(callback(error, result){ ... })
 
 
 ##### Returns
@@ -211,6 +220,8 @@ console.log(version); // 60
 #### web3.version.whisper
 
     web3.version.whisper
+    // or async
+    web3.version.getWhisper(callback(error, result){ ... })
 
 
 ##### Returns
@@ -521,6 +532,8 @@ console.log(value.toString(10)); // '200000000000000000000001'
 #### web3.net.listening
 
     web3.net.listening
+    // or async
+    web3.net.getListening(callback(error, result){ ... })
 
 This property is read only and says whether the node is actively listening for network connections or not.
 
@@ -540,6 +553,8 @@ console.log(listening); // true of false
 #### web3.net.peerCount
 
     web3.net.peerCount
+    // or async
+    web3.net.getPeerCount(callback(error, result){ ... })
 
 This property is read only and returns the number of connected peers.
 
@@ -641,6 +656,8 @@ web3.eth.defaultBlock = 231;
 #### web3.eth.coinbase
 
     web3.eth.coinbase
+    // or async
+    web3.eth.getCoinbase(callback(error, result){ ... })
 
 This property is read only and returns the coinbase address were the mining rewards go to.
 
@@ -660,6 +677,8 @@ console.log(coinbase); // "0x407d73d8a49eeb85d32cf465507dd71d507100c1"
 #### web3.eth.mining
 
     web3.eth.mining
+    // or async
+    web3.eth.getMining(callback(error, result){ ... })
 
 
 This property is read only and says whether the node is mining or not.
@@ -681,7 +700,8 @@ console.log(mining); // true or false
 #### web3.eth.hashrate
 
     web3.eth.hashrate
-
+    // or async
+    web3.eth.getHashrate(callback(error, result){ ... })
 
 This property is read only and returns the number of hashes per second that the node is mining with.
 
@@ -702,6 +722,8 @@ console.log(hashrate); // 493736
 #### web3.eth.gasPrice
 
     web3.eth.gasPrice
+    // or async
+    web3.eth.getGasPrice(callback(error, result){ ... })
 
 
 This property is read only and returns the current gas price.
@@ -725,6 +747,8 @@ console.log(gasPrice.toString(10)); // "10000000000000"
 #### web3.eth.accounts
 
     web3.eth.accounts
+    // or async
+    web3.eth.getAccounts(callback(error, result){ ... })
 
 This property is read only and returns a list of accounts the node controls.
 
@@ -744,6 +768,8 @@ console.log(accounts); // ["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]
 #### web3.eth.blockNumber
 
     web3.eth.blockNumber
+    // or async
+    web3.eth.getBlockNumber(callback(error, result){ ... })
 
 This property is read only and returns the current block number.
 
