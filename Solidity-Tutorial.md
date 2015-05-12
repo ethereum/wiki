@@ -833,6 +833,13 @@ function myFunction() <visibility specifier> returns (bool) {
  - `external`: only visible externally (only for functions)
  - `internal`: only visible internally
 
+### Modifiers
+
+ - `constant` for state variables: Disallows assignment (except initialisation), does not occupy storage slot.
+ - `constant` for functions: Disallows modification of state - this is not enforced yet.
+ - `anonymous` for events: Does not store event signature as topic.
+ - `indexed` for event parameters: Stores the parameter as topic.
+
 ### Types
 
 TODO
