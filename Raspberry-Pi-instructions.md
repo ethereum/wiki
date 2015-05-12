@@ -1,5 +1,5 @@
 ## Get the "everything-is-ready" image
-Download from: link will follow
+Download from: http://gavwood.com/ArchLinuxEthereum.img.zip
 
 Unzip it and follow those guidelines to copy the image to your sd card: https://www.raspberrypi.org/documentation/installation/installing-images/
 
