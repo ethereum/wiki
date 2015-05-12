@@ -1,5 +1,6 @@
 ## Get the "everything-is-ready" image
 Download from: http://gavwood.com/ArchLinuxEthereum.img.zip
+(it's 2.1 GB in size, if you want to save bandwidth, go and build it yourself, see instructions below)
 
 Unzip it and follow those guidelines to copy the image to your sd card: https://www.raspberrypi.org/documentation/installation/installing-images/
 
