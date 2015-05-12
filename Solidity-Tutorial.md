@@ -375,6 +375,11 @@ contract, but it contains the basic concepts necessary to understand structs.
 Struct types can be used as value types for mappings and they can itself
 contain mappings (even the struct itself can be the value type of the mapping, although it is not possible to include a struct as is inside of itself). Note how in all the functions, a struct type is assigned to a local variable. This does not copy the struct but only store a reference so that assignments to members of the local variable actually write to the state.
 
+## Assignment
+
+The semantics of assignment are a bit more complicated for non-value types like arrays and structs.
+Assigning *to* a state variable always creates an independent copy. On the other hand, assigning to a local variable creates an independent copy only for elementary types, i.e. static types that fit into 32 bytes. If structs or arrays (including `bytes`) are assigned from a state variable to a local variable, the local variable holds a reference to the original state variable. A second assignment to the local variable does not modify the state but only changes the referenc. Assignments to members (or elements) of the local variable *do* change the state.
+
 ## Enums
 
 Enums are another way to create a user-defined type in Solidity. They are explicitly convertible
