@@ -6,7 +6,7 @@ To make your Ðapp work with on Ethereum, you can use the `web3` object provided
 
 ## Using callbacks
 
-As this API is designed to work with a local RPC node and all its functions are by default use synchronous HTTP requests.
+As this API is designed to work with a local RPC node and all its functions are by default use synchronous HTTP requests.con
 
 If you want to make asynchronous request, you can pass an optional callback as the last parameter to most functions.
 All callbacks are using an [error first callback](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/) style:
@@ -1198,7 +1198,7 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
 // can be 'latest' or 'pending'
 var filter = web3.eth.filter(filterString);
 // OR object are log filter options
-var filter = web3.eth.filter(options);
+var filter = web3.eth.filter(option);
 
 // watch for changes
 filter.watch(function(error, result){
@@ -1279,11 +1279,14 @@ You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethe
 var MyContract = web3.eth.contract(abiArray);
 
 // instantiate from an existing address
-var myContractInstance = new MyContract(myContractAddress);
+var myContractInstance = MyContract.at(myContractAddress);
 
-// create the contract by passing a transaction object
-var myContractInstance = new MyContract({data: myContractCode, gas: 300000, from: mySenderAddress});
-console.log(myContractInstance.address) // "0xc4abd0339eb8d57087278718986382264244252f"
+// create the contract by passing a transaction object including initiating variables
+var myContractInstance = MyContract.new(param1, param2, {data: myContractCode, gas: 300000, from: mySenderAddress}, function(err, contract){
+    // by passing an optional callback, we can make that sendTransaction async
+    console.log(myContractInstance.address) // "0xc4abd0339eb8d57087278718986382264244252f"
+});
+
 ```
 
 ##### Example
@@ -1305,7 +1308,7 @@ var abi = [{
 var MyContract = web3.eth.contract(abi);
 
 // initiate contract for an address
-var myContractInstance = new MyContract('0xc4abd0339eb8d57087278718986382264244252f');
+var myContractInstance = MyContract.at('0xc4abd0339eb8d57087278718986382264244252f');
 
 var result = myContractInstance.myConstantMethod('myParam');
 console.log(result) // '0x25434534534'
@@ -1333,13 +1336,13 @@ filter.watch(function (error, result) {
 
 ```js
 // Automatically determines the use of call or sendTransaction based on the method type
-myContractInstance.myMethod(param1 [, param2, ...] [, transactionObject]);
+myContractInstance.myMethod(param1 [, param2, ...] [, transactionObject] [, callback]);
 
 // Explicitly calling this method
-myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject]);
+myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject] [, callback]);
 
 // Explicitly sending a transaction to this method
-myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject]);
+myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
 ```
 
 The contract object exposes the contracts methods, which can be called using parameters and a transaction object.
@@ -1347,7 +1350,8 @@ The contract object exposes the contracts methods, which can be called using par
 ##### Parameters
 
 - `String|Number` - (optional) Zero or more parameters of the function.
-- `Object` - (optional) The last parameter can be a transaction object, see [web3.eth.sendTransaction](#web3ethsendtransaction) parameter 1 for more.
+- `Object` - (optional) The (previous) last parameter can be a transaction object, see [web3.eth.sendTransaction](#web3ethsendtransaction) parameter 1 for more.
+- `Function` - (optional) If you pass a callback as the last parameter the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
@@ -1361,12 +1365,12 @@ The contract object exposes the contracts methods, which can be called using par
 var MyContract = web3.eth.contract(abi);
 
 // initiate contract for an address
-var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
+var myContractInstance = MyContract.at('0x43gg423k4h4234235345j3453');
 
 var result = myContractInstance.myConstantMethod('myParam');
 console.log(result) // '0x25434534534'
 
-myContractInstance.myStateChangingMethod('someParam1', 23, {value: 200, gas: 2000});
+myContractInstance.myStateChangingMethod('someParam1', 23, {value: 200, gas: 2000}, function(err, result){ ... });
 ```
 
 ***
@@ -1410,7 +1414,7 @@ You can use events like [filters](#web3ethfilter) and they have the same methods
 
 ```js
 var MyContract = web3.eth.contract(abi);
-var myContractInstance = new MyContract('0x43gg423k4h4234235345j3453');
+var myContractInstance = MyContract.at('0x43gg423k4h4234235345j3453');
 
 // watch for an event
 var myEvent = myContractInstance.MyEvent({some: 'args'}, additionalFilterObject);
