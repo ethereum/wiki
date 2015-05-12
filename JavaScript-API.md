@@ -20,6 +20,10 @@ web3.eth.getBlock(48, function(error, result){
 })
 ```
 
+## Batch requests
+
+TODO
+
 ## A note on big numbers in JavaScript
 
 You will always get a BigNumber object for balance values as JavaScript is not able to handle big numbers correctly.
