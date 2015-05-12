@@ -1340,11 +1340,17 @@ var MyContract = web3.eth.contract(abi);
 // initiate contract for an address
 var myContractInstance = MyContract.at('0xc4abd0339eb8d57087278718986382264244252f');
 
+// call constant function
 var result = myContractInstance.myConstantMethod('myParam');
 console.log(result) // '0x25434534534'
 
+// send a transaction to a function
 myContractInstance.myStateChangingMethod('someParam1', 23, {value: 200, gas: 2000});
 
+// short hand style
+web3.eth.contract(abi).at(address).myAwesomeMethod(...);
+
+// create filter
 var filter = myContractInstance.myEvent({a: 5});
 filter.watch(function (error, result) {
   if (!error)
