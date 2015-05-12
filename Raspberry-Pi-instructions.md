@@ -16,7 +16,7 @@ Log in and type `passwd <user>` to update the password for each user.
 
 Currently the go client (geth) and the cpp client (eth) are preinstalled. You can find instruction on how to use them here: https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options and here: https://github.com/ethereum/cpp-ethereum/wiki/Using-Ethereum-CLI-Client. But executing eth/geth with `--help` will give you more up-to-date information on how to use them.
 Also eth-netstats is installed. You can find instructions in how to use it here: https://github.com/ethereum/wiki/wiki/Network-Status.
-It is used to display your client on the centralized network server (https://eth-netstats.herokuapp.com/)
+It is used to display your client on the centralized network server (http://stats.ethdev.com/)
 
 For convenience there is `start<NameOfTheClient>ClientWithNetstat.sh` script (execute it with bash) which starts the client and registers it on eth-netstats.
 (Note: Downloading the chain takes several hours up to a day, during that time the Raspberry Pi is so busy that netstats doesn't work properly, it may even crash. You may not see your client on netstats until the download is complete. If you don't see you client after one complete day, try a reboot and execute the script again.)
@@ -112,5 +112,4 @@ Resources:
 http://archlinuxarm.org/forum/viewtopic.php?f=60&t=8366
 http://archlinuxarm.org/forum/viewtopic.php?f=31&t=3119
 https://github.com/ethereum/cpp-ethereum/wiki/Building-on-ArchLinux
-
 
