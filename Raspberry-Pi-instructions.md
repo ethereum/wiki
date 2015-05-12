@@ -23,7 +23,7 @@ For convenience there is `start<NameOfTheClient>ClientWithNetstat.sh` script (ex
 
 For updating the clients you can just do `bash update<NameOfTheClient>Client.sh` (this may take a while).
 
-## Resize you system to use large sd cards
+## Resize your system to use large sd cards
 
 The image is for a 8GB sd card. It allocates 2 GB as swap (needed for compiling and mining :-) ). If your sd card is larger than 8GB, then follow those instructions:
 
