@@ -33,6 +33,7 @@
 - [Mining](https://github.com/ethereum/wiki/wiki/Mining)
 - [Licencing](https://github.com/ethereum/wiki/wiki/Licencing)
 - [Network Status](https://github.com/ethereum/wiki/wiki/Network-Status)
+- [Raspberry Pi](https://github.com/ethereum/wiki/wiki/Raspberry-Pi-instructions)
 
 ### Ethereum Clients
 - [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
