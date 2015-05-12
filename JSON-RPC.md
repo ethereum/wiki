@@ -123,6 +123,7 @@ The following options are possible for the defaultBlock parameter:
 * [eth_getCode](#eth_getcode)
 * [eth_sendTransaction](#eth_sendtransaction)
 * [eth_call](#eth_call)
+* [eth_estimateGas](#eth_estimategas)
 * [eth_getBlockByHash](#eth_getblockbyhash)
 * [eth_getBlockByNumber](#eth_getblockbynumber)
 * [eth_getTransactionByHash](#eth_gettransactionbyhash)
@@ -835,8 +836,6 @@ Executes a new message call immediately without creating a transaction on the bl
   - `data`: `DATA`  - (optional) The compiled code of a contract
 2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
-See: [eth_sendTransaction Parameters](#eth_sendtransaction)
-
 ##### Returns
 
 `DATA` - the return value of executed contract.
@@ -851,6 +850,34 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{see above}]
   "id":1,
   "jsonrpc": "2.0",
   "result": "0x0"
+}
+```
+
+***
+
+#### eth_estimateGas
+
+Works like [eth_call](#eth_call) but instead returns the used gas.
+
+
+##### Parameters
+
+See [eth_call](#eth_call) parameters.
+
+##### Returns
+
+`QUANTITY` - the amount of gas used.
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_estimateGas","params":[{see above}],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x5208" // 21000
 }
 ```
 
