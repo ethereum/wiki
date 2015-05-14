@@ -54,7 +54,7 @@ Resistance against the mechanism being corrupted in some sense and forced to lea
 The ability for users to automatically upgrade to a newly chosen protocol without having to download a new client
 Existing work on this includes Arthur Breitman's Tezos, Bitshares' delegated proof of stake, and the not-yet-released Ethereum 2.0 proposal.
 
-#公共益の設定による解放と、インセンティブの仕組み
+公共益の設定による解放と、インセンティブの仕組み
 
 暗号プロトコルの開発における他の大きな問題は、類似しているファンディングの問題です。どのようにしてプロトコルが更新され、そしてより多くの一般的で公共益に繋がるミドルウェアとが結びつくか、という問題です。
 最初の開発フェイズにおいては、Crowdsaleのコンセプトは絶対的に欠かせないものです。何百万ドルの努力に対してのファンディング
