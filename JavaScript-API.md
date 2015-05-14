@@ -1312,7 +1312,7 @@ var MyContract = web3.eth.contract(abiArray);
 var myContractInstance = MyContract.at(myContractAddress);
 
 // create the contract by passing a transaction object including initiating variables
-var myContractInstance = MyContract.new(param1, param2, {data: myContractCode, gas: 300000, from: mySenderAddress}, function(err, contract){
+MyContract.new(param1, param2, {data: myContractCode, gas: 300000, from: mySenderAddress}, function(err, contract){
     // by passing an optional callback, we can make that sendTransaction async
     console.log(myContractInstance.address) // "0xc4abd0339eb8d57087278718986382264244252f"
 });
