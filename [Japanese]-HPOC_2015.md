@@ -1,73 +1,100 @@
 HPoC 2015
 
-昨年私達は、暗号通貨とCryptoeconomic のテクノロジーが主流のものとなるのを妨げている
+昨年私達は、暗号通貨とCryptoeconomic のテクノロジーが主流のものとなるのを妨げています。
 幾つかの技術的、経済的な難しい問題を叙述し、"Hard Problems of Cryptocurrency"の文書を出しました。
 
 そのリストには、幾つもの他の困難とともに例えばスケーラビリティや、より効率的なコンセンサスのアルゴリズム、公益となるインセンティブの仕組みを叙述しました。
 
 昨年に渡って多くの問題が解決されました、少なくとも追加された更新はもはや、0から1への解決が必要な根本的な問題ではなくなり、
-むしろ現実世界への確かな実装の問題となった。
-そして、同時に、かなりの数の試練が未だに残っている。それにもかかわらずここにある問題はかなり限定的d、
-過去のものよりも広域に渡るものではない。
+むしろ現実世界への確かな実装の問題となりました。
+そして、同時に、かなりの数の試練が未だに残っている。それにもかかわらずここにある問題はかなり限定的で、
+過去のものよりも広域に渡るものではありません。
 
-メタコンセンサス
+メタコンセンサス（コンセンサスのためのコンセンサス）
 
 技術的な視野が急速に広がることに関連し続けるために、ソフトウェアは更新されなければならず、
-更新しないソフトウェアは代替手段が無いものの、ゆっくりとより優れた技術へと取って代わられて死に絶える。
-このことは何故この問題が分散形の暗号プロトコルの同様に当てはまるべきでないのかの理由とはならない。
-しかしながら分散形の暗号システムは自然な疑問へと結びつく。誰が更新のプロセスをコントロールするのだろうか？
-このことを書いている間に、Bitcoinのコミュニティはブロックサイズを1MBから20MBに増やすかどうかを決定するプロセスを辿っていて、意図的に機関のものによる意思決定のシステムが、既定意思決定のプロセスがなされる状況へと結びつくことになっていて、
-コンポネt機に政治的な議論が小数のコアの開発者の中で行われている。
+更新しないソフトウェアは代替手段が無いものの、ゆっくりとより優れた技術へと取って代わられて死に絶えます。
+このことは何故この問題が分散形の暗号プロトコルの同様に当てはまるべきでないのかの理由とはなりません。
+しかしながら分散形の暗号システムは自然な疑問へと結びつく。誰が更新のプロセスをコントロールするのでしょうか？
+このことを書いている間に、Bitcoinのコミュニティはブロックサイズを1MBから20MBに増やすかどうかを決定するプロセスを辿っていて、
+これは、意図を明確化し、新しく機関を設立して意思決定をするというプロセスを得ずして、
+既定路線による意思決定のプロセスがなされる状況へと結びつくこととなっていて、
+政治的な議論が、小数のコア開発者の中で行われる、という状況を生み出しています。
 
-内部でのメタコンセンサスのプロトコルは有るだろうか、ー即ち、プロトコルの更新に対しての合意形成を円滑化する、
-プロトコルの内部にあるメカニズムはあるだろうか？
-もしかすると、何故この理論は分散形の暗号プロトコルに同様に当てはめられるべきではない。
+meta-consensus（大衆による合意形成を形作っていくもの）となる intra-protocol（内部プロトコル）は有るのでしょうか、
+ー 即ち、プロトコルの更新に対しての合意形成を円滑化する、
+例えば consensus 決定に関する投票 のような、プロトコルの内部にあるメカニズムはあるでしょうか？
+もしかすると、何故この理論は分散形の暗号プロトコルに同様に当てはめられるべきではありません。
+そんなシステムがあったとすれば、
+恩恵は計り知れず、
+柔軟性が格段と広がり、
+中央集約型のリスクとなる政治的な癒着に頼らずにすみ、
+かつ、参加者に対して大きな発言権を得ることができ、
+社会的に "well-connected" であるような人々のみならず、その恩恵が行き渡るでしょう。
+ (see Jo Freeman's The Tyranny of Structurelessness for more on this).
+
+
 
 In order to remain relevant in a rapidly evolving technological landscape, software must update, and software that does not update has no alternative but to slowly fade away and die as it is replaced by superior technology. There is no reason why this principle should not apply to decentralized crypto-protocols as well. However, the need to make upgrades to decentralized crypto-systems leads to a natural question: who controls the updating process? As of the time of this writing, the Bitcoin community is going through the process of deciding whether or not to increase the maximum block size from 1 MB to 20 MB, and the lack of a deliberately instituted decision-making process has lead to the situation where the de-facto decision-making process essentially amounts to political debate among a small number of core developers.
 
 Is there a way of building intra-protocol meta-consensus - that is, a mechanism inside the protocol that facilitates agreement on upgrades to the protocol, perhaps using some kind of consensus voting? Such a system would have a number of benefits, including greater flexibility, less reliance on political processes that end up being centralization risks, and can arguably ensure a greater voice to all participants in the protocol, not just those that are socially well-connected (see Jo Freeman's The Tyranny of Structurelessness for more on this).
 
-望ましいメタコンセンサスのプロトコルは下記を含む: 
+望ましいメタコンセンサスのプロトコルは下記を含みます: 
 Desirable properties of meta-consensus include:
 
-利益となるプロトコルの変更に対しての合意のインセンティブ
-ある種の古いプロトコルのもとに作られるアプリケーションが新しいプロトコルのもとでも最大限効果的であること。
-ある種のオブジェクト指向のカプセル化のメカニズムのように、開発者があるプロトコル特有の機能を使わなければならないようにすることから離れるようにする。
-メカニズムにが壊れることに対して抵抗することは、望ましくないプロトコルの変更をしなければならないことに繋がる。
-ユーザーが自動的に新しい選ばれたプロトコルへと、新しいクライアントをダウンロードせずに更新することが出来るようにすること。
-既存のこのことに対する取り組みは、Arthur Bretman's Tezos を含む、Bitsharesの delegated proof of stake そして未だリリースされていないEthereum 2.0 の提案がある。
+* 利益となるプロトコルの変更に対しての合意のインセンティブ
+* ある種の古いプロトコルのもとに作られるアプリケーションが新しいプロトコルのもとでも最大限効果的であること。
+* ある種のオブジェクト指向のカプセル化のメカニズムのように、開発者があるプロトコル特有の機能を使わなければならないようにすることから離れるようにする。(interface の実装) 
+* メカニズムが壊れないように抗うということは、望ましくないプロトコルの変更をしなければならないことに繋がっていきます。
+* ユーザーが自動的に新しく選ばれたプロトコルへと、新しいクライアントをダウンロードせずに更新することが出来るようにすること。
+* 現時点でこのメタプロトコルに対する取り組みは、Arthur Bretman's Tezos を含む、Bitsharesの delegated proof of stake そして未だリリースされていない Ethereum 2.0 の提案があります。
 
 Some kind of guarantee that applications built under the old protocol will remain maximally effective under the new protocol. Note that a part of this will likely be some kind of object-oriented encapsulation mechanisms in order to steer developers away from using features which are highly protocol-specific
 Resistance against the mechanism being corrupted in some sense and forced to lead to an undesirable protocol change
 The ability for users to automatically upgrade to a newly chosen protocol without having to download a new client
 Existing work on this includes Arthur Breitman's Tezos, Bitshares' delegated proof of stake, and the not-yet-released Ethereum 2.0 proposal.
 
-公共駅の設定による解放と、インセンティブの仕組み
+#公共益の設定による解放と、インセンティブの仕組み
 
-暗号プロトコルの開発における他の大きな問題は、類似しているファンディングの問題がある。どのようにしてプロトコルが更新され、そしてより多くの一般的で公共益に繋がるミドルウェアとが結びつくか。
-最初の開発フェイズにおいては、Crowdsaleのコンセプトは絶対的に欠かせないものである。何百万ドルの努力に対してのファンディング
-そうでなければ
+暗号プロトコルの開発における他の大きな問題は、類似しているファンディングの問題です。どのようにしてプロトコルが更新され、そしてより多くの一般的で公共益に繋がるミドルウェアとが結びつくか、という問題です。
+最初の開発フェイズにおいては、Crowdsaleのコンセプトは絶対的に欠かせないものです。何百万ドルの努力に対してのファンディング
+そうでなければ・・・以下略
 The other major problem in crypto-protocol development is the analogous funding problem: how will protocol upgrades, and more generally public-good ecosystem middleware, be paid for? In the initial phase of development, the concept of "crowdsales" has proven to be absolutely invaluable, providing millions of dollars of funding for efforts which would have otherwise been relegated to being little more than volunteer side projects. However, crowdsales by themselves have a fundamental problem: they are front-loaded, creating heavy incentives for short-term marketing but less so for long-term performance, and they are limited one-time events from which the funds received eventually run out. And even if the funds could somehow be managed so as not to run out, crypto-protocol development would be permanently centralized in a single organization. What would be ideal is, once again, some kind of intra-protocol mechanism for incentivizing the development of public goods.
 
-公共益としてのインセンティブの仕組みは長くて確立された文章で、メカニズムの仕様の設計から生まれる数多くのことと、そしてどのようにして高共益を開発することに投資し、そして同様に重要な疑問としてどの公共益が第一に投資されるに値するかを決めるということを含んでいる。
-Blockchainの文脈では、個人的なマーケットの文脈よりもファンディングの問題は幾分簡単だ、なぜなら我々には全ての通貨の保持者に
-インフレーションと、トランザクションフィーからコンセンサスのコストを引いた超過分を得ることが出来るからだ。
-だが、その設定は解放の問題をいっそう困難にする。人間の政府は非公式な決定を用いようとし、サポートに値する公共益が何かを判断するための非公式な判断を用いようとする。しかし、Blockchainは文脈的に信頼に足るファンドと、信頼に足らないファンドの違いを知ることが出来ない。例えばタバコをロビーイングしようとする会社に対してその"zero address"がどのコインから決して使うことが出来ないスキャマーかを知る事が出来る。
-それ故に、完全にある種の明白なコミュニティからもたらされる情報に対して設計されたメカニズムに頼らなければならない。
-Public goods incentivization has a long and established literature, including numerous results from mechanism design and assurance contract theory on the topic of both how to fund the development of public goods and on the equally important question of deciding which public goods are worth funding in the first place. In a blockchain context, the funding problem is somewhat easier than in a private-market context, because we have the ability to "tax" all currency holders via inflation and taking the excess of transaction fees minus consensus costs, but the preference revelation problem is much harder; a human government can try to use informal judgement to figure out which public goods are worth supporting and which ones are not, but a blockchain literally cannot tell the difference between a trustworthy development fund, an untrustworthy development fund, a tobacco lobbying company, the "zero address" from which coins can never be spent and a scammer. Hence, it must rely entirely on some kind of mechanism design to elicit this information from the community.
+公共益に対するインセンティブ化（動機付け）の仕組みは、長い文章を確立するというものを含んでいます。
+その文章は、
+メカニズムの仕様の設計から生まれる数多くのことと、そしてどのようにして公共益の開発に投資し、どの公共益が第一に投資されるに値するか、を決めるということを含んでいます。
+Blockchainの文脈では、
+個人的なマーケットの文脈よりもファンディングの問題は幾分簡単です。
+なぜなら我々には全ての通貨の保持者に
+インフレーションによる課税をし、トランザクションフィーからコンセンサスのコストを引いた超過分を得ることが出来るからです。
+しかし、preferece revelation の問題はいっそう困難なものです。というのは、人間の政府は非公式な決定を用いようとし、サポートに値する公共益が何かを判断するための非公式な判断を用いようとしますが、しかし、Blockchainは文脈的に信頼に足るファンドと、信頼に足らないファンドの違いを知ることが出来ません。例えば、とあるタバコ会社は、そのスキャムであり、使用不可能な "zero address" かどうか判断することができません。
+それ故に、完全にある種の明白なコミュニティからもたらされる情報に対して設計されたメカニズムに頼らなければなりません。
 
-この困難はBlockchainの文脈に対してのこれらの保証について当てはめる、特定の試練は下記を含む:
+Public goods incentivization has a long and established literature, including numerous results from mechanism design and assurance contract theory on the topic of both how to fund the development of public goods and on the equally important question of deciding which public goods are worth funding in the first place. 
+In a blockchain context, 
+the funding problem is somewhat easier than in a private-market context, 
+because we have the ability to "tax" all currency holders via inflation and taking the excess of transaction fees minus consensus costs, 
+but the preference revelation problem is much harder; 
+a human government can try to use informal judgement to figure out which public goods are worth supporting and which ones are not, 
+but a blockchain literally cannot tell the difference between a trustworthy development fund, 
+an untrustworthy development fund, 
+a tobacco lobbying company, 
+the "zero address" from which coins can never be spent and a scammer. Hence, it must rely entirely on some kind of mechanism design to elicit this information from the community.
+
+この困難は、Blockchainの文脈に対してのこれらの保証について当てはめます。
+この困難に対する特定の挑戦は下記の内容を含みます:
 The challenge here is applying these guarantees to a blockchain context. Particular challenges include:
 
-インセンティブと結びついたシステムの設計は、ユーザーが安全で信頼をおかずにお互いに贈り合うことさえ出来る
-例えばコントラクトを通じて（Game theoryでの協調ゲームはこの点にある）
-インセンティブと結びついたシステムの設計は、攻撃者が（P+ epsilon攻撃のように、協調ゲーム理論が不十分かもしれない、何故なら全体的にユーザーの集合は、完全に強調するか、それとも一切協調しないかのどちらかであることが期待されるからだ。）
-Caplanianの"理性的な非理性　(rational irrationality"の批判には、例えば十分に大きな報酬をユーザーに対して与えることで、どのファンドがサポートに値するかを知り、そして単純にすぐにどのようにみえるのがより良いかをすぐに単純にクリックしない。
+* インセンティブと結びついたシステムの設計は、ユーザーが安全で信頼をおかずにお互いに贈り合うことさえ出来ます
+* 例えばコントラクトを通じて（Game theoryでの協調ゲームはこの点にある）
+* インセンティブと結びついたシステムの設計は、攻撃者が（P+ epsilon攻撃のように、協調ゲーム理論が不十分かもしれない、何故なら全体的にユーザーの集合は、完全に強調するか、それとも一切協調しないかのどちらかであることが期待されるからだ。）
+* Caplanianの"理性的な非理性　(rational irrationality"の批判には、例えば十分に大きな報酬をユーザーに対して与えることで、どのファンドがサポートに値するかを知り、そして単純にすぐにどのようにみえるのがより良いかをすぐに単純にクリックしない。
 
 一般的なモデルは下記のように考えられる。:
-Nの公共液が存在し、それらのファンドが有る公共益に対して使うと約束しているアドレスによって表されているとする。誰でもそのアドレスをこのセットに登録することは出来る、ユーザーが必要とする幾らかの手数料を支払った後かも知れない。、どのようにfunding pool Dを分割するかを選択し、（Dは最大の大きさかもしれない、そのメカニズムは、幾らかのDを燃やすかもしれない。）
-攻撃者は、そこにただお金を送って欲しいだけの偽物の公共益を作り、公共液として、1が分配される和ありアイが完全に一つのプレイヤーに対していくように見えるかもしれない。
-攻撃者がどうして攻撃に成功することが社会的に悪である理由は、他の"公式な”公共益が、より高い支払いの割合を持っているかもしれないからだ
+* Nの公共益が存在し、それらのファンドが有る公共益に対して使うと約束しているアドレスによって表されているとする。誰でもそのアドレスをこのセットに登録することは出来る、ユーザーが必要とする幾らかの手数料を支払った後かも知れない。、どのようにfunding pool Dを分割するかを選択し、（Dは最大の大きさかもしれない、そのメカニズムは、幾らかのDを燃やすかもしれない。）
+* 攻撃者は、そこにただお金を送って欲しいだけの偽物の公共益を作り、公共液として、1が分配される和ありアイが完全に一つのプレイヤーに対していくように見えるかもしれない。
+* 攻撃者がどうして攻撃に成功することが社会的に悪である理由は、他の"公式な”公共益が、より高い支払いの割合を持っているかもしれないからだ
 
 Being incentive-compatible even given the assumption that users can securely and trustlessly bribe each other, eg. via contracts (cooperative game theory can help here)
 Being incentive-compatible even given the assumption that the attacker may have a superior ability to coordinate versus the individual participants (cf. P + epsilon attacks; cooperative game theory may be insufficient here as it generally assumes that collections of users can either coordinate totally or not coordinate at all)
@@ -80,7 +107,7 @@ Attackers creating fake "public goods" that really just send money to themselves
 If necessary, we can rely on the users having security deposits, eg. being validators
 Coercion-proof Voting
 
-2001年のAri Juel は、"脅迫耐性のある電子投票システム"のプロ男るを考えついた。　それは投票をオンラインで、ユーザーが他者に誰に投票したくぉ公表すること無く投票が出来るだけでなく、さらには実際に、望むのでさえあれば他の誰かに投票することを証明することが出来ないようになっている。ー脅迫したり賄賂を投票する人に対して送ることが不可能となる。
+2001年のAri Juel は、"脅迫耐性のある電子投票システム" のプロトコル を考えついた。　それは投票をオンラインで、ユーザーが他者に誰に投票したくぉ公表すること無く投票が出来るだけでなく、さらには実際に、望むのでさえあれば他の誰かに投票することを証明することが出来ないようになっている。ー脅迫したり賄賂を投票する人に対して送ることが不可能となる。
 投票問題と同様には全般的に、revelation問題の設定を解決する有る一つの可能性のある方法であうｒ．
 このようなスキームを実装することが出来る。それによって協調することが更に困難となる。
 ユーザーが2つのIDをコントロール出来るために、2つのIDが安全に腐敗した取引を互いに行うことは出来、完全な解決策は決してないが、
