@@ -717,3 +717,19 @@ contract derived is base { function foo() {} }
 ```
 
 For example in the above, foo is an abstract function and as such the base contract is an interface contract. All non-interface contracts that derive from it must implement its abstract functions.
+
+## Bare Callcode
+
+[PT](https://www.pivotaltracker.com/story/show/94682212) The address type receives a method `callcode` which is similar to `call`, but uses `CALLCODE` instead of `CALL` when the function is invoked. This means that the code at the given address will be executed in the context of the current contract. Example:
+
+```
+contract Code {
+  uint m_data;
+  function (uint v) { m_data = v; }
+}
+contract ActualContract {
+  uint public m_data;
+  function f() { Code(0x12345).callcode(7); }
+}
+```
+Assuming the contract `Code` is deployed at the address `0x12345`, calling `f()` of `ActualContract` will result in `m_data` of `ActualContract` being modified. The user has to ensure that the layout of storage in both contracts is suitable for callcode to be used.
