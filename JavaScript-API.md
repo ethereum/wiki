@@ -940,12 +940,12 @@ Returns a block matching the block number or block hash.
 
 `Object` - The block object:
 
-  - `number`: `Number` - the block number.
-  - `hash`: `String`, 32 Bytes - hash of the block.
+  - `number`: `Number` - the block number. `null` when its pending block.
+  - `hash`: `String`, 32 Bytes - hash of the block. `null` when its pending block.
   - `parentHash`: `String`, 32 Bytes - hash of the parent block.
-  - `nonce`: `String`, 8 Bytes - hash of the generated proof-of-work.
+  - `nonce`: `String`, 8 Bytes - hash of the generated proof-of-work. `null` when its pending block.
   - `sha3Uncles`: `String`, 32 Bytes - SHA3 of the uncles data in the block.
-  - `logsBloom`: `String`, 256 Bytes - the bloom filter for the logs of the block.
+  - `logsBloom`: `String`, 256 Bytes - the bloom filter for the logs of the block. `null` when its pending block.
   - `transactionsRoot`: `String`, 32 Bytes - the root of the transaction trie of the block
   - `stateRoot`: `String`, 32 Bytes - the root of the final state trie of the block.
   - `miner`: `String`, 20 Bytes - the address of the beneficiary to whom the mining rewards were given.
@@ -1066,7 +1066,7 @@ Returns a transaction matching the given transaction hash.
   - `nonce`: `Number` - the number of transactions made by the sender prior to this one.
   - `blockHash`: `String`, 32 Bytes - hash of the block where this transaction was in. `null` when its pending.
   - `blockNumber`: `Number` - block number where this transaction was in. `null` when its pending.
-  - `transactionIndex`: `Number` - integer of the transactions index position in the block.
+  - `transactionIndex`: `Number` - integer of the transactions index position in the block. `null` when its pending.
   - `from`: `String`, 20 Bytes - address of the sender.
   - `to`: `String`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
   - `value`: `BigNumber` - value transferred in Wei.
@@ -1258,11 +1258,11 @@ filter.watch(function(error, result){
 - `String` - When using the `"latest"` parameter, it returns the block hash of the last incoming block.
 - `String` - When using the `"pending"` parameter, it returns a transaction hash of the last add pending transaction.
 - `Object` - When using manual filter options, it returns a log object as follows:
-    - `logIndex`: `Number` - integer of the log index position in the block.
-    - `transactionIndex`: `Number` - integer of the transactions index position log was created from.
-    - `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
-    - `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when its pending.
-    - `blockNumber`: `Number` - the block number where this log was in. `null` when its pending.
+    - `logIndex`: `Number` - integer of the log index position in the block. `null` when its pending log.
+    - `transactionIndex`: `Number` - integer of the transactions index position log was created from. `null` when its pending log.
+    - `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from. `null` when its pending log.
+    - `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when its pending. `null` when its pending log.
+    - `blockNumber`: `Number` - the block number where this log was in. `null` when its pending. `null` when its pending log.
     - `address`: `String`, 32 Bytes - address from which this log originated.
     - `data`: `String` - contains one or more 32 Bytes non-indexed arguments of the log.
     - `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
