@@ -1,60 +1,132 @@
 # Functions
 
-### Basic design
+## Basic design
 
 We assume the ABI is strongly typed, known at compilation time and static. No introspection mechanism will be provided. We assert that all contracts will have the interface definitions of any contracts they call available at compile-time.
 
 This specification does not address contracts whose interface is dynamic or otherwise known only at run-time. Should these cases become important they can be adequately handled as facilities built within the Ethereum ecosystem.
 
-### Specifics
+## Function Selector
 
-The first four bytes of the call data denotes the function to be called, it is the
-first (left, high-order in big-endian) four bytes of the Keccak (SHA-3) hash of the signature of the function. The signature is defined as the canonical expression of the basic prototype. Starting from the fifth byte, the encoded arguments follow. The return values are encoded in the same way, without the four bytes specifying the function.
+The first four bytes of the call data for a function call specifies the function to be called. It is the
+first (left, high-order in big-endian) four bytes of the Keccak (SHA-3) hash of the signature of the function. The signature is defined as the canonical expression of the basic prototype, i.e.
+the function name with the parenthesised list of parameter types. Parameter types are split by a single comma - no spaces are used.
 
-Types can have a fixed size or their size can depend on the value. For all
-non-fixed-size types, in the order of their occurrence, the number of its
-elements (not the byte size) as a 32-byte big-endian number follows.
+## Argument Encoding
 
-After that, the arguments themselves are encoded.
+Starting from the fifth byte, the encoded arguments follow. This encoding is also used in other places, e.g. the return values and also event arguments are encoded in the same way, without the four bytes specifying the function.
 
-The following fixed-size elementary types exist:
+### Types
+
+The following elementary types exist:
 - `uint<N>`: unsigned integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`. e.g. `uint32`, `uint8`, `uint256`.
 - `int<N>`: two's complement signed integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`.
 - `address`: equivalent to `bytes20`, except for the assumed interpretation and language typing.
-- `uint`, `int`: equivalent to `uint256`, `int256` respectively.
+- `uint`, `int`: synonyms for `uint256`, `int256` respectively (not to be used for computing the function selector).
 - `bool`: equivalent to `uint8` restricted to the values 0 and 1
 - `real<N>x<M>`: fixed-point signed number of `N+M` bits, `0 < N + M <= 256`, `N % 8 == M % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
 - `ureal<N>x<M>`: unsigned variant of `real<N>x<M>`.
-- `real`, `ureal`: equivalent to `real128x128`, `ureal128x128`
+- `real`, `ureal`: synonyms for `real128x128`, `ureal128x128` respectively (not to be used for computing the function selector).
 - `bytes<N>`: binary type of `N` bytes, `N >= 0`. Unicode strings are assumed to be UTF-8 encoded.
-
-They are all encoded in big-endian, padded to a multiple of 32 bytes. Negative values
-(for signed types) are padded with ones on the higher-order side, non-negative values
-and unsigned types with zeros.
-Byte types are padded with zeros on the lower-order side.  A `real<N>x<M>`
-number `x` is encoded as the uint/int number `x * 2^M`. The behaviour is
-unspecified for incorrect padding or values that are out of range.
 
 The following (fixed-size) array type exists:
 - `<type>[N]`: a fixed-length array of the given fixed-length type.
-
-Each of its elements is encoded according to the above rules, which means that
-the type `uint8[10]` takes `32 * 10 = 320` bytes.
 
 The following non-fixed-size types exist: 
 - `bytes`: dynamic sized string. Unicode strings are assumed to be UTF-8 encoded.
 - `<type>[]`: a variable-length array of the given fixed-length type.
 
-The number of elements (number of bytes for the byres type, number of elements for
-arrays) is given before any actual data (as described above) as a 256 bit big endian integer.
-A `bytes` of length `N` is encoded the same way as `bytes<N>` and a `<type>[]` with exactly
-`N` elements is encoded the same way as `<type>[N]`.
+### Formal Specification of the Encoding
 
-### Signature
+We will now formally specify the encoding, such that it will have the following
+properties, which are especially useful if some arguments are nested arrays:
 
-The function signature is simply the function name with the parenthesised list of parameter types. Parameter types are split by a single comma - no spaces are used.
+**Properties:**
 
-### Examples
+1. The number of reads necessary to access a value is at most the depth of the
+value inside the argument array structure, i.e. four reads are needed to
+retrieve `a_i[k][l][r]`. In a previous version of the ABI, the number of reads scaled
+linearly with the total number of dynamic parameters in the worst case.
+
+2. The data of a variable or array element is not interleaved with other data
+and it is relocatable, i.e. it only uses relative "addresses"
+
+We distinguish static and dynamic types. Static types are encoded in-place and dynamic types are encoded at a separately allocated location after the current block.
+
+**Definition:** The following types are called "dynamic":
+* `bytes`
+* `T[]` for any `T`
+* `T[k]` for any dynamic `T` and any `k > 0`
+
+All other types are called "static".
+
+**Definition:** `len(a)` is the number of bytes in a binary string `a`.
+The type of `len(a)` is assumed to be `uint256`.
+
+We define `enc`, the actual encoding, as a mapping of values of the ABI types to binary strings such
+that `len(enc(X))` depends on the value of `X` if and only if the type of `X`
+is dynamic.
+
+**Definition:** For any ABI value `X`, we recursively define `enc(X)`, depending
+on the type of `X` being
+
+- `T[k]` for any `T` and `k`:
+
+  `enc(X) = head(X[0]) ... head(X[k-1]) tail(X[0]) ... tail(X[k-1])`
+
+  where `head` and `tail` are defined for `X[i]` being of a static type as
+    `head(X[i]) = enc(X[i])` and `tail(X[i]) = ""` (the empty string)
+  and as
+    `head(X[i]) = enc(len(head(X[0]) ... head(X[k-1]) tail(X[0]) ... tail(X[i-1])))`
+    `tail(X[i]) = enc(X[i])`
+  otherwise.
+
+  Note that in the dynamic case, `head(X[i])` is well-defined since the lengths of
+  the head parts only depend on the types and not the values. Its value is the offset
+  of the beginning of `tail(X[i])` relative to the start of `enc(X)`.
+  
+- `T[]` where `X` has `k` elements (`k` is assumed to be of type `uint256`):
+
+  `enc(X) = enc(k) enc([X[1], ..., X[k]])`
+
+  i.e. it is encoded as if it were an array of static size `k`, prefixed with
+  the number of elements.
+
+- `bytes`, of length `k` (which is assumed to be of type `uint256`):
+
+  `enc(X) = enc(k) pad_right(X)`, i.e. the number of bytes is encoded as a
+    `uint256` followed by the actual value of `X` as a byte sequence, followed by
+    the minimum number of zero-bytes such that `len(enc(X))` is a multiple of 32.
+
+- `uint<N>`: `enc(X)` is the big-endian encoding of `X`, padded on the higher-order (left) side with zero-bytes such that the length is a multiple of 32 bytes.
+- `address`: as in the `uint160` case
+- `int<N>`: `enc(X)` is the big-endian two's complement encoding of `X`, padded on the higher-oder (left) side with `0xff` for negative `X` and with zero bytes for positive `X` such that the length is a multiple of 32 bytes.
+- `bool`: as in the `uint8` case, where `1` is used for `true` and `0` for `false`
+- `real<N>x<M>`: `enc(X)` is `enc(X * 2**M)` where `X * 2**M` is interpreted as a `int256`.
+- `real`: as in the `real128x128` case
+- `ureal<N>x<M>`: `enc(X)` is `enc(X * 2**M)` where `X * 2**M` is interpreted as a `uint256`.
+- `ureal`: as in the `ureal128x128` case
+- `bytes<N>`: `enc(X)` is the sequence of bytes in `X` padded with zero-bytes to a length of 32.
+
+Note that for any `X`, `len(enc(X))` is a multiple of 32.
+
+## Function Selector and Argument Encoding
+
+All in all, a call to the function `f` with parameters `a_1, ..., a_n` is encoded as
+
+  `function_selector(f) enc([a_1, ..., a_n])`
+
+and the return values `v_1, ..., v_k` of `f` are encoded as
+
+  `enc([v_1, ..., v_k])`
+
+where the types of `[a_1, ..., a_n]` and `[v_1, ..., v_k]` are assumed to be
+fixed-size arrays of length `n` and `k`, respectively. Note that strictly,
+`[a_1, ..., a_n]` can be an "array" with elements of different types, but the
+encoding is still well-defined as the assumed common type `T` (above) is not
+actually used.
+
+## Examples
 
 Given the contract:
 
@@ -88,20 +160,50 @@ In total:
 0x3e27986000000000000000000000000000000002400000000000000000000000000000000000000000000000000000000000000880000000000000000000000000000000
 ```
 
-If we wanted to call `sam` with the arguments `"dave"`, `true` and `[1,2,3]`, we would pass 168 bytes total, broken down into:
+If we wanted to call `sam` with the arguments `"dave"`, `true` and `[1,2,3]`, we would pass 292 bytes total, broken down into:
 - `0x8FF261B0`: the Method ID. This is derived from the signature `sam(bytes,bool,uint256[])`. Note that `uint` is substituted for its canonical representation `uint256`.
-- `0x0000000000000000000000000000000000000000000000000000000000000004`: the size of the first dynamic parameter, measured as the bytes type length in bytes. In this case, 4.
-- `0x0000000000000000000000000000000000000000000000000000000000000003`: the size of the second dynamic parameter, measured as the number of items in the array. In this case it has a size of 3 items.
-- `0x6461766500000000000000000000000000000000000000000000000000000000`: the first parameter: the UTF-8 (equal to ASCII in this case) encoding of `"dave"`.
+- `0x0000000000000000000000000000000000000000000000000000000000000060`: the location of the data part of the first parameter (dynamic type), measured in bytes from the start of the arguments block. In this case, `0x60`.
 - `0x0000000000000000000000000000000000000000000000000000000000000001`: the second parameter: boolean true.
+- `0x00000000000000000000000000000000000000000000000000000000000000c0`: the location of the data part of the third parameter (dynamic type), measured in bytes. In this case, `0xc0`.
+- `0x0000000000000000000000000000000000000000000000000000000000000004`: the data part of the first argument, it starts with the length of the byte array in elements, in this case, 4.
+- `0x6461766500000000000000000000000000000000000000000000000000000000`: the contents of the first argument: the UTF-8 (equal to ASCII in this case) encoding of `"dave"`, padded on the right to 32 bytes.
+- `0x0000000000000000000000000000000000000000000000000000000000000003`: the data part of the third argument, it starts with the length of the array in elements, in this case, 3.
 - `0x0000000000000000000000000000000000000000000000000000000000000001`: the first entry of the third parameter.
 - `0x0000000000000000000000000000000000000000000000000000000000000002`: the second entry of the third parameter.
 - `0x0000000000000000000000000000000000000000000000000000000000000003`: the third entry of the third parameter.
 
 In total:
 ```
-0xe4ae26d60000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000364617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
+0x8FF261B00000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000464617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
 ```
+
+
+### Use of Dynamic Types
+
+A call to a function with the signature `f(uint,uint32[],bytes10,bytes)` with values `(0x123, [0x456, 0x789], "1234567890", "Hello, world!")` is encoded in the following way:
+
+The first four bytes are `sha3("f(uint256,uint32[],bytes10,bytes)")`, i.e. `0x8be65246`.
+Then we encode the head parts of all four arguments. For the static types `uint256` and `bytes10`, these are directly the values we want to pass, whereas for the dynamic types `uint32[]` and `bytes`, we use the offset in bytes to the start of their data area, measured from the start of the value encoding (i.e. not counting the first four bytes containing the hash of the function signature). These are:
+
+ - `0x0000000000000000000000000000000000000000000000000000000000000123` (`0x123` padded to 32 bytes)
+ - `0x0000000000000000000000000000000000000000000000000000000000000080` (offset to start of data part of second parameter, 4*32 bytes, exactly the size of the head part)
+ - `0x3132333435363738393000000000000000000000000000000000000000000000` (`"1234567890"` padded to 32 bytes on the right)
+ - `0x00000000000000000000000000000000000000000000000000000000000000e0` (offset to start of data part of fourth parameter = offset to start of data part of first dynamic parameter + size of data part of first dynamic parameter = 4*32 + 3*32 (see below))
+
+After this, the data part of the first dynamic argument, `[0x456, 0x789]` follows:
+
+ - `0x0000000000000000000000000000000000000000000000000000000000000002` (number of elements of the array, 2)
+ - `0x0000000000000000000000000000000000000000000000000000000000000456` (first element)
+ - `0x0000000000000000000000000000000000000000000000000000000000000789` (second element)
+
+Finally, we encode the data part of the second dynamic argument, `"Hello, world!"`:
+
+ - `0x000000000000000000000000000000000000000000000000000000000000000d` (number of elements (bytes in this case): 13)
+ - `0x48656c6c6f2c20776f726c642100000000000000000000000000000000000000` (`"Hello, world!"` padded to 32 bytes on the right)
+
+All together, the encoding is (spaces added for clarity):
+
+`0x8be65246 0000000000000000000000000000000000000000000000000000000000000123 0000000000000000000000000000000000000000000000000000000000000080 3132333435363738393000000000000000000000000000000000000000000000 00000000000000000000000000000000000000000000000000000000000000e0 0000000000000000000000000000000000000000000000000000000000000002 0000000000000000000000000000000000000000000000000000000000000456 0000000000000000000000000000000000000000000000000000000000000789 000000000000000000000000000000000000000000000000000000000000000d 48656c6c6f2c20776f726c642100000000000000000000000000000000000000`
 
 
 # Events
