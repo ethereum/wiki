@@ -2,7 +2,7 @@ The [Ethereum (centralised) network status monitor](https://stats.ethdev.com) (k
 
 ## Listing
 
-To list your node, you must install the client-side information relay, a node module. Instructions given here work on Ubuntu. Other platforms vary. (please make sure that nodejs-legacy is also installed, otherwise some modules might fail)
+To list your node, you must install the client-side information relay, a node module. Instructions given here work on Ubuntu. Other platforms vary (please make sure that nodejs-legacy is also installed, otherwise some modules might fail). 
 
 Clone the git repo, then install pm2:
 
