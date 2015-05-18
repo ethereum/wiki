@@ -223,12 +223,12 @@ In effect, a log entry using this ABI is described as:
 
 The JSON format for a contract's interface is given by an array of function and/or event descriptions. A function description is a JSON object with the fields:
 
-- `type`: always `"function"` (the default, and so may be omitted);
-- `name`: the name of the function;
+- `type`: `"function"` or `"constructor"` (can be omitted, defaulting to function);
+- `name`: the name of the function (only present for function types);
 - `inputs`: an array of objects, each of which contains:
 * `name`: the name of the parameter;
 * `type`: the canonical type of the parameter.
-- `outputs`: an array of objects similar to `inputs`.
+- `outputs`: an array of objects similar to `inputs`, can be omitted.
 
 An event description is a JSON object with fairly similar fields:
 
