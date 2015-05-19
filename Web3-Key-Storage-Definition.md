@@ -63,3 +63,39 @@ Another example, using the PBKDF algorithm for key derivation is:
 ```
 
 Most of the meanings/algorithm are similar to the original spec, except `mac`, which is given as the SHA3 of the concatenation of the last 16 bytes of the derived key together with the full `ciphertext`.
+
+## Test Vector
+
+Test vector using AES-128-CBC and PBKDF2-SHA-256:
+
+File contents of `~/.web3/keys/3198bc9c-6672-5ab3-d9954942343ae5b6.json`:
+```json
+{
+    "crypto" : {
+        "cipher" : "aes-128-cbc",
+        "cipherparams" : {
+            "iv" : "db76cba2e79171364c5d5378190062c8"
+        },
+        "ciphertext" : "e8ae879315e349d8804a779421b26d95d2d3195fcf6c4039ee5323b858f53ef3",
+        "kdf" : "pbkdf2",
+        "kdfparams" : {
+            "c" : 262144,
+            "dklen" : 16,
+            "prf" : "hmac-sha256",
+            "salt" : "de5742f1f1045c402296422cee5a8a9ecf0ac5bf594deca1170d22aef33a79cf"
+        },
+        "mac" : "340aed34a9229210bfb7a5731268d78c68dba5e78a5a4eb87ff6e28bf2952735"
+    },
+    "id" : "3198bc9c-6672-5ab3-d995-4942343ae5b6",
+    "version" : 2
+}
+```
+
+Details:
+
+- Address: `008aeeda4d805471df9b2a5b0f38a0c3bcba786b`
+- ICAP: `XE542A5PZHH8PYIZUBEJEO0MFWRAPPIL67`
+- UUID: `3198bc9c-6672-5ab3-d9954942343ae5b6`
+- Password: `testpassword`
+- Secret: `7a28b5ba57c53603b0b07b56bba752f7784bf506fa95edc395f5cf6c7514fe9d`
+
