@@ -1479,8 +1479,8 @@ You can use events like [filters](#web3ethfilter) and they have the same methods
 var MyContract = web3.eth.contract(abi);
 var myContractInstance = MyContract.at('0x43gg423k4h4234235345j3453');
 
-// watch for an event
-var myEvent = myContractInstance.MyEvent({some: 'args'}, additionalFilterObject);
+// watch for an event with {some: 'args'}
+var myEvent = myContractInstance.MyEvent({some: 'args'}, {fromBlock: 0, toBlock: 'latest'});
 myEvent.watch(function(error, result){
    ...
 });
