@@ -1071,8 +1071,8 @@ Returns a transaction matching the given transaction hash.
   - `from`: `String`, 20 Bytes - address of the sender.
   - `to`: `String`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
   - `value`: `BigNumber` - value transferred in Wei.
-  - `gasPrice`: `BigNumber` - price paid per gas in Wei.
-  - `gas`: `Number` - gas used.
+  - `gasPrice`: `BigNumber` - gas price provided by the sender in Wei.
+  - `gas`: `Number` - gas provided by the sender.
   - `input`: `String` - the data send along with the transaction.
 
 
