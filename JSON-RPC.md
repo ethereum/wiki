@@ -15,6 +15,7 @@ Default JSON-RPC endpoints:
 ```
 C++: http://localhost:8080
 Go: http://localhost:8545
+Py: http://localhost:4000
 ```
 
 ##### Go
@@ -51,7 +52,7 @@ You can also specify JSON-RPC port (default is 8080):
 ./eth -j --json-rpc-port 8079
 ```
 
-##### pyeth
+##### Python
 In python the JSONRPC server is currently started by default and listens on `127.0.0.1:4000`
 
 You can change the port and listen address by giving a config option. 
@@ -59,12 +60,12 @@ You can change the port and listen address by giving a config option.
 
 ### JSON-RPC support
 
-| | cpp-ethereum | go-ethereum |
-|-------|:------------:|:-----------:|
-| JSON-RPC 1.0 | &#x2713; | |
-| JSON-RPC 2.0 | &#x2713; | &#x2713; |
-| Batch requests | &#x2713; |  &#x2713; | 
-| HTTP | &#x2713; | &#x2713; |
+| | cpp-ethereum | go-ethereum | py-ethereum|
+|-------|:------------:|:-----------:|:-----------:|
+| JSON-RPC 1.0 | &#x2713; | | |
+| JSON-RPC 2.0 | &#x2713; | &#x2713; | &#x2713; |
+| Batch requests | &#x2713; |  &#x2713; |  &#x2713; |
+| HTTP | &#x2713; | &#x2713; | &#x2713; |
 
 ### Output HEX values
 
