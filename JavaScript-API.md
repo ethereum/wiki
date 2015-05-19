@@ -1231,7 +1231,7 @@ Executes a message call or transaction, which is directly executed in the VM of 
 
 ##### Parameters
 
-See [web3.eth.call](#web3ethcall), expect that all properties are optional.
+See [web3.eth.sendTransaction](#web3ethsendtransaction), expect that all properties are optional.
 
 ##### Returns
 
