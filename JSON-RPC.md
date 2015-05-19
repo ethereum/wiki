@@ -865,8 +865,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{see above}]
 
 #### eth_estimateGas
 
-Works like [eth_call](#eth_call) but instead returns the used gas.
-
+Makes a call or transaction, which won't be add to the blockchain and returns the used gas, which can be used for estimating the used gas.
 
 ##### Parameters
 
