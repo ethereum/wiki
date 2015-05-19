@@ -34,35 +34,41 @@ Changes have been made to the format to give the following file, functionally eq
 }
 ```
 
-The actual encoding and decoding of the file remains largely unchanged, except that the crypto algorithm is no longer fixed to AES-128-CBC.
-
-Another example, using the PBKDF algorithm for key derivation is:
+## Definition
 
 
-```json
-{
-    "crypto": {
-        "cipher": "aes-128-cbc",
-        "ciphertext": "07533e172414bfa50e99dba4a0ce603f654ebfa1ff46277c3e0c577fdc87f6bb4e4fe16c5a94ce6ce14cfa069821ef9b",
-        "cipherparams": {
-            "iv": "16d67ba0ce5a339ff2f07951253e6ba8"
-        },
-        "kdf": "pbkdf2",
-        "kdfparams": {
-            "prf": "hmac-sha256",
-            "dklen": 32,
-            "c": 262144,
-            "salt": "06870e5e6a24e183a5c807bd1c43afd86d573f7db303ff4853d135cd0fd3fe91"
-        },
-        "mac": "8ccded24da2e99a11d48cda146f9cc8213eb423e2ea0d8427f41c3be414424dd",
-        "version": 1
-    },
-    "id": "0498f19a-59db-4d54-ac95-33901b4f1870",
-    "version": 2
-}
-```
+The actual encoding and decoding of the file remains largely unchanged, except that the crypto algorithm is no longer fixed to AES-128-CBC. Most of the meanings/algorithm are similar to the original spec, except `mac`, which is given as the SHA3 of the concatenation of the last 16 bytes of the derived key together with the full `ciphertext`.
 
-Most of the meanings/algorithm are similar to the original spec, except `mac`, which is given as the SHA3 of the concatenation of the last 16 bytes of the derived key together with the full `ciphertext`.
+Secret key files are stored directly in `~/.web3/keys` (for Unix-like systems) and `~/AppData/Web3/keys` (for Windows). They may be named anything, but a good convention is `<uuid>.json`, where `<uuid>` is the 128-bit UUID given to the secret key (a privacy-preserving proxy for the secret key's address).
+
+All such files have an associated password. To derive a given `.json` file's secret key, first derive the file's encryption key; this is done through taking the file's password and passing it through a key derivation function as described by the `kdf` key. KDF-dependent static and dynamic parameters to the KDE function are described in `kdfparams` key.
+
+PBKDF2 must be supported by all minimally-compliant implementations, denoted though:
+
+- `kdf`: `pbkdf2`
+
+For PBKDF2, the `kdfparams` include:
+
+- `prf`: Must be `hmac-sha256` (may be extended in the future);
+- `c`: number of iterations;
+- `salt`: salt passed to PBKDF;
+- `dklen`: length for the derived key (must be 16, may be extended in the future).
+
+One the file's key has been derived, it should be verified through the derivation of the MAC. The MAC should be calculated as the Keccak hash of the byte array formed as the concatenations of the rightmost 16 bytes with the `ciphertext` key's contents.
+
+This value should be compared to the contents of the `mac` key; if they are different, an alternative password should be requested (or the operation cancelled).
+
+After the file's key has been verified, the cipher text (the `ciphertext` key in the file) may be decrypted using the symmetric encryption algorithm specified by the `cipher` key and parameterised through the `cipherparams` key. If the derived key size and the algorithm's key size are mismatched, the zero padded, rightmost bytes of the derived key should be used as the key to the algorithm.
+
+All minimally-compliant implementations must support the AES-128-CBC algorithm, denoted through:
+
+- `cipher`: `aes-128-cbc`
+
+This cipher takes the following parameters, given as keys to the `cipherparams` key:
+
+- `iv`: 128-bit initialisation vector for the cipher.
+
+The creation/encryption of a secret key should be essentially the reverse of these instructions. Make sure the `uuid`, `salt` and `iv` are actually random.
 
 ## Test Vector
 
