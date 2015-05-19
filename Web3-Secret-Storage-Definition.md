@@ -17,7 +17,7 @@ For PBKDF2, the `kdfparams` include:
 - `prf`: Must be `hmac-sha256` (may be extended in the future);
 - `c`: number of iterations;
 - `salt`: salt passed to PBKDF;
-- `dklen`: length for the derived key (must be 16, may be extended in the future).
+- `dklen`: length for the derived key (should probably be 16).
 
 One the file's key has been derived, it should be verified through the derivation of the MAC. The MAC should be calculated as the Keccak hash of the byte array formed as the concatenations of the rightmost 16 bytes with the `ciphertext` key's contents.
 
