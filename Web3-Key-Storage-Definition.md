@@ -41,7 +41,7 @@ The actual encoding and decoding of the file remains largely unchanged, except t
 
 Secret key files are stored directly in `~/.web3/keys` (for Unix-like systems) and `~/AppData/Web3/keys` (for Windows). They may be named anything, but a good convention is `<uuid>.json`, where `<uuid>` is the 128-bit UUID given to the secret key (a privacy-preserving proxy for the secret key's address).
 
-All such files have an associated password. To derive a given `.json` file's secret key, first derive the file's encryption key; this is done through taking the file's password and passing it through a key derivation function as described by the `kdf` key. KDF-dependent static and dynamic parameters to the KDE function are described in `kdfparams` key.
+All such files have an associated password. To derive a given `.json` file's secret key, first derive the file's encryption key; this is done through taking the file's password and passing it through a key derivation function as described by the `kdf` key. KDF-dependent static and dynamic parameters to the KDF function are described in `kdfparams` key.
 
 PBKDF2 must be supported by all minimally-compliant implementations, denoted though:
 
