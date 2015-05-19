@@ -1023,8 +1023,8 @@ params: [
   - `from`: `DATA`, 20 Bytes - address of the sender.
   - `to`: `DATA`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
   - `value`: `QUANTITY` - value transferred in Wei.
-  - `gasPrice`: `QUANTITY` - price paid per gas in Wei.
-  - `gas`: `QUANTITY` - gas used.
+  - `gasPrice`: `QUANTITY` - gas price proved by the sender in Wei.
+  - `gas`: `QUANTITY` - gas provided by the sender.
   - `input`: `DATA` - the data send along with the transaction.
 
 ##### Example
