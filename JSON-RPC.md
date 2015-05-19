@@ -870,7 +870,7 @@ Works like [eth_call](#eth_call) but instead returns the used gas.
 
 ##### Parameters
 
-See [eth_call](#eth_call) parameters.
+See [eth_call](#eth_call) parameters, expect that all properties are optional.
 
 ##### Returns
 
