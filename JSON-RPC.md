@@ -51,6 +51,12 @@ You can also specify JSON-RPC port (default is 8080):
 ./eth -j --json-rpc-port 8079
 ```
 
+##### pyeth
+In python the JSONRPC server is currently started by default and listens on `127.0.0.1:4000`
+
+You can change the port and listen address by giving a config option. 
+`pyethapp -c jsonrpc.listen_port=4002 -c jsonrpc.listen_host=127.0.0.2 run`
+
 ### JSON-RPC support
 
 | | cpp-ethereum | go-ethereum |
