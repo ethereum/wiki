@@ -102,6 +102,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [getTransactionCount(address)](#web3ethgettransactioncount)
     * [sendTransaction(object)](#web3ethsendtransaction)
     * [call(object)](#web3ethcall)
+    * [estimateGas(object)](#web3ethestimategas)
     * [filter(array (, options) )](#web3ethfilter)
         - [watch(callback)](#web3ethfilter)
         - [stopWatching(callback)](#web3ethfilter)
@@ -1214,6 +1215,32 @@ Executes a message call transaction, which is directly executed in the VM of the
 
 ```js
 var result = web3.eth.call({
+    to: "0xc4abd0339eb8d57087278718986382264244252f", 
+    data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
+});
+console.log(result); // "0x0000000000000000000000000000000000000000000000000000000000000015"
+```
+
+***
+
+#### web3.eth.estimateGas
+
+    web3.eth.estimateGas(callObject [, defaultBlock] [, callback])
+
+Executes a message call or transaction, which is directly executed in the VM of the node, but never mined into the blockchain and returns the amount of the gas used.
+
+##### Parameters
+
+See [web3.eth.call](#web3ethcall), expect that all properties are optional.
+
+##### Returns
+
+`Number` - the used gas for the simulated call/transaction.
+
+##### Example
+
+```js
+var result = web3.eth.estimateGas({
     to: "0xc4abd0339eb8d57087278718986382264244252f", 
     data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
 });
