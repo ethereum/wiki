@@ -39,13 +39,11 @@ This cipher takes the following parameters, given as keys to the `cipherparams` 
 
 - `iv`: 128-bit initialisation vector for the cipher.
 
-The key for the cipher is the Keccak hash of the leftmost 16 bytes of the derived key, i.e.:
-
-```
-KECCEK(DK[0..15])
-```
+The key for the cipher is the leftmost 16 bytes of the derived key, i.e. `DK[0..15]`
 
 The creation/encryption of a secret key should be essentially the reverse of these instructions. Make sure the `uuid`, `salt` and `iv` are actually random.
+
+In addition to the `version` field, which should act as a "hard" identifier of version, implementations may also use `minorversion` to track smaller, non-breaking changes to 
 
 ## Test Vector
 
