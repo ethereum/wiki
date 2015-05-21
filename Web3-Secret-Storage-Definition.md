@@ -65,22 +65,29 @@ File contents of `~/.web3/keys/3198bc9c-6672-5ab3-d9954942343ae5b6.json`:
     "crypto" : {
         "cipher" : "aes-128-ctr",
         "cipherparams" : {
-            "iv" : "db76cba2e79171364c5d5378190062c8"
+            "iv" : "6087dab2f9fdbbfaddc31a909735c1e6"
         },
-        "ciphertext" : "e8ae879315e349d8804a779421b26d95d2d3195fcf6c4039ee5323b858f53ef3",
+        "ciphertext" : "5318b4d5bcd28de64ee5559e671353e16f075ecae9f99c7a79a38af5f869aa46",
         "kdf" : "pbkdf2",
         "kdfparams" : {
             "c" : 262144,
-            "dklen" : 16,
+            "dklen" : 32,
             "prf" : "hmac-sha256",
-            "salt" : "de5742f1f1045c402296422cee5a8a9ecf0ac5bf594deca1170d22aef33a79cf"
+            "salt" : "ae3cd4e7013836a3df6bd7241b12db061dbe2c6785853cce422d148a624ce0bd"
         },
-        "mac" : "340aed34a9229210bfb7a5731268d78c68dba5e78a5a4eb87ff6e28bf2952735"
+        "mac" : "517ead924a9d0dc3124507e3393d175ce3ff7c1e96529c6c555ce9e51205e9b2"
     },
     "id" : "3198bc9c-6672-5ab3-d995-4942343ae5b6",
     "version" : 3
 }
 ```
+
+Intermediates:
+
+- Derived key: `f06d69cdc7da0faffb1008270bca38f5e31891a3a773950e6d0fea48a7188551`
+- MAC Body: `e31891a3a773950e6d0fea48a71885515318b4d5bcd28de64ee5559e671353e16f075ecae9f99c7a79a38af5f869aa46`
+- MAC `517ead924a9d0dc3124507e3393d175ce3ff7c1e96529c6c555ce9e51205e9b2`
+- Cipher key: `f06d69cdc7da0faffb1008270bca38f5`
 
 ### Scrypt
 
