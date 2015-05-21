@@ -43,7 +43,7 @@ The key for the cipher is the leftmost 16 bytes of the derived key, i.e. `DK[0..
 
 The creation/encryption of a secret key should be essentially the reverse of these instructions. Make sure the `uuid`, `salt` and `iv` are actually random.
 
-In addition to the `version` field, which should act as a "hard" identifier of version, implementations may also use `minorversion` to track smaller, non-breaking changes to 
+In addition to the `version` field, which should act as a "hard" identifier of version, implementations may also use `minorversion` to track smaller, non-breaking changes to the format.
 
 ## Test Vectors
 
