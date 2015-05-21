@@ -120,3 +120,7 @@ Changes have been made to the format to give the following file, functionally eq
     "version": 2
 }
 ```
+
+## Alterations from Version 2
+
+Version 2 was an early C++ implementation with a number of bugs. All essentials remain unchanged from it.
