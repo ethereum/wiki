@@ -1663,6 +1663,8 @@ curl -X POST --data '{"jsonrpc":"2.0", "method":"eth_submitWork", "params":["0x0
 
 Stores a string in the local database.
 
+**Note** this function is deprecated and will be removed in the future.
+
 ##### Parameters
 
 1. `String` - Database name.
@@ -1700,6 +1702,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_putString","params":["testDB"
 
 Returns string from the local database.
 
+**Note** this function is deprecated and will be removed in the future.
+
 ##### Parameters
 
 1. `String` - Database name.
@@ -1735,6 +1739,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_getString","params":["testDB"
 #### db_putHex
 
 Stores binary data in the local database.
+
+**Note** this function is deprecated and will be removed in the future.
 
 
 ##### Parameters
@@ -1773,6 +1779,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"db_putHex","params":["testDB","m
 #### db_getHex
 
 Returns binary data from the local database.
+
+**Note** this function is deprecated and will be removed in the future.
 
 
 ##### Parameters
