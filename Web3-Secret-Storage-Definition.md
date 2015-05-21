@@ -1,8 +1,8 @@
-This documents version 2 of the Web3 Secret Storage Definition. 
+This documents version 3 of the Web3 Secret Storage Definition. 
 
 ## Definition
 
-The actual encoding and decoding of the file remains largely unchanged from version 1, except that the crypto algorithm is no longer fixed to AES-128-CBC. Most of the meanings/algorithm are similar to version 1, except `mac`, which is given as the SHA3 of the concatenation of the last 16 bytes of the derived key together with the full `ciphertext`.
+The actual encoding and decoding of the file remains largely unchanged from version 1, except that the crypto algorithm is no longer fixed to AES-128-CBC (AES-128-CTR is now the minimal requirement). Most of the meanings/algorithm are similar to version 1, except `mac`, which is given as the SHA3 of the concatenation of the last 16 bytes of the derived key together with the full `ciphertext`.
 
 Secret key files are stored directly in `~/.web3/keys` (for Unix-like systems) and `~/AppData/Web3/keys` (for Windows). They may be named anything, but a good convention is `<uuid>.json`, where `<uuid>` is the 128-bit UUID given to the secret key (a privacy-preserving proxy for the secret key's address).
 
@@ -17,33 +17,45 @@ For PBKDF2, the `kdfparams` include:
 - `prf`: Must be `hmac-sha256` (may be extended in the future);
 - `c`: number of iterations;
 - `salt`: salt passed to PBKDF;
-- `dklen`: length for the derived key (should probably be 16).
+- `dklen`: length for the derived key. Must be >= 32.
 
-One the file's key has been derived, it should be verified through the derivation of the MAC. The MAC should be calculated as the Keccak hash of the byte array formed as the concatenations of the rightmost 16 bytes with the `ciphertext` key's contents.
+One the file's key has been derived, it should be verified through the derivation of the MAC. The MAC should be calculated as the Keccak hash of the byte array formed as the concatenations of the second-leftmost 16 bytes of the derived key with the `ciphertext` key's contents, i.e.:
+
+```
+KECCAK(DK[16..31] ++ <ciphertext>)
+```
+
+(where `++` is the concatenation operator)
 
 This value should be compared to the contents of the `mac` key; if they are different, an alternative password should be requested (or the operation cancelled).
 
 After the file's key has been verified, the cipher text (the `ciphertext` key in the file) may be decrypted using the symmetric encryption algorithm specified by the `cipher` key and parameterised through the `cipherparams` key. If the derived key size and the algorithm's key size are mismatched, the zero padded, rightmost bytes of the derived key should be used as the key to the algorithm.
 
-All minimally-compliant implementations must support the AES-128-CBC algorithm, denoted through:
+All minimally-compliant implementations must support the AES-128-CTR algorithm, denoted through:
 
-- `cipher`: `aes-128-cbc`
+- `cipher`: `aes-128-ctr`
 
 This cipher takes the following parameters, given as keys to the `cipherparams` key:
 
 - `iv`: 128-bit initialisation vector for the cipher.
 
+The key for the cipher is the Keccak hash of the leftmost 16 bytes of the derived key, i.e.:
+
+```
+KECCEK(DK[0..15])
+```
+
 The creation/encryption of a secret key should be essentially the reverse of these instructions. Make sure the `uuid`, `salt` and `iv` are actually random.
 
 ## Test Vector
 
-Test vector using AES-128-CBC and PBKDF2-SHA-256:
+Test vector using AES-128-CTR and PBKDF2-SHA-256:
 
 File contents of `~/.web3/keys/3198bc9c-6672-5ab3-d9954942343ae5b6.json`:
 ```json
 {
     "crypto" : {
-        "cipher" : "aes-128-cbc",
+        "cipher" : "aes-128-ctr",
         "cipherparams" : {
             "iv" : "db76cba2e79171364c5d5378190062c8"
         },
@@ -81,6 +93,7 @@ This version fixes several inconsistencies with the version 1 published [here](h
 - The key derivation function is given, yet the crypto algorithm is hard specified. 
 - `Version` is intrinsically numeric yet is a string (structured versioning would be possible with a string, but can be considered out of scope for a rarely changing configuration file format).
 - KDF and cipher are notionally sibling concepts yet are organised differently.
+- MAC is calculated through a whitespace agnostic piece of data(!)
 
 Changes have been made to the format to give the following file, functionally equivalent to the example given on the previously linked page:
 
