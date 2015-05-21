@@ -45,7 +45,17 @@ The creation/encryption of a secret key should be essentially the reverse of the
 
 In addition to the `version` field, which should act as a "hard" identifier of version, implementations may also use `minorversion` to track smaller, non-breaking changes to 
 
-## Test Vector
+## Test Vectors
+
+Details:
+
+- Address: `008aeeda4d805471df9b2a5b0f38a0c3bcba786b`
+- ICAP: `XE542A5PZHH8PYIZUBEJEO0MFWRAPPIL67`
+- UUID: `3198bc9c-6672-5ab3-d9954942343ae5b6`
+- Password: `testpassword`
+- Secret: `7a28b5ba57c53603b0b07b56bba752f7784bf506fa95edc395f5cf6c7514fe9d`
+
+### PBKDF2-SHA-256
 
 Test vector using AES-128-CTR and PBKDF2-SHA-256:
 
@@ -68,17 +78,43 @@ File contents of `~/.web3/keys/3198bc9c-6672-5ab3-d9954942343ae5b6.json`:
         "mac" : "340aed34a9229210bfb7a5731268d78c68dba5e78a5a4eb87ff6e28bf2952735"
     },
     "id" : "3198bc9c-6672-5ab3-d995-4942343ae5b6",
-    "version" : 2
+    "version" : 3
 }
 ```
 
-Details:
+### Scrypt
 
-- Address: `008aeeda4d805471df9b2a5b0f38a0c3bcba786b`
-- ICAP: `XE542A5PZHH8PYIZUBEJEO0MFWRAPPIL67`
-- UUID: `3198bc9c-6672-5ab3-d9954942343ae5b6`
-- Password: `testpassword`
-- Secret: `7a28b5ba57c53603b0b07b56bba752f7784bf506fa95edc395f5cf6c7514fe9d`
+Test vector using SHA-128-CTR and Scrypt:
+
+```json
+{
+    "crypto" : {
+        "cipher" : "aes-128-ctr",
+        "cipherparams" : {
+            "iv" : "83dbcc02d8ccb40e466191a123791e0e"
+        },
+        "ciphertext" : "d172bf743a674da9cdad04534d56926ef8358534d458fffccd4e6ad2fbde479c",
+        "kdf" : "scrypt",
+        "kdfparams" : {
+            "dklen" : 32,
+            "n" : 262144,
+            "p" : 1,
+            "r" : 8,
+            "salt" : "ab0c7876052600dd703518d6fc3fe8984592145b591fc8fb5c6d43190334ba19"
+        },
+        "mac" : "2103ac29920d71da29f15d75b4a16dbe95cfd7ff8faea1056c33131d846e3097"
+    },
+    "id" : "3198bc9c-6672-5ab3-d995-4942343ae5b6",
+    "version" : 3
+}
+```
+
+Intermediates:
+
+- Derived key: `fac192ceb5fd772906bea3e118a69e8bbb5cc24229e20d8766fd298291bba6bd`
+- MAC Body `bb5cc24229e20d8766fd298291bba6bdd172bf743a674da9cdad04534d56926ef8358534d458fffccd4e6ad2fbde479c`
+- MAC: `2103ac29920d71da29f15d75b4a16dbe95cfd7ff8faea1056c33131d846e3097`
+- Cipher key: `fac192ceb5fd772906bea3e118a69e8b`
 
 ## Alterations from Version 1
 
