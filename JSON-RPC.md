@@ -129,6 +129,7 @@ The following options are possible for the defaultBlock parameter:
 * [eth_getUncleCountByBlockHash](#eth_getunclecountbyblockhash)
 * [eth_getUncleCountByBlockNumber](#eth_getunclecountbyblocknumber)
 * [eth_getCode](#eth_getcode)
+* [eth_sign](#eth_sign)
 * [eth_sendTransaction](#eth_sendtransaction)
 * [eth_call](#eth_call)
 * [eth_estimateGas](#eth_estimategas)
@@ -780,6 +781,35 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xa94f53
   "result": "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 }
 ```
+
+***
+
+#### eth_sign
+
+##### Parameters
+
+1. `FROM`: 20 bytes - address
+1. `DATA`: Data to sign
+
+##### Returns
+
+1. `DATA`: Signed data
+
+##### Example
+
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sign","params":["0xd1ade25ccd3d550a7eb532ac759cac7be09c2719", "Schoolbus"],"id":1}'
+
+// Result
+{
+  "id":1,
+  "jsonrpc": "2.0",
+  "result": "0x2ac19db245478a06032e69cdbd2b54e648b78431d0a47bd1fbab18f79f820ba407466e37adbe9e84541cab97ab7d290f4a64a5825c876d22109f3bf813254e8601"
+}
+```
+
+
 
 ***
 
