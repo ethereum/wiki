@@ -105,8 +105,8 @@ Test vector using SHA-128-CTR and Scrypt:
         "kdfparams" : {
             "dklen" : 32,
             "n" : 262144,
-            "p" : 1,
-            "r" : 8,
+            "r" : 1,
+            "p" : 8,
             "salt" : "ab0c7876052600dd703518d6fc3fe8984592145b591fc8fb5c6d43190334ba19"
         },
         "mac" : "2103ac29920d71da29f15d75b4a16dbe95cfd7ff8faea1056c33131d846e3097"
