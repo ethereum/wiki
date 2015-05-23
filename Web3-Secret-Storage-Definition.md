@@ -91,7 +91,7 @@ Intermediates:
 
 ### Scrypt
 
-Test vector using SHA-128-CTR and Scrypt:
+Test vector using AES-128-CTR and Scrypt:
 
 ```json
 {
