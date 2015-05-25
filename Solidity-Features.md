@@ -733,3 +733,12 @@ contract ActualContract {
 }
 ```
 Assuming the contract `Code` is deployed at the address `0x12345`, calling `f()` of `ActualContract` will result in `m_data` of `ActualContract` being modified. The user has to ensure that the layout of storage in both contracts is suitable for callcode to be used.
+
+## Gas Estimation
+
+[PT](https://www.pivotaltracker.com/story/show/90098268) Solidity provides two ways to compute an upper bound on the gas usage of code: A structural one, which can be used to identify expensive statements and a functional one which tries to give an exact gas estimation for each function.
+Some gas costs depend on the state of the virtual machine, e.g. on the cost of `sha3` depends on the length of the argument and writing to storage has different costs depending on whether the storage slot had the value zero or not.
+
+For the structural gas estimation, the gas cost of each opcode is computed assuming the intersection of all states in which the VM could reach this opcode. These costs are accumulated for each opcode that results from a specific statement (in some situations also other AST nodes) in the AST. So in this mode, opcodes are not counted multiple times even if they occur in loops.
+
+The functional gas estimation takes a different approach: For each function in a contract, the execution of this function is "simulated". As we want to provide an upper bound on the gas costs independent of the actual arguments, this is sometimes not accurate and may even result in "infinite" gas costs. Note that the gas costs of message-called functions are not included in the gas costs of a function.
