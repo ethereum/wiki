@@ -76,6 +76,7 @@ modify the state of the contract (note that this is not yet enforced, though).
 In Solidity, return "parameters" are named and essentially create a local
 variable. So to return the balance, we could also just use `balance =
 balances[addr];` without any return statement.
+Events like `Send` allow external clients to search the blockchain more efficiently. If an event is invoked like in the function `send`, this fact is permanently stored in the blockchain, but more on this later.
 
 ## Comments
 
