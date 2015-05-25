@@ -39,6 +39,9 @@ or retrieve the value of the variable.
 contract Coin {
     address minter;
     mapping (address => uint) balances;
+
+    event Send(address from, address to, uint value);
+
     function Coin() {
         minter = msg.sender;
     }
@@ -50,6 +53,7 @@ contract Coin {
         if (balances[msg.sender] < amount) return;
         balances[msg.sender] -= amount;
         balances[receiver] += amount;
+        Send(msg.sender, receiver, amount);
     }
     function queryBalance(address addr) constant returns (uint balance) {
         return balances[addr];
