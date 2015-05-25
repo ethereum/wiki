@@ -47,8 +47,8 @@ Ethereum が提供しようとしているものは、チューリング完全�
     * [Ethereum の 状態遷移関数](#ethereum-state-transition-function)
     * [コード実行](#code-execution)
     * [Blockchain と 採掘](#blockchain-and-mining)
-* [Applications](#applications)
-    * [Token Systems](#token-systems)
+* [アプリケーション](#applications)
+    * [証明書発行のシステム](#token-systems)
     * [Financial derivatives](#financial-derivatives-and-stable-value-currencies)
     * [Identity and Reputation Systems](#identity-and-reputation-systems)
     * [Decentralized File Storage](#decentralized-file-storage)
@@ -468,7 +468,7 @@ UTXO は、ノンス、タイムスタンプ、直前のブロックのハッシ
 Ethereum では、
 われわれは、代替となる骨格を築き上げ、
 簡単な開発であっても、大きな成果物が得られ、
-スマフォのようなライト・クライアントの財産に対しても強固なものを提供し、
+スマフォのようなライト・クライアントのもつ財産に対しても強固なものを提供し、
 同時に、アプリケーションが 経済環境 と blockchain セキュリティ とを共有できるものを提供することを意図しています。
 
 
@@ -699,22 +699,55 @@ Ethereum における基本的な、ブロック有効化 アルゴリズム は
 その時点より未来において、ブロック`B`をダウンロードした全てのノードということです。」
 
 
-## Applications
+## アプリケーション
 
-In general, there are three types of applications on top of Ethereum. The first category is financial applications, providing users with more powerful ways of managing and entering into contracts using their money. This includes sub-currencies, financial derivatives, hedging contracts, savings wallets, wills, and ultimately even some classes of full-scale employment contracts. The second category is semi-financial applications, where money is involved but there is also a heavy non-monetary side to what is being done; a perfect example is self-enforcing bounties for solutions to computational problems. Finally, there are applications such as online voting and decentralized governance that are not financial at all.
+一般的に、Ethereum 上には、3 種類のアプリケーションがあります。
+一つ目のカテゴリーは、金融系のアプリケーションで、金銭を使用する契約に対し、導入・管理の強力な手段をユーザへ提供するものです。
+これには、副次通貨、金融ディリバティブ、ヘッジング契約、預金、資産相続文書や、さらに言及しますと、労働契約書まるまる含めたものなどがあります。
+二つ目のカテゴリは、準金融系アプリであり、非金融的事象の結果に対して金銭を絡めてくるようなもので、その良い例として、計算理論における難題に対し懸賞金を自動執行するようなアプリが挙げられます。
+三つ目としては、オンライン選挙 や 分散型統治機構 があります。
 
-### Token Systems
 
-On-blockchain token systems have many applications ranging from sub-currencies representing assets such as USD or gold to company stocks, individual tokens representing smart property, secure unforgeable coupons, and even token systems with no ties to conventional value at all, used as point systems for incentivization. Token systems are surprisingly easy to implement in Ethereum. The key point to understand is that all a currency, or token system, fundamentally is is a database with one operation: subtract X units from A and give X units to B, with the proviso that (i) A had at least X units before the transaction and (2) the transaction is approved by A. All that it takes to implement a token system is to implement this logic into a contract.
+### 証明書発行のシステム
 
-The basic code for implementing a token system in Serpent looks as follows:
+ブロックチェイン上の 証明書発行システム (token system) には、多々のアプリケーションがあり、
+USドルや金を表す副次通貨から、株式、スマートプロパティとして個人発行した証明書、堅牢で偽造不可な商品券、あるいは全くの無から新たに作られた貨幣証書でさえその範囲に含まれ、経済原理となる（人々の行動の動機付けとなる）ポイント(稼ぎ)のシステムとして使われます。
+
+Ethereum 上で 証明書発行システム を実装するのは驚くほどに簡単です。
+理解するために重要点は、
+通貨や証明書システムといった基軸となるものはすべて、
+あるひとつの操作をともなうデータベース だということです。
+そのひとつの操作とは : 
+
+```
+A から X 単位を差し引き、それを B にやる
+その時の条件として
+(1) A は トランザクション以前に 少なくとも X 単位 を保持している
+(2) トランザクションが A によって承認される
+```
+
+トークンシステムの実装するのにかかる手間は、このロジックを contract に実装するだけです。
+トークンシステムの Serpent における実装の基本コードは以下のようになります:
 
     def send(to, value):
         if self.storage[msg.sender] >= value:
             self.storage[msg.sender] = self.storage[msg.sender] - value
             self.storage[to] = self.storage[to] + value
 
-This is essentially a literal implementation of the "banking system" state transition function described further above in this document. A few extra lines of code need to be added to provide for the initial step of distributing the currency units in the first place and a few other edge cases, and ideally a function would be added to let other contracts query for the balance of an address. But that's all there is to it. Theoretically, Ethereum-based token systems acting as sub-currencies can potentially include another important feature that on-chain Bitcoin-based meta-currencies lack: the ability to pay transaction fees directly in that currency. The way this would be implemented is that the contract would maintain an ether balance with which it would refund ether used to pay fees to the sender, and it would refill this balance by collecting the internal currency units that it takes in fees and reselling them in a constant running auction. Users would thus need to "activate" their accounts with ether, but once the ether is there it would be reusable because the contract would refund it each time.
+これは、基礎的に、このドキュメントの冒頭で説明した"銀行システム" の状態遷移関数の文字通りの実装となります。
+このコードとは別に、初期化ステップとして通貨単位を共有するあるいはその他特例のために、数行必要となり、
+理念としては、ある function は、他の contract に、あるアドレスの残高を探索してもらうために追加されるものですが、
+コードの記述はこれで十分です。
+理論的に、Ethereum 基盤の証明書発行システムで副次通貨としてふるまうものは、
+潜在的に別の重要な特徴を持っています。それは Bitcoin 基盤の meta currency には無いもので、
+副次通貨で直接トランザクションの手数料の支払いが可能だという機能です。
+もしこれを実装すらならば、
+手数料支払いに使用される ether を送信者に 再振込 する方法をとり、
+contract は、その時の ether 残高を維持管理することになるかと思います。
+手数料支払い時、および常駐のオークションにおいて副次通貨を再度売る時、に使用される、この内部保持されている副次通貨単位を集めることで、ether の残高を再度満たすことになるでしょう。
+ユーザはこのため ether でアカウントをアクティベートする必要がありますが、
+一度 ether が確認されると、contract がその度ごとに再度振込をするので、再利用可能となるでしょう。
+
 
 ### Financial derivatives and Stable-Value Currencies
 
