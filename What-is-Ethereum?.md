@@ -23,7 +23,7 @@ In a more practical sense, Ethereum is an internet service platform for guarante
  * fully customizable payment logic; easily create your own payment system without any reliance on third parties
  * 100% ddos resistant up-time, guaranteed by being a fully decentralized blockchain-based platform
  * no-fuss storage: forget about having to set up secure databases; Ethereum gives you as much 
- * ultimate interoperability: everything in the Ethereum ecosystem and trivially interact with everything else, from reputation to custom currencies 
+ * ultimate interoperability: everything in the Ethereum ecosystem can trivially interact with everything else, from reputation to custom currencies 
  * server free zone: your whole application can be deployed on the blockchain meaning no need for setting up or maintaining servers; let your users pay for the cost of them using your service.
 
 We have seen the development of services and infrastructure to make the overhead of running businesses simpler and less expensive particularly accelerate over the last fifty years, mainly thanks to the internet. The likes of eBay, Etsy and Airbnb have made setting up a shop or hotel much easier. These are platforms that allow people to set-up their service quickly, as long as the service they want to provide fits the template offered by the platform. Ethereum, in this sense, is a platform for platforms. It allows people to easily set up the infrastructure to make it easy to set up new services on the internet. Importantly, because there is not a company or indeed any entity in charge of or controlling Ethereum, the cost of running the infrastructure doesn't have to include any profit margin, so we are likely to see lower costs.
