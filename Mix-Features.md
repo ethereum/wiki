@@ -172,3 +172,7 @@ One of the common error is that the current account does not have enough ether t
 Users should be aware of that and the status panel should display the amount of gas needed, and the current amount of ether that the user has given for this transaction.
 Other important error messages will be displayed here.
 
+# Highlight secondary error locations
+
+If the current compilation error has secondary errors locations Mix shows those secondary errors.
+In each secondary errors Mix shows where (document) the primary error is.
