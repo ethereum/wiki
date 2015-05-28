@@ -749,20 +749,44 @@ contract は、その時の ether 残高を維持管理することになるか�
 一度 ether が確認されると、contract がその度ごとに再度振込をするので、再利用可能となるでしょう。
 
 
-### Financial derivatives and Stable-Value Currencies
+### 金融ディリバティブ と 安定価格通貨
 
-Financial derivatives are the most common application of a "smart contract", and one of the simplest to implement in code. The main challenge in implementing financial contracts is that the majority of them require reference to an external price ticker; for example, a very desirable application is a smart contract that hedges against the volatility of ether (or another cryptocurrency) with respect to the US dollar, but doing this requires the contract to know what the value of ETH/USD is. The simplest way to do this is through a "data feed" contract maintained by a specific party (eg. NASDAQ) designed so that that party has the ability to update the contract as needed, and providing an interface that allows other contracts to send a message to that contract and get back a response that provides the price.
+金融ディリバティブ は、最も一般的な、smart contract のアプリケーションであり、コード実装が最も簡単なもののひとつです。
+金融契約の実装における主な試練は、その大部分が価格表示器への外部参照が必要となるということです。
+例えば、とても望ましいアプリケーションの例として、USドルに対するEther のボラティリティ(取引規模に由来する凶暴性）に対して、ヘッジ（囲い込み：高値で売り、安値で買う）をおこなう smart contract がありますが（これは価格安定化に寄与します）、
+これを行うには、ETH/USD の価格がいくらであるかを知るための contract が必要となります。
+いちばんシンプルな実行方法としては、必要に応じて contract を更新する能力をもつように設計された(NASDAQのような) 特定のパーティにより維持管理される「 データフィード contract 」を通す方法があります。これにより、他の contract はそのデータフィード contract にメッセージを送信し、価格情報が与えられた返答を受け取ることができます。
 
-Given that critical ingredient, the hedging contract would look as follows:
 
-1. Wait for party A to input 1000 ether.
-2. Wait for party B to input 1000 ether.
-3. Record the USD value of 1000 ether, calculated by querying the data feed contract, in storage, say this is $x.
-4. After 30 days, allow A or B to "reactivate" the contract in order to send $x worth of ether (calculated by querying the data feed contract again to get the new price) to A and the rest to B.
+それらの深刻材料が与えられた条件下において, ヘッジング contract は次のようになるでしょう :
 
-Such a contract would have significant potential in crypto-commerce. One of the main problems cited about cryptocurrency is the fact that it's volatile; although many users and merchants may want the security and convenience of dealing with cryptographic assets, they many not wish to face that prospect of losing 23% of the value of their funds in a single day. Up until now, the most commonly proposed solution has been issuer-backed assets; the idea is that an issuer creates a sub-currency in which they have the right to issue and revoke units, and provide one unit of the currency to anyone who provides them (offline) with one unit of a specified underlying asset (eg. gold, USD). The issuer then promises to provide one unit of the underlying asset to anyone who sends back one unit of the crypto-asset. This mechanism allows any non-cryptographic asset to be "uplifted" into a cryptographic asset, provided that the issuer can be trusted.
+1. パーティ A が 1000 ether 入金するのを待ちます
+2. パーティ B が 1000 ether 入金するのを待ちます
+3. 1000 ether の USD での価値を記録します。これはデータフィード contract を探索することで計算され、ストレージに対し、「Xドルだ」と告げます（記録します）
+4. 30日後、（データフィード contract から得られた新しい価格によって計算された）Xドル相当の ether をAに送信し、
+残りをBに送るのに、A もしくは B が 該当 contract を再アクティベートすることができるようにします。
 
-In practice, however, issuers are not always trustworthy, and in some cases the banking infrastructure is too weak, or too hostile, for such services to exist. Financial derivatives provide an alternative. Here, instead of a single issuer providing the funds to back up an asset, a decentralized market of speculators, betting that the price of a cryptographic reference asset (eg. ETH) will go up, plays that role. Unike issuers, speculators have no option to default on their side of the bargain because the hedging contract holds their funds in escrow. Note that this approach is not fully decentralized, because a trusted source is still needed to provide the price ticker, although arguably even still this is a massive improvement in terms of reducing infrastructure requirements (unlike being an issuer, issuing a price feed requires no licenses and can likely be categorized as free speech) and reducing the potential for fraud.
+
+このような contract には暗号取引における重要な潜在価値があるでしょう。
+暗号通貨を取引等に引用するときに現れる主要な問題として、極めてボラティリティが高いということがあります。
+多くのユーザや商売人が暗号通貨の取引の利便性やセキュリティを望んでいるかもしれないにもかかわらず、
+たった1日で資金の23％を失うという場面には直面したくないでしょう。
+この問題に対して、いままでに提案された、最も一般的な解決策としてあるのは、発行者の後ろ盾のある財産 です。
+この考えは、発行者が発行並びに無効化の権利を有した副次通貨をつくり、
+金やUSDのような特定の基礎財産の一単位をオフラインで提供する全ての人に対し、その副次通貨の一単位を提供するというものです。
+そして発行者は、暗号副次通貨が送り返されたときには、基礎財産を提供することを約束します。
+この仕組みによって、全ての非暗号化財産が、暗号財産へと "上場" されることが可能となりますが、これは発行主体が信用可能であることにより実現します。
+
+
+しかし実際は、発行主体は常に信用に価するとは限らず、
+中には、その銀行システムはあまりにも脆弱であったり、
+あまりにも顧客対抗的であるようなことが見受けられ、
+これは金融サービスとしてはとてもあるまじきものとなりえます。
+金融ディリバティブ はこれに取って代わり、よりよいサービスを提供します。
+金融ディリバティブにおいては、財産をバックアップするための資金を提供する単一の発行主体の代わりに、
+分散型の投資市場、つまり ETH ような暗号参照財産の価格が上昇するか賭けをする場所、がその役割を担います。
+発行主体とは違って、投資家は自分たちの都合で売り出しをなかったことにすることができません。というのは、「 ヘッジング contract 」がエスクローとして資金を保持しているからです。この方法でも、まだ完全に非中央集約化したわけではないことに注意してください。というのは、価格表示器を提供するのに信用あるデータソースが必要となります。とはいうものの、中央集約型のインフラに対する要求事項を減らし、かつ詐欺の潜在性を減らした点で大きな進歩と言えます。（副次通貨の発行主体となるのとは違って、価格データの発行はライセンスが必要とされず、表現が自由な範疇に分類される可能性が高いのです。（そのため参入への垣根が低い自由競争をもたらします。））
+
 
 ### Identity and Reputation Systems
 
