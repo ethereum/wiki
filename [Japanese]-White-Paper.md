@@ -50,8 +50,8 @@ Ethereum が提供しようとしているものは、チューリング完全�
 * [アプリケーション](#applications)
     * [証明書発行のシステム](#token-systems)
     * [金融ディリバティブ](#financial-derivatives-and-stable-value-currencies)
-    * [Identity and Reputation Systems](#identity-and-reputation-systems)
-    * [Decentralized File Storage](#decentralized-file-storage)
+    * [Identity と Reputation のシステム](#identity-and-reputation-systems)
+    * [分散型ファイルストレージ](#decentralized-file-storage)
     * [Decentralized Autonomous Organizations](#decentralized-autonomous-organizations)
     * [Further Applications](#further-applications)
 * [Miscellanea And Concerns](#miscellanea-and-concerns)
@@ -788,23 +788,60 @@ contract は、その時の ether 残高を維持管理することになるか�
 発行主体とは違って、投資家は自分たちの都合で売り出しをなかったことにすることができません。というのは、「 ヘッジング contract 」がエスクローとして資金を保持しているからです。この方法でも、まだ完全に非中央集約化したわけではないことに注意してください。というのは、価格表示器を提供するのに信用あるデータソースが必要となります。とはいうものの、中央集約型のインフラに対する要求事項を減らし、かつ詐欺の潜在性を減らした点で大きな進歩と言えます。（副次通貨の発行主体となるのとは違って、価格データの発行はライセンスが必要とされず、表現が自由な範疇に分類される可能性が高いのです。（そのため参入への垣根が低い自由競争をもたらします。））
 
 
-### Identity and Reputation Systems
+### Identity と Reputation のシステム
 
-The earliest alternative cryptocurrency of all, [Namecoin](http://namecoin.org/), attempted to use a Bitcoin-like blockchain to provide a name registration system, where users can register their names in a public database alongside other data. The major cited use case is for a [DNS](http://en.wikipedia.org/wiki/Domain_Name_System) system, mapping domain names like "bitcoin.org" (or, in Namecoin's case, "bitcoin.bit") to an IP address. Other use cases include email authentication and potentially more advanced reputation systems. Here is the basic contract to provide a Namecoin-like name registration system on Ethereum:
+すべての代替暗号通貨のなかでいちばん早くに登場した [Namecoin](http://namecoin.org/) は、
+名前登録サービスに Bitcoin と似た blockchain を用いる試みを行いました。
+そこでは、ユーザは他のデータとともに 名前 を公共的なデータベースに登録することができます。 
+Namecoin の最も広く普及した利用方法は、[DNS](http://en.wikipedia.org/wiki/Domain_Name_System) システムとして使う方法で、
+"bitcoin.org" のような名前を、IPアドレスに対応（ mapping )づけたものです。
+他の使用方法として、email authentication や、潜在的発展性のある reputation システム などが考えられます。
+以下に、Namecoin に似た名前登録システムの Ethereum 上での、基本 contract を示します。
 
     def register(name, value):
         if !self.storage[name]:
             self.storage[name] = value
 
-The contract is very simple; all it is is a database inside the Ethereum network that can be added to, but not modified or removed from. Anyone can register a name with some value, and that registration then sticks forever. A more sophisticated name registration contract will also have a "function clause" allowing other contracts to query it, as well as a mechanism for the "owner" (ie. the first registerer) of a name to change the data or transfer ownership. One can even add reputation and web-of-trust functionality on top.
+contract はとてもシンプルです。
+システムの全容は、追加のみが可能で削除および修正が不可能な Ethereum ネットワーク内部にあるデータベースです。
+誰でも、幾つかの値とともに名前を登録することが可能で、その登録内容は永遠に保管されます。
+より洗練された名前登録 contract は、他の contract がその内容を探索できるようにするための 関数節（ (内部)関数 ）をもつでしょう。
+同様に、（例えば、初期登録者のような） 名前の所有者 がデータを変更したり所有権を移行したりするためのメカニズム のようなものも考えられます。
+reputation や web上の信用度 といった機能性さえ、システムの上層に追加可能です。
 
-### Decentralized File Storage
 
-Over the past few years, there have emerged a number of popular online file storage startups, the most prominent being Dropbox, seeking to allow users to upload a backup of their hard drive and have the service store the backup and allow the user to access it in exchange for a monthly fee. However, at this point the file storage market is at times relatively inefficient; a cursory look at various [existing solutions](http://online-storage-service-review.toptenreviews.com/) shows that, particularly at the "uncanny valley" 20-200 GB level at which neither free quotas nor enterprise-level discounts kick in, monthly prices for mainstream file storage costs are such that you are paying for more than the cost of the entire hard drive in a single month. Ethereum contracts can allow for the development of a decentralized file storage ecosystem, where individual users can earn small quantities of money by renting out their own hard drives and unused space can be used to further drive down the costs of file storage.
 
-The key underpinning piece of such a device would be what we have termed the "decentralized Dropbox contract". This contract works as follows. First, one splits the desired data up into blocks, encrypting each block for privacy, and builds a Merkle tree out of it. One then makes a contract with the rule that, every N blocks, the contract would pick a random index in the Merkle tree (using the previous block hash, accessible from contract code, as a source of randomness), and give X ether to the first entity to supply a transaction with a simplified payment verification-like proof of ownership of the block at that particular index in the tree. When a user wants to re-download their file, they can use a micropayment channel protocol (eg. pay 1 szabo per 32 kilobytes) to recover the file; the most fee-efficient approach is for the payer not to publish the transaction until the end, instead replacing the transaction with a slightly more lucrative one with the same nonce after every 32 kilobytes.
+### 分散型ファイルストレージ
 
-An important feature of the protocol is that, although it may seem like one is trusting many random nodes not to decide to forget the file, one can reduce that risk down to near-zero by splitting the file into many pieces via secret sharing, and watching the contracts to see each piece is still in some node's possession. If a contract is still paying out money, that provides a cryptographic proof that someone out there is still storing the file.
+過去数年にわたり、オンライン上でのファイルストレージ・サービスのスタートアップが出現し、たくさんの非常に人気あるものが生まれました。
+一番人気のあるのが、Dropbox です。ユーザはハードドライブのバックアップをアップロードし、保管してもらうことが可能で、月額使用料と引き換えにそのデータにアクセスできます。
+しかしながら、使用料金支払いの点でファイルストレージの市場は比較的非効率です。
+この使用料金問題に関する様々な[現存の解決方法](http://online-storage-service-review.toptenreviews.com/)を概観しても、" uncanny valley "と呼ばれる、20-200 GBレベルでは、無料利用や企業割引が全く存在せず、ファイルストレージのアクセスに対する月額料金は、同等容量のハードドライブの調達に要する全コストをたった一ヶ月のうちに上回ってしまいます。
+Ethereum の contract によって、分散型ファイルストレージという新しい経済圏を開発することが可能で、そこでは、個人ユーザが自分のハードドライブを貸し出すことで、小遣い稼ぎが可能となり、さらに未使用領域が使用されれば、ファイルストレージのコストは下がります。
+
+そのようなデバイスを裏で繋ぎとめておくための 鍵 として、" 分散型 Dropbox contract " と命名したものがあります。
+この contract は次のように動作します。
+
+1. まずはじめに、保存したいデータをブロックに分割し、プライバシーのために各ブロックを暗号化し、
+その暗号化したブロック群から、（データ保管木として）ひとつのマークル木を作り上げます。
+2. N ブロック毎に、contract は マークル木からランダムに参照先を選び、
+（ランダム性を提供するものとしては直前のブロックハッシュを使用し、contract コードでアクセスできるようにします）、
+そのデータ木におけるその特定の参照先におけるそのブロックの所有のSPV証明のようなもの（ブロックを預けた人は当然ながら秘密鍵を持っており、その預け人の出すクイズに対して簡潔に回答した証明書）を載せたトランザクションを一番はじめに提供した個人に対して、X ether を与えます。
+
+ユーザがそれらのファイルを再ダウンロードしたいときは、
+[micropayment　channel プロトコル](https://bitcoinj.github.io/working-with-micropayments) を使用することができ、
+（例えば 32 KBで 1 szabo 支払うといった具合で、) ファイルを復元することできます。
+micropayment channel を利用した最も支払い効率のよい方法は、
+支払い者がその終わりまでトランザクションを発行せず、
+かわりに、そのトランザクションを32KB毎に同じノンスを使用して
+微量ではあるもののより利益を生むトランザクションに置き換え続けるというやり方です。
+
+この 分散型 dropbox protocol の重要な性質として、
+預け人はたくさんの乱雑なノードがファイルを忘れてしまうという決定をしないものと信用しているように見えるかもしれませんが、
+秘密共有を通して、ファイルをたくさんの断片へと分割することで、また各断片がどこかのノードに未だに保存されていることを確認するために contract を監視することで、そのリスクは限りなくゼロに近づきます。
+もし、その contract がお金の支払いを続けていたならば、それは、誰かまだファイルを所有している人がいるといった 暗号学的証拠 を提供していることとなります。
+
+
 
 ### Decentralized Autonomous Organizations
 
