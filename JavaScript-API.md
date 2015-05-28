@@ -1532,7 +1532,7 @@ Compiles solidity source code.
 
 ##### Returns
 
-`String` - The compiled solidity code as HEX string.
+`Object` - Contract and compiler info.
 
 
 ##### Example
@@ -1544,9 +1544,44 @@ var source = "" +
     "       return a * 7;\n" +
     "   }\n" +
     "}\n";
-var code = web3.eth.compile.solidity(source);
-console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c6888fa114601857005b6021600435602b565b8060005260206000f35b600081600702905091905056"
-```
+var compiled = web3.eth.compile.solidity(source);
+console.log(compiled); 
+// {
+  "test": {
+    "code": "0x605280600c6000396000f3006000357c010000000000000000000000000000000000000000000000000000000090048063c6888fa114602e57005b60376004356041565b8060005260206000f35b6000600782029050604d565b91905056",
+    "info": {
+      "source": "contract test {\n\tfunction multiply(uint a) returns(uint d) {\n\t\treturn a * 7;\n\t}\n}\n",
+      "language": "Solidity",
+      "languageVersion": "0",
+      "compilerVersion": "0.8.2",
+      "abiDefinition": [
+        {
+          "constant": false,
+          "inputs": [
+            {
+              "name": "a",
+              "type": "uint256"
+            }
+          ],
+          "name": "multiply",
+          "outputs": [
+            {
+              "name": "d",
+              "type": "uint256"
+            }
+          ],
+          "type": "function"
+        }
+      ],
+      "userDoc": {
+        "methods": {}
+      },
+      "developerDoc": {
+        "methods": {}
+      }
+    }
+  }
+}```
 
 ***
 
