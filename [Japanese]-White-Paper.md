@@ -49,7 +49,7 @@ Ethereum が提供しようとしているものは、チューリング完全�
     * [Blockchain と 採掘](#blockchain-and-mining)
 * [アプリケーション](#applications)
     * [証明書発行のシステム](#token-systems)
-    * [Financial derivatives](#financial-derivatives-and-stable-value-currencies)
+    * [金融ディリバティブ](#financial-derivatives-and-stable-value-currencies)
     * [Identity and Reputation Systems](#identity-and-reputation-systems)
     * [Decentralized File Storage](#decentralized-file-storage)
     * [Decentralized Autonomous Organizations](#decentralized-autonomous-organizations)
