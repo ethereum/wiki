@@ -27,13 +27,14 @@ The following elementary types exist:
 - `real<N>x<M>`: fixed-point signed number of `N+M` bits, `0 < N + M <= 256`, `N % 8 == M % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
 - `ureal<N>x<M>`: unsigned variant of `real<N>x<M>`.
 - `real`, `ureal`: synonyms for `real128x128`, `ureal128x128` respectively (not to be used for computing the function selector).
-- `bytes<N>`: binary type of `N` bytes, `N >= 0`. Unicode strings are assumed to be UTF-8 encoded.
+- `bytes<N>`: binary type of `N` bytes, `N >= 0`.
 
 The following (fixed-size) array type exists:
 - `<type>[N]`: a fixed-length array of the given fixed-length type.
 
 The following non-fixed-size types exist: 
-- `bytes`: dynamic sized string. Unicode strings are assumed to be UTF-8 encoded.
+- `bytes`: dynamic sized byte sequence.
+- `string`: dynamic sized unicode string assumed to be UTF-8 encoded.
 - `<type>[]`: a variable-length array of the given fixed-length type.
 
 ### Formal Specification of the Encoding
@@ -55,6 +56,7 @@ We distinguish static and dynamic types. Static types are encoded in-place and d
 
 **Definition:** The following types are called "dynamic":
 * `bytes`
+* `string`
 * `T[]` for any `T`
 * `T[k]` for any dynamic `T` and any `k > 0`
 
@@ -97,6 +99,10 @@ on the type of `X` being
   `enc(X) = enc(k) pad_right(X)`, i.e. the number of bytes is encoded as a
     `uint256` followed by the actual value of `X` as a byte sequence, followed by
     the minimum number of zero-bytes such that `len(enc(X))` is a multiple of 32.
+
+- `string`:
+
+  `enc(X) = enc(enc_utf8(X))`, i.e. `X` is utf-8 encoded and this value is interpreted as of `bytes` type and encoded further.
 
 - `uint<N>`: `enc(X)` is the big-endian encoding of `X`, padded on the higher-order (left) side with zero-bytes such that the length is a multiple of 32 bytes.
 - `address`: as in the `uint160` case
