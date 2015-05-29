@@ -13,8 +13,8 @@ Peers should exchange their latest block number in the Status packet. Also, ther
     **Status** [`+0x00`: `P`, `protocolVersion`: `P`, `networkId`: `P`, `td`: `P`, `bestHash`: `B_32`, `genesisHash`: `B_32`, `number`: `P`] 
        * `number`: Number of the last block
 
-2.  Introduce a new packet: `BlockHashesFromNumbers`, into the slot `+0x08` (new).
+2.  Introduce a new packet: `BlockHashesFromNumber`, into the slot `+0x08` (new).
 
-**BlockHashesFromNumbers**
+**BlockHashesFromNumber**
 [`+0x08`: `P`, `number`: `P`, `maxBlocks`: `P`]
 Requests a BlockHashes message detailing a number of the first block hash and a total of hashes to be sent. Returned hash list must be ordered by block number in ascending order.
