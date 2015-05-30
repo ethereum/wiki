@@ -4,7 +4,7 @@
 
 ナカモトサトシの論文により、2009年に開発された Bitcoin は通貨・貨幣における革新的な発明だと
 謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。 
-- see [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/)　  
+see [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/)　  
 しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。
 それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、急速に人々の注目を集めつつあります。
 
@@ -16,13 +16,10 @@ blockchain 上の電子財産を実装したものとして:
 * 基礎となる物理デバイスの所有権  ([ smart property ](https://en.bitcoin.it/wiki/Smart_Property))
 * ドメインのような投資対象外の財産　([ Namecoin ](http://namecoin.org))  
 
-
 があり、より複雑なアプリケーションとしては以下のものが挙げられます:
 
 * ( 役人や銀行員に取って代わり、)コーディングによってあらゆるルールを実装することで、個々の電子資産を管理しようというもの([ smart contracts ](http://szabo.best.vwh.net/smart_contracts_idea.html))
 * 上記のスマートコントラクトを blockchain 上で実装したもの ([ decentralized autonomous organizations (分散型自動組織) ](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAOs))
-
-
 
 Ethereum が提供しようとしているものは、チューリング完全なプログラミング言語の完成品を
  blockchain に埋め込み提供することにあります。
