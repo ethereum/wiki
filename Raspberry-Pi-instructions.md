@@ -1,4 +1,4 @@
-## Get the "everything-is-ready" image
+## Get the "everything-is-ready" image for your Raspberry Pi 2
 Download from: http://gav.ethdev.com/ArchLinuxEthereum.img.zip
 (it's 2.1 GB in size, if you want to save bandwidth, go and build it yourself, see instructions below)
 
