@@ -51,9 +51,9 @@ Ethereum が提供しようとしているものは、チューリング完全�
     * [証明書発行のシステム](#token-systems)
     * [金融ディリバティブ](#financial-derivatives-and-stable-value-currencies)
     * [Identity と Reputation のシステム](#identity-and-reputation-systems)
-    * [分散型ファイルストレージ](#decentralized-file-storage)
-    * [Decentralized Autonomous Organizations](#decentralized-autonomous-organizations)
-    * [Further Applications](#further-applications)
+    * [非中央型ファイルストレージ](#decentralized-file-storage)
+    * [非中央型自動組織](#decentralized-autonomous-organizations)
+    * [その他のアプリケーション](#further-applications)
 * [Miscellanea And Concerns](#miscellanea-and-concerns)
     * [Modified GHOST Implementation](#modified-ghost-implementation)
     * [Fees](#fees)
@@ -811,7 +811,7 @@ reputation や web上の信用度 といった機能性さえ、システムの�
 
 
 
-### 分散型ファイルストレージ
+### 非中央型ファイルストレージ
 
 過去数年にわたり、オンライン上でのファイルストレージ・サービスのスタートアップが出現し、たくさんの非常に人気あるものが生まれました。
 一番人気のあるのが、Dropbox です。ユーザはハードドライブのバックアップをアップロードし、保管してもらうことが可能で、月額使用料と引き換えにそのデータにアクセスできます。
@@ -843,43 +843,102 @@ micropayment channel を利用した最も支払い効率のよい方法は、
 
 
 
-### Decentralized Autonomous Organizations
+### 非中央型自動組織
 
-The general concept of a "decentralized autonomous organization" is that of a virtual entity that has a certain set of members or shareholders which, perhaps with a 67% majority, have the right to spend the entity's funds and modify its code. The members would collectively decide on how the organization should allocate its funds. Methods for allocating a DAO's funds could range from bounties, salaries to even more exotic mechanisms such as an internal currency to reward work. This essentially replicates the legal trappings of a traditional company or nonprofit but using only cryptographic blockchain technology for enforcement. So far much of the talk around DAOs has been around the "capitalist" model of a "decentralized autonomous corporation" (DAC) with dividend-receiving shareholders and tradable shares; an alternative, perhaps described as a "decentralized autonomous community", would have all members have an equal share in the decision making and require 67% of existing members to agree to add or remove a member. The requirement that one person can only have one membership would then need to be enforced collectively by the group.
+非中央型自動組織 Decentralized autonomous organization (DAO) の一般的な概念としては、
+会員あるいは株主が、67%以上の多数派を占めると、contract コードの修正や、資金の消費が可能となる、仮想団体としてのものです。
+会員であれば、まとまることで資金の使い道を決定することができるでしょう。
+資金の使い道としては、懸賞金、給料、あるいは、労働報酬として使用価値のある域内通貨のような、
+異文化地域における仕組みにさえ、適用するこができます。
+これは基礎的に、
+伝統的な会社や非営利組織を合法的にとらえることのできる枠組みでありますが、
+執行に際し使用するのは、暗号理論に則った blockchain テクノロジー だけとなります。
 
-A general outline for how to code a DAO is as follows. The simplest design is simply a piece of self-modifying code that changes if two thirds of members agree on a change. Although code is theoretically immutable, one can easily get around this and have de-facto mutability by having chunks of the code in separate contracts, and having the address of which contracts to call stored in the modifiable storage. In a simple implementation of such a DAO contract, there would be three transaction types, distinquished by the data provided in the transaction:
+DAO の議論をさらに進めると、配当株主や株券をともなう 非中央型自動株式会社 DACorp (decentralized autonomous corporation) といった資本主義を推し進めるモデルに行き当たりました。
+代案としてある、非中央型自動共同体 DACom (decentralizd autonomous community) では、
+会員の除名あるいは入会を承認するといった決定に関し、全会員が平等に権利を保持し、在籍会員の67％の承認を必要とします。
+というのは、一人一会員のみという要望があれば、グループによってまとまって執行される必要が有るのです。
+（非中央型自動株式会社では、当然大株主が決定権を支配するので、こういった要望は、却下されるでしょう。）
+
+DAO をコード化する方法の概要は次のようになります。
+一番シンプルな設計を示しますと、それは「もし、2/3の会員が賛同すれば、変更する」といった 自己修正コード です。
+理論的には contract コードは不変なものですが、
+別のところに contract を複数保持し、
+ストレージは修正可能なので、そこに呼び出す contract のアドレスを保持することで、
+事実として、contract の書き換えが可能となります。
+DAO contract のようなものの簡素な実装において、そのトランザクションが提供するデータによって、
+三種類に分けることができます。
 
 * `[0,i,K,V]` to register a proposal with index `i` to change the address at storage index `K` to value `V`
 * `[0,i]` to register a vote in favor of proposal `i`
 * `[2,i]` to finalize proposal `i` if enough votes have been made
 
-The contract would then have clauses for each of these. It would maintain a record of all open storage changes, along with a list of who voted for them. It would also have a list of all members. When any storage change gets to two thirds of members voting for it, a finalizing transaction could execute the change. A more sophisticated skeleton would also have built-in voting ability for features like sending a transaction, adding members and removing members, and may even provide for [Liquid Democracy](http://en.wikipedia.org/wiki/Delegative_democracy)-style vote delegation (ie. anyone can assign someone to vote for them, and assignment is transitive so if A assigns B and B assigns C then C determines A's vote). This design would allow the DAO to grow organically as a decentralized community, allowing people to eventually delegate the task of filtering out who is a member to specialists, although unlike in the "current system" specialists can easily pop in and out of existence over time as individual community members change their alignments.
+contract はこれら各種類ごとに、複数の条項を持つでしょう。
+contract は、誰が投票したかというリストに従い、全オープンストレージの書き換えを維持管理するでしょう。
+さらに、contract は、全会員のリストも保持するでしょう。
+どんなストレージの変化も、それが投票する会員の2/3に達したとき、ある最終決定トランザクションがその変化を執行できることとなるでしょう。
+より洗練された枠組みとしては、
+トランザクションの送信、会員の除名や入会のような特徴を組み込んだ投票システムを保持するものもあり、
+そして流動的民主主義 [Liquid Democracy](http://en.wikipedia.org/wiki/Delegative_democracy) スタイルの代議員議会の投票でさえ提供可能です。
+（※誰でも代議員選出が可能で、その選出投票は、遷移的であり、結果、もしAがBを、BがCを選出したならば、CはAの投票権を保持することになります。）
+この設計であれば、DAO は非中央型コミュニティとして、有機的成長を遂げることが可能で、
+民衆は結果的に、会員の選出作業を専門家に委任することが可能となります。
+しかし、これは "現行の政治システム"にみうけられるようなものとは異なり、 
+個々のコミュニティメンバが提携先を変えることで、時間軸上において、専門家は簡単に出現と消失（取り替え）することが可能です。
 
-An alternative model is for a decentralized corporation, where any account can have zero or more shares, and two thirds of the shares are required to make a decision. A complete skeleton would involve asset management functionality, the ability to make an offer to buy or sell shares, and the ability to accept offers (preferably with an order-matching mechanism inside the contract). Delegation would also exist Liquid Democracy-style, generalizing the concept of a "board of directors".
+代わりとなる非中央型株式会社のモデルでは、0以上の株式をもつアカウントがあり、株式の 2/3 が決定に必要とされます。
+完璧な枠組みとしては、財産管理機能や、株式売買の申請機能および受諾機能を備えたものがあるでしょう。（ contract 内部に注文一致させる機能があることが望ましいでしょう）
+代議員選出による委任は、流動的民主主義を存在させ、" 意思決定機関 " という概念を一般化するものでしょう。
 
-### Further Applications
 
-**1. Savings wallets**. Suppose that Alice wants to keep her funds safe, but is worried that she will lose or someone will hack her private key. She puts ether into a contract with Bob, a bank, as follows:
+### その他のアプリケーション
 
-* Alice alone can withdraw a maximum of 1% of the funds per day.
-* Bob alone can withdraw a maximum of 1% of the funds per day, but Alice has the ability to make a transaction with her key shutting off this ability.
-* Alice and Bob together can withdraw anything.
+**1. 預金ウォレット**. 次のような場面を考えて下さい。アリスは、自分の資金を安全に管理したいとします。
+しかし彼女は、資産を失うことや秘密鍵がハッキングされることを心配しています。そこで彼女は、銀行となるボブとともに、
+contract をつくり、ether をその中に保管します。それは以下のようになります。
 
-Normally, 1% per day is enough for Alice, and if Alice wants to withdraw more she can contact Bob for help. If Alice's key gets hacked, she runs to Bob to move the funds to a new contract. If she loses her key, Bob will get the funds out eventually. If Bob turns out to be malicious, then she can turn off his ability to withdraw.
+* アリスは自分一人で1日あたり最大資金の1%を引き出すことが可能です。
+* ボブは自分一人で1日あたり最大資金の1%を引き出すことが可能です。しかし、アリスは自分の秘密鍵でこのボブの能力を奪い去るトランザクションを作成することができます。
+* アリスとボブは一緒であればどんな額でも引き出し可能です。
 
-**2. Crop insurance**. One can easily make a financial derivatives contract but using a data feed of the weather instead of any price index. If a farmer in Iowa purchases a derivative that pays out inversely based on the precipitation in Iowa, then if there is a drought, the farmer will automatically receive money and if there is enough rain the farmer will be happy because their crops would do well. This can be expanded to natural disaster insurance generally.
+通常、1日1％というは、アリスにとって十分な額であり、もしそれ以上引き出したいのであれば、ボブに頼めば済む話となります。
+もし、アリスが秘密鍵をハッキングされたならば、アリスは、ボブのところに駆け寄り、ふたりで新しい contract に資金を移します。
+もし、彼女が秘密鍵をなくしてしまえば、結果として、ボブは資金を引き出すことになるでしょう。
+もしも、ボブが悪意をもっているとわかったならば、アリスは、ボブの引き出し能力を消去できます。
 
-**3. A decentralized data feed**. For financial contracts for difference, it may actually be possible to decentralize the data feed via a protocol called "[SchellingCoin](http://blog.ethereum.org/2014/03/28/schellingcoin-a-minimal-trust-universal-data-feed/)". SchellingCoin basically works as follows: N parties all put into the system the value of a given datum (eg. the ETH/USD price), the values are sorted, and everyone between the 25th and 75th percentile gets one token as a reward. Everyone has the incentive to provide the answer that everyone else will provide, and the only value that a large number of players can realistically agree on is the obvious default: the truth. This creates a decentralized protocol that can theoretically provide any number of values, including the ETH/USD price, the temperature in Berlin or even the result of a particular hard computation.
+**2. 農作物保険**. 金融ディリバティブ contract は簡単に作成可能ですが、データフィードとして、価格表示器でなく天候を使用します。
+アイオワ にいる農家が、逆にアイオワ における降水量を基盤として逆に支払いをするディリバティブを購入したとすると、
+もし干ばつがあったならば、農家は自動的にお金を受け取り、もし十分な降水があったなら、作物が同様の働きをしてくれるので、農家は幸運を手に入れることができます。これは一般的に、自然災害の保険にも拡張可能です。
 
-**4. Smart multisignature escrow**. Bitcoin allows multisignature transaction contracts where, for example, three out of a given five keys can spend the funds. Ethereum allows for more granularity; for example, four out of five can spend everything, three out of five can spend up to 10% per day, and two out of five can spend up to 0.5% per day. Additionally, Ethereum multisig is asynchronous - two parties can register their signatures on the blockchain at different times and the last signature will automatically send the transaction.
+**3. 非中央型データフィード**. 金融 contract その他において、"[SchellingCoin](http://blog.ethereum.org/2014/03/28/schellingcoin-a-minimal-trust-universal-data-feed/)" と呼ばれるプロトコルを通してデータフィードを非中央化することが実際可能です。
+SchellingCoin は基本的に次のように動作します。
+N 個のパーティが全て、ある与えられた一つのデータ（例えば ETH/USD の価格）の値をそれぞれ提供するものとします。
+その価格の値はソートされ、その値の順番が 25% ~ 75% であるものが、報酬を得られるようにします。
+全員が、他の全員が提供するだろう答えを提供するインセンティブを保持し、その大多数のプレイヤが現実的に認める唯一の価格が、明白な基準となり、これは信用のおけるものとなります。
+これによって、理論的にどんな数値をも提供することが可能な、非中央型プロトコルが作られます。
+それには、ETH/USD価格、ベルリンの気温、あるいは特定の重い計算の結果、でさえ含まれます。
 
-**5. Cloud computing**. The EVM technology can also be used to create a verifiable computing environment, allowing users to ask others to carry out computations and then optionally ask for proofs that computations at certain randomly selected checkpoints were done correctly. This allows for the creation of a cloud computing market where any user can participate with their desktop, laptop or specialized server, and spot-checking together with security deposits can be used to ensure that the system is trustworthy (ie. nodes cannot profitably cheat). Although such a system may not be suitable for all tasks; tasks that require a high level of inter-process communication, for example, cannot easily be done on a large cloud of nodes. Other tasks, however, are much easier to parallelize; projects like SETI@home, folding@home and genetic algorithms can easily be implemented on top of such a platform.
+**4. スマート・マルチシグネチャ 認証**. Bitcoin では マルチシグネチャ・トランザクション contact が可能で、例えば、５つの秘密鍵のうち、３つが揃えば資金を使用できるといったものです。
+Ethereum では、より詳細な設計が可能です。たとえば、５つのうち４つで全て使用可能とし、５つのうち３つで1日10%使用可能とし、５つのうち２つで1日0.5%使用可能とすることができます。
+加えて、Ethereum マルチシグネチャは同期します。というのは二つのパーティが、別々の時間に blockchain 上に署名を登録することが可能で、その最後の署名が行われれば、自動的にトランザクションは送信されます。
 
-**6. Peer-to-peer gambling**. Any number of peer-to-peer gambling protocols, such as Frank Stajano and Richard Clayton's [Cyberdice](http://www.cl.cam.ac.uk/~fms27/papers/2008-StajanoCla-cyberdice.pdf), can be implemented on the Ethereum blockchain. The simplest gambling protocol is actually simply a contract for difference on the next block hash, and more advanced protocols can be built up from there, creating gambling services with near-zero fees that have no ability to cheat.
 
-**7. Prediction markets**. Provided an oracle or SchellingCoin, prediction markets are also easy to implement, and prediction markets together with SchellingCoin may prove to be the first mainstream application of [futarchy](http://hanson.gmu.edu/futarchy.html) as a governance protocol for decentralized organizations.
+**5. クラウド・コンピューティング**. EVM テクノロジは、検証可能な計算環境を構築する目的でも使用され、
+ユーザは他人に対して、計算の実行を依頼することができます。またオプションとしてランダムに選択したチェックポイントにおける、計算の整合性を示した証拠の提出を依頼することができます。
+これによって、クラウド・コンピューティングの市場を作ることが可能で、どんなユーザでも、デスクトップ型あるいはノートパソコンあるいは特化型サーバを用いて参加することが可能です。そして、セキュリティ課金を用いたスポットチェックにより、システムが信用に足るかということを確かめます。（結果ノードはチートすることによって、より利益を得ることはできません。）
+このようなシステムは、あらゆるタスクに適する、ということはないかもしれません。たとえば、内部プロセスにおける高度な連携が必要なタスクだと複数のノードによる大きなクラウドにおいて、簡単に計算することは不可能です。
+しかしながら、他のタスクは容易に並列化可能で、SETI@home 、folding@home や 遺伝的アルゴリズム のようなプロジェクトは簡単に、プラットフォーム上に構築可能です。
 
-**8. On-chain decentralized marketplaces**, using the identity and reputation system as a base.
+**6. P2P 賭博**. P2P賭博プロトコルはいくらでも実装可能で、例えば、
+Frank Stajano と Richard Clayton による [Cyberdice](http://www.cl.cam.ac.uk/~fms27/papers/2008-StajanoCla-cyberdice.pdf) は Ethereum blockchain 上で実装できます。
+簡素な賭博プロトコルは実はただの次のブロックのハッシュ値を当てるだけの contract で、より進化したプロトコルはそこから作り上げることが可能で、チート不可能な手数料が０に近い賭博サービスを作ることができます。
+
+**7. 市場予測**. SchellingCoin あるいは Oracle が提供されることで、市場予測もまた実装が容易となります。
+市場予測と SchellingCoin が一緒になることで、非中央組織の統治プロトコルである [futarchy](http://hanson.gmu.edu/futarchy.html) の主流アプリケーションとしては初のものと成る可能性があります。
+
+**8. blockchain 上の商取引市場**, Identity と Reputation のシステムを基盤とします。
+
+
 
 ## Miscellanea And Concerns
 
