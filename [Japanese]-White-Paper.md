@@ -4,7 +4,7 @@
 
 ナカモトサトシの論文により、2009年に開発された Bitcoin は通貨・貨幣における革新的な発明だと
 謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。 
-see [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、急速に人々の注目を集めつつあります。
+（see [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) ）しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、急速に人々の注目を集めつつあります。
 
 一般的に、
 blockchain テクノロジーを引用している Bitcoin の代替アプリで、
