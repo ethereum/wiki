@@ -22,7 +22,14 @@ web3.eth.getBlock(48, function(error, result){
 
 ## Batch requests
 
-TODO
+Batch requests allow queuing up requests and processing them at once.
+
+```js
+var batch = web3.createBatch();
+batch.add(web3.eth.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
+batch.add(web3.eth.contract(abi).at(address).balance.request(address, callback2));
+batch.execute();
+```
 
 ## A note on big numbers in JavaScript
 
