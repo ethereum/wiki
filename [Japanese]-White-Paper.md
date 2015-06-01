@@ -1,10 +1,11 @@
 # Ethereum 白書
 
-### A Next-Generation Smart Contract and Decentralized Application Platform
+### 次世代スマートコントラクトと分散型アプリケーション基盤
 
 ナカモトサトシの論文により、2009年に開発された Bitcoin は通貨・貨幣における革新的な発明だと
-謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。 
-（see [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) ）しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、急速に人々の注目を集めつつあります。
+謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。
+（ [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) ）しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。
+それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、急速に人々の注目を集めつつあります。
 
 一般的に、
 blockchain テクノロジーを引用している Bitcoin の代替アプリで、
@@ -16,8 +17,8 @@ blockchain 上の電子財産を実装したものとして:
 
 があり、より複雑なアプリケーションとしては以下のものが挙げられます:
 
-* ( 役人や銀行員に取って代わり、)コーディングによってあらゆるルールを実装することで、個々の電子資産を管理しようというもの([ smart contracts ](http://szabo.best.vwh.net/smart_contracts_idea.html))
-* 上記のスマートコントラクトを blockchain 上で実装したもの ([ decentralized autonomous organizations (分散型自動組織) ](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAOs))
+* ( 役人や銀行員に取って代わり、)コーディングによってあらゆるルールを実装することで、個々の電子資産を管理するもの([ smart contracts ](http://szabo.best.vwh.net/smart_contracts_idea.html))
+* 上記のスマートコントラクトを blockchain 上で実装したもの ([ 分散型自動組織 ](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAOs))
 
 Ethereum が提供しようとしているものは、チューリング完全なプログラミング言語の完成品を
  blockchain に埋め込み提供することにあります。
@@ -46,8 +47,8 @@ Ethereum が提供しようとしているものは、チューリング完全�
     * [証明書発行のシステム](#token-systems)
     * [金融ディリバティブ](#financial-derivatives-and-stable-value-currencies)
     * [Identity と Reputation のシステム](#identity-and-reputation-systems)
-    * [非中央型ファイルストレージ](#decentralized-file-storage)
-    * [非中央型自動組織](#decentralized-autonomous-organizations)
+    * [分散型ファイルストレージ](#decentralized-file-storage)
+    * [分散型自律組織](#decentralized-autonomous-organizations)
     * [その他のアプリケーション](#further-applications)
 * [Miscellanea And Concerns](#miscellanea-and-concerns)
     * [Modified GHOST Implementation](#modified-ghost-implementation)
@@ -496,8 +497,8 @@ Ethereum では、「状態」は、「アカウント」と呼ばれるオブ�
 
 Ether は、Ethereum における主要な内部暗号燃料であり、トランザクション手数料を支払うために使用されます。
 一般的に、アカウントには二つの種類があります。
-秘密鍵により管理される**externally owned accounts** と自身のコントラクトコードにより管理される**contract account**です。
-EOA (externally owned account) はコードを持たず、EOAからトランザクションを生成し署名することによって メッセージ を送ることができます。contract (contract account) では、メッセージを受信した時はいつも保持コードをアクティベートし、内部ストレージを読み書き可能にし、メッセージを送信するもしくは新しいコントラクトを作る、といった内容のことが順番に実行されます。
+秘密鍵により管理される **EOA (externally owned accounts)** と自身のコントラクトコードにより管理される **contract (contract account)** です。
+EOA はコードを持たず、EOA からトランザクションを生成し署名することによって メッセージ を送ることができます。contract では、メッセージを受信した時はいつも保持コードをアクティベートし、内部ストレージを読み書き可能にし、メッセージを送信するもしくは新しいコントラクトを作る、といった内容のことが順番に実行されます。
 
 Ethereum における contract は履行されるべきあるいは一緒にコンパイルされるべきものというよりかはむしろ、
 Ethereum 実行環境を職場とする「自動金融エージェント」といったものに似ており、メッセージやトランザクションによって起動されたときには、いつもある特定のコードを実行し、自身の ether 残高と、なんども使う変数を把握するのに必要な key/value ストレージ を直接管理する権限を持っている、ということに注意してください。
@@ -806,7 +807,7 @@ reputation や web上の信用度 といった機能性さえ、システムの�
 
 
 
-### 非中央型ファイルストレージ
+### 分散型ファイルストレージ
 
 過去数年にわたり、オンライン上でのファイルストレージ・サービスのスタートアップが出現し、たくさんの非常に人気あるものが生まれました。
 一番人気のあるのが、Dropbox です。ユーザはハードドライブのバックアップをアップロードし、保管してもらうことが可能で、月額使用料と引き換えにそのデータにアクセスできます。
@@ -838,9 +839,9 @@ micropayment channel を利用した最も支払い効率のよい方法は、
 
 
 
-### 非中央型自動組織
+### 分散型自律組織
 
-非中央型自動組織 Decentralized autonomous organization (DAO) の一般的な概念としては、
+分散型自律組織 Decentralized autonomous organization (DAO) の一般的な概念としては、
 会員あるいは株主が、67%以上の多数派を占めると、contract コードの修正や、資金の消費が可能となる、仮想団体としてのものです。
 会員であれば、まとまることで資金の使い道を決定することができるでしょう。
 資金の使い道としては、懸賞金、給料、あるいは、労働報酬として使用価値のある域内通貨のような、
@@ -849,8 +850,8 @@ micropayment channel を利用した最も支払い効率のよい方法は、
 伝統的な会社や非営利組織を合法的にとらえることのできる枠組みでありますが、
 執行に際し使用するのは、暗号理論に則った blockchain テクノロジー だけとなります。
 
-DAO の議論をさらに進めると、配当株主や株券をともなう 非中央型自動株式会社 DACorp (decentralized autonomous corporation) といった資本主義を推し進めるモデルに行き当たりました。
-代案としてある、非中央型自動共同体 DACom (decentralizd autonomous community) では、
+DAO の議論をさらに進めると、配当株主や株券をともなう 分散型自律株式会社 DACorp (decentralized autonomous corporation) といった資本主義を推し進めるモデルに行き当たりました。
+代案としてある、分散型自律共同体 DACom (decentralizd autonomous community) では、
 会員の除名あるいは入会を承認するといった決定に関し、全会員が平等に権利を保持し、在籍会員の67％の承認を必要とします。
 というのは、一人一会員のみという要望があれば、グループによってまとまって執行される必要が有るのです。
 （非中央型自動株式会社では、当然大株主が決定権を支配するので、こういった要望は、却下されるでしょう。）
@@ -876,12 +877,12 @@ contract は、誰が投票したかというリストに従い、全オープ�
 トランザクションの送信、会員の除名や入会のような特徴を組み込んだ投票システムを保持するものもあり、
 そして流動的民主主義 [Liquid Democracy](http://en.wikipedia.org/wiki/Delegative_democracy) スタイルの代議員議会の投票でさえ提供可能です。
 （※誰でも代議員選出が可能で、その選出投票は、遷移的であり、結果、もしAがBを、BがCを選出したならば、CはAの投票権を保持することになります。）
-この設計であれば、DAO は非中央型コミュニティとして、有機的成長を遂げることが可能で、
+この設計であれば、DAO は分散型コミュニティとして、有機的成長を遂げることが可能で、
 民衆は結果的に、会員の選出作業を専門家に委任することが可能となります。
 しかし、これは "現行の政治システム"にみうけられるようなものとは異なり、 
 個々のコミュニティメンバが提携先を変えることで、時間軸上において、専門家は簡単に出現と消失（取り替え）することが可能です。
 
-代わりとなる非中央型株式会社のモデルでは、0以上の株式をもつアカウントがあり、株式の 2/3 が決定に必要とされます。
+代わりとなる分散型株式会社のモデルでは、0以上の株式をもつアカウントがあり、株式の 2/3 が決定に必要とされます。
 完璧な枠組みとしては、財産管理機能や、株式売買の申請機能および受諾機能を備えたものがあるでしょう。（ contract 内部に注文一致させる機能があることが望ましいでしょう）
 代議員選出による委任は、流動的民主主義を存在させ、" 意思決定機関 " という概念を一般化するものでしょう。
 
@@ -935,15 +936,47 @@ Frank Stajano と Richard Clayton による [Cyberdice](http://www.cl.cam.ac.uk/
 
 
 
-## Miscellanea And Concerns
 
-### Modified GHOST Implementation
 
-The "Greedy Heaviest Observed Subtree" (GHOST) protocol is an innovation first introduced by Yonatan Sompolinsky and Aviv Zohar in [December 2013](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf). The motivation behind GHOST is that blockchains with fast confirmation times currently suffer from reduced security due to a high stale rate - because blocks take a certain time to propagate through the network, if miner A mines a block and then miner B happens to mine another block before miner A's block propagates to B, miner B's block will end up wasted and will not contribute to network security. Furthermore, there is a centralization issue: if miner A is a mining pool with 30% hashpower and B has 10% hashpower, A will have a risk of producing a stale block 70% of the time (since the other 30% of the time A produced the last block and so will get mining data immediately) whereas B will have a risk of producing a stale block 90% of the time. Thus, if the block interval is short enough for the stale rate to be high, A will be substantially more efficient simply by virtue of its size. With these two effects combined, blockchains which produce blocks quickly are very likely to lead to one mining pool having a large enough percentage of the network hashpower to have de facto control over the mining process.
+## 雑録 と 関心事
 
-As described by Sompolinsky and Zohar, GHOST solves the first issue of network security loss by including stale blocks in the calculation of which chain is the "longest"; that is to say, not just the parent and further ancestors of a block, but also the stale descendants of the block's ancestor (in Ethereum jargon, "uncles") are added to the calculation of which block has the largest total proof of work backing it. To solve the second issue of centralization bias, we go beyond the protocol described by Sompolinsky and Zohar, and also provide block rewards to stales: a stale block receives 87.5% of its base reward, and the nephew that includes the stale block receives the remaining 12.5%. Transaction fees, however, are not awarded to uncles.
+### GHOSTの修正版実装
 
-Ethereum implements a simplified version of GHOST which only goes down seven levels. Specifically, it is defined as follows:
+
+Greedy Heavist Observed Subtree (GHOST) は、Yonatan SompolinskyとAviv Zoharによって[2013年12月](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf)に初めて導入されたイノベーションです。
+GHOST開発の動機は、blockchain の検証時間を短縮すると、
+現行のシステムでは、「非同期状態」（最新のブロックと同期していない状態）の割合が増えるため、
+セキュリティを減少させてしまうという問題に苦しんでいます。
+というのは、ブロックはネットワークを通して伝播するのにある程度の時間がかかるため、
+もし、マイナーAがブロックを発掘し、つぎにマイナーBがたまたまAのブロックがBに伝わってくる前にその他のブロックを見つけた場合、
+マイナーBのブロックは最終的に無駄となり、ネットワークセキュリティに貢献しないこととなります。
+さらには中央集約の問題があります。
+それは、もしマイナーAが30%の採掘能力を持つマイニングプールで、Bが10%の採掘能力を持つものとすると、
+Aには、採掘時間の70%は無効なブロックを生成するリスクがあり、
+（採掘時間の30%のあいだ、Aは有効な最終ブロックを生成しているということなので、採掘データをすぐに得る事ができます。）
+一方、Bには、採掘時間の10%は無効なブロックを生成するリスクがあります。
+このよう状況で、
+ブロック生成の間隔が「非同期状態」の割合が高くなるぐらいに十分、ブロック間のインターバルが短いと、
+Aは、単に自身のプールのサイズから得られる効能によって、実質上さらに効率的となります。
+これら二つの効果が結びつくことで、
+ブロック生成の速いブロックチェーンは、ネットワーク上の採掘能力のうち大きな割合を占めやすくなり、
+マイニングのプロセス全体をコントロールできるマイニングプールを生み出してしまいます。
+
+Somopolinsky と Zohar の説明によると、
+GHOSTは、最長チェインの計算上において、無効ブロックを採り入れることで、
+一つ目のネットワークセキュリティ損失の問題を解決します。
+つまり、親ブロックや先祖ブロックのみでなく、
+proof-of-workの裏付けされネットワーク上で最長チェインを誇る、
+先祖ブロックの無効な子孫ブロック ( ethereum 用語では 「 uncle (叔父) 」) が計算に加えられます。
+二つ目の中央集約のバイアスがかかるという問題を解決するためには、
+SomopolinskyとZoharによって描かれたプロトコルのさらに先を考える必要があり、
+無効ブロックへの報酬を供給する必要があります。
+無効ブロックは元となる報酬の87.5%を受け取り、
+uncle として無効ブロックを採り入れた nephew (甥)ブロックには残りの12.5%が贈られます。
+しかしながら、トランザクション手数料は uncle には与えられません。
+
+Ethereum は、７層だけ遡る簡易版 GHOST を実装しました。
+仕様としては以下の通りです。
 
 * A block must specify a parent, and it must specify 0 or more uncles
 * An uncle included in block B must have the following properties:
@@ -953,48 +986,114 @@ Ethereum implements a simplified version of GHOST which only goes down seven lev
   * An uncle must be different from all uncles included in previous blocks and all other uncles included in the same block (non-double-inclusion)
 * For every uncle U in block B, the miner of B gets an additional 3.125% added to its coinbase reward and the miner of U gets 93.75% of a standard coinbase reward.
 
-This limited version of GHOST, with uncles includable only up to 7 generations, was used for two reasons. First, unlimited GHOST would include too many complications into the calculation of which uncles for a given block are valid. Second, unlimited GHOST with compensation as used in Ethereum removes the incentive for a miner to mine on the main chain and not the chain of a public attacker.
+この制限版の GHOST では、７世代上までの uncle を取り込みますが、これが採択されたのには２つの理由がありました。
+ひとつめとして、無制限の GHOST だと、与えられたブロックに対し、どの uncle が有効なのか確かめる計算が複雑になりすぎます。
+ふたつめとして、無制限の GHOST と Ethereumで使用されている報酬の方法が合わさると、採掘者が、メインチェイン上で採掘する動機を取り去ってしまい、攻撃者のチェインにおいてはそうでないので、攻撃されすくなります。
 
-### Fees
 
-Because every transaction published into the blockchain imposes on the network the cost of needing to download and verify it, there is a need for some regulatory mechanism, typically involving transaction fees, to prevent abuse. The default approach, used in Bitcoin, is to have purely voluntary fees, relying on miners to act as the gatekeepers and set dynamic minimums. This approach has been received very favorably in the Bitcoin community particularly because it is "market-based", allowing supply and demand between miners and transaction senders determine the price. The problem with this line of reasoning is, however, that transaction processing is not a market; although it is intuitively attractive to construe transaction processing as a service that the miner is offering to the sender, in reality every transaction that a miner includes will need to be processed by every node in the network, so the vast majority of the cost of transaction processing is borne by third parties and not the miner that is making the decision of whether or not to include it. Hence, tragedy-of-the-commons problems are very likely to occur.
 
-However, as it turns out this flaw in the market-based mechanism, when given a particular inaccurate simplifying assumption, magically cancels itself out. The argument is as follows. Suppose that:
+### 手数料
 
-1. A transaction leads to `k` operations, offering the reward `kR` to any miner that includes it where `R` is set by the sender and `k` and `R` are (roughly) visible to the miner beforehand.
-2. An operation has a processing cost of `C` to any node (ie. all nodes have equal efficiency)
-3. There are `N` mining nodes, each with exactly equal processing power (ie. `1/N` of total)
-4. No non-mining full nodes exist.
+blockchain 上に発行される全トランザクションは、ネットワークに対し、
+ダウンロードと検証に際し必要なコストの支払いを強いるので、
+乱用を防ぐために、トランザクション手数料に代表される、何らかの規制メカニズムが必要となります。
 
-A miner would be willing to process a transaction if the expected reward is greater than the cost. Thus, the expected reward is `kR/N` since the miner has a `1/N` chance of processing the next block, and the processing cost for the miner is simply `kC`. Hence, miners will include transactions where `kR/N > kC`, or `R > NC`. Note that `R` is the per-operation fee provided by the sender, and is thus a lower bound on the benefit that the sender derives from the transaction, and `NC` is the cost to the entire network together of processing an operation. Hence, miners have the incentive to include only those transactions for which the total utilitarian benefit exceeds the cost.
 
-However, there are several important deviations from those assumptions in reality:
+Bitcoin でとられている初期のアプローチでは、純粋な寄付金としての手数料をとり、
+採掘者に対し、「門番」の役割と動的な最小額を決める役割を依頼しています。
+このアプローチはBitcoinコミュニティには好意的に受け入れられました。
+これには、採掘者とトランザクション送信者間の需給バランスにより価格が決まる、といった市場原理に基づくという理由があります。
+しかしながら、この論理の道筋には問題があって、トランザクションの処理は市場ではないのです。というのは、
+トランザクションを採掘者が送信者にオファするサービスと捉えることには本質的魅力がありますが、
+実際は、採掘者が採り入れた全トランザクションは、ネットワーク内の全てのノードにおいて処理される必要があるため、
+トランザクション実行のための大きなコストはサードパーティによって担われ、
+あるトランザクションを取り入れるかどうかの決定は採掘者に担われている訳ではないのです。
+このような仕組みでは、コモンズの悲劇の問題が発生する確率が非常に高いのです。
 
-1. The miner does pay a higher cost to process the transaction than the other verifying nodes, since the extra verification time delays block propagation and thus increases the chance the block will become a stale.
-2. There do exist nonmining full nodes.
-3. The mining power distribution may end up radically inegalitarian in practice.
-4. Speculators, political enemies and crazies whose utility function includes causing harm to the network do exist, and they can cleverly set up contracts where their cost is much lower than the cost paid by other verifying nodes.
+市場原理に基づくメカニズムにおけるこの欠陥が明るみにでましたが、
+ある特定の厳密でないシンプルな仮定のもとで、その欠陥を手品のようにキャンセルすることができます。
+論拠は以下のようなものです。
 
-(1) provides a tendency for the miner to include fewer transactions, and (2) increases `NC`; hence, these two effects at least partially cancel each other out. (3) and (4) are the major issue; to solve them we simply institute a floating cap: no block can have more operations than `BLK_LIMIT_FACTOR` times the long-term exponential moving average. Specifically:
+1. `k`個のオペレーションを含むトランザクションに対して、送信者がそのオペレーションを含める採掘者に対して`kR`の報酬をオファーする。ここで、`R`は送信者によって決定され、`k`と`R`は採掘者に対しておおよその値が事前に分かるようにする。
+2. 一つのオペレーションはどのノードにとっても`C`という実行コストを持つ（すなわち、すべてのノードは同じ効率をもつ）
+3. `N`個のマイニングノードが存在するとき、それぞれは全く同じ処理能力を持っている（すなわち  `1/N`である）
+4. 採掘をしない フルノード は存在しない
+
+採掘者は、期待できる報酬がコストより大きければ、トランザクションを喜んで処理します。
+そして、採掘者が次のブロックを見つける確率は`1/N`なので、予想される報酬は `kR/N`となり、
+採掘者にとっての処理コストは`kC`だけです。
+このように考えると、採掘者は `kR/N > kC` つまり `R > NC`の時、トランザクションを取り込みます。
+ここで、`R`は送信者がオペレーション処理の前に支払う手数料で、
+送信者がトランザクション送信による利益を享受するのに必要な最低料金となります。
+NCはオペレーションを処理するためのネットワーク全体のコストであり、
+よって、採掘者は、実利のトータルがコストを超えるトランザクションだけを取り入れようとします。
+
+しかし、実際の仮定では、いくつか重要な逸脱が生じます。
+
+1. 採掘者は実際には他の検証ノードよりもトランザクション処理に高いコストを払う事があります。それは、追加の検証時間がブロックの伝搬を遅らせ、ブロックが無効になる可能性が増加するためです。
+2. 採掘を全くしないフルノードが存在します。
+3. 現実には採掘能力の分散は非常に不平等なものとなります。
+4. 投機家、政敵、ネットワークの存在に対して攻撃を仕掛ける道具をもった狂人が存在しまう。彼らは頭が良く、contract において、自分たちのコストが他の検証ノードが払うコストよりもかなり低いような環境を設定します。
+
+(1)は採掘者が少ししかトランザクションを取り込まない傾向を生み出してしまいます。
+(2)は`NC`を増加させます。よって、(1)と(2)は、少なくとも互いに部分的にキャンセルします。
+(3)(4)は重要な問題です。これらの問題を解決する方法としては、単純に上限を設定しました。
+どのブロックも`BLK_LIMIT_FACTOR`回 x `長期指数関数移動平均` 以上のオペレーションを行うことはできません。
+つまり、
 
     blk.oplimit = floor((blk.parent.oplimit * (EMAFACTOR - 1) + floor(parent.opcount * BLK_LIMIT_FACTOR)) / EMA_FACTOR)
 
-`BLK_LIMIT_FACTOR` and `EMA_FACTOR` are constants that will be set to 65536 and 1.5 for the time being, but will likely be changed after further analysis.
+`BLK_LIMIT_FACTOR` と `EMA_FACTOR` は、当分は、65536と1.5に設定される定数で、さらに解析が進めば、変更される可能性があります。
 
-There is another factor disincentivizing large block sizes in Bitcoin: blocks that are large will take longer to propagate, and thus have a higher probability of becoming stales. In Ethereum, highly gas-consuming blocks can also take longer to propagate both because they are physically larger and because they take longer to process the transaction state transitions to validate. This delay disincentive is a significant consideration in Bitcoin, but less so in Ethereum because of the GHOST protocol; hence, relying on regulated block limits provides a more stable baseline.
+Bitcoin に見られる大きなブロックを推奨しない別の理由として、
+大きなブロックは伝播するのに、時間がかかります。
+そして、このように、高確率で新鮮でないものとなってしまいます。
+Ethereum においては、ガス消費量の大きいブロックも同様に伝播するのに時間がかかります。
+それには、物理的に大きいトランザクションの状態遷移を検証するのに時間が掛かるという双方の理由があります。
+この遅延に対すす非推奨はBitcoin においては重要な問題ですが、
+Ethereum においては、GHOST プロトコルのおかげでそれほど問題ではありません。
+このように、ブロックを規制することにより、より安定した基盤工程ができあがります。
 
-### Computation And Turing-Completeness
 
-An important note is that the Ethereum virtual machine is Turing-complete; this means that EVM code can encode any computation that can be conceivably carried out, including infinite loops. EVM code allows looping in two ways. First, there is a `JUMP` instruction that allows the program to jump back to a previous spot in the code, and a `JUMPI` instruction to do conditional jumping, allowing for statements like `while x < 27: x = x * 2`. Second, contracts can call other contracts, potentially allowing for looping through recursion. This naturally leads to a problem: can malicious users essentially shut miners and full nodes down by forcing them to enter into an infinite loop? The issue arises because of a problem in computer science known as the halting problem: there is no way to tell, in the general case, whether or not a given program will ever halt.
+### 計算 と チューリング完全
 
-As described in the state transition section, our solution works by requiring a transaction to set a maximum number of computational steps that it is allowed to take, and if execution takes longer computation is reverted but fees are still paid. Messages work in the same way. To show the motivation behind our solution, consider the following examples:
+Ethereum 仮想マシン が チューリング完全 だというのはとても重要なことです。
+これは、EVMコードが無限ループを含む計算もコード化できることを意味します。
+EVMコードは二つの方法でループを可能にします。
+第一に、
+`JUMP` 命令はプログラムにコードの以前のどこか指定した場所へジャンプします。
+`JUMPI`命令は`while x<27; x= x*2`のような条件分岐を可能にします。
+第二に contract は別の contract を呼ぶ事ができ、
+潜在的に再帰によりループが可能となります。
+この方法では当然問題に行き当たります。
+悪意をもったユーザは、無限ループに陥らせる事で採掘者を黙らせ、フルノードをダウンさせることができるのか？という問題で、
+これは、コンピュータサイエンスの「実行停止問題」として知られる問題を浮かび上がらせます。
+実行停止問題とは、一般的に与えられたプログラムがいつまでも停止しないかどうかを知る方法が無いというものです。
 
-* An attacker creates a contract which runs an infinite loop, and then sends a transaction activating that loop to the miner. The miner will process the transaction, running the infinite loop, and wait for it to run out of gas. Even though the execution runs out of gas and stops halfway through, the transaction is still valid and the miner still claims the fee from the attacker for each computational step.
-* An attacker creates a very long infinite loop with the intent of forcing the miner to keep computing for such a long time that by the time computation finishes a few more blocks will have come out and it will not be possible for the miner to include the transaction to claim the fee. However, the attacker will be required to submit a value for `STARTGAS` limiting the number of computational steps that execution can take, so the miner will know ahead of time that the computation will take an excessively large number of steps.
-* An attacker sees a contract with code of some form like `send(A,contract.storage[A]); contract.storage[A] = 0`, and sends a transaction with just enough gas to run the first step but not the second (ie. making a withdrawal but not letting the balance go down). The contract author does not need to worry about protecting against such attacks, because if execution stops halfway through the changes get reverted.
-* A financial contract works by taking the median of nine proprietary data feeds in order to minimize risk. An attacker takes over one of the data feeds, which is designed to be modifiable via the variable-address-call mechanism described in the section on DAOs, and converts it to run an infinite loop, thereby attempting to force any attempts to claim funds from the financial contract to run out of gas. However, the financial contract can set a gas limit on the message to prevent this problem.
+"状態遷移の章" で説明したように我々の解決方法は、
+トランザクションに対し、許される最大の計算ステップ数を設定し、もし実行が長引けば計算を元に戻し、費用だけを支払うといったもので、
+メッセージも同じ方法をとります。
+我々がこの解法を選んだ動機を理解するために、以下のような例を考えてみましょう。
 
-The alternative to Turing-completeness is Turing-incompleteness, where `JUMP` and `JUMPI` do not exist and only one copy of each contract is allowed to exist in the call stack at any given time. With this system, the fee system described and the uncertainties around the effectiveness of our solution might not be necessary, as the cost of executing a contract would be bounded above by its size. Additionally, Turing-incompleteness is not even that big a limitation; out of all the contract examples we have conceived internally, so far only one required a loop, and even that loop could be removed by making 26 repetitions of a one-line piece of code. Given the serious implications of Turing-completeness, and the limited benefit, why not simply have a Turing-incomplete language? In reality, however, Turing-incompleteness is far from a neat solution to the problem. To see why, consider the following contracts:
+* 攻撃者が、無限ループを引き起こす contract を作り、採掘者に対してそのループを引き起こすトランザクションを送信します。
+採掘者はトランザクションを実行し、無限ループを実行し、そして燃料が切れるのを待ちます。実行は燃料切れになり、途中で止まりますが、トランザクションはまだ有効であり、採掘者は各実行ステップのための手数料を攻撃者に要求し続けています。
+* 攻撃者は非常に長い無限ループを作り、数ブロックが認証されるほどの時間、採掘者を計算させ続け、採掘者がトランザクションを含めて手数料を要求することを不可能にさせます。しかし、攻撃者は計算ステップ数の上限を決める`STARTGAS`の値を提供する必要があるので、採掘者は計算が非常に大きなステップ数であることを前もって知ります。
+* 攻撃者は `send(A,contract.storage[A]); contract.storage[A] = 0` のようなコードを持った contract を見て、最初のステップのみ実行できて二番目のステップは実行できないような量の燃料を持ったトランザクションを送付します。
+（つまり、引き出しはするが差額を減らさせない）。contract の作者はそのような攻撃に対する防御を考える必要はない。なぜならば、実行が途中で終わる時には状態の変化は元に戻ります。
+* ある金融 contract がリスクを減らすために９つの固有のデータフィードの中央値をとるとします。DAO の章で説明したような、呼出アドレスを変数化するメカニズム を通して変更可能な設計をされている一つのデータフィードを攻撃者は乗っ取り、無限ループを引き起こすように変更し、金融 contract から資金を要求するものを燃料切れにしていきます。しかしながら、金融 contract は、メッセージ上で燃料の上限を設定できるので、このような問題は防ぐ事ができます。
+
+
+チューリング完全 に取って代わるものは、チューリング不完全 です。`JUMP` や `JUMPI` 命令は存在せず、
+コールスタックにはそれぞれの contract の一つだけのコピーが存在できます。
+このシステムではこれまでに述べた手数料システムや我々の解決策の効果についての不確実性は必要なくなります。
+なぜなら contract を実行するコストはそのサイズによって上限が決まるからです。
+さらに、チューリング不完全 はそれほど大きな制約ではありません。
+というのは、我々が内部で想像した全ての contract の例で、一つのみがループを必要とし、
+さらにそのループはコードを26回繰り返す事によって取り除くことができました。
+チューリング完全 のもたらす厳しさや限定された利益を考えた時、
+何故チューリング不完全な言語を使用しないのでしょうか？
+しかし実際は、チューリング不完全では、与えられた問題の正しい解決からはほど遠いものです。
+その理由を知るために、以下のcontractを考えましょう。
 
     C0: call(C1); call(C1);
     C1: call(C2); call(C2);
@@ -1003,45 +1102,70 @@ The alternative to Turing-completeness is Turing-incompleteness, where `JUMP` an
     C49: call(C50); call(C50);
     C50: (run one step of a program and record the change in storage)
 
-Now, send a transaction to A. Thus, in 51 transactions, we have a contract that takes up 2<sup>50</sup> computational steps. Miners could try to detect such logic bombs ahead of time by maintaining a value alongside each contract specifying the maximum number of computational steps that it can take, and calculating this for contracts calling other contracts recursively, but that would require miners to forbid contracts that create other contracts (since the creation and execution of all 26 contracts above could easily be rolled into a single contract). Another problematic point is that the address field of a message is a variable, so in general it may not even be possible to tell which other contracts a given contract will call ahead of time. Hence, all in all, we have a surprising conclusion: Turing-completeness is surprisingly easy to manage, and the lack of Turing-completeness is equally surprisingly difficult to manage unless the exact same controls are in place - but in that case why not just let the protocol be Turing-complete?
+いまあるトランザクションをAに送ります。
+このように、51個のトランザクションにおいて、2<sup>50</sup> の計算ステップを持つ contract を保持するものとします。
+採掘者はそれぞれの contract に付随している、
+演算実行ステップの最大値や、contract が呼出す他の contract を前もって見る事によって
+そのような論理爆弾を事前に察知することが可能です。
+しかし、そのことは採掘者に対し、他の contract を生み出す contract を禁止します。
+(なぜなら、上記の全ての 51 個の contract の生成と実行は簡単に一つの contract にまとめることができます。）
+他の問題となるポイントはメッセージのアドレスフィールドが変数であり、一般的に contract が呼出す他の contract を事前に理解することが不可能なことです。
+よって、我々は驚くべき結論を得ます。
+チューリング完全 では驚く程容易に管理でき、
+一方、チューリング不完全 では、チューリング完全と同じ機能を持たせようとすると、驚く程管理が難しくなります。
+そのような場合、チューリング完全にしない理由はありません。
 
-### Currency And Issuance
 
-The Ethereum network includes its own built-in currency, ether, which serves the dual purpose of providing a primary liquidity layer to allow for efficient exchange between various types of digital assets and, more importantly, of providing a mechanism for paying transaction fees. For convenience and to avoid future argument (see the current mBTC/uBTC/satoshi debate in Bitcoin), the denominations will be pre-labelled:
+### 通貨と発行
+
+Ethereumのネットワークは ether という、それ自身の組込型通貨を保持しています。
+それは二つの目的ための主要なレイヤーとなります。
+種々のデジタル資産の効率的交換と、さらに重要なものとして、
+トランザクション手数料の支払いのメカニズムを提供します。
+簡便性のためと将来の議論を避けるため Bitcoinにおける mBTC/uBTC/satoshi に関する現在の議論を参照してください。単位は設定済みで以下のようになります。
 
 * 1: wei
+* 10<sup>3</sup>: lovelace
+* 10<sup>6</sup>: babbage
+* 10<sup>9</sup>: shannon
 * 10<sup>12</sup>: szabo
 * 10<sup>15</sup>: finney
 * 10<sup>18</sup>: ether
 
-This should be taken as an expanded version of the concept of "dollars" and "cents" or "BTC" and "satoshi". In the near future, we expect "ether" to be used for ordinary transactions, "finney" for microtransactions and "szabo" and "wei" for technical discussions around fees and protocol implementation; the remaining denominations may become useful later and should not be included in clients at this point.
+これはドルとセント、または BTC と satoshi のコンセプトの拡張と考える事ができます。
+近い将来、ether は通常のトランザクションで使用され、finney はマイクロトランザクションで使用され、szabo と wei は手数料やプロトコル実装の技術討論で用いられると我々は予想しています。残りの単位は後ほど有益になるかもしれませんが、現在の所、クライアント・サイドの実装には含まれていません。
 
-The issuance model will be as follows:
+Ether 発行 のモデルは以下の通りとなります。
 
-* Ether will be released in a currency sale at the price of 1000-2000 ether per BTC, a mechanism intended to fund the Ethereum organization and pay for development that has been used with success by other platforms such as Mastercoin and NXT. Earlier buyers will benefit from larger discounts. The BTC received from the sale will be used entirely to pay salaries and bounties to developers and invested into various for-profit and non-profit projects in the Ethereum and cryptocurrency ecosystem.
-* 0.099x the total amount sold (60102216 ETH) will be allocated to the organization to compensate early contributors and pay ETH-denominated expenses before the genesis block.
-* 0.099x the total amount sold will be maintained as a long-term reserve.
-* 0.26x the total amount sold will be allocated to miners per year forever after that point.
+* Etherは1BTCあたり1000-2000 etherの価格で通貨販売でリリースされます。このメカニズムは Etehereum Organization の資金調達の目的と、Mastercoin や NXT のような成功した他の基盤を引き継ぎ開発するための支払いを意図しています。
+初期の購入者は大きなディスカウントを得る事ができます。販売で得られたBTCは、全て、開発者の給与や賞金、Etehreum や仮想通貨エコシステムの様々な利益、非利益プロジェクトへの投資に使用されます。
+* 0.099 x プリセール販売額 ( 60102216 ETH ) が、初期の貢献者へ報いるために Ethereum Organization へ与えられます。
+ブロック生成開始前にETH建てで経費は支払われ、残りは長期に保有されます。
+* 0.099 x プリセール販売額 が長期保存用として維持管理されます。
+* 0.26 x プリセール販売額 が一年あたり採掘者に割り当てられる総額で、永遠に提供されます。
 
 | Group  | At launch | After 1 year | After 5 years
 | ------------- | ------------- |-------------| ----------- |
-| Currency units  | 1.198X | 1.458X  |  2.498X |
-| Purchasers  | 83.5% | 68.6%  | 40.0% |
-| Reserve spent pre-sale | 8.26% | 6.79% | 3.96% |
-| Reserve used post-sale | 8.26% | 6.79% | 3.96% |
-| Miners | 0% | 17.8% | 52.0% |
+| Currency units  | 1.3X | 1.6X  |  2.8X |
+| Purchasers  | 76.9% | 62.5%  | 35.7% |
+| Reserve spent pre-sale | 5.77% | 4.69% | 2.68% |
+| Reserve used post-sale | 17.3% | 14.1% | 8.04% |
+| Miners | 0% | 23.1% | 53.6% |
 
-**Long-Term Supply Growth Rate (percent)**
+**長期における供給成長率**
 
-[SPV in bitcoin]
+![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
 
-_Despite the linear currency issuance, just like with Bitcoin over time the supply growth rate nevertheless tends to zero_
+_線形的な通貨の発行に関わらず、しかしながら、Bitcoinのように長期的に供給成長率はゼロとなる傾向がある_
+
 
 The two main choices in the above model are (1) the existence and size of an endowment pool, and (2) the existence of a permanently growing linear supply, as opposed to a capped supply as in Bitcoin. The justification of the endowment pool is as follows. If the endowment pool did not exist, and the linear issuance reduced to 0.217x to provide the same inflation rate, then the total quantity of ether would be 16.5% less and so each unit would be 19.8% more valuable. Hence, in the equilibrium 19.8% more ether would be purchased in the sale, so each unit would once again be exactly as valuable as before. The organization would also then have 1.198x as much BTC, which can be considered to be split into two slices: the original BTC, and the additional 0.198x. Hence, this situation is _exactly equivalent_ to the endowment, but with one important difference: the organization holds purely BTC, and so is not incentivized to support the value of the ether unit.
 
 The permanent linear supply growth model reduces the risk of what some see as excessive wealth concentration in Bitcoin, and gives individuals living in present and future eras a fair chance to acquire currency units, while at the same time retaining a strong incentive to obtain and hold ether because the "supply growth rate" as a percentage still tends to zero over time. We also theorize that because coins are always lost over time due to carelessness, death, etc, and coin loss can be modeled as a percentage of the total supply per year, that the total currency supply in circulation will in fact eventually stabilize at a value equal to the annual issuance divided by the loss rate (eg. at a loss rate of 1%, once the supply reaches 26X then 0.26X will be mined and 0.26X lost every year, creating an equilibrium).
 
 Note that in the future, it is likely that Ethereum will switch to a proof-of-stake model for security, reducing the issuance requirement to somewhere between zero and 0.05X per year. In the event that the Ethereum organization loses funding or for any other reason disappears, we leave open a "social contract": anyone has the right to create a future candidate version of Ethereum, with the only condition being that the quantity of ether must be at most equal to `60102216 * (1.198 + 0.26 * n)` where `n` is the number of years after the genesis block. Creators are free to crowd-sell or otherwise assign some or all of the difference between the PoS-driven supply expansion and the maximum allowable supply expansion to pay for development. Candidate upgrades that do not comply with the social contract may justifiably be forked into compliant versions.
+
+
 
 ### Mining Centralization
 
