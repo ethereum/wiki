@@ -30,36 +30,36 @@ Ethereum が提供しようとしているものは、チューリング完全�
 
 ### 目次
 
-* [歴史](#history)
-    * [状態遷移システム としての Bitcoin](#bitcoin-as-a-state-transition-system)
-    * [採掘](#mining)
-    * [マークル木](#merkle-trees)
-    * [Blockchain を用いた代替アプリケーション](#alternative-blockchain-applications)
-    * [スクリプト言語による記述](#scripting)
+* [歴史](#歴史)
+    * [状態遷移システム としての Bitcoin](#状態遷移システム-としての-bitcoin)
+    * [採掘](#採掘)
+    * [マークル木](#マークル木)
+    * [Blockchain を用いた代替アプリケーション](#blockchain-を用いた代替アプリケーション)
+    * [スクリプト言語による記述](#スクリプト言語による記述)
 * [Ethereum](#ethereum)
-    * [Ethereum アカウント](#ethereum-accounts)
-    * [メッセージ と トランザクション](#messages-and-transactions)
-    * [Ethereum の 状態遷移関数](#ethereum-state-transition-function)
-    * [コード実行](#code-execution)
-    * [Blockchain と 採掘](#blockchain-and-mining)
-* [アプリケーション](#applications)
-    * [証明書発行のシステム](#token-systems)
-    * [金融ディリバティブ](#financial-derivatives-and-stable-value-currencies)
-    * [Identity と Reputation のシステム](#identity-and-reputation-systems)
-    * [分散型ファイルストレージ](#decentralized-file-storage)
-    * [分散型自律組織](#decentralized-autonomous-organizations)
-    * [その他のアプリケーション](#further-applications)
-* [雑録 と 関心事](#miscellanea-and-concerns)
-    * [GHOST の修正実装](#modified-ghost-implementation)
-    * [手数料](#fees)
-    * [計算 And チューリング完全](#computation-and-turing-completeness)
-    * [通貨 と 発行](#currency-and-issuance)
-    * [Mining Centralization](#mining-centralization)
-    * [Scalability](#scalability)
-* [Conclusion](#conclusion)
-* [References and Further Reading](#references-and-further-reading)
+    * [Ethereum アカウント](#ethereum-アカウント)
+    * [メッセージ と トランザクション](#メッセージ-と-トランザクション)
+    * [Ethereum の 状態遷移関数](#ethereum-の-状態遷移関数)
+    * [コード実行](#コード実行)
+    * [Blockchain と 採掘](#blockchain-と-採掘)
+* [アプリケーション](#アプリケーション)
+    * [証明書発行のシステム](#証明書発行のシステム)
+    * [金融ディリバティブ と 安定価格通貨](#金融ディリバティブ-と-安定価格通貨)
+    * [Identity と Reputation のシステム](#identity-と-reputation-のシステム)
+    * [分散型ファイルストレージ](#分散型ファイルストレージ)
+    * [分散型自律組織](#分散型自律組織)
+    * [その他のアプリケーション](#その他のアプリケーション)
+* [雑録 と 関心事](#雑録-と-関心事)
+    * [GHOST の修正実装](#ghost-の修正実装)
+    * [手数料](#手数料)
+    * [計算 と チューリング完全](#計算-と-チューリング完全)
+    * [通貨 と 発行](#通貨-と-発行)
+    * [マイニング集中](#マイニング集中)
+    * [スケーラビリティ](#スケーラビリティ)
+* [結論](#結論)
+* [脚注 及び 参考文献](#脚注-及び-参考文献)
 
-## Introduction to Bitcoin and Existing Concepts
+## Bitcoin への導入 と 既存の概念
 
 ### 歴史
 
@@ -142,7 +142,7 @@ Bitcoin における「状態 state」とは、全コインの集合 であり�
 
 アリスがボブに 11.7BTC を送信したいとします。
 まずはじめに、アリスは、利用可能な UTXO を自分の持っているものの中からかき集め、
-少なくとも総計11.7BTCになるようにします。アリスの UTXO を集めてちょうど11.7BTCをつくることはできず、6+4+2=12 BTCがアリスの得る最小の値です。
+少なくとも総計11.7BTCになるようにします。アリスの UTXO を集めてちょうど11.7BTCをつくることはできず、6+4+2=12 BTC がアリスの得る最小の値です。
 そして彼女は、３つの入力値と２つの出力値をもつトランザクションをつくります。
 ひとつめの出力値は11.7BTCでボブのアドレスが所有者として記録され、
 ふたつめの出力値は0.3BTCの"お釣り"がアリス自身を所有者として記録されます。
@@ -340,7 +340,7 @@ Tor や Bitcoin , BitMessage のような分散型プロトコルでは、個体
 しかしながら、問題なのは "ジョージ" という名前を誰でも、同じプロセスをたどることで登録でき、"ジョージ"として振舞えるのです。
 唯一の解決策は 「fist-to-file パラダイム」を用いることです。
 これは、最初（first）の登録者は登録（file）に成功し、二番目以降では失敗するというものです。
-この問題は Bitcoin の大衆意思決定のプロトコルに完全に合致し、 Namecoinは一早くにこの考えを使って名前登録のシステムを実装し、見事に成功しました。
+この問題は Bitcoin の大衆意思決定のプロトコルに完全に合致し、 Namecoin は一早くにこの考えを使って名前登録のシステムを実装し、見事に成功しました。
 
 * **Colored coins** - [colored coins](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) の目的は、Bitcoin の blockchain 上に「自身で作ったデジタル通貨」や、
 通貨の重要な性質である少額使用の例としてユニットを採用した「デジタルトークン」を、構築できるプロトコルを提供することです。
@@ -447,7 +447,7 @@ UTXO は単純な一度きりの契約をつくることにしか使用できず
 meta プロトコルの実装を困難なものとします。
 また、値の定まらない2進数状態では、「引き出し制限」が不可能となります。これは重要なアプリケーションであり、大きな弊害であると言えるでしょう。
 
-* **Blockchainが見えない問題** - 
+* **Blockchain が見えない問題** - 
 UTXO は、ノンス、タイムスタンプ、直前のブロックのハッシュといった blockchain のデータに対して盲目です。
 このことにより、スクリプト言語が、ランダム性の観点で潜在的価値のあるソースを参照するのを防いでしまい、
 ギャンブル・アプリケーションや他のカテゴリのいくつかを、厳しく制限してしまうことになります。
@@ -905,12 +905,12 @@ contract をつくり、ether をその中に保管します。それは以下�
 アイオワ にいる農家が、逆にアイオワ における降水量を基盤として逆に支払いをするディリバティブを購入したとすると、
 もし干ばつがあったならば、農家は自動的にお金を受け取り、もし十分な降水があったなら、作物が同様の働きをしてくれるので、農家は幸運を手に入れることができます。これは一般的に、自然災害の保険にも拡張可能です。
 
-**3. 非中央型データフィード**. 金融 contract その他において、"[SchellingCoin](http://blog.ethereum.org/2014/03/28/schellingcoin-a-minimal-trust-universal-data-feed/)" と呼ばれるプロトコルを通してデータフィードを非中央化することが実際可能です。
+**3. 分散型データフィード**. 金融 contract その他において、"[SchellingCoin](http://blog.ethereum.org/2014/03/28/schellingcoin-a-minimal-trust-universal-data-feed/)" と呼ばれるプロトコルを通してデータフィードを分散化することが実際可能です。
 SchellingCoin は基本的に次のように動作します。
 N 個のパーティが全て、ある与えられた一つのデータ（例えば ETH/USD の価格）の値をそれぞれ提供するものとします。
 その価格の値はソートされ、その値の順番が 25% ~ 75% であるものが、報酬を得られるようにします。
 全員が、他の全員が提供するだろう答えを提供するインセンティブを保持し、その大多数のプレイヤが現実的に認める唯一の価格が、明白な基準となり、これは信用のおけるものとなります。
-これによって、理論的にどんな数値をも提供することが可能な、非中央型プロトコルが作られます。
+これによって、理論的にどんな数値をも提供することが可能な、分散型プロトコルが作られます。
 それには、ETH/USD価格、ベルリンの気温、あるいは特定の重い計算の結果、でさえ含まれます。
 
 **4. スマート・マルチシグネチャ 認証**. Bitcoin では マルチシグネチャ・トランザクション contact が可能で、例えば、５つの秘密鍵のうち、３つが揃えば資金を使用できるといったものです。
@@ -942,7 +942,7 @@ Frank Stajano と Richard Clayton による [Cyberdice](http://www.cl.cam.ac.uk/
 ### GHOST の修正実装
 
 
-Greedy Heavist Observed Subtree (GHOST) は、Yonatan SompolinskyとAviv Zoharによって[2013年12月](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf)に初めて導入されたイノベーションです。
+Greedy Heavist Observed Subtree (GHOST) は、Yonatan Sompolinsky と Aviv Zoharによって[2013年12月](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf)に初めて導入されたイノベーションです。
 GHOST開発の動機は、blockchain の検証時間を短縮すると、
 現行のシステムでは、「非同期状態」（最新のブロックと同期していない状態）の割合が増えるため、
 セキュリティを減少させてしまうという問題に苦しんでいます。
@@ -968,7 +968,7 @@ GHOSTは、最長チェインの計算上において、無効ブロックを採
 proof-of-workの裏付けされネットワーク上で最長チェインを誇る、
 先祖ブロックの無効な子孫ブロック ( ethereum 用語では 「 uncle (叔父) 」) が計算に加えられます。
 二つ目の中央集約のバイアスがかかるという問題を解決するためには、
-SomopolinskyとZoharによって描かれたプロトコルのさらに先を考える必要があり、
+Somopolinsky と Zohar によって描かれたプロトコルのさらに先を考える必要があり、
 無効ブロックへの報酬を供給する必要があります。
 無効ブロックは元となる報酬の87.5%を受け取り、
 uncle として無効ブロックを採り入れた nephew (甥)ブロックには残りの12.5%が贈られます。
@@ -987,7 +987,7 @@ Ethereum は、７層だけ遡る簡易版 GHOST を実装しました。
 
 この制限版の GHOST では、７世代上までの uncle を取り込みますが、これが採択されたのには２つの理由がありました。
 ひとつめとして、無制限の GHOST だと、与えられたブロックに対し、どの uncle が有効なのか確かめる計算が複雑になりすぎます。
-ふたつめとして、無制限の GHOST と Ethereumで使用されている報酬の方法が合わさると、採掘者が、メインチェイン上で採掘する動機を取り去ってしまい、攻撃者のチェインにおいてはそうでないので、攻撃されすくなります。
+ふたつめとして、無制限の GHOST と Ethereum で使用されている報酬の方法が合わさると、採掘者が、メインチェイン上で採掘する動機を取り去ってしまい、攻撃者のチェインにおいてはそうでないので、攻撃されすくなります。
 
 
 
@@ -1057,8 +1057,8 @@ Ethereum においては、GHOST プロトコルのおかげでそれほど問�
 ### 計算 と チューリング完全
 
 Ethereum 仮想マシン が チューリング完全 だというのはとても重要なことです。
-これは、EVMコードが無限ループを含む計算もコード化できることを意味します。
-EVMコードは二つの方法でループを可能にします。
+これは、EVMコード が無限ループを含む計算もコード化できることを意味します。
+EVMコード は二つの方法でループを可能にします。
 第一に、
 `JUMP` 命令はプログラムにコードの以前のどこか指定した場所へジャンプします。
 `JUMPI`命令は`while x<27; x= x*2`のような条件分岐を可能にします。
@@ -1103,11 +1103,10 @@ EVMコードは二つの方法でループを可能にします。
 
 いまあるトランザクションをAに送ります。
 このように、51個のトランザクションにおいて、2<sup>50</sup> の計算ステップを持つ contract を保持するものとします。
-採掘者はそれぞれの contract に付随している、
-演算実行ステップの最大値や、contract が呼出す他の contract を前もって見る事によって
-そのような論理爆弾を事前に察知することが可能です。
-しかし、そのことは採掘者に対し、他の contract を生み出す contract を禁止します。
-(なぜなら、上記の全ての 51 個の contract の生成と実行は簡単に一つの contract にまとめることができます。）
+採掘者はそれぞれの contract に付随する、
+最大の計算ステップ数や、contract が呼出す contract を前もって見る事によって
+そのような論理爆弾を事前に察知することが可能ですが、これには、採掘者が他の contract を作り出す contract を禁止する必要が有ります。
+(なぜなら、上記の 51 個の contract の生成と実行は簡単に一つの contract に書き記すことができるのです。）
 他の問題となるポイントはメッセージのアドレスフィールドが変数であり、一般的に contract が呼出す他の contract を事前に理解することが不可能なことです。
 よって、我々は驚くべき結論を得ます。
 チューリング完全 では驚く程容易に管理でき、
@@ -1117,11 +1116,11 @@ EVMコードは二つの方法でループを可能にします。
 
 ### 通貨 と 発行
 
-Ethereumのネットワークは ether という、それ自身の組込型通貨を保持しています。
-それは二つの目的ための主要なレイヤーとなります。
+Ethereum のネットワークは ether という、自身の組込型通貨を保持し、
+二つの主要レイヤを保持します。
 種々のデジタル資産の効率的交換と、さらに重要なものとして、
 トランザクション手数料の支払いのメカニズムを提供します。
-簡便性のためと将来の議論を避けるため Bitcoinにおける mBTC/uBTC/satoshi に関する現在の議論を参照してください。単位は設定済みで以下のようになります。
+簡便性のためと将来の議論を避けるため Bitcoin における mBTC/uBTC/satoshi に関する現在の議論を参照してください。通貨単位は設定済みで以下の通りです。
 
 * 1: wei
 * 10<sup>3</sup>: lovelace
@@ -1131,12 +1130,12 @@ Ethereumのネットワークは ether という、それ自身の組込型通�
 * 10<sup>15</sup>: finney
 * 10<sup>18</sup>: ether
 
-これはドルとセント、または BTC と satoshi のコンセプトの拡張と考える事ができます。
-近い将来、ether は通常のトランザクションで使用され、finney はマイクロトランザクションで使用され、szabo と wei は手数料やプロトコル実装の技術討論で用いられると我々は予想しています。残りの単位は後ほど有益になるかもしれませんが、現在の所、クライアント・サイドの実装には含まれていません。
+これはドルとセント、あるいは BTC と satoshi のコンセプトの拡張であり、
+近い将来、ether は通常のトランザクションで使用され、finney はマイクロトランザクションで使用され、szabo と wei は手数料やプロトコル実装の技術討論で用いられると我々は予想しています。残りの単位は後に必要となるかもしれませんが、現在の所、クライアント・サイドの実装には含まれていません。
 
 Ether 発行 のモデルは以下の通りとなります。
 
-* Etherは1BTCあたり1000-2000 etherの価格で通貨販売でリリースされます。このメカニズムは Etehereum Organization の資金調達の目的と、Mastercoin や NXT のような成功した他の基盤を引き継ぎ開発するための支払いを意図しています。
+* Etherは1BTCあたり1000-2000 etherの価格で通貨販売でリリースされます。このメカニズムは Etehereum Organization の資金調達の目的と、Mastercoin や NXT のような成功した他の基盤を引き継ぎ開発するための支払い目的を意図しています。
 初期の購入者は大きなディスカウントを得る事ができます。販売で得られたBTCは、全て、開発者の給与や賞金、Etehreum や仮想通貨エコシステムの様々な利益、非利益プロジェクトへの投資に使用されます。
 * 0.099 x プリセール販売額 ( 60102216 ETH ) が、初期の貢献者へ報いるために Ethereum Organization へ与えられます。
 ブロック生成開始前にETH建てで経費は支払われ、残りは長期に保有されます。
@@ -1145,60 +1144,148 @@ Ether 発行 のモデルは以下の通りとなります。
 
 | Group  | At launch | After 1 year | After 5 years
 | ------------- | ------------- |-------------| ----------- |
-| Currency units  | 1.3X | 1.6X  |  2.8X |
-| Purchasers  | 76.9% | 62.5%  | 35.7% |
-| Reserve spent pre-sale | 5.77% | 4.69% | 2.68% |
-| Reserve used post-sale | 17.3% | 14.1% | 8.04% |
-| Miners | 0% | 23.1% | 53.6% |
+| Currency units  | 1.198X | 1.458X  |  2.498X |
+| Purchasers  | 83.5% | 68.6%  | 40.0% |
+| Reserve spent pre-sale | 8.26% | 6.79% | 3.96% |
+| Reserve used post-sale | 8.26% | 6.79% | 3.96% |
+| Miners | 0% | 17.8% | 52.0% |
+
 
 **長期における供給成長率**
 
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
+![SPV in bitcoin](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/inflation.png)
 
-_線形的な通貨の発行に関わらず、しかしながら、Bitcoinのように長期的に供給成長率はゼロとなる傾向がある_
-
-
-The two main choices in the above model are (1) the existence and size of an endowment pool, and (2) the existence of a permanently growing linear supply, as opposed to a capped supply as in Bitcoin. The justification of the endowment pool is as follows. If the endowment pool did not exist, and the linear issuance reduced to 0.217x to provide the same inflation rate, then the total quantity of ether would be 16.5% less and so each unit would be 19.8% more valuable. Hence, in the equilibrium 19.8% more ether would be purchased in the sale, so each unit would once again be exactly as valuable as before. The organization would also then have 1.198x as much BTC, which can be considered to be split into two slices: the original BTC, and the additional 0.198x. Hence, this situation is _exactly equivalent_ to the endowment, but with one important difference: the organization holds purely BTC, and so is not incentivized to support the value of the ether unit.
-
-The permanent linear supply growth model reduces the risk of what some see as excessive wealth concentration in Bitcoin, and gives individuals living in present and future eras a fair chance to acquire currency units, while at the same time retaining a strong incentive to obtain and hold ether because the "supply growth rate" as a percentage still tends to zero over time. We also theorize that because coins are always lost over time due to carelessness, death, etc, and coin loss can be modeled as a percentage of the total supply per year, that the total currency supply in circulation will in fact eventually stabilize at a value equal to the annual issuance divided by the loss rate (eg. at a loss rate of 1%, once the supply reaches 26X then 0.26X will be mined and 0.26X lost every year, creating an equilibrium).
-
-Note that in the future, it is likely that Ethereum will switch to a proof-of-stake model for security, reducing the issuance requirement to somewhere between zero and 0.05X per year. In the event that the Ethereum organization loses funding or for any other reason disappears, we leave open a "social contract": anyone has the right to create a future candidate version of Ethereum, with the only condition being that the quantity of ether must be at most equal to `60102216 * (1.198 + 0.26 * n)` where `n` is the number of years after the genesis block. Creators are free to crowd-sell or otherwise assign some or all of the difference between the PoS-driven supply expansion and the maximum allowable supply expansion to pay for development. Candidate upgrades that do not comply with the social contract may justifiably be forked into compliant versions.
+_線形的な通貨の発行に関わらず、しかしながら、Bitcoin のように長期的に供給成長率は零となる傾向がある_
 
 
+上記モデルにおける主要な二つの選択として、
+(1)基金プールの存在とその規模、
+(2)供給上限があるBitcoinと異なった永久に全供給量が増え続ける仕組み
+が挙げられます。
+基金プールの存在に対する正当性は次のとおりです。
+もし基金プールが存在せず、
+同じインフレ率を提供するために線形発行量を0.217倍に減少させると、
+etherの全供給量は16.5%減り、一単位の価値は19.8%上昇します。
+この19.8%の不均衡を埋めるために、より多くのetherがセールで購入され、
+結果、1単位が以前と全く同じ価値を持つところで平衡を保ちます。
+組織は1.198倍のBTCを持ちますが、
+それは二つに分ける事ができます。
+オリジナルのBTCと追加の0.198倍のBTCです。
+このように考えると、基金プールを持たない状況は、基金プールがある状況と _厳密に等価_ ですが、
+一つだけ重要な違いがあります。
+組織は純粋にBTCを保持し、ether の価値を維持するインセンティブを持ちません。
 
-### Mining Centralization
+永遠に線形的に全供給量が増えるモデルでは、Bitcoin で見られた一部に富の超過集中リスクを減らします。
+そして、現在を生きる個人と未来を生きる個人に対して公平な通貨獲得の機会を与えます。
+同時に、供給増加レートがゼロに向かうため、Etherを得て保持しようという強いインセンティブを与えます。
+不注意や死やその他の理由でコインは常に失われて行き、
+コインの損失は一年あたりの総供給量に対する割合でモデリングすることができ、
+全循環通貨供給量はゆっくりと年間発行量を損失率で割った値に近づいて行くということから上記の理論化を行っています。
+（すなわち、損失率が1%の場合、ひとたび供給量が26Xになったら、0.26Xが採掘され、0.26Xが毎年失われるところで均衡します)。
 
-The Bitcoin mining algorithm works by having miners compute SHA256 on slightly modified versions of the block header millions of times over and over again, until eventually one node comes up with a version whose hash is less than the target (currently around 2<sup>192</sup>). However, this mining algorithm is vulnerable to two forms of centralization. First, the mining ecosystem has come to be dominated by ASICs (application-specific integrated circuits), computer chips designed for, and therefore thousands of times more efficient at, the specific task of Bitcoin mining. This means that Bitcoin mining is no longer a highly decentralized and egalitarian pursuit, requiring millions of dollars of capital to effectively participate in. Second, most Bitcoin miners do not actually perform block validation locally; instead, they rely on a centralized mining pool to provide the block headers. This problem is arguably worse: as of the time of this writing, the top three mining pools indirectly control roughly 50% of processing power in the Bitcoin network, although this is mitigated by the fact that miners can switch to other mining pools if a pool or coalition attempts a 51% attack.
+将来、Ethereum はセキュリティ向上のため proof of stake モデルに切り替える可能性が高く、発行需要量を0-0.05X/年の間に減らす考えがあります。Ethereum Organization が資金を失ったり他の理由で消失した場合に備えて、オープンな、
+「 social contract 」をあとに残す考えがあります。
+誰もが Ethereum の未来候補版を作成する権利があり、唯一の条件は ether の総額は、
+せいぜい `60102216 * (1.198 + 0.26 * n)` ( `n` : ブロック生成開始からの年数 ) に等しくなることです。
+クリエータは開発費用を捻出するために自由に
+クラウドセールを行ったりあるいは、
+POS 上での供給拡大と最大許容供給拡大の間の差の一部あるいは全てを自由に使用することができます。
+socail contract に合致しない候補版のアップグレードが
+準拠版として公正にフォークされる可能性もあります。
 
-The current intent at Ethereum is to use a mining algorithm where miners are required to fetch random data from the state, compute some randomly selected transactions from the last N blocks in the blockchain, and return the hash of the result. This has two important benefits. First, Ethereum contracts can include any kind of computation, so an Ethereum ASIC would essentially be an ASIC for general computation - ie. a better CPU. Second, mining requires access to the entire blockchain, forcing miners to store the entire blockchain and at least be capable of verifying every transaction. This removes the need for centralized mining pools; although mining pools can still serve the legitimate role of evening out the randomness of reward distribution, this function can be served equally well by peer-to-peer pools with no central control.
 
-This model is untested, and there may be difficulties along the way in avoiding certain clever optimizations when using contract execution as a mining algorithm. However, one notably interesting feature of this algorithm is that it allows anyone to "poison the well", by introducing a large number of contracts into the blockchain specifically designed to stymie certain ASICs. The economic incentives exist for ASIC manufacturers to use such a trick to attack each other. Thus, the solution that we are developing is ultimately an adaptive economic human solution rather than purely a technical one.
+### マイニング集中
 
-### Scalability
 
-One common concern about Ethereum is the issue of scalability. Like Bitcoin, Ethereum suffers from the flaw that every transaction needs to be processed by every node in the network. With Bitcoin, the size of the current blockchain rests at about 15 GB, growing by about 1 MB per hour. If the Bitcoin network were to process Visa's 2000 transactions per second, it would grow by 1 MB per three seconds (1 GB per hour, 8 TB per year). Ethereum is likely to suffer a similar growth pattern, worsened by the fact that there will be many applications on top of the Ethereum blockchain instead of just a currency as is the case with Bitcoin, but ameliorated by the fact that Ethereum full nodes need to store just the state instead of the entire blockchain history.
+Bitcoin のマイニングアルゴリズムは、基本的に、採掘者にブロックヘッダの少しだけ変更したバージョンについて何百万回も繰り返してSHA256を演算をさせ、最終的に一つのノードがあるターゲット以下（現在は2<sup>192</sup>)のハッシュ値になることによって成立しています。しかしながら、このマイニングアルゴリズムは二つの中央集権化に対する脆弱性を持っています。一つは、マイニングのエコシステムがASIC(application-specific integrated circuits)に支配されるようになってきています。ASIC はマイニング専門にチップがデザインされているためビットコインマイニングのタスクに対して数千倍の効率を持っています。これはBitcoinのマイニングはもはや分散型ではなく、効率的に参加するためには数百万ドルが必要となり、平等主義を追求していないことを意味しています。第二に殆どのBitcoinマイナーはブロックの認証プロセスを実際には一人では行っていません。その代わりにブロックヘッダを見つけるための中央集権化されたマイニングプールに依存しています。こちらの問題はおそらくもっとひどいものです。この文章を書いている時で、トップ３のマイニングプールは直接的ではないですが、Bitcoinネットワークの約50%をコントロールしています。マイナーはもしマイニングプールや連立が51%アタックをしようとしたときに他のマイニングプールに移動できるのですが、それでも良くないものです。
 
-The problem with such a large blockchain size is centralization risk. If the blockchain size increases to, say, 100 TB, then the likely scenario would be that only a very small number of large businesses would run full nodes, with all regular users using light SPV nodes. In such a situation, there arises the potential concern that the full nodes could band together and all agree to cheat in some profitable fashion (eg. change the block reward, give themselves BTC). Light nodes would have no way of detecting this immediately. Of course, at least one honest full node would likely exist, and after a few hours information about the fraud would trickle out through channels like Reddit, but at that point it would be too late: it would be up to the ordinary users to organize an effort to blacklist the given blocks, a massive and likely infeasible coordination problem on a similar scale as that of pulling off a successful 51% attack. In the case of Bitcoin, this is currently a problem, but there exists a blockchain modification [suggested by Peter Todd](http://sourceforge.net/p/bitcoin/mailman/message/31709140/) which will alleviate this issue.
+現在 Ethereum が使用しようとしているアルゴリズムは採掘者が「 状態 」から ランダムなデータ を生み出し、
+ブロックチェインの最後のNブロックからランダムに選ばれたトランザクションを計算し、結果のハッシュを返すというものです。これは二つの重要な利点があります。第一に、Etehreum の contract はどのような種類の演算も取り込む事ができます、つまりEtehreum用のASICを開発するとしたら、本質的にどのような演算も早いASIC ー　それはすなわち、より良いCPUということになります。第二に、マイニングにおいてブロックチェイン全体にアクセスすることが必要になり、マイナーにブロックチェイン全体を保持することと、少なくとも全てのトランザクションを検証できるということを要求する事になります。これは中央集権化したマイニングプールの必要性を取り除くことになります；マイニングプールは報酬の分配のランダムさを平等にする、正当な役割を果たす事はできますが、この機能はP2Pプールによって中央集権無しに実現できます。
 
-In the near term, Ethereum will use two additional strategies to cope with this problem. First, because of the blockchain-based mining algorithms, at least every miner will be forced to be a full node, creating a lower bound on the number of full nodes. Second and more importantly, however, we will include an intermediate state tree root in the blockchain after processing each transaction. Even if block validation is centralized, as long as one honest verifying node exists, the centralization problem can be circumvented via a verification protocol. If a miner publishes an invalid block, that block must either be badly formatted, or the state `S[n]` is incorrect. Since `S[0]` is known to be correct, there must be some first state `S[i]` that is incorrect where `S[i-1]` is correct. The verifying node would provide the index `i`, along with a "proof of invalidity" consisting of the subset of Patricia tree nodes needing to process `APPLY(S[i-1],TX[i]) -> S[i]`. Nodes would be able to use those nodes to run that part of the computation, and see that the `S[i]` generated does not match the `S[i]` provided.
+このモデルはまだテストされていません。そしてマイニングアルゴリズムとしてcontractの実行をさせる時に、賢く最適化を利用されることを避ける難しさがあると思われます。しかしながら、このアルゴリズムの面白い特徴は非常に大きな数のcontractを、特にあるASICの妨害をするように設計して、ブロックチェインに入れることで誰でも井戸に毒を盛る事ができるということです。ASIC 製造者にはお互いにそのようなトリックを使って攻撃する経済的なインセンティブが存在します。よって、我々が開発中のソリューションは純粋なテクニカルなものというよりも究極の経済的なヒューマンソリューションとなります。
 
-Another, more sophisticated, attack would involve the malicious miners publishing incomplete blocks, so the full information does not even exist to determine whether or not blocks are valid. The solution to this is a challenge-response protocol: verification nodes issue "challenges" in the form of target transaction indices, and upon receiving a node a light node treats the block as untrusted until another node, whether the miner or another verifier, provides a subset of Patricia nodes as a proof of validity.
 
-## Conclusion
 
-The Ethereum protocol was originally conceived as an upgraded version of a cryptocurrency, providing advanced features such as on-blockchain escrow, withdrawal limits, financial contracts, gambling markets and the like via a highly generalized programming language. The Ethereum protocol would not "support" any of the applications directly, but the existence of a Turing-complete programming language means that arbitrary contracts can theoretically be created for any transaction type or application. What is more interesting about Ethereum, however, is that the Ethereum protocol moves far beyond just currency. Protocols around decentralized file storage, decentralized computation and decentralized prediction markets, among dozens of other such concepts, have the potential to substantially increase the efficiency of the computational industry, and provide a massive boost to other peer-to-peer protocols by adding for the first time an economic layer. Finally, there is also a substantial array of applications that have nothing to do with money at all.
+### スケーラビリティ
 
-The concept of an arbitrary state transition function as implemented by the Ethereum protocol provides for a platform with unique potential; rather than being a closed-ended, single-purpose protocol intended for a specific array of applications in data storage, gambling or finance, Ethereum is open-ended by design, and we believe that it is extremely well-suited to serving as a foundational layer for a very large number of both financial and non-financial protocols in the years to come.
 
-## Notes and Further Reading
+Ethereum に関する大勢の関心の一つは スケーラビリティ です。
+Bitcoin のように Etehreum はすべてのトランザクションがネットワーク上の全てのノードで実行される必要があるという欠点があります。
+Bitcoin では現在のブロックチェインは約15GBであり、一時間あたり1MB増加しています。
+もし Bitcoin ネットワークが Visa のように一秒当たり 2000 トランザクション を処理する場合、
+3秒当たり1MB(１時間あたり1GB, 一年当たり8TB)もの増加をすることになります。
+Etehreum も同じような成長パターンに苦しむことになります。
+さらに悪い事には、単なる貨幣として使用されているBitcoinと異なり、
+Ethereum のブロックチェインは様々なアプリケーションが実行されることになります。
+しかし、Ethereum のフルノードはブロックチェインの履歴全てではなく、状態だけを保持すれば良いという事実が良い方向に働くでしょう。
 
-#### Notes
 
-1. A sophisticated reader may notice that in fact a Bitcoin address is the hash of the elliptic curve public key, and not the public key itself. However, it is in fact perfectly legitimate cryptographic terminology to refer to the pubkey hash as a public key itself. This is because Bitcoin's cryptography can be considered to be a custom digital signature algorithm, where the public key consists of the hash of the ECC pubkey, the signature consists of the ECC pubkey concatenated with the ECC signature, and the verification algorithm involves checking the ECC pubkey in the signature against the ECC pubkey hash provided as a public key and then verifying the ECC signature against the ECC pubkey.
-2. Technically, the median of the 11 previous blocks.
-3. Internally, 2 and "CHARLIE" are both numbers, with the latter being in big-endian base 256 representation. Numbers can be at least 0 and at most 2<sup>256</sup>-1.
+このような巨大なブロックチェインのサイズには中央集約化リスクが存在します。
+仮にブロックチェインのサイズが100TBになったとします。
+そのとき、もっともあり得るシナリオは非常に少ない数の巨大なビジネス組織のみがフルノードを動作させており、通常のユーザーは皆ライトSPVノードを使っているというものです。そのような状態では、なんらかの利益のためにお互いが手を組んでずるをして合意するという潜在的な危機が浮かび上がります（例えば、ブロックの報酬を変更して、彼らにBTCを与える)。ライトノードはこれを即座に見つけ出す方法を持っていません。もちろん少なくとも一つの誠実なフルノードが存在しているでしょう、そして、欠陥についての情報が数時間のちにRedditのようなチャンネルを通してじわじわ広まったとして、そのタイミングではもう遅すぎます：与えられたブロック
+をブラックリスト化する努力を計画するかは一般ユーザに委ねられ、またうまく出来た５１％アタックを抜き出すのと同じ規模の、巨大でおそらく不可能な整合作業となるでしょう。Bitcoin の場合、このことは現在問題になっています。しかし[Peter Todd の提案](http://sourceforge.net/p/bitcoin/mailman/message/31709140/)がこの問題を緩和するでしょう。
 
-#### Further Reading
+
+近い将来、Ethereum はこの問題に取り組むために二つの戦略を追加する予定です。
+第一に、ブロックチェインベースのマイニングアルゴリズムのために、
+すくなくとも全てのマイナーがフルノードである必要があり、
+フルノードの数の下限を作ります。
+第二に、これはさらに重要なのですが、
+それぞれのトランザクションを処理した後にブロックチェイン内部に中間状態木のルートを含めます。
+もしブロック認証が中央集権化してしまったとしても、一つの正直な認証ノードが存在している限り、
+中央集権問題は認証プロトコルによって避ける事が可能です。
+もし、採掘者が有効でないブロックを提供した場合、
+そのブロックはフォーマットが間違っているか、
+もしくは状態`S[n]`が正しくないかです。
+`S[0]`は正しい事が分かっているので、どこかに`S[i-1]`は正しいが、`S[i]`は正しくないという最初の状態が存在します。検証ノードは `APPLY(S[i-1],TX[i]) -> S[i]` を実行するのに必要なパトリシアツリーのノードの部分木による誤りの検証プロセスによって、index `i`を見つけます。ノードはこれらのノードを演算の一部として実行し、与えられた`S[i]`と異なる`S[i]`を見つけます。
+
+
+他のより洗練された攻撃として、
+悪意のある採掘者が不完全なブロックを提出することで、
+ブロックが有効かどうかの決定に際し、完全な情報不足状態をつくることができます。
+この攻撃に対する解決策は challenge-response プロトコルです。
+検証ノードは、該当トランザクション索引 の形式で「 challenge 」を発行し、
+ひとつのノードを受け取った 軽量ノードは、
+採掘者あるいは検証者が、有効性の証明としてパトリシアノードの部分木を送るまでブロックを信用できないものとして扱います。
+
+
+## 結論
+
+
+Ethereum のプロトコルは元々、暗号通貨のアップグレード版で、ブロックチェイン上のエスクローや、引き出しの上限、金融contract、ギャンブルマーケットのような先進的な特徴を、高度一般化したプログラミング言語を通して提供するものだと考えられてきました。
+Ethereum のプロトコルはどんなアプリケーションも直接にはサポートせず、チューリング完全なプログラミング言語のみが存在します。
+それは、理論的にはどんなトランザクションタイプやアプリケーションのための任意の contract を作る事ができるということです。
+しかし、Ethereum について、さらに興味深い事は、Ethereum のプロトコルは単なる通貨を超えているということです。
+分散型ファイルストレージ、分散型コンピューティング、分散型市場予想や、その他多数の概念のプロトコルは、
+コンピュータ業界の効率の増加とともに本質的な潜在性が開花するものと思われますが、
+最初は経済のレイヤーでP2Pプロトコルを加速しました。
+最終的には、通貨と全く関係のない沢山の本質的なアプリケーションの可能性が広がっています。
+
+
+Ethereum のプロトコルによって実装されている任意の状態遷移関数のコンセプトはユニークな潜在性をもった基盤です。
+閉じた単一の目的である、データストレージや、賭博、金融アプリケーション用のプロトコルと異なり、
+Ethereum は非常にオープンな設計です。
+我々は数年で、金融や非金融の両方のプロトコルにおいて、
+多数の基礎レイヤーとして使われる事になると信じています。
+
+# 脚注 及び 参考文献
+
+#### 脚注
+
+1. 洗練された読者は Bitcoin のアドレスは公開鍵そのものでは無く、
+楕円曲線公開鍵のハッシュであることに気がつくでしょう。
+しかしながら、じつのところ、暗号用語は公開鍵そのものとして公開鍵ハッシュを扱っても成立します。
+これは Bitcoin の暗号がカスタムなデジタル署名アルゴリズムと考えることが可能で、
+そこでは公開鍵は ECC 公開鍵 のハッシュで構成されており、
+署名はECC公開鍵をECC署名と重ねたもので構成されており、
+認証アルゴリズムは署名の中のECC公開鍵が公開鍵として与えられているECC公開鍵ハッシュに対して正しいかチェックすることを含んでおり、
+よって、ECC 署名 が ECC 公開鍵 に対して正しいかのチェックになっているからです。
+2. 技術的には、11個前までのブロックの中央値です。
+3. 内部的には 2 も "CHARLIE" も両方とも番号です。
+後者は ビッグエンディアンの256ビットベース の表現です。番号は最小で 0 、最大で 2<sup>256</sup>-1 を取る事ができます。
+
+
+#### 参考文献
 
 1. Intrinsic value: http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/
 2. Smart property: https://en.bitcoin.it/wiki/Smart_Property
