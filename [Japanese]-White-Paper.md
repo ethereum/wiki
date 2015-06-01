@@ -3,8 +3,7 @@
 ### 次世代スマートコントラクトと分散型アプリケーション基盤
 
 ナカモトサトシの論文により、2009年に開発された Bitcoin は通貨・貨幣における革新的な発明だと
-謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。
-（ [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) ）しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。
+謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。( [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) ) しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。
 それは分散型大衆決定のツールとして、まさにその基礎をなす Blockchain の技術であり、急速に人々の注目を集めつつあります。
 
 一般的に、
@@ -17,7 +16,7 @@ blockchain 上の電子財産を実装したものとして:
 
 があり、より複雑なアプリケーションとしては以下のものが挙げられます:
 
-* コーディングであらゆるルールを実装し、個々の電子資産を管理するもの([ smart contracts ](http://szabo.best.vwh.net/smart_contracts_idea.html))
+* ( 役人や銀行員に取って代わり、)コーディングであらゆるルールを実装し、個々の電子資産を管理するもの([ smart contracts ](http://szabo.best.vwh.net/smart_contracts_idea.html))
 * 上記のスマートコントラクトを blockchain 上で実装したもの ([ DAO ](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/))
 
 Ethereum が提供しようとしているものは、チューリング完全なプログラミング言語の完成品を
@@ -50,11 +49,11 @@ Ethereum が提供しようとしているものは、チューリング完全�
     * [分散型ファイルストレージ](#decentralized-file-storage)
     * [分散型自律組織](#decentralized-autonomous-organizations)
     * [その他のアプリケーション](#further-applications)
-* [Miscellanea And Concerns](#miscellanea-and-concerns)
-    * [Modified GHOST Implementation](#modified-ghost-implementation)
-    * [Fees](#fees)
-    * [Computation And Turing-Completeness](#computation-and-turing-completeness)
-    * [Currency And Issuance](#currency-and-issuance)
+* [雑録 と 関心事](#miscellanea-and-concerns)
+    * [GHOST の修正実装](#modified-ghost-implementation)
+    * [手数料](#fees)
+    * [計算 And チューリング完全](#computation-and-turing-completeness)
+    * [通貨 と 発行](#currency-and-issuance)
     * [Mining Centralization](#mining-centralization)
     * [Scalability](#scalability)
 * [Conclusion](#conclusion)
@@ -940,7 +939,7 @@ Frank Stajano と Richard Clayton による [Cyberdice](http://www.cl.cam.ac.uk/
 
 ## 雑録 と 関心事
 
-### GHOSTの修正版実装
+### GHOST の修正実装
 
 
 Greedy Heavist Observed Subtree (GHOST) は、Yonatan SompolinskyとAviv Zoharによって[2013年12月](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf)に初めて導入されたイノベーションです。
@@ -1116,7 +1115,7 @@ EVMコードは二つの方法でループを可能にします。
 そのような場合、チューリング完全にしない理由はありません。
 
 
-### 通貨と発行
+### 通貨 と 発行
 
 Ethereumのネットワークは ether という、それ自身の組込型通貨を保持しています。
 それは二つの目的ための主要なレイヤーとなります。
