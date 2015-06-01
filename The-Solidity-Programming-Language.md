@@ -63,7 +63,7 @@ The type system in Solidity revolves largely around the 256-bit word size of the
 - `uint`: 256-bit unsigned integer, operable with bitwise and unsigned arithmetic operations.
 - `int`: 256-bit signed integer, operable with bitwise and signed arithmetic operations.
 - `real`: 256-bit signed fixed-point quantity, 127-bit left of the point, 128-bit right.
-- `string32`: zero-terminated ASCII string of maximum length 32-bytes (256-bit).
+- `bytes`: zero-terminated ASCII string of maximum length 32-bytes (256-bit).
 
 In addition to these, there is the intrinsic `address` type used for identifying specific accounts and a bool type for representing two and false:
 
