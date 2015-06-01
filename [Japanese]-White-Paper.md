@@ -17,8 +17,8 @@ blockchain 上の電子財産を実装したものとして:
 
 があり、より複雑なアプリケーションとしては以下のものが挙げられます:
 
-* ( 役人や銀行員に取って代わり、)コーディングによってあらゆるルールを実装することで、個々の電子資産を管理するもの([ smart contracts ](http://szabo.best.vwh.net/smart_contracts_idea.html))
-* 上記のスマートコントラクトを blockchain 上で実装したもの ([ 分散型自動組織 ](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAOs))
+* コーディングであらゆるルールを実装し、個々の電子資産を管理するもの([ smart contracts ](http://szabo.best.vwh.net/smart_contracts_idea.html))
+* 上記のスマートコントラクトを blockchain 上で実装したもの ([ DAO ](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/))
 
 Ethereum が提供しようとしているものは、チューリング完全なプログラミング言語の完成品を
  blockchain に埋め込み提供することにあります。
