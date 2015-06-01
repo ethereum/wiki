@@ -1,6 +1,6 @@
 # Ethereum 白書
 
-### 次世代スマートコントラクトと分散型アプリケーション基盤
+### 次世代スマートコントラクト と 分散型アプリケーション基盤
 
 ナカモトサトシの論文により、2009年に開発された Bitcoin は通貨・貨幣における革新的な発明だと
 謳われ、金兌換のような後ろ盾がなく、中央通貨管理局をもたないはじめての デジタル財産 の例です。( [intrinsic value](http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/) ) しかし、その壮大な Bitcoin の実験における、より特筆すべき重要部は別の所にあります。
