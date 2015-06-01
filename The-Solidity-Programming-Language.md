@@ -58,7 +58,7 @@ Unlike in Javascript, all variables must be declared prior to use and typed. How
 
 ## Simple Types
 
-The type system in Solidity revolves largely around the 256-bit word size of the EVM. To this end, there are 5 major types, each of which are specifically 256-bits wide:
+The type system in Solidity revolves largely around the 256-bit word size of the EVM. To this end, there are 4 major types, each of which are specifically 256-bits wide:
 
 - `uint`: 256-bit unsigned integer, operable with bitwise and unsigned arithmetic operations.
 - `int`: 256-bit signed integer, operable with bitwise and signed arithmetic operations.
