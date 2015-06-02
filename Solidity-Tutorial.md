@@ -861,7 +861,7 @@ function myFunction() <visibility specifier> returns (bool) {
 
  - `public`: visible externally and internally (creates accessor function for storage/state variables)
  - `private`: only visible in the current contract
- - `external`: only visible externally (only for functions)
+ - `external`: only visible externally (only for functions) - i.e. can only be message-called (via `this.fun`)
  - `internal`: only visible internally
 
 ### Modifiers
