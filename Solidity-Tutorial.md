@@ -306,7 +306,7 @@ contract ArrayContract {
     m_pairsOfFlags = newPairs;
   }
   function setFlagPair(uint index, bool flagA, bool flagB) {
-    // access to a non-existing index will stop execution
+    // access to a non-existing index will throw an exception
     m_pairsOfFlags[index][0] = flagA;
     m_pairsOfFlags[index][1] = flagB;
   }
@@ -411,6 +411,12 @@ contract test {
     }
 }
 ```
+
+## Exceptions
+
+Currently, there are two situations, where exceptions can happen in Solidity: If you access an array beyond its length (i.e. `x[i]` where `i >= x.length`) or if a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself). In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state.
+
+It is planned to also throw and catch exceptions manually.
 
 ## Interfacing with other Contracts
 
