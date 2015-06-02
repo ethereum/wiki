@@ -519,7 +519,7 @@ contract named is owned, mortal {
     }
 }
 
-// If a constructor takes an argument, it needs to be provided in the header.
+// If a constructor takes an argument, it needs to be provided in the header (or modifier-invocation-style at the constructor of the derived contract (see below)).
 contract PriceFeed is owned, mortal, named("GoldFeed") {
    function updateInfo(uint newInfo) {
       if (msg.sender == owner) info = newInfo;
@@ -570,6 +570,24 @@ inheritance graph, so it will call `Base2.kill()` (note that the final inheritan
 -- starting with the most derived contract: Final, Base1, Base2, mortal, owned). Note that the actual function that
 is called when using super is not known in the context of the class where it is used,
 although its type is known. This is similar for ordinary virtual method lookup.
+
+### Arguments for Base Constructors
+
+Derived contracts need to provide all arguments needed for the base constructors. This can be done at two places:
+
+```js
+contract Base {
+  uint x;
+  function Base(uint _x) { x = _x; }
+}
+contract Derived is Base(7) {
+  function Derived(uint _y) Base(_y * _y) {
+  }
+}
+```
+
+Either directly in the inheritance list (`is Base(7)`) or in the way a modifier would be invoked as part of the header of the derived constructor (`Base(_y * _y)`). The first way to do it is more convenient if the constructor argument is a constant and defines the behaviour of the contract or describes it. The second way has to be used if the constructor arguments of the base depend on those of the derived contract.
+
 
 ### Multiple Inheritance and Linearization
 
