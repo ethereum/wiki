@@ -28,7 +28,7 @@ In a more practical sense, Ethereum is an internet service platform for guarante
 
 Over the last twenty years in particular, we have seen an acceleration in the development of services and infrastructure to make the overhead of working as a team or running businesses simpler and less expensive, mainly thanks to the internet. The likes of eBay, Drivy and Airbnb have made setting up a shop, car rental company or hotel much easier. These are platforms that allow people to realize their idea quickly, as long as the service they want to provide fits the template offered by the platform. Ethereum, in this sense, is a platform for platforms. It allows people to easily create the infrastructure to make it easy to set up new services on the internet. Importantly, because there is not a company or indeed any entity in charge of or controlling Ethereum, the cost of running the infrastructure doesn't have to include any profit margin, so we are likely to see lower costs.
 
-With the coming of the Mix IDE and the Mist browser, the functionality of Ethereum as a deployment platform for internet services will become more clear.
+With the coming of the Mix IDE and the Mist browser, the functionality of Ethereum as a deployment platform for internet services will become more clear. The take-home message from this section, however, is that Ethereum is poised to disrupt industries as diverse as finance and supply chains.
 
 
 ##Opt-in Social Contracts 
@@ -46,16 +46,17 @@ Crowdfunding is a key example in the advancement organizational tools. It provid
 
 Philosophically, it is the next step in re-decentralizing the internet. A decentralized system is one that anyone can unilaterally join and participate in, one in which all participants contribute to the running and maintanence, and one in which any participant can unilaterally leave and when they do, the system continues regardless. In a decentralized system, there is no entity that can prevent participation or arbitrarily censor the content or usage. The internet was designed to be decentralized, but the way we use it has become increasingly centralized, to the point where censorship and exclusion are accepted and expected. Blockchain technology, introduced by Satoshi Nakamoto with the proof-of-concept implementation of a simple value transfer system known as bitcoin, represents the best digital system we have (after the internet itself) for administering multi-user interactions without any need for centralized coordination or oversight. Effectively, a decentralized system is it's own authority for enforcing the rules (e.g. 'you can only spend your money once' in bitcoin, or 'whatever rule you programmed in to your smart contract' in Ethereum), so participants can be confident that the rules they expect to be enforced will be, without any danger of corruption, bribery, nepotism, political bias, exclusion or arbitrary exception. 
 
-Ethereum allows people to make neutrally enforceable agreements in a completely peer-to-peer fashion. Now, it must be remembered that Ethereum can only enforce within its own digital limits; Ethereum does not remove the need for an external authority for adjudication over disputes outside its realm --- "the other party punched me in the face after putting in the Ethereum contract that he wouldn't" is non-sense, but rules exist elsewhere to cover this --- but what Ethereum does do is allow us to push the boundary on what the digital realm can cover.
+Ethereum allows people to make neutrally enforceable agreements in a completely peer-to-peer fashion. Now, it must be remembered that Ethereum can only enforce within its own digital limits; Ethereum does not remove the need for an external authority for adjudication over disputes outside its realm---"the other party punched me in the face after putting in the Ethereum contract that he wouldn't" is non-sense, but rules exist elsewhere to cover this---but what Ethereum does do is allow us to push the boundary on what the digital realm can cover.
 
 
 ##Conclusion
 
-Ethereum is a collection of non-localized singleton programmeable data structures. What this means will depend on where you are coming from, but where ever you are, it's going to be better with Ethereum.
+Ethereum is a collection of non-localized singleton programmable data structures. What this means will depend on where you are coming from, but where ever you are, it's going to be better with Ethereum.
 
 
 ###Notes
 *Copeland, Jack (2006). Colossus: The Secrets of Bletchley Park's Codebreaking Computers. Oxford University Press. p.109
+
 Note that T.J.Watson, the former head of IBM, almost certainly never said, "I think there is a world market for maybe five computers", although for a time (late 1940s, early 1950s) it was indeed the case that there was, in the United States, a market for about five computers. 
 
 **Presidential speech, Milwaukee, Wisconsin.
