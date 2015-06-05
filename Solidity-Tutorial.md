@@ -272,7 +272,7 @@ address x = 0x123;
 if (x.balance < 10 && address(this).balance >= 10) x.send(10);
 ```
 
-Beware that if `x` is a contract address, its code will be executed together with the `send` call (this is a limitation of the EVM and cannot be prevented). Furthermore, if that execution runs out of gas or fails in any way, the `send` call will also fail, throw a Solidity exception and thus terminate and revert the current execution (unless it is caught).
+Beware that if `x` is a contract address, its code will be executed together with the `send` call (this is a limitation of the EVM and cannot be prevented). If that execution runs out of gas or fails in any way, the Ether transfer will be reverted. In this case, `send` returns `false`.
 
 Furthermore, to interface with contracts that do not adhere to the ABI (like the classic NameReg contract),
 the function `call` is provided which takes an arbitrary number of arguments of any type. These arguments are ABI-serialized (i.e. also padded to 32 bytes). One exception is the case where the first argument is encoded to exactly four bytes. In this case, it is not padded to allow the use of function signatures here.
@@ -282,6 +282,12 @@ address nameReg = 0x72ba7d8e73fe8eb666ea66babc8116a41bfb10e2;
 nameReg.call("register", "MyName");
 nameReg.call(bytes4(sha3("fun(uint256)")), a);
 ```
+
+`call` returns a boolean indicating whether the invoked function terminated (`true`) or caused an EVM exception (`false`). It is not possible to access the actual data returned (for this we would need to know the encoding and size in advance).
+
+In a similar way, the function `callcode` can be used: The difference is that only the code of the given address is used, all other aspects (storage, balance, ...) are taken from the current contract. The purpose of `callcode` is to use library code which is stored in another contract. The user has to ensure that the layout of storage in both contracts is suitable for callcode to be used.
+
+Both `call` and `callcode` are very low-level functions and should only be used as a *last resort* as they break the type-safety of Solidity.
 
 Note that contracts inherit all members of address, so it is possible to query the balance of the
 current contract using `this.balance`.
@@ -851,7 +857,7 @@ even though the instructions contained a jump in the beginning.
  - `super`: the contract one level higher in the inheritance hierarchy
  - `suicide(address)`: suicide the current contract, sending its funds to the given address
  - `<address>.balance`: balance of the address in Wei
- - `<address>.send(uint256)`: send given amount of Wei to address.
+ - `<address>.send(uint256) returns (bool)`: send given amount of Wei to address, returns `false` on failure.
 
 ### Function Visibility Specifiers
 
