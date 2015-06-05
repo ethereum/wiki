@@ -272,6 +272,8 @@ address x = 0x123;
 if (x.balance < 10 && address(this).balance >= 10) x.send(10);
 ```
 
+Beware that if `x` is a contract address, its code will be executed together with the `send` call (this is a limitation of the EVM and cannot be prevented). Furthermore, if that execution runs out of gas or fails in any way, the `send` call will also fail, throw a Solidity exception and thus terminate and revert the current execution (unless it is caught).
+
 Furthermore, to interface with contracts that do not adhere to the ABI (like the classic NameReg contract),
 the function `call` is provided which takes an arbitrary number of arguments of any type. These arguments are ABI-serialized (i.e. also padded to 32 bytes). One exception is the case where the first argument is encoded to exactly four bytes. In this case, it is not padded to allow the use of function signatures here.
 
