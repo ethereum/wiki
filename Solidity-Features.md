@@ -752,3 +752,8 @@ The functional gas estimation takes a different approach: For each function in a
 
 In the ABI encoding (wiki already changed), string is a dynamic type whose "number of elements" field is the number of bytes, not the number of characters.
 The encoding of the string is assumed to be UTF-8, but is not yet used inside Solidity.
+
+## In-memory types
+
+[PT](https://www.pivotaltracker.com/n/projects/1189488/stories/88238440)
+Variables of reference type (structs and arrays) can either point to memory, storage or calldata. The keywords `storage` and `memory` as part of their declaration are used to indicate that (calldata cannot be used explicitly). Parameters (not return parameters) of external functions are forced to point to calldata. Parameters (also return parameters) of externally-visibly functions (public and external) are forced to point to memory (unless they point to calldata). In all other cases, if neither storage or memory is given, function parameters default to point to memory and local variables default to point to storage.
