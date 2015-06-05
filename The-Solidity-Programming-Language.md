@@ -63,16 +63,16 @@ The type system in Solidity revolves largely around the 256-bit word size of the
 - `uint`: 256-bit unsigned integer, operable with bitwise and unsigned arithmetic operations.
 - `int`: 256-bit signed integer, operable with bitwise and signed arithmetic operations.
 - `real`: 256-bit signed fixed-point quantity, 127-bit left of the point, 128-bit right.
-- `bytes`: zero-terminated ASCII string of maximum length 32-bytes (256-bit).
+- `bytes32`: sequence of 32 bytes (256 bit in total).
 
 In addition to these, there is the intrinsic `address` type used for identifying specific accounts and a bool type for representing two and false:
 
 - `address`: account identifier, 160-bits.
 - `bool`: two-state value.
 
-Most of the time, we'll tend to use `uint`; the former if we intend to do arithmetic, the latter when we need to identify or refer to pieces of data, events, &c.
+Most of the time, we'll tend to use `uint` und `bytes32`; the former if we intend to do arithmetic, the latter when we need to identify or refer to pieces of data, events, &c.
 
-So to declare a variable it is very similar to the C-like languages: we simply place the type, followed by the variable name and finish the expression with a `;`. For example to declare a uint named `x` we'd write:
+So to declare a variable it is very similar to the C-like languages: we simply place the type, followed by the variable name and finish the expression with a `;`. For example to declare a uint named `x` we would write:
 
 ```
 uint x;
@@ -91,7 +91,7 @@ There is a shorthand to declaring and assigning; those two statements may be col
 uint x = 69;
 ```
 
-In this situation, where we are simulataneously declaring and initialising the variable, we are able to substitute the type with the keyword `var`. If we do this, the type will be determined through the type of the expression we are assigning:
+In this situation, where we are simultaneously declaring and initialising the variable, we are able to substitute the type with the keyword `var`. If we do this, the type will be determined through the type of the expression we are assigning:
 
 ```
 var x = 69;
@@ -119,9 +119,9 @@ In terms of literals, addresses are formed from the characters `0x` followed dir
 address a = 0x0123456789abcdef0123;
 ```
 
-# Strings
+# Byte Strings
 
-String literals are formed by a sequence of arbitrary characters contained between quote characters (`"`). They are generally interpreted as zero-terminated ASCII encoded text, similar to C. The terminating zero need not be supplied. An examples would be: `"Hello, World!"`.
+Byte string literals are formed by a sequence of arbitrary characters contained between quote characters (`"`). They are generally interpreted as zero-terminated ASCII encoded text, similar to C. The terminating zero need not be supplied. An examples would be: `"Hello, World!"`.
 
 # Reals
 
