@@ -137,7 +137,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
       * [stopWatching(callback)](#web3shhfilter)
       * [get(callback)](#web3shhfilter)
 
-# Usage
+## Usage
 
 #### web3
 The `web3` object provides all methods.
