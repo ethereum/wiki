@@ -102,7 +102,7 @@ Una volta avvenuto lo step (1), dopo qualche minuto qualche miner includerà la 
 
 ### Merkle Trees
 
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/spv_bitcoin.png)
+![SPV in bitcoin](https://raw.githubusercontent.com/ethereum/www/master-postsale/src/extras/gh_wiki/spv_bitcoin.png)
 
 _Sinistra: è sufficiente mostrare solo un esiguo numero di nodi in un Merkle tree per dimostrare la prova della validità di un ramo._
 
