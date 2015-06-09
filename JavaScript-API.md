@@ -33,7 +33,7 @@ batch.add(web3.eth.contract(abi).at(address).balance.request(address, callback2)
 batch.execute();
 ```
 
-## A note on big numbers in JavaScript
+## A note on big numbers in web3.js
 
 You will always get a BigNumber object for balance values as JavaScript is not able to handle big numbers correctly.
 Look at the following examples:
