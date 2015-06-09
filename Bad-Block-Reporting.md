@@ -86,7 +86,7 @@ and `VMTRACE` is the object:
 		"memory": [ HEX, ... ], OPTIONAL
 		"storage": { HEX: HEX }, OPTIONAL
 		"gas": BIGINT
-		"pc": INT
+		"pc": BIGINT
 		"inst": INT
 		"depth": INT, OPTIONAL
 		"steps": INT
