@@ -25,13 +25,15 @@ NOTE: All hex is lower-case.
 	"block": DATA
 	"errortype": TAG_ERROR
 	"hints": [ (all items OPTIONAL)
-		"receipts": DATA, OPTIONAL
+		"receipts": [ DATA, ... ], OPTIONAL
 		"vmtrace": VMTRACE, OPTIONAL
 	], OPTIONAL
 }
 ```
 
 Where:
+
+`receipts` is simply the array of RLP-encoded receipts.
 
 `TAG_ERROR` is a string containing one of (specified roughly in order of ability to detect):
 
