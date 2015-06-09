@@ -38,7 +38,10 @@ Where:
 `TAG_ERROR` is a string containing one of (specified roughly in order of ability to detect):
 
 #### Generic:
-- `BadRLP`: Invalid RLP.
+- `BadRLP`: Generally invalid RLP (e.g. 0x8100).
+- `BadCast`: Given RLP is of an incorrect type (e.g. 0x00 being interpreted as an integer).
+- `OversizeRLP`: Additional bytes trailing an otherwise valid RLP fragment (e.g. 0x8000).
+- `UndersizeRLP`: Bytes missing from the end of an otherwise valid RLP fragment (e.g. 0x81).
 
 #### Block-specific:
 - `InvalidBlockFormat`: Block format is wrong (!= array, != 3 items &c.).
