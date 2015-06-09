@@ -40,14 +40,13 @@ Answers to questions about Ethereum
 
 ### What is Ethereum?
 
-> Ethereum is an open source platform to build and distribute decentralized applications.
-> It's scheduled for release in the winter of 2014/2015.  
->
-> For a quick overview, see:
-> + [Introducing Ethereum](http://youtu.be/mRWNr3MA2jo) (Video, 10min)
-> + [Vitalik Buterin reveals Ethereum at Bitcoin Miami 2014](http://youtu.be/l9dpjN3Mwps) (Video, 28min)
-> + [Singularity 1 on 1: Ethereum is a Decentralized Consensus Platform](http://youtu.be/fbEtivJIfIU) (Video, 69min)
-> + [Our second Reddit "Ask Me Anything" for community selected questions](http://www.reddit.com/r/IAmA/comments/2bjmgb/hi_we_are_the_ethereum_project_team_ask_us/)
+There are several ways to answer this question, which are introduced on the dedicated [What is Ethereum](http://github.com/ethereum/wiki/wiki/What-is-Ethereum) wiki page.
+
+If you prefer to learn by watching videos, see:
+ + [Introducing Ethereum](http://youtu.be/mRWNr3MA2jo) (Video, 10min)
+ + [Vitalik Buterin reveals Ethereum at Bitcoin Miami 2014](http://youtu.be/l9dpjN3Mwps) (Video, 28min)
+ + [Singularity 1 on 1: Ethereum is a Decentralized Consensus Platform](http://youtu.be/fbEtivJIfIU) (Video, 69min)
+ + [Our second Reddit "Ask Me Anything" for community selected questions](http://www.reddit.com/r/IAmA/comments/2bjmgb/hi_we_are_the_ethereum_project_team_ask_us/) (not actually a video)
 
 ### Where can I learn more about Ethereum?
 
