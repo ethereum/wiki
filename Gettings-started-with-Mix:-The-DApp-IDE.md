@@ -2,30 +2,32 @@
 
 This guide provides a very simple and quick introduction to the Mix IDE workflow by walking you through the creation of a simple ÐApp. Once you are done with this tutorial, you will have a general knowledge of how to create and run applications in the IDE.
 
-Note that the software is in still in proof-of-concept state. Thing are changing rapidly and this tutorial might nob be up to date with the latest version. In such case please open an issue on [github](https://github.com/ethereum/cpp-ethereum/issues) 
+Note that the software is in still in proof-of-concept state. Things are changing rapidly and this tutorial might not be up to date. If that is the case [please open an issue](https://github.com/ethereum/cpp-ethereum/issues). 
 
 ## Getting started.
 
-This tutorial assumes you have Mix release binary or source build with Qt 5.4. See [wiki](https://github.com/ethereum/cpp-ethereum/wiki) for building instructions.
+This tutorial assumes you have installed [from source](https://github.com/ethereum/cpp-ethereum/wiki) (Qt 5.4) or from a precompiled binary.
 
 ## Creating a new project
 
-Let's create a simple DApp that will allow user to store and query personal movie ratings.
+Let's create a simple ÐApp that will allow user to store and query personal movie ratings.
 
-In the IDE, choose `File > New Project`. Enter the contract name "MovieRaings" and a path for the project file. A new empty project will be created. To the left there is a project items list with two items added by default: Contract and index.html. Contract contains solidity contract code, and index.html is for the front end web page. You can add new contract files to the project using file menu. All files will be copied to the project directory.
+In the IDE, choose `File > New Project`. Enter the contract name "MovieRatings" and a path for the project file. To the left there is a project items list with two items added by default: Contract and index.html. Contract contains [Solidity](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial) contract code, and index.html is for the front-end. You can add new contract files to the project using file menu. All files will be copied to the project directory.
 
 Select Contract and enter the text for the rating contract:
 
+```js
 	contract Rating {
 		function setRating(bytes32 _key, uint256 _value) {
 			ratings[_key] = _value;
 		}
 		mapping (bytes32 => uint256) public ratings;
 	}
+```
 
 Check [Solidity tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial) for solidity reference.
 
-Now select index.html and enter the following html code:
+Now select `index.html` and enter the following html code:
 ```html
 	<!doctype>
 	<html>
