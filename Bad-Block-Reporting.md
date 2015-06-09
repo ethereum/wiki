@@ -87,7 +87,7 @@ and `VMTRACE` is the object:
 		"storage": { HEX: HEX }, OPTIONAL
 		"gas": BIGINT
 		"pc": INT
-		"inst": HEX
+		"inst": INT
 		"depth": INT, OPTIONAL
 		"steps": INT
 		"address": DATA_20, OPTIONAL
@@ -103,7 +103,7 @@ and `VMTRACE` is the object:
 - `storage`: The contents of storage that SSTOREs operate on (RE-READ THAT!), prior to execution. Omitted when previous operation did not write to storage and not first operation.
 - `gas`: The amount of gas available prior to this instruction.
 - `pc`: The program counter, immediately prior to execution.
-- `inst`: The instruction that is being executed.
+- `inst`: The instruction opcode index that is to be executed (e.g. STOP would be 0).
 - `depth`: The depth of in present context in CALL/CREATE stack. Omitted when no change since previous operation and not first operation.
 - `steps`: The number of steps taken so far in present CALL/CREATE context.
 - `address`: The address of account that is executing in present CALL/CREATE context. Omitted when no change since previous operation and not first operation.
