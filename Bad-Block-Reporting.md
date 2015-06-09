@@ -1,6 +1,6 @@
-Send a JSONRPC request to http://badblocks.ethdev.com:
+Send a JSONRPC request to `http://badblocks.ethdev.com`:
 
-Call `badBlock(BADBLOCK)`, with `BADBLOCK` the object described below:
+Call `eth_badBlock(BADBLOCK)`, with `BADBLOCK` the object described below:
 
 ## BADBLOCK Object Format
 
