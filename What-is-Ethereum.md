@@ -51,7 +51,7 @@ Ethereum allows people to make neutrally enforceable agreements in a completely 
 
 ##Conclusion
 
-Gavin Wood has distilled the description of Ethereum to being a collection of non-localized singleton programmable data structures. What this means will depend on where you are coming from, but where ever you are, it's going to be better with Ethereum.
+Gavin Wood has distilled the description of Ethereum to being a collection of non-localized singleton programmable data structures. What this means will depend on where you are coming from, but where ever you are, it's probably going to be better with Ethereum.
 
 
 ###Notes
