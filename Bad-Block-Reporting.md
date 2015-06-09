@@ -99,13 +99,13 @@ and `VMTRACE` is the object:
 ```
 
 - `stack`: The stack, prior to execution.
-- `memory`: The memory, prior to execution. If omitted, no change since previous operation. Never omitted for first operation.
-- `storage`: The contents of storage that SSTOREs operate on (RE-READ THAT!), prior to execution. If omitted, no change since previous operation. Never omitted for first operation.
+- `memory`: The memory, prior to execution. Omitted when previous operation did not write to memory and not first operation.
+- `storage`: The contents of storage that SSTOREs operate on (RE-READ THAT!), prior to execution. Omitted when previous operation did not write to storage and not first operation.
 - `gas`: The amount of gas available prior to this instruction.
 - `pc`: The program counter, immediately prior to execution.
 - `inst`: The instruction that is being executed.
-- `depth`: The depth of in present context in CALL/CREATE stack. If omitted, no change since previous operation. Never omitted for first operation.
+- `depth`: The depth of in present context in CALL/CREATE stack. Omitted when no change since previous operation and not first operation.
 - `steps`: The number of steps taken so far in present CALL/CREATE context.
-- `address`: The address of account that is executing in present CALL/CREATE context. If omitted, no change since previous operation. Never omitted for first operation.
-- `memexpand`: The size that memory is to be expanded by in words for this operation. If omitted, zero.
+- `address`: The address of account that is executing in present CALL/CREATE context. Omitted when no change since previous operation and not first operation.
+- `memexpand`: The size that memory is to be expanded by in words for this operation. Omitted when zero.
 - `gascost`: The total cost of gas for executing this instruction (technically the /maximum/ total cost of gas - CALL/CREATE may return gas).
