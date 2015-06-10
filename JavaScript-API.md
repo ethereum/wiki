@@ -1464,7 +1464,7 @@ You can use events like [filters](#web3ethfilter) and they have the same methods
 
 ##### Parameters
 
-1. `Object` - Indexed return values you want to filter the logs by, e.g. `{'valueA': 1, 'valueB': [myFirstAddress, mySecondAddress]}`.
+1. `Object` - Indexed return values you want to filter the logs by, e.g. `{'valueA': 1, 'valueB': [myFirstAddress, mySecondAddress]}`. By default all filter values are set to `null`. It means, that they will match any event of given type sent from this contract.
 2. `Object` - Additional filter options, see [filters](#web3ethfilter) parameter 1 for more.
 
 ##### Callback return
