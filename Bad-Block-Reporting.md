@@ -84,6 +84,7 @@ and `VMTRACE` is the object:
 	{
 		"stack": [ HEX, ... ]
 		"memory": HEX, OPTIONAL
+		"sha3memory": DATA_32, OPTIONAL
 		"storage": { HEX: HEX }, OPTIONAL
 		"gas": BIGINT
 		"pc": BIGINT
@@ -99,13 +100,14 @@ and `VMTRACE` is the object:
 ```
 
 - `stack`: The stack, prior to execution.
-- `memory`: The memory, prior to execution. Omitted when previous operation was not memory-dependent (MLOAD/MSTORE/MSTORE8/SHA3/CALL/CALLCODE/CREATE/CALLDATACOPY/CODECOPY/EXTCODECOPY) and not first operation.
-- `storage`: The contents of storage that SSTOREs operate on (RE-READ THAT!), prior to execution. Omitted when previous operation is not storage-dependent (SLOAD/SSTORE) and not first operation.
+- `memory`: The memory, prior to execution. Omitted when previous operation was not memory-dependent (MLOAD/MSTORE/MSTORE8/SHA3/CALL/CALLCODE/CREATE/CALLDATACOPY/CODECOPY/EXTCODECOPY), not first operation of CALL/CREATE context or when memory >= 1024 bytes large.
+- `sha3memory`: The Keccak hash of the memory, prior to execution. Omitted when previous operation was not memory-dependent (MLOAD/MSTORE/MSTORE8/SHA3/CALL/CALLCODE/CREATE/CALLDATACOPY/CODECOPY/EXTCODECOPY), not first operation of CALL/CREATE context or when memory < 1024 bytes large.
+- `storage`: The contents of storage that SSTOREs operate on (RE-READ THAT!), prior to execution. Omitted when previous operation is not storage-dependent (SLOAD/SSTORE) and not first operation of CALL/CREATE context.
 - `gas`: The amount of gas available prior to this instruction.
 - `pc`: The program counter, immediately prior to execution.
 - `inst`: The instruction opcode index that is to be executed (e.g. STOP would be 0).
-- `depth`: The depth of in present context in CALL/CREATE stack. Omitted when no change since previous operation and not first operation.
+- `depth`: The depth of in present context in CALL/CREATE stack. Omitted when no change since previous operation and not first operation of CALL/CREATE context.
 - `steps`: The number of steps taken so far in present CALL/CREATE context.
-- `address`: The address of account that is executing in present CALL/CREATE context. Omitted when no change since previous operation and not first operation.
+- `address`: The address of account that is executing in present CALL/CREATE context. Omitted when no change since previous operation and not first operation of CALL/CREATE context.
 - `memexpand`: The size that memory is to be expanded by in words for this operation. Omitted when zero.
 - `gascost`: The total cost of gas for executing this instruction (technically the /maximum/ total cost of gas - CALL/CREATE may return gas).
