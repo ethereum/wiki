@@ -1682,7 +1682,7 @@ This method should be called, when we want to get string from the local leveldb 
 
 ##### Parameters
 
-1. `String` - The database to store to.
+1. `String` - The database string name to retrieve from.
 2. `String` - The name of the store.
 
 ##### Returns
