@@ -758,6 +758,22 @@ The encoding of the string is assumed to be UTF-8, but is not yet used inside So
 [PT](https://www.pivotaltracker.com/n/projects/1189488/stories/88238440)
 Variables of reference type (structs and arrays) can either point to memory, storage or calldata. The keywords `storage` and `memory` as part of their declaration are used to indicate that (calldata cannot be used explicitly). Parameters (not return parameters) of external functions are forced to point to calldata. Parameters (also return parameters) of externally-visibly functions (public and external) are forced to point to memory (unless they point to calldata). In all other cases, if neither storage or memory is given, function parameters default to point to memory and local variables default to point to storage.
 
+As part of this change, references to storage are also cleaned up: An assignment of a state variable to a local variable or temporary converts it from a reference to a pointer. Assignments to storage pointers do not modify storage but only change the pointer. This means that it is not possible to assign a memory array to a storage pointer. Furthermore, it is illegal to pass a memory-array as an argument to a function that requires a storage reference. Es an example:
+```js
+contract c {
+  uint[] x;
+  function f(uint[] memoryArray) {
+    x = memoryArray; // works, copies the array to storage
+    var y = x; // works, assigns a pointer
+    y[7]; // fine, returns the 8th element
+    y.length = 2; // fine, modifies storage
+    delete x; // fine, clears the array
+    // y = memoryArray; // does not work, would need to create a new temporary / unnamed array in storage, but storage is "statically" allocated
+    // delete y; // does not work, would set pointer to zero and does not make sense for pointer
+  }
+}
+```
+
 ## Positive integers conversion to signed
 
 [PT](https://www.pivotaltracker.com/n/projects/1189488/stories/92691082)
