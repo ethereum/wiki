@@ -1,4 +1,5 @@
 - [Cheat Sheet](#cheatsheet)
+- [Tips and Tricks](#tips-and-tricks)
 
 Solidity is a high-level language whose syntax is similar to that of JavaScript and it is designed to compile to code for the Ethereum Virtual Machine. This
 tutorial provides a basic introduction to Solidity and assumes some knowledge of
@@ -831,6 +832,13 @@ data[7] = 9;
 return 1;
 ```
 even though the instructions contained a jump in the beginning.
+
+## Tips and Tricks
+
+ * Use `delete` on arrays to delete all its elements.
+ * Use shorter types for struct elements and sort them such that short types are grouped together. This can lower the gas costs as multiple SSTORE operations might be combined into a single (SSTORE costs 5000 or 20000 gas, so this is what you want to optimise). Use the gas price estimator (with optimiser enabled) to check!
+ * Make your state variables public - the compiler will create [getters](#accessor-functions) for you for free.
+ * If you end up checking conditions on input or state a lot at the beginning of your functions, try using [modifiers](#function-modifiers)
 
 ## Cheatsheet
 
