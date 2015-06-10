@@ -83,7 +83,7 @@ and `VMTRACE` is the object:
 [
 	{
 		"stack": [ HEX, ... ]
-		"memory": [ HEX, ... ], OPTIONAL
+		"memory": HEX, OPTIONAL
 		"storage": { HEX: HEX }, OPTIONAL
 		"gas": BIGINT
 		"pc": BIGINT
