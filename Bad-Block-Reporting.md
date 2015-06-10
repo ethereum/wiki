@@ -99,8 +99,8 @@ and `VMTRACE` is the object:
 ```
 
 - `stack`: The stack, prior to execution.
-- `memory`: The memory, prior to execution. Omitted when previous operation did not write to memory and not first operation.
-- `storage`: The contents of storage that SSTOREs operate on (RE-READ THAT!), prior to execution. Omitted when previous operation did not write to storage and not first operation.
+- `memory`: The memory, prior to execution. Omitted when previous operation was not memory-dependent (MLOAD/MSTORE/MSTORE8/SHA3/CALL/CALLCODE/CREATE/CALLDATACOPY/CODECOPY/EXTCODECOPY) and not first operation.
+- `storage`: The contents of storage that SSTOREs operate on (RE-READ THAT!), prior to execution. Omitted when previous operation is not storage-dependent (SLOAD/SSTORE) and not first operation.
 - `gas`: The amount of gas available prior to this instruction.
 - `pc`: The program counter, immediately prior to execution.
 - `inst`: The instruction opcode index that is to be executed (e.g. STOP would be 0).
