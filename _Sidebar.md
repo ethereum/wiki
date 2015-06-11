@@ -20,6 +20,7 @@
 - [NatSpec Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format)
 - [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
 - [Bad Block Reporting](http://github.com/ethereum/wiki/wiki/Bad-Block-Reporting)
+- [Bad Chain Canary](http://github.com/ethereum/wiki/wiki/Bad-Chain-Canary)
 
 ### Ethash/Dashimoto
 - [Ethash](https://github.com/ethereum/wiki/wiki/Ethash)
