@@ -6,6 +6,8 @@ Specifically there are three modes it can be in:
 - `1` Bad chain. Client should not mine on it. Client upgrade not yet available.
 - `2` Update required. Just as for `1`; additionally, an update to your client is available and would be prudent.
 
+Clients implementing this protocol should display a message to the user to make any non-zero status clear. For a status of 2, the user should be notified than an immediate upgrade is required, regardless of whether mining is enabled.
+
 #### Addresses
 
 - For Olympic: `0x6879392ee114f8a4e133f0ff3dc4bc1717fe9344`
