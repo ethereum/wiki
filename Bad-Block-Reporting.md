@@ -24,10 +24,10 @@ NOTE: All hex is lower-case.
 {
 	"block": DATA
 	"errortype": TAG_ERROR
-	"hints": [ (all items OPTIONAL)
+	"hints": { (all items OPTIONAL)
 		"receipts": [ DATA, ... ], OPTIONAL
 		"vmtrace": VMTRACE, OPTIONAL
-	], OPTIONAL
+	}, OPTIONAL
 }
 ```
 
