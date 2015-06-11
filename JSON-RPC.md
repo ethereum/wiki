@@ -1524,7 +1524,7 @@ params: [
 - For filters created with `eth_newPendingTransactionFilter ` the return are transaction hashes (`DATA`, 32 Bytes), e.g. `["0x6345343454645..."]`.
 - For filters created with `eth_newFilter` logs are objects with following params:
 
-  - `type`: STRING - `pending` when the log is pending. `mined` if log is already mined.
+  - `type`: `TAG` - `pending` when the log is pending. `mined` if log is already mined.
   - `logIndex`: `QUANTITY` - integer of the log index position in the block. `null` when its pending log.
   - `transactionIndex`: `QUANTITY` - integer of the transactions index position log was created from. `null` when its pending log.
   - `transactionHash`: `DATA`, 32 Bytes - hash of the transactions this log was created from. `null` when its pending log.
