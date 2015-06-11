@@ -6,7 +6,7 @@ The current protocol specification does not provide the means to mitigate an inf
 
 Peers should be able to request hashes not only backwards towards the genesis block, but forward too to some specific target hash. This would allow the downloader to start pulling actual blocks and verify them concurrently with fetching the hashes. If no peers (including the hash provider) has the blocks to back up the hashes, the chain is rejected.
 
-This forward synchronization strategy requires the capacity to locate a common ancestor block to our blockchain and that of a remote peer in order to know the joining point from which to request the hashes. This however can be facilitated with the same mechanism by doing a binary search on our blockchain, requesting 1xhashes from the remote (towards its advertised head) side to see if it knows about it or not, honing in on the common ancestor.
+This forward synchronization strategy requires the capacity to locate a common ancestor block to our blockchain and that of a remote peer in order to know the joining point from which to request the hashes. This can be facilitated with the same mechanism by doing a binary search on our blockchain, requesting 1xhashes from the remote (towards its advertised head) side to see if it knows about it or not, honing in on the common ancestor.
 
 # Specification
 
