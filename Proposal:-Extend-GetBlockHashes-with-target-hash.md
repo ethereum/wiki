@@ -19,7 +19,7 @@ This forward synchronization strategy requires the capacity to locate a common a
 
     * Adhere to that requested by `GetBlockHashes`, opposed to the current "hard coded" young -> old ordering
 
-The benefit of this proposal is that beside providing the means to do forward synchronization, it retains the capacity to implement the currently specified reverse-fetch behavior by passing the genesis block's hash to `targetHash`. This way Eth implementations don't have to immediately devise a new downloader strategy to cope with the update, but can function as they are until ready to evolve.
+The benefit of this proposal is that beside providing the means to do forward syncing, it retains the capacity to implement the currently specified reverse fetch behavior by passing the genesis block's hash to `targetHash`. This way Ethereum implementations don't have to immediately devise a new downloader strategy to cope with the update, but can function as they are until ready to evolve.
 
 # Supersedes
 
@@ -27,6 +27,6 @@ The benefit of this proposal is that beside providing the means to do forward sy
 
 The main issue the `BlockHashesFromNumbers` set out to resolve was the slow download of hashes (which was stalling the synchronization), by introducing parallel fetches based on height/block-number based hash retrievals. It also inherently provided a mechanism to limit the number of potentially invalid hashes downloaded to that of the current chain's height.
 
-The current proposal however approaches the challenge from the opposite direction. By downloading hashes towards the end of a chain, after the first hash delivery blocks can be immediately retrieved in parallel (compared to which hash downloads are insignificant in size and hence latency), so there is no need for the added complexity and potential issues with parallelizing hash downloads. Additionally, by limiting the number of pending hashes, we can also prevent any infinite chain attacks.
+The current proposal however approaches the challenge from the opposite direction. By downloading hashes towards the end of a chain - after the first hash delivery - blocks can be immediately retrieved in parallel (compared to which hash downloads are insignificant in size and hence latency), so there is no need for the added complexity and potential issues with parallelizing hash downloads. Additionally, by limiting the number of pending hashes, we can also prevent any infinite chain attacks.
 
 Given that the current proposal addresses all of the issues `BlockHashesFromNumbers` aimed to fix, while being much less invasive (requires the addition of single packet field); is gracefully compatible with previous protocol implementations (they can continue to function without an algorithm update); and implementation wise is straightforward and easy to reason about; we believe it is a superior proposal.
