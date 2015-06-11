@@ -939,7 +939,7 @@ params: [
 
 ##### Returns
 
-`Object` - A block object, or `null` when no transaction was found:
+`Object` - A block object, or `null` when no block was found:
 
   - `number`: `QUANTITY` - the block number. `null` when its pending block.
   - `hash`: `DATA`, 32 Bytes - hash of the block. `null` when its pending block.
