@@ -1879,7 +1879,7 @@ console.log(result2); // false
 var filter = web3.shh.filter(options)
 
 // watch for changes
-event.watch(function(error, result){
+filter.watch(function(error, result){
   if (!error)
     console.log(result);
 });
