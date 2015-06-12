@@ -243,7 +243,7 @@ An event description is a JSON object with fairly similar fields:
 - `inputs`: an array of objects, each of which contains:
 * `name`: the name of the parameter;
 * `type`: the canonical type of the parameter.
-* `indexed`: `true` if the field is part of the log's data segment, `false` if it one of the log's topics.
+* `indexed`: `true` if the field is part of the log's topics, `false` if it one of the log's data segment.
 * `anonymous`: `true` if the event was declared as `anonymous`.
 
 For example, 
