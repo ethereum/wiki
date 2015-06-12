@@ -24,7 +24,6 @@
 
 ### Ethash/Dashimoto
 - [Ethash](https://github.com/ethereum/wiki/wiki/Ethash)
-- [Ethash Design Rationale] (https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale)
 - [Ethash C API](https://github.com/ethereum/wiki/wiki/Ethash-C-API)
 - [Ethash DAG](https://github.com/ethereum/wiki/wiki/Ethash-DAG)
 
