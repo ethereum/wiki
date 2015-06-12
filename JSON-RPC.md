@@ -104,7 +104,7 @@ The following options are possible for the defaultBlock parameter:
 
 - `HEX String` - an integer block number
 - `String "earliest"` for the earliest/genesis block
-- `String "latest"` - for the latest minded block
+- `String "latest"` - for the latest mined block
 - `String "pending"` - for the pending state/transactions
 
 ### JSON-RPC methods
