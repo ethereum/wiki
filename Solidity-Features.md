@@ -781,3 +781,10 @@ Positive integer literals are now convertible to signed if in value range.
 ```
 int8 x = 2;
 ```
+
+## Exceptions in Solidity
+
+[PT](https://www.pivotaltracker.com/n/projects/1189488/stories/92929256)
+Currently, there are two situations, where exceptions can happen in Solidity: If you access an array beyond its length (i.e. x[i] where i >= x.length) or if a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself). In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state.
+
+It is planned to also throw and catch exceptions manually.
