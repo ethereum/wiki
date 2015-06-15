@@ -786,14 +786,18 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xa94f53
 
 #### eth_sign
 
+Signs data with a given address.
+
+**Note** the address to sign must be unlocked.
+
 ##### Parameters
 
-1. `FROM`: 20 bytes - address
-1. `DATA`: Data to sign
+1. `DATA`, 20 Bytes - address
+2. `DATA`, Data to sign
 
 ##### Returns
 
-1. `DATA`: Signed data
+`DATA`: Signed data
 
 ##### Example
 
