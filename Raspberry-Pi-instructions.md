@@ -63,7 +63,7 @@ This has been tested on the Raspberry Pi 2 only.
 ## Just get the binaries
 
 Alternativly, you can use the linux system of your choice and and get the arm binaries here:
-* https://build.ethdev.com/builds/ARM%20Go%20develop%20branch/geth-ARM-20150608083202-0.9.27-60-c6faa18.tar.bz2 (go)
+* https://build.ethdev.com/builds/ARM%20Go%20develop%20branch/geth-ARM-latest.tar.bz2 (go)
 * \<link will follow> (cpp-ethereum)
 
 ## Build it yourself
