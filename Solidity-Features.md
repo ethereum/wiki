@@ -756,9 +756,9 @@ The encoding of the string is assumed to be UTF-8, but is not yet used inside So
 ## In-memory types
 
 [PT](https://www.pivotaltracker.com/n/projects/1189488/stories/88238440)
-Variables of reference type (structs and arrays) can either point to memory, storage or calldata. The keywords `storage` and `memory` as part of their declaration are used to indicate that (calldata cannot be used explicitly). Parameters (not return parameters) of external functions are forced to point to calldata. Parameters (also return parameters) of externally-visibly functions (public and external) are forced to point to memory (unless they point to calldata). In all other cases, if neither storage or memory is given, function parameters default to point to memory and local variables default to point to storage.
+Variables of reference type (structs and arrays including `string` and `bytes`) can either point to memory, storage or calldata. The keywords `storage` and `memory` as part of their declaration are used to indicate that (calldata cannot be used explicitly). Parameters (not return parameters) of external functions are forced to point to calldata. Parameters (also return parameters) of public and return parameters of external functions are forced to point to memory. In all other cases, if neither storage nor memory is given, function parameters default to point to memory and local variables default to point to storage.
 
-As part of this change, references to storage are also cleaned up: An assignment of a state variable to a local variable or temporary converts it from a reference to a pointer. Assignments to storage pointers do not modify storage but only change the pointer. This means that it is not possible to assign a memory array to a storage pointer. Furthermore, it is illegal to pass a memory-array as an argument to a function that requires a storage reference. Es an example:
+As part of this change, references to storage are also cleaned up: An assignment of a state variable to a local variable or temporary converts it from a reference to a pointer. Assignments to storage pointers do not modify storage but only change the pointer. This means that it is not possible to assign a memory array to a storage pointer. Furthermore, it is illegal to pass a memory-array as an argument to a function that requires a storage reference (note that storage is statically allocated, i.e. there is no place to put this value). Es an example:
 ```js
 contract c {
   uint[] x;
@@ -773,6 +773,35 @@ contract c {
   }
 }
 ```
+
+If possible (i.e. from anything to memory and from anything to a storage reference that is not a pointer), conversions between these data locations are performed automatically by the compiler. Sometimes, this is still not possible, i.e. mappings cannot reside in memory (as their size is unknown) and for now, some types in memory are not yet implemented, this includes structs and multi-dimensional arrays.
+
+Of course, once a storage array is converted to memory, modifications do not affect the array in storage. You can either assign the modified array back to storage (though this would be vastly inefficient) or you can pass around a storage pointer to begin with. As an example:
+
+```js
+contract BinarySearch {
+  /// Finds the position of _value in the sorted list _data.
+  /// Note that "internal" is important here, because storage references only work for internal or private functions
+  function find(uint[] storage _data, uint _value) internal returns (uint o_position) {
+    return find(_data, 0, _data.length, _value);
+  }
+  function find(uint[] storage _data, uint _begin, uint _len, uint _value) private returns (uint o_position) {
+    if (_len == 0 || (_len == 1 && _data[_begin] != _value))
+      return uint(-1); // failure
+    uint halfLen = _len / 2;
+    uint v = _data[_begin + halfLen];
+    if (_value < v)
+      return find(_data, _begin, halfLen, _value);
+    else if (_value > v)
+      return find(_data, _begin + halfLen + 1, halfLen - 1, _value);
+    else
+      return _begin + halfLen;
+  }
+}
+```
+
+
+On memory usage: Since memory is wiped after each external function call, the Solidity runtime does not include proper memory management. It includes a "level indicator" which points to the next free memory slot. If memory is needed (because a storage object is copied to memory or an external function is called), it is allocated starting from this pointer. Functions that return objects stored in memory will not reset this pointer. This means that temporary memory objects will still take up space in memory even if they are not needed anymore. On the other hand, if a function does not return any memory-stored object, it resets the pointer to the value it had upon function entry.
 
 ## Positive integers conversion to signed
 
