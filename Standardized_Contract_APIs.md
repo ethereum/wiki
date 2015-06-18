@@ -2,15 +2,17 @@ Although Ethereum allows developers to create absolutely any kind of application
 
 ### Currency
 
-* `balance(address addr) returns (uint256 bal)`: get balance
-* `send(address to, uint256 value) returns (bool success)`: send currency
-* `send(address to, uint256 value, address from) returns (bool success)`: send currency from another account
+* `sendCoin(uint _val, address _to)`: send currency
+* `sendCoinFrom(address _from, uint _val, address _to)`: send currency from another account
+* `function coinBalance() constant returns (uint _r)`: get your balance
+* `coinBalanceOf(address _a) constant returns (uint _r)`: get the balance of another account
 
-The third command is used for a "direct debit" workflow, allowing contracts to charge fees in sub-currencies; the second `send` command should fail unless the `from` account has deliberately authorized the sender of the message via some mechanism; we propose these standardized APIs for approval:
+The `sendCoinFrom` is used for a "direct debit" workflow, allowing contracts to charge fees in sub-currencies; the command should fail unless the `from` account has deliberately authorized the sender of the message via some mechanism; we propose these standardized APIs for approval:
 
-* `approve(address addr, bool status)`: status = 1 to allow `addr` to direct debit from your account, status = 0 to disapprove
-* `approved(address addr) returns (bool status)`: returns 1 if `addr` is allowed to direct debit from your account
-* `approve_once(address addr, bool status, uint256 maxval)`: makes a one-time approval to send a maximum amount of currency equal to `maxval`
+* `approve(address _a)`: allow `addr` to direct debit from your account
+* `isApproved(address _proxy) constant returns (bool _r)`: returns 1 if `addr` is allowed to direct debit from your account
+* `isApprovedFor(address _target, address _proxy) constant returns (bool _r)`: returns 1 if `proxy` is allowed to direct debit from `target`
+* `approveOnce(address _a, uint256 _maxval)`: makes a one-time approval to send a maximum amount of currency equal to `_maxval`
 
 ### Exchanges
 
@@ -26,10 +28,18 @@ Note that individual exchanges may support only a subset of these commands; for 
 
 Registries (eg. domain name systems) have the following API:
 
-* `register(string32 key) returns (bool success)`: registers a particular key as being owned by yourself
-* `set_data(string32 key, string32 data)`: if you are the owner of a key, sets its associated data
-* `get_data(string32 key)`: get the data associated with a key
-* `get_owner(string32 key)`: get the owner of a particular key
-* `get_key(address owner)`: get a key that has been registered by a particular owner
-* `unregister(string32 key)`: unregisters a key that you currently control
+* `reserve(bytes32 _name)`: reserves a name and sets its owner to you if it is not yet reserved
+* `owner(bytes32 _name) constant returns (address o_owner)`: get the owner of a particular name
+* `transfer(bytes32 _name, address _newOwner)`: transfer ownership of a name
+* `setAddress(bytes32 _name, address _a, bool _primary)`: set the primary address associated with a name (similar to an A record in traditional DNS)
+* `addr(bytes32 _name) constant returns (address o_address)`: get the primary address associated with a name 
+* `setContent(bytes32 _name, bytes32 _content)`: if you are the owner of a name, sets its associated content
+* `content(bytes32 _name) constant returns (bytes32)`: get the content associated with a name
+* `setSubRegistrar(bytes32 _name, address _registrar)`: records the name as referring to a sub-registrar at the given address
+* `subRegistrar(bytes32 _name) constant returns (address)`: gets the sub-registrar associated with the given name
+* `disown(bytes32 _name)`: relinquishes control over a name that you currently control
 
+Events:
+
+* `event Changed(bytes32 indexed name)`: triggered when changed to a domain happen
+* `event PrimaryChanged(bytes32 indexed name, address indexed addr)`: triggered when the primary address of a domain changes
