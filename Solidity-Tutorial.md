@@ -755,6 +755,12 @@ contract ClientReceipt {
 Here, the call to `Deposit` will behave identical to
 `log3(msg.value, 0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20, sha3(msg.sender), _id);`. Note that the large hex number is equal to the sha3-hash of "Deposit(address,bytes32,uint256)", the event's signature.
 
+### Additional useful links for understanding events:
+
+Javascript documentation: <https://github.com/ethereum/wiki/wiki/JavaScript-API#contract-events>
+Example usage of events: <https://github.com/debris/smart-exchange/blob/master/lib/contracts/SmartExchange.sol>
+How yo access them in js: <https://github.com/debris/smart-exchange/blob/master/lib/exchange_transactions.js>
+
 ## Layout of State Variables in Storage
 
 Statically-sized variables (everything except mapping and dynamically-sized array types) are laid out contiguously in storage starting from position `0`. Multiple items that need less than 32 bytes are packed into a single storage slot if possible, according to the following rules:
