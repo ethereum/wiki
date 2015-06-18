@@ -1277,7 +1277,7 @@ filter.watch(function(error, result){
 ##### Parameters
 
 1. `String|Object` - The string `"latest"` or `"pending"` to watch for changes in the latest block or pending transactions respectively. Or a filter options object as follows:
-  * `fromBlock`: `Number|String` - The number of the earliest block (`latest` may be given to mean the most recent and `pending` currently mining, block). By default 0.
+  * `fromBlock`: `Number|String` - The number of the earliest block (`latest` may be given to mean the most recent and `pending` currently mining, block). By default `latest`.
   * `toBlock`: `Number|String` - The number of the latest block (`latest` may be given to mean the most recent and `pending` currently mining, block). By default `latest`.
   * `address`: `String` - An address or a list of addresses to only get logs from particular account(s).
   * `topics`: `Array of Strings` - An array of values which must each appear in the log entries. The order is important, if you want to leave topics use `null`, e.g. `[null, '0x00...']`.
