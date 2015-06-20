@@ -42,6 +42,18 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 [`+0x07`, [`blockHeader`, `transactionList`, `uncleList`], `totalDifficulty`] Specify a single block that the peer should know about. The composite item in the list (following the message ID) is a block in the format described in the main Ethereum specification.
 - `totalDifficulty` is the total difficulty of the block (aka score).
 
+**GetBlockHeaders**
+[`+0x08`: `P`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Requests a `BlockHeaders` message detailing a number of block headers to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these block headers in a single message - you might have to re-request them.
+
+**BlockHeaders**
+[`+0x09`, [`blockHeader`, `transactionList`, `uncleList`], `...`] Specify (a) block header(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
+
+**HashLookup**
+[`+0x10`, [`h1`, `h2`, ...], `...`] Ask for a `HashLookupResponse` message containing a value which hashes to `h[i]` for each `h[i]` specified.
+
+**HashLookupResponse**
+[`+0x11`, [`v1`, `v2`, ...], `...`] Provides `v[i]` where `sha3(v[i]) = h[i]` as an answer to `HashLookup` with arguments `h[i]`. If no response for a particular `h[i]` can be found, provide the empty string instead. Clients should at the minimum expose nodes in the current and recent state trie and transactions.
+
 ### Session Management
 
 For the Ethereum sub-protocol, upon an active session, a `Status` message must be sent. Following the reception of the peer's `Status` message, the Ethereum session is active and any other messages may be sent. All transactions should initially be sent with one or more Transactions messages.
