@@ -42,6 +42,8 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 [`+0x07`, [`blockHeader`, `transactionList`, `uncleList`], `totalDifficulty`] Specify a single block that the peer should know about. The composite item in the list (following the message ID) is a block in the format described in the main Ethereum specification.
 - `totalDifficulty` is the total difficulty of the block (aka score).
 
+### Proposed messages for headers-first syncing
+
 **GetBlockHeaders**
 [`+0x08`: `P`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Requests a `BlockHeaders` message detailing a number of block headers to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these block headers in a single message - you might have to re-request them.
 
