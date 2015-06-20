@@ -2,8 +2,8 @@ Although Ethereum allows developers to create absolutely any kind of application
 
 ### Currency
 
-* `sendCoin(uint _val, address _to)`: send currency
-* `sendCoinFrom(address _from, uint _val, address _to)`: send currency from another account
+* `sendCoin(uint _val, address _to) returns (bool _success)`: send currency
+* `sendCoinFrom(address _from, uint _val, address _to) returns (bool _success)`: send currency from another account
 * `function coinBalance() constant returns (uint _r)`: get your balance
 * `coinBalanceOf(address _a) constant returns (uint _r)`: get the balance of another account
 
