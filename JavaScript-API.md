@@ -1776,7 +1776,7 @@ var shh = web3.shh;
 
    web3.shh.post(object [, callback])
 
-This method should be called, when we want to post whisper message to teh network.
+This method should be called, when we want to post whisper message to the network.
 
 ##### Parameters
 
