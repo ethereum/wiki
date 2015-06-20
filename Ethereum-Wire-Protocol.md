@@ -51,10 +51,10 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 [`+0x09`, [`blockHeader`, `transactionList`, `uncleList`], `...`] Specify (a) block header(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
 
 **HashLookup**
-[`+0x10`, [`h1`, `h2`, `...`], `...`] Ask for a `HashLookupResponse` message containing a value which hashes to `h[i]` for each `h[i]` specified.
+[`+0x0a`, [`h1`, `h2`, `...`], `...`] Ask for a `HashLookupResponse` message containing a value which hashes to `h[i]` for each `h[i]` specified.
 
 **HashLookupResponse**
-[`+0x11`, [`v1`, `v2`, `...`], `...`] Provides `v[i]` where `sha3(v[i]) = h[i]` as an answer to `HashLookup` with arguments `h[i]`. If no response for a particular `h[i]` can be found, provide the empty string instead. Clients should at the minimum expose nodes in the current and recent state trie and transactions.
+[`+0x0b`, [`v1`, `v2`, `...`], `...`] Provides `v[i]` where `sha3(v[i]) = h[i]` as an answer to `HashLookup` with arguments `h[i]`. If no response for a particular `h[i]` can be found, provide the empty string instead. Clients should at the minimum expose nodes in the current and recent state trie and transactions.
 
 ### Session Management
 
