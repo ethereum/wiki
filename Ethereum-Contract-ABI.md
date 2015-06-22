@@ -239,7 +239,7 @@ The JSON format for a contract's interface is given by an array of function and/
 An event description is a JSON object with fairly similar fields:
 
 - `type`: always `"event"`
-- `name`: the name of the function;
+- `name`: the name of the event;
 - `inputs`: an array of objects, each of which contains:
 * `name`: the name of the parameter;
 * `type`: the canonical type of the parameter.
