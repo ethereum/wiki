@@ -1,5 +1,7 @@
 Although Ethereum allows developers to create absolutely any kind of application without restriction to specific feature types, and prides itself on its "lack of features", there is nevertheless a need to standardize certain very common use cases in order to allow users and applications to more easily interact with each other. This includes sending currency units, registering names, making offers on exchanges, and other similar functions. A standard typically consists of a set of function signatures for a few methods, eg. `send`, `register`, `delete`, providing the set of arguments and their formats in the [Ethereum contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI) language.
 
+The standards described below have sample implementations available at https://github.com/ethereum/pyethereum/blob/develop/ethereum/tests/test_solidity.py
+
 ### Currency
 
 * `sendCoin(uint _val, address _to) returns (bool _success)`: send currency
@@ -50,5 +52,7 @@ The data feed standard is a _templated standard_, ie. in the below descriptions 
 
 * `get(bytes32 _key) returns (<t> _value)`: get the value associated with a key
 * `set(bytes32 _key, <t> _value)`: set the value associated with a key if you are the owner
-* `setFee(uint256 fee)`: sets the fee
-* `setFeeCurrency()`: sets the currency 
+* `setFee(uint256 _fee)`: sets the fee
+* `setFeeCurrency(address _currency)`: sets the currency that the fee is paid in
+
+The latter two methods are optional; also, note that the fee may be charged either in ether or subcurrency; if the contract charges in ether then the `setFeeCurrency` method is unnecessary.
