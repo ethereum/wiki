@@ -16,13 +16,13 @@ The `sendCoinFrom` is used for a "direct debit" workflow, allowing contracts to 
 
 ### Exchanges
 
-* `new(string32 offer_currency, uint256 offer_value, string32 want_currency, uint256 want_value) returns (uint256 offerid)`: express a desire to give up `offer_value` units of `offer_currency` in exchange for `want_value` units of `want_currency`. The exchange may or may not fill orders partially. Optionally returns an ID for the offer
-* `claim(uint256 offerid)`: claim a particular offer.
-* `delete(string32 offer_currency, string32 want_currency)`: removes the caller's best offer on the order book to exchange `offer_currency` for `want_currency`
-* `delete(uint256 offerid)`: delete a particular offer
+* `placeOrder(address offer_currency, uint256 offer_value, address want_currency, uint256 want_value) returns (uint256 offerid)`: express a desire to give up `offer_value` units of `offer_currency` in exchange for `want_value` units of `want_currency`. The exchange may or may not fill orders partially. Optionally returns an ID for the offer. `offer_currency` and `want_currency` are the addresses of the master contracts for the currencies in question.
+* `claimOrder(uint256 offerid)`: claim a particular offer.
+* `deleteOrder(uint256 offerid)`: delete a particular offer
+* `deleteOrder(string32 offer_currency, string32 want_currency)`: removes the caller's best offer on the order book to exchange `offer_currency` for `want_currency`
 * `price(string32 offer_currency, string32 want_currency) returns (real128x128 price)`: returns the best price (irrespective of volume) for how much `offer_currency` is required to return one unit of `want_currency`
 
-Note that individual exchanges may support only a subset of these commands; for example, for efficiency's sake some may only support `new` and `claim`, and require sorting logic to be done off-chain, whereas others will support `new` and have orders match against each other automatically.
+Note that individual exchanges may support only a subset of these commands; for example, for efficiency's sake some may only support `placeOrder` and `claimOrder`, and require sorting logic to be done off-chain, whereas others will support `placeOrder` only and have orders match against each other automatically.
 
 ### Registries
 
@@ -31,7 +31,7 @@ Registries (eg. domain name systems) have the following API:
 * `reserve(bytes32 _name)`: reserves a name and sets its owner to you if it is not yet reserved
 * `owner(bytes32 _name) constant returns (address o_owner)`: get the owner of a particular name
 * `transfer(bytes32 _name, address _newOwner)`: transfer ownership of a name
-* `setAddress(bytes32 _name, address _a, bool _primary)`: set the primary address associated with a name (similar to an A record in traditional DNS)
+* `setAddr(bytes32 _name, address _a)`: set the primary address associated with a name (similar to an A record in traditional DNS)
 * `addr(bytes32 _name) constant returns (address o_address)`: get the primary address associated with a name 
 * `setContent(bytes32 _name, bytes32 _content)`: if you are the owner of a name, sets its associated content
 * `content(bytes32 _name) constant returns (bytes32)`: get the content associated with a name
@@ -43,3 +43,12 @@ Events:
 
 * `event Changed(bytes32 indexed name)`: triggered when changed to a domain happen
 * `event PrimaryChanged(bytes32 indexed name, address indexed addr)`: triggered when the primary address of a domain changes
+
+### Data feeds
+
+The data feed standard is a _templated standard_, ie. in the below descriptions one should be free to replace `<t>` with any desired data type, eg. `uint256`, `bytes32`, `address`, `real192x64`.  
+
+* `get(bytes32 _key) returns (<t> _value)`: get the value associated with a key
+* `set(bytes32 _key, <t> _value)`: set the value associated with a key if you are the owner
+* `setFee(uint256 fee)`: sets the fee
+* `setFeeCurrency()`: sets the currency 
