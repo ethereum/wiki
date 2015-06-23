@@ -494,8 +494,8 @@ contract owned {
     address owner;
 }
 
-// Use "is" to derive from another contract. Derived contracts can access all members
-// including private functions and state variables.
+// Use "is" to derive from another contract. Derived contracts can access all non-private members
+// including internal functions and state variables. The cannot be accessed externally via `this`, though.
 contract mortal is owned {
     function kill() { if (msg.sender == owner) suicide(owner); }
 }
