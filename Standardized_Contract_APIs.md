@@ -2,12 +2,12 @@ Although Ethereum allows developers to create absolutely any kind of application
 
 The standards described below have sample implementations available at https://github.com/ethereum/pyethereum/blob/develop/ethereum/tests/test_solidity.py
 
-All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinSent`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are always `_r` except when denoting success or failure, in which case `_success` (always boolean) is used.
+All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinSent`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_offerId`) for methods that perform an action but need to return a value as an identifier.
 
 ### Currency
 
-* `sendCoin(uint _val, address _to) returns (bool _success)`: send currency
-* `sendCoinFrom(address _from, uint _val, address _to) returns (bool _success)`: send currency from another account
+* `sendCoin(uint _value, address _to) returns (bool _success)`: send currency
+* `sendCoinFrom(address _from, uint _value, address _to) returns (bool _success)`: send currency from another account
 * `function coinBalance() constant returns (uint _r)`: get your balance
 * `coinBalanceOf(address _a) constant returns (uint _r)`: get the balance of another account
 
@@ -16,7 +16,7 @@ The `sendCoinFrom` is used for a "direct debit" workflow, allowing contracts to 
 * `approve(address _a)`: allow `addr` to direct debit from your account
 * `isApproved(address _proxy) constant returns (bool _r)`: returns 1 if `addr` is allowed to direct debit from your account
 * `isApprovedFor(address _target, address _proxy) constant returns (bool _r)`: returns 1 if `proxy` is allowed to direct debit from `target`
-* `approveOnce(address _a, uint256 _maxval)`: makes a one-time approval to send a maximum amount of currency equal to `_maxval`
+* `approveOnce(address _a, uint256 _maxValue)`: makes a one-time approval to send a maximum amount of currency equal to `_maxval`
 
 Events:
 
@@ -27,8 +27,8 @@ Events:
 * `placeOrder(address _offerCurrency, uint256 _offerValue, address _wantCurrency, uint256 _wantValue) returns (uint256 _offerId)`: express a desire to give up `_offerValue` units of `_offerCurrency` in exchange for `_wantValue` units of `_wantCurrency`. The exchange may or may not fill orders partially. Optionally returns an ID for the offer. `_offerCurrency` and `_wantCurrency` are the addresses of the master contracts for the currencies in question.
 * `claimOrder(uint256 _offerId)`: claim a particular offer.
 * `deleteOrder(uint256 _offerId)`: delete a particular offer
-* `deleteOrder(address _offerCurrency, address _wantCurrency)`: removes the caller's best offer on the order book to exchange `_offerCurrency` for `_WantCurrency`
-* `price(bytes32 offerCurrency, string32 _wantCurrency) returns (real128x128 price)`: returns the best price (irrespective of volume) for how much `_offerCurrency` is required to return one unit of `_wantCurrency`
+* `deleteOrder(address _offerCurrency, address _wantCurrency)`: removes the caller's best offer on the order book to exchange `_offerCurrency` for `_wantCurrency`
+* `price(bytes32 _offerCurrency, string32 _wantCurrency) returns (real128x128 _r)`: returns the best price (irrespective of volume) for how much `_offerCurrency` is required to return one unit of `_wantCurrency`
 
 Note that individual exchanges may support only a subset of these commands; for example, for efficiency's sake some may only support `placeOrder` and `claimOrder`, and require sorting logic to be done off-chain, whereas others will support `placeOrder` only and have orders match against each other automatically.
 
@@ -47,7 +47,7 @@ Registries (eg. domain name systems) have the following API:
 * `addr(bytes32 _name) constant returns (address _r)`: get the primary address associated with a name 
 * `setContent(bytes32 _name, bytes32 _content)`: if you are the owner of a name, sets its associated content
 * `content(bytes32 _name) constant returns (bytes32 _r)`: get the content associated with a name
-* `setSubRegistrar(bytes32 _name, address _registrar)`: records the name as referring to a sub-registrar at the given address
+* `setSubRegistrar(bytes32 _name, address _subRegistrar)`: records the name as referring to a sub-registrar at the given address
 * `subRegistrar(bytes32 _name) constant returns (address _r)`: gets the sub-registrar associated with the given name
 * `disown(bytes32 _name)`: relinquishes control over a name that you currently control
 
@@ -62,6 +62,6 @@ The data feed standard is a _templated standard_, ie. in the below descriptions 
 * `get(bytes32 _key) returns (<t> _r)`: get the value associated with a key
 * `set(bytes32 _key, <t> _value)`: set the value associated with a key if you are the owner
 * `setFee(uint256 _fee)`: sets the fee
-* `setFeeCurrency(address _currency)`: sets the currency that the fee is paid in
+* `setFeeCurrency(address _feeCurrency)`: sets the currency that the fee is paid in
 
 The latter two methods are optional; also, note that the fee may be charged either in ether or subcurrency; if the contract charges in ether then the `setFeeCurrency` method is unnecessary.
