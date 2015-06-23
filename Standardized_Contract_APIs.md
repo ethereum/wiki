@@ -24,31 +24,31 @@ Events:
 
 ### Exchanges
 
-* `placeOrder(address offerCurrency, uint256 offerValue, address wantCurrency, uint256 wantValue) returns (uint256 offerid)`: express a desire to give up `offerValue` units of `offerCurrency` in exchange for `wantValue` units of `wantCurrency`. The exchange may or may not fill orders partially. Optionally returns an ID for the offer. `offerCurrency` and `wantCurrency` are the addresses of the master contracts for the currencies in question.
-* `claimOrder(uint256 offerid)`: claim a particular offer.
-* `deleteOrder(uint256 offerid)`: delete a particular offer
-* `deleteOrder(string32 offer_currency, string32 want_currency)`: removes the caller's best offer on the order book to exchange `offer_currency` for `want_currency`
-* `price(string32 offer_currency, string32 want_currency) returns (real128x128 price)`: returns the best price (irrespective of volume) for how much `offer_currency` is required to return one unit of `want_currency`
+* `placeOrder(address _offerCurrency, uint256 _offerValue, address _wantCurrency, uint256 _wantValue) returns (uint256 _offerId)`: express a desire to give up `_offerValue` units of `_offerCurrency` in exchange for `_wantValue` units of `_wantCurrency`. The exchange may or may not fill orders partially. Optionally returns an ID for the offer. `_offerCurrency` and `_wantCurrency` are the addresses of the master contracts for the currencies in question.
+* `claimOrder(uint256 _offerId)`: claim a particular offer.
+* `deleteOrder(uint256 _offerId)`: delete a particular offer
+* `deleteOrder(address _offerCurrency, address _wantCurrency)`: removes the caller's best offer on the order book to exchange `_offerCurrency` for `_WantCurrency`
+* `price(bytes32 offerCurrency, string32 _wantCurrency) returns (real128x128 price)`: returns the best price (irrespective of volume) for how much `_offerCurrency` is required to return one unit of `_wantCurrency`
 
 Note that individual exchanges may support only a subset of these commands; for example, for efficiency's sake some may only support `placeOrder` and `claimOrder`, and require sorting logic to be done off-chain, whereas others will support `placeOrder` only and have orders match against each other automatically.
 
 Events:
 
-* `event Traded(address indexed currencyXor, address indexed seller, uint256 offerValue, address indexed buyer, uint256 wantValue)`: triggered when a trade takes place, where `currencyXor` is the XOR of `offerCurrency` and `wantCurrency` (this is done to limit the number of indexed parameters to 3)
+* `event Traded(bytes32 indexed currencyPair, address indexed seller, uint256 offerValue, address indexed buyer, uint256 wantValue)`: triggered when a trade takes place, where `currencyPair = offerCurrency[:16] + wantCurrency[:16]` (this is done to limit the number of indexed parameters to 3)
 
 ### Registries
 
 Registries (eg. domain name systems) have the following API:
 
 * `reserve(bytes32 _name) returns (bool _success)`: reserves a name and sets its owner to you if it is not yet reserved
-* `owner(bytes32 _name) constant returns (address o_owner)`: get the owner of a particular name
+* `owner(bytes32 _name) constant returns (address _r)`: get the owner of a particular name
 * `transfer(bytes32 _name, address _newOwner)`: transfer ownership of a name
-* `setAddr(bytes32 _name, address _a)`: set the primary address associated with a name (similar to an A record in traditional DNS)
-* `addr(bytes32 _name) constant returns (address o_address)`: get the primary address associated with a name 
+* `setAddr(bytes32 _name, address _addr)`: set the primary address associated with a name (similar to an A record in traditional DNS)
+* `addr(bytes32 _name) constant returns (address _r)`: get the primary address associated with a name 
 * `setContent(bytes32 _name, bytes32 _content)`: if you are the owner of a name, sets its associated content
-* `content(bytes32 _name) constant returns (bytes32)`: get the content associated with a name
+* `content(bytes32 _name) constant returns (bytes32 _r)`: get the content associated with a name
 * `setSubRegistrar(bytes32 _name, address _registrar)`: records the name as referring to a sub-registrar at the given address
-* `subRegistrar(bytes32 _name) constant returns (address)`: gets the sub-registrar associated with the given name
+* `subRegistrar(bytes32 _name) constant returns (address _r)`: gets the sub-registrar associated with the given name
 * `disown(bytes32 _name)`: relinquishes control over a name that you currently control
 
 Events:
@@ -59,7 +59,7 @@ Events:
 
 The data feed standard is a _templated standard_, ie. in the below descriptions one should be free to replace `<t>` with any desired data type, eg. `uint256`, `bytes32`, `address`, `real192x64`.  
 
-* `get(bytes32 _key) returns (<t> _value)`: get the value associated with a key
+* `get(bytes32 _key) returns (<t> _r)`: get the value associated with a key
 * `set(bytes32 _key, <t> _value)`: set the value associated with a key if you are the owner
 * `setFee(uint256 _fee)`: sets the fee
 * `setFeeCurrency(address _currency)`: sets the currency that the fee is paid in
