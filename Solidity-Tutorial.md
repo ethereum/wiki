@@ -840,6 +840,10 @@ return 1;
 ```
 even though the instructions contained a jump in the beginning.
 
+## Using the Commandline Compiler
+
+TODO, also speak about "import".
+
 ## Tips and Tricks
 
  * Use `delete` on arrays to delete all its elements.
