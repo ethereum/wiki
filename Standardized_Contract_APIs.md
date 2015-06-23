@@ -2,6 +2,8 @@ Although Ethereum allows developers to create absolutely any kind of application
 
 The standards described below have sample implementations available at https://github.com/ethereum/pyethereum/blob/develop/ethereum/tests/test_solidity.py
 
+All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinSent`). Variable names are not encoded into the ABI and so do not need to be standardized.
+
 ### Currency
 
 * `sendCoin(uint _val, address _to) returns (bool _success)`: send currency
@@ -15,6 +17,10 @@ The `sendCoinFrom` is used for a "direct debit" workflow, allowing contracts to 
 * `isApproved(address _proxy) constant returns (bool _r)`: returns 1 if `addr` is allowed to direct debit from your account
 * `isApprovedFor(address _target, address _proxy) constant returns (bool _r)`: returns 1 if `proxy` is allowed to direct debit from `target`
 * `approveOnce(address _a, uint256 _maxval)`: makes a one-time approval to send a maximum amount of currency equal to `_maxval`
+
+Events:
+
+* `event CoinSent(address indexed from, address indexed to, uint256 value)`: triggered when money is sent
 
 ### Exchanges
 
@@ -44,7 +50,6 @@ Registries (eg. domain name systems) have the following API:
 Events:
 
 * `event Changed(bytes32 indexed name)`: triggered when changed to a domain happen
-* `event PrimaryChanged(bytes32 indexed name, address indexed addr)`: triggered when the primary address of a domain changes
 
 ### Data feeds
 
