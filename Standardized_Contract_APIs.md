@@ -2,27 +2,27 @@ Although Ethereum allows developers to create absolutely any kind of application
 
 The standards described below have sample implementations available at https://github.com/ethereum/pyethereum/blob/develop/ethereum/tests/test_solidity.py
 
-All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinSent`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_offerId`) for methods that perform an action but need to return a value as an identifier.
+All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinSent`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_offerId`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_addr` when generic, and otherwise if a more specific description exists (eg. `from`, `_to`).
 
 ### Currency
 
 * `sendCoin(uint _value, address _to) returns (bool _success)`: send currency
 * `sendCoinFrom(address _from, uint _value, address _to) returns (bool _success)`: send currency from another account
 * `function coinBalance() constant returns (uint _r)`: get your balance
-* `coinBalanceOf(address _a) constant returns (uint _r)`: get the balance of another account
+* `coinBalanceOf(address _addr) constant returns (uint _r)`: get the balance of another account
 
 The `sendCoinFrom` is used for a "direct debit" workflow, allowing contracts to charge fees in sub-currencies; the command should fail unless the `from` account has deliberately authorized the sender of the message via some mechanism; we propose these standardized APIs for approval:
 
-* `approve(address _a)`: allow `addr` to direct debit from your account
-* `isApproved(address _proxy) constant returns (bool _r)`: returns 1 if `addr` is allowed to direct debit from your account
+* `approve(address _addr)`: allow `addr` to direct debit from your account
+* `isApproved(address _proxy) constant returns (bool _r)`: returns 1 if `proxy` is allowed to direct debit from your account
 * `isApprovedFor(address _target, address _proxy) constant returns (bool _r)`: returns 1 if `proxy` is allowed to direct debit from `target`
-* `approveOnce(address _a, uint256 _maxValue)`: makes a one-time approval to send a maximum amount of currency equal to `_maxval`
+* `approveOnce(address _addr, uint256 _maxValue)`: makes a one-time approval to send a maximum amount of currency equal to `_maxval`
 
 Events:
 
 * `event CoinSent(address indexed from, address indexed to, uint256 value)`: triggered when money is sent
 
-### Exchanges
+### Decentralized exchanges
 
 * `placeOrder(address _offerCurrency, uint256 _offerValue, address _wantCurrency, uint256 _wantValue) returns (uint256 _offerId)`: express a desire to give up `_offerValue` units of `_offerCurrency` in exchange for `_wantValue` units of `_wantCurrency`. The exchange may or may not fill orders partially. Optionally returns an ID for the offer. `_offerCurrency` and `_wantCurrency` are the addresses of the master contracts for the currencies in question.
 * `claimOrder(uint256 _offerId)`: claim a particular offer.
