@@ -2,7 +2,7 @@ Although Ethereum allows developers to create absolutely any kind of application
 
 The standards described below have sample implementations available at https://github.com/ethereum/pyethereum/blob/develop/ethereum/tests/test_solidity.py
 
-All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinSent`).
+All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinSent`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are always `_r` except when denoting success or failure, in which case `_success` (always boolean) is used.
 
 ### Currency
 
