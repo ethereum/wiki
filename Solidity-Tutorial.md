@@ -87,15 +87,40 @@ comments (which are not covered here).
 
 ## Types
 
-The currently implemented (elementary) types are booleans (`bool`), integer and fixed-length string/byte array (bytes0 to bytes32) types.
-The integer types are signed and unsigned integers of various bit widths
-(`int8`/`uint8` to `int256`/`uint256` in steps of 8 bits, where `uint`/`int` are
-aliases for `uint256`/`int256`) and addresses (of 160 bits).
+### Elementary Types
 
-Comparisons (`<=`, `!=`, `==`, etc.) always yield booleans which can be
-combined using `&&`, `||` and `!`. Note that the usual short-circuiting rules
-apply for `&&` and `||`, which means that for expressions of the form
-`(0 < 1 || fun())`, the function is actually never called.
+__Booleans__: Keyword `bool`, constants `true`, `false`, operators: `!` (logical negation) `&&` (logical conjunction, "and"), `||` (logical disjunction, "or"), `==` (equality) and `!=` (inequality).
+
+The operators `||` and `&&` apply the common short-circuiting rules. This means that in the expression `f(x) || g(y)`, if `f(x)` evaluates to `true`, `g(y)` will not be evaluated even if it may have side-effects.
+
+__Integers__: Signed and unsigned of various sizes. Keywords `uint8` to `uint256` in steps of `8` (unsigned of 8 up to 256 bits) and `int8` to `int256`. `uint` and `int` are aliases for `uint256` and `int256`, respectively.
+
+Operators: 
+Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)
+Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation) 
+Arithmetic operators: `+`, `-`, unary `-`, unary `+`, `*`, `/`, `%` (remainder), `**` (exponentiation)
+
+__Address__: Keyword `address`, holds a 20 byte value. Operators: `<=`, `<`, `==`, `!=`, `>=` and `>`. Address types also have members (see [Functions on addresses](#Functions+on+addresses)) and serve as base for all contracts.
+
+__Bytes__: Keywords `bytes1` to `bytes32`, `byte` is an alias for `bytes1`. 
+Operators:
+Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)
+Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation) 
+
+__Integer Literals__: Integer literals are arbitrary precision integers until they are used together with a non-literal. In `var x = 1 - 2;`, for example, the value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives the type `int8` -- the smallest type that contains `-1`, although the natural types of `1` and `2` are actually `uint8`. 
+It is even possible to temporarily exceed the maximum of 256 bits as long as only integer literals are used for the computation: `var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;` Here, `x` will have the value `0` and thus the type `uint8`.
+
+__Byte Literals__: Byte literals are written with double quotes (`"abc"`), their type is the shortest  `bytesN` that can hold them. I.e. the type of `"abc"` is `bytes3`.
+
+### Operators Involving LValues
+
+If `a` is an LValue (i.e. a variable), the following operators are available as shorthands:
+
+`a += e` is equivalent to `a = a + e`. The operators `-=`, `*=`, `/=`, `%=`, `a |=`, `&=` and `^=` are defined.
+
+Furthermore, `delete a` is mostly equivalent to `a = 0` or `a = false`, but also resets non-elementary types (e.g. all members of structs are reset recursively and dynamic arrays are cleared).
+
+### Conversions between Elementary Types
 
 If an operator is applied to different types, the compiler tries to
 implicitly convert one of the operands to the type of the other (the same is
@@ -131,34 +156,6 @@ State variables of integer and bytesXX types can be declared as constant.
 uint constant x = 32;
 bytes3 constant text = "abc";
 ```
-
-## Integer Literals
-
-The type of integer literals is not determined as long as integer literals are
-combined with themselves. This is probably best explained with examples:
-
-```js
-var x = 1 - 2;
-```
-The value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives
-the type `int8` -- the smallest type that contains `-1`. The following code
-snippet behaves differently, though:
-```js
-var one = 1;
-var two = 2;
-var x = one - two;
-```
-
-Here, `one` and `two` both have type `uint8` which is also propagated to `x`. The
-subtraction inside the type `uint8` causes wrapping and thus the value of
-`x` will be `255`.
-
-It is even possible to temporarily exceed the maximum of 256 bits as long as
-only integer literals are used for the computation:
-```js
-var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;
-```
-Here, `x` will have the value `0` and thus the type `uint8`.
 
 ## Ether and Time Units
 
