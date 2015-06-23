@@ -803,6 +803,8 @@ contract BinarySearch {
 
 On memory usage: Since memory is wiped after each external function call, the Solidity runtime does not include proper memory management. It includes a "level indicator" which points to the next free memory slot. If memory is needed (because a storage object is copied to memory or an external function is called), it is allocated starting from this pointer. Functions that return objects stored in memory will not reset this pointer. This means that temporary memory objects will still take up space in memory even if they are not needed anymore. On the other hand, if a function does not return any memory-stored object, it resets the pointer to the value it had upon function entry.
 
+The EVM does not allow `CALL` to be used with variably-sized return values. Because of this, return types of message-called functions which are dynamically sized are transparently changed to `void`. Clearing up the confusion which might arise in face of the resulting error message remains to do.
+
 ## Positive integers conversion to signed
 
 [PT](https://www.pivotaltracker.com/n/projects/1189488/stories/92691082)
