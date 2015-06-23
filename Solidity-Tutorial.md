@@ -495,14 +495,17 @@ contract owned {
 }
 
 // Use "is" to derive from another contract. Derived contracts can access all non-private members
-// including internal functions and state variables. The cannot be accessed externally via `this`, though.
+// including internal functions and state variables. These cannot be accessed externally via
+// `this`, though.
 contract mortal is owned {
     function kill() { if (msg.sender == owner) suicide(owner); }
 }
 
 // These are only provided to make the interface known to the compiler.
-contract Config { function lookup(uint id) returns (address adr) {} }
-contract NameReg { function register(bytes32 name) {} function unregister() {} }
+// Note the bodiless functions. If a contract does not implement all functions
+// it can only be used as an interface.
+contract Config { function lookup(uint id) returns (address adr); }
+contract NameReg { function register(bytes32 name); function unregister(); }
 
 // Multiple inheritance is possible. Note that "owned" is also a base class of
 // "mortal", yet there is only a single instance of "owned" (as for virtual
@@ -592,7 +595,7 @@ contract Derived is Base(7) {
 }
 ```
 
-Either directly in the inheritance list (`is Base(7)`) or in the way a modifier would be invoked as part of the header of the derived constructor (`Base(_y * _y)`). The first way to do it is more convenient if the constructor argument is a constant and defines the behaviour of the contract or describes it. The second way has to be used if the constructor arguments of the base depend on those of the derived contract.
+Either directly in the inheritance list (`is Base(7)`) or in the way a modifier would be invoked as part of the header of the derived constructor (`Base(_y * _y)`). The first way to do it is more convenient if the constructor argument is a constant and defines the behaviour of the contract or describes it. The second way has to be used if the constructor arguments of the base depend on those of the derived contract. If, as in this silly example, both places are used, the modifier-style argument takes precedence.
 
 
 ### Multiple Inheritance and Linearization
