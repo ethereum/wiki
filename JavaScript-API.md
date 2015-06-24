@@ -1265,10 +1265,16 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
 // can be 'latest' or 'pending'
 var filter = web3.eth.filter(filterString);
 // OR object are log filter options
-var filter = web3.eth.filter(option);
+var filter = web3.eth.filter(options);
 
 // watch for changes
 filter.watch(function(error, result){
+  if (!error)
+    console.log(result);
+});
+
+// Additionally you can start watching right away, by passing a callback:
+web3.eth.filter(options, function(error, result){
   if (!error)
     console.log(result);
 });
@@ -1388,8 +1394,7 @@ myContractInstance.myStateChangingMethod('someParam1', 23, {value: 200, gas: 200
 web3.eth.contract(abi).at(address).myAwesomeMethod(...);
 
 // create filter
-var filter = myContractInstance.myEvent({a: 5});
-filter.watch(function (error, result) {
+var filter = myContractInstance.myEvent({a: 5}, function (error, result) {
   if (!error)
     console.log(result);
     /*
@@ -1459,6 +1464,13 @@ event.watch(function(error, result){
   if (!error)
     console.log(result);
 });
+
+// Or pass a callback to start watching immediately
+var event = myContractInstance.MyEvent({valueA: 23}, additionalFilterObject, function(error, result){
+  if (!error)
+    console.log(result);
+});
+
 ```
 
 You can use events like [filters](#web3ethfilter) and they have the same methods, but you pass different objects to create the event filter.
