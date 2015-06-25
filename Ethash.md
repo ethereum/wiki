@@ -82,7 +82,7 @@ The cache production process involves first sequentially filling up 32 MB of mem
 
 ### Data aggregation function
 
-We use an algorithm inspired by the [FNV hash](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function) in some cases as a non-associative substitute for XOR. Note that we multiply the prime with the 32-bit input, in contrast with the FNV-1 spec which multiplies with one byte (octet) in turn.
+We use an algorithm inspired by the [FNV hash](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function) in some cases as a non-associative substitute for XOR. Note that we multiply the prime with the full 32-bit input, in contrast with the FNV-1 spec which multiplies the prime with one byte (octet) in turn.
 
 ```python
 FNV_PRIME = 0x01000193
