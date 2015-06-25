@@ -14,6 +14,8 @@ Row numbering starts with 0. Each row number _i_ contains peers whose address ma
 
 As a matter of implementation, it might be worth internally representing all 255 rows from the outset (requiring that the _i_+1st bit be different from our node in all rows); but then considering all of the rows at the end as if they were one row. That is, we look at non empty rows at the end and treat the elements in them as if they belonged to row _i_ where _i_ is the lowest index such that the total number of all elements in row _i_ and in all higher rows, together is at most _k_.
 
+Note: there is a difference here to the original Kedemlia paper http://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf The rows with a high _i_ for us here are the rows with a low _i_ in the paper. For us, high _i_ means high number of bits agreeing, for them high _i_ mean high xor distance. 
+
 # Adding a new peer
 
 A peer is added to the row to which it belongs according to the length of address prefix in common with this node. If that would increase the length of the row in question beyond _k_, the **worst** peer (according to some, not necessarily global, peer quality metric) is dropped from the row, except if it is the last row, in which case a new row _i_ + 1 is added and the elements in the old last row are split between the two rows according to the bit at the corresponding position. Note: If we followed the implementation suggestion in the previous section, then we do not need to make an exception for the last row, nor do we have to worry about splitting the last row on the implementation level.
