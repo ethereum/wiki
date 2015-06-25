@@ -54,7 +54,7 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 [`+0x0a`, [`h1`, `h2`, `...`], `...`] Ask for a `HashLookupResponse` message containing a value which hashes to `h[i]` for each `h[i]` specified.
 
 **HashLookupResponse**
-[`+0x0b`, [`v1`, `v2`, `...`], `...`] Provides `v[i]` where `sha3(v[i]) = h[i]` as an answer to `HashLookup` with arguments `h[i]`. If no response for a particular `h[i]` can be found, provide the empty string instead. Clients should at the minimum expose nodes in the current and recent state trie and transactions.
+[`+0x0b`, [`v1`, `v2`, `...`], `...`] Provides `v[i]` where `sha3(v[i]) = h[i]` as an answer to `HashLookup` with arguments `h[i]`. If no response for a particular `h[i]` can be found, provide the empty string instead.
 
 ### Session Management
 
