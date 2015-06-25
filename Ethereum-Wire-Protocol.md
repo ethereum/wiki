@@ -10,7 +10,7 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 ### Ethereum Sub-protocol
 
 **Status**
-[`+0x00`: `P`, `protocolVersion`: `P`, `networkId`: `P`, `td`: `P`, `bestHash`: `B_32`, `genesisHash`: `B_32`] Inform a peer of it's current **ethereum** state. This message should be send _after_ the initial handshake and _prior_ to any **ethereum** related messages.
+[`+0x00`: `P`, `protocolVersion`: `P`, `networkId`: `P`, `td`: `P`, `bestHash`: `B_32`, `genesisHash`: `B_32` { PV61; , `number`: `P` }] Inform a peer of it's current **ethereum** state. This message should be send _after_ the initial handshake and _prior_ to any **ethereum** related messages.
 * `protocolVersion` is one of:
     * `0x00` for PoC-1;
     * `0x01` for PoC-2;
@@ -21,7 +21,8 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 * `networkId` should be 0.
 * `td`: Total Difficulty of the best chain. Integer, as found in block header.
 * `bestHash`: The hash of the best (i.e. highest TD) known block.
-* `genesisHash`: The hash of the Genesis block
+* `genesisHash`: The hash of the Genesis block.
+* `number`: The number of the latest block.
 
 **Transactions**
 [`+0x02`: `P`, [`nonce`: `P`, `receivingAddress`: `B_20`, `value`: `P`, `...`], `...`] Specify (a) transaction(s) that the peer should make sure is included on its transaction queue. The items in the list (following the first item `0x12`) are transactions in the format described in the main Ethereum specification. Nodes must not resend the same transaction to a peer in the same session. This packet must contain at least one (new) transaction.
@@ -41,6 +42,13 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 **NewBlock**
 [`+0x07`, [`blockHeader`, `transactionList`, `uncleList`], `totalDifficulty`] Specify a single block that the peer should know about. The composite item in the list (following the message ID) is a block in the format described in the main Ethereum specification.
 - `totalDifficulty` is the total difficulty of the block (aka score).
+
+
+### PV61 specific
+
+**BlockHashesFromNumber**
+[`+0x08`: `P`, `number`: `P`, `maxBlocks`: `P`]
+Requests a BlockHashes message detailing a number of the first block hash and a total of hashes to be sent. Returned hash list must be ordered by block number in ascending order.
 
 ### Proposed messages for headers-first syncing
 
