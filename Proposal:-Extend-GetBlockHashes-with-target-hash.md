@@ -30,3 +30,12 @@ The main issue the `BlockHashesFromNumbers` set out to resolve was the slow down
 The current proposal however approaches the challenge from the opposite direction. By downloading hashes towards the end of a chain - after the first hash delivery - blocks can be immediately retrieved in parallel (compared to which hash downloads are insignificant in size and hence latency), so there is no need for the added complexity and potential issues with parallelizing hash downloads. Additionally, by limiting the number of pending hashes, we can also prevent any infinite chain attacks.
 
 Given that the current proposal addresses all of the issues `BlockHashesFromNumbers` aimed to fix, while being much less invasive (requires the addition of single packet field); is gracefully compatible with previous protocol implementations (they can continue to function without an algorithm update); and implementation wise is straightforward and easy to reason about; we believe it is a superior proposal.
+
+### Critique
+
+- Closer to the present protocol than `BlockHashesFromNumbers`.
+- Somewhat more complex in terms of semantics:
+  - The notion of a series of hash going from a source hash to a destination hash is found nowhere else in the protocol or codebase. Exchanging number to/from hash is already found in the API.
+  - Not immediately clear with edge cases (e.g. if from is genesis and to is leaf, or if from doesn't exist in the chain but leaf does, or vice-versa). `BlockHashesFromNumbers` is well-defined under all circumstances.
+- Somewhat more complex in terms of implementation; how to efficiently determine the fork point or common ancestor? `BlockHashesFromNumbers` would make it trivial with a binary chop.
+
