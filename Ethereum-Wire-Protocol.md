@@ -53,19 +53,19 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 [`+0x08`: `P`, `number`: `P`, `maxBlocks`: `P`]
 Requests a BlockHashes message detailing a number of the first block hash and a total of hashes to be sent. Returned hash list must be ordered by block number in ascending order.
 
-### Proposed messages for headers-first syncing
+### Proposed messages for headers-first syncing (PV62)
 
 **GetBlockHeaders**
-[`+0x08`: `P`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Requests a `BlockHeaders` message detailing a number of block headers to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these block headers in a single message - you might have to re-request them.
+[`+0x09`: `P`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Requests a `BlockHeaders` message detailing a number of block headers to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these block headers in a single message - you might have to re-request them.
 
 **BlockHeaders**
-[`+0x09`, [`blockHeader`, `transactionList`, `uncleList`], `...`] Specify (a) block header(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
+[`+0x0a`, [`blockHeader`, `transactionList`, `uncleList`], `...`] Specify (a) block header(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
 
 **HashLookup**
-[`+0x0a`, [`h1`, `h2`, `...`], `...`] Ask for a `HashLookupResponse` message containing a value which hashes to `h[i]` for each `h[i]` specified.
+[`+0x0b`, [`h1`, `h2`, `...`], `...`] Ask for a `HashLookupResponse` message containing a value which hashes to `h[i]` for each `h[i]` specified.
 
 **HashLookupResponse**
-[`+0x0b`, [`v1`, `v2`, `...`], `...`] Provides `v[i]` where `sha3(v[i]) = h[i]` as an answer to `HashLookup` with arguments `h[i]`. If no response for a particular `h[i]` can be found, provide the empty string instead.
+[`+0x0c`, [`v1`, `v2`, `...`], `...`] Provides `v[i]` where `sha3(v[i]) = h[i]` as an answer to `HashLookup` with arguments `h[i]`. If no response for a particular `h[i]` can be found, provide the empty string instead.
 
 ### Session Management
 
