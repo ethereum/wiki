@@ -74,6 +74,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
      * [whisper](#web3versionwhisper)
   * [port](#)
   * [setProvider(provider)](#web3setprovider)
+  * [currentProvider](#web3currentprovider)
   * [reset()](#web3reset)
   * [sha3(string)](#web3sha3)
   * [toHex(stringOrNumber)](#web3tohex)
@@ -269,8 +270,28 @@ none
 
 ```js
 web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545')); // 8080 for cpp/AZ, 8545 for go/mist
-// or
-web3.setProvider(new web3.providers.QtSyncProvider());
+```
+
+***
+
+#### web3.currentProvider
+
+    web3.currentProvider
+
+Will contain the current provider, if one is set. This can be used to check if mist etc. set already a provider.
+
+
+##### Returns
+
+`Object` - The provider set or `null`;
+
+##### Example
+
+```js
+// Check if mist etc. already set a provider
+if(!web3.currentProvider)
+    web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+
 ```
 
 ***
