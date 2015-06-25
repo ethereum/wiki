@@ -34,8 +34,9 @@ Given that the current proposal addresses all of the issues `BlockHashesFromNumb
 ### Critique
 
 - Closer to the present protocol than `BlockHashesFromNumbers`.
+- Less general and expansive than `BlockHashesFromNumbers`: it is designed for a very particular strategy and is less likely to be adaptable to future, unknown strategies.
+- Does not support parallel hash-chain downloading alongside forward hash-chain downloading (`BlockHashesFromNumbers` supports both).
 - Somewhat more complex in terms of semantics:
   - The notion of a series of hash going from a source hash to a destination hash is found nowhere else in the protocol or codebase. Exchanging number to/from hash is already found in the API.
   - Not immediately clear with edge cases (e.g. if from is genesis and to is leaf, or if from doesn't exist in the chain but leaf does, or vice-versa). `BlockHashesFromNumbers` is well-defined under all circumstances.
 - Somewhat more complex in terms of implementation; how to efficiently determine the fork point or common ancestor? `BlockHashesFromNumbers` would make it trivial with a binary chop.
-
