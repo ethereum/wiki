@@ -115,11 +115,30 @@ __Byte Literals__: Byte literals are written with double quotes (`"abc"`), their
 
 ### Operators Involving LValues
 
-If `a` is an LValue (i.e. a variable), the following operators are available as shorthands:
+If `a` is an LValue (i.e. a variable or something that can be assigned to), the following operators are available as shorthands:
 
-`a += e` is equivalent to `a = a + e`. The operators `-=`, `*=`, `/=`, `%=`, `a |=`, `&=` and `^=` are defined.
+`a += e` is equivalent to `a = a + e`. The operators `-=`, `*=`, `/=`, `%=`, `a |=`, `&=` and `^=` are defined accordingly. `a++` and `a--` are equivalent to `a += 1` / `a -= 1` but the expression itself still has the previous value of `a`. In contrast, `--a` and `++a` have the same effect on `a` but return the value after the change.
 
-Furthermore, `delete a` is mostly equivalent to `a = 0` or `a = false`, but also resets non-elementary types (e.g. all members of structs are reset recursively and dynamic arrays are cleared).
+**delete**
+`delete a` assigns the initial value for the type to `a`. I.e. for integers it is equivalent to `a = 0`, but it can also be used on arrays, where it assigns a dynamic array of length zero or a static array of the same length with all elements reset. For structs, it assigns a struct with all members reset.
+
+It is important to note that `delete a` really behaves like an assignment to `a`, i.e. it stores a new object in `a`.
+```js
+contract DeleteExample {
+  uint data
+  uint[] dataArray;
+  function f() {
+    uint x = data;
+    delete x; // sets x to 0, does not affect data
+    delete data; // sets data to 0, does not affect x which still holds a copy
+    uint[] y = dataArray;
+    delete dataArray; // this sets data.length to zero, but as uint[] is a complex object, also
+    // y is affected which is an alias to the storage object
+    // On the other hand: "delete y" is not valid, as assignments to local variables
+    // referencing storage objects can only be made from existing storage objects.
+  }
+}
+```
 
 ### Conversions between Elementary Types
 
