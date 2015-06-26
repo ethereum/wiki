@@ -14,7 +14,7 @@ There are a number of different types of payload that may be encoded within the 
 
 ÐΞVp2p is designed to support arbitrary sub-protocols (aka _capabilities_) over the basic wire protocol. Each sub-protocol is given as much of the message-ID space as it needs (all such protocols must statically specify how many message IDs they require). On connection and reception of the `Hello` message, both peers have equivalent information about what subprotocols they share (including versions) and are able to form consensus over the composition of message ID space.
 
-Message IDs are assumed to be compact from ID 0x10 onwards (0x00-0x10 is reserved for ÐΞVp2p messages) and given to each shared (equal-version, equal name) sub-protocol in alphabetic order. Sub-protocols that are not shared are ignored.
+Message IDs are assumed to be compact from ID 0x10 onwards (0x00-0x10 is reserved for ÐΞVp2p messages) and given to each shared (equal-version, equal name) sub-protocol in alphabetic order. Sub-protocols that are not shared are ignored. If multiple versions are shared of the same (equal name) sub-protocol, the numerically highest wins, others are ignored.
 
 ### P2P
 
