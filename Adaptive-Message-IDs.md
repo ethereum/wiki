@@ -63,6 +63,3 @@ All `eth` sub-protocol message ids are lowered by `0x10` and have a `+` prepende
 [23:22:11] Jeffrey Wilcke: right ok. i thought you meant alphabetical in the _messages_
 [23:22:19] Jeffrey Wilcke: ok makes sense
 ```
-### Proposed addition
-
-If capabilities include multiple versions of the same subprotocol (e.g. eth/60 and eth/61) message IDs are assigned to latest common protocol version only.
