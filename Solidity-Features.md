@@ -758,6 +758,8 @@ The encoding of the string is assumed to be UTF-8, but is not yet used inside So
 [PT](https://www.pivotaltracker.com/n/projects/1189488/stories/88238440)
 Variables of reference type (structs and arrays including `string` and `bytes`) can either point to memory, storage or calldata. The keywords `storage` and `memory` as part of their declaration are used to indicate that (calldata cannot be used explicitly). Parameters (not return parameters) of external functions are forced to point to calldata. Parameters (also return parameters) of public and return parameters of external functions are forced to point to memory. In all other cases, if neither storage nor memory is given, function parameters default to point to memory and local variables default to point to storage.
 
+Note that this story enforces the constraints on memory-stored structs, but does not yet fully implement the code-generation part. Arrays, on the other hand, are fully implemented.
+
 As part of this change, references to storage are also cleaned up: An assignment of a state variable to a local variable or temporary converts it from a reference to a pointer. Assignments to storage pointers do not modify storage but only change the pointer. This means that it is not possible to assign a memory array to a storage pointer. Furthermore, it is illegal to pass a memory-array as an argument to a function that requires a storage reference (note that storage is statically allocated, i.e. there is no place to put this value). Es an example:
 ```js
 contract c {
@@ -801,9 +803,11 @@ contract BinarySearch {
 ```
 
 
-On memory usage: Since memory is wiped after each external function call, the Solidity runtime does not include proper memory management. It includes a "level indicator" which points to the next free memory slot. If memory is needed (because a storage object is copied to memory or an external function is called), it is allocated starting from this pointer. Functions that return objects stored in memory will not reset this pointer. This means that temporary memory objects will still take up space in memory even if they are not needed anymore. On the other hand, if a function does not return any memory-stored object, it resets the pointer to the value it had upon function entry.
+On memory usage: Since memory is wiped after each external function call, the Solidity runtime does not include proper memory management. It includes a "level indicator" which points to the next free memory slot. If memory is needed (because a storage object is copied to memory or an external function is called), it is allocated starting from this pointer. Functions that return objects stored in memory will not reset this pointer. This means that temporary memory objects will still take up space in memory even if they are not needed anymore. On the other hand, if a function does not return any memory-stored object, it resets the pointer to the value it had upon function entry (this is not yet implemented).
 
 The EVM does not allow `CALL` to be used with variably-sized return values. Because of this, return types of message-called functions which are dynamically sized are transparently changed to `void`. Clearing up the confusion which might arise in face of the resulting error message remains to do.
+
+Memory-stored objects as local variables are correctly zero-initialised: Members of structs and elements of fixed-size arrays are recursively initialised, dynamic arrays are set to zero length. `delete x` assigns a new zero-initialised value to `x`.
 
 ## Positive integers conversion to signed
 
