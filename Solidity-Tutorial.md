@@ -1,6 +1,3 @@
-- [Cheat Sheet](#cheatsheet)
-- [Tips and Tricks](#tips-and-tricks)
-
 Solidity is a high-level language whose syntax is similar to that of JavaScript and it is designed to compile to code for the Ethereum Virtual Machine. This
 tutorial provides a basic introduction to Solidity and assumes some knowledge of
 the Ethereum Virtual Machine and programming in general. For more details,
@@ -13,9 +10,68 @@ with no need to download or compile anything. This application only supports
 compilation - if you want to run the code or inject it into the blockchain, you
 have to use a client like AlethZero.
 
+**Quick links:**
 
+- [Cheat Sheet](#cheatsheet)
+- [Tips and Tricks](#tips-and-tricks)
 
-## Simple Example
+**Table of contents**
+
+<!-- TOC depth:6 withLinks:1 updateOnSave:1 -->
+- [Some Examples](#some-examples)
+	- [Storage](#storage)
+	- [Subcurrency Example](#subcurrency-example)
+- [Layout of a Solidity Source failure](#layout-of-a-solidity-source-failure)
+	- [Comments](#comments)
+- [Structure of a Solidity Contract](#structure-of-a-solidity-contract)
+- [Types](#types)
+	- [Elementary Types](#elementary-types)
+	- [Operators Involving LValues](#operators-involving-lvalues)
+	- [Conversions between Elementary Types](#conversions-between-elementary-types)
+	- [Functions on addresses](#functions-on-addresses)
+	- [Enums](#enums)
+	- [Arrays](#arrays)
+	- [Structs](#structs)
+- [Syntactic Sugar and Globally Available Variables](#syntactic-sugar-and-globally-available-variables)
+	- [Ether and Time Units](#ether-and-time-units)
+	- [Special Variables and Functions](#special-variables-and-functions)
+		- [Block and Transaction Properties](#block-and-transaction-properties)
+		- [Cryptographic Functions](#cryptographic-functions)
+		- [Contract Related](#contract-related)
+- [Control Structures](#control-structures)
+	- [Function Calls](#function-calls)
+	- [Order of Evaluation of Expressions](#order-of-evaluation-of-expressions)
+	- [Assignment](#assignment)
+	- [Exceptions](#exceptions)
+- [Contracts](#contracts)
+	- [Interfacing with other Contracts](#interfacing-with-other-contracts)
+	- [Constructor Arguments](#constructor-arguments)
+	- [Contract Inheritance](#contract-inheritance)
+		- [Arguments for Base Constructors](#arguments-for-base-constructors)
+		- [Multiple Inheritance and Linearization](#multiple-inheritance-and-linearization)
+	- [Abstract Contracts](#abstract-contracts)
+	- [Visibility Specifiers](#visibility-specifiers)
+	- [Accessor Functions](#accessor-functions)
+	- [Fallback Functions](#fallback-functions)
+	- [Function Modifiers](#function-modifiers)
+	- [Events](#events)
+		- [Additional Resources for Understanding Events:](#additional-resources-for-understanding-events)
+- [Miscellaneous](#miscellaneous)
+	- [Layout of State Variables in Storage](#layout-of-state-variables-in-storage)
+	- [Esoteric Features](#esoteric-features)
+	- [Internals - the Optimizer](#internals-the-optimizer)
+	- [Using the Commandline Compiler](#using-the-commandline-compiler)
+	- [Tips and Tricks](#tips-and-tricks)
+	- [Cheatsheet](#cheatsheet)
+		- [Global Variables](#global-variables)
+		- [Function Visibility Specifiers](#function-visibility-specifiers)
+		- [Modifiers](#modifiers)
+		- [Types](#types)
+<!-- /TOC -->
+
+# Some Examples
+
+## Storage
 
 ```js
 contract SimpleStorage {
@@ -79,15 +135,32 @@ variable. So to return the balance, we could also just use `balance =
 balances[addr];` without any return statement.
 Events like `Send` allow external clients to search the blockchain more efficiently. If an event is invoked like in the function `send`, this fact is permanently stored in the blockchain, but more on this later.
 
+# Layout of a Solidity Source failure
+
 ## Comments
 
 Single-line comments (`//`) and multi-line comments (`/*...*/`) are possible, while
 triple-slash comments (`///`) right in front of function declarations introduce NatSpec
 comments (which are not covered here).
 
-## Types
 
-### Elementary Types
+# Structure of a Solidity Contract
+
+In Solidity, contracts are what classes are in object-oriented languages.
+They can contain so-called state variables, which are permanently stored
+in storage together with the contract and functions, the entry pointers
+into operating on these state variables. Apart from state variables, there are
+also local variables declared inside functions, whose content is cleared
+as soon as control flow returns from the function.
+
+# Types
+
+Solidity is a statically typed language, which means that the type of each
+variable (state and local) needs to be specified (or at least known) at
+compile-time. Solidity provides several elementary types which can be combined
+to complex types.
+
+## Elementary Types
 
 __Booleans__: Keyword `bool`, constants `true`, `false`, operators: `!` (logical negation) `&&` (logical conjunction, "and"), `||` (logical disjunction, "or"), `==` (equality) and `!=` (inequality).
 
@@ -102,18 +175,18 @@ Arithmetic operators: `+`, `-`, unary `-`, unary `+`, `*`, `/`, `%` (remainder),
 
 __Address__: Keyword `address`, holds a 20 byte value. Operators: `<=`, `<`, `==`, `!=`, `>=` and `>`. Address types also have members (see [Functions on addresses](#Functions+on+addresses)) and serve as base for all contracts.
 
-__Bytes__: Keywords `bytes1` to `bytes32`, `byte` is an alias for `bytes1`. 
+__Bytes__: Keywords `bytes1` to `bytes32`, `byte` is an alias for `bytes1`.
 
 Operators:  
 Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)  
-Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation) 
+Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation)
 
 __Integer Literals__: Integer literals are arbitrary precision integers until they are used together with a non-literal. In `var x = 1 - 2;`, for example, the value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives the type `int8` -- the smallest type that contains `-1`, although the natural types of `1` and `2` are actually `uint8`.  
 It is even possible to temporarily exceed the maximum of 256 bits as long as only integer literals are used for the computation: `var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;` Here, `x` will have the value `0` and thus the type `uint8`.
 
 __Byte Literals__: Byte literals are written with double quotes (`"abc"`), their type is the shortest  `bytesN` that can hold them. I.e. the type of `"abc"` is `bytes3`.
 
-### Operators Involving LValues
+## Operators Involving LValues
 
 If `a` is an LValue (i.e. a variable or something that can be assigned to), the following operators are available as shorthands:
 
@@ -140,7 +213,7 @@ contract DeleteExample {
 }
 ```
 
-### Conversions between Elementary Types
+## Conversions between Elementary Types
 
 If an operator is applied to different types, the compiler tries to
 implicitly convert one of the operands to the type of the other (the same is
@@ -177,109 +250,6 @@ uint constant x = 32;
 bytes3 constant text = "abc";
 ```
 
-## Ether and Time Units
-
-A literal number can take a suffix of `wei`, `finney`, `szabo` or `ether` to convert between the subdenominations of ether, where Ether currency numbers without a postfix are assumed to be "wei", e.g. `2 ether == 2000 finney` evaluates to `true`.
-
-Furthermore, suffixes of `seconds`, `minutes`, `hours`, `days`, `weeks` and `years` can be used to convert between units of time where seconds are the base unit and units are converted naively (i.e. a year is always exactly 365 days, etc.).
-
-## Control Structures
-
-Most of the control structures from C/JavaScript are available in Solidity
-except for `switch` (not planned) and `goto` (note that it's called Solidity). So
-there is: `if`, `else`, `while`, `for`, `break`, `continue`, `return`. Note that there
-is no type conversion from non-boolean to boolean types as there is in C and
-JavaScript, so `if (1) { ... }` is _not_ valid Solidity.
-
-## Function Calls
-
-Functions of the current contract can be called directly, also recursively, as seen in
-this nonsensical example:
-
-```js
-contract c {
-  function g(uint a) returns (uint ret) { return f(); }
-  function f() returns (uint ret) { return g(7) + f(); }
-}
-```
-
-The expression `this.g(8);` is also a valid function call, but this time, the function
-will be called via a message call and not directly via jumps. When calling functions
-of other contracts, the amount of Wei sent with the call and the gas can be specified:
-```js
-contract InfoFeed {
-  function info() returns (uint ret) { return 42; }
-}
-contract Consumer {
-  InfoFeed feed;
-  function setFeed(address addr) { feed = InfoFeed(addr); }
-  function callFeed() { feed.info.value(10).gas(800)(); }
-}
-```
-Note that the expression `InfoFeed(addr)` performs an explicit type conversion stating
-that "we know that the type of the contract at the given address is `InfoFeed`" and
-this does not execute a constructor. Be careful in that `feed.info.value(10).gas(800)`
-only (locally) set the value and amount of gas sent with the function call and only the
-parentheses at the end perform the actual call.
-
-Function call arguments can also be given by name, in any order:
-```js
-contract c {
-function f(uint key, uint value) { ... }
-function g() {
-  f({value: 2, key: 3});
-}
-}
-```
-The names for function parameters and return parameters are optional.
-```js
-contract test {
-  function func(uint k, uint) returns(uint){
-    return k;
-  }
-}
-```
-
-## Special Variables and Functions
-
-There are special variables and functions which always exist in the global
-namespace.
-
-### Block and Transaction Properties
-
- - `block.coinbase` (`address`): current block miner's address
- - `block.difficulty` (`uint`): current block difficulty
- - `block.gaslimit` (`uint`): current block gaslimit
- - `block.number` (`uint`): current block number
- - `block.blockhash` (`function(uint) returns (bytes32)`): hash of the given block
- - `block.timestamp` (`uint`): current block timestamp
- - `msg.data` (`bytes`): complete calldata
- - `msg.gas` (`uint`): remaining gas
- - `msg.sender` (`address`): sender of the message (current call)
- - `msg.value` (`uint`): number of wei sent with the message
- - `now` (`uint`): current block timestamp (alias for `block.timestamp`)
- - `tx.gasprice` (`uint`): gas price of the transaction
- - `tx.origin` (`address`): sender of the transaction (full call chain)
-
-### Cryptographic Functions
-
- - `sha3(...) returns (bytes32)`: compute the SHA3 hash of the (tightly packed) arguments
- - `sha256(...) returns (bytes32)`: compute the SHA256 hash of the (tightly packed) arguments
- - `ripemd160(...) returns (bytes20)`: compute RIPEMD of 256 the (tightly packed) arguments
- - `ecrecover(bytes32, byte, bytes32, bytes32) returns (address)`: recover public key from elliptic curve signature
-
-In the above, "tightly packed" means that the arguments are concatenated without padding, i.e.
-`sha3("ab", "c") == sha3("abc") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`. If padding is needed, explicit type conversions can be used.
-
-It might be that you run into Out-of-Gas for `sha256`, `ripemd160` or `ecrecover` on a *private blockchain*. The reason for this is that those are implemented as so-called precompiled contracts and these contracts only really exist after they received the first message (although their contract code is hardcoded). Messages to non-existing contracts are more expensive and thus the execution runs into an Out-of-Gas error. A workaround for this problem is to first send e.g. 1 Wei to each of the contracts before you use them in your actual contracts. This is not an issue on the official or test net.
-
-### Contract Related
-
- - `this` (current contract's type): the current contract, explicitly convertible to `address`
- - `suicide(address)`: suicide the current contract, sending its funds to the given address
-
-Furthermore, all functions of the current contract are callable directly including the current function.
-
 ## Functions on addresses
 
 It is possible to query the balance of an address using the property `balance`
@@ -310,13 +280,30 @@ Both `call` and `callcode` are very low-level functions and should only be used 
 Note that contracts inherit all members of address, so it is possible to query the balance of the
 current contract using `this.balance`.
 
-## Order of Evaluation of Expressions
+## Enums
 
-The evaluation order of expressions is not specified (more formally, the order
-in which the children of one node in the expression tree are evaluated is not
-specified, but they are of course evaluated before the node itself). It is only
-guaranteed that statements are executed in order and short-circuiting for
-boolean expressions is done.
+Enums are another way to create a user-defined type in Solidity. They are explicitly convertible
+to and from all integer types but implicit conversion is not allowed. The variable of enum type can be declared as constant.
+
+```js
+contract test {
+    enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
+    ActionChoices choices;
+    ActionChoices constant defaultChoice = ActionChoices.GoStraight;
+    function setGoStraight()
+    {
+        choices = ActionChoices.GoStraight;
+    }
+    function getChoice() returns (uint)
+    {
+        return uint(choices);
+    }
+    function getDefaultChoice() returns (uint)
+    {
+        return uint(defaultChoice);
+    }
+}
+```
 
 ## Arrays
 
@@ -408,41 +395,136 @@ contract, but it contains the basic concepts necessary to understand structs.
 Struct types can be used as value types for mappings and they can itself
 contain mappings (even the struct itself can be the value type of the mapping, although it is not possible to include a struct as is inside of itself). Note how in all the functions, a struct type is assigned to a local variable. This does not copy the struct but only store a reference so that assignments to members of the local variable actually write to the state.
 
+# Syntactic Sugar and Globally Available Variables
+
+## Ether and Time Units
+
+A literal number can take a suffix of `wei`, `finney`, `szabo` or `ether` to convert between the subdenominations of ether, where Ether currency numbers without a postfix are assumed to be "wei", e.g. `2 ether == 2000 finney` evaluates to `true`.
+
+Furthermore, suffixes of `seconds`, `minutes`, `hours`, `days`, `weeks` and `years` can be used to convert between units of time where seconds are the base unit and units are converted naively (i.e. a year is always exactly 365 days, etc.).
+
+## Special Variables and Functions
+
+There are special variables and functions which always exist in the global
+namespace.
+
+### Block and Transaction Properties
+
+ - `block.coinbase` (`address`): current block miner's address
+ - `block.difficulty` (`uint`): current block difficulty
+ - `block.gaslimit` (`uint`): current block gaslimit
+ - `block.number` (`uint`): current block number
+ - `block.blockhash` (`function(uint) returns (bytes32)`): hash of the given block
+ - `block.timestamp` (`uint`): current block timestamp
+ - `msg.data` (`bytes`): complete calldata
+ - `msg.gas` (`uint`): remaining gas
+ - `msg.sender` (`address`): sender of the message (current call)
+ - `msg.value` (`uint`): number of wei sent with the message
+ - `now` (`uint`): current block timestamp (alias for `block.timestamp`)
+ - `tx.gasprice` (`uint`): gas price of the transaction
+ - `tx.origin` (`address`): sender of the transaction (full call chain)
+
+### Cryptographic Functions
+
+ - `sha3(...) returns (bytes32)`: compute the SHA3 hash of the (tightly packed) arguments
+ - `sha256(...) returns (bytes32)`: compute the SHA256 hash of the (tightly packed) arguments
+ - `ripemd160(...) returns (bytes20)`: compute RIPEMD of 256 the (tightly packed) arguments
+ - `ecrecover(bytes32, byte, bytes32, bytes32) returns (address)`: recover public key from elliptic curve signature
+
+In the above, "tightly packed" means that the arguments are concatenated without padding, i.e.
+`sha3("ab", "c") == sha3("abc") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`. If padding is needed, explicit type conversions can be used.
+
+It might be that you run into Out-of-Gas for `sha256`, `ripemd160` or `ecrecover` on a *private blockchain*. The reason for this is that those are implemented as so-called precompiled contracts and these contracts only really exist after they received the first message (although their contract code is hardcoded). Messages to non-existing contracts are more expensive and thus the execution runs into an Out-of-Gas error. A workaround for this problem is to first send e.g. 1 Wei to each of the contracts before you use them in your actual contracts. This is not an issue on the official or test net.
+
+### Contract Related
+
+ - `this` (current contract's type): the current contract, explicitly convertible to `address`
+ - `suicide(address)`: suicide the current contract, sending its funds to the given address
+
+Furthermore, all functions of the current contract are callable directly including the current function.
+
+# Control Structures
+
+Most of the control structures from C/JavaScript are available in Solidity
+except for `switch` and `goto`. So
+there is: `if`, `else`, `while`, `for`, `break`, `continue`, `return`, with
+the usual semantics known from C / JavaScript.
+
+Parentheses can *not* be omitted for conditionals, but curly brances can be omitted
+around single-statement bodies.
+
+Note that there is no type conversion from non-boolean to boolean types as
+there is in C and JavaScript, so `if (1) { ... }` is _not_ valid Solidity.
+
+## Function Calls
+
+Functions of the current contract can be called directly, also recursively, as seen in
+this nonsensical example:
+
+```js
+contract c {
+  function g(uint a) returns (uint ret) { return f(); }
+  function f() returns (uint ret) { return g(7) + f(); }
+}
+```
+
+The expression `this.g(8);` is also a valid function call, but this time, the function
+will be called via a message call and not directly via jumps. When calling functions
+of other contracts, the amount of Wei sent with the call and the gas can be specified:
+```js
+contract InfoFeed {
+  function info() returns (uint ret) { return 42; }
+}
+contract Consumer {
+  InfoFeed feed;
+  function setFeed(address addr) { feed = InfoFeed(addr); }
+  function callFeed() { feed.info.value(10).gas(800)(); }
+}
+```
+Note that the expression `InfoFeed(addr)` performs an explicit type conversion stating
+that "we know that the type of the contract at the given address is `InfoFeed`" and
+this does not execute a constructor. Be careful in that `feed.info.value(10).gas(800)`
+only (locally) set the value and amount of gas sent with the function call and only the
+parentheses at the end perform the actual call.
+
+Function call arguments can also be given by name, in any order:
+```js
+contract c {
+function f(uint key, uint value) { ... }
+function g() {
+  f({value: 2, key: 3});
+}
+}
+```
+The names for function parameters and return parameters are optional.
+```js
+contract test {
+  function func(uint k, uint) returns(uint){
+    return k;
+  }
+}
+```
+
+## Order of Evaluation of Expressions
+
+The evaluation order of expressions is not specified (more formally, the order
+in which the children of one node in the expression tree are evaluated is not
+specified, but they are of course evaluated before the node itself). It is only
+guaranteed that statements are executed in order and short-circuiting for
+boolean expressions is done.
+
 ## Assignment
 
 The semantics of assignment are a bit more complicated for non-value types like arrays and structs.
-Assigning *to* a state variable always creates an independent copy. On the other hand, assigning to a local variable creates an independent copy only for elementary types, i.e. static types that fit into 32 bytes. If structs or arrays (including `bytes`) are assigned from a state variable to a local variable, the local variable holds a reference to the original state variable. A second assignment to the local variable does not modify the state but only changes the referenc. Assignments to members (or elements) of the local variable *do* change the state.
-
-## Enums
-
-Enums are another way to create a user-defined type in Solidity. They are explicitly convertible
-to and from all integer types but implicit conversion is not allowed. The variable of enum type can be declared as constant.
-
-```js
-contract test {
-    enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
-    ActionChoices choices;
-    ActionChoices constant defaultChoice = ActionChoices.GoStraight;
-    function setGoStraight()
-    {
-        choices = ActionChoices.GoStraight;
-    }
-    function getChoice() returns (uint)
-    {
-        return uint(choices);
-    }
-    function getDefaultChoice() returns (uint)
-    {
-        return uint(defaultChoice);
-    }
-}
-```
+Assigning *to* a state variable always creates an independent copy. On the other hand, assigning to a local variable creates an independent copy only for elementary types, i.e. static types that fit into 32 bytes. If structs or arrays (including `bytes` and `string`) are assigned from a state variable to a local variable, the local variable holds a reference to the original state variable. A second assignment to the local variable does not modify the state but only changes the referenc. Assignments to memberss (or elements) of the local variable *do* change the state.
 
 ## Exceptions
 
 Currently, there are two situations, where exceptions can happen in Solidity: If you access an array beyond its length (i.e. `x[i]` where `i >= x.length`) or if a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself). In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state.
 
 It is planned to also throw and catch exceptions manually.
+
+# Contracts
 
 ## Interfacing with other Contracts
 
@@ -542,7 +624,7 @@ contract named is owned, mortal {
         if (msg.sender == owner) {
             address ConfigAddress = 0xd5f9d8d94886e70b06e474c3fb14fd43e2f23970;
             NameReg(Config(ConfigAddress).lookup(1)).unregister();
-// It is still possible to call a specific overridden function. 
+// It is still possible to call a specific overridden function.
             mortal.kill();
         }
     }
@@ -781,6 +863,8 @@ Here, the call to `Deposit` will behave identical to
 - Example usage of events: <https://github.com/debris/smart-exchange/blob/master/lib/contracts/SmartExchange.sol>
 - How to access them in js: <https://github.com/debris/smart-exchange/blob/master/lib/exchange_transactions.js>
 
+# Miscellaneous
+
 ## Layout of State Variables in Storage
 
 Statically-sized variables (everything except mapping and dynamically-sized array types) are laid out contiguously in storage starting from position `0`. Multiple items that need less than 32 bytes are packed into a single storage slot if possible, according to the following rules:
@@ -847,7 +931,7 @@ These steps are applied to each basic block and the newly generated code is used
 ```js
 var x = 7;
 data[7] = 9;
-if (data[x] != x + 2) 
+if (data[x] != x + 2)
   return 2;
 else
   return 1;
