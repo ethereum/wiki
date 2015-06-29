@@ -32,8 +32,10 @@ have to use a client like AlethZero.
 		- [Type Deduction](#type-deduction)
 	- [Functions on addresses](#functions-on-addresses)
 	- [Enums](#enums)
-	- [Arrays](#arrays)
-	- [Structs](#structs)
+	- [Reference Types](#reference-types)
+		- [Data location](#data-location)
+		- [Arrays](#arrays)
+		- [Structs](#structs)
 - [Syntactic Sugar and Globally Available Variables](#syntactic-sugar-and-globally-available-variables)
 	- [Ether and Time Units](#ether-and-time-units)
 	- [Special Variables and Functions](#special-variables-and-functions)
@@ -278,6 +280,16 @@ var y = x;
 Here, the type of `y` will be `uint20`. Using `var` is not possible for function
 parameters or return parameters.
 
+Beware that currently, the type is only deduced from the first assignment, so
+the loop in the following snippet is infinite, as `i` will have the type
+`uint8` and any value of this type is smaller than `2000`.
+```js
+for (var i = 0; i < 2000; i++)
+{
+    // do something
+}
+```
+
 ## Functions on addresses
 
 It is possible to query the balance of an address using the property `balance`
@@ -310,8 +322,8 @@ current contract using `this.balance`.
 
 ## Enums
 
-Enums are another way to create a user-defined type in Solidity. They are explicitly convertible
-to and from all integer types but implicit conversion is not allowed. The variable of enum type can be declared as constant.
+Enums are one way to create a user-defined type in Solidity. They are explicitly convertible
+to and from all integer types but implicit conversion is not allowed.
 
 ```js
 contract test {
@@ -322,9 +334,14 @@ contract test {
     {
         choices = ActionChoices.GoStraight;
     }
-    function getChoice() returns (uint)
+    // Since enum types are not part of the ABI, the signature of "getChoice"
+    // will automatically be changed to "getChoice() returns (uint8)"
+    // for all matters external to Solidity. The integer type used is just
+    // large enough to hold all enum values, i.e. if you have more values,
+    // `uint16` will be used and so on.
+    function getChoice() returns (ActionChoices)
     {
-        return uint(choices);
+        return choices;
     }
     function getDefaultChoice() returns (uint)
     {
@@ -333,16 +350,71 @@ contract test {
 }
 ```
 
-## Arrays
+## Reference Types
 
-Both variably and fixed size arrays are supported in state and as parameters of external
-functions:
+Complex types, i.e. types which do not always fit 256 bits have to be handled
+more carefully than the value-types we have already seen. Since copying
+them is not so cheap, we have to think about whether we want them to be
+stored in memory (which is not persisting) or storage (where the state
+variables are held).
+
+### Data location
+
+These complex types are *arrays* and *structs*. Every such type has an additional
+annotation, the "data location", about whether it is stored in memory or in storage. Depending on the
+context, there is always a default but it can be overridden by appending
+either `storage` or `memory` to the type. The default for local variables
+and function arguments is `memory` and the location is forced
+to "storage" for state variables (obviously).
+
+There is also a third data location, "calldata" which is a non-modifyable
+non-persistent area whether function arguments are stored. Function parameters
+(not return parameters) of external funcitons are forced to "calldata" and
+it behaves mostly like memory.
+
+Data locations are important because they change how assignments behave:
+Assignments between storage and memory and also to a state variable (even from other state variables)
+always create an independent copy.
+Assignment to local storage variables only assign a reference, though, and
+this reference always points to the state variable even if the latter is changed
+in the meantime.
+On the other hand, assignments from a memory stored reference type to another
+memory-stored reference type does not create a copy.
+
+```js
+contract c {
+  uint[] x;
+  function f(uint[] memoryArray) {
+    x = memoryArray; // works, copies the array to storage
+    var y = x; // works, assigns a pointer
+    y[7]; // fine, returns the 8th element
+    y.length = 2; // fine, modifies storage
+    delete x; // fine, clears the array
+    // The following does not work; it would need to create a new temporary /
+    // unnamed array in storage, but storage is "statically" allocated:
+    // y = memoryArray;
+    // This does not work either, since it would "reset" the pointer, but there
+    // is no sensible location it could point to.
+    // delete y;
+  }
+}
+```
+
+### Arrays
+
+Fixed-size and dynamic arrays of any other type are supported.
+Dynamic arrays can be resized in storage by changing the `.length` member,
+while their size is fixed (but dynamic, i.e. it can depend on runtime
+parameters) in memory.
 
 ```js
 contract ArrayContract {
   uint[2**20] m_aLotOfIntegers;
+  // Note that the following is not a pair of arrays but an array of pairs.
   bool[2][] m_pairsOfFlags;
-  function setAllFlagPairs(bool[2][] newPairs) external {
+  // newPairs is stored in memory - the default for function arguments
+  //
+  function setAllFlagPairs(bool[2][] newPairs) {
     // assignment to array replaces the complete array
     m_pairsOfFlags = newPairs;
   }
@@ -363,7 +435,7 @@ contract ArrayContract {
     m_pairsOfFlags.length = 0;
   }
   bytes m_byteData;
-  function byteArrays(bytes data) external {
+  function byteArrays(bytes data) {
     // byte arrays ("bytes") are different as they are stored without padding,
     // but can be treated identical to "uint8[]"
     m_byteData = data;
@@ -374,7 +446,12 @@ contract ArrayContract {
 }
 ```
 
-## Structs
+Of course, arrays can also be combined with structs and mappings, although
+mappings are only supported in storage.
+
+TODO: Some more information about arrays as function parameters.
+
+### Structs
 
 Solidity provides a way to define new types in the form of structs, which is
 shown in the following example:
@@ -397,7 +474,7 @@ contract CrowdFunding {
   function newCampaign(address beneficiary, uint goal) returns (uint campaignID) {
     campaignID = numCampaigns++; // campaignID is return variable
     Campaign c = campaigns[campaignID];  // assigns reference
-    c.beneficiary = beneficiary;
+    c.beneficiary = beneficiary; // modifies storage
     c.fundingGoal = goal;
   }
   function contribute(uint campaignID) {
@@ -420,8 +497,12 @@ contract CrowdFunding {
 
 The contract does not provide the full functionality of a crowdfunding
 contract, but it contains the basic concepts necessary to understand structs.
-Struct types can be used as value types for mappings and they can itself
-contain mappings (even the struct itself can be the value type of the mapping, although it is not possible to include a struct as is inside of itself). Note how in all the functions, a struct type is assigned to a local variable. This does not copy the struct but only store a reference so that assignments to members of the local variable actually write to the state.
+Struct types can be used inside mappings and they can itself
+contain mappings (even the struct itself can be the value type of the mapping,
+although it is not possible to include a struct as is inside of itself).
+Note how in all the functions, a struct type is assigned to a local variable.
+This does not copy the struct but only store a reference so that assignments to
+members of the local variable actually write to the state.
 
 # Syntactic Sugar and Globally Available Variables
 
