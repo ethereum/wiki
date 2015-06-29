@@ -1,8 +1,8 @@
 Solidity is a high-level language whose syntax is similar to that of JavaScript and it is designed to compile to code for the Ethereum Virtual Machine. This
 tutorial provides a basic introduction to Solidity and assumes some knowledge of
-the Ethereum Virtual Machine and programming in general. For more details,
-please see the Solidity specficiation (yet to be written). This tutorial does not cover features like
-the natural language documentation or formal verification and is also not meant as a final specification
+the Ethereum Virtual Machine and programming in general. This tutorial does not cover features like
+the [natural language specification](Ethereum-Natural-Specification-Format)
+or formal verification and is also not meant as a final specification
 of the language.
 
 You can start using [Solidity in your browser](http://chriseth.github.io/cpp-ethereum),
@@ -21,13 +21,15 @@ have to use a client like AlethZero.
 - [Some Examples](#some-examples)
 	- [Storage](#storage)
 	- [Subcurrency Example](#subcurrency-example)
-- [Layout of a Solidity Source failure](#layout-of-a-solidity-source-failure)
-	- [Comments](#comments)
+- [Layout of a Solidity Source File](#layout-of-a-solidity-source-file)
 - [Structure of a Solidity Contract](#structure-of-a-solidity-contract)
 - [Types](#types)
-	- [Elementary Types](#elementary-types)
+	- [Elementary Types (Value Types)](#elementary-types-value-types)
 	- [Operators Involving LValues](#operators-involving-lvalues)
 	- [Conversions between Elementary Types](#conversions-between-elementary-types)
+		- [Implicit Conversions](#implicit-conversions)
+		- [Explicit Conversions](#explicit-conversions)
+		- [Type Deduction](#type-deduction)
 	- [Functions on addresses](#functions-on-addresses)
 	- [Enums](#enums)
 	- [Arrays](#arrays)
@@ -54,6 +56,7 @@ have to use a client like AlethZero.
 	- [Accessor Functions](#accessor-functions)
 	- [Fallback Functions](#fallback-functions)
 	- [Function Modifiers](#function-modifiers)
+	- [Constants](#constants)
 	- [Events](#events)
 		- [Additional Resources for Understanding Events:](#additional-resources-for-understanding-events)
 - [Miscellaneous](#miscellaneous)
@@ -70,6 +73,9 @@ have to use a client like AlethZero.
 <!-- /TOC -->
 
 # Some Examples
+
+Let us begin with some examples. It is fine if you do not understand everything
+right now, we will go into more detail later.
 
 ## Storage
 
@@ -133,15 +139,21 @@ modify the state of the contract (note that this is not yet enforced, though).
 In Solidity, return "parameters" are named and essentially create a local
 variable. So to return the balance, we could also just use `balance =
 balances[addr];` without any return statement.
-Events like `Send` allow external clients to search the blockchain more efficiently. If an event is invoked like in the function `send`, this fact is permanently stored in the blockchain, but more on this later.
+Events like `Send` allow external clients to search the blockchain more efficiently.
+If an event is invoked like in the function `send`, this fact is permanently stored in the blockchain, but more on this later.
 
-# Layout of a Solidity Source failure
+# Layout of a Solidity Source File
 
-## Comments
+A Solidity source file can contain an arbitrary number of contracts.
+**Other source files** can be referenced using `import "filename";` and the symbols
+defined there will also be available in the current source file. Note that
+the browser-based compiler does not support multiple files and if you are using
+the commandline compiler, you have to explicitly specify all files you will use
+as arguments, the compiler will not search your filesystem on its own.
 
-Single-line comments (`//`) and multi-line comments (`/*...*/`) are possible, while
-triple-slash comments (`///`) right in front of function declarations introduce NatSpec
-comments (which are not covered here).
+**Comments** Single-line comments (`//`) and multi-line comments (`/*...*/`) are possible, while
+triple-slash comments (`///`) right in front of function declarations introduce
+[NatSpec](Ethereum-Natural-Specification-Format) (which are not covered here).
 
 
 # Structure of a Solidity Contract
@@ -156,11 +168,16 @@ as soon as control flow returns from the function.
 # Types
 
 Solidity is a statically typed language, which means that the type of each
-variable (state and local) needs to be specified (or at least known) at
+variable (state and local) needs to be specified (or at least known - see
+[Type Deduction](#Type+Deduction) below) at
 compile-time. Solidity provides several elementary types which can be combined
 to complex types.
 
-## Elementary Types
+## Elementary Types (Value Types)
+
+The following types are also called value types because variables of these
+types will always be passed by value, i.e. they are always copied when they
+are used as function arguments or in assignments.
 
 __Booleans__: Keyword `bool`, constants `true`, `false`, operators: `!` (logical negation) `&&` (logical conjunction, "and"), `||` (logical disjunction, "or"), `==` (equality) and `!=` (inequality).
 
@@ -215,14 +232,20 @@ contract DeleteExample {
 
 ## Conversions between Elementary Types
 
+### Implicit Conversions
+
 If an operator is applied to different types, the compiler tries to
 implicitly convert one of the operands to the type of the other (the same is
-true for assignments). In general, an implicit conversion is possible if it
+true for assignments). In general, an implicit conversion between value-types
+is possible if it
 makes sense semantically and no information is lost: `uint8` is convertible to
-`uint16` and `int120` to `int256`, but `int8` is not convertible to `uint256`.
+`uint16` and `int120` to `int256`, but `int8` is not convertible to `uint256`
+(because `uint256` cannot hold e.g. `-1`).
 Furthermore, unsigned integers can be converted to bytes of the same or larger
 size, but not vice-versa. Any type that can be converted to `uint160` can also
 be converted to `address`.
+
+### Explicit Conversions
 
 If the compiler does not allow implicit conversion but you know what you are
 doing, an explicit type conversion is sometimes possible:
@@ -235,6 +258,16 @@ uint x = uint(y);
 At the end of this code snippet, `x` will have the value `0xfffff..fd` (64 hex
 characters), which is -3 in two's complement representation of 256 bits.
 
+If a type is explicitly converted to a smaller type, higher-order bits are
+cut off:
+
+```js
+uint32 a = 0x12345678;
+uint16 b = uint16(a); // b will be 0x5678 now
+```
+
+### Type Deduction
+
 For convenience, it is not always necessary to explicitly specify the type of a
 variable, the compiler automatically infers it from the type of the first
 expression that is assigned to the variable:
@@ -244,11 +277,6 @@ var y = x;
 ```
 Here, the type of `y` will be `uint20`. Using `var` is not possible for function
 parameters or return parameters.
-State variables of integer and bytesXX types can be declared as constant.
-```js
-uint constant x = 32;
-bytes3 constant text = "abc";
-```
 
 ## Functions on addresses
 
@@ -841,6 +869,19 @@ contract Register is priced, owned {
 ```
 
 Multiple modifiers can be applied to a function by specifying them in a whitespace-separated list and will be evaluated in order. Explicit returns from a modifier or function body immediately leave the whole function, while control flow reaching the end of a function or modifier body continues after the "_" in the preceding modifier. Arbitrary expressions are allowed for modifier arguments and in this context, all symbols visible from the function are visible in the modifier. Symbols introduced in the modifier are not visible in the function (as they might change by overriding).
+
+## Constants
+
+State variables of value type can be declared as constant.
+```js
+contract C {
+  uint constant x = 32;
+  bytes3 constant text = "abc";
+}
+```
+
+This has the effect that the compiler does not reserve a storage slot
+for these variables and every occurrence is replaced by their constant value.
 
 ## Events
 
