@@ -44,6 +44,9 @@ have to use a client like AlethZero.
 		- [Contract Related](#contract-related)
 - [Control Structures](#control-structures)
 	- [Function Calls](#function-calls)
+		- [Intenal Function Calls](#intenal-function-calls)
+		- [External Function Calls](#external-function-calls)
+		- [Named and Optional Function Parameters](#named-and-optional-function-parameters)
 	- [Order of Evaluation of Expressions](#order-of-evaluation-of-expressions)
 	- [Assignment](#assignment)
 	- [Exceptions](#exceptions)
@@ -567,7 +570,9 @@ there is in C and JavaScript, so `if (1) { ... }` is _not_ valid Solidity.
 
 ## Function Calls
 
-Functions of the current contract can be called directly, also recursively, as seen in
+### Intenal Function Calls
+
+Functions of the current contract can be called directly ("internally"), also recursively, as seen in
 this nonsensical example:
 
 ```js
@@ -577,8 +582,19 @@ contract c {
 }
 ```
 
+These function calls are translated into simple jumps inside the EVM. This has
+the effect that the current memory is not cleared, i.e. passing memory references
+to internally-called functions is very efficient. Only functions of the same
+contract can be called internally.
+
+### External Function Calls
+
 The expression `this.g(8);` is also a valid function call, but this time, the function
-will be called via a message call and not directly via jumps. When calling functions
+will be called "externally", via a message call and not directly via jumps.
+Functions of other contracts have to be called externally. For an external call,
+all function arguments have to be copied to memory.
+
+When calling functions
 of other contracts, the amount of Wei sent with the call and the gas can be specified:
 ```js
 contract InfoFeed {
@@ -596,19 +612,20 @@ this does not execute a constructor. Be careful in that `feed.info.value(10).gas
 only (locally) set the value and amount of gas sent with the function call and only the
 parentheses at the end perform the actual call.
 
-Function call arguments can also be given by name, in any order:
+### Named and Optional Function Parameters
+
+Function call arguments can also be given by name, in any order, and the names
+of unused parameters (especially return parameters) can be omitted.
+
 ```js
 contract c {
-function f(uint key, uint value) { ... }
-function g() {
-  f({value: 2, key: 3});
-}
-}
-```
-The names for function parameters and return parameters are optional.
-```js
-contract test {
-  function func(uint k, uint) returns(uint){
+  function f(uint key, uint value) { ... }
+  function g() {
+    // named arguments
+    f({value: 2, key: 3});
+  }
+  // omitted parameters
+  function func(uint k, uint) returns(uint) {
     return k;
   }
 }
@@ -693,6 +710,8 @@ contract TokenCreator {
 A Solidity contract expects constructor arguments after the end of the contract data itself.
 This means that you pass the arguments to a contract by putting them after the
 compiled bytes as returned by the compiler in the usual ABI format.
+
+If you use web3.js's `MyContract.new()`, you do not have to care about this, though.
 
 ## Contract Inheritance
 
