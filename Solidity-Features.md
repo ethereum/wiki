@@ -85,7 +85,7 @@ Note that, unfortunately, this only works directly on structs for now, so I woul
 
 ## Contract Inheritance
 
-[PT1](https://www.pivotaltracker.com/story/show/84976094) 
+[PT1](https://www.pivotaltracker.com/story/show/84976094)
 [PT2](https://www.pivotaltracker.com/story/show/86666936) Contracts can inherit from each other.
 
 ```
@@ -119,7 +119,7 @@ contract named is owned, mortal {
         if (msg.sender == owner) {
             address ConfigAddress = 0xd5f9d8d94886e70b06e474c3fb14fd43e2f23970;
             NameReg(Config(ConfigAddress).lookup(1)).unregister();
-// It is still possible to call a specific overridden function. 
+// It is still possible to call a specific overridden function.
             mortal.kill();
         }
     }
@@ -203,7 +203,7 @@ contract Test {
 
 ## Access to super
 
-[PT](https://www.pivotaltracker.com/story/show/86688340) In the following contract, the function `kill` is overridden by sibling classes. Due to the fact that the sibling classes do not know of each other, they can only call `mortal.kill()` with the effect that one of the overrides is completely bypassed. A reasonable implementation would call the kill functions in all classes in the inheritance hierarchy. 
+[PT](https://www.pivotaltracker.com/story/show/86688340) In the following contract, the function `kill` is overridden by sibling classes. Due to the fact that the sibling classes do not know of each other, they can only call `mortal.kill()` with the effect that one of the overrides is completely bypassed. A reasonable implementation would call the kill functions in all classes in the inheritance hierarchy.
 ```
 contract mortal { function kill() { suicide(msg.sender); } }
 contract named is mortal { function kill() { /*namereg.unregister();*/ mortal.kill(); } }
@@ -337,10 +337,10 @@ contract c {
       val3 = 1 finney; // 1 * 10 ** 15
       val4 = 1 ether;  // 1 * 10 ** 18
  }
-  uint256 val1; 
+  uint256 val1;
   uint256 val2;
   uint256 val3;
-  uint256 val4; 
+  uint256 val4;
 }
 ```
 
@@ -354,7 +354,7 @@ contract c {
       val1 = sha3("foo"); // sha3(0x666f6f)
       val3 = sha3(val2, "bar", 1031); //sha3(0x7b626172407)
   }
-  uint256 val1; 
+  uint256 val1;
   uint16 val2;
   uint256 val3;
 }
@@ -529,7 +529,7 @@ contract TimedContract {
 ```
 
 ## HashXX and StringXX to bytesXX
-[Link to PT] (https://www.pivotaltracker.com/story/show/88146508) 
+[Link to PT] (https://www.pivotaltracker.com/story/show/88146508)
 + We replace `hash(XX*8)` and `stringXX` by `bytesXX`.
 + `bytesXX` behaves as `hash(XX*8)` in terms of convertability and operators and as `stringXX` in terms of layout in memory (alignment, etc).
 
@@ -539,7 +539,7 @@ contract TimedContract {
 
 
 ## `msg.sig` returns the function's signature hash
-[Link to PT] (https://www.pivotaltracker.com/story/show/86896308) 
+[Link to PT] (https://www.pivotaltracker.com/story/show/86896308)
 New magic type `msg.sig` that will provide the hash of the current function signature as `bytes4` type.
 
 ```
@@ -553,7 +553,7 @@ contract test {
 Calling that function will return `2FBEBD38` which is the hash of the signature of `foo(uint256)`.
 
 ## Constant variables
-[PT](https://www.pivotaltracker.com/story/show/86670364) 
+[PT](https://www.pivotaltracker.com/story/show/86670364)
 Added `constant` specifier for uint, mapping and bytesXX types. Variables declared with `constant` specifier should be initialized at declaration time and can not be changed later. For now local variables can not be constant. Constant variables are not stored in Storage.
 
 ```
@@ -564,7 +564,7 @@ contract Foo {
 ```
 
 ## Anonymous Events
-[PT](https://www.pivotaltracker.com/story/show/89518344) 
+[PT](https://www.pivotaltracker.com/story/show/89518344)
 Added `anonymous` specifier for Event. For the event declared as anonymous the hash of the signature of the event will not be added as a first topic. The format is
 
 ```
@@ -638,7 +638,7 @@ contract test {
 }
 ```
 ## External Types
-[PT](https://www.pivotaltracker.com/story/show/88772706) 
+[PT](https://www.pivotaltracker.com/story/show/88772706)
 All functions with visibility more than internal should have external types (ABI types) otherwise raise an error.
 For Contract type external type is address type.
 ```
@@ -655,7 +655,7 @@ contract Test {
 the ABI interface for Poo is Poo(address) when the Solidity interface is still Poo(Foo).
 
 ## Accessor for Arrays
-[PT](https://www.pivotaltracker.com/story/show/88500646) 
+[PT](https://www.pivotaltracker.com/story/show/88500646)
 For Arrays the accessor is generated which accepts the index as parameter and returns an array element
 ```
 contract test {
@@ -823,3 +823,28 @@ int8 x = 2;
 Currently, there are two situations, where exceptions can happen in Solidity: If you access an array beyond its length (i.e. x[i] where i >= x.length) or if a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself). In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state.
 
 It is planned to also throw and catch exceptions manually.
+
+## Structs in Memory
+
+[PT](https://www.pivotaltracker.com/n/projects/1189488/stories/84119690)
+Structs can be passed around as function arguments, be returned from functions
+and created in memory.
+
+```js
+contract C {
+    struct S { uint a; uint b; }
+    struct A { uint x; uint y; S s; }
+    A data;
+    function f() internal returns (A) {
+        // Construct structs inline, pass to a function and return from it.
+        // Memory is allocated only once, pointers are passed around.
+        // Construction by member name is possible.
+        return g(A(5, 7, S({b: 1, a: 2})));
+    }
+    function g(A _a) internal returns (A) {
+        _a.s.b = 2;
+        data = _a; // performs a copy
+        return _a;
+    }
+}
+```
