@@ -1388,10 +1388,17 @@ MyContract.new(param1, param2, {data: myContractCode, gas: 300000, from: mySende
 ```js
 // contract abi
 var abi = [{
-     name: 'myMethod',
+     name: 'myConstantMethod',
      type: 'function',
+     constant: true,
      inputs: [{ name: 'a', type: 'string' }],
      outputs: [{name: 'd', type: 'string' }]
+}, {
+     name: 'myStateChangingMethod',
+     type: 'function',
+     constant: false,
+     inputs: [{ name: 'a', type: 'string' }, { name: 'b', type: 'int' }],
+     outputs: []
 }, {
      name: 'myEvent',
      type: 'event',
