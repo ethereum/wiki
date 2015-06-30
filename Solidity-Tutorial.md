@@ -645,7 +645,7 @@ this does not execute a constructor. Be careful in that `feed.info.value(10).gas
 only (locally) set the value and amount of gas sent with the function call and only the
 parentheses at the end perform the actual call.
 
-### Named and Optional Function Parameters
+### Named Calls and Anonymous Function Parameters
 
 Function call arguments can also be given by name, in any order, and the names
 of unused parameters (especially return parameters) can be omitted.
@@ -675,7 +675,7 @@ boolean expressions is done.
 ## Assignment
 
 The semantics of assignment are a bit more complicated for non-value types like arrays and structs.
-Assigning *to* a state variable always creates an independent copy. On the other hand, assigning to a local variable creates an independent copy only for elementary types, i.e. static types that fit into 32 bytes. If structs or arrays (including `bytes` and `string`) are assigned from a state variable to a local variable, the local variable holds a reference to the original state variable. A second assignment to the local variable does not modify the state but only changes the referenc. Assignments to memberss (or elements) of the local variable *do* change the state.
+Assigning *to* a state variable always creates an independent copy. On the other hand, assigning to a local variable creates an independent copy only for elementary types, i.e. static types that fit into 32 bytes. If structs or arrays (including `bytes` and `string`) are assigned from a state variable to a local variable, the local variable holds a reference to the original state variable. A second assignment to the local variable does not modify the state but only changes the reference. Assignments to members (or elements) of the local variable *do* change the state.
 
 ## Exceptions
 
