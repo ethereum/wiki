@@ -430,7 +430,7 @@ Il modello di emissione sarà come segue:
 
 **Tasso di Crescita a Lungo-Termine (in percentuale)**
 
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
+![SPV in bitcoin](https://blog.ethereum.org/wp-content/uploads/2013/12/issuance-model.jpg)
 
 _Tuttavia, nonostante l'emissione di valuta lineare, il tasso di crescita dell'offerta, proprio come avviene nel Bitcoin, tende, con il passare del tempo, a zero_
 
