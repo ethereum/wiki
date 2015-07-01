@@ -8,7 +8,7 @@ Ethereum, like any advanced system, will mean different things to different peop
 
 >"It is very possible that ... one machine would suffice to solve all the problems ... of the whole [world]" - Sir Charles Darwin, 1946*
 
-In a technical sense, Ethereum is a "world computer". Harking back to the days of the mainframe, and probably about as fast, Ethereum can be viewed as a single computer that the whole world can use. It notionally has only a single processor (no multi-threading or parallel execution), but as much memory as required. Anybody can upload programmes to the Ethereum World Computer and anybody can request that a programme that has been uploaded be executed. This does not mean that anyone can ask any programme to do anything; on the contrary: the author of the programme can specify that requests from anyone but themselves be ignored, for example. Also, in a very strong sense, every programme has its own permanent storage that persists between executions. Furthermore, as long as it is in demand, the Ethereum World Computer will always be there: it can't be shut down or turned off.
+In a technical sense, Ethereum is a "world computer". Harking back to the days of the mainframe, and probably about as fast, Ethereum can be viewed as a single computer that the whole world can use. It notionally has only a single processor (no multi-threading or parallel execution), but as much memory as required. Anybody can upload programs to the Ethereum World Computer and anybody can request that a program that has been uploaded be executed. This does not mean that anyone can ask any program to do anything; on the contrary: the author of the program can specify that requests from anyone but themselves be ignored, for example. Also, in a very strong sense, every program has its own permanent storage that persists between executions. Furthermore, as long as it is in demand, the Ethereum World Computer will always be there: it can't be shut down or turned off.
 
 You may ask, "why would anyone use such a system?" and again there are many reasons. The main reason is because it makes what you want to do cheaper and easier. This statement needs to be broken down somewhat, which is what the following paragraphs explore.
 
@@ -51,7 +51,7 @@ Ethereum allows people to make neutrally enforceable agreements in a completely 
 
 ##Conclusion
 
-Gavin Wood has distilled the description of Ethereum to being a collection of non-localized singleton programmable data structures. What this means will depend on where you are coming from, but where ever you are, it's probably going to be better with Ethereum.
+Gavin Wood has distilled the description of Ethereum to being a collection of non-localized singleton programmable data structures. What this means will depend on where you are coming from, but wherever you are, it's probably going to be better with Ethereum.
 
 
 ###Notes
