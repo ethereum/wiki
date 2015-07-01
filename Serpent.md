@@ -478,10 +478,9 @@ There are also special commands for a few crypto operations; particularly:
 
 * If you get a core dump when calling `abi_contract()`, check that you do not have functions with the same name.
 
-* Constants need to be be defined inside shared, example:
+* Use macro for constants, example:
 ```
-def shared():
-    CONSTANT = 99
+macro CONSTANT: 99
 ```
 
 * Be careful that if your flow requires going through a number of contracts, that someone can't just directly short-circuit and call one of your latter contracts with data they've manipulated elsewhere. Example: If you have contract C which gives someone ether, but relies on computation from Contract A->B->C, that someone can't just call B or C to give themselves ether.
