@@ -62,10 +62,10 @@ Requests a BlockHashes message detailing a number of the first block hash and a 
 [`+0x0a`, `blockHeader1`, `blockHeader2`, `...`] Specify (a) block header(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
 
 **GetNodeData**
-[`+0x0b`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Ask for a `HashLookupResponse` message containing a value which hashes to `hash[i]` for each `hash[i]` specified.
+[`+0x0b`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Ask for a `NodeData` message containing a value which hashes to a hash for each `hash` specified.
 
 **NodeData**
-[`+0x0c`, `value_0`: `B`, `value_1`: `B`, `...`] Provides `value[i]` where `sha3(value[i]) = hash[i]` as an answer to `HashLookup` with arguments `hash[i]`. If no response for a particular `hash[i]` can be found, provide the empty string instead.
+[`+0x0c`, `value_0`: `B`, `value_1`: `B`, `...`] Provides `value` where `sha3(value) = hash` as an answer to `HashLookup` with arguments `hash_0`, `hash_1` &c. If no response for a particular `hash` can be found, provide the empty string instead.
 
 ### Session Management
 
