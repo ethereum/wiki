@@ -21,6 +21,7 @@
 - [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
 - [Bad Block Reporting](http://github.com/ethereum/wiki/wiki/Bad-Block-Reporting)
 - [Bad Chain Canary](http://github.com/ethereum/wiki/wiki/Bad-Chain-Canary)
+- [Extra Data](http://github.com/ethereum/wiki/wiki/Extra-Data)
 
 ### Ethash/Dashimoto
 - [Ethash](https://github.com/ethereum/wiki/wiki/Ethash)
