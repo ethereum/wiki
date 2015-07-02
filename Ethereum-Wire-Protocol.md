@@ -59,13 +59,13 @@ Requests a BlockHashes message detailing a number of the first block hash and a 
 [`+0x09`: `P`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Requests a `BlockHeaders` message detailing a number of block headers to be sent, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these block headers in a single message - you might have to re-request them.
 
 **BlockHeaders**
-[`+0x0a`, [`blockHeader`], `...`] Specify (a) block header(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
+[`+0x0a`, `blockHeader1`, `blockHeader2`, `...`] Specify (a) block header(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
 
-**HashLookup**
-[`+0x0b`, [`h1`, `h2`, `...`], `...`] Ask for a `HashLookupResponse` message containing a value which hashes to `h[i]` for each `h[i]` specified.
+**GetNodeData**
+[`+0x0b`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Ask for a `HashLookupResponse` message containing a value which hashes to `hash[i]` for each `hash[i]` specified.
 
-**HashLookupResponse**
-[`+0x0c`, [`v1`, `v2`, `...`], `...`] Provides `v[i]` where `sha3(v[i]) = h[i]` as an answer to `HashLookup` with arguments `h[i]`. If no response for a particular `h[i]` can be found, provide the empty string instead.
+**NodeData**
+[`+0x0c`, `value_0`: `B`, `value_1`: `B`, `...`] Provides `value[i]` where `sha3(value[i]) = hash[i]` as an answer to `HashLookup` with arguments `hash[i]`. If no response for a particular `hash[i]` can be found, provide the empty string instead.
 
 ### Session Management
 
