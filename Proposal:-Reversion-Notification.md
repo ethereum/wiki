@@ -1,6 +1,6 @@
 ## **JSONRPC** changes:
 
-`eth_newFilter` both accept from/to as block hashes.
+`eth_newFilter` accept from/to as block hashes.
 
 ```diff
 params: [{
