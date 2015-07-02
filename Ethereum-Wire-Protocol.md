@@ -65,7 +65,7 @@ Requests a BlockHashes message detailing a number of the first block hash and a 
 [`+0x0b`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Ask for a `NodeData` message containing a value which hashes to a hash for each `hash` specified.
 
 **NodeData**
-[`+0x0c`, `value_0`: `B`, `value_1`: `B`, `...`] Provides `value` where `sha3(value) = hash` as an answer to `HashLookup` with arguments `hash_0`, `hash_1` &c. If no response for a particular `hash` can be found, provide the empty string instead.
+[`+0x0c`, `value_0`: `B`, `value_1`: `B`, `...`] Provides `value` where `sha3(value) = hash` as an answer to `GetNodeData` with arguments `hash_0`, `hash_1` &c. If no response for a particular `hash` can be found, provide the empty string instead.
 
 ### Session Management
 
