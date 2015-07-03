@@ -46,28 +46,39 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 [`+0x07`, [`blockHeader`, `transactionList`, `uncleList`], `totalDifficulty`] Specify a single block that the peer should know about. The composite item in the list (following the message ID) is a block in the format described in the main Ethereum specification.
 - `totalDifficulty` is the total difficulty of the block (aka score).
 
-
 ### PV61 specific
 
 **BlockHashesFromNumber**
 [`+0x08`: `P`, `number`: `P`, `maxBlocks`: `P`]
-Requests a BlockHashes message detailing a number of the first block hash and a total of hashes to be sent. Returned hash list must be ordered by block number in ascending order.
+Requires peer to reply with a `BlockHashes` message. Message should contain block with that of number `number` on the canonical chain. Should also be followed by subsequent blocks, on the same chain, detailing a number of the first block hash and a total of hashes to be sent. Returned hash list must be ordered by block number in ascending order.
 
-### Proposed messages for headers-first syncing (PV62)
+### Proposed messages for New Model syncing (PV62)
 
 **GetBlockHeaders**
-[`+0x09`: `P`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `BlockHeaders` message. Hint that a useful reply would detail a number of block headers, each referred to by a hash. Note: Don't expect that the peer necessarily give you all these block headers in a single message - you might have to re-request them.
+[`+0x09`: `P`, `block`: [ `P` | `B_32` ], `maxHeaders`: `P`, `skip`: `P`, `reverse`: [ `0` | `1` ] ] Require peer to return a `BlockHeaders` message. Reply must contain a number of block headers, of rising number when `reverse` is `0`, falling when `1`, `skip` blocks apart, beginning at block `block` (denoted by either number or hash) in the canonical chain, and with at most `maxHeaders` items.
 
 **BlockHeaders**
-[`+0x0a`, `blockHeader1`, `blockHeader2`, `...`] Specify (a) block header(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
+[`+0x0a`, `blockHeader_0`, `blockHeader_1`, `...`] Reply to `GetBlockHeaders`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification, previously asked for in a `GetBlockHeaders` message. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
+
+**GetBlockBodies**
+[`+0x0b`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `BlockHeaders` message. Specify the set of blocks that we're interested in with the hashes.
+
+**BlockBodies**
+[`+0x0c`, [`transactions_0`, `uncles_0`] , `...`] Reply to `GetBlockBodies`. The items in the list (following the message ID) are some of the blocks, minus the header, in the format described in the main Ethereum specification, previously asked for in a `GetBlockBodies` message. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
 
 ### Proposed messages for light client (PV63)
 
 **GetNodeData**
-[`+0x0b`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `NodeData` message. Hint that useful values in it are those which correspond to given hashes.
+[`+0x0d`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `NodeData` message. Hint that useful values in it are those which correspond to given hashes.
 
 **NodeData**
-[`+0x0c`, `value_0`: `B`, `value_1`: `B`, `...`] Provide a set of values which correspond to previously asked node data hashes from `GetNodeData`. Does not need to contain all; best effort is fine. If it contains none, then has no information for previous `GetNodeData` hashes.
+[`+0x0e`, `value_0`: `B`, `value_1`: `B`, `...`] Provide a set of values which correspond to previously asked node data hashes from `GetNodeData`. Does not need to contain all; best effort is fine. If it contains none, then has no information for previous `GetNodeData` hashes.
+
+**GetReceipts**
+[`+0x0f`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `Receipts` message. Hint that useful values in it are those which correspond to blocks of the given hashes.
+
+**Receipts**
+[`+0x10`, [`receipt_0`, `receipt_1`], `...`] Provide a set of receipts which correspond to previously asked in `GetReceipts`.
 
 ### Session Management
 
