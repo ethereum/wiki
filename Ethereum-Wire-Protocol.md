@@ -69,7 +69,7 @@ Requires peer to reply with a `BlockHashes` message. Message should contain bloc
 **BlockBodies**
 [`+0x06`, [`transactions_0`, `uncles_0`] , `...`] Reply to `GetBlockBodies`. The items in the list (following the message ID) are some of the blocks, minus the header, in the format described in the main Ethereum specification, previously asked for in a `GetBlockBodies` message. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
 
-ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`
+ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashesFromNumber`
 
 ### Proposed messages for light client (PV63)
 
