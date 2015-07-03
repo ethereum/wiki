@@ -61,6 +61,8 @@ Requests a BlockHashes message detailing a number of the first block hash and a 
 **BlockHeaders**
 [`+0x0a`, `blockHeader1`, `blockHeader2`, `...`] Specify (a) block header(s) as an answer to `GetBlocks`. The items in the list (following the message ID) are block headers in the format described in the main Ethereum specification. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
 
+### Proposed messages for light client (PV63)
+
 **GetNodeData**
 [`+0x0b`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `NodeData` message. Hint that useful values in it are those which correspond to given hashes.
 
