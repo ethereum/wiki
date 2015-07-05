@@ -65,3 +65,12 @@ The data feed standard is a _templated standard_, ie. in the below descriptions 
 * `setFeeCurrency(address _feeCurrency)`: sets the currency that the fee is paid in
 
 The latter two methods are optional; also, note that the fee may be charged either in ether or subcurrency; if the contract charges in ether then the `setFeeCurrency` method is unnecessary.
+
+### Forwarding contracts (eg. multisig)
+
+Forwarding contracts will likely work very differently depending on what the authorization policy of each one is. However, there are some standard workflows that should be used as much as possible:
+
+* `function execute(address _to, uint _value, bytes _data) returns (bytes32 _id)`: Create a message with the desired recipient, value and data. Returns a "pending ID" for the transaction.
+* `function confirm(bytes32 _id) returns (bool _success)`: Confirm a pending message with a particular ID using your account; returns success or failure. If enough confirmations are made, sends the message along.
+
+Access policies can be of any form, eg. multisig, an arbitrary CNF boolean formula, a scheme that depends on the _value_ or _contents_ of a transaction, etc.
