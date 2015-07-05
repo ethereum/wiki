@@ -2,7 +2,7 @@ Although Ethereum allows developers to create absolutely any kind of application
 
 The standards described below have sample implementations available at https://github.com/ethereum/pyethereum/blob/develop/ethereum/tests/test_solidity.py
 
-All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinSent`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_offerId`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_addr` when generic, and otherwise if a more specific description exists (eg. `from`, `_to`).
+All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinTransfer`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_offerId`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_addr` when generic, and otherwise if a more specific description exists (eg. `from`, `_to`).
 
 ### Currency
 
@@ -20,7 +20,7 @@ The `sendCoinFrom` is used for a "direct debit" workflow, allowing contracts to 
 
 Events:
 
-* `event CoinSent(address indexed from, address indexed to, uint256 value)`: triggered when money is sent
+* `event CoinTransfer(address indexed from, address indexed to, uint256 value)`: triggered when money is sent
 
 ### Decentralized exchanges
 
