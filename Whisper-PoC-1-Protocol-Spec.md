@@ -112,9 +112,13 @@ Nodes can advertise their topics of interest to each other. For that purpose the
 A message matches the bloom filter, if any one of the topics in this message, converted to the Whisper bloom hash, will match the bloom filter. 
 
 Whisper bloom function accepts AbridgedTopic as a parameter (size: 4 bytes), and produces a 64-byte hash, where three bits (at the most) are set to one, and the rest are set to zeros, according to the following algorithm:
+
 0. Set all the bits in the resulting 64-byte hash to zero.
+
 1. We take 9 bits form the AbridgedTopic, and convert to integer value (range: 0 - 511).
+
 2. This value defines the index of the bit in the resulting 512-bit hash, which should be set to one.
+
 3. Repeat steps 1 & 2 for the second and third bit to be set in the resulting hash.
 
 Thus, in order to produce the bloom, we use 27 bits out of 32 in the AbridgedTopic. For more details, please see the implementation of the function: TopicBloomFilterBase<N>::bloom() [libwhisper/BloomFilter.h].
