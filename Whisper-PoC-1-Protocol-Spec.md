@@ -107,7 +107,17 @@ To insert a message, little more is needed than to place the envelope containing
 
 ### Topic Masking and Advertising
 
-For PoC-1, there is no affordance in the protocol for advertising topics to peers. This will be introduced in PoC-2 through either the distribution of a Bloom filter or a mask to peers. This mechanism is not yet finalised.
+Nodes can advertise their topics of interest to each other. For that purpose they use a special type of Whisper message (TopicFilterPacket). The size of Bloom Filter they send to each other must be 64 bytes. Subsequently the rating system will be introduced -- peers sending useful messages will be rated higher then those sending random messages. 
+
+A message matches the bloom filter, if any one of the topics in this message, converted to the Whisper bloom hash, will match the bloom filter. 
+
+Whisper bloom function accepts AbridgedTopic as a parameter (size: 4 bytes), and produces a 64-byte hash, where three bits (at the most) are set to one, and the rest are set to zeros, according to the following algorithm:
+0. Set all the bits in the resulting 64-byte hash to zero.
+1. We take 9 bits form the AbridgedTopic, and convert to integer value (range: 0 - 511).
+2. This value defines the index of the bit in the resulting 512-bit hash, which should be set to one.
+3. Repeat steps 1 & 2 for the second and third bit to be set in the resulting hash.
+
+Thus, in order to produce the bloom, we use 27 bits out of 32 in the AbridgedTopic. For more details, please see the implementation of the function: TopicBloomFilterBase<N>::bloom() [libwhisper/BloomFilter.h].
 
 ### Coming changes
 
