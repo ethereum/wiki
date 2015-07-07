@@ -109,6 +109,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [getBlockUncleCount(hash/number)](#web3ethgetblockunclecount)
     * [getTransaction(hash)](#web3ethgettransaction)
     * [getTransactionFromBlock(hashOrNumber, indexNumber)](#web3ethgettransactionfromblock)
+    * [getTransactionReceipt(hash)](#web3ethgettransactionreceipt)
     * [getTransactionCount(address)](#web3ethgettransactioncount)
     * [sendTransaction(object)](#web3ethsendtransaction)
     * [call(object)](#web3ethcall)
@@ -1158,6 +1159,55 @@ Returns a transaction based on a block hash or number and the transactions index
 var transaction = web3.eth.getTransactionFromBlock('0x4534534534', 2);
 console.log(transaction); // see web3.eth.getTransaction
 
+```
+
+***
+
+#### web3.eth.getTransactionReceipt
+
+    web3.eth.getTransactionReceipt(hashString [, callback])
+
+Returns the receipt of a transaction by transaction hash.
+
+**Note** That the receipt is not available for pending transactions.
+
+
+##### Parameters
+
+1. `String` - The transaction hash.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+##### Returns
+
+`Object` - A transaction receipt object, or `null` when no receipt was found:
+
+  - `blockHash`: `String`, 32 Bytes - hash of the block where this transaction was in.
+  - `blockNumber`: `Number` - block number where this transaction was in.
+  - `transactionHash`: `String`, 32 Bytes - hash of the transaction.
+  - `transactionIndex`: `Number` - integer of the transactions index position in the block.
+  - `from`: `String`, 20 Bytes - address of the sender.
+  - `to`: `String`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
+  - `cumulativeGasUsed `: `Number ` - The total amount of gas used when this transaction was executed in the block.
+  - `gasUsed `: `Number ` -  The amount of gas used by this specific transaction alone.
+  - `contractAddress `: `String` - 20 Bytes - The contract address created, if the transaction was a contract creation, otherwise `null`.
+  - `logs `:  `Array` - Array of log objects, which this transaction generated.
+
+##### Example
+```js
+var receipt = web3.eth.getTransactionReceipt('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b');
+console.log(receipt);
+{
+  "transactionHash": "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
+  "transactionIndex": 0,
+  "blockHash": "0xef95f2f1ed3ca60b048b4bf67cde2195961e0bba6f70bcbea9a2c4e133e34b46",
+  "blockNumber": 3,
+  "contractAddress": "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+  "cumulativeGasUsed": 314159,
+  "gasUsed": 30234,
+  "logs": [{
+         // logs as returned by getFilterLogs, etc.
+     }, ...]
+}
 ```
 
 ***
