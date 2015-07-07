@@ -255,7 +255,7 @@ console.log(version); // 20
 
 #### web3.setProvider
 
-    web3.setProvider(providor)
+    web3.setProvider(provider)
 
 Should be called to set provider.
 
