@@ -827,7 +827,7 @@ Creates new message call transaction or a contract creation, if the data field c
 1. `Object` - The transaction object
   - `from`: `DATA`, 20 Bytes - The address the transaction is send from.
   - `to`: `DATA`, 20 Bytes - (optional when creating new contract) The address the transaction is directed to.
-  - `gas`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gas provided for the transaction execution. It will return unused gas.
+  - `gas`: `QUANTITY`  - (optional, default: 90000) Integer of the gas provided for the transaction execution. It will return unused gas.
   - `gasPrice`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each paid gas
   - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
   - `data`: `DATA`  - (optional) The compiled code of a contract
@@ -847,6 +847,8 @@ params: [{
 ##### Returns
 
 `DATA`, 32 Bytes - the transaction hash.
+
+Use [eth_getTransactionReceipt](#eth_gettransactionreceipt) to get the contract address, after the transaction was mined, when you created a contract.
 
 ##### Example
 ```js
