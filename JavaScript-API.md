@@ -1432,7 +1432,7 @@ var myContract = MyContract.new(param1, param2, {
    data: myContractCode,
    gas: 300000,
    from: mySenderAddress}, function(err, contract){
-    if(!e) {
+    if(!err) {
        // The callback will fire after the contract is mined
        // Note that the returned "myContract" === "myContractInstance"
        console.log(myContractInstance.address) // "0xc4abd0339eb8d57087278718986382264244252f"
