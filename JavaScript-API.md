@@ -72,7 +72,6 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
      * [network](#web3versionnetwork)
      * [ethereum](#web3versionethereum)
      * [whisper](#web3versionwhisper)
-  * [port](#)
   * [setProvider(provider)](#web3setprovider)
   * [currentProvider](#web3currentprovider)
   * [reset()](#web3reset)
