@@ -1427,18 +1427,20 @@ var MyContract = web3.eth.contract(abiArray);
 // instantiate from an existing address
 var myContractInstance = MyContract.at(myContractAddress);
 
-// create the contract by passing a transaction object including initiating variables
+// Create the contract async
 var myContract = MyContract.new(param1, param2, {
    data: myContractCode,
    gas: 300000,
    from: mySenderAddress}, function(err, contract){
-    // The callback will fire after the contract is mined
-    // Note that the returned "myContract" === "myContractInstance"
-    console.log(myContractInstance.address) // "0xc4abd0339eb8d57087278718986382264244252f"
-    console.log(myContractInstance.transactionHash) // The hash of the transaction, which created the contract
-});
+    if(!e) {
+       // The callback will fire after the contract is mined
+       // Note that the returned "myContract" === "myContractInstance"
+       console.log(myContractInstance.address) // "0xc4abd0339eb8d57087278718986382264244252f"
+       console.log(myContractInstance.transactionHash) // The hash of the transaction, which created the contract
+    }
+  });
 
-// you can also create contract sync: Then the address will be added as soon as the contract is mined.
+// Create contract sync: Then the address will be added as soon as the contract is mined.
 // Additionally you can watch the transaction by using the "transactionHash" property
 var myContractInstance = MyContract.new(param1, param2, {data: myContractCode, gas: 300000, from: mySenderAddress});
 myContractInstance.transactionHash // The hash of the transaction, which created the contract
