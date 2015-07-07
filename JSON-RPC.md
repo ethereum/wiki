@@ -1155,6 +1155,8 @@ Result see [eth_getTransactionByHash](#eth_gettransactionbyhash)
 
 Returns the receipt of a transaction by transaction hash.
 
+**Note** That the receipt is not available for pending transactions.
+
 
 ##### Parameters
 
@@ -1171,9 +1173,9 @@ params: [
 `Object` - A transaction receipt object, or `null` when no receipt was found:
 
   - `transactionHash `: `DATA`, 32 Bytes - hash of the transaction.
-  - `transactionIndex`: `QUANTITY` - integer of the transactions index position in the block. `null` when its pending.
-  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this transaction was in. `null` when its pending.
-  - `blockNumber`: `QUANTITY` - block number where this transaction was in. `null` when its pending.
+  - `transactionIndex`: `QUANTITY` - integer of the transactions index position in the block.
+  - `blockHash`: `DATA`, 32 Bytes - hash of the block where this transaction was in.
+  - `blockNumber`: `QUANTITY` - block number where this transaction was in.
   - `cumulativeGasUsed `: `QUANTITY ` - The total amount of gas used when this transaction was executed in the block.
   - `gasUsed `: `QUANTITY ` - The amount of gas used by this specific transaction alone.
   - `contractAddress `: `DATA`, 20 Bytes - The contract address created, if the transaction was a contract creation, otherwise `null`.
