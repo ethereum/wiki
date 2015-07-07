@@ -1258,7 +1258,9 @@ Sends a transaction to the network.
 
 ##### Returns
 
-`String` - The address of the newly created contract, or the 32 Bytes transaction hash as HEX string.
+`String` - The 32 Bytes transaction hash as HEX string.
+
+If the transaction was a contract creation use [web3.eth.getTransactionReceipt()](#web3gettransactionreceipt) to get the contract address, after the transaction was mined.
 
 ##### Example
 
@@ -1426,11 +1428,21 @@ var MyContract = web3.eth.contract(abiArray);
 var myContractInstance = MyContract.at(myContractAddress);
 
 // create the contract by passing a transaction object including initiating variables
-MyContract.new(param1, param2, {data: myContractCode, gas: 300000, from: mySenderAddress}, function(err, contract){
-    // by passing an optional callback, we can make that sendTransaction async
+var myContract = MyContract.new(param1, param2, {
+   data: myContractCode,
+   gas: 300000,
+   from: mySenderAddress}, function(err, contract){
+    // The callback will fire after the contract is mined
+    // Note that the returned "myContract" === "myContractInstance"
     console.log(myContractInstance.address) // "0xc4abd0339eb8d57087278718986382264244252f"
+    console.log(myContractInstance.transactionHash) // The hash of the transaction, which created the contract
 });
 
+// you can also create contract sync: Then the address will be added as soon as the contract is mined.
+// Additionally you can watch the transaction by using the "transactionHash" property
+var myContractInstance = MyContract.new(param1, param2, {data: myContractCode, gas: 300000, from: mySenderAddress});
+myContractInstance.transactionHash // The hash of the transaction, which created the contract
+myContractInstance.address // undefined at start, but will be auto-filled later
 ```
 
 ##### Example
