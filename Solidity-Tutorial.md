@@ -564,6 +564,7 @@ namespace and are mainly used to provide information about the blockchain.
  - `msg.data` (`bytes`): complete calldata
  - `msg.gas` (`uint`): remaining gas
  - `msg.sender` (`address`): sender of the message (current call)
+ - `msg.sig` (`bytes4`): first four bytes of the calldata (i.e. function identifier)
  - `msg.value` (`uint`): number of wei sent with the message
  - `now` (`uint`): current block timestamp (alias for `block.timestamp`)
  - `tx.gasprice` (`uint`): gas price of the transaction
