@@ -5,7 +5,7 @@ Ethash is the PoW system. It requires a great huge dataset known as the DAG. Thi
 The DAG should be stored in a 1GB dump (for the initial epoch, anyway), in a file:
 
 - Mac/Linux: `$(HOME)/.ethash/full-R<REVISION>-<SEEDHASH>`
-- Windows: `$(HOME)/Appdata/Ethash/full-R<REVISION>-<SEEDHASH>`
+- Windows: `$(HOME)/Appdata/Local/Ethash/full-R<REVISION>-<SEEDHASH>`
 
 Where:
  
