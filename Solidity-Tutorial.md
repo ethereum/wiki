@@ -203,9 +203,9 @@ Operators:
 Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)  
 Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation)
 
-`bytes`: Dynamically-sized byte array, see [arrays](#Arrays).
+`bytes`: Dynamically-sized byte array, see [arrays](#Arrays). Not a value-type!
 
-`string`: Dynamically-sized UTF8-encoded string, see [arrays](#Arrays).
+`string`: Dynamically-sized UTF8-encoded string, see [arrays](#Arrays). Not a value-type!
 
 __Integer Literals__: Integer literals are arbitrary precision integers until they are used together with a non-literal. In `var x = 1 - 2;`, for example, the value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives the type `int8` -- the smallest type that contains `-1`, although the natural types of `1` and `2` are actually `uint8`.  
 It is even possible to temporarily exceed the maximum of 256 bits as long as only integer literals are used for the computation: `var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;` Here, `x` will have the value `0` and thus the type `uint8`.
@@ -441,6 +441,10 @@ Arrays have a `length` member to hold their number of elements.
 Dynamic arrays can be resized in storage (not in memory) by changing the
 `.length` member. The size of memory arrays is fixed (but dynamic, i.e. it
 can depend on runtime parameters) once they are created.
+
+Variables of type `bytes` and `string` are special arrays. A `bytes` is similar to `byte[]`,
+but it is packed tightly in calldata. `string` is equal to `bytes` but does not allow
+length or index access (for now).
 
 ```js
 contract ArrayContract {
