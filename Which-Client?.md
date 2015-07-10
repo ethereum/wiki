@@ -9,3 +9,5 @@ There are three official Ethereum clients. Being official, they have been develo
 |External mining ("ethminer")|YES|YES|YES|
 |Viable on RPi|YES|NO|NO|
 |Chain import benchmark|100%|~30%|~10%|
+|Rescue DB in case of crash|YES|NO|NO|
+|Graphical analytic GUI|YES|NO|NO|
