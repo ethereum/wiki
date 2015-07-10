@@ -5,13 +5,13 @@ _**Note:** Binary format is concatenated RLP-encoded blocks_
 ```
 eth --import <filename>
 ```
-Formats supported: binary
+_Formats supported: binary_
 
 ### Export:
 ```
 eth --export Myfile --format binary --from 45 --to latest
 ```
-Formats supported: hex (newlines separating), binary or JSON
+_Formats supported: hex (newlines separating), binary or JSON_
 `--from` and `--to` also support blockhashes
 
 ## Go
@@ -19,10 +19,16 @@ Formats supported: hex (newlines separating), binary or JSON
 ```
 geth import <filename>
 ```
-Formats supported: binary
+_Formats supported: binary_
+
+Genesis block:
+```
+geth --genesis <filename>
+```
+_Formats supported: json_
 ### Export
 ```
 geth export <filename>
 ```
-Formats supported: binary
+_Formats supported: binary_
 ## Python
