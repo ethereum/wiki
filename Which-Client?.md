@@ -1,0 +1,11 @@
+There are three official Ethereum clients. Being official, they have been developed in-house, primarily by each of the three DEV directors. Additionally, all three have passed our "gold standard" Yellow Paper consensus tests, which test all aspects of the consensus algorithm including the virtual machine, state transitions, blocks and block chains. All three are being subject two audits, both internal and external.
+
+|   |C++ ("AlethZero", "eth")|Go ("geth")|Python|
+|---|---|---|---|
+|Fully protocol compliant|YES|YES|YES|
+|Internal audit|DONE|   |   |
+|External audit|ONGOING|DONE|   |
+|Internal mining|YES|NO|NO|
+|External mining|YES|YES|YES|
+|Viable on RPi|YES|NO|NO|
+|Chain import benchmark|~100 blocks/sec|30 blocks/sec|10 blocks/sec|
