@@ -8,4 +8,4 @@ There are three official Ethereum clients. Being official, they have been develo
 |Internal mining|YES|NO|NO|
 |External mining ("ethminer")|YES|YES|YES|
 |Viable on RPi|YES|NO|NO|
-|Chain import benchmark|~100 blocks/sec|30 blocks/sec|10 blocks/sec|
+|Chain import benchmark|100%|~30%|~10%|
