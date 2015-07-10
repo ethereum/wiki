@@ -184,29 +184,33 @@ The following types are also called value types because variables of these
 types will always be passed by value, i.e. they are always copied when they
 are used as function arguments or in assignments.
 
-__Booleans__: Keyword `bool`, constants `true`, `false`, operators: `!` (logical negation) `&&` (logical conjunction, "and"), `||` (logical disjunction, "or"), `==` (equality) and `!=` (inequality).
+`bool`: Booleans, constants `true`, `false`, operators: `!` (logical negation) `&&` (logical conjunction, "and"), `||` (logical disjunction, "or"), `==` (equality) and `!=` (inequality).
 
 The operators `||` and `&&` apply the common short-circuiting rules. This means that in the expression `f(x) || g(y)`, if `f(x)` evaluates to `true`, `g(y)` will not be evaluated even if it may have side-effects.
 
-__Integers__: Signed and unsigned of various sizes. Keywords `uint8` to `uint256` in steps of `8` (unsigned of 8 up to 256 bits) and `int8` to `int256`. `uint` and `int` are aliases for `uint256` and `int256`, respectively.
+`int•` / `uint•`: Signed and unsigned integers of various sizes. Keywords `uint8` to `uint256` in steps of `8` (unsigned of 8 up to 256 bits) and `int8` to `int256`. `uint` and `int` are aliases for `uint256` and `int256`, respectively.
 
 Operators:  
 Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)  
 Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation)  
 Arithmetic operators: `+`, `-`, unary `-`, unary `+`, `*`, `/`, `%` (remainder), `**` (exponentiation)
 
-__Address__: Keyword `address`, holds a 20 byte value. Operators: `<=`, `<`, `==`, `!=`, `>=` and `>`. Address types also have members (see [Functions on addresses](#Functions+on+addresses)) and serve as base for all contracts.
+`address`: Holds a 20 byte value (size of an Ethereum address). Operators: `<=`, `<`, `==`, `!=`, `>=` and `>`. Address types also have members (see [Functions on addresses](#Functions+on+addresses)) and serve as base for all contracts.
 
-__Bytes__: Keywords `bytes1` to `bytes32`, `byte` is an alias for `bytes1`.
+`byte`, `bytes1`, ..., `bytes32`: Fixed-size byte arrays, `byte` is an alias for `bytes1`.
 
 Operators:  
 Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)  
 Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation)
 
+`bytes`: Dynamically-sized byte array, see [arrays](#Arrays).
+
+`string`: Dynamically-sized UTF8-encoded string, see [arrays](#Arrays).
+
 __Integer Literals__: Integer literals are arbitrary precision integers until they are used together with a non-literal. In `var x = 1 - 2;`, for example, the value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives the type `int8` -- the smallest type that contains `-1`, although the natural types of `1` and `2` are actually `uint8`.  
 It is even possible to temporarily exceed the maximum of 256 bits as long as only integer literals are used for the computation: `var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;` Here, `x` will have the value `0` and thus the type `uint8`.
 
-__Byte Literals__: Byte literals are written with double quotes (`"abc"`), their type is the shortest  `bytesN` that can hold them. I.e. the type of `"abc"` is `bytes3`.
+__String Literals__: String literals are written with double quotes (`"abc"`). As with integer literals, their type can vary, but they are implicitly convertible to `bytes•` if they fit, to `bytes` and to `string`.
 
 ## Operators Involving LValues
 
