@@ -236,7 +236,7 @@ The Ethereum blockchain is in many ways similar to the Bitcoin blockchain, altho
 3. Check that the block number, difficulty, transaction root, uncle root and gas limit (various low-level Ethereum-specific concepts) are valid.
 4. Check that the proof of work on the block is valid.
 5. Let `S[0]` be the state at the end of the previous block.
-6. Let `TX` be the block's transaction list, with `n` transactions. For all in in `0...n-1`, set `S[i+1] = APPLY(S[i],TX[i])`. If any applications returns an error, or if the total gas consumed in the block up until this point exceeds the `GASLIMIT`, return an error. 
+6. Let `TX` be the block's transaction list, with `n` transactions. For all `i` in `0...n-1`, set `S[i+1] = APPLY(S[i],TX[i])`. If any applications returns an error, or if the total gas consumed in the block up until this point exceeds the `GASLIMIT`, return an error. 
 7. Let `S_FINAL` be `S[n]`, but adding the block reward paid to the miner.
 8. Check if the Merkle tree root of the state `S_FINAL` is equal to the final state root provided in the block header. If it is, the block is valid; otherwise, it is not valid.
 
