@@ -972,7 +972,7 @@ contract Test {
 
 contract Caller {
   function callTest(address testAddress) {
-    Test(testAddress).call('0xabcdefgh'); // hash does not exist
+    Test(testAddress).call(0xabcdef01); // hash does not exist
     // results in Test(testAddress).x becoming == 1.
   }
 }
