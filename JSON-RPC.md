@@ -846,7 +846,7 @@ params: [{
 
 ##### Returns
 
-`DATA`, 32 Bytes - the transaction hash.
+`DATA`, 32 Bytes - the transaction hash, or the zero hash if the transaction is not yet available.
 
 Use [eth_getTransactionReceipt](#eth_gettransactionreceipt) to get the contract address, after the transaction was mined, when you created a contract.
 
