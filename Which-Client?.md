@@ -5,7 +5,7 @@ There are three official Ethereum clients. Being official, they have been develo
 |Fully protocol compliant|YES|YES|YES|
 |Internal audit|DONE|   |   |
 |External audit|ONGOING|DONE|   |
-|Internal mining|YES|NO|NO|
+|Internal GPU mining|YES|NO|NO|
 |External mining ("ethminer")|YES|YES|YES|
 |Viable on RPi|YES|NO|NO|
 |Chain import benchmark|100%|~30%|~10%|
