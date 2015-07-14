@@ -688,7 +688,15 @@ Assigning *to* a state variable always creates an independent copy. On the other
 
 ## Exceptions
 
-Currently, there are two situations, where exceptions can happen in Solidity: If you access an array beyond its length (i.e. `x[i]` where `i >= x.length`) or if a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself). In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state.
+Currently, there are three situations, where exceptions can happen in Solidity:
+
+1. If you access an array beyond its length (i.e. `x[i]` where `i >= x.length`)
+2. If a non-existing function on a contract is called.
+3. If a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself).
+
+In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state. The reason for this is that there is no safe way to continue execution, because an expected effect did not occur. Because we want to retain the atomicity of transactions, the safest thing to do is to revert all changes and make the whole transaction (or at least call) without effect.
+
+There is one situation where we would like to avoid reverting the changes: If we want contracts to receive ether without actual function calls. In this case, there is no "ordinary" function to receive the call and thus an exception would be triggered. To avoid this, the [fallback function](#Fallback_Functions) `function() {...}` can be added to the contract which is called when no other function matches the function identifier.
 
 It is planned to also throw and catch exceptions manually.
 
@@ -1137,6 +1145,7 @@ TODO, also speak about "import".
  * Make your state variables public - the compiler will create [getters](#accessor-functions) for you for free.
  * If you end up checking conditions on input or state a lot at the beginning of your functions, try using [modifiers](#function-modifiers)
  * If your contract has a function called `send` but you want to use the built-in send-function, use `address(contractVariable).send(amount)`.
+ * If you want your contracts to receive ether when called via `send`, you have to implement the [fallback function](#Fallback_Functions).
  * Initialise storage structs with a single assignment: `x = MyStruct({a: 1, b: 2});`
 
 ## Cheatsheet
