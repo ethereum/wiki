@@ -1137,6 +1137,7 @@ TODO, also speak about "import".
  * Make your state variables public - the compiler will create [getters](#accessor-functions) for you for free.
  * If you end up checking conditions on input or state a lot at the beginning of your functions, try using [modifiers](#function-modifiers)
  * If your contract has a function called `send` but you want to use the built-in send-function, use `address(contractVariable).send(amount)`.
+ * Initialise storage structs with a single assignment: `x = MyStruct({a: 1, b: 2});`
 
 ## Cheatsheet
 
