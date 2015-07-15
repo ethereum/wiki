@@ -1,18 +1,5 @@
 ## **JSONRPC** changes:
 
-`eth_newFilter` accept from/to as block hashes.
-
-```diff
-params: [{
--  "fromBlock": "0x1",
-+  "fromBlock": "0x599438826541d3e8c29c167fa15b491d91b65e422f8b8a3da69eaa9a43c832e1",
--  "toBlock": "0x2",
-+  "toBlock": "0x599438826541d3e8c29c167fa15b491d91b65e422f8b8a3da69eaa9a43c832e1",
-  "address": "0x8888f1f195afa192cfee860698584c030f4c9db1",
-  "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]
-}]
-```
-
 `eth_getFilterChanges`, `eth_getFilterLogs` both return additional fields: "type" and "polarity"
 
 - `type`: `STRING` - `pending` when the log is pending. `mined` if log is already mined.
@@ -42,12 +29,26 @@ params: [{
 
 ## **JSONRPC** new methods:
 
-- `eth_getFilterChangesEx`
-- `eth_getFilterLogsEx`
+- `eth_newFilterEx` (new version of `eth_newFilter`)
+- `eth_getLogsEx` (new version of `eth_getLogs`)
+
+They expect 'fromBlock', 'toBlock' to be block hash instead of block number.
+
+```diff
+params: [{
+-  "fromBlock": "0x1",
++  "fromBlock": "0x599438826541d3e8c29c167fa15b491d91b65e422f8b8a3da69eaa9a43c832e1",
+-  "toBlock": "0x2",
++  "toBlock": "0x599438826541d3e8c29c167fa15b491d91b65e422f8b8a3da69eaa9a43c832e1",
+  "address": "0x8888f1f195afa192cfee860698584c030f4c9db1",
+  "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]
+}]
+```
+
+- `eth_getFilterChangesEx` (new version of `eth_getFilterChanges`)
+- `eth_getFilterLogsEx` (new version of `eth_getFilterLogs`)
 
 `eth_getFilterChangesEx` && `eth_getFilterLogsEx` have the same input params as `eth_getFilterChanges` && `eth_getFilterLogs`, but different format of returned objects.
-
-##### Returns
 
 ```
 // Result
