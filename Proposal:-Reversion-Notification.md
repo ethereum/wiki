@@ -27,6 +27,24 @@
 }
 ```
 
+- logs order
+
+logs should be returned in order, from earliest to latest.
+
+In case of fork, the order should be following:
+
+```
+//
+// ......1 - 2 - 3a - 4a
+// ...............\- 3b - 4b - 5b
+//
+// getLogs({fromBlock: 4a, toBlock: 5b}) should return
+// 4a, 3a, 3b, 4b, 5b
+//
+```
+
+
+
 ## **JSONRPC** new methods:
 
 - `eth_newFilterEx` (new version of `eth_newFilter`)
