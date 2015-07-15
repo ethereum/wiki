@@ -221,7 +221,7 @@ If `a` is an LValue (i.e. a variable or something that can be assigned to), the 
 **delete**
 `delete a` assigns the initial value for the type to `a`. I.e. for integers it is equivalent to `a = 0`, but it can also be used on arrays, where it assigns a dynamic array of length zero or a static array of the same length with all elements reset. For structs, it assigns a struct with all members reset.
 
-`delete` has no effect an mappings (as the keys of mappings may be arbitrary and are generally unknown). So if you delete a struct, it will reset all members that are not mappings and also recurse into the members unless they are mappings.
+`delete` has no effect on mappings (as the keys of mappings may be arbitrary and are generally unknown). So if you delete a struct, it will reset all members that are not mappings and also recurse into the members unless they are mappings.
 
 It is important to note that `delete a` really behaves like an assignment to `a`, i.e. it stores a new object in `a`.
 ```js
