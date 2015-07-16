@@ -93,3 +93,11 @@ params: [{
     }]
 }
 ```
+
+
+## Comments:
+
+Fabian: I liked but i would change three things
+1. `polarity: true` -> `invalidated: true`
+2. get rid of the old filter and add the new filter as `eth_newLogFilter`, to make it fit the other filter type names (`eth_newBlockFilter`, `etH_newPendingTransactionFilter`)
+3. Don't return logs grouped by blocks, as i don't see an advantage besides that it is harder to parse. (Logs don't really care in which block they came, though we need to add the `blockX` properties for reference)
