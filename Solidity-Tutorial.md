@@ -509,9 +509,8 @@ contract CrowdFunding {
   mapping (uint => Campaign) campaigns;
   function newCampaign(address beneficiary, uint goal) returns (uint campaignID) {
     campaignID = numCampaigns++; // campaignID is return variable
-    Campaign c = campaigns[campaignID];  // assigns reference
-    c.beneficiary = beneficiary; // modifies storage
-    c.fundingGoal = goal;
+    // Creates new struct and saves in storage. We leave out the mapping type.
+    campaigns[campaignID] = Campaign(beneficiary, goal, 0, 0);
   }
   function contribute(uint campaignID) {
     Campaign c = campaigns[campaignID];
@@ -519,7 +518,7 @@ contract CrowdFunding {
 	// and copies it over to storage.
 	// Note that you can also use Funder(msg.sender, msg.value) to initialise.
     c.funders[c.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
-    c.amount += f.amount;
+    c.amount += msg.value;
   }
   function checkGoalReached(uint campaignID) returns (bool reached) {
     Campaign c = campaigns[campaignID];
