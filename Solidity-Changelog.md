@@ -1,3 +1,4 @@
+ * Mapping members are skipped for structs in memory
  * Use only a single stack slot for storage references.
  * Fix comparison between `bytesXX` types. (#2087)
  * Improved error message for wrong argument count. (#2456)
