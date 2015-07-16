@@ -97,7 +97,7 @@ params: [{
 
 ## Comments:
 
-**Fabian**: I liked but i would change three things:
+**Fabian**: I like it but i would change three things:
 
 1. `polarity: true` -> `invalidated: true`
 2. get rid of the old filter and add the new filter as `eth_newLogFilter`, to make it fit the other filter type names (`eth_newBlockFilter`, `etH_newPendingTransactionFilter`)
