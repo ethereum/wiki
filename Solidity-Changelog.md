@@ -1,4 +1,4 @@
- * Bugfix: Many local variables. (#2478)
+ * Bugfix: Some problem with many local variables. (#2478)
  * Bugfix: Initialising `string` and `bytes` state variables.
  * Mapping members are skipped for structs in memory.
  * Use only a single stack slot for storage references.
