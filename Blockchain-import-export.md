@@ -21,9 +21,9 @@ geth import <filename>
 ```
 _Formats supported: binary_
 
-Genesis block:
+### Genesis block:
 ```
-geth --genesis <filename>
+geth --genesis <filename> --genesisnonce <nonce>
 ```
 _Formats supported: json_
 ### Export
