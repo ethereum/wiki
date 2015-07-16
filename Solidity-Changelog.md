@@ -1,3 +1,4 @@
+ * Bugfix: Initialising `string` and `bytes` state variables.
  * Mapping members are skipped for structs in memory
  * Use only a single stack slot for storage references.
  * Fix comparison between `bytesXX` types. (#2087)
