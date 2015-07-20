@@ -1422,7 +1422,12 @@ You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethe
 
 ```js
 var MyContract = web3.eth.contract(abiArray);
+```
 
+And then you can either initiate an existing contract on an address,
+or deploy the contract using the compiled byte code:
+
+```js
 // Instantiate from an existing address:
 var myContractInstance = MyContract.at(myContractAddress);
 
