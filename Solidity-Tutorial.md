@@ -70,6 +70,7 @@ have to use a client like AlethZero.
 	- [Internals - the Optimizer](#internals-the-optimizer)
 	- [Using the Commandline Compiler](#using-the-commandline-compiler)
 	- [Tips and Tricks](#tips-and-tricks)
+	- [Pitfalls](#pitfalls)
 	- [Cheatsheet](#cheatsheet)
 		- [Global Variables](#global-variables)
 		- [Function Visibility Specifiers](#function-visibility-specifiers)
@@ -1148,6 +1149,14 @@ TODO, also speak about "import".
  * If your contract has a function called `send` but you want to use the built-in send-function, use `address(contractVariable).send(amount)`.
  * If you want your contracts to receive ether when called via `send`, you have to implement the [fallback function](#fallback-functions).
  * Initialise storage structs with a single assignment: `x = MyStruct({a: 1, b: 2});`
+
+## Pitfalls
+
+Unfortunately, there are some subtleties the compiler does not yet warn you about.
+
+ - If you use `uint[] x` as a local variable, it **has** to be assigned from a state variable,
+   otherwise it behaves like a "null pointer" to storage, so you cannot use it on its own.
+   Please read about [data locations](#data-location).
 
 ## Cheatsheet
 
