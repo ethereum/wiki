@@ -646,14 +646,14 @@ contract InfoFeed {
 }
 contract Consumer {
   InfoFeed feed;
-  function setFeed(InfoFeed _feed) { feed = _feed; }
+  function setFeed(address addr) { feed = InfoFeed(addr); }
   function callFeed() { feed.info.value(10).gas(800)(); }
 }
 ```
 Note that the expression `InfoFeed(addr)` performs an explicit type conversion stating
 that "we know that the type of the contract at the given address is `InfoFeed`" and
-this does not execute a constructor. Be careful in that `feed.info.value(10).gas(800)`
-only (locally) set the value and amount of gas sent with the function call and only the
+this does not execute a constructor. We could also have used `function setFeed(InfoFeed _feed) { feed = _feed; }` directly.  Be careful about the fact that `feed.info.value(10).gas(800)`
+only (locally) sets the value and amount of gas sent with the function call and only the
 parentheses at the end perform the actual call.
 
 ### Named Calls and Anonymous Function Parameters
