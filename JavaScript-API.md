@@ -72,6 +72,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
      * [network](#web3versionnetwork)
      * [ethereum](#web3versionethereum)
      * [whisper](#web3versionwhisper)
+  * [isConnected()](#web3isconnected)
   * [setProvider(provider)](#web3setprovider)
   * [currentProvider](#web3currentprovider)
   * [reset()](#web3reset)
@@ -249,6 +250,34 @@ console.log(version); // 60
 ```js
 var version = web3.version.whisper;
 console.log(version); // 20
+```
+
+***
+#### web3.isConnected
+
+    web3.isConnected()
+
+Should be called to check if a connection to a node exists
+
+##### Parameters
+none
+
+##### Returns
+
+`Boolean`
+
+##### Example
+
+```js
+if(!web3.isConnected()) {
+  
+   // show some dialog to ask the user to start a node
+
+} else {
+ 
+   // start web3 filters, calls, etc
+  
+}
 ```
 
 ***
