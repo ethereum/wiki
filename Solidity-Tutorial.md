@@ -646,7 +646,7 @@ contract InfoFeed {
 }
 contract Consumer {
   InfoFeed feed;
-  function setFeed(address addr) { feed = InfoFeed(addr); }
+  function setFeed(InfoFeed _feed) { feed = _feed; }
   function callFeed() { feed.info.value(10).gas(800)(); }
 }
 ```
