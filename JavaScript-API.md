@@ -121,6 +121,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [contract(abiArray)](#web3ethcontract)
     * [contract.myMethod()](#contract-methods)
     * [contract.myEvent()](#contract-events)
+    * [contract.allEvents()](#contract-allevents)
     * [getCompilers()](#web3ethgetcompilers)
     * [compile.lll(string)](#web3ethcompilelll)
     * [compile.solidity(string)](#web3ethcompilesolidity)
@@ -1619,6 +1620,7 @@ You can use events like [filters](#web3ethfilter) and they have the same methods
 
 1. `Object` - Indexed return values you want to filter the logs by, e.g. `{'valueA': 1, 'valueB': [myFirstAddress, mySecondAddress]}`. By default all filter values are set to `null`. It means, that they will match any event of given type sent from this contract.
 2. `Object` - Additional filter options, see [filters](#web3ethfilter) parameter 1 for more. By default filterObject has field 'address' set to address of the contract. Also first topic is the signature of event.
+3. `Function` - (optional) If you pass a callback as the last parameter it will immediately start watching and you don't need to call `myEvent.watch(function(){})`. See [this note](#using-callbacks) for details.
 
 ##### Callback return
 
@@ -1657,6 +1659,60 @@ myEvent.stopWatching();
 ```
 
 ***
+
+#### Contract allEvents
+
+```js
+var events = myContractInstance.allEvents([additionalFilterObject]);
+
+// watch for changes
+events.watch(function(error, event){
+  if (!error)
+    console.log(event);
+});
+
+// Or pass a callback to start watching immediately
+var events = myContractInstance.allEvents([additionalFilterObject,] function(error, log){
+  if (!error)
+    console.log(log);
+});
+
+```
+
+Will call the callback for all events which are created by this contract.
+
+##### Parameters
+
+1. `Object` - Additional filter options, see [filters](#web3ethfilter) parameter 1 for more. By default filterObject has field 'address' set to address of the contract. Also first topic is the signature of event.
+2. `Function` - (optional) If you pass a callback as the last parameter it will immediately start watching and you don't need to call `myEvent.watch(function(){})`. See [this note](#using-callbacks) for details.
+
+##### Callback return
+
+
+`Object` - See [Contract Events](#contract-events) for more.
+
+##### Example
+
+```js
+var MyContract = web3.eth.contract(abi);
+var myContractInstance = MyContract.at('0x78e97bcc5b5dd9ed228fed7a4887c0d7287344a9');
+
+// watch for an event with {some: 'args'}
+var events = myContractInstance.allEvents({fromBlock: 0, toBlock: 'latest'});
+events.watch(function(error, result){
+   ...
+});
+
+// would get all past logs again.
+var myResults = events.get();
+
+...
+
+// would stop and uninstall the filter
+myEvent.stopWatching();
+```
+
+****
 
 #### web3.eth.getCompilers
 
