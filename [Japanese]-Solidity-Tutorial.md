@@ -301,10 +301,11 @@ contract test {
 `sha3("ab", "c") == sha3("abc") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`。 
 もし余白が必要ならば、外部型変換が利用可能です。
 
-プライベート・ブロックチェーン上においては、`sha256` 、`ripemd160` あるいは` ecrecover` がガス欠に陥るかもしれません。
-プリ・コンパイルされた contract は最初の message を受信してのみ、はじめてすることとなり、
-
-The reason for this is that those are implemented as so-called precompiled contracts and these contracts only really exist after they received the first message (although their contract code is hardcoded). Messages to non-existing contracts are more expensive and thus the execution runs into an Out-of-Gas error. A workaround for this problem is to first send e.g. 1 Wei to each of the contracts before you use them in your actual contracts. This is not an issue on the official or test net.
+注意事項として、プライベート・ブロックチェーン上においては、`sha256` 、`ripemd160` あるいは `ecrecover` はガス欠になりえます。
+というのは、コントラクトは最初いわゆるプリ・コンパイルされた contract としてコンパイルされ、コントラクトは最初の message を受信してはじめて存在することとなるからです。（インスタンスが生成されるとも言います。）
+存在しない（インスタンスが生成されていない）コントラクトへのメッセージはとても高くつき、このためエラーが（ガス欠が）生じるのです。
+この問題への動作対処法ははじめに、（例えば）1 Wei を暗号関数を含む各コントラクトへ送信（初期化）してから、あなたの作成したコントラクト上でそれらのコントラクトを呼び出す形をとります。
+テストネット上や、公式のブロックチェーン上では、（初期の段階であらかじめ初期化されているため、）このようなことは起こりません。
 
 
 
