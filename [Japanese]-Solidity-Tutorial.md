@@ -6,13 +6,12 @@
 
 
 
-
 Solidity は、構文がJavaScriptとよく似た高級言語で、  
 EVM(イーサリアム仮想マシン)上で動くコードへとコンパイルされるために設計されました。  
 この項では、Solidityの基礎事項を抑え、EVMの知識を深めます。  
 より詳細な事項については[Solidity 特記事項(建設中)]()を参照して下さい。  
 また、この項では、非開発者向けの言語で書かれておらず、さらに安定版を確約するものでもありません。  
-  
+
 オンライン・エミュレーターはこちら：  
  [Solidity in your browser](http://chriseth.github.io/cpp-ethereum),  
 このリンクはコンパイルのみをサポートしています。  
@@ -33,11 +32,11 @@ contract SimpleStorage {
     }
 }
 ```
-`uint storedData` は、`uint`型の `storedData`という呼び名の状態変数を宣言します。   
+`uint storedData` は、`uint`型の `storedData`という呼び名の状態変数を宣言します。
 (`uint`: unsigned integer of 256 bits)  
 この変数のアドレス領域はコンパイラによって自動生成されます。  
 `set`関数と`get`関数はこの値を引用したり修正したりするのに使われます。  
-  
+
 
 ## Subcurrency Example
 
@@ -73,7 +72,7 @@ contract Coin {
 このコントラクトでは少し新しい概念が出てきます。
 　　  
 
-* まず `address`型です。これは 160 bitの値で、論理数値演算できません。 　　   
+* まず `address`型です。これは 160 bitの値で、論理数値演算できません。 　　
 * 状態変数`balance`を見て欲しいのですが、これは複雑なデータ型から成り立っており、  
 難しい言葉で言うと、`address`型から`uint`型への射(写像) ということになります。  
 Mapping(写像)はハッシュテーブルのようなもので、自動的に初期化され、  
@@ -82,15 +81,15 @@ Mapping(写像)はハッシュテーブルのようなもので、自動的に�
 コードをよく見ると、`contract Code`の中に`function Code`が定義されており、  
 コンストラクタであることが見て取れます。  
 コンスタラクタでありますから当然、あとでこの関数を呼び出すことはできません。  
-この例では、コンストラクタにより、contract 作成者のアドレスが永久的に保存されます。 　　 
-  `tx`、`block`、`msg`はグローバル変数で魔法のように場所を選びません。   
+この例では、コンストラクタにより、contract 作成者のアドレスが永久的に保存されます。 　　
+  `tx`、`block`、`msg`はグローバル変数で魔法のように場所を選びません。
 この３種類の魔法変数によって保持されるメンバにより contract の外部にアクセスすることが可能です。  
 * `queryBalance`関数は`constant`宣言がされており、contractの状態を修正できないようにします。  
 （まだ完全に修正不可能というわけではない、ということに注意してください）  
 Solidity 言語では、returns のとる引数には名前がついていて、戻り値は基本、ローカル変数を作成します。
 なので、ここでは、リターン文を記述しなくとも、 `balance = balances[addr];` と書くだけで、戻り値が返ります。
 * `Send` のような event は外部クライアントがブロックチェーンをより効率的に探索できるようにするものです。
-`send` 関数の中にあるようにして、　event が呼び起こされると、このことは、永久的にblockchain 上に保存されます。 
+`send` 関数の中にあるようにして、　event が呼び起こされると、このことは、永久的にblockchain 上に保存されます。
 このことについては、あとでもう少し詳しく述べます。
 
 
@@ -99,7 +98,7 @@ Solidity 言語では、returns のとる引数には名前がついていて、
 ## Comments
 
 
-一行コメント (`//`) と 複数行コメント (`/*...*/`) が使えます。 
+一行コメント (`//`) と 複数行コメント (`/*...*/`) が使えます。
 トリプルスラッシュのコメント (`///`) を用いると、[NatSpec](https://github.com/ethereum/wiki/wiki/Natspec-Example)を導入することができますが、ここでは詳しく述べません。
 
 
@@ -108,7 +107,7 @@ Solidity 言語では、returns のとる引数には名前がついていて、
 ## Types
 
 現段階で開発済みの 基本型 は　
-* booleans `bool` 
+* booleans `bool`
 * integer
 * 固定長string / byte配列(bytes0 ~ bytes32)  
 
@@ -150,7 +149,7 @@ var y = x;
 ```
 
 ここでは、`y` の型は `uint20` となります。
-ただし関数の引数や、戻り値に `var` は使用できません。 
+ただし関数の引数や、戻り値に `var` は使用できません。
 integer 型と byte 型は定数として宣言できます。
 
 ```js
@@ -191,7 +190,7 @@ var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;
 ここでは、`x` は `uint` 型の `0` となります。
 
 
-## Ether and Time Units
+## Ether と Time の単位
 
 文字としての数値は `wei` , `finney` , `szabo` , `ether` といった単位を取ることができます。
 単位を記述しないと、単位は "wei" となります。例を挙げると、 `2 ether == 2000 finney` は `true` を返します。
@@ -202,16 +201,18 @@ var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;
 
 ## Control Structures
 
-Most of the control structures from C/JavaScript are available in Solidity
-except for `switch` (not planned) and `goto` (note that it's called Solidity). So
-there is: `if`, `else`, `while`, `for`, `break`, `continue`, `return`. Note that there
-is no type conversion from non-boolean to boolean types as there is in C and
-JavaScript, so `if (1) { ... }` is _not_ valid Solidity.
+C/JapaScript 由来の、大部分の（分岐やジャンプといった）制御構造が Solidity で利用可能です。
+ただし、 `switch` と `goto` (Solidity と呼ばれることに注意) は含まれません。
+ということで、`if` , `else` , `while` , `for` , `break` , `continue` , `return` といった制御文が使えます。
+C言語やJavascriptにみられるような、非boolean型からboolean型への型変換は存在せず、
+`if (1) { ... }` は Solidity では無効なものとなります。
+
 
 ## Function Calls
 
-Functions of the current contract can be called directly, also recursively, as seen in
-this nonsensical example:
+the current contract の関数は直接呼び出すことができ、
+また再起呼び出しも可能です。
+ナンセンスな事例ですが、次をごらんください。
 
 ```js
 contract c {
@@ -220,9 +221,12 @@ contract c {
 }
 ```
 
-The expression `this.g(8);` is also a valid function call, but this time, the function
-will be called via a message call and not directly via jumps. When calling functions
-of other contracts, the amount of Wei sent with the call and the gas can be specified:
+`this.g(8);` という表現も関数呼び出しに有効ですが、
+この方法では、関数の呼び出しは message call を介して呼び出されるので、
+直接 jump operation 等により呼び出されるものではありません。
+他の contract の関数呼び出し時、呼び出しで使用されるガスの単価と量は特定されます。
+
+
 ```js
 contract InfoFeed {
   function info() returns (uint ret) { return 42; }
@@ -233,13 +237,16 @@ contract Consumer {
   function callFeed() { feed.info.value(10).gas(800)(); }
 }
 ```
-Note that the expression `InfoFeed(addr)` performs an explicit type conversion stating
-that "we know that the type of the contract at the given address is `InfoFeed`" and
-this does not execute a constructor. Be careful in that `feed.info.value(10).gas(800)`
-only (locally) set the value and amount of gas sent with the function call and only the
-parentheses at the end perform the actual call.
+`InfoFeed(addr)` という表現は、
+与えられた address 上のコントラクトの型は `InfoFeed` であると宣言し、
+外部型への変換を行い、ここにおいてコンストラクタの遂行はしません。
 
-Function call arguments can also be given by name, in any order:
+`feed.info.value(10).gas(800)` は関数呼び出しで送られるガスの値と量をローカルでsetするだけであり、
+実際の呼び出しは終わりにある括弧が遂行します。
+
+
+関数呼び出しにおける引数は名前で指定することができ、順番がバラバラでも構いません。
+
 ```js
 contract c {
 function f(uint key, uint value) { ... }
@@ -248,7 +255,9 @@ function g() {
 }
 }
 ```
-The names for function parameters and return parameters are optional.
+
+関数や戻り宣言の仮引数名はなくても構いません。
+
 ```js
 contract test {
   function func(uint k, uint) returns(uint){
@@ -257,10 +266,13 @@ contract test {
 }
 ```
 
+
+
 ## Special Variables and Functions
 
-There are special variables and functions which always exist in the global
-namespace.
+デフォルトのグローバル名前空間に存在する
+グローバル変数およびグローバル関数を紹介します。
+
 
 ### Block and Transaction Properties
 
@@ -285,10 +297,16 @@ namespace.
  - `ripemd160(...) returns (bytes20)`: compute RIPEMD of 256 the (tightly packed) arguments
  - `ecrecover(bytes32, byte, bytes32, bytes32) returns (address)`: recover public key from elliptic curve signature
 
-In the above, "tightly packed" means that the arguments are concatenated without padding, i.e.
-`sha3("ab", "c") == sha3("abc") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`. If padding is needed, explicit type conversions can be used.
+ "tightly packed" ：複数の引数間の余白をなくしひとまとめにできることを意味します。
+`sha3("ab", "c") == sha3("abc") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`。 
+もし余白が必要ならば、外部型変換が利用可能です。
 
-It might be that you run into Out-of-Gas for `sha256`, `ripemd160` or `ecrecover` on a *private blockchain*. The reason for this is that those are implemented as so-called precompiled contracts and these contracts only really exist after they received the first message (although their contract code is hardcoded). Messages to non-existing contracts are more expensive and thus the execution runs into an Out-of-Gas error. A workaround for this problem is to first send e.g. 1 Wei to each of the contracts before you use them in your actual contracts. This is not an issue on the official or test net.
+プライベート・ブロックチェーン上においては、`sha256` 、`ripemd160` あるいは` ecrecover` がガス欠に陥るかもしれません。
+プリ・コンパイルされた contract は最初の message を受信してのみ、はじめてすることとなり、
+
+The reason for this is that those are implemented as so-called precompiled contracts and these contracts only really exist after they received the first message (although their contract code is hardcoded). Messages to non-existing contracts are more expensive and thus the execution runs into an Out-of-Gas error. A workaround for this problem is to first send e.g. 1 Wei to each of the contracts before you use them in your actual contracts. This is not an issue on the official or test net.
+
+
 
 ### Contract Related
 
@@ -556,7 +574,7 @@ contract named is owned, mortal {
         if (msg.sender == owner) {
             address ConfigAddress = 0xd5f9d8d94886e70b06e474c3fb14fd43e2f23970;
             NameReg(Config(ConfigAddress).lookup(1)).unregister();
-// It is still possible to call a specific overridden function. 
+// It is still possible to call a specific overridden function.
             mortal.kill();
         }
     }
@@ -861,7 +879,7 @@ These steps are applied to each basic block and the newly generated code is used
 ```js
 var x = 7;
 data[7] = 9;
-if (data[x] != x + 2) 
+if (data[x] != x + 2)
   return 2;
 else
   return 1;
