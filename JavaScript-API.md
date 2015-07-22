@@ -1598,7 +1598,7 @@ myContractInstance.myStateChangingMethod('someParam1', 23, {value: 200, gas: 200
 #### Contract Events
 
 ```js
-var event = myContractInstance.MyEvent({valueA: 23}, additionalFilterObject)
+var event = myContractInstance.MyEvent({valueA: 23} [, additionalFilterObject])
 
 // watch for changes
 event.watch(function(error, result){
@@ -1607,7 +1607,7 @@ event.watch(function(error, result){
 });
 
 // Or pass a callback to start watching immediately
-var event = myContractInstance.MyEvent({valueA: 23}, additionalFilterObject, function(error, result){
+var event = myContractInstance.MyEvent([{valueA: 23}] [, additionalFilterObject] , function(error, result){
   if (!error)
     console.log(result);
 });
