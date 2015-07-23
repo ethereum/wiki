@@ -4,7 +4,7 @@ This documents version 3 of the Web3 Secret Storage Definition.
 
 The actual encoding and decoding of the file remains largely unchanged from version 1, except that the crypto algorithm is no longer fixed to AES-128-CBC (AES-128-CTR is now the minimal requirement). Most of the meanings/algorithm are similar to version 1, except `mac`, which is given as the SHA3 of the concatenation of the last 16 bytes of the derived key together with the full `ciphertext`.
 
-Secret key files are stored directly in `~/.web3/keys` (for Unix-like systems) and `~/AppData/Web3/keys` (for Windows). They may be named anything, but a good convention is `<uuid>.json`, where `<uuid>` is the 128-bit UUID given to the secret key (a privacy-preserving proxy for the secret key's address).
+Secret key files are stored directly in `~/.web3/keystore` (for Unix-like systems) and `~/AppData/Web3/keystore` (for Windows). They may be named anything, but a good convention is `<uuid>.json`, where `<uuid>` is the 128-bit UUID given to the secret key (a privacy-preserving proxy for the secret key's address).
 
 All such files have an associated password. To derive a given `.json` file's secret key, first derive the file's encryption key; this is done through taking the file's password and passing it through a key derivation function as described by the `kdf` key. KDF-dependent static and dynamic parameters to the KDF function are described in `kdfparams` key.
 
@@ -59,7 +59,7 @@ Details:
 
 Test vector using AES-128-CTR and PBKDF2-SHA-256:
 
-File contents of `~/.web3/keys/3198bc9c-6672-5ab3-d9954942343ae5b6.json`:
+File contents of `~/.web3/keystore/3198bc9c-6672-5ab3-d9954942343ae5b6.json`:
 ```json
 {
     "crypto" : {
