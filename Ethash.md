@@ -9,7 +9,7 @@ The general route that the algorithm takes is as follows:
 3. From the cache, we can generate a **1 GB dataset**, with the property that each item in the dataset depends on only a small number of items from the cache. Full clients and miners store the dataset.  The dataset grows linearly with time.
 4. Mining involves grabbing random slices of the dataset and hashing them together. Verification can be done with low memory by using the cache to regenerate the specific pieces of the dataset that you need, so you only need to store the cache.
 
-The large dataset is updated once every 1000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it.
+The large dataset is updated once every 30000 blocks, so the vast majority of a miner's effort will be reading the dataset, not making changes to it.
 
 See [https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale](https://github.com/ethereum/wiki/wiki/Ethash-Design-Rationale) for design rationale considerations for this algorithm.
 
