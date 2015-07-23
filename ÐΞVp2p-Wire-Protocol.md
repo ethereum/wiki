@@ -86,10 +86,3 @@ A Ping and the returned Pong.
 Upon connecting, all clients (i.e. both sides of the connection) must send a `Hello` message. Upon receiving the `Hello` message and verifying compatibility of the network and versions, a session is active and any other P2P messages may be sent.
 
 At any time, a Disconnect message may be sent.
-
-### Upcoming Changes
-- [Adaptive Peer Time](https://github.com/ethereum/wiki/wiki/Adaptive-Peer-Time)
-
-### Changes (PoC-7)
-- [Adaptive Message IDs](https://github.com/ethereum/wiki/wiki/Adaptive-Message-IDs)
-- [IPv6 Support](https://github.com/ethereum/wiki/wiki/IPv6)
