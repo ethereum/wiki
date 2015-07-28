@@ -1,15 +1,15 @@
-### Overview
+# JSON RPC
 
 [JSON](http://json.org/) is a lightweight data-interchange format. It can represent numbers, strings, ordered sequences of values, and collections of name/value pairs.
 
 [JSON-RPC](http://www.jsonrpc.org/specification) is a stateless, light-weight remote procedure call (RPC) protocol. Primarily this specification defines several data structures and the rules around their processing. It is transport agnostic in that the concepts can be used within the same process, over sockets, over HTTP, or in many various message passing environments. It uses JSON ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt)) as data format.
 
-### JavaScript API
+## JavaScript API
 
 To talk to an ethereum node from inside a JavaScript application use the [web3.js](https://github.com/ethereum/web3.js) library, which gives an convenient interface for the RPC methods.
 See the [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API) for more.
 
-### JSON-RPC Endpoint
+## JSON-RPC Endpoint
 
 Default JSON-RPC endpoints:
 ```
@@ -18,7 +18,7 @@ Go: http://localhost:8545
 Py: http://localhost:4000
 ```
 
-##### Go
+### Go
 
 You can start the HTTP JSON-RPC with the `--rpc` flag
 ```bash
@@ -40,7 +40,7 @@ geth --rpc --rpccorsdomain "http://localhost:3000"
 The JSON RPC can also be started from the [geth console](https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console) using the `admin.startRPC(addr, port)` command.
 
 
-##### C++
+### C++
 
 You can start it by running `eth` application with `-j` option:
 ```bash
@@ -52,14 +52,14 @@ You can also specify JSON-RPC port (default is 8080):
 ./eth -j --json-rpc-port 8079
 ```
 
-##### Python
+### Python
 In python the JSONRPC server is currently started by default and listens on `127.0.0.1:4000`
 
 You can change the port and listen address by giving a config option. 
 
 `pyethapp -c jsonrpc.listen_port=4002 -c jsonrpc.listen_host=127.0.0.2 run`
 
-### JSON-RPC support
+## JSON-RPC support
 
 | | cpp-ethereum | go-ethereum | py-ethereum|
 |-------|:------------:|:-----------:|:-----------:|
@@ -68,7 +68,7 @@ You can change the port and listen address by giving a config option.
 | Batch requests | &#x2713; |  &#x2713; |  &#x2713; |
 | HTTP | &#x2713; | &#x2713; | &#x2713; |
 
-### Output HEX values
+## Output HEX values
 
 At present there are two key datatypes that are passed over JSON: unformatted byte arrays and quantities. Both are passed with a hex encoding, however with different requirements to formatting:
 
@@ -88,7 +88,7 @@ When encoding **UNFORMATTED DATA** (byte arrays, account addresses, hashes, byte
 
 Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ethereum](https://github.com/ethereum/go-ethereum) provides JSON-RPC communication only over http.
 
-### The default block parameter
+## The default block parameter
 
 The following methods have a extra default block parameter:
 
@@ -107,7 +107,7 @@ The following options are possible for the defaultBlock parameter:
 - `String "latest"` - for the latest mined block
 - `String "pending"` - for the pending state/transactions
 
-### JSON-RPC methods
+## JSON-RPC methods
 
 * [web3_clientVersion](#web3_clientversion)
 * [web3_sha3](#web3_sha3)
@@ -169,7 +169,7 @@ The following options are possible for the defaultBlock parameter:
 * [shh_getFilterChanges](#shh_getfilterchanges)
 * [shh_getMessages](#shh_getmessages)
 
-### API
+## JSON RPC API Reference
 
 ***
 
