@@ -106,7 +106,7 @@
 
 ### 머클트리
 
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/spv_bitcoin.png)
+![SPV in bitcoin](https://raw.githubusercontent.com/ethereum/www/master-postsale/src/extras/gh_wiki/spv_bitcoin.png)
 
 _왼쪽: Merkle tree(머클트리)의 몇몇 노드만 보아도 곁가지(branch)의 유효성을 입증하기에 충분하다._
 
@@ -546,4 +546,3 @@ _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러�
 19. Ethereum RLP: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP
 20. Ethereum Merkle Patricia trees: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree
 21. Peter Todd on Merkle sum trees: http://sourceforge.net/p/bitcoin/mailman/message/31709140/
-
