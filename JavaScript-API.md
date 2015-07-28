@@ -1,5 +1,7 @@
 # Introduction
 
+## Using the Web3 Javascript Ðapp API
+
 To make your Ðapp work on Ethereum, you can use the `web3` object provided by the [web3.js library](https://github.com/ethereum/web3.js). Under the hood it communicates to a local node through [RPC calls](https://github.com/ethereum/wiki/wiki/JSON-RPC). web3.js works with any Ethereum node, which exposes an RPC layer.
 
 `web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols. Working  [examples can be found here](https://github.com/ethereum/web3.js/tree/master/example).
@@ -63,7 +65,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 // "13145.23443534645646666646" // you number would be cut after the 20 floating point
 ```
 
-# API
+# API Reference
 
 * [web3](#web3)
   * [version](#web3versionapi)
