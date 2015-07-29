@@ -338,11 +338,11 @@ to and from all integer types but implicit conversion is not allowed.
 ```js
 contract test {
     enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
-    ActionChoices choices;
+    ActionChoices choice;
     ActionChoices constant defaultChoice = ActionChoices.GoStraight;
     function setGoStraight()
     {
-        choices = ActionChoices.GoStraight;
+        choice = ActionChoices.GoStraight;
     }
     // Since enum types are not part of the ABI, the signature of "getChoice"
     // will automatically be changed to "getChoice() returns (uint8)"
@@ -351,7 +351,7 @@ contract test {
     // `uint16` will be used and so on.
     function getChoice() returns (ActionChoices)
     {
-        return choices;
+        return choice;
     }
     function getDefaultChoice() returns (uint)
     {
