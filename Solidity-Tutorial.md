@@ -584,7 +584,7 @@ namespace and are mainly used to provide information about the blockchain.
 
  - `sha3(...) returns (bytes32)`: compute the SHA-3 hash of the (tightly packed) arguments
  - `sha256(...) returns (bytes32)`: compute the SHA-256 hash of the (tightly packed) arguments
- - `ripemd160(...) returns (bytes20)`: compute RIPEMD-160 the (tightly packed) arguments
+ - `ripemd160(...) returns (bytes20)`: compute RIPEMD-160 hash of the (tightly packed) arguments
  - `ecrecover(bytes32, byte, bytes32, bytes32) returns (address)`: recover public key from elliptic curve signature
 
 In the above, "tightly packed" means that the arguments are concatenated without padding, i.e.
