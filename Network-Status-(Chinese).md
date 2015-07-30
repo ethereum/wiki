@@ -1,3 +1,5 @@
+Special thanks to Kyle Chen for translation.
+
 # 网络状态监控
 
 以太坊（中心化的）网络状态监控器 （有时被称为“eth-netstats”），是一个基于网页的应用程序，通过一组节点去监控测试链或者主链的健康状态。
