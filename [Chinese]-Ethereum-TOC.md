@@ -7,3 +7,5 @@
 [以太坊开发计划](https://github.com/ethereum/wiki/wiki/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%BC%80%E5%8F%91%E8%AE%A1%E5%88%92)
 
 [术语表](https://github.com/ethereum/wiki/wiki/%E6%9C%AF%E8%AF%AD%E8%A1%A8)
+
+[网络状态监控](https://github.com/ethereum/wiki/wiki/Network-Status-%28Chinese%29)
