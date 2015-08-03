@@ -1245,7 +1245,7 @@ console.log(receipt);
 
     web3.eth.getTransactionCount(addressHexString [, defaultBlock] [, callback])
 
-Get the numbers of transactions send from this address.
+Get the numbers of transactions sent from this address.
 
 ##### Parameters
 
@@ -1255,7 +1255,7 @@ Get the numbers of transactions send from this address.
 
 ##### Returns
 
-`Number` - The number of transactions send from the given address.
+`Number` - The number of transactions sent from the given address.
 
 ##### Example
 
