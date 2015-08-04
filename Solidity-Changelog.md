@@ -1,3 +1,4 @@
+ * Strings can be used as mapping keys.
  * Clone contracts.
  * Mapping members are skipped for structs in memory.
  * Use only a single stack slot for storage references.
