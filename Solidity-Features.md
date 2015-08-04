@@ -865,3 +865,13 @@ contract C {
   }
 }
 ```
+
+## Strings as Mapping Keys
+
+Strings are allowed as keys for mappings.
+```js
+contract C {
+  mapping (string => uint) counter;
+  function inc(string _s) { counter[_s]++; }
+}
+```
