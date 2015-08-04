@@ -44,7 +44,7 @@ have to use a client like AlethZero.
 		- [Contract Related](#contract-related)
 - [Control Structures](#control-structures)
 	- [Function Calls](#function-calls)
-		- [Intenal Function Calls](#intenal-function-calls)
+		- [Internal Function Calls](#internal-function-calls)
 		- [External Function Calls](#external-function-calls)
 		- [Named and Optional Function Parameters](#named-and-optional-function-parameters)
 	- [Order of Evaluation of Expressions](#order-of-evaluation-of-expressions)
@@ -614,7 +614,7 @@ there is in C and JavaScript, so `if (1) { ... }` is _not_ valid Solidity.
 
 ## Function Calls
 
-### Intenal Function Calls
+### Internal Function Calls
 
 Functions of the current contract can be called directly ("internally"), also recursively, as seen in
 this nonsensical example:
