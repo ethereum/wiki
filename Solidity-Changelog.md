@@ -1,5 +1,6 @@
  * Explicit conversion between `bytes` and `string`.
  * Bugfix: Value transfer used in clone contracts.
+ * Bugfix: Problem with strings as mapping keys.
 
 ### 0.1.1 (2015-08-04)
 
