@@ -8,4 +8,4 @@ Implementations are encouraged to follow this protocol for populating the `extra
 
 `[` version: `P`, clientIdentity: `B` `]`
 
-Two further arguments, a raw representation of a string to identify the client (this would usually be the same client identifier as returned by the JSON RPC's `web3_clientVersion`).
+One further argument, a raw representation of a string to identify the client (this would usually be a shortened form of the client identifier as returned by the JSON RPC's `web3_clientVersion`).
