@@ -170,7 +170,7 @@ var web3 = require('web3')
 
 ```js
 var version = web3.version.api;
-console.log(api); // "0.2.0"
+console.log(version); // "0.2.0"
 ```
 
 ***
