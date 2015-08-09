@@ -188,7 +188,7 @@ In total:
 
 A call to a function with the signature `f(uint,uint32[],bytes10,bytes)` with values `(0x123, [0x456, 0x789], "1234567890", "Hello, world!")` is encoded in the following way:
 
-The first four bytes are `sha3("f(uint256,uint32[],bytes10,bytes)")`, i.e. `0x8be65246`.
+We take the first four bytes of `sha3("f(uint256,uint32[],bytes10,bytes)")`, i.e. `0x8be65246`.
 Then we encode the head parts of all four arguments. For the static types `uint256` and `bytes10`, these are directly the values we want to pass, whereas for the dynamic types `uint32[]` and `bytes`, we use the offset in bytes to the start of their data area, measured from the start of the value encoding (i.e. not counting the first four bytes containing the hash of the function signature). These are:
 
  - `0x0000000000000000000000000000000000000000000000000000000000000123` (`0x123` padded to 32 bytes)
