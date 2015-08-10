@@ -20,7 +20,7 @@ No, using [meteor-build-client](https://github.com/frozeman/meteor-build-client)
 
 ***
 
-## creating a Ðapp
+## Create your Ðapp
 
 Install Meteor if don't have already:
 
@@ -48,11 +48,11 @@ I recommend also to add the following packages:
 - [frozeman:template-var](https://atmospherejs.com/frozeman/template-var) - Gives you the `TemplateVar` object, that allows you to set reactive variables, which are template instance specific. See the [readme](https://atmospherejs.com/frozeman/template-var) for more.
 - [frozeman:persistent-minimongo](https://atmospherejs.com/frozeman/persistent-minimongo) - Allows you to auto persist your minimongo collection in local storage
 
-## Adding basics to your Ðapp
+## Start your Ðapp
 
 // Add folder structure expl, and set web3 provider, start geth
 
 ## Using ethereum:elements
 
-## Bundling you Ðapp
+## Bundling your Ðapp
 
