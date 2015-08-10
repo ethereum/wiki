@@ -48,9 +48,12 @@ I recommend also to add the following packages:
 - [frozeman:template-var](https://atmospherejs.com/frozeman/template-var) - Gives you the `TemplateVar` object, that allows you to set reactive variables, which are template instance specific. See the [readme](https://atmospherejs.com/frozeman/template-var) for more.
 - [frozeman:persistent-minimongo](https://atmospherejs.com/frozeman/persistent-minimongo) - Allows you to auto persist your minimongo collection in local storage
 
+
 ## Start your Ðapp
 
 // Add folder structure expl, and set web3 provider, start geth
+
+## Add Ðapp styles
 
 ## Using ethereum:elements
 
