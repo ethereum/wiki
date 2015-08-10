@@ -1,1 +1,0 @@
-This tutorial will show you how to setup a meteor app to be used as a dapp. 
