@@ -20,21 +20,21 @@ No, using [meteor-build-client](https://github.com/frozeman/meteor-build-client)
 
 ***
 
-## creating you Ðapp
+## creating a Ðapp
 
-First install Meteor if don't have already:
+Install Meteor if don't have already:
 
 ```bash
 $ curl https://install.meteor.com/ | sh
 ```
 
-Then we create a app:
+Then create an app:
 ```bash
 $ meteor create myDapp
 $ cd myDapp
 ```
 
-Next we add the web package:
+Next add the web3 package:
 ```bash
 $ meteor add ethereum:web3
 ```
@@ -50,7 +50,7 @@ I recommend also to add the following packages:
 
 ## Adding basics to your Ðapp
 
-// Add folder structure expl, and set web3 provider
+// Add folder structure expl, and set web3 provider, start geth
 
 ## Using ethereum:elements
 
