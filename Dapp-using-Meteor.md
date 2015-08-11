@@ -1,8 +1,13 @@
 This tutorial will show you how to setup a Meteor app to be used as a Ðapp and probably answer a few questions on why Meteor should used.
 
 1. [Create your Ðapp](#create-your-%C3%90app)
-1. [Create your Ðapp](#create-your-%C3%90app)
-1. [Create your Ðapp](#create-your-%C3%90app)
+2. [Start your Ðapp](#start-your-%C3%90app)
+3. [Connect your Ðapp](#connect-your-%C3%90app)
+4. [Run your Ðapp](#run-your-%C3%90app)
+5. [Add Ðapp styles](#add-%C3%90app-styles)
+4. [Using ethereum:elements](#using-etheruem-elements)
+4. [Bundle your Ðapp](#bundle-your-%C3%90app)
+
 
 ## FAQ
 
@@ -79,7 +84,7 @@ So to build a Ðapp we ideally create the following folder structure in our `myD
 
 **Note** The community provides also Meteor Ðapp Boilerplates like this on from Nick Dodson: https://github.com/SilentCicero/meteor-dapp-boilerplate
 
-### Connecting your Ðapp
+### Connect your Ðapp
 To connect our dapp we need to start `geth` with the right CORS headers in another terminal:
 
 ```bash
@@ -94,7 +99,7 @@ if(!web3.currentProvider) // make sure we don't overwrite a provider set by Mist
     web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
 ```
 
-### Running your Ðapp
+### Run your Ðapp
 
 Now we can run our Ðapp by simply running:
 
@@ -134,5 +139,5 @@ Now you can use all dapp-styles classes and also overwrite all variables of the 
 
 ## Using ethereum:elements
 
-## Bundling your Ðapp
+## Bundle your Ðapp
 
