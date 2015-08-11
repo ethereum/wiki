@@ -5,7 +5,7 @@ This tutorial will show you how to setup a Meteor app to be used as a Ðapp and 
 3. [Connect your Ðapp](#connect-your-%C3%90app)
 4. [Run your Ðapp](#run-your-%C3%90app)
 5. [Add Ðapp styles](#add-%C3%90app-styles)
-6. [Using ethereum:elements](#using-etheruemelements)
+6. [Using ethereum:elements](#using-ethereumelements)
 7. [Bundle your Ðapp](#bundle-your-%C3%90app)
 
 
@@ -140,4 +140,3 @@ Now you can use all dapp-styles classes and also overwrite all variables of the 
 ## Using ethereum:elements
 
 ## Bundle your Ðapp
-
