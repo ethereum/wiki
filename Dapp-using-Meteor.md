@@ -6,7 +6,8 @@ This tutorial will show you how to setup a Meteor app to be used as a Ðapp and 
 4. [Run your Ðapp](#run-your-%C3%90app)
 5. [Add Ðapp styles](#add-%C3%90app-styles)
 6. [Using ethereum:elements](#using-ethereumelements)
-7. [Bundle your Ðapp](#bundle-your-%C3%90app)
+7. [Ðapp code structure](#%C3%90app-code-structure)
+8. [Bundle your Ðapp](#bundle-your-%C3%90app)
 
 
 ## FAQ
@@ -135,8 +136,44 @@ And rename you `myDapp.css` to `myDapp.less` and add the following line inside:
 @import 'public/dapp-styles/dapp-styles.less';
 ```
 
-Now you can use all dapp-styles classes and also overwrite all variables of the framewwork. You can find them in `public/dapp-styles/constants.import.less`. Overwite them by copying them to your `myDapp.less` file and set different values.
+Now you can use all dapp-styles classes and also overwrite all variables of the framewwork. You can find them in `public/dapp-styles/constants.import.less`. Overwrite them by copying them to your `myDapp.less` file and set different values.
 
-## Using ethereum:elements
+## Using ethereum packages
+
+To make your live as a Ðapp developer easier we provide some packages that help you build Ðapps faster.
+
+If you add the recommended packages above you should have the [ethereum:tools](https://atmospherejs.com/ethereum/tools), [accounts](https://atmospherejs.com/ethereum/accounts) and [ethereum:blocks](https://atmospherejs.com/ethereum/blocks) packages available.
+
+These 3 packages give you the `EthTools`, `EthAccounts` and `Ethblocks` objects, which give you formatter functions,  a collection with the accounts from `web3.eth.accounts` (with auto updated balance) and a collection of the last 50 blocks.
+
+Most of these functions are reactive so they should make building interfaces a breeze.
+
+### Example usage
+
+If you look into you `myDapp.html` you will find the `hello` template.
+Just add a helper called `{{currentBlock}}` some where between the `<template name="hello">..</template>` tags.
+
+Now open the `myDapp.js` and add after the `counter: function..` the `currentBlock` helper:
+```js
+Template.elements.helpers({
+    counter: function () {
+      ...
+    },
+    currentBlock: function(){
+        return EthBlocks.latest.number;
+    }
+  });
+```
+
+If you now check your Ðapp in the browser you should see the latest block number, which will increase once you mine.
+
+
+*For more examples please checkout the packages readmes and the [demo](http://ethereum-elements.meteor.com) ([source](https://github.com/frozeman/meteor-ethereum-elements-demo)) for more.*
+
+## Ðapp code structure
+
+This tutorial won't go into building apps with Meteor. For this please refer to the [Meteor's tutorials](https://www.meteor.com/tutorials/blaze/creating-an-app), [A list of good resources](https://www.meteor.com/tools/resources), [EventMinded](https://www.eventedmind.com) (payed tutorials) or books like [Building Single-page Web Apps with Meteor](https://www.packtpub.com/web-development/building-single-page-web-apps-meteor) or [Discover Meteor](http://discovermeteor.com).
+
+
 
 ## Bundle your Ðapp
