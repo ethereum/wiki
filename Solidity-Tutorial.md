@@ -175,7 +175,7 @@ as soon as control flow returns from the function.
 
 Solidity is a statically typed language, which means that the type of each
 variable (state and local) needs to be specified (or at least known - see
-[Type Deduction](#Type+Deduction) below) at
+[Type Deduction](#type-deduction) below) at
 compile-time. Solidity provides several elementary types which can be combined
 to complex types.
 
@@ -196,7 +196,7 @@ Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)
 Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation)  
 Arithmetic operators: `+`, `-`, unary `-`, unary `+`, `*`, `/`, `%` (remainder), `**` (exponentiation)
 
-`address`: Holds a 20 byte value (size of an Ethereum address). Operators: `<=`, `<`, `==`, `!=`, `>=` and `>`. Address types also have members (see [Functions on addresses](#Functions+on+addresses)) and serve as base for all contracts.
+`address`: Holds a 20 byte value (size of an Ethereum address). Operators: `<=`, `<`, `==`, `!=`, `>=` and `>`. Address types also have members (see [Functions on addresses](#functions-on-addresses)) and serve as base for all contracts.
 
 `byte`, `bytes1`, ..., `bytes32`: Fixed-size byte arrays, `byte` is an alias for `bytes1`.
 
@@ -204,9 +204,9 @@ Operators:
 Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)  
 Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation)
 
-`bytes`: Dynamically-sized byte array, see [arrays](#Arrays). Not a value-type!
+`bytes`: Dynamically-sized byte array, see [arrays](#arrays). Not a value-type!
 
-`string`: Dynamically-sized UTF8-encoded string, see [arrays](#Arrays). Not a value-type!
+`string`: Dynamically-sized UTF8-encoded string, see [arrays](#arrays). Not a value-type!
 
 __Integer Literals__: Integer literals are arbitrary precision integers until they are used together with a non-literal. In `var x = 1 - 2;`, for example, the value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives the type `int8` -- the smallest type that contains `-1`, although the natural types of `1` and `2` are actually `uint8`.  
 It is even possible to temporarily exceed the maximum of 256 bits as long as only integer literals are used for the computation: `var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;` Here, `x` will have the value `0` and thus the type `uint8`.
