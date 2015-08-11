@@ -251,7 +251,7 @@ implicitly convert one of the operands to the type of the other (the same is
 true for assignments). In general, an implicit conversion between value-types
 is possible if it
 makes sense semantically and no information is lost: `uint8` is convertible to
-`uint16` and `int120` to `int256`, but `int8` is not convertible to `uint256`
+`uint16` and `int128` to `int256`, but `int8` is not convertible to `uint256`
 (because `uint256` cannot hold e.g. `-1`).
 Furthermore, unsigned integers can be converted to bytes of the same or larger
 size, but not vice-versa. Any type that can be converted to `uint160` can also
