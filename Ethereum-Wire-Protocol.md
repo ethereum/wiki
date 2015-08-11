@@ -94,7 +94,7 @@ ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashes
 [`+0x12`, [`blknum`, `address`, `key`]] Require peer to return a `Proof` message, containing a Merkle-tree proof of the storage value of index `key` in `address` from the state root of block `blknum`
 
 **Proof**
-[`+0x12`, [`node_1`, `node_2`...]] Return a Merkle-tree proof consisting of a set of nodes that must be processed in order to access the piece of account data or storage value requested in `GetAcctProof` or `GetStorageDataProof`
+[`+0x13`, [`node_1`, `node_2`...]] Return a Merkle-tree proof consisting of a set of nodes that must be processed in order to access the piece of account data or storage value requested in `GetAcctProof` or `GetStorageDataProof`
 
 ### Session Management
 
