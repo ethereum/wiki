@@ -227,7 +227,7 @@ If `a` is an LValue (i.e. a variable or something that can be assigned to), the 
 It is important to note that `delete a` really behaves like an assignment to `a`, i.e. it stores a new object in `a`.
 ```js
 contract DeleteExample {
-  uint data
+  uint data;
   uint[] dataArray;
   function f() {
     uint x = data;
