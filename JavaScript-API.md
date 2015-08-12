@@ -127,18 +127,19 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [compile.solidity(string)](#web3ethcompilesolidity)
     * [compile.serpent(string)](#web3ethcompileserpent)
     * [namereg](#web3ethnamereg)
-    * [iban](#web3iban)
-      * [fromAddress](#web3ibanfromaddress)
-      * [fromBban](#web3ibanfrombban)
-      * [createIndirect](#web3ibancreateindirect)
-      * [isValid](#web3ibanisvalid)
-      * [isDirect](#web3ibanisdirect)
-      * [isIndirect](#web3ibanisindirect)
-      * [checksum](#web3ibanchecksum)
-      * [institution](#web3ibaninstitution)
-      * [client](#web3ibanclient)
-      * [address](#web3ibanaddress)
-      * [toString](#web3ibantostring)
+    * [sendIBANTransaction](#web3ethsendibantransaction)
+    * [iban](#web3ethiban)
+      * [fromAddress](#web3ethibanfromaddress)
+      * [fromBban](#web3ethibanfrombban)
+      * [createIndirect](#web3ethibancreateindirect)
+      * [isValid](#web3ethibanisvalid)
+      * [isDirect](#web3ethibanisdirect)
+      * [isIndirect](#web3ethibanisindirect)
+      * [checksum](#web3ethibanchecksum)
+      * [institution](#web3ethibaninstitution)
+      * [client](#web3ethibanclient)
+      * [address](#web3ethibanaddress)
+      * [toString](#web3ethibantostring)
   * [db](#web3db)
     * [putString(name, key, value)](#web3dbputstring)
     * [getString(name, key)](#web3dbgetstring)
@@ -2145,7 +2146,23 @@ Watch for incoming whisper messages.
 
 ***
 
-#### web3.iban
+#### web3.eth.sendIBANTransaction
+
+```js
+var txHash = web3.eth.sendIBANTransaction('0x00c5496aee77c1ba1f0854206a26dda82a81d6d8', 'XE81ETHXREGGAVOFYORK', 0x100);
+```
+
+Sends IBAN transaction from user account to destination IBAN address.
+
+##### Parameters
+
+- `string` - address from which we want to send transaction
+- `string` - IBAN address to which we want to send transaction
+- `value` - value that we want to send in IBAN transaction
+
+***
+
+#### web3.eth.iban
 
 ```js
 var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
@@ -2153,7 +2170,7 @@ var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
 
 ***
 
-#### web3.iban.fromAddress
+#### web3.eth.iban.fromAddress
 
 ```js
 var i = web3.eth.iban.fromAddress('0x00c5496aee77c1ba1f0854206a26dda82a81d6d8');
@@ -2162,7 +2179,7 @@ console.log(i.toString()); // 'XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS
 
 ***
 
-#### web3.iban.fromBban
+#### web3.eth.iban.fromBban
 
 ```js
 var i = web3.eth.iban.fromBban('ETHXREGGAVOFYORK');
@@ -2171,7 +2188,7 @@ console.log(i.toString()); // "XE81ETHXREGGAVOFYORK"
 
 ***
 
-#### web3.iban.createIndirect
+#### web3.eth.iban.createIndirect
 
 ```js
 var i = web3.eth.iban.createIndirect({
@@ -2183,7 +2200,7 @@ console.log(i.toString()); // "XE81ETHXREGGAVOFYORK"
 
 ***
 
-#### web3.iban.isValid
+#### web3.eth.iban.isValid
 
 ```js
 var valid = web3.eth.iban.isValid("XE81ETHXREGGAVOFYORK");
@@ -2200,7 +2217,7 @@ console.log(valid3); // true
 
 ***
 
-#### web3.iban.isDirect
+#### web3.eth.iban.isDirect
 
 ```js
 var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
@@ -2210,7 +2227,7 @@ console.log(direct); // false
 
 ***
 
-#### web3.iban.isIndirect
+#### web3.eth.iban.isIndirect
 
 ```js
 var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
@@ -2220,7 +2237,7 @@ console.log(indirect); // true
 
 ***
 
-#### web3.iban.checksum
+#### web3.eth.iban.checksum
 
 ```js
 var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
@@ -2230,7 +2247,7 @@ console.log(checksum); // "81"
 
 ***
 
-#### web3.iban.institution
+#### web3.eth.iban.institution
 
 ```js
 var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
@@ -2240,7 +2257,7 @@ console.log(institution); // 'XREG'
 
 ***
 
-#### web3.iban.client
+#### web3.eth.iban.client
 
 ```js
 var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
@@ -2250,7 +2267,7 @@ console.log(client); // 'GAVOFYORK'
 
 ***
 
-#### web3.iban.address
+#### web3.eth.iban.address
 
 ```js
 var i = new web3.eth.iban('XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS');
@@ -2260,7 +2277,7 @@ console.log(address); // '00c5496aee77c1ba1f0854206a26dda82a81d6d8'
 
 ***
 
-#### web3.iban.toString
+#### web3.eth.iban.toString
 
 ```js
 var i = new web3.eth.iban('XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS');
