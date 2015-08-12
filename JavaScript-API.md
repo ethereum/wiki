@@ -127,6 +127,18 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [compile.solidity(string)](#web3ethcompilesolidity)
     * [compile.serpent(string)](#web3ethcompileserpent)
     * [namereg](#web3ethnamereg)
+    * [iban](#web3iban)
+      * [fromAddress](#web3ibanfromaddress)
+      * [fromBban](#web3ibanfrombban)
+      * [createIndirect](#web3ibancreateindirect)
+      * [isValid](#web3ibanisvalid)
+      * [isDirect](#web3ibanisdirect)
+      * [isIndirect](#web3ibanisindirect)
+      * [checksum](#web3ibanchecksum)
+      * [institution](#web3ibaninstitution)
+      * [client](#web3ibanclient)
+      * [address](#web3ibanaddress)
+      * [toString](#web3ibantostring)
   * [db](#web3db)
     * [putString(name, key, value)](#web3dbputstring)
     * [getString(name, key)](#web3dbgetstring)
@@ -2104,6 +2116,127 @@ filter.watch(function(error, result){
   if (!error)
     console.log(result);
 });
+```
+
+***
+
+#### web3.iban
+
+```js
+var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
+```
+
+***
+
+#### web3.iban.fromAddress
+
+```js
+var i = web3.eth.iban.fromAddress('0x00c5496aee77c1ba1f0854206a26dda82a81d6d8');
+```
+
+***
+
+#### web3.iban.fromBban
+
+```js
+var i = web3.eth.iban.fromBban('ETHXREGGAVOFYORK');
+```
+
+***
+
+#### web3.iban.createIndirect
+
+```js
+var i = web3.eth.iban.createIndirect({
+  institution: "XREG",
+  identifier: "GAVOFYORK"
+});
+```
+
+***
+
+#### web3.iban.isValid
+
+```js
+var valid = web3.eth.iban.isValid("XE81ETHXREGGAVOFYORK");
+console.log(valid); // true
+
+var valid2 = web3.eth.iban.isValid("XE82ETHXREGGAVOFYORK");
+console.log(valid2); // false, cause checksum is incorrect
+
+var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
+var valid3 = i.isValid();
+console.log(valid3); // true
+
+```
+
+***
+
+#### web3.iban.isDirect
+
+```js
+var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
+var direct = i.isDirect();
+console.log(direct); // false
+```
+
+***
+
+#### web3.iban.isIndirect
+
+```js
+var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
+var indirect = i.isIndirect();
+console.log(indirect); // true
+```
+
+***
+
+#### web3.iban.checksum
+
+```js
+var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
+var checksum = i.checksum();
+console.log(checksum); // "81"
+```
+
+***
+
+#### web3.iban.institution
+
+```js
+var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
+var institution = i.institution();
+console.log(institution); // 'XREG'
+```
+
+***
+
+#### web3.iban.client
+
+```js
+var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
+var client = i.client();
+console.log(client); // 'GAVOFYORK'
+```
+
+***
+
+#### web3.iban.address
+
+```js
+var i = new web3.eth.iban('XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS');
+var address = i.address();
+console.log(address); // '00c5496aee77c1ba1f0854206a26dda82a81d6d8'
+```
+
+***
+
+#### web3.iban.toString
+
+```js
+var i = new web3.eth.iban('XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS');
+console.log(i.toString()); // 'XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS'
 ```
 
 Watch for incoming whisper messages.
