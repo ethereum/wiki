@@ -2118,6 +2118,31 @@ filter.watch(function(error, result){
 });
 ```
 
+Watch for incoming whisper messages.
+
+##### Parameters
+
+1. `Object` - The filter options:
+  * `topics`: `Array of Strings` - Filters messages by this topic(s). You can use the following combinations:
+    - `['topic1', 'topic2'] == 'topic1' && 'topic2'`
+    - `['topic1', ['topic2', 'topic3']] == 'topic1' && ('topic2' || 'topic3')`
+    - `[null, 'topic1', 'topic2'] == ANYTHING && 'topic1' && 'topic2'` -> `null` works as a wildcard
+  * `to`: Filter by identity of receiver of the message. If provided and the node has this identity, it will decrypt incoming encrypted messages.
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+##### Callback return
+
+`Object` - The incoming message:
+
+  - `from`: `String`, 60 Bytes - The sender of the message, if a sender was specified.
+  - `to`: `String`, 60 Bytes - The receiver of the message, if a receiver was specified.
+  - `expiry`: `Number` - Integer of the time in seconds when this message should expire (?).
+  - `ttl`: `Number` -  Integer of the time the message should float in the system in seconds (?).
+  - `sent`: `Number` -  Integer of the unix timestamp when the message was sent.
+  - `topics`: `Array of String` - Array of `String` topics the message contained.
+  - `payload`: `String` - The payload of the message.
+  - `workProved`: `Number` - Integer of the work this message required before it was send (?).
+
 ***
 
 #### web3.iban
@@ -2241,28 +2266,3 @@ console.log(address); // '00c5496aee77c1ba1f0854206a26dda82a81d6d8'
 var i = new web3.eth.iban('XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS');
 console.log(i.toString()); // 'XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS'
 ```
-
-Watch for incoming whisper messages.
-
-##### Parameters
-
-1. `Object` - The filter options:
-  * `topics`: `Array of Strings` - Filters messages by this topic(s). You can use the following combinations:
-    - `['topic1', 'topic2'] == 'topic1' && 'topic2'`
-    - `['topic1', ['topic2', 'topic3']] == 'topic1' && ('topic2' || 'topic3')`
-    - `[null, 'topic1', 'topic2'] == ANYTHING && 'topic1' && 'topic2'` -> `null` works as a wildcard
-  * `to`: Filter by identity of receiver of the message. If provided and the node has this identity, it will decrypt incoming encrypted messages.
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
-##### Callback return
-
-`Object` - The incoming message:
-
-  - `from`: `String`, 60 Bytes - The sender of the message, if a sender was specified.
-  - `to`: `String`, 60 Bytes - The receiver of the message, if a receiver was specified.
-  - `expiry`: `Number` - Integer of the time in seconds when this message should expire (?).
-  - `ttl`: `Number` -  Integer of the time the message should float in the system in seconds (?).
-  - `sent`: `Number` -  Integer of the unix timestamp when the message was sent.
-  - `topics`: `Array of String` - Array of `String` topics the message contained.
-  - `payload`: `String` - The payload of the message.
-  - `workProved`: `Number` - Integer of the work this message required before it was send (?).
