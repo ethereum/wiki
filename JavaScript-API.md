@@ -2132,6 +2132,7 @@ var i = new web3.eth.iban("XE81ETHXREGGAVOFYORK");
 
 ```js
 var i = web3.eth.iban.fromAddress('0x00c5496aee77c1ba1f0854206a26dda82a81d6d8');
+console.log(i.toString()); // 'XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS
 ```
 
 ***
@@ -2140,6 +2141,7 @@ var i = web3.eth.iban.fromAddress('0x00c5496aee77c1ba1f0854206a26dda82a81d6d8');
 
 ```js
 var i = web3.eth.iban.fromBban('ETHXREGGAVOFYORK');
+console.log(i.toString()); // "XE81ETHXREGGAVOFYORK"
 ```
 
 ***
@@ -2151,6 +2153,7 @@ var i = web3.eth.iban.createIndirect({
   institution: "XREG",
   identifier: "GAVOFYORK"
 });
+console.log(i.toString()); // "XE81ETHXREGGAVOFYORK"
 ```
 
 ***
