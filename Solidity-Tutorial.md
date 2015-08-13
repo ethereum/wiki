@@ -442,8 +442,7 @@ shaves off one level in the type from the right).
 
 Arrays have a `length` member to hold their number of elements.
 Dynamic arrays can be resized in storage (not in memory) by changing the
-`.length` member. The size of memory arrays is fixed (but dynamic, i.e. it
-can depend on runtime parameters) once they are created.
+`.length` member. This does not happen automatically when attempting to access elements outside the current length. The size of memory arrays is fixed (but dynamic, i.e. it can depend on runtime parameters) once they are created.
 
 Variables of type `bytes` and `string` are special arrays. A `bytes` is similar to `byte[]`,
 but it is packed tightly in calldata. `string` is equal to `bytes` but does not allow
