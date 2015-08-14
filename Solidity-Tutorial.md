@@ -689,15 +689,12 @@ Assigning *to* a state variable always creates an independent copy. On the other
 
 ## Exceptions
 
-Currently, there are three situations, where exceptions can happen in Solidity:
+Currently, there are two situations, where exceptions can happen in Solidity:
 
 1. If you access an array beyond its length (i.e. `x[i]` where `i >= x.length`)
-2. If a non-existing function on a contract is called.
-3. If a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself).
+2. If a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself).
 
 In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state. The reason for this is that there is no safe way to continue execution, because an expected effect did not occur. Because we want to retain the atomicity of transactions, the safest thing to do is to revert all changes and make the whole transaction (or at least call) without effect.
-
-There is one situation where we would like to avoid reverting the changes: If we want contracts to receive ether without actual function calls. In this case, there is no "ordinary" function to receive the call and thus an exception would be triggered. To avoid this, the [fallback function](#fallback-functions) `function() {...}` can be added to the contract which is called when no other function matches the function identifier.
 
 It is planned to also throw and catch exceptions manually.
 
