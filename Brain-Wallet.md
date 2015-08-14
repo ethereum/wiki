@@ -16,8 +16,7 @@ END FUNCTION
 See [C++ implementation](https://github.com/ethereum/cpp-ethereum/blob/develop/libethcore/KeyManager.cpp#L215-L225) for an example.
 
 
-
-Comments (Gustav):
+### **Comments (Gustav):**
 
 Recent advancement in brain wallet cracking [1] show how vulnerable brain wallets are to weak passwords. Applying a KDF hardens brain wallets by reducing number of passwords an attacker can generate per second.
 
