@@ -65,7 +65,7 @@ The type system in Solidity revolves largely around the 256-bit word size of the
 - `real`: 256-bit signed fixed-point quantity, 127-bit left of the point, 128-bit right.
 - `bytes32`: sequence of 32 bytes (256 bit in total).
 
-In addition to these, there is the intrinsic `address` type used for identifying specific accounts and a bool type for representing two and false:
+In addition to these, there is the intrinsic `address` type used for identifying specific accounts and a bool type for representing true and false:
 
 - `address`: account identifier, 160-bits.
 - `bool`: two-state value.
