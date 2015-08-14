@@ -106,7 +106,7 @@ var y = 69.42;	// here, "var" is equivalent to "real".
 
 ## Literals
 
-Solidity includes three of types of literals; these are used for expressing specific, well-known values.
+Solidity includes three types of literals; these are used for expressing specific, well-known values.
 
 # Integers
 
