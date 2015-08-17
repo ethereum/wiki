@@ -1,5 +1,7 @@
 Although Ethereum allows developers to create absolutely any kind of application without restriction to specific feature types, and prides itself on its "lack of features", there is nevertheless a need to standardize certain very common use cases in order to allow users and applications to more easily interact with each other. This includes sending currency units, registering names, making offers on exchanges, and other similar functions. A standard typically consists of a set of function signatures for a few methods, eg. `send`, `register`, `delete`, providing the set of arguments and their formats in the [Ethereum contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI) language.
 
+Please note that these "standards" have been developed independently by a third-party developer, and does not necessarily have endorsement from the core developers.
+
 The standards described below have sample implementations available at https://github.com/ethereum/pyethereum/blob/develop/ethereum/tests/test_solidity.py
 
 All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinTransfer`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_offerId`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_addr` when generic, and otherwise if a more specific description exists (eg. `from`, `_to`).
@@ -21,6 +23,11 @@ The `sendCoinFrom` is used for a "direct debit" workflow, allowing contracts to 
 Events:
 
 * `event CoinTransfer(address indexed from, address indexed to, uint256 value)`: triggered when money is sent
+
+
+### Advanced Assets
+
+Some assets 
 
 ### Decentralized exchanges
 
