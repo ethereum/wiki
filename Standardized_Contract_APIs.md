@@ -25,10 +25,6 @@ Events:
 * `event CoinTransfer(address indexed from, address indexed to, uint256 value)`: triggered when money is sent
 
 
-### Advanced Assets
-
-Some assets 
-
 ### Decentralized exchanges
 
 * `placeOrder(address _offerCurrency, uint256 _offerValue, address _wantCurrency, uint256 _wantValue) returns (uint256 _offerId)`: express a desire to give up `_offerValue` units of `_offerCurrency` in exchange for `_wantValue` units of `_wantCurrency`. The exchange may or may not fill orders partially. Optionally returns an ID for the offer. `_offerCurrency` and `_wantCurrency` are the addresses of the master contracts for the currencies in question.
