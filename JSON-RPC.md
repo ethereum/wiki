@@ -154,6 +154,7 @@ The following options are possible for the defaultBlock parameter:
 * [eth_getLogs](#eth_getlogs)
 * [eth_getWork](#eth_getwork)
 * [eth_submitWork](#eth_submitwork)
+* [eth_submiHashrate](#eth_submitHashrate)
 * [db_putString](#db_putstring)
 * [db_getString](#db_getstring)
 * [db_putHex](#db_puthex)
@@ -1745,6 +1746,43 @@ curl -X POST --data '{"jsonrpc":"2.0", "method":"eth_submitWork", "params":["0x0
 // Result
 {
   "id":1,
+  "jsonrpc":"2.0",
+  "result": true
+}
+```
+
+***
+
+#### eth_submitHashrate
+
+Used for submitting mining hashrate.
+
+
+##### Parameters
+
+1. `Hashrate`, an int with the hashrate
+2. `ID`, String - A random hexadecimal(32 bytes) ID identifying the client
+
+```js
+params: [
+  1568939,
+  "0x59daa26581d0acd1fce254fb7e85952f4c09d0915afd33d3886cd914bc7d283c"
+]
+```
+
+##### Returns
+
+`Boolean` - returns `true` if submitting went through succesfully and `false` otherwise.
+
+
+##### Example
+```js
+// Request
+curl -X POST --data '{"jsonrpc":"2.0", "method":"eth_submitHashrate", "params":[155652, "0x59daa26581d0acd1fce254fb7e85952f4c09d0915afd33d3886cd914bc7d283c"],"id":73}'
+
+// Result
+{
+  "id":73,
   "jsonrpc":"2.0",
   "result": true
 }
