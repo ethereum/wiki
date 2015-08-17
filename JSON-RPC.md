@@ -1760,12 +1760,12 @@ Used for submitting mining hashrate.
 
 ##### Parameters
 
-1. `Hashrate`, an int with the hashrate
+1. `Hashrate`, a hexadecimal string representation (32 bytes) of the hash rate 
 2. `ID`, String - A random hexadecimal(32 bytes) ID identifying the client
 
 ```js
 params: [
-  1568939,
+  "0x0000000000000000000000000000000000000000000000000000000000500000",
   "0x59daa26581d0acd1fce254fb7e85952f4c09d0915afd33d3886cd914bc7d283c"
 ]
 ```
@@ -1778,7 +1778,7 @@ params: [
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0", "method":"eth_submitHashrate", "params":[155652, "0x59daa26581d0acd1fce254fb7e85952f4c09d0915afd33d3886cd914bc7d283c"],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0", "method":"eth_submitHashrate", "params":["0x0000000000000000000000000000000000000000000000000000000000500000", "0x59daa26581d0acd1fce254fb7e85952f4c09d0915afd33d3886cd914bc7d283c"],"id":73}'
 
 // Result
 {
