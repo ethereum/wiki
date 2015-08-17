@@ -154,7 +154,7 @@ The following options are possible for the defaultBlock parameter:
 * [eth_getLogs](#eth_getlogs)
 * [eth_getWork](#eth_getwork)
 * [eth_submitWork](#eth_submitwork)
-* [eth_submiHashrate](#eth_submitHashrate)
+* [eth_submitHashrate](#eth_submitHashrate)
 * [db_putString](#db_putstring)
 * [db_getString](#db_getstring)
 * [db_putHex](#db_puthex)
