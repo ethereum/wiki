@@ -49,6 +49,7 @@
 - [Whisper Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
 - [PoC-1 Wire protocol](https://github.com/ethereum/wiki/wiki/Whisper-Wire-Protocol)
 - [PoC-1 Whitepaper](https://github.com/ethereum/wiki/wiki/Whisper-PoC-1-Protocol-Spec)
+- [PoC-2 Wire protocol](https://github.com/ethereum/wiki/wiki/Whisper-PoC-2-Wire-Protocol)
 
 ### Ðapp Development
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
