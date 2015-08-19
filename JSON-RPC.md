@@ -2017,7 +2017,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_post","params":[{"from":"0xc
 
 ***
 
-#### shh_newIdentinty
+#### shh_newIdentity
 
 Creates new whisper identity in the client.
 
