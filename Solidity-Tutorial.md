@@ -1152,7 +1152,7 @@ Unfortunately, there are some subtleties the compiler does not yet warn you abou
 
  - If you use `StructName x` or `uint[] x` as a local variable, it **has** to be assigned from a state variable,
    otherwise it behaves like a "null pointer" to storage, so you cannot use it on its own.
-   Please read about [data locations](#data-location). The most common solution for `StructName x` is to use `StructName memory x`.
+   Please read about [data locations](#data-location). The most common solution is to use `StructName memory x` or `uint[] memory x`.
 
 ## Cheatsheet
 
