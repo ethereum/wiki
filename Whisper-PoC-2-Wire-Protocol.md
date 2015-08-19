@@ -25,4 +25,27 @@ For the Whisper sub-protocol, upon an active session, a `Status` message must be
 
 ### Bloomed Topics
 
-The Bloom filter used in the `TopicFilter` message type is a means a identifying a number of topics to a peer without compromising (too much) privacy over precisely what topics are of interest. Precise control over the information content (and thus efficiency of the filter) may be maintained through the addition of bits. 
+The Bloom filter used in the `TopicFilter` message type is a means a identifying a number of topics to a peer without compromising (too much) privacy over precisely what topics are of interest. Precise control over the information content (and thus efficiency of the filter) may be maintained through the addition of bits.
+
+Blooms are formed by the bitwise OR operation on a number of bloomed topics. The bloom function takes the abridged topic (the first four bytes of the SHA3 of the ÐApp/user level topic description) and projects them onto a 512-bit slice; in total, three bits are marked for each bloomed topic.
+
+The projection function is defined as a mapping from a a 4-byte slice `S` to a 512-bit slice `D`; for ease of explanation, `S` will dereference to bytes, whereas `D` will dereference to bits.
+
+```
+FOREACH i IN { 0, 1, 2 } DO
+LET n = S[i]
+IF S[3] & (2 ** i) THEN n += 512
+D[n] = 1
+END FOR
+```
+
+In formal notation:
+```
+D[i] := f(0) == i || f(1) == i || f(2) == i
+```
+where:
+```
+f(x) := S[x] + S[3][x] * 512
+```
+(assuming a byte value `S[i]` may be further dereferenced into a bit value)
+
