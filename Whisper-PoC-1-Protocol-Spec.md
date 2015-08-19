@@ -66,9 +66,11 @@ Four bytes was chosen to minimise space should a large number of topics be menti
 
 ### Messages
 
-A message is formed as the concatenation of a single byte for flags (at present only a single flag is used), followed by any additional data (as stipulated by the flags) and finally the actual payload. This series of bytes is what forms the `data` item of the envelope, however, it may be encrypted.
+A message is formed as the concatenation of a single byte for flags (at present only a single flag is used), followed by any additional data (as stipulated by the flags) and finally the actual payload. This series of bytes is what forms the `data` item of the envelope and is always encrypted.
 
-Notably, no explicit indication is given that the data field is encrypted; any would-be readers of the message must know ahead of time, through the choice of topic that they have specifically filtered for, that the message is encrypted with a particular key. Any determination that the message is indeed from a particular sender is left for a higher-level to address. This is noted through the Javascript API allowing the `to` parameter to be passed only at the point of specifying the filter. Since the signature is a part of the message and not outside in the envelope, those unable to decrypt the message data are also unable to access any signature.
+In the present protocol version, no explicit authentication token is given to indicate that the data field is encrypted; any would-be readers of the message must know ahead of time, through the choice of topic that they have specifically filtered for, that the message is encrypted with a particular key. This is likely to be altered in a further PoC to include a MAC.
+
+Any determination that the message is indeed from a particular sender is left for a higher-level to address. This is noted through the Javascript API allowing the `to` parameter to be passed only at the point of specifying the filter. Since the signature is a part of the message and not outside in the envelope, those unable to decrypt the message data are also unable to access any signature.
 
 - `flags`: 1 byte
 - (`signature`: 65 bytes)
@@ -76,7 +78,13 @@ Notably, no explicit indication is given that the data field is encrypted; any w
 
 Bit 0 of the flags determines whether the signature exists. All other bits are not yet given a purpose and should be set randomly. A message is invalid if bit 0 is set but the total data is less than 66 bytes (since this wouldn't allow it to contain a signature).
 
-Payloads, if encrypted, are encrypted using ECIES with the accessing-identity's SECP-256k1 public key. The signature, if provided, is the SHA3-256 hash of the unencrypted payload signed using ECDSA with the insertion-identity's secret key.
+Payloads are encrypted in one of two ways. If the message has a specific recipient, then by using ECIES with the specific recipient's SECP-256k1 public key. If the message has no recipient, then by AES-256 with a randomly generated key. This key is then XORed with each of the *full* topics to form a salted topic. Each salted topic is stored prior to the encrypted data *in the same order as the corresponding topics are in the envelope header*.
+
+As a recipient, payloads are decrypted in one of two ways. Through use of topics, it should be known whether the envelope is encrypted to a specific recipient (in which case use the private key to decrypt) or to a general multicast audience. In the latter case, we assume that at least one topic is known (since otherwise, the envelope could not be properly "identified"). In this case, we match the known *full* topic to one of the abridged topics in the envelope, determine the index and de-salt the according salted-key at the beginning of the data segment in order to retrieve the final key.
+
+Encryption using the full topic with "routing" using the abridged topic ensures that nodes which are merely transiently storing the message and have no interest in the contents (thus have access only to routing information via the abridged topics) have no intrinsic ability to read the content of the message.
+
+The signature, if provided, is the SHA3-256 hash of the unencrypted payload signed using ECDSA with the insertion-identity's secret key.
 
 The signature portion is formed as the concatenation of the *r*, *s* and *v* parameters of the SECP-256k1 ECDSA signature, in that order. `v` is non-normalised and should be either 27 or 28. `r` and `s` are both big-endian encoded, fixed-width 32-byte unsigned.
 
