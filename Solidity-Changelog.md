@@ -1,3 +1,6 @@
+### 0.1.2 (2015-08-20)
+
+ * Improved commandline interface.
  * Explicit conversion between `bytes` and `string`.
  * Bugfix: Value transfer used in clone contracts.
  * Bugfix: Problem with strings as mapping keys.
