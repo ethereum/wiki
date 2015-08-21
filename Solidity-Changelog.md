@@ -1,3 +1,5 @@
+ * Bugfix: Propagate exceptions in clone contracts.
+
 ### 0.1.2 (2015-08-20)
 
  * Improved commandline interface.
