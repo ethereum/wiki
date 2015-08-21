@@ -581,10 +581,10 @@ namespace and are mainly used to provide information about the blockchain.
 
 ### Cryptographic Functions
 
- - `sha3(...) returns (bytes32)`: compute the SHA-3 hash of the (tightly packed) arguments
+ - `sha3(...) returns (bytes32)`: compute the Ethereum-SHA-3 hash of the (tightly packed) arguments
  - `sha256(...) returns (bytes32)`: compute the SHA-256 hash of the (tightly packed) arguments
  - `ripemd160(...) returns (bytes20)`: compute RIPEMD-160 hash of the (tightly packed) arguments
- - `ecrecover(bytes32, byte, bytes32, bytes32) returns (address)`: recover public key from elliptic curve signature
+ - `ecrecover(bytes32, byte, bytes32, bytes32) returns (address)`: recover public key from elliptic curve signature - arguments are (data, v, r, s)
 
 In the above, "tightly packed" means that the arguments are concatenated without padding, i.e.
 `sha3("ab", "c") == sha3("abc") == sha3(0x616263) == sha3(6382179) = sha3(97, 98, 99)`. If padding is needed, explicit type conversions can be used.
@@ -1171,7 +1171,7 @@ Unfortunately, there are some subtleties the compiler does not yet warn you abou
  - `now` (`uint`): current block timestamp (alias for `block.timestamp`)
  - `tx.gasprice` (`uint`): gas price of the transaction
  - `tx.origin` (`address`): sender of the transaction (full call chain)
- - `sha3(...) returns (bytes32)`: compute the SHA3 hash of the (tightly packed) arguments
+ - `sha3(...) returns (bytes32)`: compute the Ethereum-SHA3 hash of the (tightly packed) arguments
  - `sha256(...) returns (bytes32)`: compute the SHA256 hash of the (tightly packed) arguments
  - `ripemd160(...) returns (bytes20)`: compute RIPEMD of 256 the (tightly packed) arguments
  - `ecrecover(bytes32, byte, bytes32, bytes32) returns (address)`: recover public key from elliptic curve signature
