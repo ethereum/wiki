@@ -555,7 +555,7 @@ Calling that function will return `2FBEBD38` which is the hash of the signature 
 
 ## Constant variables
 [PT](https://www.pivotaltracker.com/story/show/86670364)
-Added `constant` specifier for uint, mapping and bytesXX types. Variables declared with `constant` specifier should be initialized at declaration time and can not be changed later. For now local variables can not be constant. Constant variables are not stored in Storage.
+Added `constant` specifier for uint, mapping and bytesXX types. Variables declared with `constant` specifier should be initialized at declaration time and can not be changed later. For now local variables can not be constant. Constant variables are not stored in Storage. For now 'constant' specifier is valid only for uint, bytesXX and enum types.
 
 ```
 contract Foo {
