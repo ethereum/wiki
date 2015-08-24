@@ -26,7 +26,7 @@ Then edit the `app.json` file in it to configure for your node:
 Finally run the process with:
 
 ```
-pm2 start app.json
+pm2 start app.js
 ```
 
 Several commands are available:
