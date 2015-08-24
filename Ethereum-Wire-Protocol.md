@@ -10,7 +10,7 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 ### Ethereum Sub-protocol
 
 **Status**
-[`+0x00`: `P`, `protocolVersion`: `P`, `networkId`: `P`, `td`: `P`, `bestHash`: `B_32`, `genesisHash`: `B_32` **{ PV61:** , `number`: `P` **}**] Inform a peer of it's current **ethereum** state. This message should be sent _after_ the initial handshake and _prior_ to any **ethereum** related messages.
+[`+0x00`: `P`, `protocolVersion`: `P`, `networkId`: `P`, `td`: `P`, `bestHash`: `B_32`, `genesisHash`: `B_32`] Inform a peer of it's current **ethereum** state. This message should be sent _after_ the initial handshake and _prior_ to any **ethereum** related messages.
 * `protocolVersion` is one of:
     * `0x00` for PoC-1;
     * `0x01` for PoC-2;
@@ -22,7 +22,6 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 * `td`: Total Difficulty of the best chain. Integer, as found in block header.
 * `bestHash`: The hash of the best (i.e. highest TD) known block.
 * `genesisHash`: The hash of the Genesis block.
-* `number`: The number of the latest block.
 
 **NewBlockHashes**
 [`+0x01`: `P`, `hash1`: `B_32`, `hash2`: `B_32`, `...`] Specify one or more new blocks which have appeared on the network. To be maximally helpful, nodes should inform peers of all blocks that they may not be aware of. Including hashes that the sending peer could reasonably be considered to know (due to the fact they were previously informed of because that node has itself advertised knowledge of the hashes through `NewBlockHashes`) is considered Bad Form, and may reduce the reputation of the sending node. Including hashes that the sending node later refuses to honour with a proceeding `GetBlocks` message is considered Bad Form, and may reduce the reputation of the sending node.
