@@ -179,4 +179,15 @@ TODD
 
 ## Bundle your Ðapp
 
-TODO
+To bundle your Ðapp into a local standalone file use [meteor-build-client](https://github.com/frozeman/meteor-build-client):
+
+```bash
+$ npm install -g meteor-build-client
+$ cd myDapp
+$ meteor-build-client ../build ---path ""
+
+This will put your Ðapps static files into the build folder, above your `myDapp` folder.
+
+The last option `--path` will make the linking of all files relative, allowing you to start the app by simply clicking the `build/index.html`.
+
+In the future you will be able to simply upload your Ðapp on swarm.
