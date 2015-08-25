@@ -185,6 +185,7 @@ To bundle your Ðapp into a local standalone file use [meteor-build-client](http
 $ npm install -g meteor-build-client
 $ cd myDapp
 $ meteor-build-client ../build ---path ""
+```
 
 This will put your Ðapps static files into the build folder, above your `myDapp` folder.
 
