@@ -26,7 +26,7 @@ def rlp_encode(input):
     if isinstance(input,str):
         if len(input) == 1 and chr(input) < 128: return input
         else: return encode_length(len(input),128) + input
-     elif isinstance(input,list):
+    elif isinstance(input,list):
         output = ''
         for item in input: output += rlp_encode(item)
         return encode_length(len(output),192) + output
