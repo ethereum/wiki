@@ -30,9 +30,9 @@ The `sendCoinFrom` method is used for a "direct debit" workflow, allowing contra
     approve(address _addr) returns (bool _success)
 Allow `_addr` to direct debit from your account with full custody. Only implement if absolutely required and use carefully. See `approveOnce` below for a more limited method.
 
-#### disapprove
-    disapprove(address _addr) returns (bool _success)
-Disapprove address `_addr` to direct debit from your account if it was previously approved. Must reset both one-time and full custody approvals.
+#### unapprove
+    unapprove(address _addr) returns (bool _success)
+Unapprove address `_addr` to direct debit from your account if it was previously approved. Must reset both one-time and full custody approvals.
 
 #### isApproved
     isApproved(address _proxy) constant returns (bool _r)
