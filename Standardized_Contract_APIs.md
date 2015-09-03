@@ -74,49 +74,49 @@ Registries (eg. domain name systems) have the following API:
 
 ### Methods
 #### reserve
-    reserve(bytes32 _name) returns (bool _success)
+    reserve(string _name) returns (bool _success)
 Reserves a name and sets its owner to you if it is not yet reserved.
 
 #### owner
-    owner(bytes32 _name) constant returns (address _r)
+    owner(string _name) constant returns (address _r)
 Get the owner of a particular name.
 
 #### transfer
-    transfer(bytes32 _name, address _newOwner)
+    transfer(string _name, address _newOwner)
 Transfer ownership of a name.
 
 #### setAddr
-    setAddr(bytes32 _name, address _addr)
+    setAddr(string _name, address _addr)
 Set the primary address associated with a name (similar to an A record in traditional DNS.)
 
 #### addr
-    addr(bytes32 _name) constant returns (address _r)
+    addr(string _name) constant returns (address _r)
 Get the primary address associated with a name.
 
 #### setContent
-    setContent(bytes32 _name, bytes32 _content)
+    setContent(string _name, bytes32 _content)
 If you are the owner of a name, sets its associated content.
 
 #### content
-    content(bytes32 _name) constant returns (bytes32 _r)
+    content(string _name) constant returns (bytes32 _r)
 Get the content associated with a name.
 
 #### setSubRegistrar
-    setSubRegistrar(bytes32 _name, address _subRegistrar)
+    setSubRegistrar(string _name, address _subRegistrar)
 Records the name as referring to a sub-registrar at the given address.
 
 #### subRegistrar
-    subRegistrar(bytes32 _name) constant returns (address _r)
+    subRegistrar(string _name) constant returns (address _r)
 Gets the sub-registrar associated with the given name.
 
 #### disown
-    disown(bytes32 _name)
+    disown(string _name)
 Relinquishes control over a name that you currently control.
 
 ### Events
 
 #### Changed
-    event Changed(bytes32 indexed name)
+    event Changed(string indexed name)
 Triggered when changed to a domain happen.
 
 
