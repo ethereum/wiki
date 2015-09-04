@@ -116,7 +116,7 @@ Relinquishes control over a name that you currently control.
 ### Events
 
 #### Changed
-    event Changed(string indexed name)
+    event Changed(string name, bytes32 indexed __hash_name)
 Triggered when changed to a domain happen.
 
 
