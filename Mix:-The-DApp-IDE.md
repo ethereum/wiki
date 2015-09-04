@@ -12,7 +12,7 @@ This tutorial assumes you have installed [from source](https://github.com/ethere
 
 Let's create a simple ÐApp that will allow user to store and query personal movie ratings.
 
-In the IDE, choose `File > New Project`. Enter the contract name "MovieRatings" and a path for the project file. To the left there is a project items list with two items added by default: Contract and index.html. Contract contains [Solidity](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial) contract code, and index.html is for the front-end. You can add new contract files to the project using file menu. All files will be copied to the project directory.
+In the IDE, choose `File > New Project`. Enter the project name "MovieRatings" and a path for the project file. To the left there is a project items list with two items added by default: Contract and index.html. Contract contains [Solidity](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial) contract code, and index.html is for the front-end. You can add new contract files to the project using file menu. All files will be copied to the project directory.
 
 Select Contract and enter the text for the rating contract:
 
