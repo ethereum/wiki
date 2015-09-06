@@ -30,10 +30,6 @@ Allow `_addr` to direct debit from your account with full custody. Only implemen
     unapprove(address _addr) returns (bool _success)
 Unapprove address `_addr` to direct debit from your account if it was previously approved. Must reset both one-time and full custody approvals.
 
-#### isApproved
-    isApproved(address _proxy) constant returns (bool _r)
-Returns 1 if `_proxy` is allowed to direct debit from your account.
-
 #### isApprovedFor
     isApprovedFor(address _target, address _proxy) constant returns (bool _r)
 Returns 1 if `_proxy` is allowed to direct debit from `_target`
@@ -41,10 +37,6 @@ Returns 1 if `_proxy` is allowed to direct debit from `_target`
 #### approveOnce
     approveOnce(address _addr, uint256 _maxValue)
 Makes a one-time approval for `_addr` to send a maximum amount of currency equal to `_maxValue`
-
-#### isApprovedOnce
-    isApprovedOnce(address _proxy) returns (uint _maxValue)
-Returns `_maxValue` if `_proxy` is allowed to direct debit the returned `_maxValue` from your account only once. The approval must be reset on any transfer by `_proxy` of `_maxValue` or less.
 
 #### isApprovedOnceFor
     isApprovedOnceFor(address _target, address _proxy) returns (uint _maxValue)
