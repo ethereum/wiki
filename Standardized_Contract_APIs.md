@@ -15,10 +15,6 @@ Send `_value` amount of coins to address `_to`
     sendCoinFrom(address _from, uint _value, address _to) returns (bool _success)
 Send `_value` amount of coins from address `_from` to address `_to`
 
-#### coinBalance
-    coinBalance() constant returns (uint _r)
-Get your coin balance.
-
 #### coinBalanceOf
     coinBalanceOf(address _addr) constant returns (uint _r)
 Get the coin balance of another account with address `_addr`
