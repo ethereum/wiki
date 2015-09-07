@@ -1,14 +1,13 @@
-There are three official Ethereum implementations. Being official, they have been developed in-house, primarily by each of the three DEV directors. All three have passed our "gold standard" Yellow Paper consensus tests, which test much of the consensus algorithm. All have been subject to a rigorous external audit of the security and attack resilience.
+With five clients out there, it can be confusing to work out which one to download and use. That's why we made this page for you!
+
+There are three families of official Ethereum implementations. All three have passed our "gold standard" Yellow Paper consensus tests, which test much of the consensus algorithm. All have been subject to a rigorous external audit of the security and attack resilience. That is where the similarities end, though. This page describes the differences between each of the clients.
 
 |   |C++ ("AlethOne", "AlethZero", "eth")|Go ("geth")|Python|
 |---|---|---|---|
 |Historical Consensus Flaws|0|4|0|
-|Internal GPU mining|YES|NO|NO|
-|External mining ("ethminer")|YES|YES|YES|
+|Built-in GPU mining|YES|SOON|NO|
 |Viable on RPi|YES|NO|NO|
 |Chain import benchmark for 1,000,000 blocks of Olympic|4:41|?|?|
-
-With more than 5 clients out there, it can be confusing to work out which one to download and use. That's why we made this page for you!
 
 ### AlethOne: Desktop client for mining
 - Based on C++ implementation (0 Frontier consensus bugs)
