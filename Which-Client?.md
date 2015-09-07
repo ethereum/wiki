@@ -1,6 +1,6 @@
 There are three official Ethereum implementations. Being official, they have been developed in-house, primarily by each of the three DEV directors. All three have passed our "gold standard" Yellow Paper consensus tests, which test much of the consensus algorithm. All have been subject to a rigorous external audit of the security and attack resilience.
 
-|   |C++ ("AlethZero", "eth")|Go ("geth")|Python|
+|   |C++ ("AlethOne", "AlethZero", "eth")|Go ("geth")|Python|
 |---|---|---|---|
 |Historical Consensus Flaws|0|4|0|
 |Internal GPU mining|YES|NO|NO|
@@ -10,13 +10,12 @@ There are three official Ethereum implementations. Being official, they have bee
 
 With more than 5 clients out there, it can be confusing to work out which one to download and use. That's why we made this page for you!
 
-### eth: Daemon and console client
+### AlethOne: Desktop client for mining
 - Based on C++ implementation (0 Frontier consensus bugs)
-- + JSONRPC host
-- + Private chains
-- + Transaction confirmation security with whitelists
-- + Database-rescue
-- X Text mode only
+- + No-nonsense interface 
+- + Supports solo, pool and farm mining
+- + Provides basic wallet with TruGas optimised gas usage system
+- X No advanced wallet
 
 ### AlethZero: Power-user desktop client
 - Based on C++ implementation (0 Frontier consensus bugs)
@@ -30,15 +29,16 @@ With more than 5 clients out there, it can be confusing to work out which one to
 - + Many more useful features
 - X Complex
 
-### AlethOne: Desktop client for mining
+### eth: Daemon and console client
 - Based on C++ implementation (0 Frontier consensus bugs)
-- + No-nonsense interface 
-- + Supports solo, pool and farm mining
-- + Provides basic wallet with TruGas optimised gas usage system
-- X No advanced wallet
+- + JSONRPC host
+- + Private chains
+- + Transaction confirmation security with whitelists
+- + Database-rescue
+- X Text mode only
 
-### pyethereum: Scripting-friendly Python client
-- Based on Go implementation (0 Frontier consensus bugs)
+### pyethtool: Scripting-friendly Python client
+- Based on Python implementation (0 Frontier consensus bugs)
 - Command-line (text) interface
 - X Text mode only
 
