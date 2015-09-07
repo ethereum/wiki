@@ -38,7 +38,6 @@ There are three families of official Ethereum implementations. All three have pa
 
 ### pyethtool: Scripting-friendly Python client
 - Based on Python implementation (0 Frontier consensus bugs)
-- Command-line (text) interface
 - X Text mode only
 
 ### geth: Command-line (text) interface.
