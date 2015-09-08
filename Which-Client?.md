@@ -7,7 +7,7 @@ There are three families of official Ethereum implementations. All three have pa
 - If you are looking for a no-nonsense miner with simple wallet functionality for sending on your mined Ether, simply use AlethOne (TODO: Link to binaries).
 - If you are developing or debugging a contract, or need a more comprehensive wallet, blockchain explorer and development tool, use AlethZero (TODO: Link to binaries).
 - If you are looking for a CLI daemon to mine or interact with on a headless box, use either eth (TODO: Link) or geth (TODO: Link).
-- If you like Python and want a Python-langauge Ethereum implementation for experimenting, scripting and integrating, use pyethtool.
+- If you can read Python and want a Python-language Ethereum implementation for experimenting, scripting and integrating, use pyethtool.
 - If you like C++ and want a C++-language Ethereum implementation for experimenting and integrating, use libethereum and libwebthree.
 - If you like Go and want a Go-language Ethereum implementation for experimenting and integrating, use go-ethereum.
 - If you just want a wallet and DApp browser, get AlethFive, a prototype of which will hopefully be released later this week.
