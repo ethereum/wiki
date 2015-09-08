@@ -1,7 +1,18 @@
 With five clients out there, it can be confusing to work out which one to download and use. That's why we made this page for you!
 
-There are three families of official Ethereum implementations. All three have passed our "gold standard" Yellow Paper consensus tests, which test much of the consensus algorithm. All have been subject to a rigorous external audit of the security and attack resilience. That is where the similarities end, though. This page describes the differences between each of the clients.
+There are three families of official Ethereum implementations. All three have passed the suite of Yellow Paper consensus tests, which test much of the consensus algorithm. All have been subject to a rigorous external audit of the security and resilience to attack. That is where the similarities end, though. This page describes the differences between each of the families of clients and the clients themselves.
 
+## In Short
+
+- If you are looking for a no-nonsense miner with simple wallet functionality for sending on your mined Ether, simply use AlethOne (TODO: Link to binaries).
+- If you are developing or debugging a contract, or need a more comprehensive wallet, blockchain explorer and development tool, use AlethZero (TODO: Link to binaries).
+- If you are looking for a CLI daemon to mine or interact with on a headless box, use either eth (TODO: Link) or geth (TODO: Link).
+- If you like Python and want a Python-langauge Ethereum implementation for experimenting, scripting and integrating, use pyethtool.
+- If you like C++ and want a C++-language Ethereum implementation for experimenting and integrating, use libethereum and libwebthree.
+- If you like Go and want a Go-language Ethereum implementation for experimenting and integrating, use go-ethereum.
+- If you just want a wallet and DApp browser, get AlethFive, a prototype of which will hopefully be released later this week.
+
+## Details
 |   |C++ ("AlethOne", "AlethZero", "eth")|Go ("geth")|Python|
 |---|---|---|---|
 |Historical Consensus Flaws|0|4|1|
