@@ -8,16 +8,17 @@ There are three families of official Ethereum implementations. All three have pa
 |Built-in GPU mining|YES|SOON|NO|
 |Viable on RPi|YES|NO|NO|
 |Chain import benchmark for 1,000,000 blocks of Olympic|4:41|?|?|
+|Total heap security|YES|NO|NO|
 
 ### AlethOne: Desktop client for mining
-- Based on C++ implementation (0 Frontier consensus bugs)
+- *0 Frontier consensus bugs* (based on C++ implementation)
 - + No-nonsense interface 
 - + Supports solo, pool and farm mining
 - + Provides basic wallet with TruGas optimised gas usage system
 - X No advanced wallet
 
 ### AlethZero: Power-user desktop client
-- Based on C++ implementation (0 Frontier consensus bugs)
+- *0 Frontier consensus bugs* (based on C++ implementation)
 - + JSONRPC host
 - + Private chains
 - + Analytic block explorer
@@ -29,7 +30,7 @@ There are three families of official Ethereum implementations. All three have pa
 - X Complex
 
 ### eth: Daemon and console client
-- Based on C++ implementation (0 Frontier consensus bugs)
+- *0 Frontier consensus bugs* (based on C++ implementation)
 - + JSONRPC host
 - + Private chains
 - + Transaction confirmation security with whitelists
@@ -37,11 +38,11 @@ There are three families of official Ethereum implementations. All three have pa
 - X Text mode only
 
 ### pyethtool: Scripting-friendly Python client
-- Based on Python implementation (0 Frontier consensus bugs)
+- *1 Frontier consensus bug* (based on Python implementation)
 - X Text mode only
 
 ### geth: Command-line (text) interface.
-- Based on Go implementation (4 Frontier consensus bugs)
+- *4 Frontier consensus bugs* (based on Go implementation)
 - + JSONRPC host
 - + Private chains
 - X Text mode only
