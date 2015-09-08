@@ -4,7 +4,7 @@ There are three families of official Ethereum implementations. All three have pa
 
 |   |C++ ("AlethOne", "AlethZero", "eth")|Go ("geth")|Python|
 |---|---|---|---|
-|Historical Consensus Flaws|0|4|0|
+|Historical Consensus Flaws|0|4|1|
 |Built-in GPU mining|YES|SOON|NO|
 |Viable on RPi|YES|NO|NO|
 |Chain import benchmark for 1,000,000 blocks of Olympic|4:41|?|?|
