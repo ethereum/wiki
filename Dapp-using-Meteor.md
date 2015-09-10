@@ -178,7 +178,8 @@ If you now check your Ðapp in the browser you should see the latest block numbe
 TODO
 Short:
 - put ethereum related stuff into `client/lib/ethereum/somefile.js`
-- use `myCollection.observe({added: func, changed: func, removed: func})` to communicate to ethereum, keep ethereum logic out of your app as much as possible. This way you just write and read from your reactive collections and the observe functions will handle the rest (e.g. sendTransactions) and filters etc will adding logs etc to your collections. So you keep all the callback mess out of your app logic.
+- use `myCollection.observe({added: func, changed: func, removed: func})` to communicate to ethereum, keep ethereum logic out of your app as much as possible. This way you just write and read from your reactive collections and the observe functions will handle the rest (e.g. sendTransactions)
+- Filters etc will add logs etc to your collections. So you keep all the callback mess out of your app logic.
 
 
 ## Bundle your Ðapp
