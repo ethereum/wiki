@@ -737,7 +737,8 @@ contract OwnedToken {
 }
 contract TokenCreator {
   function createToken(bytes32 name) returns (address tokenAddress) {
-    // Create a new Token contract and return its address.
+    // Create a new Token contract and return its address. To get the address, this
+    // can only be called by another contract (not eth_call).
     return address(new OwnedToken(name));
   }
   function changeName(address tokenAddress, bytes32 name) {
