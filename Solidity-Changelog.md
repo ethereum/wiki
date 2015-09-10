@@ -1,6 +1,7 @@
  * Compiler option to output runtime part of contracts.
  * Bugfix: Accessors for constant public state variables.
  * Bugfix: Propagate exceptions in clone contracts.
+ * Bugfix: Empty single-line comments are now treated properly.
 
 ### 0.1.2 (2015-08-20)
 
