@@ -875,3 +875,37 @@ contract C {
   function inc(string _s) { counter[_s]++; }
 }
 ```
+
+## Libraries (without inheritance)
+
+[PT](https://www.pivotaltracker.com/n/projects/1189488/stories/82180360)
+
+Libraries are similar to contracts, but their purpose is that they are deployed only once at a specific address and their functions are called using CALLCODE, i.e. the library's code is called in the context of the calling contract.
+
+```js
+library Math {
+  function max(uint a, uint b) returns (uint) {
+    if (a > b) return a;
+    else return b;
+  }
+  function min(uint a, uint b) returns (uint) {
+    if (a < b) return a;
+    else return b;
+  }
+}
+contract C {
+  function register(uint value) {
+    value = Math.max(10, Math.min(100, value)); // clamp value to [10, 100]
+    // ...
+  }
+}
+```
+
+The calls to `Math.max` and `Math.min` are both compiled as calls (CALLCODEs) to an external contract. as the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker. If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Math______` (where `Math` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
+
+Restrictions for libraries in comparison to contracts:
+ - no state variables
+ - cannot inherit nor be inherited
+ - cannot have constructors
+
+(these might be lifted at a later point)
