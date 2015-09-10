@@ -906,6 +906,5 @@ The calls to `Math.max` and `Math.min` are both compiled as calls (CALLCODEs) to
 Restrictions for libraries in comparison to contracts:
  - no state variables
  - cannot inherit nor be inherited
- - cannot have constructors
 
 (these might be lifted at a later point)
