@@ -175,7 +175,11 @@ If you now check your Ðapp in the browser you should see the latest block numbe
 *This tutorial won't go into building apps with Meteor. For this please refer to the [Meteor's tutorials](https://www.meteor.com/tutorials/blaze/creating-an-app), [A list of good resources](https://www.meteor.com/tools/resources), [EventMinded](https://www.eventedmind.com) (payed tutorials) or books like [Building Single-page Web Apps with Meteor](https://www.packtpub.com/web-development/building-single-page-web-apps-meteor) or [Discover Meteor](http://discovermeteor.com).*
 
 
-TODD
+TODO
+Short:
+- put ethereum related stuff into `client/lib/ethereum/somefile.js`
+- use `myCollection.observe({added: func, changed: func, removed: func})` to communicate to ethereum, keep ethereum logic out of your app as much as possible. This way you just write and read from your reactive collections and the observe functions will handle the rest (e.g. sendTransactions) and filters etc will adding logs etc to your collections. So you keep all the callback mess out of your app logic.
+
 
 ## Bundle your Ðapp
 
