@@ -908,3 +908,11 @@ Restrictions for libraries in comparison to contracts:
  - cannot inherit nor be inherited
 
 (these might be lifted at a later point)
+
+How to use the commandline compiler to link binaries:
+
+New option `--libraries` to either give a file containing the library addresses or directly as a string (tries to open as a file). Syntax: `<libraryName>: <address> [, or Whitespace] ...`
+The address is a hex string that is optionally prefixed with `0x`.
+
+If solc is called with the option `--link`, all input files are interpreted to be unlinked binaries (hex-encoded) and are linked in-place (if the input is read from stdin, it is written to stdout).
+All options except `--libraries` are ignored (including `-o`).
