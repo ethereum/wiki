@@ -56,7 +56,7 @@ I recommend also to add the following packages:
 - [ethereum:accounts](https://atmospherejs.com/ethereum/accounts) - Gives you the reactive `EthAccounts` collection with all current available ethereum accounts, where balances will be automatically updated.
 - [ethereum:blocks](https://atmospherejs.com/ethereum/blocks) - Gives you the reactive `EthBlocks` collection with the latest 50 blocks. To get the lastest block use `EthBlocks.latest` (It will also have the latest default gasPrice)
 - [frozeman:template-var](https://atmospherejs.com/frozeman/template-var) - Gives you the `TemplateVar` object, that allows you to set reactive variables, which are template instance specific. See the [readme](https://atmospherejs.com/frozeman/template-var) for more.
-- [frozeman:persistent-minimongo](https://atmospherejs.com/frozeman/persistent-minimongo) - Allows you to auto persist your minimongo collection in local storage
+- [frozeman:persistent-minimongo2](https://atmospherejs.com/frozeman/persistent-minimongo2) - Allows you to auto persist your minimongo collection in local storage
 
 
 ## Start your Ðapp
