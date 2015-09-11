@@ -1,7 +1,9 @@
+ * Libraries that contain functions which are called via CALLCODE.
  * Compiler option to output runtime part of contracts.
  * Bugfix: Accessors for constant public state variables.
  * Bugfix: Propagate exceptions in clone contracts.
  * Bugfix: Empty single-line comments are now treated properly.
+ * Bugfix: Properly check the number of indexed arguments for events.
 
 ### 0.1.2 (2015-08-20)
 
