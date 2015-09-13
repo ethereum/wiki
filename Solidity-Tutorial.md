@@ -8,7 +8,7 @@ of the language.
 You can start using [Solidity in your browser](http://chriseth.github.io/cpp-ethereum),
 with no need to download or compile anything. This application only supports
 compilation - if you want to run the code or inject it into the blockchain, you
-have to use a client like [Geth](https://github.com/ethereum/go-ethereum) or AlethZero.
+have to use a client like [Geth](https://github.com/ethereum/go-ethereum) or [AlethZero](https://github.com/ethereum/alethzero).
 
 **Quick links:**
 
