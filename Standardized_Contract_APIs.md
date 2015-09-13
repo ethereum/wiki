@@ -35,7 +35,7 @@ Unapprove address `_addr` to direct debit from your account if it was previously
 Returns 1 if `_proxy` is allowed to direct debit from `_target`
 
 #### approveOnce
-    approveOnce(address _addr, uint256 _maxValue)
+    approveOnce(address _addr, uint256 _maxValue) returns (bool _success)
 Makes a one-time approval for `_addr` to send a maximum amount of currency equal to `_maxValue`
 
 #### isApprovedOnceFor
