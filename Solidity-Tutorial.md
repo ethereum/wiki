@@ -52,6 +52,7 @@ have to use a client like [Geth](https://github.com/ethereum/go-ethereum) or [Al
 	- [Exceptions](#exceptions)
 - [Contracts](#contracts)
 	- [Interfacing with other Contracts](#interfacing-with-other-contracts)
+	- [Libraries](#libraries)
 	- [Constructor Arguments](#constructor-arguments)
 	- [Contract Inheritance](#contract-inheritance)
 		- [Arguments for Base Constructors](#arguments-for-base-constructors)
@@ -713,7 +714,7 @@ contract OwnedToken {
   bytes32 name;
   function OwnedToken(bytes32 _name) {
     address nameReg = 0x72ba7d8e73fe8eb666ea66babc8116a41bfb10e2;
-    nameReg.call("register", _name);
+    nameReg.call("register", _name); // This is an unsafe raw call to another contract.
     owner = msg.sender;
     // We do an explicit type conversion from `address` to `TokenCreator` and assume that the type of
     // the calling contract is TokenCreator, there is no real way to check.
@@ -736,15 +737,16 @@ contract OwnedToken {
   }
 }
 contract TokenCreator {
-  function createToken(bytes32 name) returns (address tokenAddress) {
-    // Create a new Token contract and return its address. To get the address, this
-    // can only be called by another contract (not eth_call).
-    return address(new OwnedToken(name));
+  function createToken(bytes32 name) returns (OwnedToken tokenAddress) {
+    // Create a new Token contract and return its address.
+    // From the JavaScript side, the return type is simply "address", as this is the closest
+    // type available in the ABI.
+    // To get the address, this can only be called by another contract (not eth_call).
+    return new OwnedToken(name);
   }
-  function changeName(address tokenAddress, bytes32 name) {
-    // We need an explicit type conversion because contract types are not part of the ABI.
-    OwnedToken token = OwnedToken(tokenAddress);
-    token.changeName(name);
+  function changeName(OwnedToken tokenAddress, bytes32 name) {
+    // Again, the external type of "tokenAddress" is simply "address".
+    tokenAddress.changeName(name);
   }
   function isTokenTransferOK(address currentOwner, address newOwner) returns (bool ok) {
     // Check some arbitrary condition.
@@ -753,6 +755,41 @@ contract TokenCreator {
   }
 }
 ```
+
+## Libraries
+
+Libraries are similar to contracts, but their purpose is that they are deployed only once at a specific address and their code is reused using the CALLCODE feature of the EVM. This means that if library functions are called, their code is executed in the context of the calling contract, i.e. `this` points to the calling contract and especially the storage from the calling contract can be accessed (this is not yet possible from solidity).
+
+The following example illustrates how to use libraries. Note that the library given below is not a good example for a library, since the benefits of a library in terms of saving gas for code deployment are only visible starting from a certain size.
+```
+library Math {
+  function max(uint a, uint b) returns (uint) {
+    if (a > b) return a;
+    else return b;
+  }
+  function min(uint a, uint b) returns (uint) {
+    if (a < b) return a;
+    else return b;
+  }
+}
+contract C {
+  function register(uint value) {
+    // The library functions can be called without a specific instance of the library,
+    // since the "instance" will be the current contract.
+    value = Math.max(10, Math.min(100, value)); // clamp value to [10, 100]
+    // ...
+  }
+}
+```
+
+The calls to `Math.max` and `Math.min` are both compiled as calls (`CALLCODE`s) to an external contract. as the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker (see [Commandline Compiler] on how to use the commandline compiler for linking). If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Math______` (where `Math` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
+
+Restrictions for libraries in comparison to contracts:
+
+ - no state variables
+ - cannot inherit nor be inherited
+
+(these might be lifted at a later point)
 
 ## Constructor Arguments
 
