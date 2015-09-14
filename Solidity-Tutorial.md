@@ -155,7 +155,7 @@ A Solidity source file can contain an arbitrary number of contracts.
 **Other source files** can be referenced using `import "filename";` and the symbols
 defined there will also be available in the current source file. Note that
 the browser-based compiler does not support multiple files and if you are using
-the commandline compiler, you have to explicitly specify all files you will use
+the [commandline compiler](#using-the-commandline-compiler), you have to explicitly specify all files you will use
 as arguments, the compiler will not search your filesystem on its own.
 
 **Comments** Single-line comments (`//`) and multi-line comments (`/*...*/`) are possible, while
@@ -784,7 +784,7 @@ contract C {
 
 The calls to `Math.max` and `Math.min` are both compiled as calls (`CALLCODE`s) to an external contract. If you use libraries, take care that an actual external function call is performed, so `msg.sender` does not point to the original sender anymore but to the the calling contract and also `msg.value` contains the funds sent during the call to the library function.
 
-As the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker (see [Commandline Compiler] on how to use the commandline compiler for linking). If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Math______` (where `Math` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
+As the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker (see [Using the Commandline Compiler](#using-the-commandline-compiler) ) on how to use the commandline compiler for linking). If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Math______` (where `Math` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
 
 Restrictions for libraries in comparison to contracts:
 
