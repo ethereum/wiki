@@ -784,7 +784,7 @@ contract C {
 
 The calls to `Math.max` and `Math.min` are both compiled as calls (`CALLCODE`s) to an external contract. If you use libraries, take care that an actual external function call is performed, so `msg.sender` does not point to the original sender anymore but to the the calling contract and also `msg.value` contains the funds sent during the call to the library function.
 
-As the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker (see [Using the Commandline Compiler](#using-the-commandline-compiler) ) on how to use the commandline compiler for linking). If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Math______` (where `Math` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
+As the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker (see [Using the Commandline Compiler](#using-the-commandline-compiler) on how to use the commandline compiler for linking). If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Math______` (where `Math` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
 
 Restrictions for libraries in comparison to contracts:
 
@@ -1173,6 +1173,10 @@ return 1;
 even though the instructions contained a jump in the beginning.
 
 ## Using the Commandline Compiler
+
+One of the build targets of the Solidity repository is `solc`, the solidity commandline compiler.
+
+
 
 TODO, also speak about "import".
 
