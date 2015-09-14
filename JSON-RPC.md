@@ -575,7 +575,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x4
 
 #### eth_getTransactionCount
 
-Returns the number of transactions *send* from a address.
+Returns the number of transactions *sent* from an address.
 
 
 ##### Parameters
@@ -2031,7 +2031,7 @@ none
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentinty","params":[],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentity","params":[],"id":73}'
 
 // Result
 {
@@ -2092,7 +2092,7 @@ none
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentinty","params":[],"id":73}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newIdentity","params":[],"id":73}'
 
 // Result
 {
