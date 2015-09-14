@@ -1175,10 +1175,16 @@ even though the instructions contained a jump in the beginning.
 ## Using the Commandline Compiler
 
 One of the build targets of the Solidity repository is `solc`, the solidity commandline compiler.
+Using `solc --help` provides you with an explanation of all options. The compiler can produce various outputs, ranging from simple binaries and assembly over an abstract syntax tree (parse tree) to estimations of gas usage.
+If you only want to compile a single file, you run it as `solc --bin sourceFile.sol` and it will print the binary. Before you deploy your contract, activate the optimizer while compiling using `solc --optimize --bin sourceFile.sol`. If you want to get some of the more advanced output variants of `solc`, it is probably better to tell it to output everything to separate files using `solc -o outputDirectory --bin --ast --asm sourceFile.sol`.
 
+Of course, you can also specify several source files and actually that is also required if you use the `import` statement in Solidity: The compiler will (for now) not automatically discover source files for you, so you have to provide it with all source files your project consists of.
 
+If your contracts use [libraries](#libraries), you will notice that the bytecode contains substrings of the form `__LibraryName______`. You can use `solc` as a linker meaning that it will insert the library addresses for you at those points:
 
-TODO, also speak about "import".
+Either add `--libraries "Math:0x12345678901234567890 Heap:0xabcdef0123456" to your command to provide an address for each library or store the string in a file (one library per line) and run `solc` using `--libraries fileName`.
+
+If `solc` is called with the option `--link`, all input files are interpreted to be unlinked binaries (hex-encoded) in the `__LibraryName____`-format given above and are linked in-place (if the input is read from stdin, it is written to stdout). All options except `--libraries` are ignored (including `-o`) in this case.
 
 ## Tips and Tricks
 
