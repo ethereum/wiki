@@ -758,7 +758,7 @@ contract TokenCreator {
 
 ## Libraries
 
-Libraries are similar to contracts, but their purpose is that they are deployed only once at a specific address and their code is reused using the CALLCODE feature of the EVM. This means that if library functions are called, their code is executed in the context of the calling contract, i.e. `this` points to the calling contract and especially the storage from the calling contract can be accessed (this is not yet possible from solidity).
+Libraries are similar to contracts, but their purpose is that they are deployed only once at a specific address and their code is reused using the `CALLCODE` feature of the EVM. This means that if library functions are called, their code is executed in the context of the calling contract, i.e. `this` points to the calling contract and especially the storage from the calling contract can be accessed (this is not yet possible from solidity).
 
 The following example illustrates how to use libraries. Note that the library given below is not a good example for a library, since the benefits of a library in terms of saving gas for code deployment are only visible starting from a certain size.
 ```
@@ -782,7 +782,9 @@ contract C {
 }
 ```
 
-The calls to `Math.max` and `Math.min` are both compiled as calls (`CALLCODE`s) to an external contract. as the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker (see [Commandline Compiler] on how to use the commandline compiler for linking). If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Math______` (where `Math` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
+The calls to `Math.max` and `Math.min` are both compiled as calls (`CALLCODE`s) to an external contract. If you use libraries, take care that an actual external function call is performed, so `msg.sender` does not point to the original sender anymore but to the the calling contract and also `msg.value` contains the funds sent during the call to the library function.
+
+As the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker (see [Commandline Compiler] on how to use the commandline compiler for linking). If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Math______` (where `Math` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
 
 Restrictions for libraries in comparison to contracts:
 
