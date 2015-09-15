@@ -343,12 +343,13 @@ if(!web3.currentProvider)
 
 #### web3.reset
 
-    web3.reset()
+    web3.reset(keepIsSyncing)
 
 Should be called to reset state of web3. Resets everything except manager. Uninstalls all filters. Stops polling.
 
 ##### Parameters
-none
+
+1. `Boolean` - If `true` it will uninstall all filters, but will keep the [web3.eth.isSyncing()](web3ethissyncing) polls
 
 ##### Returns
 
