@@ -92,6 +92,8 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [eth](#web3eth)
     * [defaultAccount](#web3ethdefaultaccount)
     * [defaultBlock](#web3ethdefaultblock)
+    * [syncing/getSyncing](#web3ethsyncing)
+    * [isSyncing](#web3ethissyncing)
     * [coinbase/getCoinbase](#web3ethcoinbase)
     * [hashrate/getHashrate](#web3ethhashrate)
     * [gasPrice/getGasPrice](#web3ethgasprice)
@@ -728,6 +730,83 @@ console.log(defaultBlock); // 'latest'
 
 // set the default block
 web3.eth.defaultBlock = 231;
+```
+
+***
+
+#### web3.eth.syncing
+
+    web3.eth.syncing
+    // or async
+    web3.eth.getSyncing(callback(error, result){ ... })
+
+This property is read only and returns the either a sync object, when the node is syncing or `false`.
+
+##### Returns
+
+`Object|Boolean` - A sync object as follows, when the node is currently syncing or `false`:
+   - `startingBlock`: `Number` - The block number where the sync started.
+   - `currentBlock`: `Number` - The block number where at which block the node currently synced to already.
+   - `highestBlock`: `Number` - The estimated block number to sync to.
+
+##### Example
+
+```js
+var sync = web3.eth.syncing;
+console.log(sync);
+/*
+{
+   startingBlock: 300,
+   currentBlock: 312,
+   highestBlock: 512
+}
+*/
+```
+
+***
+
+#### web3.eth.isSyncing
+
+    web3.eth.syncing(callback);
+
+This convenience function calls the `callback` everytime a sync starts, updates and stops.
+
+##### Returns
+
+`Object` - a isSyncing object with the following methods:
+
+  * `syncing.addCallback()`: Adds another callback, which will be called when the node starts or stops syncing.
+  * `syncing.stopWatching()`: Stops the syncing callbacks.
+
+##### Callback return value
+
+- `Boolean` - The callback will be fired with `true` when the syncing starts and with `false` when it stopped.
+- `Object` - While syncing it will return the syncing object:
+   - `startingBlock`: `Number` - The block number where the sync started.
+   - `currentBlock`: `Number` - The block number where at which block the node currently synced to already.
+   - `highestBlock`: `Number` - The estimated block number to sync to.
+
+
+##### Example
+
+```js
+web3.eth.isSyncing(function(error, sync){
+    if(!error) {
+        // stop all app activity
+        if(sync === true) {
+           // we use `true`, so it stops all filters, but not the web3.eth.syncing polling
+           web3.reset(true);
+        
+        // show sync info, stop app calls etc
+        } else if(sync) {
+           console.log(sync.currentBlock);
+        
+        // regain app operation
+        } else {
+            // run your app init function...
+        }
+    }
+});
 ```
 
 ***
