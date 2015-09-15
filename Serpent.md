@@ -484,3 +484,6 @@ macro CONSTANT: 99
 ```
 
 * Be careful that if your flow requires going through a number of contracts, that someone can't just directly short-circuit and call one of your latter contracts with data they've manipulated elsewhere. Example: If you have contract C which gives someone ether, but relies on computation from Contract A->B->C, that someone can't just call B or C to give themselves ether.
+
+### Other
+http://mc2-umd.github.io/ethereumlab/docs/serpent_tutorial.pdf - some outdated but can generally be helpful
