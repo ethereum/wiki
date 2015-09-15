@@ -349,7 +349,7 @@ Should be called to reset state of web3. Resets everything except manager. Unins
 
 ##### Parameters
 
-1. `Boolean` - If `true` it will uninstall all filters, but will keep the [web3.eth.isSyncing()](web3ethissyncing) polls
+1. `Boolean` - If `true` it will uninstall all filters, but will keep the [web3.eth.isSyncing()](#web3ethissyncing) polls
 
 ##### Returns
 
