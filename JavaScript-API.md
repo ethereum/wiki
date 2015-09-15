@@ -798,11 +798,11 @@ web3.eth.isSyncing(function(error, sync){
            // we use `true`, so it stops all filters, but not the web3.eth.syncing polling
            web3.reset(true);
         
-        // show sync info, stop app calls etc
+        // show sync info
         } else if(sync) {
            console.log(sync.currentBlock);
         
-        // regain app operation
+        // re-gain app operation
         } else {
             // run your app init function...
         }
