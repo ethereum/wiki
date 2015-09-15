@@ -768,7 +768,7 @@ console.log(sync);
 
 #### web3.eth.isSyncing
 
-    web3.eth.syncing(callback);
+    web3.eth.isSyncing(callback);
 
 This convenience function calls the `callback` everytime a sync starts, updates and stops.
 
