@@ -1203,6 +1203,7 @@ Unfortunately, there are some subtleties the compiler does not yet warn you abou
  - If you use `StructName x` or `uint[] x` as a local variable, it **has** to be assigned from a state variable,
    otherwise it behaves like a "null pointer" to storage, so you cannot use it on its own.
    Please read about [data locations](#data-location). The most common solution is to use `StructName memory x` or `uint[] memory x`.
+ - In `for (var i = 0; i < arrayName.length; i++) { ... }`, the type of `i` will be `uint8`, because this is the smallest type that is required to hold the value `0`. If the array has more than 255 elements, the loop will not terminate.
 
 ## Cheatsheet
 
