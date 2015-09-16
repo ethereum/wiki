@@ -22,4 +22,7 @@ Bleeding edge code can be cloned from the develop branch of their git repositori
 - https://github.com/ethereum/go-ethereum
 - https://github.com/ethereum/pyethapp
 
+## Web Wallets
+- https://ethereumwallet.org
+
 To see the state of the latest Ethereum builds, see the [build server](http://build.ethdev.com/console).
