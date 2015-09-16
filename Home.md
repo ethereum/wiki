@@ -25,4 +25,4 @@ To see the state of the latest Ethereum builds, see the [build server](http://bu
 
 ## Web Wallets
 There are numerous web wallet solutions out there (with source-code published):
-- https://ethereumwallet.org
+- https://ethereumwallet.org (cryptographic operations are performed locally such that the private keys are never transmitted over the network)
