@@ -1,3 +1,4 @@
+ * `throw` statement.
  * Libraries that contain functions which are called via CALLCODE.
  * Linker stage for compiler to insert other contract's addresses (used for libraries).
  * Compiler option to output runtime part of contracts.
