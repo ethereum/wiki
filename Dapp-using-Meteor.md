@@ -181,6 +181,7 @@ Short:
 - use `myCollection.observe({added: func, changed: func, removed: func})` to communicate to ethereum, keep ethereum logic out of your app as much as possible. This way you just write and read from your reactive collections and the observe functions will handle the rest (e.g. sendTransactions)
 - Filters etc will add logs etc to your collections. So you keep all the callback mess out of your app logic.
 
+For an example see the [Ethereum-Wallet](https://github.com/ethereum/meteor-dapp-wallet).
 
 ## Bundle your Ðapp
 
