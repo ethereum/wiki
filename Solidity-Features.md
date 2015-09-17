@@ -924,9 +924,9 @@ All options except `--libraries` are ignored (including `-o`).
 throw is a statement that triggers a solidity exception and thus can be used to revert changes made during the transaction. It does not take any parameters and jumps to the error tag.
 ```
 contract Sharer {
-    function sendSomeEthers(address addr) returns (uint balance) {
-	    if (!addr.send(msg.value/2))
-	        throw; // also reverts the transfer to Sharer
+    function sendHalf(address addr) returns (uint balance) {
+        if (!addr.send(msg.value/2))
+            throw; // also reverts the transfer to Sharer
         return address(this).balance;
     }
 }
