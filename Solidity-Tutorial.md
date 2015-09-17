@@ -690,14 +690,11 @@ Assigning *to* a state variable always creates an independent copy. On the other
 
 ## Exceptions
 
-Currently, there are two situations, where exceptions can happen in Solidity:
+There are some cases where exceptions are thrown automatically (see below). You can use the `throw` instruction to throw an exception manually. The effect of an exception is that the currently executing call is stopped and reverted (i.e. all changes to the state and balances are undone) and the exception is also "bubbled up" through Solidity function calls (exceptions are `send` and the low-level functions `call` and `callcode`, those return `false` in case of an exception).
 
-1. If you access an array beyond its length (i.e. `x[i]` where `i >= x.length`)
-2. If a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself).
+Catching exceptions is not yet possible.
 
-In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state. The reason for this is that there is no safe way to continue execution, because an expected effect did not occur. Because we want to retain the atomicity of transactions, the safest thing to do is to revert all changes and make the whole transaction (or at least call) without effect.
-
-It is possible to throw an exception manually. Solidity will trigger the same "invalid jump". Catching exceptions is not yet possible.
+In the following example, we show how `throw` can be used to easily revert an Ether transfer and also how to check the return value of `send`:
 ```
 contract Sharer {
     function sendHalf(address addr) returns (uint balance) {
@@ -707,6 +704,13 @@ contract Sharer {
     }
 }
 ```
+
+Currently, there are two situations, where exceptions happen automatically in Solidity:
+
+1. If you access an array beyond its length (i.e. `x[i]` where `i >= x.length`)
+2. If a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself).
+
+Internally, Solidity performs an "invalid jump" when an exception is thrown and thus causes the EVM to revert all changes made to the state. The reason for this is that there is no safe way to continue execution, because an expected effect did not occur. Because we want to retain the atomicity of transactions, the safest thing to do is to revert all changes and make the whole transaction (or at least call) without effect.
 
 # Contracts
 
