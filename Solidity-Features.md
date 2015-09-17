@@ -920,4 +920,5 @@ All options except `--libraries` are ignored (including `-o`).
 ## Throw
 
 [PT](https://www.pivotaltracker.com/story/show/96275370)
+
 throw is a statement that triggers a solidity exception and thus can be used to revert changes made during the transaction. It does not take any parameters and jumps to the error tag.
