@@ -916,3 +916,8 @@ The address is a hex string that is optionally prefixed with `0x`.
 
 If solc is called with the option `--link`, all input files are interpreted to be unlinked binaries (hex-encoded) and are linked in-place (if the input is read from stdin, it is written to stdout).
 All options except `--libraries` are ignored (including `-o`).
+
+## Throw
+
+[PT](https://www.pivotaltracker.com/story/show/96275370)
+throw is a statement that triggers a solidity exception and thus can be used to revert changes made during the transaction. It does not take any parameters and jumps to the error tag.
