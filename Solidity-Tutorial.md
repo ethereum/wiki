@@ -697,7 +697,16 @@ Currently, there are two situations, where exceptions can happen in Solidity:
 
 In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state. The reason for this is that there is no safe way to continue execution, because an expected effect did not occur. Because we want to retain the atomicity of transactions, the safest thing to do is to revert all changes and make the whole transaction (or at least call) without effect.
 
-It is planned to also throw and catch exceptions manually.
+It is possible to throw an exception manually. Solidity will trigger the same "invalid jump". Catching exceptions is not yet possible.
+```
+contract Sharer {
+    function sendHalf(address addr) returns (uint balance) {
+	if (!addr.send(msg.value/2))
+	    throw; // also reverts the transfer to Sharer
+        return address(this).balance;
+    }
+}
+```
 
 # Contracts
 
