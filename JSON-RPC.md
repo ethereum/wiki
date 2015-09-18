@@ -203,7 +203,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],
 
 #### web3_sha3
 
-Returns SHA3 (keccak-256) of the given data.
+Returns Keccak-256 (*not* the standardized SHA3-256) of the given data.
 
 ##### Parameters
 
