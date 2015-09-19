@@ -165,7 +165,7 @@ Template.elements.helpers({
   });
 ```
 
-Then initialize EthBlocks by adding 'EthBlocks.init();' after 'Session.setDefault('counter', 0);'
+Then initialize EthBlocks by adding `EthBlocks.init();` after `Session.setDefault('counter', 0);`
 
 If you now check your Ðapp in the browser you should see the latest block number, which will increase once you mine.
 
