@@ -132,7 +132,7 @@ The following options are possible for the defaultBlock parameter:
 * [eth_getCode](#eth_getcode)
 * [eth_sign](#eth_sign)
 * [eth_sendTransaction](#eth_sendtransaction)
-* [eth_sendRawTransaction](#eth_sendRawTransaction)
+* [eth_sendRawTransaction](#eth_sendrawtransaction)
 * [eth_call](#eth_call)
 * [eth_estimateGas](#eth_estimategas)
 * [eth_getBlockByHash](#eth_getblockbyhash)
