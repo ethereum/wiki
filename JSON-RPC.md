@@ -13,7 +13,7 @@ See the [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API) f
 
 Default JSON-RPC endpoints:
 ```
-C++: http://localhost:8080
+C++: http://localhost:8545
 Go: http://localhost:8545
 Py: http://localhost:4000
 ```
@@ -47,7 +47,7 @@ You can start it by running `eth` application with `-j` option:
 ./eth -j
 ```
 
-You can also specify JSON-RPC port (default is 8080):
+You can also specify JSON-RPC port (default is 8545):
 ```bash
 ./eth -j --json-rpc-port 8079
 ```
