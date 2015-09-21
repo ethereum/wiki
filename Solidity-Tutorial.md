@@ -199,7 +199,7 @@ Arithmetic operators: `+`, `-`, unary `-`, unary `+`, `*`, `/`, `%` (remainder),
 
 `address`: Holds a 20 byte value (size of an Ethereum address). Operators: `<=`, `<`, `==`, `!=`, `>=` and `>`. Address types also have members (see [Functions on addresses](#functions-on-addresses)) and serve as base for all contracts.
 
-`byte`, `bytes1`, `bytes2`, ..., `bytes32`: Fixed-size byte arrays, `byte` is an alias for `bytes1`.
+`bytes1`, `bytes2`, `bytes3`, ..., `bytes32`: Fixed-size byte arrays, `byte` is an alias for `bytes1`.
 
 Operators:  
 Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)  
