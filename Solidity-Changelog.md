@@ -1,3 +1,7 @@
+ * Refactoring: Move type checking into its own module.
+
+### 0.1.3 (2014-09-25)
+
  * `throw` statement.
  * Libraries that contain functions which are called via CALLCODE.
  * Linker stage for compiler to insert other contract's addresses (used for libraries).
