@@ -8,6 +8,7 @@
  * Bugfix: Propagate exceptions in clone contracts.
  * Bugfix: Empty single-line comments are now treated properly.
  * Bugfix: Properly check the number of indexed arguments for events.
+ * Bugfix: Strings in struct constructors.
 
 ### 0.1.2 (2015-08-20)
 
