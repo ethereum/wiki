@@ -50,14 +50,11 @@ Message IDs are assumed to be compact from ID 0x10 onwards (0x00-0x10 is reserve
 **Pong**
 [`0x03`: `P`] Reply to peer's `Ping` packet.
 
-**GetPeers**
-[`0x04`: `P`] Request the peer to enumerate some known peers for us to connect to. This should include the peer itself. If no information is available for the peer to send, then it may delay the reply until such information is available. No further `GetPeers` messages may be sent until a reply is received.
+**NotImplemented (was GetPeers)**
+[`0x04`: `...`]
 
-**Peers**
-[`0x05`: `P`, [`ip1`: `B_4` OR `B_16`, `port1`: `P`, `id1`: `B_64`], [`ip2`: `B_4` OR `B_16`, `port2`: `P`, `id2`: `B_64`], `...`] Specifies a number of known peers. No single peer (a peer with the same `id` field) should be given the same peer twice. An empty `Peers` packet is invalid: it must contain the details of at least one new peer.
-* `ip` is either a 4-byte array 'ABCD' that should be interpreted as the IPv4 address A.B.C.D or a 16-byte array 'ABCDEFGHIJKLMNOP' that should be interpreted as the IPv6 address AB:CD:EF:GH:IJ:KL:MN:OP.
-* `port` is a 2-byte array that should be interpreted as a 16-bit big-endian integer.
-* `id` is the 512-bit hash that acts as the unique identifier of the node.
+**NotImplemented (was Peers)**
+[`0x05`: `...`]
 
 ### Node identity and reputation
 
