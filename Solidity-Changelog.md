@@ -1,3 +1,4 @@
+ * Bugfix: Returning fixed-size arrays.
  * Bugfix: combined-json output of solc.
  * Bugfix: Accessing fixed-size array return values.
  * Bugfix: Disallow assignment from literal strings to storage pointers.
