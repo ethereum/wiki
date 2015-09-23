@@ -84,7 +84,7 @@ ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashes
 **Receipts**
 [`+0x10`, [`receipt_0`, `receipt_1`], `...`] Provide a set of receipts which correspond to previously asked in `GetReceipts`.
 
-### Proposal for light clients (PV64) - deprecated in favor of a sub-protocol
+### Proposal for light clients (PV64) - deprecated in favor of LES (the Light Ethereum sub-protocol)
 
 **GetAcctProof**
 [`+0x11`, [`blknum`, `address`]] Require peer to return a `Proof` message, containing a Merkle-tree proof of the account data (nonce, balance, code hash, storage root) at `address` from the state root of block `blknum`
