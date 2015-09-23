@@ -375,9 +375,8 @@ variables are held).
 Every complex type, i.e. *arrays* and *structs*, has an additional
 annotation, the "data location", about whether it is stored in memory or in storage. Depending on the
 context, there is always a default, but it can be overridden by appending
-either `storage` or `memory` to the type. The default for local variables
-and function arguments is `memory` and the location is forced
-to "storage" for state variables (obviously).
+either `storage` or `memory` to the type. The default for function parameters (including return parameters) is `memory`, the default for local variables is `storage` and the location is forced
+to `storage` for state variables (obviously).
 
 There is also a third data location, "calldata" which is a non-modifyable
 non-persistent area whether function arguments are stored. Function parameters
