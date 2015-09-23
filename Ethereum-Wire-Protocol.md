@@ -70,7 +70,7 @@ Requires peer to reply with a `BlockHashes` message. Message should contain bloc
 
 ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashesFromNumber`
 
-### Proposed messages for light client (PV63)
+### Proposed messages for fast synchronization (PV63)
 
 **GetNodeData**
 [`+0x0d`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `NodeData` message. Hint that useful values in it are those which correspond to given hashes.
@@ -84,7 +84,7 @@ ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashes
 **Receipts**
 [`+0x10`, [`receipt_0`, `receipt_1`], `...`] Provide a set of receipts which correspond to previously asked in `GetReceipts`.
 
-### Proposal (PV64)
+### Proposal for light clients (PV64) - deprecated in favor for a new sub-protocol
 
 **GetAcctProof**
 [`+0x11`, [`blknum`, `address`]] Require peer to return a `Proof` message, containing a Merkle-tree proof of the account data (nonce, balance, code hash, storage root) at `address` from the state root of block `blknum`
