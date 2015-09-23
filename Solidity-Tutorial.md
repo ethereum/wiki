@@ -308,10 +308,11 @@ and to send Ether (in units of wei) to an address using the `send` function:
 
 ```js
 address x = 0x123;
-if (x.balance < 10 && address(this).balance >= 10) x.send(10);
+address myAddress = this;
+if (x.balance < 10 && myAddress.balance >= 10) x.send(10);
 ```
 
-Beware that if `x` is a contract address, its code will be executed together with the `send` call (this is a limitation of the EVM and cannot be prevented). If that execution runs out of gas or fails in any way, the Ether transfer will be reverted. In this case, `send` returns `false`.
+Beware that if `x` is a contract address, its code (more specifically: its fallback function, if present) will be executed together with the `send` call (this is a limitation of the EVM and cannot be prevented). If that execution runs out of gas or fails in any way, the Ether transfer will be reverted. In this case, `send` returns `false`.
 
 Furthermore, to interface with contracts that do not adhere to the ABI (like the classic NameReg contract),
 the function `call` is provided which takes an arbitrary number of arguments of any type. These arguments are ABI-serialized (i.e. also padded to 32 bytes). One exception is the case where the first argument is encoded to exactly four bytes. In this case, it is not padded to allow the use of function signatures here.
@@ -700,7 +701,7 @@ contract Sharer {
     function sendHalf(address addr) returns (uint balance) {
         if (!addr.send(msg.value/2))
             throw; // also reverts the transfer to Sharer
-        return address(this).balance;
+        return this.balance;
     }
 }
 ```
@@ -735,8 +736,8 @@ contract OwnedToken {
     name = _name;
   }
   function changeName(bytes32 newName) {
-    // Only the creator can alter the name -- contracts are explicitly convertible to addresses.
-    if (msg.sender == address(creator)) name = newName;
+    // Only the creator can alter the name -- contracts are implicitly convertible to addresses.
+    if (msg.sender == creator) name = newName;
   }
   function transfer(address newOwner) {
     // Only the current owner can transfer the token.
