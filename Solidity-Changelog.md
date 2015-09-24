@@ -4,7 +4,7 @@
  * Bugfix: Disallow assignment from literal strings to storage pointers.
  * Refactoring: Move type checking into its own module.
 
-### 0.1.3 (2014-09-25)
+### 0.1.3 (2015-09-25)
 
  * `throw` statement.
  * Libraries that contain functions which are called via CALLCODE.
