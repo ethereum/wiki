@@ -12,11 +12,11 @@ https://gitter.im/ethereum/cpp-ethereum
 
 ## Python 
 
-https://gitter.im/ethereum/pyethapp
+https://gitter.im/ethereum/pyethapp - the client
 
-https://gitter.im/ethereum/pyethereum
+https://gitter.im/ethereum/pyethereum - the core library (evm, blocks, txs, ...)
 
-https://gitter.im/ethereum/pydevp2p
+https://gitter.im/ethereum/pydevp2p - p2p network  
 
 # DApp Development
 
@@ -27,8 +27,6 @@ https://gitter.im/ethereum/mist
 https://gitter.im/ethereum/solidity
 
 # Other
-
-https://gitter.im/ethereum/
 
 https://gitter.im/ethereum/porting
 
