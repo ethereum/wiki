@@ -51,6 +51,7 @@ $ meteor add ethereum:web3
 
 I recommend also to add the following packages:
 
+- [ethereum:dapp-styles](https://atmospherejs.com/ethereum/dapp-styles) - The LESS/CSS framework which gives your dapp a nice Mist-consistent look.
 - [ethereum:tools](https://atmospherejs.com/ethereum/tools) - This package gives you the `EthTools` object with a set of formatting an conversion functions and template helpers for ether.
 - [ethereum:elements](https://atmospherejs.com/ethereum/elements) - A set of interface elements specifically made for ethereum, see this [Demo](http://ethereum-elements.meteor.com) for more.
 - [ethereum:accounts](https://atmospherejs.com/ethereum/accounts) - Gives you the reactive `EthAccounts` collection with all current available ethereum accounts, where balances will be automatically updated.
@@ -117,26 +118,25 @@ If we go to `http://localhost:3000`, we should see a website appear and if we op
 
 ## Add Ðapp styles
 
-If you want your Ðapp to nicely fit later into Mist and have follow the official look use the [dapp-styles css css/less framework](https://github.com/ethereum/dapp-styles).
+If you want your Ðapp to nicely fit later into Mist and have follow the official look use the [dapp-styles css css/less framework](https://atmospherejs.com/ethereum/dapp-styles).
 
-*But note that they are under heavy development and the class names and elements may change.*
+*Note that they are under heavy development and the class names and elements may change.*
 
-To add it simple copy/clone the [dapp-styles repo](https://github.com/ethereum/dapp-styles) into you `public folder`.
-
-Add the less package to your Ðapp:
+To add it simple add the following packages to your Ðapp:
 
 ```bash
 $ meteor add less
+$ meteor add ethereum:dapp-styles
 ```
 
-And rename you `myDapp.css` to `myDapp.less` and add the following line inside:
+Now rename you `myDapp.css` to `myDapp.less` and add the following line inside:
 
 ```css
 // libs
-@import 'public/dapp-styles/dapp-styles.less';
+@import '{ethereum:dapp-styles}/dapp-styles.less';
 ```
 
-Now you can use all dapp-styles classes and also overwrite all variables of the framewwork. You can find them in `public/dapp-styles/constants.import.less`. Overwrite them by copying them to your `myDapp.less` file and set different values.
+Now you can use all dapp-styles classes and also overwrite all variables of the framework. You can find them [in the repo](https://github.com/ethereum/dapp-styles/blob/master/constants.import.less). Overwrite them by copying them to your `myDapp.less` file and set different values.
 
 ## Using ethereum packages
 
