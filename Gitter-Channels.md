@@ -1,6 +1,6 @@
 https://gitter.im/ethereum
 
-# Clients
+# Node Software ("Clients")
 
 ## Go
 
@@ -18,13 +18,13 @@ https://gitter.im/ethereum/pyethereum
 
 https://gitter.im/ethereum/pydevp2p
 
-## Mist
-https://gitter.im/ethereum/mist
-
 # DApp Development
 
 https://gitter.im/ethereum/web3.js
 
+https://gitter.im/ethereum/mist
+
+https://gitter.im/ethereum/solidity
 
 # Other
 
