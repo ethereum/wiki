@@ -1,3 +1,5 @@
+https://gitter.im/ethereum
+
 # Clients
 
 ## Go
