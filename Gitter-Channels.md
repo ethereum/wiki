@@ -26,6 +26,8 @@ https://gitter.im/ethereum/mist
 
 https://gitter.im/ethereum/solidity
 
+https://gitter.im/ethereum/serpent
+
 # Other
 
 https://gitter.im/ethereum/porting
