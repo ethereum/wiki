@@ -32,6 +32,8 @@ https://gitter.im/ethereum/serpent
 
 https://gitter.im/ethereum/porting
 
+https://gitter.im/ethereum/research
+
 # Protocol
 
 https://gitter.im/ethereum/devp2p
