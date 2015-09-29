@@ -22,17 +22,24 @@ The way that you would implement the server side code is simple. In pseudocode, 
 
 (Note: the above is pseudocode; not all of the above methods are available in pyethereum quite yet).
 
+### Web of trust
+
+Basically, implement http://www.advogato.org/trust-metric.html (a trust score scheme based on max-flow) on Ethereum. Create a dapp by which anyone can register an identity, and register trust scores for other identities. Then, create a decentralized cloud computing service by which anyone can query "provide a proof, consisting of a list of augmenting paths, showing the Advogato trust score from A to B" and anyone can reply in exchange for a micropayment (or perhaps create a server that does it for free, and convince a charity to subsidize it); if user A wants to know "what is B's trust score", they can make this query, receive the result, verify the proof, and then display it.
+
 ### Financial Derivatives Market
 
-Essentially, a polished, working dapp that allows users to make options on any ethereum asset, and derivatives (eg. CFDs) on any ethereum price feed. This should support "multisig price feeds": choosing multiple data feed contract addresses addresses that support a particular ticker symbol, and taking the median of them, so as to remove reliance on any single party.
+Essentially, a polished, working dapp that allows users to make options on any ethereum asset, and derivatives (eg. CFDs) on any ethereum price feed. This should support "multisig price feeds": choosing multiple data feed contract addresses that support a particular ticker symbol, and taking the median of them, so as to remove reliance on any single party.
+
+Supported actions should ideally include:
+
+* Entering into CFDs with other parties on any price index, settling in any standards-compatible currency or asset (though perhaps start with ETH)
+* Options between any two assets (though perhaps start with asset<->ETH)
+* Plain old regular asset exchange
+* An order book for all of the above
 
 ### RANDAO
 
 Work on [this](https://forum.ethereum.org/discussion/2031/randao-a-dao-working-as-rng). Set it up as a decentralized service which any lottery or other randomness-based game can use; also, build a "full node software" package/plugin which facilitates participating in the RANDAO by providing random numbers.
-
-### Web of trust
-
-Basically, implement http://www.advogato.org/trust-metric.html (a trust score scheme based on max-flow) on Ethereum. Create a dapp by which anyone can register an identity, and register trust scores for other identities. Then, create a decentralized cloud computing service by which anyone can query "provide a proof, consisting of a list of augmenting paths, showing the Advogato trust score from A to B" and anyone can reply in exchange for a micropayment (or perhaps create a server that does it for free, and convince a charity to subsidize it); if user A wants to know "what is B's trust score", they can make this query, receive the result, verify the proof, and then display it.
 
 ### Interface with national ID
 
