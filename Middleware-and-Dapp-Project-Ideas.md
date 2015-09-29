@@ -48,3 +48,7 @@ Create a system, relying on trusting no one other than the original issuer, by w
 ### Zero knowledge proofs
 
 Create multiple compatible implementations of a ZK-SNARK protocol.
+
+### Ultrahard KDFs for brainwallets
+
+A decentralized paid cloud computing service for brainwallet computations, combined with a client-side solution, in order to implement my proposal for ultra-secure brainwallets using blind-outsourceable ultrahard KDFs: https://blog.ethereum.org/2014/10/23/information-theoretic-account-secure-brainwallets/
