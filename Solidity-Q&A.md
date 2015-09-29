@@ -8,9 +8,9 @@
 **A**: TODO
 
 ---
-**Q**: Is it possible for a Solidity method to return a variable-length type (i.e. bytes, string, non-fixed array)?
+**Q**: Is it possible for an external Solidity method to return a variable-length type (i.e. bytes, string, non-fixed array)?
 
-**A**: TODO
+**A**: Still unknown!  The [Ethereum contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI) specifies encodings for all of these types (but *not* for structs or enums), but it seems impossible for the EVM to support this.  Namely, the opcodes that would support external functions (CALL, CALLCODE, and RETURN) all require the length of the return value to be passed in advance.  An internal function does not have this restriction, however, and can definitely return any kind of data.  Also, there is no such issue with passing these types as arguments.
 
 ---
 **Q**.  What could have happened if an account has storage value/s but no code?  Example: http://test.ether.camp/account/5f740b3a43fbb99724ce93a879805f4dc89178b5
