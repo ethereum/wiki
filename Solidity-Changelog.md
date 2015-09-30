@@ -1,3 +1,8 @@
+ * Report warnings
+ * Encode short byte arrays and strings together with their length in storage.
+
+### 0.1.4 (2015-09-30)
+
  * Bugfix: Returning fixed-size arrays.
  * Bugfix: combined-json output of solc.
  * Bugfix: Accessing fixed-size array return values.
