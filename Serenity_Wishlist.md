@@ -1,3 +1,8 @@
+---
+name: Serenity Wishlist
+category: 
+---
+
 This document outlines known flaws and missing features in Ethereum Frontier and Homestead that are non-serious but inconvenient, and which we decided to leave in in order to be able to launch in any reasonable timeframe. We intend to thoroughly investigate solving all of these issues for Serenity (aka. Ethereum 1.1).
 
 ### Big Issues

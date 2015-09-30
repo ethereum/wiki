@@ -1,3 +1,8 @@
+---
+name: Cuprins
+category: 
+---
+
 ### Ethereum este platforma pe care se vor dezvolta aplicatii descentralizate si noua generatie de smart-contracts. 
 
 [Raportul Ethereum (whitepaper)](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-White-Paper)

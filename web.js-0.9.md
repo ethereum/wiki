@@ -1,3 +1,8 @@
+---
+name: Web.js 0.9
+category: 
+---
+
 Web3.js 0.9 changes
 
 I would like to apply KISS principle to web3.js. I used the library recently much more and I realised that we are doing to many things implicitly. eg:

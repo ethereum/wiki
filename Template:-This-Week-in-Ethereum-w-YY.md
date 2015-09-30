@@ -1,3 +1,8 @@
+---
+name: This Week in Ethereum Template
+category: 
+---
+
 ###Current Status 
 
 ### Protocol

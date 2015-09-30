@@ -1,3 +1,8 @@
+---
+name: Ethereum Raspberry Pi
+category: 
+---
+
 # The Ethereum Raspberry Pi (eπ) Programme
 
 The eπ programme is aimed to get as many nodes distributed around the world as possible. Any existing Ethereum meetup group is eligible to apply.

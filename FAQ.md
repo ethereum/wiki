@@ -1,3 +1,8 @@
+---
+name: FAQ
+category: 
+---
+
 Answers to questions about Ethereum
 
 <!-- Generated with marked-toc https://github.com/jonschlinkert/marked-toc -->

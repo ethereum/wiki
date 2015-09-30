@@ -1,3 +1,8 @@
+---
+name: Chain Fibers Redux
+category: 
+---
+
 # Blockchain Scalability: Chain-Fibers Redux
 
 ## History

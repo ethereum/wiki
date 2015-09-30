@@ -1,3 +1,8 @@
+---
+name: Ethash Design Rationale
+category: 
+---
+
 Ethash is intended to satisfy the following goals:
 
 1. **IO saturation**: The algorithm should consume nearly the entire available memory access bandwidth (this is a strategy toward achieving ASIC resistance, the argument being that commodity RAM, especially in GPUs, is much closer to the theoretical optimum than commodity computing capacity)

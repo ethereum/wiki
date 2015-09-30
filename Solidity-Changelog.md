@@ -1,3 +1,8 @@
+---
+name: Solidity Changelog
+category: 
+---
+
  * Refactoring: Move type checking into its own module.
 
 ### 0.1.3 (2014-09-25)

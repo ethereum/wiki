@@ -1,3 +1,8 @@
+---
+name: Ethereum TOC
+category: 
+---
+
 ###Ethereum 次世代スマートコントラクトとディセントラルアプリケーションレイヤー へようこそ。
 
 [Ethereum White Paper](https://github.com/ethereum/wiki/wiki/White-Paper) ( 英語版 )  

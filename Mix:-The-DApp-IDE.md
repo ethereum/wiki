@@ -1,3 +1,8 @@
+---
+name: Mix The DAPP IDE
+category: 
+---
+
 # Welcome to Mix IDE!
 
 This guide provides a very simple and quick introduction to the Mix IDE workflow by walking you through the creation of a simple ÐApp. Once you are done with this tutorial, you will have a general knowledge of how to create and run applications in the IDE.

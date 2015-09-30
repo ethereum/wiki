@@ -1,3 +1,8 @@
+---
+name: SendTransaction Return Value Proposal
+category: 
+---
+
 After talking to Marek we came to the conclusion, that the current return value of `eth_sendTransaction` is not enough to be able to work with self send transactions.
 
 If you send a contract creation transaction, you get the contract address back, but not the transaction hash. 

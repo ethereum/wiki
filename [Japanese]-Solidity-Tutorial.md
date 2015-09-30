@@ -1,4 +1,7 @@
-
+---
+name: Solidity Tutorial
+category: 
+---
 
 - [Cheat Sheet](#cheatsheet)
 - [Tips and Tricks](#tips-and-tricks)

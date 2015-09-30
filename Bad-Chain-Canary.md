@@ -1,3 +1,8 @@
+---
+name: Bad Chain Canary
+category: 
+---
+
 There will be a canary contract to notify that a given chain is bad. It's very easy to use; check storage location 0 of contract at the given address (see below). If non-zero, client should not mine (at least without a non-default option being given to ignore the canary and mine on a known-bad chain).
 
 Specifically there are three modes it can be in:

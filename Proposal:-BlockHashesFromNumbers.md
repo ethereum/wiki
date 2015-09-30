@@ -1,3 +1,8 @@
+---
+name: BlockHashesFromNumbers Proposal
+category: 
+---
+
 # Problem
 
 During initial synchronization to a large blockchain downloading block hashes can take significant time. Current protocol does not allow parallel hashes downloading. Hashes can be requested sequentially up the chain, making it impossible to start blocks downloading until all of the hashes up to the known hash or genesis are received. A malicious peer can feed an infinite hash chain. Currently it is not straightforward to protect against such an attack as there is no additional information on the number of hashes. The only strategy is to estimate a reasonable number of hashes using current date, genesis date and average block time, and then reject the peer after downloading that many hashes.

@@ -1,3 +1,8 @@
+---
+name: Security Categorization
+category: 
+---
+
 See also: [https://github.com/ethereum/wiki/wiki/Design-Rationale](https://github.com/ethereum/wiki/wiki/Design-Rationale), for descriptions of potentially counterintuitive design decisions in Ethereum.
 
 The purpose of this document is to attempt to create a taxonomy of key security properties that we are targeting for the Ethereum protocol, implementation and materials to have at launch time, as well as provide supplementary information where needed for each one.

@@ -1,3 +1,8 @@
+---
+name: ENode URL Format
+category: 
+---
+
 An Ethereum node can be described with a URL scheme "enode".
 
 The hexadecimal node ID is encoded in the username portion of the URL, separated from the host by an @ sign. The hostname can only be given as an IP address, DNS domain names are not allowed. The port

@@ -1,3 +1,7 @@
+---
+name: Dagger
+category: 
+---
 
 Pe parcursul a celor peste cinci ani de experienta cu Bitcoin si alte cryptocurrencies alternative, o proprietate importanta pentru functiile proof of work ce a fost descoperita este aceaa a “ duritatii memoriei” (memory-hardness)- calcularea unui proof of work valid ar trebui sa necesite nu doar un numar mare de calcule, dar si o memorie mare. Momentan, exista trei categorii majore de functii memory-hard folosite in mining : scrypt, Primecoin mining si the birthday problem. Cu toate acestea sunt imperfecte: nici una nu necesita cantitatea de memorie pe care o cere o functie memory-hard ideala, si supefa de atacuri time-memory tradeoff, unde functia poate fi calculata cu mult mai putina memorie decat este necesar, cu costul de a sacrifica din eficienta computationala. 
 Dagger este un algoritm proof of work care intentioneaza sa rezolve aceste probleme, furnizand un proof of work memory-hard bazat pe pe grafice aciclice dirijate (directed acyclic graphs –DAG) conectate moderat, care , desi departe de a fi optime, are proprietati de memory-hardness mult mai puternice decat orice alternativa folosita astazi.

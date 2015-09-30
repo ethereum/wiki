@@ -1,3 +1,8 @@
+---
+name: First Steps wih Ethereum JSON RPC
+category: 
+---
+
 # First steps with ethereum JSON-RPC
 
 

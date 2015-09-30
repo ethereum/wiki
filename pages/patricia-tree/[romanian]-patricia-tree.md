@@ -1,3 +1,8 @@
+---
+name: Patricia Tree
+category: 
+---
+
 ###Specificatiile Arborelui Merkle Patricia
 
 Arborele Merkle Patricia furnizeaza o structura autentificata cryptografic de date care poate fi folosita pentru stocarea tuturor legaturilor (key, valori), desi pentru scopul acestui document restrictionam valorile si keys la siruri (pentru a inlatura aceasta restrictie, folositi orice format de serializare pentru alte tipuri de date). Ele sunt complet deterministe, insemnand ca un arbore Patricia cu aceeasi legatura (valoare, key) va fi exact la fel pana la ultimul byte si astfel va avea aceeasi radacina hash, va furniza the holy grail al eficientei O(log(n)) pentru insertii, cautari si stergeri, si sunt mult mai usor de inteles si de codat  decat alte alternative mai complexe bazate pe comparatii cum ar fi arborii rosu-negru.

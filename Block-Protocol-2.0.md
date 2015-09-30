@@ -1,3 +1,8 @@
+---
+name: Block Protocol 2.0
+category: 
+---
+
 One of the main criticisms that has been made of Ethereum, and Bitcoin-like blockchain protocols in general, is the issue of scalability. Although Bitcoin's core developers, and other platforms such as Ripple, have continued to make iterative improvements to the way that the blockchain is stored, including innovations such as separating the state ("ledger" or "UTXO set") from the transaction list or using separate data structures to store the two on disk/memory, fundamentally no one has successfully implemented any way to improve upon the fundamental limitation that every full node must process every transaction. At this point, Ethereum also does not solve this problem. However, the block protocol described here, and specifically the stack trace mechanism, allows for secure "light nodes" to exist, which download only the headers of every block and not the full transaction set but maintain the same security level for their users as full nodes under the much weaker assumption that at least one node with non-negligible (ie. >0.01%) mining power or ether inside the system is honest.
 
 ### Data definitions

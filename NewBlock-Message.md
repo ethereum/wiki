@@ -1,3 +1,8 @@
+---
+name: NewBlock Message
+category: 
+---
+
 ### Goals
 
 At present `Blocks` messages may be sent either as a response to a `GetBlocks` message receipt or due to a new block being mined or discovered. This causes some issues for the state transition mechanisms, which are to be avoided.

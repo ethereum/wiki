@@ -1,3 +1,8 @@
+---
+name: Message IDs
+category: 
+---
+
 ### Goal
 
 Dynamic numeric identities for the sub protocol message types rather than the current fixed id system. This way we don't have to reserve parts of the message ID space up front and have a central entity to police this space to prevent clashes.

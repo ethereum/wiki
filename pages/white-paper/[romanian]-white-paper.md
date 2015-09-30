@@ -1,3 +1,8 @@
+---
+name: White Paper
+category: 
+---
+
 ###Ethereum: O platforma de aplicatii descentralizata ce faciliteaza crearea de contracte inteligente de ultima generatie.
 
 In ultimele cateva luni s-a manifestat un interes tot mai mare fata de utilizarea blockchain-urilor de tip Bitcoin- mecanismul care da intregii lumi sansa sa ajunga la un consens in privinta unei baze de date publice- pentru mai mult decat bani.Aplicatii frecvent citate includ utilizarea bunurilor digitale on-blockchain pentru a reprezenta valute personalizate si instrumente financiare ("[colored coins](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit)"), dispozitive ["smart property"](https://en.bitcoin.it/wiki/Smart_Property) cum ar fi masinile, care pot urmari un "colored coin" pe un blockchain pentru a determina proprietarul legitim al acestora, insa exista si aplicatii mult mai avansate cum ar fi schimburi decentralizate, derivate financiare,peer-to-peer gambling(?) si sisteme on-blockchain de identitate/reputatie. Dintre toate aceste tipuri de aplicatii, poate cel mai ambitios este conceptul de agenti autonomi sau [Organizatii Autonome Descentralizate](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) (DAOs) - entitati autonome care opereaza in blockchain fara nici un fel de control central, evitand orice dependenta de contracte legale si statuturi organizatorice in favoarea resurselor si fondurilor administrate autonom de un smart-contract auto-impus pe un blockchain cryptografic.

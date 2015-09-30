@@ -1,3 +1,8 @@
+---
+name: Block Protocol 2.0
+category: 
+---
+
 ###Block Protocol 2.0
 
 Una din principalele critici aduse Ethereum-ului, si in general protocoalelor blockchain de tipul Bitcoin, este  problema scalabilitatii. Desi dezvoltatorii de baza ai Bitcoin, si ai altor platforme , cum ar fi Ripple, au continuat sa faca imbunatatiri iterative modului in care blockchain-ul este stocat, incluzand inovatii, cum ar fi separarea de starea (“registrul” sau “setul UTXO”) din lista de tranzactie sau folosind structuri separate de date pentru a stoca cele două  pe disc / memorie, nimeni nu a implementat cu succes nici o modalitate de a îmbunătăți limitarea fundamentala pe care fiecare nod complet trebuie să prelucreze fiecare tranzacție. In acest punct, nici Ethereum nu rezolva aceasta problema. Totusi, protocolul block descris aici, si in special mecanismul stack trace, permite sexistenta “light nodes” sigure, care downloadeaza doar header-ele fiecarui block si nu intregul set de tranzactii, mentinand acelasi nivel de securitate pentru utilizatorii sai ca si nodurile intregi, sub asumptia gresita ca cel putin un nod cu putere de minare  non-neglijabila( ie. >0.01%) sau ether din sistem este onesta.
