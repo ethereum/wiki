@@ -1,5 +1,5 @@
 ---
-name: Proposal: Transaction Proxy Hooks
+name: Transaction Proxy Hooks Proposal
 category: 
 ---
 

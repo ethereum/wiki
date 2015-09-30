@@ -1,5 +1,5 @@
 ---
-name: Mix: The DAPP IDE
+name: Mix The DAPP IDE
 category: 
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: 
+name: Ethash Design Rationale
 category: 
 ---
 

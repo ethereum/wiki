@@ -1,5 +1,5 @@
 ---
-name: Proposal: NewBlockHashes
+name: NewBlockHashes Proposal
 category: 
 ---
 

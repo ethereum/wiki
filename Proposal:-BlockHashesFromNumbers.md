@@ -1,5 +1,5 @@
 ---
-name: Proposal: BlockHashesFromNumbers
+name: BlockHashesFromNumbers Proposal
 category: 
 ---
 

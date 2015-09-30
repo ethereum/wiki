@@ -1,5 +1,5 @@
 ---
-name: Proposal: Reversion Notification
+name: Reversion Notification Proposal
 category: 
 ---
 

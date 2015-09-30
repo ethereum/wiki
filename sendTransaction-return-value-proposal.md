@@ -1,5 +1,5 @@
 ---
-name: Proposal: SendTransaction Return Value
+name: SendTransaction Return Value Proposal
 category: 
 ---
 
