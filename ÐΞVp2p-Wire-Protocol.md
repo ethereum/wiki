@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 Peer-to-peer communications between nodes running Ethereum/Whisper/&c. clients are designed to be governed by a simple wire-protocol making use of existing ÐΞV technologies and standards such as [RLP](https://github.com/ethereum/wiki/wiki/RLP) wherever practical.
 
 This document is intended to specify this protocol comprehensively.

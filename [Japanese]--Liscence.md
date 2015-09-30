@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 Overview
 
 The Ethereum Foundation ensures three principles concerning the funds it uses to develop Ethereum:

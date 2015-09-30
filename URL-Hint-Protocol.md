@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 There exists a root `Registry` contract at address 0x42 (this is the auctioning thing). There exists a contract interface, `register`, which `Registry` implements.
 
 Entries in `register`, when looked up (indexed by a string32 name) have several value fields, including `content` and `register`.

@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ## **JSONRPC** changes:
 
 `eth_getFilterChanges`, `eth_getFilterLogs` both return additional fields: "type" and "polarity"

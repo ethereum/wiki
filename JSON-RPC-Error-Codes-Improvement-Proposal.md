@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 To help developers add proper error handling in the dapp side, we need to implement custom error codes for the returned JSON RPC errors.
 
 ## JSON RPC Standard errors

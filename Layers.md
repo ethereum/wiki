@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ## Networking daemon
 
 Purpose: the networking daemon must be able to connect to other Ethereum nodes, and accept and share data, so as to serve as the backbone for the Ethereum network. The daemon itself should be as neutral as possible; ideally, it should be useful as part of any currency or cryptographic protocol without modification. It should include anti-DDoS features; perhaps maintain a running score preventing any single IP from making more than one request per second.

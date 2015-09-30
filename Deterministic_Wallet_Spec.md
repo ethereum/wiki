@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 Address/key generation
 
 The following is a proposed deterministic wallet specification.

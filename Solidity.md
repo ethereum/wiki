@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 Solidity is probably the first example of a Contract-Oriented Language, a slight reworking of the well-established group of Object-Oriented Languages. Here's an example of Solidity:
 
 ```

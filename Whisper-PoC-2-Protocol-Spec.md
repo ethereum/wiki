@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 This page, in addition to the Whisper Wire Specification, details the full Whisper protocol for the first proof-of-concept and sets the vision for the final design. It evolve alongside the Whisper protocol as the prototype is refined. From it you should be able to develop compliant Whisper implementations. This document is intended to give only the base specification. Many of the aspects leading to an implementation of Whisper are game theoretic and best not prescribed in the specification, but rather left to individual implementation teams to determine for themselves.
 
 ### What Whisper Is (and Is Not)

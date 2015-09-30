@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 Ethereum brain wallets are formed through applying the SHA3 to a seed to get a result `R`, then using `R` as an accumulator for 16384 repeat SHA3 operations. This process is continued until the result, when used as a private key, forms a valid Direct ICAP (34 digit) address, defined as the first byte of the address being 0.
 
 ```

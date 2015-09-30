@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 **Note: we will not be using Dagger as our Proof of Work algorithm. This page is pending deletion**
 
 Over the past five years of experience with Bitcoin and alternative cryptocurrencies, one important property for proof of work functions that has been discovered is that of &quot;memory-hardness&quot; - computing a valid proof of work should require not only a large number of computations, but also a large amount of memory. Currently, there are three major categories of memory-hard functions used in mining: scrypt, Primecoin mining and the birthday problem. However, both are imperfect: neither require nearly as much memory as an ideal memory-hard function could require, and both suffer from time-memory tradeoff attacks, where the function can be computed with significantly less memory than intended at the cost of sacrificing some computational efficiency.

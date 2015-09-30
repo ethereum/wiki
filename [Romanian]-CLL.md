@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ECLL: Limbaj de programare ethereum, ce seamana cu C++.
 
 Scopul ECLL este de a furniza un limbaj simplu si accesibil utilizatorilor, folosit pentru a scrie contracte, dar in acelasi timp poate compila usor si eficient script-ul Ethereum. ECLL indeparteaza concepte precum indici, accesaul direct la memorie si favorizarea unei sintaxe traditionale de conditionale, bucle, matrice si variabile. Suportul pentru funcii si suportul de prima clasa pentru functii vor fi atribuite unei viitoare versiuni a acestui limbaj, denumita EHLL ("Ethereum High Level Language"), mai puternica dar mai putin eficienta.

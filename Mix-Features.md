@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 # Block Mining
 
 Hit `File`->`New Project`.

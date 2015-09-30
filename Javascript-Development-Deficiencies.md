@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 The medium-term vision for the Ethereum javascript development tools is simple: to make developing a dapp as easy as developing a web page. However, we are not quite there yet; this page provides a partial list of the problems that dapp developers have to deal with that web developers do not.
 
 ### Transaction Asynchrony and Uncertainty

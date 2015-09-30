@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 # Introduction
 
 Swarm Hash (a.k.a. [`bzzhash`](https://github.com/ethersphere/go-ethereum/tree/bzz/bzz/bzzhash)) is a Merkle tree hash designed for the purpose of efficient storage and retrieval in content-addressed storage, both local and networked. While it is used in [Swarm](https://github.com/ethereum/go-ethereum/wiki/Swarm---distributed-preimage-archive), there is nothing Swarm-specific in it and the authors recommend it as a drop-in substitute of sequential-iterative hash functions (like SHA3) whenever one is used for referencing integrity-sensitive content, as it constitutes an improvement in terms of performance and usability without compromising security. For instance in the [URL Hint Protocol](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol).

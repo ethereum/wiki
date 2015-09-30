@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 # Welcome to the Ethereum Wiki
 
 This is the community-maintained wiki covering all sorts of information on the next-generation peer-to-peer technology platform build by ÐΞV including **Ethereum**, _the generalized blockchain for smart contract development_, and **Whisper**, _the private low-level datagram communication platform_.

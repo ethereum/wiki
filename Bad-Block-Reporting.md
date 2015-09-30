@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 Send a JSONRPC request to `https://badblocks.ethdev.com`:
 
 Call `eth_badBlock(BADBLOCK)`, with `BADBLOCK` the object described below:

@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ## Introduction
 
 Dagger Hashimoto is a proposed spec for the mining algorithm for Ethereum 1.0. Dagger Hashimoto aims to simultaneously satisfy two goals:

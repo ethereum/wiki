@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 # Contrats Intelligents et Plateforme d'Application Décentralisée de nouvelle génération
 
 Lorsque Satoshi Nakamoto lance Bitcoin le premier réseaux décentralisé cryptographié (Blockchain) en Janvier 2009, il introduit simultanément deux concepts radicaux et très incertains. Le premier est le " bitcoin " , une monnaie décentralisée peer-to-peer qui conserve une valeur sans support financier d'un emetteur centralisé, ni valeur intrinsèque. Jusqu'à présent, le "bitcoin" comme monnaie a retenu l'essentiel de l'attention du public. D'une part en termes d'aspects politiques d'une monnaie sans banque centrale et d'autre part, à cause de son extrême volatilité à la hausse et à la baisse des prix. Le second concept, tout aussi important, qui emerge de l'expérience de Satoshi : un accord public sur l'ordre des transactions sous forme de preuve de travail, le Blockchain. Bitcoin peut être décrit comme un système du «premier à déposer son action» : si une entité dispose 50 BTC et envoie simultanément à A et à B la meme somme 50 BTC, seule l'opération qui sera validée en premiere sera confirmée. En partant de deux opérations, il n'existe pas de methode pour déterminer laquelle est venue en premiere, et pendant des décennies ce manque a entravé le développement d'une monnaie numérique décentralisée . Le blockchain de Satoshi était la première solution décentralisée crédible. Désormais, l'attention commence rapidement à se déplacer vers cette deuxième partie de la technologie, et vers l'utilisation du concept de blockchain pour autre chose que de l'argent.

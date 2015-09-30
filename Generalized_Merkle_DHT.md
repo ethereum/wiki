@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 As blockchain technologies move beyond the "1.0" model of every node processing every transaction, and a more diverse ecosystem including "light clients" that achieve security by downloading only a small portion of the blockchain and extracting the rest of the data on-demand through hash-based authentication comes into play, and particularly in the long term as scalability models essentially turn _every_ node into a light client, there arises the need to develop a strong, robust and effective networking infrastructure to handle the load. Ideally, the core technology should be built to be maximally generalized, so that the same core code and network can be used for multiple blockchain, as well as non-blockchain, applications.
 
 The kernel of the work is the distributed hash table, as pioneered by projects such as [Kademlia](http://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf) and implemented in BitTorrent and now IPFS. The distributed hash table uses a network where nodes are organized to point to other nodes in such a way that, given a value `v` with a key `k`, a node knowing `k` can quickly discover the location of the node that stores `v`; usually we say `k = H(v)` for some hash function (eg. SHA256, SHA3). Theoretically, such a DHT can be used to very easily enable light client support for _any_ blockchain protocol with sufficiently high degrees of Merkle tree support, and even use one codebase for light and full clients, the only difference being that light clients would use the DHT as a "hard drive" in place of their actual computer disks.

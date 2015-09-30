@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 Lo sviluppo su Ethereum e’ stato concepito per essere estremamente facile da imparare per gli sviluppatori – e i linguaggi di programmazione sono abbastanza simili allo Javascript che chiunque conosca quel linguaggio dovrebbe acquisirne padronanza piuttosto velocemente. 
 
 Ci sono tre programmi che ogni sviluppatore dovrebbe scaricare – Alethzero, Mist e Mix. 

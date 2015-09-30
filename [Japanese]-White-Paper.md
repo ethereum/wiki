@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 # Ethereum 白書
 
 ### 次世代 Smart contract と 分散型アプリケーション基盤

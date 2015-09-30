@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 This document exists to collate information once a fortnight (biweekly) from the various different aspects/projects taking place in Ethereum which will allow everyone to better understand what everyone else is working on.
 
 

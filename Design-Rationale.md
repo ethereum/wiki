@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 Although Ethereum borrows many ideas that have already been tried and tested for half a decade in older cryptocurrencies like Bitcoin, there are a number of places in which Ethereum diverges from the most common way of handling certain protocol features, and there are also many situations in which Ethereum has been forced to develop completely new economic approaches because it offers functionality that is not offered by other existing systems. The purpose of this document will be to detail all of the finer potentially nonobvious or in some cases controversial decisions that were made in the process of building the Ethereum protocol, as well as showing the risks involved in both our approach and possible alternatives.
 
 ## Principles

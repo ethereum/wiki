@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 HPoC 2015
 
 昨年私達は、暗号通貨とCryptoeconomic のテクノロジーが主流のものとなるのを妨げています。

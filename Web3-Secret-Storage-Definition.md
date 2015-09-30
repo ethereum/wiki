@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 This documents version 3 of the Web3 Secret Storage Definition. 
 
 ## Definition

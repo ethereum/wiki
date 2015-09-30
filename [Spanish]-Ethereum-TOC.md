@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ### Bienvenidos a Ethereum, la plataforma para la siguiente generación de contratos inteligentes y aplicaciones descentralizadas.
 
 [Whitepaper de Ethereum](https://google.com)

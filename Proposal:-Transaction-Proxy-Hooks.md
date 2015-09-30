@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ## Requirements
 
 Need an abstraction mechanism to allow ÐApps like the Wallet provide their services in an integrated manner without compromising the neutrality of the browser or placing undue burden on third-party ÐApp developers to support them.

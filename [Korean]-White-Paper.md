@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ### 차세대 스마트 컨트랙트와 탈중앙화된 어플리케이션 플랫폼 
 (A Next-Generation Smart Contract and Decentralized Application Platform)
 

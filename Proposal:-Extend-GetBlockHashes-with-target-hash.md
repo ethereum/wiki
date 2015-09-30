@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 # Problem
 
 The current protocol specification does not provide the means to mitigate an infinite chain feeding attack. A malicious peer can make up arbitrary blocks on the fly, and feed their hashes indefinitely to a target, without ever linking to the existing chain. This will result in an eventual memory exhaustion and crash. The root cause is that the protocol provides no means to validate any blocks, without first pulling the entire hash chain.

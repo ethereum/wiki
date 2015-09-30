@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 Publishing and finding the [NatSpec] (https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format) documentation for a contract is an important part of the Ethereum system. There are two pieces to this puzzle: the first is for a given client to be able to determine, given a call to a contract, what a **trustworthy** NatSpec documentation hash for the contract is; the second is to find the actual NatSpec documentation body given its content hash.
 
 ### Trusted Content Determination

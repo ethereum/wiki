@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 # Problem
 
 Block propagation is slow. This is partly due to the problematic strategy decision of either sending out a new block to all peers (costly in terms of bandwidth, especially when considered at the network level where most nodes will receive a block from most of their peers) or send a new block to a randomly selected subset of peers (making worst-case propagation times substantial).

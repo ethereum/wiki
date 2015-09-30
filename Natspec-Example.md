@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 # Introduction
 
 This is intended as an example of proof of concept of the natspec evaluation in Alethzero, the CPP client and as a showcase of the functionality of Natspec comments.

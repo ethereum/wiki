@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 _traduzione in Italiano da [Dapps for beginners blog => Introduction to development on Ethereum](https://dappsforbeginners.wordpress.com/tutorials/introduction-to-development-on-ethereum/)_   
 
 # Ethereum – una rete di consenso decentralizzato

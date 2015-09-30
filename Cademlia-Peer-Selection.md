@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 # Peer addresses
 
 Nodes in the P2P network are identified by 256-bit cryptographic hashes of the nodes' public keys.

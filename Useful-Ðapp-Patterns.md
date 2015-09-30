@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 The following page is a collection of useful patterns, Ðapps can use, such as talking to the blockchain reliably.
 
 The example patterns can possibly change, so don't rely fully on them as of yet.

@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ### Introduction
 
 In some type of financial instruments like Futures (but not Forwards), parties are guaranteed against credit losses resulting from the counterparty default by a "clearinghouse". Essentially, a clearinghouse provides this guarantee via a procedure in which the gains and losses that accrue on daily basis throughout the life of a contract are converted into actual cash (daily settlement of gains or losses).

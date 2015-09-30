@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 This is just a documentation of the request of the C API described in [this PR](https://github.com/ethereum/ethash/pull/11).
 
 ```c

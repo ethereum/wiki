@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 **NOTE:** *This is a work-in-progress*
 
 For Ethereum to succeed, and for the ultimate goals of Ethereum to be achieved, Ethereum needs to employ a number of secure decentralised data systems. The generalised Turing-complete, extensible-state blockchain is one component in this, but for it to be leveraged to its full potential for building decentralised applications (ÐApps), a suite of additional data systems are necessary. Each decentralised-datasystem solves specific needs; in general it is difficult to predict what data systems will ultimately be required since the decentralised paradigm is not immediately comparable, like-for-like with traditional centralised architected systems.

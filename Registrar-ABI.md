@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ### Registrar
 
 Read-only interface that all registrars must implement

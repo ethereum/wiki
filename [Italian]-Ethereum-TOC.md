@@ -1,3 +1,8 @@
+---
+name: 
+category: 
+---
+
 ### Benvenuti. Ethereum: il contratto intelligente di nuova generazione e piattaforma di applicazioni decentralizzate.
 
 [Libro Bianco di Ethereum](https://github.com/ethereum/wiki/wiki/%5BItalian%5D-Libro-Bianco)
