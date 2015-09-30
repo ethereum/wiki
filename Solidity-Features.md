@@ -931,3 +931,14 @@ contract Sharer {
     }
 }
 ```
+
+## Tightly Stored Byte Arrays and Strings
+
+[PT](https://www.pivotaltracker.com/story/show/101758652)
+
+Byte arrays (`bytes`) and strings (`string`) are stored more tightly packed in storage:
+Short values (less than 32 bytes) are stored directly together with the length:
+`<value><length * 2>` (the 31 higher-significant bytes contain the value, the least significant byte contains the doubled length)
+Long values (at least 32 bytes) are stored as they were stored before, just that the length is doubled and the least significant bit is set to one to indicate "long string".
+
+Example: "abcdef" is stored as `0x61626364656600000...000d` while "abcabcabc....abc" (of length 40) is stored as `0x0000000...0051`.
