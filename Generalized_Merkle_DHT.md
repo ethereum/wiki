@@ -1,5 +1,5 @@
 ---
-name: 
+name: Generalized Merkle DHT
 category: 
 ---
 

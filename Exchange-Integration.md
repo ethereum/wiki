@@ -1,5 +1,5 @@
 ---
-name: 
+name: Exchange Integration
 category: 
 ---
 

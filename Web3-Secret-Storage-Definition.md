@@ -1,5 +1,5 @@
 ---
-name: 
+name: Web3 Secret Storage Definition
 category: 
 ---
 

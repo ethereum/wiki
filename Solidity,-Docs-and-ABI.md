@@ -1,5 +1,5 @@
 ---
-name: 
+name: Solidity Docs and ABI
 category: 
 ---
 

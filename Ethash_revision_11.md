@@ -1,5 +1,5 @@
 ---
-name: 
+name: Ethash Revision 11
 category: 
 ---
 

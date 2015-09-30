@@ -1,5 +1,5 @@
 ---
-name: 
+name: NatSpec Example
 category: 
 ---
 

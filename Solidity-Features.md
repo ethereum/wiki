@@ -1,5 +1,5 @@
 ---
-name: 
+name: Solidity Features
 category: 
 ---
 

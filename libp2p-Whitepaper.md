@@ -1,5 +1,5 @@
 ---
-name: 
+name: Lib P2P Whitepaper
 category: 
 ---
 

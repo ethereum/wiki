@@ -1,5 +1,5 @@
 ---
-name: 
+name: Registrar ABI
 category: 
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: 
+name: Block Protocol 2.0
 category: 
 ---
 

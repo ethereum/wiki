@@ -1,5 +1,5 @@
 ---
-name: 
+name: The Solidity Programming Language
 category: 
 ---
 

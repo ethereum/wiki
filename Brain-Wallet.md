@@ -1,5 +1,5 @@
 ---
-name: 
+name: Brain Wallet
 category: 
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: 
+name: This Week in Ethereum 47
 category: 
 ---
 

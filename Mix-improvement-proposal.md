@@ -1,5 +1,5 @@
 ---
-name: 
+name: Mix Improvement Proposal
 category: 
 ---
 

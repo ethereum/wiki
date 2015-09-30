@@ -1,5 +1,5 @@
 ---
-name: 
+name: Geth DAPP Loading Proposal
 category: 
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: 
+name: Serenity Wishlist
 category: 
 ---
 

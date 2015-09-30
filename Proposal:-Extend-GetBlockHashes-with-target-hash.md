@@ -1,5 +1,5 @@
 ---
-name: 
+name: Proposal: Extend GetBlockHashes With Target Hash
 category: 
 ---
 

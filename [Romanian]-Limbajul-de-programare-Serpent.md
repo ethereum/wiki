@@ -1,5 +1,5 @@
 ---
-name: 
+name: Limbajul de Programare Serpent
 category: 
 ---
 

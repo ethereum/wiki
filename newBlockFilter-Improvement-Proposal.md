@@ -1,5 +1,5 @@
 ---
-name: 
+name: NewBlockFilter Improvement Proposal
 category: 
 ---
 

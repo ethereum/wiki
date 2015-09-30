@@ -1,5 +1,5 @@
 ---
-name: 
+name: Template: This Week in Ethereum
 category: 
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: 
+name: EVM JIT Binary Interface
 category: 
 ---
 

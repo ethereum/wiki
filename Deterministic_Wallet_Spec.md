@@ -1,5 +1,5 @@
 ---
-name: 
+name: Deterministic Wallet Spec
 category: 
 ---
 

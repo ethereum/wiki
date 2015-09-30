@@ -1,5 +1,5 @@
 ---
-name: 
+name: Introduzione allo sviluppo su Ethereum
 category: 
 ---
 

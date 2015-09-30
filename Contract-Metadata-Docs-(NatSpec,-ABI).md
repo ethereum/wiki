@@ -1,5 +1,5 @@
 ---
-name: 
+name: Contract Metadata Docs
 category: 
 ---
 

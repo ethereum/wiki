@@ -1,5 +1,5 @@
 ---
-name: 
+name: Swarm Hash
 category: 
 ---
 

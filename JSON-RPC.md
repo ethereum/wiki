@@ -1,5 +1,5 @@
 ---
-name: 
+name: JSON RPC
 category: 
 ---
 

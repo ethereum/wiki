@@ -1,5 +1,5 @@
 ---
-name: 
+name: Bad Chain Canary
 category: 
 ---
 

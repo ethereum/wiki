@@ -1,5 +1,5 @@
 ---
-name: 
+name: Light Client Protocol
 category: 
 ---
 

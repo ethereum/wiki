@@ -1,5 +1,5 @@
 ---
-name: 
+name: Ethereum Raspberry Pi
 category: 
 ---
 

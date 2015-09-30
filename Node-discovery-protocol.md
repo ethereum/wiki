@@ -1,5 +1,5 @@
 ---
-name: 
+name: Node Discovery Protocol
 category: 
 ---
 

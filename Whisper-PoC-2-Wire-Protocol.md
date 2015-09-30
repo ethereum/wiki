@@ -1,5 +1,5 @@
 ---
-name: 
+name: Whisper PoC-2 Wire Protocol
 category: 
 ---
 
