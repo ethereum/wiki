@@ -1,5 +1,5 @@
 ---
-name: Particia Tree
+name: Patricia Tree
 category: 
 ---
 
