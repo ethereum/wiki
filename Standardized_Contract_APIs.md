@@ -55,6 +55,28 @@ Triggered when an `address` approves `proxy` to direct debit from their account.
     AddressApprovalOnce(address indexed address, address indexed proxy, uint256 value)
 Triggered when an `address` approves `proxy` to direct debit from their account only once for a maximum of `value`
 
+### Variables
+
+These variables contain information about the coin. They are optional but adding them would increase the experience of the user that the GUI Client can use or not.
+
+#### coinSymbol (string)
+
+Contains a short sequence of letters that are used to represent the unit of the coin. Solidity string is on UTF-8 format so this should support any character supported by UTF-8. Symbols are chosen by the contract and it's up to the client to decide how to handle different currencies with similar or identical symbols.
+
+Examples: `USDX`, `BOB$`, `Ƀ`, `% of shares`.
+
+#### coinName (string)
+
+Contains a longer sequence of the coin name. Solidity string is on UTF-8 format so this should support any character supported by UTF-8. Names are chosen by the contract and it's up to the client to decide how to handle different currencies with similar or identical names.
+
+Examples: `e-Dollar`, `BobCoin`, `Bitcoin-Eth`.
+
+#### coinBaseUnit (integer)
+
+Although most coins are displayed to the final user as containing decimal points, coin values are unsigned integers, as the recommended method is to to calculations in the smallest possible unit. The client should always display the total units divided by coinBaseUnit. CoinBaseUnits can be any integer but we suggest only using powers of 10. At the moment there is no support for multiple sub-units.
+
+Example: Bob has a balance of 100000 BobCoins, whose base unit is 100. His balance will be displayed on the client as **BOB$100.00**
+
 
 ## Registries
 
