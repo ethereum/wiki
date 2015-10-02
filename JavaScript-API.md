@@ -1796,7 +1796,7 @@ events.watch(function(error, result){
 });
 
 // would get all past logs again.
-var myResults = events.get(function(error, logs){ ... });
+events.get(function(error, logs){ ... });
 
 ...
 
