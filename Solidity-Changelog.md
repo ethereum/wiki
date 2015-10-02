@@ -1,5 +1,6 @@
  * Report warnings
  * Encode short byte arrays and strings together with their length in storage.
+ * Bugfix: Problem with initialized string state variables and dynamic data in constructor.
 
 ### 0.1.4 (2015-09-30)
 
