@@ -1486,7 +1486,7 @@ web3.eth.filter(options, function(error, result){
 
 `Object` - A filter object with the following methods:
 
-  * `filter.get()`: Returns all of the log entries that fit the filter.
+  * `filter.get(callback)`: Returns all of the log entries that fit the filter.
   * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback. See [this note](#using-callbacks) for details.
   * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
 
@@ -1516,7 +1516,7 @@ filter.watch(function (error, log) {
 });
 
 // get all past logs again.
-var myResults = filter.get();
+var myResults = filter.get(function(error, logs){ ... });
 
 ...
 
@@ -1742,7 +1742,7 @@ myEvent.watch(function(error, result){
 });
 
 // would get all past logs again.
-var myResults = myEvent.get();
+var myResults = myEvent.get(function(error, logs){ ... });
 
 ...
 
@@ -1796,7 +1796,7 @@ events.watch(function(error, result){
 });
 
 // would get all past logs again.
-var myResults = events.get();
+var myResults = events.get(function(error, logs){ ... });
 
 ...
 
