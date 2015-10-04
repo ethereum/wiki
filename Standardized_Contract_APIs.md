@@ -4,23 +4,28 @@ The standards described below have sample implementations available [here](https
 
 All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinTransfer`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_maxValue`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_addr` when generic, and otherwise if a more specific description exists (eg. `_from`, `_to`).
 
-## Subcurrencies
+# Transferable Fungibles
+
+Also known as tokens, coins and sub-currencies.
+
+## Token
 
 ### Methods
-#### sendCoin
+
+#### transfer
     sendCoin(uint _value, address _to) returns (bool _success)
 Send `_value` amount of coins to address `_to`
 
-#### sendCoinFrom
+#### transferFrom
     sendCoinFrom(address _from, uint _value, address _to) returns (bool _success)
 Send `_value` amount of coins from address `_from` to address `_to`
 
-#### coinBalanceOf
-    coinBalanceOf(address _addr) constant returns (uint _r)
-Get the coin balance of another account with address `_addr`
+#### balanceOf
+    balanceOf(address _addr) constant returns (uint _r)
+Get the account balance of another account with address `_addr`
 
 ---
-The `sendCoinFrom` method is used for a "direct debit" workflow, allowing contracts to send coins on your behalf, for example to "deposit" to a contract address and/or to charge fees in sub-currencies; the command should fail unless the `_from` account has deliberately authorized the sender of the message via some mechanism; we propose these standardized APIs for approval:
+The `transferFrom` method is used for a "direct debit" workflow, allowing contracts to send coins on your behalf, for example to "deposit" to a contract address and/or to charge fees in sub-currencies; the command should fail unless the `_from` account has deliberately authorized the sender of the message via some mechanism; we propose these standardized APIs for approval:
 
 #### approve
     approve(address _addr) returns (bool _success)
@@ -43,8 +48,8 @@ Makes a one-time approval for `_addr` to send a maximum amount of currency equal
 Returns `_maxValue` if `_proxy` is allowed to direct debit the returned `_maxValue` from address `_target` only once. The approval must be reset on any transfer by `_proxy` of `_maxValue` or less.
 
 ### Events
-#### CoinTransfer
-    CoinTransfer(address indexed from, address indexed to, uint256 value)
+#### Transfer
+    Transfer(address indexed from, address indexed to, uint256 value)
 Triggered when coins are transferred.
 
 #### AddressApproval
@@ -55,28 +60,30 @@ Triggered when an `address` approves `proxy` to direct debit from their account.
     AddressApprovalOnce(address indexed address, address indexed proxy, uint256 value)
 Triggered when an `address` approves `proxy` to direct debit from their account only once for a maximum of `value`
 
-### Variables
+## TF Registries
 
-These variables contain information about the coin. They are optional but adding them would increase the experience of the user that the GUI Client can use or not.
+Token registries contain information about tokens. There is at least one global registry (though other may create more like the global Registry) to which you can add your token. Adding your token to it would increase the experience of the user that the GUI Client can use or not.
 
-#### coinSymbol (string)
+#### symbol
+    setSymbol(string _s)
+    symbol(address _token) constant returns (string)
+Sets or returns a short sequence of letters that are used to represent the unit of the coin. When setting, it assumes the `msg.sender` is the token. Solidity string is on UTF-8 format so this should support any character supported by UTF-8. Symbols are chosen by the contract and it's up to the client to decide how to handle different currencies with similar or identical symbols.
 
-Contains a short sequence of letters that are used to represent the unit of the coin. Solidity string is on UTF-8 format so this should support any character supported by UTF-8. Symbols are chosen by the contract and it's up to the client to decide how to handle different currencies with similar or identical symbols.
+Examples or symbols: `USDX`, `BOB$`, `Ƀ`, `% of shares`.
 
-Examples: `USDX`, `BOB$`, `Ƀ`, `% of shares`.
+#### name
+    setName(string _s)
+    name(address _token) constant returns (string)
+Sets or returns the name of a token. Solidity string is on UTF-8 format so this should support any character supported by UTF-8. Names are chosen by the contract and it's up to the client to decide how to handle different currencies with similar or identical names.
 
-#### coinName (string)
+Examples of names: `e-Dollar`, `BobToken`, `Bitcoin-Eth`.
 
-Contains a longer sequence of the coin name. Solidity string is on UTF-8 format so this should support any character supported by UTF-8. Names are chosen by the contract and it's up to the client to decide how to handle different currencies with similar or identical names.
+#### baseUnit (integer)
+    setBaseUnit(uint _s)
+    baseUnit(address _token) constant returns (uint)
+Sets or returns the base unit of a token. Although most tokens are displayed to the final user as containing decimal points, token values are unsigned integers counting in the smallest possible unit. The client should always display the total units divided by `baseUnit`. Base units can be any integer but we suggest only using powers of 10. At the moment there is no support for multiple sub-units.
 
-Examples: `e-Dollar`, `BobCoin`, `Bitcoin-Eth`.
-
-#### coinBaseUnit (integer)
-
-Although most coins are displayed to the final user as containing decimal points, coin values are unsigned integers, as the recommended method is to to calculations in the smallest possible unit. The client should always display the total units divided by coinBaseUnit. CoinBaseUnits can be any integer but we suggest only using powers of 10. At the moment there is no support for multiple sub-units.
-
-Example: Bob has a balance of 100000 BobCoins, whose base unit is 100. His balance will be displayed on the client as **BOB$100.00**
-
+Example: Bob has a balance of 100000 BobTokens, whose base unit is 100. His balance will be displayed on the client as **BOB$100.00**
 
 ## Registries
 
