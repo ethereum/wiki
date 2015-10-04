@@ -78,7 +78,7 @@ Sets or returns the name of a token. Solidity string is on UTF-8 format so this 
 
 Examples of names: `e-Dollar`, `BobToken`, `Bitcoin-Eth`.
 
-#### baseUnit (integer)
+#### baseUnit
     setBaseUnit(uint _s)
     baseUnit(address _token) constant returns (uint)
 Sets or returns the base unit of a token. Although most tokens are displayed to the final user as containing decimal points, token values are unsigned integers counting in the smallest possible unit. The client should always display the total units divided by `baseUnit`. Base units can be any integer but we suggest only using powers of 10. At the moment there is no support for multiple sub-units.
