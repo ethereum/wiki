@@ -75,12 +75,11 @@ Solidity является высокоуровневым языком, синт�
 
 
 ***
-# Some Examples
+# Некоторые примеры
 
-Let us begin with some examples. It is fine if you do not understand everything
-right now, we will go into more detail later.
+Давайте начнем с некоторых примеров. Позже мы рассмотрим все подробнее.
 
-## Storage
+## Хранилище
 
 ```js
 contract SimpleStorage {
@@ -94,10 +93,8 @@ contract SimpleStorage {
 }
 ```
 
-`uint storedData` declares a state variable called `storedData` of type `uint`
-(unsigned integer of 256 bits) whose position in storage is automatically
-allocated by the compiler. The functions `set` and `get` can be used to modify
-or retrieve the value of the variable.
+`uint storedData` объявляет переменную состояния, названную storedData типа uint (целое без знака 256 битов), чья позиция в хранилище автоматически решается компилятором.
+Функции `set` и `get` используются для изменения и получения значения переменной.
 
 ## Subcurrency Example
 
