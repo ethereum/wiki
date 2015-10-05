@@ -1,5 +1,21 @@
 Morden is the first Ethereum alternative testnet. It is expected to continue throughout the Frontier and Homestead era.
 
+### Usage
+
+#### TurboEthereum (C++)
+
+Pass the `--morden` parameter in when starting any of the clients. e.g.:
+
+```
+> eth --morden
+```
+
+Or, for AlethZero
+
+```
+> alethzero --morden
+```
+
 ### Details
 
 - Network Identity: **2**
