@@ -79,7 +79,6 @@ have to use a client like [Geth](https://github.com/ethereum/go-ethereum) or [Al
 		- [Function Visibility Specifiers](#function-visibility-specifiers)
 		- [Modifiers](#modifiers)
 		- [Types](#types)
-<!-- /TOC -->
 
 # Some Examples
 
