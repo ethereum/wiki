@@ -1123,10 +1123,12 @@ computation to find the starting position of the value or the array data. These 
 
 The mapping or the dynamic array itself
 occupies an (unfilled) slot in storage at some position `p` according to the above rule (or by
-recursively applying this rule for mappings to mappings or arrays of arrays). For a dynamic array, this slot stores the number of elements in the array. For a mapping, the slot is unused (but it is needed so that two equal mappings after each other will use a different hash distribution).
+recursively applying this rule for mappings to mappings or arrays of arrays). For a dynamic array, this slot stores the number of elements in the array (byte arrays and strings are an exception here, see below). For a mapping, the slot is unused (but it is needed so that two equal mappings after each other will use a different hash distribution).
 Array data is located at `sha3(p)` and the value corresponding to a mapping key
 `k` is located at `sha3(k . p)` where `.` is concatenation. If the value is again a
 non-elementary type, the positions are found by adding an offset of `sha3(k . p)`.
+
+`bytes` and `string` store their data in the same slot where also the length is stored if they are short. In particular: If the data is at most `31` bytes long, it is stored in the higher-order bytes (left aligned) and the lowest-order byte stores `length * 2`. If it is longer, the main slot stores `length * 2 + 1` and the data is stored as usual in `sha3(slot)`.
 
 So for the following contract snippet:
 ```js
