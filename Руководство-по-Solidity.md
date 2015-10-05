@@ -15,7 +15,7 @@ Solidity является высокоуровневым языком, синт�
 <!-- TOC depth:6 withLinks:1 updateOnSave:1 -->
 - [Некоторые примеры](#Некоторые-примеры)
 	- [Хранилище](#Хранилище)
-	- [Пример подвалюты](#subcurrency-example)
+	- [Пример подвалюты](#Пример-подвалюты)
 - [Разметка исходного файла Solidity](#layout-of-a-solidity-source-file)
 - [Структура договора Solidity](#structure-of-a-solidity-contract)
 - [Типы](#types)
@@ -96,7 +96,7 @@ contract SimpleStorage {
 `uint storedData` объявляет переменную состояния, названную storedData типа uint (целое без знака 256 битов), чья позиция в хранилище автоматически решается компилятором.
 Функции `set` и `get` используются для изменения и получения значения переменной.
 
-## Subcurrency Example
+## Пример подвалюты
 
 ```js
 contract Coin {
@@ -124,23 +124,11 @@ contract Coin {
 }
 ```
 
-This contract introduces some new concepts. One of them is the `address` type,
-which is a 160 bit value that does not allow any arithmetic operations.
-Furthermore, the state variable `balances` is of a complex datatype that maps
-addresses to unsigned integers. Mappings can be seen as hashtables which are
-virtually initialized such that every possible key exists and is mapped to a
-value whose byte-representation is all zeros. The special function `Coin` is the
-constructor which is run during creation of the contract and
-cannot be called afterwards. It permanently stores the address of the person creating the
-contract: Together with `tx` and `block`, `msg` is a magic global variable that
-contains some properties which allow access to the world outside of the contract.
-The function `queryBalance` is declared `constant` and thus is not allowed to
-modify the state of the contract (note that this is not yet enforced, though).
-In Solidity, return "parameters" are named and essentially create a local
-variable. So to return the balance, we could also just use `balance =
-balances[addr];` without any return statement.
-Events like `Send` allow external clients to search the blockchain more efficiently.
-If an event is invoked like in the function `send`, this fact is permanently stored in the blockchain, but more on this later.
+Настоящий контракт представляет некоторые новые понятия. Одно из них тип address-а, который является 160 битовым значением, не позволяющим арифметические операции.
+Кроме того, тип переменной состояния `balances` отображает адреса на целие числа без знака. Отображения  можно представить как хеш-таблицу виртуально инициализированную таким образом, чтобы каждый возможный ключ существовал и отображался в значении, байт-представление  которого является нулями. Специальная функция `Coin` является конструктором, который выполняют во время создания контракта и её нельзя вызвать впоследствии. Она хранит адрес лица, создающего договор вместе с `tx` и `block`, `msg` является волшебной глобальной переменной, содержащей некоторые свойства, предоставляющие доступ к миру за пределами контракта.
+Функция `queryBalance` объявлена как постоянная и таким образом не позволяется изменить состояние контракта(обратите внимание на то, что это не принудительно).
+В Solidity возвращаемые параметры наименованы и по существу создают локальную переменную. Таким образом для возврата баланса мы могли бы просто использовать `balance = balances[addr];` без какого-либо `return`. Такие события, как  `Send`, позволяют внешним клиентам искать в блокчейне более эффективно.
+Если событие вызывается как в функция `Send`, этот факт будет сохранен и отображён в блокчейне, мы узнаем больше об этом позже.
 
 # Layout of a Solidity Source File
 
