@@ -4,7 +4,7 @@ Morden is the first Ethereum alternative testnet. It is expected to continue thr
 
 #### TurboEthereum (C++)
 
-Pass the `--morden` parameter in when starting any of the clients. e.g.:
+This is supported natively on 0.9.93 and above. Pass the `--morden` argument in when starting any of the clients. e.g.:
 
 ```
 > eth --morden
@@ -15,6 +15,8 @@ Or, for AlethZero
 ```
 > alethzero --morden
 ```
+
+For earlier versions, `eth` can still be made to work by starting with arguments `--network-id 2 --genesis-json morden.json`, making sure to make a file `morden.json` containing the **Genesis JSON** contents given below.
 
 ### Details
 
