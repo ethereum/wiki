@@ -1,4 +1,4 @@
-[Russian]()
+[Russian version]()
 ***
 Solidity is a high-level language whose syntax is similar to that of JavaScript and it is designed to compile to code for the Ethereum Virtual Machine. This
 tutorial starts with a basic introduction to Solidity and assumes some knowledge of
