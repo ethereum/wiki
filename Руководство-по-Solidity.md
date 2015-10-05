@@ -1269,5 +1269,6 @@ TODO
 ***
 
 _Большое спасибо General-Beck Денис Солдатову за перевод._
+_Другие переводы на тему_ http://general-beck.info/component/tags/tag/98-ethereum
 
 _Note: This page is under construction_
