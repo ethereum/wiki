@@ -16,7 +16,7 @@ Or, for AlethZero
 > alethzero --morden
 ```
 
-For earlier versions, `eth` can still be made to work by starting with arguments `--network-id 2 --genesis-json morden.json`, making sure to make a file `morden.json` containing the **Genesis JSON** contents given below.
+For earlier versions, `eth` can still be made to work by starting with arguments `--network-id 2 --genesis-json morden.json`, making sure to make a file `morden.json` containing the **genesis.json** contents given below.
 
 ### Details
 
@@ -28,7 +28,7 @@ For earlier versions, `eth` can still be made to work by starting with arguments
 ### Seed Nodes
 - `enode://5374c1bff8df923d3706357eeb4983cd29a63be40a269aaa2296ee5f3b2119a8978c0ed68b8f6fc84aad0df18790417daadf91a4bfbb786a16c9b0a199fa254a@92.51.165.126:30303`
 
-### Genesis.json
+### genesis.json
 
 ```json
 {
