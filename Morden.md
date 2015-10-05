@@ -16,17 +16,17 @@ Or, for AlethZero
 > alethzero --morden
 ```
 
-For earlier versions, `eth` can still be made to work by starting with arguments `--network-id 2 --genesis-json morden.json`, making sure to make a file `morden.json` containing the **genesis.json** contents given below.
-
 ### Details
 
 - Network Identity: **2**
-- All parameters except genesis are same as Frontier
-- Genesis block hash: `4957c918...`
-- Genesis state root: `74f349dc...`
+- All parameters same as Frontier except:
+  - genesis.json (given below);
+  - Initial Account Nonce is 2^40 (instead of 0 in all previous networks).
+- Genesis block hash: `0cd786a2425d16f152c658316c423e6ce1181e15c3295826d7c9904cba9ce303`
+- Genesis state root: `f3f4696bbf3b3b07775128eb7a3763279a394e382130f27c21e70233e04946a9`
 
 ### Seed Nodes
-- `enode://5374c1bff8df923d3706357eeb4983cd29a63be40a269aaa2296ee5f3b2119a8978c0ed68b8f6fc84aad0df18790417daadf91a4bfbb786a16c9b0a199fa254a@92.51.165.126:30303`
+- `enode://e58d5e26b3b630496ec640f2530f3e7fa8a8c7dfe79d9e9c4aac80e3730132b869c852d3125204ab35bb1b1951f6f2d40996c1034fd8c5a69b383ee337f02ddc@92.51.165.126:30303`
 
 ### genesis.json
 
@@ -45,13 +45,7 @@ For earlier versions, `eth` can still be made to work by starting with arguments
                 "0000000000000000000000000000000000000002": { "wei": "1" },
                 "0000000000000000000000000000000000000003": { "wei": "1" },
                 "0000000000000000000000000000000000000004": { "wei": "1" },
-                "5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f": { "wei": "1606938044258990275541962092341162602522202993782792835301376" },
-                "0037a6b811ffeb6e072da21179d11b1406371c63": { "wei": "1606938044258990275541962092341162602522202993782792835301376" },
-                "02e816afc1b5c0f39852131959d946eb3b07b5ad": { "wei": "1606938044258990275541962092341162602522202993782792835301376" },
-                "775e18be7a50a0abb8a4e82b1bd697d79f31fe04": { "wei": "1606938044258990275541962092341162602522202993782792835301376" },
-                "063dd253c8da4ea9b12105781c9611b8297f5d14": { "wei": "1606938044258990275541962092341162602522202993782792835301376" },
-                "c5a96db085dda36ffbe390f455315d30d6d3dc52": { "wei": "1606938044258990275541962092341162602522202993782792835301376" },
-                "c2c2c26961e5560081003bb157549916b21744db": { "wei": "1606938044258990275541962092341162602522202993782792835301376" }
+                "102e61f5d8f9bc71d0ad4a084df4e65e05ce0e1c": { "wei": "1606938044258990275541962092341162602522202993782792835301376" }
         }
 }
 ```
