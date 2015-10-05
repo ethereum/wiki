@@ -2,7 +2,7 @@ _исходный текст [Solidity Tutorial](https://github.com/ethereum/wik
 ***
 Solidity является высокоуровневым языком, синтаксис которого схож c JavaScript, и он разработан для компиляции кода для Виртуальной машины Ethereum. Это учебное руководство обеспечивает основное введение в Solidity и предполагает некоторое знание Виртуальной машины Ethereum и программирования в целом. Оно не касается таких функций как [естественная спецификация языка](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial/Ethereum-Natural-Specification-Format) или формальная верификация и не является заключительной спецификаций языка.
 
-Можно начать использовать [Solidity в браузере](http://chriseth.github.io/cpp-ethereum)без потребности загрузжать или компилировать что-либо. Это приложение только поддерживает компиляцию - если Вы хотите выполнить код или ввести его в блокчейн, необходимо использовать клиент как [Geth](https://github.com/ethereum/go-ethereum) или [AlethZero](https://github.com/ethereum/alethzero).
+Можно начать использовать [Solidity в браузере](http://chriseth.github.io/cpp-ethereum) без потребности загрузжать или компилировать что-либо. Это приложение только поддерживает компиляцию - если Вы хотите выполнить код или ввести его в блокчейн, необходимо использовать клиент как [Geth](https://github.com/ethereum/go-ethereum) или [AlethZero](https://github.com/ethereum/alethzero).
 
 
 **Быстрые ссылки:**
