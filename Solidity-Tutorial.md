@@ -211,8 +211,8 @@ Operators:
 **Fixed-size byte arrays**
 `bytes1`, `bytes2`, `bytes3`, ..., `bytes32`. `byte` is an alias for `bytes1`.
 
-**Dynamically-sized byte array**
-`bytes`: Dynamically-sized byte array, see [arrays](#arrays). Not a value-type!
+**Dynamically-sized byte array**  
+`bytes`: Dynamically-sized byte array, see [arrays](#arrays). Not a value-type!  
 `string`: Dynamically-sized UTF8-encoded string, see [arrays](#arrays). Not a value-type!
 
 Operators:  
