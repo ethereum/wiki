@@ -130,18 +130,14 @@ contract Coin {
 В Solidity возвращаемые параметры наименованы и по существу создают локальную переменную. Таким образом для возврата баланса мы могли бы просто использовать `balance = balances[addr];` без какого-либо `return`. Такие события, как  `Send`, позволяют внешним клиентам искать в блокчейне более эффективно.
 Если событие вызывается как в функция `Send`, этот факт будет сохранен и отображён в блокчейне, мы узнаем больше об этом позже.
 
-# Layout of a Solidity Source File
+# Разметка исходного файла Solidity
 
-A Solidity source file can contain an arbitrary number of contracts.
-**Other source files** can be referenced using `import "filename";` and the symbols
-defined there will also be available in the current source file. Note that
-the browser-based compiler does not support multiple files and if you are using
-the [commandline compiler](#using-the-commandline-compiler), you have to explicitly specify all files you will use
-as arguments, the compiler will not search your filesystem on its own.
+Исходный файл Solidity может содержать произвольное число контрактов.
+На **другие исходные файлы** можно сослаться с помощью `import "filename";`, символы, определенные там, также будут доступны в текущем исходном файле. 
+Обратите внимание на то, что компилятор в браузере поддерживает не больше одного файла и если Вы используете компилятор командной строки, необходимо явно указать все файлы, которые Вы будете использовать в качестве параметров, компилятор не будет ничего искать в Вашей файловой системе самостоятельно.
 
-**Comments** Single-line comments (`//`) and multi-line comments (`/*...*/`) are possible, while
-triple-slash comments (`///`) right in front of function declarations introduce
-[NatSpec](Ethereum-Natural-Specification-Format) (which are not covered here).
+**Комментарии** однострочные комментарии (`//`) и многострочные комментарии (`/*...*/`)возможны, в то время как тройная наклонная черта (`///`) справа перед объявлениями функции производит
+[NatSpec](Ethereum-Natural-Specification-Format) (которые не освещены здесь).
 
 
 # Structure of a Solidity Contract
