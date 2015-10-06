@@ -1,4 +1,5 @@
 See also [Russian version](https://github.com/ethereum/wiki/wiki/%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE-Solidity)
+см. также [русский перевод](https://github.com/ethereum/wiki/wiki/%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE-Solidity)
 ***
 Solidity is a high-level language whose syntax is similar to that of JavaScript and it is designed to compile to code for the Ethereum Virtual Machine. This
 tutorial starts with a basic introduction to Solidity and assumes some knowledge of
@@ -209,7 +210,11 @@ Operators:
 `<=`, `<`, `==`, `!=`, `>=` and `>`.
 
 **Fixed-size byte arrays**  
-`bytes1`, `bytes2`, `bytes3`, ..., `bytes32`. `byte` is an alias for `bytes1`.
+`bytes1`, `bytes2`, `bytes3`, ..., `bytes32`. `byte` is an alias for `bytes1`.  
+
+Operators:  
+Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)  
+Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation)  
 
 **Dynamically-sized byte array**  
 `bytes`: Dynamically-sized byte array, see [arrays](#arrays). Not a value-type!  
