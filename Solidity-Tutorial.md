@@ -784,33 +784,50 @@ contract TokenCreator {
 
 ## Libraries
 
-Libraries are similar to contracts, but their purpose is that they are deployed only once at a specific address and their code is reused using the `CALLCODE` feature of the EVM. This means that if library functions are called, their code is executed in the context of the calling contract, i.e. `this` points to the calling contract and especially the storage from the calling contract can be accessed (this is not yet possible from solidity).
+Libraries are similar to contracts, but their purpose is that they are deployed only once at a specific address and their code is reused using the `CALLCODE` feature of the EVM. This means that if library functions are called, their code is executed in the context of the calling contract, i.e. `this` points to the calling contract and especially the storage from the calling contract can be accessed. As a library is an isolated piece of source code, it can only access state variables of the calling contract if they are explicitly supplied (it would have to way to name them, otherwise).
 
-The following example illustrates how to use libraries. Note that the library given below is not a good example for a library, since the benefits of a library in terms of saving gas for code deployment are only visible starting from a certain size.
+The following example illustrates how to use libraries.
 ```
-library Math {
-  function max(uint a, uint b) returns (uint) {
-    if (a > b) return a;
-    else return b;
+library Set {
+  // We define a new struct datatype that will be used to hold its data in the calling contract.
+  struct Data { mapping(uint => bool) flags; }
+  // Note that the first parameter is of type "storage reference" and
+  // thus only its storage address and not its contents is passed as part of the call.
+  // This is a special feature of library functions.
+  // It is idiomatic to call the first parameter 'self', if the function can be seen
+  // as a method of that object.
+  function insert(Data storage self, uint value) returns (bool) {
+    if (self.flags[value])
+      return false; // already there
+    self.flags[value] = true;
+    return true;
   }
-  function min(uint a, uint b) returns (uint) {
-    if (a < b) return a;
-    else return b;
+  function remove(Data storage self, uint value) returns (bool) {
+    if (!self.flags[value])
+      return false; // not there
+    self.flags[value] = false;
+    return true;
+  }
+  function contains(Data storage self, uint value) returns (bool) {
+    return self.flags[value];
   }
 }
 contract C {
+  Set.Data knownValues;
   function register(uint value) {
     // The library functions can be called without a specific instance of the library,
     // since the "instance" will be the current contract.
-    value = Math.max(10, Math.min(100, value)); // clamp value to [10, 100]
-    // ...
+    if (!Set.insert(knownValues, value))
+      throw;
   }
+  // In this contract, we can also directly access knownValues.flags, if we want.
 }
 ```
+Of course, you do not have to follow this way to use libraries - they can also be used without defining struct data types, functions also work without any storage reference parameters, can have multiple storage reference parameters and in any position.
 
-The calls to `Math.max` and `Math.min` are both compiled as calls (`CALLCODE`s) to an external contract. If you use libraries, take care that an actual external function call is performed, so `msg.sender` does not point to the original sender anymore but to the the calling contract and also `msg.value` contains the funds sent during the call to the library function.
+The calls to `Set.contains`, `Set.insert` and `Set.remove` are all compiled as calls (`CALLCODE`s) to an external contract/library. If you use libraries, take care that an actual external function call is performed, so `msg.sender` does not point to the original sender anymore but to the the calling contract and also `msg.value` contains the funds sent during the call to the library function.
 
-As the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker (see [Using the Commandline Compiler](#using-the-commandline-compiler) on how to use the commandline compiler for linking). If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Math______` (where `Math` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
+As the compiler cannot know where the library will be deployed at, these addresses have to be filled into the final bytecode by a linker (see [Using the Commandline Compiler](#using-the-commandline-compiler) on how to use the commandline compiler for linking). If the addresses are not given as arguments to the compiler, the compiled hex code will contain placeholders of the form `__Set______` (where `Set` is the name of the library). The address can be filled manually by replacing all those 40 symbols by the hex encoding of the address of the library contract.
 
 Restrictions for libraries in comparison to contracts:
 
