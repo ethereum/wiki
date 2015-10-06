@@ -216,6 +216,7 @@ Operators:
 `string`: Dynamically-sized UTF8-encoded string, see [arrays](#arrays). Not a value-type!
 
 Operators:
+
 Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)  
 Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation)
 
