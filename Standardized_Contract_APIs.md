@@ -13,11 +13,11 @@ Also known as tokens, coins and sub-currencies.
 ### Methods
 
 #### transfer
-    sendCoin(uint _value, address _to) returns (bool _success)
+    transfer(uint _value, address _to) returns (bool _success)
 Send `_value` amount of coins to address `_to`
 
 #### transferFrom
-    sendCoinFrom(address _from, uint _value, address _to) returns (bool _success)
+    trasnferFrom(address _from, uint _value, address _to) returns (bool _success)
 Send `_value` amount of coins from address `_from` to address `_to`
 
 #### balanceOf
