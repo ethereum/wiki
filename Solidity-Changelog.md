@@ -1,5 +1,8 @@
  * Report warnings
  * Encode short byte arrays and strings together with their length in storage.
+ * Allow storage reference types for public library functions.
+ * Access to types declared in other contracts and libraries via `.`.
+ * Version stamp at beginning of runtime bytecode of libraries.
  * Bugfix: Problem with initialized string state variables and dynamic data in constructor.
 
 ### 0.1.4 (2015-09-30)
