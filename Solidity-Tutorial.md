@@ -190,7 +190,7 @@ are used as function arguments or in assignments.
 **Booleans**
 `bool`: The possible values are constants `true` and `false`.
 
-Operators:
+Operators:  
 `!` (logical negation) `&&` (logical conjunction, "and"), `||` (logical disjunction, "or"), `==` (equality) and `!=` (inequality).
 The operators `||` and `&&` apply the common short-circuiting rules. This means that in the expression `f(x) || g(y)`, if `f(x)` evaluates to `true`, `g(y)` will not be evaluated even if it may have side-effects.
 
