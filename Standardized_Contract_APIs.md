@@ -17,7 +17,7 @@ Also known as tokens, coins and sub-currencies.
 Send `_value` amount of coins to address `_to`
 
 #### transferFrom
-    trasnferFrom(address _from, uint _value, address _to) returns (bool _success)
+    transferFrom(address _from, uint _value, address _to) returns (bool _success)
 Send `_value` amount of coins from address `_from` to address `_to`
 
 #### balanceOf
