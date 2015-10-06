@@ -220,11 +220,11 @@ Comparisons: `<=`, `<`, `==`, `!=`, `>=`, `>` (evaluate to `bool`)
 Bit operators: `&`, `|`, `^` (bitwise exclusive or), `~` (bitwise negation)
 
 **Integer Literals**
-Integer literals are arbitrary precision integers until they are used together with a non-literal. In `var x = 1 - 2;`, for example, the value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives the type `int8` -- the smallest type that contains `-1`, although the natural types of `1` and `2` are actually `uint8`.  
+are arbitrary precision integers until they are used together with a non-literal. In `var x = 1 - 2;`, for example, the value of `1 - 2` is `-1`, which is assigned to `x` and thus `x` receives the type `int8` -- the smallest type that contains `-1`, although the natural types of `1` and `2` are actually `uint8`.  
 It is even possible to temporarily exceed the maximum of 256 bits as long as only integer literals are used for the computation: `var x = (0xffffffffffffffffffff * 0xffffffffffffffffffff) * 0;` Here, `x` will have the value `0` and thus the type `uint8`.
 
 **String Literals**
-String literals are written with double quotes (`"abc"`). As with integer literals, their type can vary, but they are implicitly convertible to `bytes•` if they fit, to `bytes` and to `string`.
+are written with double quotes (`"abc"`). As with integer literals, their type can vary, but they are implicitly convertible to `bytes•` if they fit, to `bytes` and to `string`.
 
 ## Operators Involving LValues
 
