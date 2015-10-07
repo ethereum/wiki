@@ -6,6 +6,7 @@
  * Bugfix: Problem with initialized string state variables and dynamic data in constructor.
  * Bugfix: Resolve dependencies concerning `new` automatically.
  * Bugfix: Allow four indexed arguments for anonymous events.
+ * Bugfix: Detect too large integer constants in functions that accept arbitrary parameters.
 
 ### 0.1.4 (2015-09-30)
 
