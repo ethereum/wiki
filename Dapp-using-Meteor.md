@@ -22,7 +22,7 @@ True, Meteor is a full stack framework and its main improvement is realtime web 
 2. You get a development environment, which has live reload, CSS injection and support for many pre-compilers (LESS, Coffeescript, etc) out of the box
 3. You can get all frontend code as single `index.html` with one `js` and `css` file plus your assets, using [meteor-build-client](https://github.com/frozeman/meteor-build-client). You can then host it everywhere or simple run the `index.html` itself or distribute it later on *swarm*.
 4. It embraces full reactivity, which make building consistent interface much easier (similar to angualr.js `$scope` or binding)
-5. It has a great model called Minimongo, which gives you a mongoDB like interface for a reactive in-memory database, which can also be [auto-persistet to localstorage](https://atmospherejs.com/frozeman/persistent-minimongo)
+5. It has a great model called Minimongo, which gives you a mongoDB like interface for a reactive in-memory database, which can also be [auto-persistet to localstorage](https://atmospherejs.com/frozeman/persistent-minimongo) or [indexedDB](https://atmospherejs.com/frozeman/persistent-minimongo2)
 
 ### Do i need to host my Ðapp on a server?
 
