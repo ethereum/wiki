@@ -718,10 +718,11 @@ contract Sharer {
 }
 ```
 
-Currently, there are two situations, where exceptions happen automatically in Solidity:
+Currently, there are three situations, where exceptions happen automatically in Solidity:
 
 1. If you access an array beyond its length (i.e. `x[i]` where `i >= x.length`)
 2. If a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself).
+3. If a non-existent function on a library is called or Ether is sent to a library.
 
 Internally, Solidity performs an "invalid jump" when an exception is thrown and thus causes the EVM to revert all changes made to the state. The reason for this is that there is no safe way to continue execution, because an expected effect did not occur. Because we want to retain the atomicity of transactions, the safest thing to do is to revert all changes and make the whole transaction (or at least call) without effect.
 
