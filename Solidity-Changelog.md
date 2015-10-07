@@ -1,3 +1,5 @@
+### 0.1.5 (2015-10-07)
+
  * Breaking change in storage encoding: Encode short byte arrays and strings together with their length in storage.
  * Report warnings
  * Allow storage reference types for public library functions.
