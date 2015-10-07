@@ -1,9 +1,11 @@
+ * Breaking change in storage encoding: Encode short byte arrays and strings together with their length in storage.
  * Report warnings
- * Encode short byte arrays and strings together with their length in storage.
  * Allow storage reference types for public library functions.
  * Access to types declared in other contracts and libraries via `.`.
  * Version stamp at beginning of runtime bytecode of libraries.
  * Bugfix: Problem with initialized string state variables and dynamic data in constructor.
+ * Bugfix: Resolve dependencies concerning `new` automatically.
+ * Bugfix: Allow four indexed arguments for anonymous events.
 
 ### 0.1.4 (2015-09-30)
 
