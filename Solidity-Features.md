@@ -1033,3 +1033,19 @@ contract User
 }
 ```
 
+## Destructuring Assignments
+
+[PT](https://www.pivotaltracker.com/story/show/99085194) Tuple-valued objects (for now only in the form of function return values and structs) can be assigned to newly declared local variables in the following way:
+
+``` function f() returns (uint, uint, uint) { ... }```
+```
+var (a,b,c) = f();
+var (,x,) = f();
+var (,y) = f();
+var (z,) = f();
+```
+
+Assuming `f` returns `(1,2,3)`, the following will hold true:
+`a == 1`, `b == 2`, `c == 3`, `x == 2`, `y == 3`, `z == 1`.
+
+It is not possible to specify the types of the variables, they will be inferred from the assigned value.
