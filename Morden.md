@@ -19,7 +19,7 @@ Or, for AlethZero
 PyEthApp (Python client):
 
 ```
-> pyethapp --profile morden
+> pyethapp --profile morden run
 ```
 
 ### Details
