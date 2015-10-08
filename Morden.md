@@ -16,6 +16,12 @@ Or, for AlethZero
 > alethzero --morden
 ```
 
+PyEthApp (Python client):
+
+```
+> pyethapp --profile morden
+```
+
 ### Details
 
 - Network Identity: **2**
