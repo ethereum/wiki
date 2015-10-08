@@ -21,7 +21,9 @@ Or, for AlethZero
 - Network Identity: **2**
 - All parameters same as Frontier except:
   - genesis.json (given below);
-  - Initial Account Nonce is 2^20 (instead of 0 in all previous networks).
+  - Initial Account Nonce (`IAN`) is 2^20 (instead of 0 in all previous networks).
+    - All accounts in the state trie have nonce >= `IAN`.
+    - Whenever an account is inserted into the state trie it is initialised with nonce = `IAN`.
 - Genesis block hash: `0cd786a2425d16f152c658316c423e6ce1181e15c3295826d7c9904cba9ce303`
 - Genesis state root: `f3f4696bbf3b3b07775128eb7a3763279a394e382130f27c21e70233e04946a9`
 
