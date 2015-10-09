@@ -36,7 +36,9 @@ Currently, such systems are actively being looked into and adopted by private co
 
 And even governments:
 
+<center>
 [![](https://www.privateinternetaccess.com/blog/wp-content/uploads/2015/10/SesameCredit.jpg)](https://www.privateinternetaccess.com/blog/2015/10/in-china-your-credit-score-is-now-affected-by-your-political-opinions-and-your-friends-political-opinions/)
+</center>
 
 However, centralized credit scores have an important problem in both of these cases: they give the party controlling the scoring metric too much power. If society ends up relying on one particular number as a standard, then the issuer of that standard has the power to use the standard to obtain a substantial degree of "soft power" through the ability to manipulate the scoring system to achieve particular ends.
 
