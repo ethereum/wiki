@@ -30,7 +30,9 @@ Reputation and credit scores are potentially a very powerful economic lubricant 
 
 Currently, such systems are actively being looked into and adopted by private companies particularly in the "sharing economy":
 
+<center>
 ![](http://www.kellydessaint.com/wp-content/uploads/2014/08/lyft_ratings3.jpg)
+</center>
 
 And even governments:
 
