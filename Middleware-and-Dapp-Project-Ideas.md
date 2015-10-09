@@ -22,9 +22,31 @@ The way that you would implement the server side code is simple. In pseudocode, 
 
 (Note: the above is pseudocode; not all of the above methods are available in pyethereum quite yet).
 
+An alternative but related idea is an **HTTP getter passthrough contract**. Essentially, the contract would have one method, `get(string)`, that would take a URL as an argument, and simply log the URL alongside the address that asked for the get. A server daemon would make a curl request to the URL, and call the `passthroughCallback(string)` method of the sender address with the output. Note that multiple daemons running in this form could be called in multisig fashion if desired.
+
 ### Web of trust
 
-Basically, implement http://www.advogato.org/trust-metric.html (a trust score scheme based on max-flow) on Ethereum. Create a dapp by which anyone can register an identity, and register trust scores for other identities. Then, create a decentralized cloud computing service by which anyone can query "provide a proof, consisting of a list of augmenting paths, showing the Advogato trust score from A to B" and anyone can reply in exchange for a micropayment (or perhaps create a server that does it for free, and convince a charity to subsidize it); if user A wants to know "what is B's trust score", they can make this query, receive the result, verify the proof, and then display it.
+Reputation and credit scores are potentially a very powerful economic lubricant in modern society, allowing us to easily tell reliable from unreliable parties, and are even more important in a decentralized world where centralized curation is unavailable and many classes of regulation become more difficult to enforce. The question of "can this user be trusted?" is approximated with a simple and easy-to-understand number.
+
+Currently, such systems are actively being looked into and adopted by private companies particularly in the "sharing economy":
+
+![](http://www.kellydessaint.com/wp-content/uploads/2014/08/lyft_ratings3.jpg)
+
+And even governments:
+
+[![](https://www.privateinternetaccess.com/blog/wp-content/uploads/2015/10/SesameCredit.jpg)](https://www.privateinternetaccess.com/blog/2015/10/in-china-your-credit-score-is-now-affected-by-your-political-opinions-and-your-friends-political-opinions/)
+
+However, centralized credit scores have an important problem in both of these cases: they give the party controlling the scoring metric too much power. If society ends up relying on one particular number as a standard, then the issuer of that standard has the power to use the standard to obtain a substantial degree of "soft power" through the ability to manipulate the scoring system to achieve particular ends.
+
+An alternative solution uses the "web of trust" route: essentially, instead of trying to achieve a single universal score for everyone, provide a way for each person to score anyone else from their own point of view. This is accomplished through the trust transitivity heuristic: if A trusts B, and B trusts C, then to some degree that's cause for A to trust C. In some ways, centralized credit scores are a special case of this: everyone trusts the central agency (in theory), the central agency assigns people trust ratings, and so that's how much everyone is induced to trust everyone else. However, the decentralized approach is more general, and ideally allows us to take into account _all_ "chains of trust" between two people, and not just the ones that flow through a particular centralized gateway.
+
+![](http://vitalik.ca/files/wot_centralized_or_decentralized.png)
+
+One example of an algorithm that does this well is the [Advogato trust metric](http://www.advogato.org/trust-metric.html), a trust score scheme based on [max-flow](https://en.wikipedia.org/wiki/Maximum_flow_problem).
+
+A useful project would be to create an implementation of such a system on Ethereum, and create a dapp by which anyone can register an identity, and register trust scores for other identities. Then, create a decentralized cloud computing service by which anyone can query "provide a proof, consisting of a list of trust paths, showing the Advogato trust score from A to B" and anyone can reply in exchange for a micropayment (or perhaps create a server that does it for free, and convince a charity to subsidize it); if user A wants to know "what is B's trust score", they can make this query, receive the result, verify the proof, and then display it.
+
+This system could then be used by many other dapps on ethereum, including financial contract using price feeds and arbitration.
 
 ### Financial Derivatives Market
 
