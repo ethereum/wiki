@@ -1227,7 +1227,7 @@ Returns a transaction matching the given transaction hash.
   - `value`: `BigNumber` - value transferred in Wei.
   - `gasPrice`: `BigNumber` - gas price provided by the sender in Wei.
   - `gas`: `Number` - gas provided by the sender.
-  - `input`: `String` - the data send along with the transaction.
+  - `input`: `String` - the data sent along with the transaction.
 
 
 ##### Example
