@@ -22,7 +22,17 @@ The way that you would implement the server side code is simple. In pseudocode, 
 
 (Note: the above is pseudocode; not all of the above methods are available in pyethereum quite yet).
 
-An alternative but related idea is an **HTTP getter passthrough contract**. Essentially, the contract would have one method, `get(string)`, that would take a URL as an argument, and simply log the URL alongside the address that asked for the get. A server daemon would make a curl request to the URL, and call the `passthroughCallback(string)` method of the sender address with the output. Note that multiple daemons running in this form could be called in multisig fashion if desired.
+If you control:
+
+* An exchange or other website that has access to price feed or index data
+* A weather network
+* A site that lists results of real-life events
+* A service that KYCs people and assigns them unique identity tokens
+* Any other data repository
+
+Then the Ethereum ecosystem will benefit from you publishing a data feed contract on the ethereum blockchain.
+
+A closely related idea is an **HTTP getter passthrough contract**. Essentially, the contract would have one method, `get(string)`, that would take a URL as an argument, and simply log the URL alongside the address that asked for the get. A server daemon would make a curl request to the URL, and call the `passthroughCallback(string)` method of the sender address with the output. Note that multiple daemons running in this form could be called in multisig fashion if desired.
 
 ### Web of trust
 
@@ -65,7 +75,7 @@ Supported actions should ideally include:
 
 ### RANDAO
 
-Work on [this](https://forum.ethereum.org/discussion/2031/randao-a-dao-working-as-rng). Set it up as a decentralized service which any lottery or other randomness-based game can use; also, build a "full node software" package/plugin which facilitates participating in the RANDAO by providing random numbers.
+Essentially, [this](https://forum.ethereum.org/discussion/2031/randao-a-dao-working-as-rng). Set it up as a decentralized service which any lottery or other randomness-based game can use; also, build a "full node software" package/plugin which facilitates participating in the RANDAO by providing random numbers.
 
 ### Interface with national ID
 
