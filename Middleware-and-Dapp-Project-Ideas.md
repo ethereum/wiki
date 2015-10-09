@@ -40,7 +40,7 @@ However, centralized credit scores have an important problem in both of these ca
 
 An alternative solution uses the "web of trust" route: essentially, instead of trying to achieve a single universal score for everyone, provide a way for each person to score anyone else from their own point of view. This is accomplished through the trust transitivity heuristic: if A trusts B, and B trusts C, then to some degree that's cause for A to trust C. In some ways, centralized credit scores are a special case of this: everyone trusts the central agency (in theory), the central agency assigns people trust ratings, and so that's how much everyone is induced to trust everyone else. However, the decentralized approach is more general, and ideally allows us to take into account _all_ "chains of trust" between two people, and not just the ones that flow through a particular centralized gateway.
 
-![](http://vitalik.ca/files/wot_centralized_and_decentralized.png)
+![](http://vitalik.ca/files/wot_centralized_and_decentralized.png?1)
 
 One example of an algorithm that does this well is the [Advogato trust metric](http://www.advogato.org/trust-metric.html), a trust score scheme based on [max-flow](https://en.wikipedia.org/wiki/Maximum_flow_problem).
 
