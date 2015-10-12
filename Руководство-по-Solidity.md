@@ -189,31 +189,31 @@ Solidity является статически типизированным яз
 **Строковые Литералы**  
 Строковые литералы записываются с двойными кавычками(`"abc"`). Как с целочисленными литералами, тип может варьироваться, но они неявно конвертируемы в `bytes•` если помещаются, в `bytes` и в `string`.
 
-## Operators Involving LValues
+## Операторы, включающие LValue
 
-If `a` is an LValue (i.e. a variable or something that can be assigned to), the following operators are available as shorthands:
-
-`a += e` is equivalent to `a = a + e`. The operators `-=`, `*=`, `/=`, `%=`, `a |=`, `&=` and `^=` are defined accordingly. `a++` and `a--` are equivalent to `a += 1` / `a -= 1` but the expression itself still has the previous value of `a`. In contrast, `--a` and `++a` have the same effect on `a` but return the value after the change.
+**Операторы инкремента/декремента**
+Если `a` LValue (т.е. переменная или что-то, что может быть присвоено), следующие операторы доступны как сокращения:
+`a += e` эквивалентен `a = a + e`. Операторы `-=`, `*=`, `/=`, `%=`, `a |=`, `&=` и `^=` определяются соответственно. `a++` и `a--` эквивалентны `a += 1` / `a -= 1`, но само выражение все еще имеет предыдущее значение a. Напротив, `--a` и `++a` имеют тот же эффект, но возвращяют значения после изменения.
 
 **delete**
-`delete a` assigns the initial value for the type to `a`. I.e. for integers it is equivalent to `a = 0`, but it can also be used on arrays, where it assigns a dynamic array of length zero or a static array of the same length with all elements reset. For structs, it assigns a struct with all members reset.
+`delete a` присваивает `a` начальное значения для типа.  Т.е. для целых чисел это `a = 0`, но он также может использоваться в массивах, где он присваивает длине динамического массива `0`, а статическому-  массив той же длины где элементы имеют начальное значение. Для структур он присваивает переменной структуру со сбрасыванием значений для всех элементов.
 
-`delete` has no effect on whole mappings (as the keys of mappings may be arbitrary and are generally unknown). So if you delete a struct, it will reset all members that are not mappings and also recurse into the members unless they are mappings. However, individual keys and what they map to can be deleted.
+`delete` не имеет никакого эффекта на соответствия(mappings) (поскольку ключи соответствий могут быть произвольными и обычно неизвестны). Таким образом, при удалении структуры, значения все элементов кроме соответствий будут сброшены(рекурсивно для членов кроме соодветсвий). Однако отдельные ключи и то на что они отображаются, могут быть удалены.
 
-It is important to note that `delete a` really behaves like an assignment to `a`, i.e. it stores a new object in `a`.
+Важно отметить, что `delete a`,  в действительности ведет себя как присвоение на `a`, т.е. хранит новый объект в `a`.
 ```js
 contract DeleteExample {
   uint data;
   uint[] dataArray;
   function f() {
     uint x = data;
-    delete x; // sets x to 0, does not affect data
-    delete data; // sets data to 0, does not affect x which still holds a copy
+    delete x; // x = 0, не влияет на data
+    delete data; // data = 0, не влияет на x, каторая все еще содержит копию
     uint[] y = dataArray;
-    delete dataArray; // this sets dataArray.length to zero, but as uint[] is a complex object, also
-    // y is affected which is an alias to the storage object
-    // On the other hand: "delete y" is not valid, as assignments to local variables
-    // referencing storage objects can only be made from existing storage objects.
+    delete dataArray; // обнуляет dataArray.length, но поскольку uint[] сложный объект, также
+    // затронут y, который является псевдонимом к объекту хронилища.
+    // С другой стороны: «delete y», не действительнo, так как присвоение локальным переменным
+    // ссылающимеся на объекты хронилища может быть сделано только из существующих объектов хронилища.
   }
 }
 ```
