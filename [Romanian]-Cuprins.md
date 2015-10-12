@@ -12,7 +12,7 @@
 
 [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL), Specificatii pentru limbajul low-level "Lisp-like Language" , folosit pentru definirea contractelor in clientul ethereum incepand cu PoC-3.
 
-[Dagger](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Dagger), Detalii depsre algoritmul "proof-of-work".
+[Dagger](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Dagger), Detalii despre algoritmul "proof-of-work".
 
 [Block Protocol 2.0](https://github.com/ethereum/wiki/wiki/%5BRomanian%5D-Block-Protocol-2.0)
 
