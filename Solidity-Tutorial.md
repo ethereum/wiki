@@ -788,7 +788,7 @@ contract TokenCreator {
 Libraries are similar to contracts, but their purpose is that they are deployed only once at a specific address and their code is reused using the `CALLCODE` feature of the EVM. This means that if library functions are called, their code is executed in the context of the calling contract, i.e. `this` points to the calling contract and especially the storage from the calling contract can be accessed. As a library is an isolated piece of source code, it can only access state variables of the calling contract if they are explicitly supplied (it would have to way to name them, otherwise).
 
 The following example illustrates how to use libraries.
-```
+```js
 library Set {
   // We define a new struct datatype that will be used to hold its data in the calling contract.
   struct Data { mapping(uint => bool) flags; }
