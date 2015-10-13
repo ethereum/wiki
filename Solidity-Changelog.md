@@ -1,3 +1,7 @@
+ * Tuple expressions (`(1,2,3)` or `return (1,2,3);`)
+ * Declaration and assignment of multiple variables (`var (x,y,) = (1,2,3,4,5);` or `var (x,y) = f();`)
+ * Destructuring assignment (`(x,y,) = (1,2,3)`)
+
 ### 0.1.5 (2015-10-07)
 
  * Breaking change in storage encoding: Encode short byte arrays and strings together with their length in storage.
