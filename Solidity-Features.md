@@ -1035,17 +1035,29 @@ contract User
 
 ## Destructuring Assignments
 
-[PT](https://www.pivotaltracker.com/story/show/99085194) Tuple-valued objects (for now only in the form of function return values and structs) can be assigned to newly declared local variables in the following way:
+[PT](https://www.pivotaltracker.com/story/show/99085194) Inline tuples can be created and assigned to newly declared local variables or already existing lvalues. This makes it possible to access multiple return values from functions.
 
-``` function f() returns (uint, uint, uint) { ... }```
+``` function f() returns (uint, uint, uint) { return (1,2,3); }```
 ```
 var (a,b,c) = f();
 var (,x,) = f();
 var (,y) = f();
 var (z,) = f();
 ```
-
-Assuming `f` returns `(1,2,3)`, the following will hold true:
+For newly declared variables it is not possible to specify the types of variables, they will be inferred from the assigned value. Any component in the assigned tuple can be left out. If the first or last element is left out, they can consume an arbitrary number of values. At the end of this code, we will have:
 `a == 1`, `b == 2`, `c == 3`, `x == 2`, `y == 3`, `z == 1`.
 
-It is not possible to specify the types of the variables, they will be inferred from the assigned value.
+For newly constructed tuples, elements may not be left out, except for one special case that allows to distiguish between 1-tuples and single expressions: `(x)` is equivalent to `x`, but `(x,)` is a 1-tuple containing `x`.
+
+Assigning to pre-existing lvalues is similar to declaring multiple variables and also allows wildcards:
+
+```
+contract c {
+  string s;
+  struct Data {uint a; uint b;}
+  mapping(uint => Data) data;
+  function f() {
+    (s, data[45]) = (7, Data(1, 2));
+  }
+}
+```
