@@ -1,3 +1,4 @@
+ * `.push()` for dynamic storage arrays.
  * Tuple expressions (`(1,2,3)` or `return (1,2,3);`)
  * Declaration and assignment of multiple variables (`var (x,y,) = (1,2,3,4,5);` or `var (x,y) = f();`)
  * Destructuring assignment (`(x,y,) = (1,2,3)`)
