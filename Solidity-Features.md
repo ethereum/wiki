@@ -1057,7 +1057,7 @@ contract c {
   struct Data {uint a; uint b;}
   mapping(uint => Data) data;
   function f() {
-    (s, data[45]) = (7, Data(1, 2));
+    (s, data[45]) = ("abc", Data(1, 2));
   }
 }
 ```
