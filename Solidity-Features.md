@@ -1061,3 +1061,19 @@ contract c {
   }
 }
 ```
+
+## `.push()` for Dynamic Storage Arrays
+
+Dynamically-sized storage arrays have a member function `push`, such that
+`var l = arr.push(el);` is equivalent to `arr[arr.length++] = el; var l = arr.length;`.
+
+```
+contract c {
+  struct Account { address owner; uint balance; }
+  Account[] accounts;
+  function newAccount(address _owner, uint _balance) {
+    accounts.push(Account(_owner, _balance));
+  }
+}
+
+```
