@@ -2,6 +2,7 @@
  * Tuple expressions (`(1,2,3)` or `return (1,2,3);`)
  * Declaration and assignment of multiple variables (`var (x,y,) = (1,2,3,4,5);` or `var (x,y) = f();`)
  * Destructuring assignment (`(x,y,) = (1,2,3)`)
+ * Bugfix: Internal error about usage of library function with invalid types.
 
 ### 0.1.5 (2015-10-07)
 
