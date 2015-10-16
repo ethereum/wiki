@@ -723,9 +723,9 @@ contract C {
     // Components can be left out (also for variable declarations).
     // If the tuple ends in an empty component,
     // the rest of the values are discarded.
-    (data.length,) = g(); // Sets the length to 7
+    (data.length,) = f(); // Sets the length to 7
     // The same can be done on the left side.
-    (,data[3]) = g(); // Sets data[3] to 2
+    (,data[3]) = f(); // Sets data[3] to 2
     // Components can only be left out at the left-hand-side of assignments, with
     // one exception:
     (x,) = (1,);
@@ -734,8 +734,6 @@ contract C {
   }
 }
 ```
-
-
 
 ### Complications for Arrays and Structs
 
