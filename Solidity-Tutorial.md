@@ -454,13 +454,15 @@ third dynamic array, you use `x[2][1]` (indices are zero-based and
 access works in the opposite way of the declaration, i.e. `x[2]`
 shaves off one level in the type from the right).
 
-Arrays have a `length` member to hold their number of elements.
-Dynamic arrays can be resized in storage (not in memory) by changing the
-`.length` member. This does not happen automatically when attempting to access elements outside the current length. The size of memory arrays is fixed (but dynamic, i.e. it can depend on runtime parameters) once they are created.
-
 Variables of type `bytes` and `string` are special arrays. A `bytes` is similar to `byte[]`,
 but it is packed tightly in calldata. `string` is equal to `bytes` but does not allow
 length or index access (for now).
+
+*length*: Arrays have a `length` member to hold their number of elements.
+Dynamic arrays can be resized in storage (not in memory) by changing the
+`.length` member. This does not happen automatically when attempting to access elements outside the current length. The size of memory arrays is fixed (but dynamic, i.e. it can depend on runtime parameters) once they are created.
+*push*: Dynamic storage arrays and `bytes` (not `string`) have a member function called `push` that can be used to append an element at the end of the array. The function returns the new length.
+
 
 ```js
 contract ArrayContract {
@@ -496,6 +498,9 @@ contract ArrayContract {
     m_byteData.length += 7;
     m_byteData[3] = 8;
     delete m_byteData[2];
+  }
+  function addFlag(bool[2] flag) returns (uint) {
+    return m_pairsOfFlags.push(flag);
   }
 }
 ```
