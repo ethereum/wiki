@@ -50,9 +50,9 @@ And even governments:
 [![](https://www.privateinternetaccess.com/blog/wp-content/uploads/2015/10/SesameCredit.jpg)](https://www.privateinternetaccess.com/blog/2015/10/in-china-your-credit-score-is-now-affected-by-your-political-opinions-and-your-friends-political-opinions/)
 </center>
 
-However, centralized credit scores have an important problem in both of these cases: they give the party controlling the scoring metric too much power. If society ends up relying on one particular number as a standard, then the issuer of that standard has the power to use the standard to obtain a substantial degree of "soft power" through the ability to manipulate the scoring system to achieve particular ends.
+However, if we want to create a globally accessible system, centralized credit scores are arguably insufficient: not everyone in the world will be willing to trust a particular entity to provide accurate and fair credit scores, particularly in international cases where there are large political differences. Hence, while centralized credit scores may work in particular closed environments, in an international trade context it would be more ideal to have a global framework that allows specialized scoring agencies to exist, but which allows recipients to choose which ones they "listen" to, and even combine their scores.
 
-An alternative solution uses the "web of trust" route: essentially, instead of trying to achieve a single universal score for everyone, provide a way for each person to score anyone else from their own point of view. This is accomplished through the trust transitivity heuristic: if A trusts B, and B trusts C, then to some degree that's cause for A to trust C. In some ways, centralized credit scores are a special case of this: everyone trusts the central agency (in theory), the central agency assigns people trust ratings, and so that's how much everyone is induced to trust everyone else. However, the decentralized approach is more general, and ideally allows us to take into account _all_ "chains of trust" between two people, and not just the ones that flow through a particular centralized gateway.
+A highly effective solution to this problem, which has existed in academia and the public for over a decade, uses the "web of trust" route: essentially, instead of trying to achieve a single universal score for everyone, provide a way for each person to score anyone else from their own point of view. This is accomplished through the trust transitivity heuristic: if A trusts B, and B trusts C, then to some degree that's cause for A to trust C. In some ways, centralized credit scores are a special case of this: everyone trusts the central agency (in theory), the central agency assigns people trust ratings, and so that's how much everyone is induced to trust everyone else. However, the decentralized approach is more general, and ideally allows us to take into account _all_ "chains of trust" between two people, and not just the ones that flow through a particular centralized gateway.
 
 ![](http://vitalik.ca/files/wot_centralized_and_decentralized.png?1)
 
@@ -88,3 +88,14 @@ Create multiple compatible implementations of a ZK-SNARK protocol.
 ### Ultrahard KDFs for brainwallets
 
 A decentralized paid cloud computing service for brainwallet computations, combined with a client-side solution, in order to implement my proposal for ultra-secure brainwallets using blind-outsourceable ultrahard KDFs: https://blog.ethereum.org/2014/10/23/information-theoretic-account-secure-brainwallets/
+
+### Estonia ID integration
+
+Create a system which integrates the Estonian digital ID system into Ethereum; essentially, create a registry where someone can link their address to a particular Estonian digital ID by signing a transaction with their ID. The registry should cryptographically verify that the signature is valid and that it matches a particular ID, and should then store a mapping, eg. `address -> (first name, last name, number)`
+
+Some developer resources that can help with this include:
+
+* http://eid.eesti.ee/index.php/Authenticating_in_web_applications
+* https://e-estonia.com/e-residents/for-developers/
+* https://sk.ee/en/services/testcard/
+* http://id.ee/index.php?id=30469
