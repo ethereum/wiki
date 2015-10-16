@@ -3,6 +3,7 @@
  * Declaration and assignment of multiple variables (`var (x,y,) = (1,2,3,4,5);` or `var (x,y) = f();`)
  * Destructuring assignment (`(x,y,) = (1,2,3)`)
  * Bugfix: Internal error about usage of library function with invalid types.
+ * Bugfix: Correctly parse `Library.structType a` at statement level.
 
 ### 0.1.5 (2015-10-07)
 
