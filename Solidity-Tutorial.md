@@ -707,7 +707,7 @@ boolean expressions is done.
 
 Solidity internally allows tuple types, i.e. a list of objects of potentially different types whose size is a constant at compile-time. Those tuples can be used to return multiple values at the same time and also assign them to multiple variables (or LValues in general) at the same time:
 
-```
+```js
 contract C {
   uint[] data;
   function f() returns (uint, bool, uint) {
@@ -747,7 +747,7 @@ There are some cases where exceptions are thrown automatically (see below). You 
 Catching exceptions is not yet possible.
 
 In the following example, we show how `throw` can be used to easily revert an Ether transfer and also how to check the return value of `send`:
-```
+```js
 contract Sharer {
     function sendHalf(address addr) returns (uint balance) {
         if (!addr.send(msg.value/2))
