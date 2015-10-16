@@ -4,6 +4,7 @@
  * Destructuring assignment (`(x,y,) = (1,2,3)`)
  * Bugfix: Internal error about usage of library function with invalid types.
  * Bugfix: Correctly parse `Library.structType a` at statement level.
+ * Bugfix: Correctly report source locations of parenthesized expressions (as part of "tuple" story).
 
 ### 0.1.5 (2015-10-07)
 
