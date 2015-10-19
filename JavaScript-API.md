@@ -176,9 +176,11 @@ var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
 #### web3.version.api
 
-    web3.version.api
-    // or async
-    web3.version.getApi(callback(error, result){ ... })
+```js
+web3.version.api
+// or async
+web3.version.getApi(callback(error, result){ ... })
+```
 
 ##### Returns
 
