@@ -66,7 +66,7 @@ Requires peer to reply with a `BlockHashes` message. Message should contain bloc
 [`+0x05`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `BlockBodies` message. Specify the set of blocks that we're interested in with the hashes.
 
 **BlockBodies**
-[`+0x06`, [`transactions_0`, `uncles_0`] , `...`] Reply to `GetBlockBodies`. The items in the list (following the message ID) are some of the blocks, minus the header, in the format described in the main Ethereum specification, previously asked for in a `GetBlockBodies` message. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
+[`+0x06`, [`transactions_0`, `uncles_0`] , `...`] Reply to `GetBlockBodies`. The items in the list (following the message ID) are some of the blocks, minus the header, in the format described in the main Ethereum specification, previously asked for in a `GetBlockBodies` message. This may validly contain no items if no blocks were able to be returned for the `GetBlockBodies` query.
 
 ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashesFromNumber`
 
