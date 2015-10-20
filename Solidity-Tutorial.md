@@ -1,4 +1,4 @@
-See also [Russian version (русский перевод)](https://ethereum.github.io/solidity//docs/simple-smart-contract/)  
+See also [Russian version (русский перевод)](https://ethereum.github.io/solidity//docs/home/)  
 
 ***
 
