@@ -60,6 +60,7 @@
 - [Solidity Tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial)
 - [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
 - [Useful Ðapp Patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns)
+- [Standardized Contract APIs](https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs)
 - [Mix Tutorial](https://github.com/ethereum/wiki/wiki/Mix:-The-DApp-IDE)
 - [Mix Features](https://github.com/ethereum/wiki/wiki/Mix-Features)
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
