@@ -1,3 +1,5 @@
+ * Improved error messages for unexpected tokens.
+
 ### 0.1.6 (2015-10-16)
 
  * `.push()` for dynamic storage arrays.
