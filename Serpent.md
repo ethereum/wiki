@@ -437,8 +437,8 @@ The three other useful features in the tester environment are:
 Serpent also gives you access to many "special variables"; the full list is:
 
 * `tx.origin` - the sender of the transaction
-* `tx.gas` - gas remaining
 * `tx.gasprice` - gas price of the transaction
+* `msg.gas` - gas remaining
 * `msg.sender` - the sender of the message
 * `msg.value` - the number of wei (smallest units of ether) sent with the message
 * `self` - the contract's own address
