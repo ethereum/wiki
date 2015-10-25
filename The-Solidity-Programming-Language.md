@@ -1,3 +1,7 @@
+# This page is not actively maintained.
+
+The current Solidity documentation can be found at http://ethereum.github.io/solidity/
+
 # Foreword
 
 Solidity is roughly speaking, an object-oriented language designed for writing contracts in Ethereum. Contracts are (typically) small programs which govern the behaviour of accounts within the Ethereum state. These programs operate within the context of the Ethereum environment. Such accounts are able to pass messages between themselves as well as doing practically Turing complete computation.
