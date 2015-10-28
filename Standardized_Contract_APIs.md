@@ -13,26 +13,26 @@ Also known as tokens, coins and sub-currencies.
 ### Methods
 
 #### transfer
-    transfer(uint _value, address _to) returns (bool _success)
+    transfer(address _to, uint256 _value) returns (bool success)
 Send `_value` amount of coins to address `_to`
 
 #### transferFrom
-    transferFrom(address _from, uint _value, address _to) returns (bool _success)
+    transferFrom(address _from, address _to, uint256 _value) returns (bool success)
 Send `_value` amount of coins from address `_from` to address `_to`
 
 #### balanceOf
-    balanceOf(address _addr) constant returns (uint _r)
+    balanceOf(address _address) constant returns (uint256 balance)
 Get the account balance of another account with address `_addr`
 
 ---
 The `transferFrom` method is used for a "direct debit" workflow, allowing contracts to send coins on your behalf, for example to "deposit" to a contract address and/or to charge fees in sub-currencies; the command should fail unless the `_from` account has deliberately authorized the sender of the message via some mechanism; we propose these standardized APIs for approval:
 
 #### approve
-    approve(address _addr) returns (bool _success)
+    approve(address _address) returns (bool _success)
 Allow `_addr` to direct debit from your account with full custody. Only implement if absolutely required and use carefully. See `approveOnce` below for a more limited method.
 
 #### unapprove
-    unapprove(address _addr) returns (bool _success)
+    unapprove(address _address) returns (bool _success)
 Unapprove address `_addr` to direct debit from your account if it was previously approved. Must reset both one-time and full custody approvals.
 
 #### isApprovedFor
@@ -40,17 +40,17 @@ Unapprove address `_addr` to direct debit from your account if it was previously
 Returns 1 if `_proxy` is allowed to direct debit from `_target`
 
 #### approveOnce
-    approveOnce(address _addr, uint256 _maxValue) returns (bool _success)
+    approveOnce(address _address, uint256 _maxValue) returns (bool _success)
 Makes a one-time approval for `_addr` to send a maximum amount of currency equal to `_maxValue`
 
 #### isApprovedOnceFor
-    isApprovedOnceFor(address _target, address _proxy) returns (uint _maxValue)
+    isApprovedOnceFor(address _target, address _proxy) returns (uint256 _maxValue)
 Returns `_maxValue` if `_proxy` is allowed to direct debit the returned `_maxValue` from address `_target` only once. The approval must be reset on any transfer by `_proxy` of `_maxValue` or less.
 
 ### Events
 #### Transfer
     Transfer(address indexed from, address indexed to, uint256 value)
-Triggered when coins are transferred.
+Triggered when tokens are transferred.
 
 #### AddressApproval
     AddressApproval(address indexed address, address indexed proxy, bool result)
