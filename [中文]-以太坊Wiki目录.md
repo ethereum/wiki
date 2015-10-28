@@ -1,4 +1,4 @@
-中文读者可以在以太坊中文社区( www.1tf.org )获知最新信息。
+中文读者可以在[以太坊爱好者社区](http://ethfans.org)获知最新信息。
 
 白皮书：[以太坊（Ethereum ）:下一代智能合约和去中心化应用平台](https://github.com/ethereum/wiki/wiki/White-Paper-%5BChinese%5D)
 
