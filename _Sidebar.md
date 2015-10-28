@@ -54,6 +54,7 @@
 - [PoC-2 Whitepaper](https://github.com/ethereum/wiki/wiki/Whisper-PoC-2-Protocol-Spec)
 
 ### Ðapp Development
+- [Ðapp Developer Resources](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources)
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
 - [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/JSON-RPC)
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
