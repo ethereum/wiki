@@ -1,4 +1,4 @@
-As a Dapp developer you have three main resources which allow Dapp development.
+As a Ðapp developer you have three main resources which allow Ðapp development.
 
 ### Main Resources
 
@@ -9,3 +9,5 @@ As a Dapp developer you have three main resources which allow Dapp development.
 ### Other Resources:
 
 - [Dapp using Meteor](https://github.com/ethereum/wiki/wiki/Dapp-using-Meteor) - This short tutorial gives an intro on how to start building a Dapp using [Meteor](https://www.meteor.com), and also why Meteor is a good fit for Dapps.
+- [Useful Ðapp Patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns) - Code snippets which are useful for Ðapp development.
+- [Standardized Contract APIs](https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs) - Standard contract API, which should be used to make some contract types accessible by other Ðapps.
