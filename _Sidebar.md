@@ -5,6 +5,21 @@
 - [Ethereum Yellow Paper](http://gavwood.com/Paper.pdf)
 - [FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
 
+### Ðapp Development
+- [Ðapp Developer Resources](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources)
+- [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
+- [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/JSON-RPC)
+- [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
+- [Solidity](https://ethereum.github.io/solidity/docs/home/)
+- [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
+- [Useful Ðapp Patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns)
+- [Standardized Contract APIs](https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs)
+- [Mix Tutorial](https://github.com/ethereum/wiki/wiki/Mix:-The-DApp-IDE)
+- [Mix Features](https://github.com/ethereum/wiki/wiki/Mix-Features)
+- [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
+- [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
+- [Mutan](https://github.com/obscuren/mutan)
+
 ### ÐΞV Technologies
 - [RLP Encoding](https://github.com/ethereum/wiki/wiki/RLP)
 - [RLPx Node Discovery Protocol](https://github.com/ethereum/wiki/wiki/Node-discovery-protocol-(RLPx))
@@ -52,21 +67,6 @@
 - [PoC-1 Wire protocol](https://github.com/ethereum/wiki/wiki/Whisper-Wire-Protocol)
 - [PoC-2 Wire protocol](https://github.com/ethereum/wiki/wiki/Whisper-PoC-2-Wire-Protocol)
 - [PoC-2 Whitepaper](https://github.com/ethereum/wiki/wiki/Whisper-PoC-2-Protocol-Spec)
-
-### Ðapp Development
-- [Ðapp Developer Resources](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources)
-- [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
-- [Generic JSON RPC](https://github.com/ethereum/wiki/wiki/JSON-RPC)
-- [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
-- [Solidity Tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial)
-- [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
-- [Useful Ðapp Patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns)
-- [Standardized Contract APIs](https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs)
-- [Mix Tutorial](https://github.com/ethereum/wiki/wiki/Mix:-The-DApp-IDE)
-- [Mix Features](https://github.com/ethereum/wiki/wiki/Mix-Features)
-- [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
-- [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
-- [Mutan](https://github.com/obscuren/mutan)
 
 ### Misc
 - [Hard Problems of Cryptocurrency](https://github.com/ethereum/wiki/wiki/Problems)
