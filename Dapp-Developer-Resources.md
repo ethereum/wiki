@@ -13,4 +13,5 @@ As a Ðapp developer you have three main resources which allow Ðapp development
 - [Dapp using Meteor](https://github.com/ethereum/wiki/wiki/Dapp-using-Meteor) - This short tutorial gives an intro on how to start building a Ðapp using [Meteor](https://www.meteor.com), and also why Meteor is a good fit for Ðapps.
 
 ### Useful read
+- [FAQ](https://github.com/ethereum/wiki/wiki/FAQ) - Collection of links, useful for understanding the Ethereum eco system.
 - [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) - Great explanation of Blockchain related terms.
