@@ -2,7 +2,7 @@ Although Ethereum allows developers to create absolutely any kind of application
 
 The standards described below have sample implementations available [here](https://github.com/ethereum/dapp-bin/tree/master/standardized_contract_apis).
 
-All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinTransfer`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_maxValue`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_addr` when generic, and otherwise if a more specific description exists (eg. `_from`, `_to`).
+All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinTransfer`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_maxValue`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_address` when generic, and otherwise if a more specific description exists (eg. `_from`, `_to`).
 
 # Transferable Fungibles
 
@@ -31,7 +31,7 @@ Send `_value` amount of coins from address `_from` to address `_to`
 ```js
 balanceOf(address _address) constant returns (uint256 balance)
 ```
-Get the account balance of another account with address `_addr`
+Get the account balance of another account with address `_address`
 
 ---
 The `transferFrom` method is used for a "direct debit" workflow, allowing contracts to send coins on your behalf, for example to "deposit" to a contract address and/or to charge fees in sub-currencies; the command should fail unless the `_from` account has deliberately authorized the sender of the message via some mechanism; we propose these standardized APIs for approval:
@@ -159,7 +159,7 @@ Transfer ownership of a name.
 #### setAddr
 
 ```js
-setAddr(string _name, address _addr)
+setAddr(string _name, address _address)
 ```
 
 Set the primary address associated with a name (similar to an A record in traditional DNS.)
