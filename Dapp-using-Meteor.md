@@ -27,7 +27,7 @@ True, Meteor is a full stack framework and its main improvement is realtime web 
 2. You get a development environment, which has live reload, CSS injection and support for many pre-compilers (LESS, Coffeescript, etc) out of the box
 3. You can get all frontend code as single `index.html` with one `js` and `css` file plus your assets, using [meteor-build-client](https://github.com/frozeman/meteor-build-client). You can then host it everywhere or simple run the `index.html` itself or distribute it later on *swarm*.
 4. It embraces full reactivity, which make building consistent interface much easier (similar to angualr.js `$scope` or binding)
-5. It has a great model called Minimongo, which gives you a mongoDB like interface for a reactive in-memory database, which can also be [auto-persistet to localstorage](https://atmospherejs.com/frozeman/persistent-minimongo)
+5. It has a great model called Minimongo, which gives you a mongoDB like interface for a reactive in-memory database, which can also be [auto-persistet to localstorage](https://atmospherejs.com/frozeman/persistent-minimongo) or [indexedDB](https://atmospherejs.com/frozeman/persistent-minimongo2)
 
 ### Do i need to host my Ðapp on a server?
 
@@ -56,6 +56,7 @@ $ meteor add ethereum:web3
 
 I recommend also to add the following packages:
 
+- [ethereum:dapp-styles](https://atmospherejs.com/ethereum/dapp-styles) - The LESS/CSS framework which gives your dapp a nice Mist-consistent look.
 - [ethereum:tools](https://atmospherejs.com/ethereum/tools) - This package gives you the `EthTools` object with a set of formatting an conversion functions and template helpers for ether.
 - [ethereum:elements](https://atmospherejs.com/ethereum/elements) - A set of interface elements specifically made for ethereum, see this [Demo](http://ethereum-elements.meteor.com) for more.
 - [ethereum:accounts](https://atmospherejs.com/ethereum/accounts) - Gives you the reactive `EthAccounts` collection with all current available ethereum accounts, where balances will be automatically updated.
@@ -122,26 +123,25 @@ If we go to `http://localhost:3000`, we should see a website appear and if we op
 
 ## Add Ðapp styles
 
-If you want your Ðapp to nicely fit later into Mist and have follow the official look use the [dapp-styles css css/less framework](https://github.com/ethereum/dapp-styles).
+If you want your Ðapp to nicely fit later into Mist and have follow the official look use the [dapp-styles css css/less framework](https://atmospherejs.com/ethereum/dapp-styles).
 
-*But note that they are under heavy development and the class names and elements may change.*
+*Note that they are under heavy development and the class names and elements may change.*
 
-To add it simple copy/clone the [dapp-styles repo](https://github.com/ethereum/dapp-styles) into you `public folder`.
-
-Add the less package to your Ðapp:
+To add it simple add the following packages to your Ðapp:
 
 ```bash
 $ meteor add less
+$ meteor add ethereum:dapp-styles
 ```
 
-And rename you `myDapp.css` to `myDapp.less` and add the following line inside:
+Now rename you `myDapp.css` to `myDapp.less` and add the following line inside:
 
 ```css
 // libs
-@import 'public/dapp-styles/dapp-styles.less';
+@import '{ethereum:dapp-styles}/dapp-styles.less';
 ```
 
-Now you can use all dapp-styles classes and also overwrite all variables of the framewwork. You can find them in `public/dapp-styles/constants.import.less`. Overwrite them by copying them to your `myDapp.less` file and set different values.
+Now you can use all dapp-styles classes and also overwrite all variables of the framework. You can find them [in the repo](https://github.com/ethereum/dapp-styles/blob/master/constants.import.less). Overwrite them by copying them to your `myDapp.less` file and set different values.
 
 ## Using ethereum packages
 
@@ -197,7 +197,7 @@ To bundle your Ðapp into a local standalone file use [meteor-build-client](http
 ```bash
 $ npm install -g meteor-build-client
 $ cd myDapp
-$ meteor-build-client ../build ---path ""
+$ meteor-build-client ../build --path ""
 ```
 
 This will put your Ðapps static files into the build folder, above your `myDapp` folder.

@@ -23,7 +23,7 @@ You may ask, "why would anyone use such a system?" and again there are many reas
 
 In a more practical sense, Ethereum is an internet service platform for guaranteed computation. More than that, as a platform, it provides a set of integral features which are very useful to the developer:
 
- * user authentication, via seemless integration of cryptographic signatures
+ * user authentication, via seamless integration of cryptographic signatures
  * fully customizable payment logic; easily create your own payment system without any reliance on third parties
  * 100% ddos resistant up-time, guaranteed by being a fully decentralized blockchain-based platform
  * no-fuss storage: forget about having to set up secure databases; Ethereum gives you as much storage as you want

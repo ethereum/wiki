@@ -73,7 +73,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 * [web3](#web3)
   * [version](#web3versionapi)
      * [api](#web3versionapi)
-     * [client](#web3versionclient)
+     * [node](#web3versionnode)
      * [network](#web3versionnetwork)
      * [ethereum](#web3versionethereum)
      * [whisper](#web3versionwhisper)
@@ -171,16 +171,21 @@ The `web3` object provides all methods.
 ##### Example
 
 ```js
-var web3 = require('web3')
+var Web3 = require('web3');
+// create an instance of web3 using the HTTP provider.
+// NOTE in mist web3 is already available, so check first if its available before instantiating
+var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 ```
 
 ***
 
 #### web3.version.api
 
-    web3.version.api
-    // or async
-    web3.version.getApi(callback(error, result){ ... })
+```js
+web3.version.api
+// or async
+web3.version.getApi(callback(error, result){ ... })
+```
 
 ##### Returns
 
@@ -195,9 +200,9 @@ console.log(version); // "0.2.0"
 
 ***
 
-#### web3.version.client
+#### web3.version.node
 
-    web3.version.client
+    web3.version.node
     // or async
     web3.version.getClient(callback(error, result){ ... })
 
@@ -209,7 +214,7 @@ console.log(version); // "0.2.0"
 ##### Example
 
 ```js
-var version = web3.version.client;
+var version = web3.version.node;
 console.log(version); // "Mist/v0.9.3/darwin/go1.4.1"
 ```
 
@@ -1232,7 +1237,7 @@ Returns a transaction matching the given transaction hash.
   - `value`: `BigNumber` - value transferred in Wei.
   - `gasPrice`: `BigNumber` - gas price provided by the sender in Wei.
   - `gas`: `Number` - gas provided by the sender.
-  - `input`: `String` - the data send along with the transaction.
+  - `input`: `String` - the data sent along with the transaction.
 
 
 ##### Example
@@ -1485,13 +1490,13 @@ web3.eth.filter(options, function(error, result){
   * `fromBlock`: `Number|String` - The number of the earliest block (`latest` may be given to mean the most recent and `pending` currently mining, block). By default `latest`.
   * `toBlock`: `Number|String` - The number of the latest block (`latest` may be given to mean the most recent and `pending` currently mining, block). By default `latest`.
   * `address`: `String` - An address or a list of addresses to only get logs from particular account(s).
-  * `topics`: `Array of Strings` - An array of values which must each appear in the log entries. The order is important, if you want to leave topics out use `null`, e.g. `[null, '0x00...']`.
+  * `topics`: `Array of Strings` - An array of values which must each appear in the log entries. The order is important, if you want to leave topics out use `null`, e.g. `[null, '0x00...']`. You can also pass another array for each topic with options for that topic e.g. `[null, ['option1', 'option2']]`
 
 ##### Returns
 
 `Object` - A filter object with the following methods:
 
-  * `filter.get()`: Returns all of the log entries that fit the filter.
+  * `filter.get(callback)`: Returns all of the log entries that fit the filter.
   * `filter.watch(callback)`: Watches for state changes that fit the filter and calls the callback. See [this note](#using-callbacks) for details.
   * `filter.stopWatching()`: Stops the watch and uninstalls the filter in the node. Should always be called once it is done.
 
@@ -1521,7 +1526,7 @@ filter.watch(function (error, log) {
 });
 
 // get all past logs again.
-var myResults = filter.get();
+var myResults = filter.get(function(error, logs){ ... });
 
 ...
 
@@ -1549,6 +1554,16 @@ You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethe
 
 ```js
 var MyContract = web3.eth.contract(abiArray);
+
+// instantiate by address
+var contractInstance = MyContract.at([address]);
+
+// deploy new contract
+var contractInstance = MyContract.new([contructorParam1] [, contructorParam2], {data: '0x12345...', from: myAccount, gas: 1000000});
+
+// Get the data to deploy the contract manually
+var contractData = MyContract.new.getData([contructorParam1] [, contructorParam2], {data: '0x12345...'});
+// contractData = '0x12345643213456000000000023434234'
 ```
 
 And then you can either initiate an existing contract on an address,
@@ -1659,6 +1674,13 @@ myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject] [,
 
 // Explicitly sending a transaction to this method
 myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
+
+// Explicitly sending a transaction to this method
+myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
+
+// Get the call data, so you can call the contract through some other means
+var myCallData = myContractInstance.myMethod.getData(param1 [, param2, ...]);
+// myCallData = '0x45ff3ff6000000000004545345345345..'
 ```
 
 The contract object exposes the contracts methods, which can be called using parameters and a transaction object.
@@ -1747,7 +1769,7 @@ myEvent.watch(function(error, result){
 });
 
 // would get all past logs again.
-var myResults = myEvent.get();
+var myResults = myEvent.get(function(error, logs){ ... });
 
 ...
 
@@ -1801,7 +1823,7 @@ events.watch(function(error, result){
 });
 
 // would get all past logs again.
-var myResults = events.get();
+events.get(function(error, logs){ ... });
 
 ...
 

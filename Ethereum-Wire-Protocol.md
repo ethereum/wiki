@@ -71,7 +71,7 @@ Requires peer to reply with a `BlockHashes` message. Message should contain bloc
 [`+0x05`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `BlockBodies` message. Specify the set of blocks that we're interested in with the hashes.
 
 **BlockBodies**
-[`+0x06`, [`transactions_0`, `uncles_0`] , `...`] Reply to `GetBlockBodies`. The items in the list (following the message ID) are some of the blocks, minus the header, in the format described in the main Ethereum specification, previously asked for in a `GetBlockBodies` message. This may validly contain no block headers if no block headers were able to be returned for the `GetBlockHeaders` query.
+[`+0x06`, [`transactions_0`, `uncles_0`] , `...`] Reply to `GetBlockBodies`. The items in the list (following the message ID) are some of the blocks, minus the header, in the format described in the main Ethereum specification, previously asked for in a `GetBlockBodies` message. This may validly contain no items if no blocks were able to be returned for the `GetBlockBodies` query.
 
 ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashesFromNumber`
 
@@ -89,7 +89,7 @@ ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashes
 **Receipts**
 [`+0x10`, [`receipt_0`, `receipt_1`], `...`] Provide a set of receipts which correspond to previously asked in `GetReceipts`.
 
-### Proposal for light clients (PV64) - deprecated in favor of a sub-protocol
+### Proposal for light clients (PV64) - deprecated in favor of LES (the Light Ethereum sub-protocol)
 
 **GetAcctProof**
 [`+0x11`, [`blknum`, `address`]] Require peer to return a `Proof` message, containing a Merkle-tree proof of the account data (nonce, balance, code hash, storage root) at `address` from the state root of block `blknum`
