@@ -68,7 +68,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 * [web3](#web3)
   * [version](#web3versionapi)
      * [api](#web3versionapi)
-     * [client](#web3versionclient)
+     * [node](#web3versionnode)
      * [network](#web3versionnetwork)
      * [ethereum](#web3versionethereum)
      * [whisper](#web3versionwhisper)
@@ -195,9 +195,9 @@ console.log(version); // "0.2.0"
 
 ***
 
-#### web3.version.client
+#### web3.version.node
 
-    web3.version.client
+    web3.version.node
     // or async
     web3.version.getClient(callback(error, result){ ... })
 
@@ -209,7 +209,7 @@ console.log(version); // "0.2.0"
 ##### Example
 
 ```js
-var version = web3.version.client;
+var version = web3.version.node;
 console.log(version); // "Mist/v0.9.3/darwin/go1.4.1"
 ```
 
