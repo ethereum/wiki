@@ -1549,6 +1549,16 @@ You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethe
 
 ```js
 var MyContract = web3.eth.contract(abiArray);
+
+// instantiate by address
+var contractInstance = MyContract.at([address]);
+
+// deploy new contract
+var contractInstance = MyContract.new([contructorParam1] [, contructorParam2], {data: '0x12345...', from: myAccount, gas: 1000000});
+
+// Get the data to deploy the contract manually
+var contractData = MyContract.new.getData([contructorParam1] [, contructorParam2], {data: '0x12345...'});
+// contractData = '0x12345643213456000000000023434234'
 ```
 
 And then you can either initiate an existing contract on an address,
@@ -1659,6 +1669,13 @@ myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject] [,
 
 // Explicitly sending a transaction to this method
 myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
+
+// Explicitly sending a transaction to this method
+myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
+
+// Get the call data, so you can call the contract through some other means
+var myCallData = myContractInstance.myMethod.getData(param1 [, param2, ...]);
+// myCallData = '0x45ff3ff6000000000004545345345345..'
 ```
 
 The contract object exposes the contracts methods, which can be called using parameters and a transaction object.
