@@ -1,4 +1,5 @@
  * Improved error messages for unexpected tokens.
+ * Bugfix: Using string literals in tuples.
 
 ### 0.1.6 (2015-10-16)
 
