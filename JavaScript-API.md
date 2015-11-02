@@ -8,9 +8,9 @@ If you want to look at some more sophisticated examples using web3.js check out 
 
 ## Using callbacks
 
-As this API is designed to work with a local RPC node and all its functions are by default use synchronous HTTP requests.con
+As this API is designed to work with a local RPC node, all its functions use synchronous HTTP requests by default.
 
-If you want to make asynchronous request, you can pass an optional callback as the last parameter to most functions.
+If you want to make an asynchronous request, you can pass an optional callback as the last parameter to most functions.
 All callbacks are using an [error first callback](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/) style:
 
 ```js
