@@ -6,7 +6,7 @@ Note that the software is in still in proof-of-concept state. Things are changin
 
 ## Getting started.
 
-This tutorial assumes you have [C++ Ethereum installed](https://github.com/ethereum/cpp-ethereum/wiki).
+This tutorial assumes you have [C++ Ethereum installed](https://github.com/ethereum/cpp-ethereum/wiki). If this is the case, then Mix is already installed.
 
 ## Creating a new project
 
