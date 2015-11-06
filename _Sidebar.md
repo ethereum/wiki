@@ -5,6 +5,11 @@
 - [Ethereum Yellow Paper](http://gavwood.com/Paper.pdf)
 - [FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
 
+### Ethereum Clients
+- [Webthree (C++)](https://github.com/ethereum/webthree-umbrella/wiki)
+- [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
+- [pyeth (Python)](https://github.com/ethereum/pyethereum/wiki) 
+
 ### Ðapp Development
 - [Ðapp Developer Resources](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources)
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
@@ -20,11 +25,6 @@
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
-
-### Ethereum Clients
-- [Webthree (C++)](https://github.com/ethereum/webthree-umbrella/wiki)
-- [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
-- [pyeth (Python)](https://github.com/ethereum/pyethereum/wiki) 
 
 ### ÐΞV Technologies
 - [RLP Encoding](https://github.com/ethereum/wiki/wiki/RLP)
