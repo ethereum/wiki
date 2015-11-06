@@ -21,6 +21,11 @@
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
 
+### Ethereum Clients
+- [Webthree (C++)](https://github.com/ethereum/webthree-umbrella/wiki)
+- [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
+- [pyeth (Python)](https://github.com/ethereum/pyethereum/wiki) 
+
 ### ÐΞV Technologies
 - [RLP Encoding](https://github.com/ethereum/wiki/wiki/RLP)
 - [RLPx Node Discovery Protocol](https://github.com/ethereum/wiki/wiki/Node-discovery-protocol-(RLPx))
@@ -56,11 +61,6 @@
 - [Licensing](https://github.com/ethereum/wiki/wiki/Licensing)
 - [Network Status](https://github.com/ethereum/wiki/wiki/Network-Status)
 - [Raspberry Pi](https://github.com/ethereum/wiki/wiki/Raspberry-Pi-instructions)
-
-### Ethereum Clients
-- [Webthree (C++)](https://github.com/ethereum/webthree-umbrella/wiki)
-- [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
-- [pyeth (Python)](https://github.com/ethereum/pyethereum/wiki) 
 
 ### Concerning Whisper
 - [Whisper Proposal](https://github.com/ethereum/wiki/wiki/Whisper)
