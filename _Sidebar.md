@@ -58,9 +58,9 @@
 - [Raspberry Pi](https://github.com/ethereum/wiki/wiki/Raspberry-Pi-instructions)
 
 ### Ethereum Clients
-- [AlethZero (C++)](https://github.com/ethereum/wiki/wiki/AlethZero)
-- [Mist (Go)](https://github.com/ethereum/wiki/wiki/Ethereal) 
-- [pyeth (Python)](https://github.com/ethereum/wiki/wiki/Pyeth) 
+- [Webthree (C++)](https://github.com/ethereum/webthree-umbrella/wiki)
+- [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
+- [pyeth (Python)](https://github.com/ethereum/pyethereum/wiki) 
 
 ### Concerning Whisper
 - [Whisper Proposal](https://github.com/ethereum/wiki/wiki/Whisper)
