@@ -43,7 +43,7 @@ approve(address _address) returns (bool _success)
 ```
 Allow `_address ` to direct debit from your account with full custody. Only implement if absolutely required and use carefully. See `approveOnce` below for a more limited method.
 
-#### unapproved
+#### unapprove
 
 ```js
 unapprove(address _address) returns (bool _success)
