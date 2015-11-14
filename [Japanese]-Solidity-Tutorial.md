@@ -1,3 +1,3 @@
-[\[Japanese\] solidity tutorial](http://ghasshee.github.io/solidity/) に建設中
+[\[日本語\] solidity tutorial](http://ghasshee.github.io/solidity/) に移行します。
 
 
