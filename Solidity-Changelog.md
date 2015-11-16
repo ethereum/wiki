@@ -3,6 +3,7 @@
  * Bugfix: "Successor block not found" on Windows.
  * Bugfix: Using string literals in tuples.
  * Bugfix: Cope with invalid commit hash in version for libraries.
+ * Bugfix: Some test framework fixes on windows.
 
 ### 0.1.6 (2015-10-16)
 
