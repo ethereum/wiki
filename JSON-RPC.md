@@ -2349,9 +2349,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getFilterChanges","params":[
 
 #### shh_getMessages
 
-Get all messages matching a filter, which are still existing in the node's buffer.
-
-**Note** calling this method, will also reset the buffer for the [shh_getFilterChanges](#shh_getfilterchanges) method, so that you won't receive duplicate messages.
+Get all messages matching a filter. Unlike `shh_getFilterChanges` this returns all messages.
 
 ##### Parameters
 
