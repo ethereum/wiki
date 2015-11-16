@@ -1,6 +1,7 @@
  * Improved error messages for unexpected tokens.
  * Proof-of-concept transcompilation to why3 for formal verification of contracts.
  * Bugfix: Arrays (also strings) as indexed parameters of events.
+ * Bugfix: Writing to elements of `bytes` or `string` overwrite others.
  * Bugfix: "Successor block not found" on Windows.
  * Bugfix: Using string literals in tuples.
  * Bugfix: Cope with invalid commit hash in version for libraries.
