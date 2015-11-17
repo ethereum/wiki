@@ -1,3 +1,5 @@
+### 0.1.7 (2015-11-17)
+
  * Improved error messages for unexpected tokens.
  * Proof-of-concept transcompilation to why3 for formal verification of contracts.
  * Bugfix: Arrays (also strings) as indexed parameters of events.
