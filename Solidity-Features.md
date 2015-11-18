@@ -1094,3 +1094,7 @@ contract c {
 
 This is a **breaking change** because of the way NewExpressions are parsed: Expressions of the form
 `new ContractName.value(10)()` have to be changed to `(new ContractName).value(10)()`.
+
+## Support for addmod and mulmod
+
+[PT](https://www.pivotaltracker.com/story/show/108433524) Modular arithmetics outside of the 256 bit field is provided by the `addmod` and `mulmod` functions. `addmod(x, y, z)` computes `(x+y) % z`, only that it uses unbounded integers for the computations. Similarly, `mulmod(x, y, z)` computes `(x*y) % z`.
