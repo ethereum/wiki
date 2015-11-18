@@ -9,7 +9,7 @@ Though TCP provides a connection-oriented medium, ÐΞVp2p nodes communicate in 
 RLPx provides facilities to send and receive packets. For more information about RLPx, refer to the [protocol specification](https://github.com/ethereum/devp2p/rlpx.md). 
 
 ÐΞVp2p nodes find peers through the RLPx discovery protocol DHT. Peer connections can also be initiated by supplying
-the endpoint of a peer to an client-specific RPC API.
+the endpoint of a peer to a client-specific RPC API.
 
 ### Payload Contents
 
