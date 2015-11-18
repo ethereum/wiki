@@ -6,7 +6,7 @@ This document is intended to specify this protocol comprehensively.
 
 ÐΞVp2p nodes communicate by sending messages using RLPx, an encrypted and authenticated transport protocol. Peers are free to advertise and accept connections on any TCP ports they wish, however, a default port on which the connection may be listened and made will be 30303.
 Though TCP provides a connection-oriented medium, ÐΞVp2p nodes communicate in terms of packets.
-RLPx provides facilities to send and receive packets. For more information about RLPx, refer to the [protocol specification](https://github.com/ethereum/devp2p/rlpx.md). 
+RLPx provides facilities to send and receive packets. For more information about RLPx, refer to the [protocol specification](https://github.com/ethereum/devp2p/tree/master/rlpx.md). 
 
 ÐΞVp2p nodes find peers through the RLPx discovery protocol DHT. Peer connections can also be initiated by supplying
 the endpoint of a peer to a client-specific RPC API.
