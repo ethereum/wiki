@@ -74,17 +74,20 @@ Check the [JavaScript API Reference](https://github.com/ethereum/wiki/wiki/JavaS
 
 Select `File > Save` to save project files. You should see the web preview in the web preview pane.
 
-## Setting up state
+## Setting up scenario
 
-Now we need to configure a state for debugging. Mix has its own blockchain that is reset on each debugging session. States are used to get the blockchain to a point where it is possible to make transactions and calls to a contract. A state is defined by a sequence of transactions that create DApp and all dependencies on the blockchain and set up DApp initial storage. 
+Now we need to configure a scenario for debugging. Mix has its own blockchain that is reset on each debugging session. Scenarios are used to get the blockchain to a point where it is possible to make transactions and calls to a contract. A scenario is defined by a sequence of transactions that create DApp and all dependencies on the blockchain and set up DApp initial storage. 
 
-If the debugger pane on the right side is not open, open it by pressing `F7` or selecting `Windows > Show right view` from the menu. At the top of the right pane you can see a state selector and a transaction log. The Default state is already created. Add a transaction by clicking the `Add Tx` button. Make sure the function called `Rating` is selected from the Contract dropdown. This is the contract constructor, running this transaction will effectively deploy the contract on a blockchain. Close the windows by pressing `OK`.
+If the scenario panel on the right side is not open, open it by pressing `F7` or selecting `Windows > Show right view` from the menu. 
+A default scenario is already created (which contains the transaction which deploy the Sample contract). We don't need this anymore. Click on the green checkbox on the left side of the transaction. This will delete the transaction on the next rebuild. The rebuild button is blinking it means that the scenario needs to be rebuilt in order to apply changes. Click on it.
 
-Add another transaction with `Add Tx` button. This time select a `Transact with Contract` transaction and enter parameter values, e.g. `Titanic` for _key and `4` for _value. This will add a single rating key-value pair to the state. Close the state editor with `OK`. Now once you press `Add Block...` the blockchain will be cleared and a state will be re-deployed. You can see the Pending transactions move to Block 1 in the transaction log.
+At this point we have a clean blockchain. Click on the icon "add Transaction..." which is represented by a flying blue plane. Be sure to have selected "Create Contract" and that the contract "Rating" is selected. Apply changes. 
+The contract is now deployed and you can use it from the web preview.
+Let's create a new transaction. Click an "add Transaction..." then select "Transact with Contract". The deployed contract "Rating - O" should be selected, this is the one which has been previously deployed. You want now to call the function "setRating". 
+Select the function and give some parameters (for instance Titanic for the first parameter and an integer for the second). Apply changes.
 
-## Transaction log
-
-Now let's test out contract. Type "Titanic" in the web preview query input and you should see the result returned. Enter a name and a rating in store fields and click `Save` to add a new rating. Note that all  transactions and calls made to the contract during state deployment and debugging session are recorded into Transaction log to the right. Double click on any entry to load the execution into the debugger. There is also a mine button `Add Block...` to instantly mine a new block on the chain and put all pending transactions there.
+Now let's test out contract. Type "Titanic" in the web preview query input and you should see the result returned. Enter a name and a rating in store fields and click `Save` to add a new rating. Note that all  transactions and calls made to the contract during state deployment and debugging session are recorded into the scenario panel to the right (you can hide calls by unselecting the option "Scenario > Display calls" in the mix menu).
+Now it is possible to debug a transaction. Expand one transaction (by clicking on the arrow on the right side) and on "Debug Transaction".
 
 ## Debugging
 
