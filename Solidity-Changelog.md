@@ -1,3 +1,5 @@
+ * Allocation of memory arrays using `new`.
+
 ### 0.1.7 (2015-11-17)
 
  * Improved error messages for unexpected tokens.
