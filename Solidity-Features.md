@@ -1064,7 +1064,7 @@ contract c {
 
 ## `.push()` for Dynamic Storage Arrays
 
-Dynamically-sized storage arrays have a member function `push`, such that
+[PT](https://www.pivotaltracker.com/story/show/105439966) Dynamically-sized storage arrays have a member function `push`, such that
 `var l = arr.push(el);` is equivalent to `arr[arr.length++] = el; var l = arr.length;`.
 
 ```
@@ -1075,5 +1075,22 @@ contract c {
     accounts.push(Account(_owner, _balance));
   }
 }
+```
+
+## Allocation of Dynamic Memory Arrays
+
+[PT](https://www.pivotaltracker.com/story/show/101688050) Dynamic memory arrays can be allocated in the following way:
 
 ```
+contract c {
+  function f() {
+    uint[] memory x = new uint[](100);
+    uint[][] memory twoDim = new uint[][](20);
+    for (uint i = 0; i < twoDim.length; i++)
+      twoDim[i] = new uint[](30);
+  }
+}
+```
+
+This is a **breaking change** because of the way NewExpressions are parsed: Expressions of the form
+`new ContractName.value(10)()` have to be changed to `(new ContractName).value(10)()`.
