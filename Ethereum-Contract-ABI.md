@@ -21,7 +21,7 @@ Starting from the fifth byte, the encoded arguments follow. This encoding is als
 The following elementary types exist:
 - `uint<N>`: unsigned integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`. e.g. `uint32`, `uint8`, `uint256`.
 - `int<N>`: two's complement signed integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`.
-- `address`: equivalent to `bytes20`, except for the assumed interpretation and language typing.
+- `address`: equivalent to `uint160`, except for the assumed interpretation and language typing.
 - `uint`, `int`: synonyms for `uint256`, `int256` respectively (not to be used for computing the function selector).
 - `bool`: equivalent to `uint8` restricted to the values 0 and 1
 - `real<N>x<M>`: fixed-point signed number of `N+M` bits, `0 < N + M <= 256`, `N % 8 == M % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
