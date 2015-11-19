@@ -8,8 +8,6 @@ All function names are in lower camelCase (eg. `sendCoin`) and all event names a
 
 Also known as tokens, coins and sub-currencies.
 
-## Token
-
 ### Methods
 
 #### totalSupply
