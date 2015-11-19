@@ -12,86 +12,92 @@ Also known as tokens, coins and sub-currencies.
 
 ### Methods
 
+#### totalSupply
+
+```js
+function totalSupply() constant returns (uint256 supply)
+```
+Get the total coin supply
+
+#### balanceOf
+
+```js
+function balanceOf(address _address) constant returns (uint256 balance)
+```
+Get the account balance of another account with address `_address`
+
 #### transfer
 
 ```js
-transfer(address _to, uint256 _value) returns (bool success)
+function transfer(address _to, uint256 _value) returns (bool _success)
 ```
 Send `_value` amount of coins to address `_to`
 
 #### transferFrom
 
 ```js
-transferFrom(address _from, address _to, uint256 _value) returns (bool success)
+function transferFrom(address _from, address _to, uint256 _value) returns (bool success)
 ```
 Send `_value` amount of coins from address `_from` to address `_to`
 
-#### balanceOf
-
-```js
-balanceOf(address _address) constant returns (uint256 balance)
-```
-Get the account balance of another account with address `_address`
-
----
 The `transferFrom` method is used for a "direct debit" workflow, allowing contracts to send coins on your behalf, for example to "deposit" to a contract address and/or to charge fees in sub-currencies; the command should fail unless the `_from` account has deliberately authorized the sender of the message via some mechanism; we propose these standardized APIs for approval:
 
 #### approve
 
 ```js
-approve(address _address) returns (bool _success)
+function approve(address _address) returns (bool success)
 ```
 Allow `_address ` to direct debit from your account with full custody. Only implement if absolutely required and use carefully. See `approveOnce` below for a more limited method.
 
 #### unapprove
 
 ```js
-unapprove(address _address) returns (bool _success)
+function unapprove(address _address) returns (bool success)
 ```
 Unapprove address `_address ` to direct debit from your account if it was previously approved. Must reset both one-time and full custody approvals.
 
 #### isApprovedFor
 
 ```js
-isApprovedFor(address _target, address _proxy) constant returns (bool _r)
+function isApprovedFor(address _target, address _proxy) constant returns (bool success)
 ```
 Returns 1 if `_proxy` is allowed to direct debit from `_target`
 
 #### approveOnce
 
 ```js
-approveOnce(address _address, uint256 _maxValue) returns (bool _success)
+function approveOnce(address _address, uint256 _maxValue) returns (bool success)
 ```
 Makes a one-time approval for `_address ` to send a maximum amount of currency equal to `_maxValue`
 
 #### isApprovedOnceFor
 
 ```js
-isApprovedOnceFor(address _target, address _proxy) returns (uint256 _maxValue)
+function isApprovedOnceFor(address _target, address _proxy) returns (uint256 maxValue)
 ```
-Returns `_maxValue` if `_proxy` is allowed to direct debit the returned `_maxValue` from address `_target` only once. The approval must be reset on any transfer by `_proxy` of `_maxValue` or less.
+Returns `_maxValue` if `_proxy` is allowed to direct debit the returned `maxValue` from address `_target` only once. The approval must be reset on any transfer by `_proxy` of `_maxValue` or less.
 
 ### Events
 #### Transfer
 
 ```js
-Transfer(address indexed from, address indexed to, uint256 value)
+event Transfer(address indexed _from, address indexed _to, uint256 _value)
 ```
 Triggered when tokens are transferred.
 
 #### AddressApproval
 
 ```js
-AddressApproval(address indexed address, address indexed proxy, bool result)
+event AddressApproval(address indexed _address, address indexed _proxy, bool _result)
 ```
-Triggered when an `address` approves `proxy` to direct debit from their account.
+Triggered when an `_address` approves `_proxy` to direct debit from their account.
 
 #### AddressApprovalOnce
 
 ```js
-AddressApprovalOnce(address indexed address, address indexed proxy, uint256 value)
+event AddressApprovalOnce(address indexed _address, address indexed _proxy, uint256 _value)
 ```
-Triggered when an `address` approves `proxy` to direct debit from their account only once for a maximum of `value`
+Triggered when an `_address` approves `_proxy` to direct debit from their account only once for a maximum of `_value`
 
 ## TF Registries
 
