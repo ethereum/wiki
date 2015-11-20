@@ -27,7 +27,7 @@ The following elementary types exist:
 - `real<N>x<M>`: fixed-point signed number of `N+M` bits, `0 < N + M <= 256`, `N % 8 == M % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
 - `ureal<N>x<M>`: unsigned variant of `real<N>x<M>`.
 - `real`, `ureal`: synonyms for `real128x128`, `ureal128x128` respectively (not to be used for computing the function selector).
-- `bytes<N>`: binary type of `N` bytes, `N >= 0`.
+- `bytes<N>`: binary type of `N` bytes, `0 < N <= 32`.
 
 The following (fixed-size) array type exists:
 - `<type>[N]`: a fixed-length array of the given fixed-length type.
