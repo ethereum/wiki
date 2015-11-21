@@ -31,7 +31,7 @@ Satoshi Nakamoto's development of Bitcoin in 2009 has often been hailed as a rad
     * [Mining Centralization](#mining-centralization)
     * [Scalability](#scalability)
 * [Conclusion](#conclusion)
-* [References and Further Reading](#references-and-further-reading)
+* [Notes and Further Reading](#notes-and-further-reading)
 
 ## Introduction to Bitcoin and Existing Concepts
 
