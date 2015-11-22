@@ -181,8 +181,6 @@ value は、そのパスの先にあるノードのハッシュ値です。
 そこで、完全に一般化して、この key/value store に、'dog' と 'doge' のような　key　を同時に保存したいので、
 他ノードへのパスとなる &quot;途中の&quot; 値が決して存在しないようにして終端記号(16)をアルファベットに対し追加します。
 (つまり終端記号に格納されている値はパスでなく実際のvalueとなります)
-Also, we add another conceptual change:
-internal nodes can no longer have values, only leaves with no children of their own can; however, since to be fully generic we want the key/value store to be able to store keys like 'dog' and 'doge' at the same time, we simply add a terminator symbol (16) to the alphabet so there is never a value &quot;en-route&quot; to another value.
 
 kv node (アイテムが2つの配列`[ key, v]`) において, `v` は value または node です。
 * `v` が value のとき、key はニブルが終端記号のフラグを **伴う** コンパクト符号化の戻り値です。
