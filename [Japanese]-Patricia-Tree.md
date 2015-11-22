@@ -14,9 +14,7 @@ red black tree のような、複雑な比較基盤のデータ構造よりも�
 
 ### 序文: Basic Radix Trees
 
-基本的な radix tree においては、すべてのノードは次のように見えます。
-
-In a basic radix tree, every node looks as follows:
+基本的な radix tree において、あらゆるノードは次のように表現されます :
 
     [ value, i0, i1 ... in]
 
