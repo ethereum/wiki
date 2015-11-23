@@ -51,7 +51,7 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 [`+0x08`: `P`, `number`: `P`, `maxBlocks`: `P`]
 Requires peer to reply with a `BlockHashes` message. Message should contain block with that of number `number` on the canonical chain. Should also be followed by subsequent blocks, on the same chain, detailing a number of the first block hash and a total of hashes to be sent. Returned hash list must be ordered by block number in ascending order.
 
-### Proposed messages for New Model syncing (PV62)
+### New model syncing (PV62)
 
 **NewBlockHashes**
 [`+0x01`: `P`, [`hash_0`: `B_32`, `number_0`: `P`], [`hash_1`: `B_32`, `number_1`: `P`], ...] Specify one or more new blocks which have appeared on the network. To be maximally helpful, nodes should inform peers of all blocks that they may not be aware of. Including hashes that the sending peer could reasonably be considered to know (due to the fact they were previously informed of because that node has itself advertised knowledge of the hashes through `NewBlockHashes`) is considered Bad Form, and may reduce the reputation of the sending node. Including hashes that the sending node later refuses to honour with a proceeding `GetBlockHeaders` message is considered Bad Form, and may reduce the reputation of the sending node.
@@ -70,7 +70,7 @@ Requires peer to reply with a `BlockHashes` message. Message should contain bloc
 
 ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashesFromNumber`
 
-### Proposed messages for fast synchronization (PV63)
+### Fast synchronization (PV63)
 
 **GetNodeData**
 [`+0x0d`, `hash_0`: `B_32`, `hash_1`: `B_32`, `...`] Require peer to return a `NodeData` message. Hint that useful values in it are those which correspond to given hashes.
@@ -83,17 +83,6 @@ ELIMINATED: `GetBlockHashes`, `BlockHashes`, `GetBlocks`, `Blocks`, `BlockHashes
 
 **Receipts**
 [`+0x10`, [`receipt_0`, `receipt_1`], `...`] Provide a set of receipts which correspond to previously asked in `GetReceipts`.
-
-### Proposal for light clients (PV64) - deprecated in favor of LES (the Light Ethereum sub-protocol)
-
-**GetAcctProof**
-[`+0x11`, [`blknum`, `address`]] Require peer to return a `Proof` message, containing a Merkle-tree proof of the account data (nonce, balance, code hash, storage root) at `address` from the state root of block `blknum`
-
-**GetStorageDataProof**
-[`+0x12`, [`blknum`, `address`, `key`]] Require peer to return a `Proof` message, containing a Merkle-tree proof of the storage value of index `key` in `address` from the state root of block `blknum`
-
-**Proof**
-[`+0x13`, [`node_1`, `node_2`...]] Return a Merkle-tree proof consisting of a set of nodes that must be processed in order to access the piece of account data or storage value requested in `GetAcctProof` or `GetStorageDataProof`
 
 ### Session Management
 
