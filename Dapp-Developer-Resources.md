@@ -15,3 +15,7 @@ As a Ðapp developer you have three main resources which allow Ðapp development
 ### Useful read
 - [FAQ](https://github.com/ethereum/wiki/wiki/FAQ) - Collection of links, useful for understanding the Ethereum eco system.
 - [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) - Great explanation of Blockchain related terms.
+
+### Gitter Community
+- web3 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/web3.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- mist [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/mist?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
