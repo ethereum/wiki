@@ -1,5 +1,6 @@
  * **Breaking Change**: `new ContractName.value(10)()` has to be written as `(new ContractName).value(10)()`
  * Allocation of memory arrays using `new`.
+ * Bugfix: Memory allocation of structs containing arrays or strings.
 
 ### 0.1.7 (2015-11-17)
 
