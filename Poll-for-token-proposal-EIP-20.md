@@ -8,7 +8,7 @@ nmushegian       |  Set1    | decimals    | Yes |
 joeykrug       |  Set1, identifier    | ?    | ? |
 koeppelmann    |  Set1, identifier    | ?    | ? |
 Georgi87       |  Set1, identifier    | ?    | ? |
-niran          |  Set1, identifier    | ?    | ? |
+niran          |  Set1    | decimals    | Yes? |
 ethers         |  Set1, identifier    | decimals    | Yes |
 simondlr       |  Set1    | decimals    | Yes |
 frozeman       |  Set1, decimals    |    |  |
