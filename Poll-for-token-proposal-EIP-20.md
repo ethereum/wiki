@@ -13,7 +13,7 @@ ethers         |  Set1, identifier    | decimals    | Yes |
 simondlr       |  Set1    | decimals    | Yes |
 frozeman       |  Set1, decimals    |    |  |
 alexvandesande |  Set1, decimals    |    |  |
-caktux         |  Set1    |  ?  | ? |
+caktux         |  Set1, decimals    |    |  |
 
 
 * Set1 = balanceOf, transfer, transferFrom, totalSupply, approve, unapprove, allowance
