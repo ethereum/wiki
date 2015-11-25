@@ -12,6 +12,7 @@ niran          |  Set1    | ?    | ? | identifiers should be in IN
 ethers         |  Set1    | decimals    | Yes | identifiers should be in IN
 simondlr       |  Set1    | decimals    | Yes |
 frozeman       |  Set1, decimals    |    | Yes |
+alexvandesande |  Set1, decimals    |    | Yes |
 caktux         |  Set1    |  ?  | ? |
 
 
