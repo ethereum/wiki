@@ -14,7 +14,7 @@ red black tree のような複雑な比較基盤のデータ構造よりも、�
 <br>
 <br>
 
-### 序文: Basic Radix Trees
+### はじめに: Basic Radix Trees
 
 基本的な radix tree においては、すべてのノードは次のように表現されます :
 
