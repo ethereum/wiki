@@ -11,7 +11,7 @@ Georgi87       |  Set1, identifier    | ?    | ? |
 niran          |  Set1    | decimals    | Yes? |
 ethers         |  Set1, identifier    | decimals    | Yes |
 simondlr       |  Set1    | decimals    | Yes |
-frozeman       |  Set1, decimals    |    | NO (optional) |
+frozeman       |  Set1, decimals    |    | NO (Mark optional) |
 alexvandesande |  Set1, decimals    |    |  |
 caktux         |  Set1, decimals    |    |  |
 
