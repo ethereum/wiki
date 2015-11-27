@@ -7,7 +7,7 @@ christianlundkvist|  Set1             | decimals                                
 nmushegian        |  Set1             | decimals                                | YES |
 joeykrug          |  Set1, identifier | ?                                       | ?   |
 koeppelmann       |  Set1, identifier | ?                                       | ?   |
-Georgi87          |  Set1, identifier | ?                                       | ?   |
+Georgi87          |  Set1, identifier | decimals                                | Yes |
 niran             |  Set1             | decimals                                | YES?|
 ethers            |  Set1, identifier | decimals                                | YES |
 simondlr          |  Set1             | decimals                                | YES |
