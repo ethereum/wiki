@@ -4,6 +4,7 @@
  * Binding library functions to types via `using x for y`
  * Bugfix: Constructor arguments of fixed array type were not read correctly.
  * Bugfix: Memory allocation of structs containing arrays or strings.
+ * Bugfix: Data location for explicit memory parameters in libraries was set to storage.
 
 ### 0.1.7 (2015-11-17)
 
