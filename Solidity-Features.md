@@ -1098,3 +1098,23 @@ This is a **breaking change** because of the way NewExpressions are parsed: Expr
 ## Support for addmod and mulmod
 
 [PT](https://www.pivotaltracker.com/story/show/108433524) Modular arithmetics outside of the 256 bit field is provided by the `addmod` and `mulmod` functions. `addmod(x, y, z)` computes `(x+y) % z`, only that it uses unbounded integers for the computations. Similarly, `mulmod(x, y, z)` computes `(x*y) % z`.
+
+## Attaching Library Functions to Types
+
+[PT](https://www.pivotaltracker.com/story/show/101773928) At the contract level, statements of the form `using Lib for Type;` are possible, where `Lib` has to be the name of a library and `Type` can either be the name of a type or `*`. The effect is that all functions in `Lib` are attached to variables of type `Type` (or just all, if `Y` is `*`) as member functions and expressions of the form `x.function(a, b)` are essentially equivalent to `Lib.function(x, a, b)`.
+
+```
+library Lib {
+  function sum(uint[] storage self) returns (uint s) {
+    for (uint i = 0; i < self.length; i++)
+      s += self[i];
+  }
+}
+contract C {
+  using Lib for uint[];
+  uint[] data;
+  function f() {
+    data.push(data.sum());
+  }
+}
+```
