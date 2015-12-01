@@ -21,6 +21,10 @@ In order to install the Serpent python library and executable do:
 
     $ sudo pip install ethereum-serpent
 
+You can install pyethereum itself as well:
+
+    $ sudo pip install ethereum
+
 If you want a library you can directly call from C++, instead do:
 
     $ git clone http://github.com/ethereum/serpent
@@ -96,7 +100,7 @@ Now, what if you want to actually run the contract? That is where [pyethereum](h
     >>> s = t.state()
     >>> c = s.abi_contract('mul2.se')
     >>> c.double(42)
-    [84]
+    84
 
 The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `c.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
 
