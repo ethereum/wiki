@@ -334,7 +334,7 @@ However, if a contract wants to call another contract that takes arrays as argum
 
     extern composer: [compose:[int256[],int256]:int256, main:[]:int256]
 
-Here, `ai` means "an array followed by an integer". You can do things like `iiaa`, meaning 2 integers followed by 2 arrays or `iss` meaning an integer followed by 2 strings. If a colon is not provided, as in `main` in this example, that means that the function takes no arguments. If you want to determine the signature to use from a given file, you can do:
+If you want to determine the signature to use from a given file, you can do:
 
     > serpent mk_signature compose_test.se
     extern compose_test: [compose:[int256[],int256]:int256, main:[]:int256]
