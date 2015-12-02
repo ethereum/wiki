@@ -132,13 +132,13 @@ Now, paste the code into `namecoin.se`, if you wish try compiling it to LLL, opc
     >>> s = t.state()
     >>> c = s.abi_contract('namecoin.se')
     >>> c.register(0x67656f726765, 45)
-    [1]
+    1
     >>> c.register(0x67656f726765, 20)
-    [0]
+    0
     >>> c.register(0x6861727279, 65)
-    [1]
+    1
     >>> c.ask(0x6861727279)
-    [65]
+    65
 
 If we wanted to encode the transaction data for that first call, we would do: 
 
@@ -157,7 +157,7 @@ mul2.se:
 
 returnten.se:
 
-    extern mul2.se: [double:i:i]
+    extern mul2.se: [double:[int256]:int256]
     
     MUL2 = create('mul2.se')
     def returnten():
@@ -169,7 +169,7 @@ And open Python:
     >>> s = t.state()
     >>> c = s.abi_contract('returnten.se')
     >>> c.returnten()
-    [10]
+    10
 
 Note that here we introduced several new features. Particularly:
 
@@ -179,7 +179,7 @@ Note that here we introduced several new features. Particularly:
 
 `create` is self-explanatory; it creates a contract and returns the address to the contract. 
 
-The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. To generate `extern mul2.se: [double:i:i]` use
+The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. To generate `extern mul2.se: [double:[int256]:int256]` use
 	
 	$ serpent mk_signature mul2.se
 
@@ -332,12 +332,12 @@ If a contract calls one of its functions, then it will autodetect which argument
 
 However, if a contract wants to call another contract that takes arrays as arguments, then you will need to put a "signature" into the extern declaration:
 
-    extern composer: [compose:ai, main]
+    extern composer: [compose:[int256[],int256]:int256, main:[]:int256]
 
 Here, `ai` means "an array followed by an integer". You can do things like `iiaa`, meaning 2 integers followed by 2 arrays or `iss` meaning an integer followed by 2 strings. If a colon is not provided, as in `main` in this example, that means that the function takes no arguments. If you want to determine the signature to use from a given file, you can do:
 
     > serpent mk_signature compose_test.se
-    extern compose_test: [compose:ai, main]
+    extern compose_test: [compose:[int256[],int256]:int256, main:[]:int256]
 
 ### Strings
 
@@ -476,7 +476,7 @@ There are also special commands for a few crypto operations; particularly:
 
 * Sometimes you may be intending to use unsigned operators. eg div() and lt() instead of '/' and '<'.
 
-* To upgrade Serpent, you may need to do `pip uninstall ethereum-serpent` and `python setup.py install`.  (Avoid `pip install ethereum-serpent` since it will get from PyPI which is probably old.)
+* To upgrade Serpent, you may need to do `pip uninstall ethereum-serpent` and `python setup.py install`. (Avoid `pip install ethereum-serpent` since it will get from PyPI which is probably old.) (Also avoid using the master branch, which is probably even older than the PyPI version; use the develop branch instead.)
 
 * When calling abi_contract(), if you get this type of error `Exception: Error (file "main", line 1, char 5): Invalid object member (ie. a foo.bar not mapped to anything)` make sure you are specifying correct path to the file you are compiling.
 
