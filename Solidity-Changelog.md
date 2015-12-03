@@ -1,3 +1,5 @@
+### 0.2.0 (2015-12-02)
+
  * **Breaking Change**: `new ContractName.value(10)()` has to be written as `(new ContractName).value(10)()`
  * Added `selfdestruct` as an alias for `suicide`.
  * Allocation of memory arrays using `new`.
