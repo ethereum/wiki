@@ -4,6 +4,7 @@
  * Added `selfdestruct` as an alias for `suicide`.
  * Allocation of memory arrays using `new`.
  * Binding library functions to types via `using x for y`
+ * `addmod` and `mulmod` (modular addition and modular multiplication with arbitrary intermediate precision)
  * Bugfix: Constructor arguments of fixed array type were not read correctly.
  * Bugfix: Memory allocation of structs containing arrays or strings.
  * Bugfix: Data location for explicit memory parameters in libraries was set to storage.
