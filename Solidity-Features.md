@@ -1131,3 +1131,6 @@ contract C {
 
 `import {symbol1 as alias, symbol2} from "filename";` creates new global symbols `alias` and `symbol2` which reference `symbol1` and `symbal2` from `"filename"`, respectively.
 
+Another syntax that is not part of ES6, but probably convenient:
+
+`import "filename" as symbolName;` is equivalent to `import * as symbolName from "filename";`.
