@@ -1136,3 +1136,5 @@ Another syntax that is not part of ES6, but probably convenient:
 `import "filename" as symbolName;` is equivalent to `import * as symbolName from "filename";`.
 
 Furthermore, `"filename"` is treated as a path relative to the path of the current file using `/` as directory separator, `.` is the current directory and `..` the parent directory.
+
+This hierarchy does not need to strictly map onto the filesystem. Furthermore, the "driver" running the compiler can define path names starting with certain strings like `github.com` to always be considered absolute paths.
