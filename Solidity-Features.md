@@ -1134,3 +1134,5 @@ contract C {
 Another syntax that is not part of ES6, but probably convenient:
 
 `import "filename" as symbolName;` is equivalent to `import * as symbolName from "filename";`.
+
+Furthermore, `"filename"` is treated as a path relative to the path of the current file using `/` as directory separator.
