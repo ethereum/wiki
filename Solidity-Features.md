@@ -1141,3 +1141,7 @@ In the above, `filename` is always treated as a path to a file with `/` as `/` a
 This hierarchy does not need to strictly map onto the filesystem, it can also map to resources discovered via e.g. ipfs, http or git.
 
 When the compiler is invoked, it is not only possible to specify how to discover the first element of a path, but it is possible to specify path prefix remappings so that e.g. `github.com/ethereum/dapp-bin/library` is remapped to `/usr/local/dapp-bin/library` and the compiler will read the files from there. If remapping keys are prefixes of each other, the longest is tried first. This allows for a "fallback-remapping" with e.g. "" maps to "/usr/local/include/solidity".
+
+### Changes to solc Interface
+
+For solc, these remappings are provided as `key=value` arguments, where the `=value` part is optional (and defaults to `key` in that case). All remapping values that are regular files are compiled (including their dependencies). This mechanism is completely backwards-compatible (as long as no filename contains a `=`) and thus not a breaking change.
