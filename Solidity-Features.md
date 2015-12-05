@@ -1135,8 +1135,9 @@ Another syntax that is not part of ES6, but probably convenient:
 
 `import "filename" as symbolName;` is equivalent to `import * as symbolName from "filename";`.
 
-Furthermore, `"filename"` is treated as a path relative to the path of the current file using `/` as directory separator, `.` is the current directory and `..` the parent directory.
+### Path Resolution
 
-This hierarchy does not need to strictly map onto the filesystem. Furthermore, the "driver" running the compiler can define path names starting with certain strings like `github.com` to always be considered absolute paths.
+In the above, `filename` is always treated as a path to a file with `/` as `/` as directory separator, `.` as the current directory and `..` as the parent directory. Path names that do not start with `./` or `../` are treated as absolute paths and the compiler has to be instructed how to resolve the first element of that path.
+This hierarchy does not need to strictly map onto the filesystem, it can also map to resources discovered via e.g. ipfs, http or git.
 
-When the compiler is invoked, it is possible to specify path remappings so that e.g. `github.com/ethereum/dapp-bin/library` is remapped to `/usr/local/dapp-bin/library` and the compiler will read the files from there. If remapping keys are prefixes of each other, the longest is tried first. This allows for a "fallback-remapping" with e.g. "" maps to "/usr/local/include/solidity".
+When the compiler is invoked, it is not only possible to specify how to discover the first element of a path, but it is possible to specify path prefix remappings so that e.g. `github.com/ethereum/dapp-bin/library` is remapped to `/usr/local/dapp-bin/library` and the compiler will read the files from there. If remapping keys are prefixes of each other, the longest is tried first. This allows for a "fallback-remapping" with e.g. "" maps to "/usr/local/include/solidity".
