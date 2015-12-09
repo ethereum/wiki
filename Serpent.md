@@ -1,8 +1,16 @@
-See https://github.com/ethereum/wiki/wiki/Serpent-1.0-(old) for Serpent 1.0.
-
 Serpent is one of the high-level programming languages used to write Ethereum contracts. The language, as suggested by its name, is designed to be very similar to Python; it is intended to be maximally clean and simple, combining many of the efficiency benefits of a low-level language with ease-of-use in programming style, and at the same time adding special domain-specific features for contract programming. The latest version of the Serpent compiler, available [on github](http://github.com/ethereum/serpent), is written in C++, allowing it to be easily included in any client.
 
 This tutorial assumes basic knowledge of how Ethereum works, including the concept of blocks, transactions, contracts and messages and the fact that contracts take a byte array as input and provide a byte array as output. If you do not, then go [here](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for a basic tutorial.
+
+This documentation is not complete and these examples may further help:
+
+https://github.com/AugurProject/augur-core/tree/master/tests/serpent_tests
+
+https://github.com/ethereum/serpent/tree/develop/examples
+
+https://github.com/AugurProject/augur-core/tree/master/src
+
+https://github.com/ethereum/dapp-bin
 
 ### Differences Between Serpent and Python
 
