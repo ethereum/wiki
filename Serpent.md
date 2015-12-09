@@ -437,8 +437,6 @@ This returns 156, the integer portion of 12.5^2. A purely integer-based version 
 
 ### Miscellaneous
 
-Additional Serpent coding examples can be found here: https://github.com/ethereum/serpent/tree/master/examples
-
 The three other useful features in the tester environment are:
 
 * Block access - you can dig around `s.block` to see block data (eg. `s.block.number`, `s.block.get_balance(addr)`, `s.block.get_storage_data(addr, index)`)
