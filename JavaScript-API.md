@@ -368,11 +368,12 @@ web3.reset();
 
 #### web3.sha3
 
-    web3.sha3(string)
+    web3.sha3(string, options)
 
 ##### Parameters
 
 1. `String` - The string to hash using the SHA3 algorithm
+1. `Object` - Set `hex` to `true` if the string to hash is encoded in hex. A leading `0x` will be automatically ignored.
 
 ##### Returns
 
