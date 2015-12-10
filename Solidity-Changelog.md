@@ -1,4 +1,5 @@
  * Bugfix: Fixed segfault connected to function paramater types, appeared during gas estimation.
+ * Bugfix: Type checker crash for wrong number of base constructor parameters.
 
 ### 0.2.0 (2015-12-02)
 
