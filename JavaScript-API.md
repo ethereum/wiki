@@ -76,7 +76,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [setProvider(provider)](#web3setprovider)
   * [currentProvider](#web3currentprovider)
   * [reset()](#web3reset)
-  * [sha3(string)](#web3sha3)
+  * [sha3(string, options)](#web3sha3)
   * [toHex(stringOrNumber)](#web3tohex)
   * [toAscii(hexString)](#web3toascii)
   * [fromAscii(textString, [padding])](#web3fromascii)
