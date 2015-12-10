@@ -368,13 +368,11 @@ web3.reset();
 
 #### web3.sha3
 
-    web3.sha3(string [, callback])
+    web3.sha3(string)
 
 ##### Parameters
 
 1. `String` - The string to hash using the SHA3 algorithm
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
 
 ##### Returns
 
