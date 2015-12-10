@@ -1,3 +1,5 @@
+ * Bugfix: Fixed segfault connected to function paramater types, appeared during gas estimation.
+
 ### 0.2.0 (2015-12-02)
 
  * **Breaking Change**: `new ContractName.value(10)()` has to be written as `(new ContractName).value(10)()`
