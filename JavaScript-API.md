@@ -382,11 +382,11 @@ web3.reset();
 ##### Example
 
 ```js
-var str = web3.sha3("Some ASCII string to be hashed");
-console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
+var hash = web3.sha3("Some ASCII string to be hashed");
+console.log(hash); // "b21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
 
-var hash = web3.sha3(str);
-console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
+var hashOfHash = web3.sha3(hash, {encoding: 'hex'});
+console.log(hashOfHash); // "951b5476a2c80d7ee31877385456aa8a3351cd0e9a80b24ee16372705e3dec86"
 ```
 
 ***
