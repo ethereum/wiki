@@ -1125,8 +1125,6 @@ contract C {
 
 `import "filename";`: will import all symbols from `"filename"` (and symbols imported there) into the current global scope (different than in ES6 but backwards-compatible for Solidity).
 
-`import symbolName from "filename";`: imports only the symbol
-
 `import * as symbolName from "filename";` creates a new global symbol `symbolName` whose members are all symbols from `"filename"`.
 
 `import {symbol1 as alias, symbol2} from "filename";` creates new global symbols `alias` and `symbol2` which reference `symbol1` and `symbal2` from `"filename"`, respectively.
