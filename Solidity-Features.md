@@ -1121,6 +1121,8 @@ contract C {
 
 ## More Flexible Import
 
+**This is a breaking change because from was not a keyword before**
+
 [PT](https://www.pivotaltracker.com/story/show/102848776) The import statement will behave as a subset of the [ES6 import](http://exploringjs.com/es6/ch_modules.html). The `export` keyword is not available, all symbols will be exported and there is no "default export". The import statement behaves as follows:
 
 `import "filename";`: will import all symbols from `"filename"` (and symbols imported there) into the current global scope (different than in ES6 but backwards-compatible for Solidity).
