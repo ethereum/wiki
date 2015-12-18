@@ -1,6 +1,7 @@
  * (unfinished) Inline arrays.
  * (unfinished) Import similar to ECMAScript6 import (`import "abc.sol" as d` and `import {x, y} from "abc.sol"`).
  * (unfinished) Commandline compiler solc automatically resolves missing imports and allows for "include directories".
+ * Bugfix: Enums and structs were not accessible to other contracts.
  * Bugfix: Fixed segfault connected to function paramater types, appeared during gas estimation.
  * Bugfix: Type checker crash for wrong number of base constructor parameters.
  * Bugfix: Allow function overloads with different array types.
