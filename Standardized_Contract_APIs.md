@@ -118,7 +118,7 @@ baseUnit(address _token) constant returns (uint256)
 
 Sets or returns the base unit of a token. Although most tokens are displayed to the final user as containing decimal points, token values are unsigned integers counting in the smallest possible unit. The client should always display the total units divided by `baseUnit`. Base units can be any integer but we suggest only using powers of 10. At the moment there is no support for multiple sub-units.
 
-Example: Bob has a balance of 100000 BobTokens, whose base unit is 100. His balance will be displayed on the client as **BOB$100.00**
+Example: Bob has a balance of 100000 BobTokens, whose base unit is 100. His balance will be displayed on the client as **BOB$1000.00**
 
 ## Registries
 
