@@ -709,6 +709,7 @@ This default block is used for the following methods (optionally you can overwri
 - [web3.eth.getTransactionCount()](#web3ethgettransactioncount)
 - [web3.eth.getStorageAt()](#web3ethgetstorageat)
 - [web3.eth.call()](#web3ethcall)
+- [web3.eth.estimateGas()](#web3ethestimategas)
 
 ##### Values
 
