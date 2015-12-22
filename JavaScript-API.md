@@ -702,7 +702,7 @@ web3.eth.defaultAccount = '0x8888f1f195afa192cfee860698584c030f4c9db1';
 
     web3.eth.defaultBlock
 
-This default block is used for the following methods (optionally you can overwrite the defaultBlock by passing it as the last parameter):
+This default block is used for the following methods (optionally you can override it by passing the defaultBlock parameter):
 
 - [web3.eth.getBalance()](#web3ethgetbalance)
 - [web3.eth.getCode()](#web3ethgetcode)
