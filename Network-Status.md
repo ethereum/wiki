@@ -54,7 +54,7 @@ bash <(curl https://raw.githubusercontent.com/cubedro/eth-net-intelligence-api/m
 ```
 
 ### Configuration
-Configure the app modifying [processes.json](/eth-net-intelligence-api/blob/master/processes.json). Note that you have to modify the backup processes.json file located in `./bin/processes.json` (to allow you to set your env vars without being rewritten when updating).
+Configure the app modifying [app.json](https://github.com/cubedro/eth-net-intelligence-api/blob/master/app.json.example). Note that you have to modify the backup `app.json` (to allow you to set your env vars without being rewritten when updating).
 
 ```js
 "env":
