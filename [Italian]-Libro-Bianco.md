@@ -22,7 +22,7 @@ Tali nuove applicazioni, includono l'utilizzo di risorse digitali sulla blockcha
     * [Esecuzione del Codice](#esecuzione-del-codice)
     * [Blockchain e Mining](#blockchain-e-mining)
 * [Applicazioni](#applicazioni)
-    * [Sistemi di Token](#sistemi-di-token)
+    * [Sistemi di Token](#sistema-dei-tokens)
     * [Derivati Finanziari](#derivati-finanziari)
     * [Sistema di Identità e Reputazione](#sistemi-di-identità-e-reputazione)
     * [Storage Decentralizzato dei File](#storage-decentralizzato-dei-file)
