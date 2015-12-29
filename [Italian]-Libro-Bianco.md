@@ -16,7 +16,7 @@ Tali nuove applicazioni, includono l'utilizzo di risorse digitali sulla blockcha
     * [Applicazioni Alternative della Blockchain](#applicazioni-alternative-della-blockchain)
     * [Scripting](#scripting)
 * [Ethereum](#ethereum)
-    * [Portafogli Ethereum](#portafogli-Ethereum)
+    * [Portafogli Ethereum](#portafogli-ethereum)
     * [Messaggi e Transazioni](#messaggi-e-Transazioni)
     * [Ethereum come un Sistema di Transizione di Stato](#ethereum-come-un-sistema-di-transizione-di-stato)
     * [Esecuzione del Codice](#esecuzione-del-codice)
