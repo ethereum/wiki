@@ -26,6 +26,13 @@ PyEthApp supports the morden network from v1.0.5 onwards:
 > pyethapp --profile morden run
 ```
 
+#### geth (Go client)
+
+```
+> geth --testnet
+```
+
+
 ### Details
 
 - Network Identity: **2**
