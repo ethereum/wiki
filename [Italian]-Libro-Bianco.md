@@ -10,7 +10,7 @@ Tali nuove applicazioni, includono l'utilizzo di risorse digitali sulla blockcha
 ### Tavola dei Contenuti
 
 * [Storia](#Storia)
-    * [Bitcoin come un Sistema di Transizione di Stato](#Bitcoin-come-un-Sistema-di-Transizione-di-Stato)
+    * [Bitcoin come un Sistema di Transizione di Stato](#bitcoin-come-un-sistema-di-transizione-di-stato)
     * [Mining](#mining)
     * [Merkle Trees](#merkle-trees)
     * [Applicazioni Alternative della Blockchain](#applicazioni-alternative-della-blockchain)
