@@ -26,6 +26,8 @@ web3.eth.getBlock(48, function(error, result){
 
 Batch requests allow queuing up requests and processing them at once.
 
+**Note** Batch requests are not faster, in fact making many requests at once will in some cases be faster, as requests are processed asynchronous. Batch requests are mainly useful to ensure the serial processing of requests.
+
 ```js
 var batch = web3.createBatch();
 batch.add(web3.eth.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
