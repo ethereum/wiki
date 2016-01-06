@@ -45,14 +45,7 @@ The `transferFrom` method is used for a withdraw workflow, allowing contracts to
 ```js
 function approve(address _spender, uint256 _value) returns (bool success)
 ```
-Allow `_spender` to withdraw from your account up to the `_value` amount. If this function is called multiple times it would add up the value which `_spender` is approved for.
-
-#### unapprove
-
-```js
-function unapprove(address _spender) returns (bool success)
-```
-Unapprove address `_spender` to withdraw from your account if it was previously approved. This will reset the allowance of `_spender` to zero.
+Allow `_spender` to withdraw from your account, multiple times, up to the `_value` amount. If this function is called again it overwrites the current allowance with `_value`.
 
 #### allowance
 
@@ -69,19 +62,13 @@ event Transfer(address indexed _from, address indexed _to, uint256 _value)
 ```
 Triggered when tokens are transferred.
 
-#### Approved
+#### Approval
 
 ```js
-event Approved(address indexed _owner, address indexed _spender, uint256 _value)
+event Approval(address indexed _owner, address indexed _spender, uint256 _value)
 ```
 Triggered whenever `approve(address _spender, uint256 _value)` is called.
 
-#### Unapproved
-
-```js
-event Unapproved(address indexed _owner, address indexed _spender)
-```
-Triggered whenever `unapprove(address _spender)` is called.
 
 ## TF Registries
 
