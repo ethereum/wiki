@@ -873,7 +873,7 @@ Creates new message call transaction or a contract creation, if the data field c
   - `gas`: `QUANTITY`  - (optional, default: 90000) Integer of the gas provided for the transaction execution. It will return unused gas.
   - `gasPrice`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each paid gas
   - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
-  - `data`: `DATA`  - (optional) The compiled code of a contract
+  - `data`: `DATA`  - The compiled code of a contract OR the hash of the invoked method signature and encoded parameters. For details see [Ethereum Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
   - `nonce`: `QUANTITY`  - (optional) Integer of a nonce. This allows to overwrite your own pending transactions that use the same nonce.
 
 ```js
@@ -957,7 +957,7 @@ Executes a new message call immediately without creating a transaction on the bl
   - `gas`: `QUANTITY`  - (optional) Integer of the gas provided for the transaction execution. eth_call consumes zero gas, but this parameter may be needed by some executions.
   - `gasPrice`: `QUANTITY`  - (optional) Integer of the gasPrice used for each paid gas
   - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
-  - `data`: `DATA`  - (optional) The compiled code of a contract
+  - `data`: `DATA`  - (optional) Hash of the method signature and encoded parameters. For details see [Ethereum Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
 2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 ##### Returns
