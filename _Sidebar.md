@@ -26,6 +26,17 @@
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
 
+### Infrastructure Development
+- [Morden Testnet](https://github.com/ethereum/wiki/wiki/Morden)
+- [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
+- [URL Hint Protocol](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol)
+- [NatSpec Determination](https://github.com/ethereum/wiki/wiki/NatSpec-Determination)
+- [Exchange Integration](https://github.com/ethereum/wiki/wiki/Exchange-Integration)
+- [Mining](https://github.com/ethereum/wiki/wiki/Mining)
+- [Licensing](https://github.com/ethereum/wiki/wiki/Licensing)
+- [Network Status](https://github.com/ethereum/wiki/wiki/Network-Status)
+- [Raspberry Pi](https://github.com/ethereum/wiki/wiki/Raspberry-Pi-instructions)
+
 ### ÐΞV Technologies
 - [RLP Encoding](https://github.com/ethereum/wiki/wiki/RLP)
 - [RLPx Node Discovery Protocol](https://github.com/ethereum/wiki/wiki/Node-discovery-protocol-(RLPx))
@@ -51,18 +62,7 @@
 - [Ethash C API](https://github.com/ethereum/wiki/wiki/Ethash-C-API)
 - [Ethash DAG](https://github.com/ethereum/wiki/wiki/Ethash-DAG)
 
-### Infrastructure Development
-- [Morden](https://github.com/ethereum/wiki/wiki/Morden)
-- [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
-- [URL Hint Protocol](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol)
-- [NatSpec Determination](https://github.com/ethereum/wiki/wiki/NatSpec-Determination)
-- [Exchange Integration](https://github.com/ethereum/wiki/wiki/Exchange-Integration)
-- [Mining](https://github.com/ethereum/wiki/wiki/Mining)
-- [Licensing](https://github.com/ethereum/wiki/wiki/Licensing)
-- [Network Status](https://github.com/ethereum/wiki/wiki/Network-Status)
-- [Raspberry Pi](https://github.com/ethereum/wiki/wiki/Raspberry-Pi-instructions)
-
-### Concerning Whisper
+### Whisper
 - [Whisper Proposal](https://github.com/ethereum/wiki/wiki/Whisper)
 - [Whisper Overview](https://github.com/ethereum/wiki/wiki/Whisper-Overview)
 - [PoC-1 Wire protocol](https://github.com/ethereum/wiki/wiki/Whisper-Wire-Protocol)
