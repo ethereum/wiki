@@ -1,3 +1,5 @@
+**OUTDATED** *This document can contain outdated information.*
+
 # Block Mining
 
 Hit `File`->`New Project`.
