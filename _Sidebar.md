@@ -10,15 +10,15 @@
 - [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
 - [pyeth (Python)](https://github.com/ethereum/pyethereum/wiki) 
 
-### Ðapp Development
-- [Ðapp Developer Resources](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources)
+### ÐApp Development
+- [ÐApp Developer Resources](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources)
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
 - [JSON RPC API](https://github.com/ethereum/wiki/wiki/JSON-RPC)
 - [Solidity](https://ethereum.github.io/solidity/docs/home/)
 - [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
 - [Useful Ðapp Patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns)
 - [Standardized Contract APIs](https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs)
-- [Ðapp using Meteor](https://github.com/ethereum/wiki/wiki/Dapp-using-Meteor)
+- [ÐApp using Meteor](https://github.com/ethereum/wiki/wiki/Dapp-using-Meteor)
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 - [Mix Tutorial](https://github.com/ethereum/wiki/wiki/Mix:-The-DApp-IDE)
 - [Mix Features](https://github.com/ethereum/wiki/wiki/Mix-Features)
@@ -26,16 +26,16 @@
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
 
-### Infrastructure Development
+### Infrastructure
 - [Morden Testnet](https://github.com/ethereum/wiki/wiki/Morden)
 - [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
 - [URL Hint Protocol](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol)
 - [NatSpec Determination](https://github.com/ethereum/wiki/wiki/NatSpec-Determination)
+- [Network Status](https://github.com/ethereum/wiki/wiki/Network-Status)
+- [Raspberry Pi](https://github.com/ethereum/wiki/wiki/Raspberry-Pi-instructions)
 - [Exchange Integration](https://github.com/ethereum/wiki/wiki/Exchange-Integration)
 - [Mining](https://github.com/ethereum/wiki/wiki/Mining)
 - [Licensing](https://github.com/ethereum/wiki/wiki/Licensing)
-- [Network Status](https://github.com/ethereum/wiki/wiki/Network-Status)
-- [Raspberry Pi](https://github.com/ethereum/wiki/wiki/Raspberry-Pi-instructions)
 
 ### ÐΞV Technologies
 - [RLP Encoding](https://github.com/ethereum/wiki/wiki/RLP)
