@@ -64,7 +64,7 @@ This has been tested on the Raspberry Pi 2 only.
 
 Alternativly, you can use the linux system of your choice and and get the arm binaries here:
 * https://build.ethdev.com/builds/ARM%20Go%20develop%20branch/geth-ARM-latest.tar.bz2 (go)
-* \<link will follow> (cpp-ethereum)
+* https://github.com/doublethinkco/webthree-umbrella-cross/releases/tag/crosseth-armhf-apt-2015-12-31 (cpp-ethereum)
 
 ## Build it yourself
 If you want to build all that yourself, you can do so following those instructions:
