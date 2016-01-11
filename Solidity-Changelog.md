@@ -6,6 +6,7 @@
  * Bugfix: Type checker crash for wrong number of base constructor parameters.
  * Bugfix: Allow function overloads with different array types.
  * Bugfix: Allow assignments of type `(x) = 7`.
+ * Bugfix: Fixed crash during type checking concerning constructor calls.
 
 ### 0.2.0 (2015-12-02)
 
