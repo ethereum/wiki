@@ -404,12 +404,12 @@ web3.reset();
 
 ##### Parameters
 
-1. `String` - The string to hash using the SHA3 algorithm
+1. `String` - The string to hash using the Keccak-256 SHA3 algorithm
 1. `Object` - Set `encoding` to `hex` if the string to hash is encoded in hex. A leading `0x` will be automatically ignored.
 
 ##### Returns
 
-`String` - The SHA3 of the given data.
+`String` - The Keccak-256 SHA3 of the given data.
 
 ##### Example
 
