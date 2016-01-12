@@ -8,13 +8,13 @@ If you want to look at some more sophisticated examples using web3.js check out 
 
 ## Getting Started
 
-* [Initiating web3](#initiating-web3)
+* [Adding web3](#adding-web3)
 * [Using Callbacks](#using-callbacks)
 * [Batch requests](#batch-requests)
 * [A note on big numbers in web3.js](#a-note-on-big-numbers-in-web3js)
 * [API Reference](#web3js-api-reference)
 
-### Initiating web3
+### Adding web3
 
 First you need to get web3.js into your project. This can be done using the following methods:
 
