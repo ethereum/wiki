@@ -6,7 +6,37 @@ To make your Ðapp work on Ethereum, you can use the `web3` object provided by t
 
 If you want to look at some more sophisticated examples using web3.js check out these [useful Ðapp patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns).
 
-## Using callbacks
+## Getting Started
+
+* [Initiating web3](#initiating-web3)
+* [Using Callbacks](#using-callbacks)
+* [Batch requests](#batch-requests)
+* [A note on big numbers in web3.js](#a-note-on-big-numbers-in-web3js)
+* [API Reference](#web3js-api-reference)
+
+### Initiating web3
+
+First you need to get web3.js into your project. This can be done using the following methods:
+
+- npm: `$ npm install web3`
+- bower: `$ bower install web3`
+- meteor: `$meteor add ethereum:web3`
+- vanilla: link the `dist./web3.min.js`
+
+The you need to create a web3 instance, setting a provider.
+To make sure you don't overwrite the already set provider when in mist, check first if the web3 is available:
+
+```js
+if(typeof web3 !== 'undefined')
+  web3 = new Web3(web3.currentProvider);
+else
+  // set the provider you want from Web3.providers
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+```
+
+After that you can use the [API](web3js-api-reference) of the `web3` object.
+
+### Using callbacks
 
 As this API is designed to work with a local RPC node, all its functions use synchronous HTTP requests by default.
 
@@ -22,11 +52,11 @@ web3.eth.getBlock(48, function(error, result){
 })
 ```
 
-## Batch requests
+### Batch requests
 
 Batch requests allow queuing up requests and processing them at once.
 
-**Note** Batch requests are not faster, in fact making many requests at once will in some cases be faster, as requests are processed asynchronous. Batch requests are mainly useful to ensure the serial processing of requests.
+**Note** Batch requests are not faster! In fact making many requests at once will in some cases be faster, as requests are processed asynchronous. Batch requests are mainly useful to ensure the serial processing of requests.
 
 ```js
 var batch = web3.createBatch();
@@ -35,7 +65,7 @@ batch.add(web3.eth.contract(abi).at(address).balance.request(address, callback2)
 batch.execute();
 ```
 
-## A note on big numbers in web3.js
+### A note on big numbers in web3.js
 
 You will always get a BigNumber object for number values as JavaScript is not able to handle big numbers correctly.
 Look at the following examples:
@@ -65,7 +95,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 // "13145.23443534645646666646" // you number would be cut after the 20 floating point
 ```
 
-## Web3 Javascript Ðapp API Reference
+## Web.js API Reference
 
 * [web3](#web3)
   * [version](#web3versionapi)
