@@ -12,7 +12,7 @@ If you want to look at some more sophisticated examples using web3.js check out 
 * [Using Callbacks](#using-callbacks)
 * [Batch requests](#batch-requests)
 * [A note on big numbers in web3.js](#a-note-on-big-numbers-in-web3js)
-* [API Reference](#web3js-api-reference)
+* [-> API Reference](#web3js-api-reference)
 
 ### Adding web3
 
