@@ -2,12 +2,15 @@
  * (unfinished) Import similar to ECMAScript6 import (`import "abc.sol" as d` and `import {x, y} from "abc.sol"`).
  * (unfinished) Commandline compiler solc automatically resolves missing imports and allows for "include directories".
  * Conditional: `x ? y : z`
+ * Bugfix: Fixed several bugs where the optimizer generated invalid code.
  * Bugfix: Enums and structs were not accessible to other contracts.
  * Bugfix: Fixed segfault connected to function paramater types, appeared during gas estimation.
  * Bugfix: Type checker crash for wrong number of base constructor parameters.
  * Bugfix: Allow function overloads with different array types.
  * Bugfix: Allow assignments of type `(x) = 7`.
  * Bugfix: Fixed crash during type checking concerning constructor calls.
+ * Bugfix: Fixed crash during code generation concerning invalid accessors for struct types.
+ * Bugfix: Fixed crash during code generating concerning computing a hash of a struct type.
 
 ### 0.2.0 (2015-12-02)
 
