@@ -208,7 +208,7 @@ contract DeleteExample {
   function f() {
     uint x = data;
     delete x; // x = 0, не влияет на data
-    delete data; // data = 0, не влияет на x, каторая все еще содержит копию
+    delete data; // data = 0, не влияет на x, которая все еще содержит копию
     uint[] y = dataArray;
     delete dataArray; // обнуляет dataArray.length, но поскольку uint[] сложный объект, также
     // затронут y, который является псевдонимом к объекту хронилища.
