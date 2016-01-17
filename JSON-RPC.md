@@ -914,13 +914,10 @@ Creates new message call transaction or a contract creation for signed transacti
 
 ##### Parameters
 
-1. `Object` - The transaction object
-  - `data`: `DATA`, The signed transaction data.
+1. `DATA`, The signed transaction data.
 
 ```js
-params: [{
-  "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
-}]
+params: ["0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"]
 ```
 
 ##### Returns
