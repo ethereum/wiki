@@ -9,9 +9,12 @@ Still, there tools popping up that analyze and create various statistics about t
 All identifier strings should be a slash separated list of metadata fields: `metadata-1/metadata-2/.../metadata-n`, where the first few fields are fixed among all clients, whereas the latter ones (both in meaning and in count) are up to each implementation to use as seen fit.
 
 The fixed fields are:
- 1. Display name of the client, without any version numbering. E.g. `Geth`, `++eth`, `Ethereum(J)`
- 2. Semantic version, prefixed with `v`, *optionally* suffixed by `-<extra info>`. E.g. `v1.3.3`, `v0.9.41-ed7a8a35`, `v1.4.0-unstable`
- 3. Name of the operating system the client is running on. E.g. `Linux`, `Windows`, `Darwin`, `Android`
+ 1. Display name of the client, without any version numbering
+   * E.g. `Geth`, `++eth`, `Ethereum(J)`
+ 2. Semantic version, prefixed with `v`, *optionally* suffixed by `-<extra info>`
+   * E.g. `v1.3.3`, `v0.9.41-ed7a8a35`, `v1.4.0-unstable`
+ 3. Name of the operating system the client is running on
+   * E.g. `Linux`, `Windows`, `Darwin`, `Android`
 
 As there might be differences in implementation as to how one language or another retrieves the name of the operating system – among others – we recommend tools using the IDs to convert the strings internally to lowercase before making aggregations.
 
