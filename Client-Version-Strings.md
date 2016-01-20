@@ -30,4 +30,4 @@ A few examples conforming to the above schema spec:
 
 Beside the above defined fixed metadata fields, an identifier string may contain arbitrarily many implementation specific metadata entries (the order and index of which should desirably be maintained by the developers of said client implementations). To help developers working on analysis tools have a central repository of the metadata semantics, the rest of this document describes the extra fields used by each implementation. Feel free to add your own implementation to the below list, but please maintain alphabetical ordering and please be concise.
 
-**Geth**: `<go runtime>` / `<jit vm>` / `<custom name>`
+ * **Geth**: `<go runtime>` / `<jit vm>` / `<custom name>`
