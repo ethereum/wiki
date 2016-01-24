@@ -74,7 +74,7 @@ In addition to these, there is the intrinsic `address` type used for identifying
 - `address`: account identifier, 160-bits.
 - `bool`: two-state value.
 
-Most of the time, we'll tend to use `uint` und `bytes32`; the former if we intend to do arithmetic, the latter when we need to identify or refer to pieces of data, events, &c.
+Most of the time, we'll tend to use `uint` and `bytes32`; the former if we intend to do arithmetic, the latter when we need to identify or refer to pieces of data, events, &c.
 
 So to declare a variable it is very similar to the C-like languages: we simply place the type, followed by the variable name and finish the expression with a `;`. For example to declare a uint named `x` we would write:
 
