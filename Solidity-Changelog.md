@@ -1,4 +1,4 @@
- * Inline arrays, i.e. `var y = [1,x,f()];` if there is a common type for `1`, `x` and `f()`.
+ * Inline arrays, i.e. `var y = [1,x,f()];` if there is a common type for `1`, `x` and `f()`. Note that the result is always a fixed-length memory array and conversion to dynamic-length memory arrays is not yet possible.
  * (unfinished) Import similar to ECMAScript6 import (`import "abc.sol" as d` and `import {x, y} from "abc.sol"`).
  * (unfinished) Commandline compiler solc automatically resolves missing imports and allows for "include directories".
  * Conditional: `x ? y : z`
