@@ -8,6 +8,7 @@
  * Bugfix: Type checker crash for wrong number of base constructor parameters.
  * Bugfix: Allow function overloads with different array types.
  * Bugfix: Allow assignments of type `(x) = 7`.
+ * Bugfix: Type `uint176` was not available.
  * Bugfix: Fixed crash during type checking concerning constructor calls.
  * Bugfix: Fixed crash during code generation concerning invalid accessors for struct types.
  * Bugfix: Fixed crash during code generating concerning computing a hash of a struct type.
