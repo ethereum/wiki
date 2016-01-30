@@ -1141,4 +1141,4 @@ When the compiler is invoked, it is not only possible to specify how to discover
 
 ### Changes to solc Interface
 
-For solc, these remappings are provided as `key=value` arguments, where the `=value` part is optional (and defaults to `key` in that case). All remapping values that are regular files are compiled (including their dependencies). This mechanism is completely backwards-compatible (as long as no filename contains a `=`) and thus not a breaking change.
+For solc, these remappings are provided as `key=value` arguments, where the `=value` part is optional (and defaults to `key` in that case). All remapping values that are regular files are compiled (including their dependencies). This mechanism is completely backwards-compatible (as long as no filename contains a `=`) and thus not a breaking change. solc will only read files in directory(ies) where input files reside or in remapping targets.
