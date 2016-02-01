@@ -2,8 +2,29 @@
 
 ## Standard Mapping
 
-```
-@vbuterin TODO: paste python code here
+```python
+from ethereum import trie, db, utils
+import time
+
+MIN_COUNT = 32
+ROUNDS = 1000
+MAX_COUNT = 32
+SYMMETRIC = True
+a = time.time()
+t = trie.Trie(db.EphemDB())
+seed = '\x00' * 32
+
+for i in range(ROUNDS):
+    seed = utils.sha3(seed)
+    mykey = seed[:MIN_COUNT + ord(seed[-1]) % (MAX_COUNT + 1 - MIN_COUNT)]
+    if SYMMETRIC:
+        t.update(mykey, mykey)
+    else:
+        seed = utils.sha3(seed)
+        myval = seed[-1] if ord(seed[0]) % 2 else seed
+        t.update(mykey, myval)
+print time.time() - a 
+print t.root_hash.encode('hex')
 ```
 
 ## Results
