@@ -2,9 +2,12 @@
 
 ## Standard Mapping
 
-TODO
+```
+```
 
 ## Results
+
+Test ID is given as `pair_count`-`key_size`-`value_type`, where valid `value_type`s are `ran` (random) and `mir` (same as key).
 
 | Test ID   | Root | *C++*  | SHA3s | *Python* | Root | SHA3s |
 | --------- | ---- | ---- | ----- | ------ | -----| ----- |
