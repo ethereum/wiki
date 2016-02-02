@@ -27,6 +27,17 @@ print time.time() - a
 print t.root_hash.encode('hex')
 ```
 
+## Method
+
+### C++
+
+```
+cd libweb3core
+cmake -DCMAKE_BUILD_TYPE=Release
+make -j8
+./libweb3core/bench/bench trie
+```
+
 ## Results
 
 Test ID is given as `pair_count`-`key_size`-`value_type`, where valid `value_type`s are `ran` (random) and `mir` (same as key).
