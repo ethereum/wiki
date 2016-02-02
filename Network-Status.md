@@ -1,6 +1,6 @@
 # Network Status Monitoring
 
-The [Ethereum (centralised) network status monitor](https://stats.ethdev.com) (known sometimes as "eth-netstats") is a web-based application to monitor the health of the testnet/mainnet through a group of nodes.
+The [Ethereum (centralised) network status monitor](https://ethstats.net) (known sometimes as "eth-netstats") is a web-based application to monitor the health of the testnet/mainnet through a group of nodes.
 
 ## Listing
 
@@ -65,7 +65,7 @@ Configure the app modifying [app.json](https://github.com/cubedro/eth-net-intell
 		"LISTENING_PORT"  : "30303", // eth listening port (only used for display)
 		"INSTANCE_NAME"   : "", // whatever you wish to name your node
 		"CONTACT_DETAILS" : "", // add your contact details here if you wish (email/skype)
-		"WS_SERVER"       : "wss://stats.ethdev.com", // path to eth-netstats WebSockets api server
+		"WS_SERVER"       : "wss://rpc.ethstats.net", // path to eth-netstats WebSockets api server
 		"WS_SECRET"       : "", // WebSockets api server secret used for login
 	}
 ```
