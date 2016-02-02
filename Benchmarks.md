@@ -1,6 +1,6 @@
 # Trie
 
-Common Trie benchmarks. The point of this is to give a controlled test between clients that reflects typical on-chain situations. We do this by defining a common dataset of key/value pairs for insertion into the trie. The dataset is then inserted into the trie with root hashes being computed at specific intervals ("era_size"). This number represents the number of update operations per root calculation; three standard values are provided to model a simple transaction (3), a more complex contract transaction (6) and a very complex contract transaction (9).
+Common Trie benchmarks. The point of this is to give a controlled test between clients that reflects typical on-chain situations. We do this by defining a common dataset of key/value pairs for insertion into the trie. The dataset is then inserted into the trie with root hashes being computed at specific intervals ("era_size"). This number represents the number of update operations per root calculation; three standard values are provided to model a simple transaction (3), a contract transaction making several `SSTORE`s (5) and a more complex contract transaction (9).
 
 Sensible implementations may precompute the dataset to avoid the additional burden of SHA3 computation.
 
@@ -75,7 +75,7 @@ Test ID is given as `pair_count`-`era_size`-`key_size`-`value_type`, where valid
 | Test ID      | C++ time (ms) | SHA3s | Python time (ms) | | SHA3s | Go time (ms) |
 | ------------ | ---- | ----- | ------ | ----- | ----- | ----- |
 | 1k-3-32-ran  | 34   | 8469  | 369    |       | 7079  | 45.7  |
-| 1k-6-32-ran  | 34   | 8469  | 369    |       | 7079  | 29.3  |
-| 1k-9-32-ran | 34   | 8469  | 369    |       | 7079  | 23.6 |
-| 1k-1k-32-ran | 34   | 8469  | 369    |       | 7079  | 12.9  |
+| 1k-5-32-ran  | 34   | 8469  | 369    |       | 7079  | 28.5  |
+| 1k-9-32-ran  | 34   | 8469  | 369    |       | 7079  | 23.6 |
+| 1k-1k-32-ran | 34   | 8469  | 369    |       | 7079  | 10.0  |
 | 1k-1k-32-mir | 22   | 8500  | 294    | 26    | 4228  | 8.0  |
