@@ -39,29 +39,43 @@ The final trie root after 1000 rounds should be `36f6...93a3` for `SYMMETRIC = T
 
 ## Method
 
+Tests run on:
+```
+Linux gav-MacBookPro 4.4.0-040400rc7-lowlatency #201512272230 SMP PREEMPT Mon Dec 28 03:36:57 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+```
+
+CPU:
+```
+model name	: Intel(R) Core(TM) i7-4980HQ CPU @ 2.80GHz
+cpu MHz		: 3195.609
+cache size	: 6144 KB
+bogomips	: 5587.06
+```
+
 ### C++
 
 ```
 cd libweb3core
 cmake -DCMAKE_BUILD_TYPE=Release
 make -j8
-./libweb3core/bench/bench trie
+sudo nice -n -19 ./libweb3core/bench/bench trie
 ```
 
 ### Go
 
 ```
-godep go test  -run=- -bench=Std ./trie
+sudo nice -n -19 godep go test  -run=- -bench=Std ./trie
 ```
 
 ## Results
 
 Test ID is given as `pair_count`-`era_size`-`key_size`-`value_type`, where valid `value_type`s are `ran` (`SYMMETRIC = False`) and `mir` (`SYMMETRIC = True`). Note clients which do not do bulk insertion optimisations (C++, Python) will have the same time for each test.
 
+
 | Test ID      | C++ time (ms) | SHA3s | Python time (ms) | | SHA3s | Go time (ms) |
 | ------------ | ---- | ----- | ------ | ----- | ----- | ----- |
-| 1k-2-32-ran  | 34   | 8469  | 369    |       | 7079  | 31.9  |
-| 1k-8-32-ran  | 34   | 8469  | 369    |       | 7079  | 28.0  |
-| 1k-32-32-ran | 34   | 8469  | 369    |       | 7079  | 20.6  |
-| 1k-1k-32-ran | 34   | 8469  | 369    |       | 7079  | 6.90  |
-| 1k-1k-32-mir | 22   | 8500  | 294    | 26    | 4228  | 6.22  |
+| 1k-3-32-ran  | 34   | 8469  | 369    |       | 7079  | 45.7  |
+| 1k-6-32-ran  | 34   | 8469  | 369    |       | 7079  | 41.2  |
+| 1k-20-32-ran | 34   | 8469  | 369    |       | 7079  | 33.1  |
+| 1k-1k-32-ran | 34   | 8469  | 369    |       | 7079  | 6.9  |
+| 1k-1k-32-mir | 22   | 8500  | 294    | 26    | 4228  | 10.7  |
