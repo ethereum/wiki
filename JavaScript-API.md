@@ -1152,7 +1152,7 @@ Returns a block matching the block number or block hash.
 ##### Example
 
 ```js
-var info = web3.eth.block(3150);
+var info = web3.eth.getBlock(3150);
 console.log(info);
 /*
 {
