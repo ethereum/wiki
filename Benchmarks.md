@@ -38,6 +38,12 @@ make -j8
 ./libweb3core/bench/bench trie
 ```
 
+### Go
+
+```
+godep go test  -run=- -bench=Std ./trie
+```
+
 ## Results
 
 Test ID is given as `pair_count`-`key_size`-`value_type`, where valid `value_type`s are `ran` (random) and `mir` (same as key).
