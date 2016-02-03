@@ -1,4 +1,4 @@
- * Index access for types `bytes8`, ..., `bytes32` (only read access for now).
+ * Index access for types `bytes1`, ..., `bytes32` (only read access for now).
 
 ### 0.2.1 (2016-01-30)
 
