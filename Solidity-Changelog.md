@@ -1,3 +1,5 @@
+ * Index access for types `bytes8`, ..., `bytes32` (only read access for now).
+
 ### 0.2.1 (2016-01-30)
 
  * Inline arrays, i.e. `var y = [1,x,f()];` if there is a common type for `1`, `x` and `f()`. Note that the result is always a fixed-length memory array and conversion to dynamic-length memory arrays is not yet possible.
