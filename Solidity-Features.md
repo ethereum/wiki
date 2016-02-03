@@ -1142,3 +1142,15 @@ When the compiler is invoked, it is not only possible to specify how to discover
 ### Changes to solc Interface
 
 For solc, these remappings are provided as `key=value` arguments, where the `=value` part is optional (and defaults to `key` in that case). All remapping values that are regular files are compiled (including their dependencies). This mechanism is completely backwards-compatible (as long as no filename contains a `=`) and thus not a breaking change. solc will only read files in directory(ies) where input files reside or in remapping targets.
+
+## Index access for fixed bytes type
+
+[PT](https://www.pivotaltracker.com/story/show/108246592) Single bytes of expressions of type `bytes8`, ..., `bytes32` are accessible using `[i]`. Example:
+
+```
+contract C {
+  function f(bytes32 a, uint i) returns (byte) { return a[i]; }
+}
+```
+
+Write access is not supported, as it is actually quite difficult and blurs the distinction between value and reference types.
