@@ -6,7 +6,7 @@ Merkle Patricia trees provide a cryptographically authenticated data structure t
 
 In a basic radix tree, every node looks as follows:
 
-    [ value, i0, i1 ... in]
+    [i0, i1 ... in, value]
 
 Where i0 ... in represent the symbols of the alphabet (often binary or hex). value is the terminal value at the node, and the values in the i0 ... in slots are either NULL or pointers to (in our case, hashes of) other nodes. This forms a basic (key, value) store; for example, if you are interested in the value that is currently mapped to dog in the tree, you would first convert dog into the alphabet (giving 646f67 if we're using hex), and then descend down the tree following that path until at the end of the path you read the value. That is, you would first look up the root hash in a key/value store to get the root node, then look up node 6 of the root node to get the node one level down, then look up node 4 of that, then look up node 6 of that, and so on, until, once you followed the path root -> 6 -> 4 -> 6 -> f -> 6 -> 7, you look up the value of the node that you have and return the result.
 
@@ -16,7 +16,7 @@ The update and delete operations for radix trees are simple, and can be defined 
         if key == '':
             curnode = db.get(node) if node else [ NULL ] * 17
             newnode = curnode.copy()
-            newnode['value'] = value
+            newnode[-1] = value
         else:
             curnode = db.get(node) if node else [ NULL ] * 17
             newnode = curnode.copy()
@@ -33,7 +33,7 @@ The update and delete operations for radix trees are simple, and can be defined 
             newnode = curnode.copy()
             newindex = delete(curnode[key[0]],key[1:])
             newnode[key[0]] = newindex
-            if len(filter(x -&gt; x is not NULL, newnode)) == 0:
+            if len(filter(x -> x is not NULL, newnode)) == 0:
                 return NULL
             else:
                 db.put(hash(newnode),newnode)
