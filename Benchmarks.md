@@ -67,15 +67,23 @@ sudo nice -n -19 ./libweb3core/bench/bench trie
 sudo nice -n -19 godep go test  -run=- -bench=Std ./trie
 ```
 
+#### JS
+```
+git clone https://github.com/ethereumjs/merkle-patricia-tree.git`
+cd merkle-patricia-tree
+npm install
+node ./benchmarks/random.js
+```
+
 ## Results
 
 Test ID is given as `pair_count`-`era_size`-`key_size`-`value_type`, where valid `value_type`s are `ran` (`SYMMETRIC = False`) and `mir` (`SYMMETRIC = True`). Note clients which do not do bulk insertion optimisations (C++, Python) will have the same time for each test.
 
 
-| Test ID      | C++ time (ms) | SHA3s | Python time (ms) | SHA3s | Go time (ms) | SHA3s |
-| ------------ | ---- | ----- | ------ | ----- | ----- | ----- |
-| 1k-3-32-ran  | 23.8   | 8469  | 369   | 7079  | 45.7  |       |
-| 1k-5-32-ran  | 23.8   | 8469  | 369   | 7079  | 28.5  |       |
-| 1k-9-32-ran  | 23.8   | 8469  | 369   | 7079  | 23.6 |       |
-| 1k-1k-32-ran | 23.8   | 8469  | 369    | 7079  | 10.0  |       |
-| 1k-1k-32-mir | 23.9   | 8500  | 294    | 4228  | 8.0  |       |
+| Test ID      | C++ time (ms) | SHA3s | Python time (ms) | SHA3s | Go time (ms) | SHA3s | Pure JS - No extensions (ms) |
+| ------------ | ---- | ----- | ------ | ----- | ----- | ----- |---- |
+| 1k-3-32-ran  | 23.8   | 8469  | 369   | 7079  | 45.7  |      | 388  |
+| 1k-5-32-ran  | 23.8   | 8469  | 369   | 7079  | 28.5  |      | 374 |
+| 1k-9-32-ran  | 23.8   | 8469  | 369   | 7079  | 23.6 |       | 374 |
+| 1k-1k-32-ran | 23.8   | 8469  | 369    | 7079  | 10.0  |     | 389 |
+| 1k-1k-32-mir | 23.9   | 8500  | 294    | 4228  | 8.0  |      | 382 |
