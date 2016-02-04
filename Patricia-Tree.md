@@ -67,7 +67,7 @@ To solve both of these issues, we force the first nibble of the final bytestream
 Examples:
 
     &gt; [ 1, 2, 3, 4, 5 ]
-    '\x11\x23\x45'
+    '\x11\x23\x45'  ( Here in python, '\x11#E' because of its displaying unicodes. ) 
     &gt; [ 0, 1, 2, 3, 4, 5 ]
     '\x00\x01\x23\x45'
     &gt; [ 0, 15, 1, 12, 11, 8, T ]
