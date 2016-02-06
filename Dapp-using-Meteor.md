@@ -24,7 +24,7 @@ True, Meteor is a full stack framework and its main improvement is realtime web 
 4. It embraces full reactivity, which make building consistent interface much easier (similar to angualr.js `$scope` or binding)
 5. It has a great model called Minimongo, which gives you a mongoDB like interface for a reactive in-memory database, which can also be [auto-persistet to localstorage](https://atmospherejs.com/frozeman/persistent-minimongo) or [indexedDB](https://atmospherejs.com/frozeman/persistent-minimongo2)
 
-### Do i need to host my Ðapp on a server?
+### Do I need to host my Ðapp on a server?
 
 No, using [meteor-build-client](https://github.com/frozeman/meteor-build-client) you can get all the static assets of you Ðapp to run without any server, though if you use a router like [iron-](https://atmospherejs.com/iron/router) or [flow-router](https://atmospherejs.com/meteorhacks/flow-router), you need to use hash (`index.html#!/mypath`) routes instead of clean HTML5 pushstate routes.
 
@@ -139,7 +139,7 @@ Now you can use all dapp-styles classes and also overwrite all variables of the 
 
 ## Using ethereum packages
 
-To make your live as a Ðapp developer easier we provide some packages that help you build Ðapps faster.
+To make your life as a Ðapp developer easier we provide some packages that help you build Ðapps faster.
 
 If you add the recommended packages above you should have the [ethereum:tools](https://atmospherejs.com/ethereum/tools), [accounts](https://atmospherejs.com/ethereum/accounts) and [ethereum:blocks](https://atmospherejs.com/ethereum/blocks) packages available.
 
