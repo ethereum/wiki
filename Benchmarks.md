@@ -95,7 +95,7 @@ node ./benchmarks/random.js
 
 Test ID is given as `pair_count`-`era_size`-`key_size`-`value_type`, where valid `value_type`s are `ran` (`SYMMETRIC = False`) and `mir` (`SYMMETRIC = True`).
 
-The standard test is `1k-9-32-ran`. The 9 that is used as `era_size` is determined empirically from the Frontier mainnet: the mean number of insertions per commit on all secure tries from block #0 to #900,000 is 9.29.
+The standard test is `1k-9-32-ran`. The 9 that is used as `era_size` is determined empirically from the Frontier mainnet: the mean number of insertions per commit on all secure tries from block #0 to #900,000 is 9.35 (TODO: determine median & quartiles - they're likely to be better indicators on real world performance).
 
 | Client      | Time (ms) | SHA3s |
 | ----------- | --------- | ----- |
