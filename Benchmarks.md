@@ -1,6 +1,6 @@
 # Trie
 
-*TODO* Separate benchmarks for populate->root usage (receipt & transaction tries), where Go can have unlimited inserts/commit.
+*TODO* Separate benchmarks for populate->root usage (receipt & transaction tries).
 
 Common Trie benchmarks. The point of this is to give a controlled test between clients that reflects typical on-chain situations. We do this by defining a common dataset of key/value pairs for insertion into the trie. The dataset is then inserted into the trie with root hashes being computed at specific intervals ("era_size"). This number represents the number of update operations per root calculation; three standard values are provided to model a simple transaction (3), a contract transaction making several `SSTORE`s (5) and a more complex contract transaction (9).
 
