@@ -19,18 +19,18 @@ Starting from the fifth byte, the encoded arguments follow. This encoding is als
 ### Types
 
 The following elementary types exist:
-- `uint<N>`: unsigned integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`. e.g. `uint32`, `uint8`, `uint256`.
-- `int<N>`: two's complement signed integer type of `N` bits, `0 < N <= 256`, `N % 8 == 0`.
+- `uint<M>`: unsigned integer type of `M` bits, `0 < M <= 256`, `M % 8 == 0`. e.g. `uint32`, `uint8`, `uint256`.
+- `int<M>`: two's complement signed integer type of `M` bits, `0 < M <= 256`, `M % 8 == 0`.
 - `address`: equivalent to `uint160`, except for the assumed interpretation and language typing.
 - `uint`, `int`: synonyms for `uint256`, `int256` respectively (not to be used for computing the function selector).
 - `bool`: equivalent to `uint8` restricted to the values 0 and 1
-- `real<N>x<M>`: fixed-point signed number of `N+M` bits, `0 < N + M <= 256`, `N % 8 == M % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
-- `ureal<N>x<M>`: unsigned variant of `real<N>x<M>`.
-- `real`, `ureal`: synonyms for `real128x128`, `ureal128x128` respectively (not to be used for computing the function selector).
-- `bytes<N>`: binary type of `N` bytes, `0 < N <= 32`.
+- `fixed<M>x<N>`: fixed-point signed number of `M+N` bits, `0 < M + N <= 256`, `M % 8 == N % 8 == 0`. Corresponds to the int256 equivalent binary value divided by `2^M`.
+- `ufixed<M>x<N>`: unsigned variant of `fixed<M>x<N>`.
+- `fixed`, `ufixed`: synonyms for `fixed128x128`, `ufixed128x128` respectively (not to be used for computing the function selector).
+- `bytes<M>`: binary type of `M` bytes, `0 < M <= 32`.
 
 The following (fixed-size) array type exists:
-- `<type>[N]`: a fixed-length array of the given fixed-length type.
+- `<type>[M]`: a fixed-length array of the given fixed-length type.
 
 The following non-fixed-size types exist: 
 - `bytes`: dynamic sized byte sequence.
@@ -104,15 +104,15 @@ on the type of `X` being
 
   `enc(X) = enc(enc_utf8(X))`, i.e. `X` is utf-8 encoded and this value is interpreted as of `bytes` type and encoded further. Note that the length used in this subsequent encoding is the number of bytes of the utf-8 encoded string, not its number of characters.
 
-- `uint<N>`: `enc(X)` is the big-endian encoding of `X`, padded on the higher-order (left) side with zero-bytes such that the length is a multiple of 32 bytes.
+- `uint<M>`: `enc(X)` is the big-endian encoding of `X`, padded on the higher-order (left) side with zero-bytes such that the length is a multiple of 32 bytes.
 - `address`: as in the `uint160` case
-- `int<N>`: `enc(X)` is the big-endian two's complement encoding of `X`, padded on the higher-oder (left) side with `0xff` for negative `X` and with zero bytes for positive `X` such that the length is a multiple of 32 bytes.
+- `int<M>`: `enc(X)` is the big-endian two's complement encoding of `X`, padded on the higher-oder (left) side with `0xff` for negative `X` and with zero bytes for positive `X` such that the length is a multiple of 32 bytes.
 - `bool`: as in the `uint8` case, where `1` is used for `true` and `0` for `false`
-- `real<N>x<M>`: `enc(X)` is `enc(X * 2**M)` where `X * 2**M` is interpreted as a `int256`.
-- `real`: as in the `real128x128` case
-- `ureal<N>x<M>`: `enc(X)` is `enc(X * 2**M)` where `X * 2**M` is interpreted as a `uint256`.
-- `ureal`: as in the `ureal128x128` case
-- `bytes<N>`: `enc(X)` is the sequence of bytes in `X` padded with zero-bytes to a length of 32.
+- `fixed<M>x<N>`: `enc(X)` is `enc(X * 2**N)` where `X * 2**N` is interpreted as a `int256`.
+- `fixed`: as in the `fixed128x128` case
+- `ufixed<M>x<N>`: `enc(X)` is `enc(X * 2**N)` where `X * 2**N` is interpreted as a `uint256`.
+- `ufixed`: as in the `ufixed128x128` case
+- `bytes<M>`: `enc(X)` is the sequence of bytes in `X` padded with zero-bytes to a length of 32.
 
 Note that for any `X`, `len(enc(X))` is a multiple of 32.
 
@@ -138,7 +138,7 @@ Given the contract:
 
 ```js
 contract Foo {
-  function bar(real[2] xy) {}
+  function bar(fixed[2] xy) {}
   function baz(uint32 x, bool y) returns (bool r) { r = x > 32 || y; }
   function sam(bytes name, bool z, uint[] data) {}
 }
@@ -157,9 +157,9 @@ In total:
 It returns a single `bool`. If, for example, it were to return `false`, its output would be the single byte array `0x0000000000000000000000000000000000000000000000000000000000000000`, a single bool.
 
 If we wanted to call `bar` with the argument `[2.125, 8.5]`, we would pass 68 bytes total, broken down into:
-- `0x3e279860`: the Method ID. This is derived from the signature `bar(real128x128[2])`. Note that `real` is substituted for its canonical representation `real128x128`.
-- `0x0000000000000000000000000000000240000000000000000000000000000000`: the first part of the first parameter, a real128x128 value `2.125`.
-- `0x0000000000000000000000000000000880000000000000000000000000000000`: the first part of the first parameter, a real128x128 value `8.5`.
+- `0x3e279860`: the Method ID. This is derived from the signature `bar(fixed128x128[2])`. Note that `fixed` is substituted for its canonical representation `fixed128x128`.
+- `0x0000000000000000000000000000000240000000000000000000000000000000`: the first part of the first parameter, a fixed128x128 value `2.125`.
+- `0x0000000000000000000000000000000880000000000000000000000000000000`: the first part of the first parameter, a fixed128x128 value `8.5`.
 
 In total:
 ```
