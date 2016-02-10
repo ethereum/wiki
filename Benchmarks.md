@@ -63,6 +63,12 @@ make -j8
 sudo nice -n -19 ./libweb3core/bench/bench trie
 ```
 
+### Parity
+
+```
+cd util && cargo bench
+```
+
 ##### CPython / PyPy
 ```
 pip install ethereum
