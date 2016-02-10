@@ -134,7 +134,7 @@ For this benchmark, 1k inserts is quite reasonable; we naturally avoid doing any
 
 | Test ID      | C++  | CPython | PyPy | Go  | JS  | Parity |
 | ------------ | ------ | ----- | --- | ---- | --- | ------ |
-| 1k-1k-32-ran | 23.8   | 369   | 46 | 10.0  | 389 | 1.6    |
-| 1k-1k-32-mir | 23.9   | 294   | 45 | 8.0   | 382 | 1.5    |
+| 1k-1k-32-ran | 23.8   | 369   | 46 | 10.0  | 389 | 1.634  |
+| 1k-1k-32-mir | 23.9   | 294   | 45 | 8.0   | 382 | 1.529  |
 
 Note: PyPy times were measured on 1.7 GHz i7
