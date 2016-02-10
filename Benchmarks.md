@@ -113,7 +113,7 @@ Note clients which do not do bulk insertion optimisations (C++, Python) will hav
 All times in ms.
 
 | Test ID      | C++  | CPython | PyPy | Go  | JS  |
-| ------------ | ------ | ----- | -- | ----- |-----|
+| ------------ | ------ | ----- | --- | ---- | --- |
 | 1k-3-32-ran  | 23.8   | 369   | 45 | 45.7  | 388 |
 | 1k-5-32-ran  | 23.8   | 369   | 41 | 28.5  | 374 |
 | 1k-1k-32-ran | 23.8   | 369   | 46 | 10.0  | 389 |
