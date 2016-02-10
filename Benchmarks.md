@@ -69,7 +69,7 @@ sudo nice -n -19 ./libweb3core/bench/bench trie
 cd util && cargo bench
 ```
 
-##### CPython / PyPy
+### CPython / PyPy
 ```
 pip install ethereum
 wget https://gist.github.com/heikoheiko/0fa2b322560ba7794f22
@@ -83,7 +83,7 @@ pypy trie_benchmark.py
 sudo nice -n -19 godep go test  -run=- -bench=Std ./trie
 ```
 
-#### JS
+### JS
 ```
 git clone https://github.com/ethereumjs/merkle-patricia-tree.git`
 cd merkle-patricia-tree
