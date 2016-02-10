@@ -96,9 +96,14 @@ node ./benchmarks/random.js
 
 Test ID is given as `pair_count`-`era_size`-`key_size`-`value_type`, where valid `value_type`s are `ran` (`SYMMETRIC = False`) and `mir` (`SYMMETRIC = True`). Note clients which do not do bulk insertion optimisations (C++, Python) will have the same time for each test.
 
-| Test ID      | C++ time (ms) | SHA3s | CPython time (ms) |  PyPy time (ms) | SHA3s | Go time (ms) | SHA3s | Pure JS - No extensions (ms) |
-| ------------ | ---- | ----- | ------ | ----- |----- | ----- | ----- |---- |
-| 1k-9-32-ran  | 23.8   | 8469  | 369   | 45 | 7079  | 23.6 |       | 374 |
+| Client      | Time (ms) | SHA3s |
+| ----------- | --------- | ----- |
+| C++ | 23.8 | 8469 |
+| CPython | 369 | 7079 |
+| PyPy | 45 | |
+| Go | 23.6 | |
+| Pure JS | 374 | |
+| Parity | 11.6 | 4221 |
 
 ### Other results (values other than 9 inserts/commit)
 
