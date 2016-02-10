@@ -2,7 +2,7 @@
 
 *TODO* Separate benchmarks for populate->root usage (receipt & transaction tries).
 
-Common Trie benchmarks. The point of this is to give a controlled test between clients that reflects typical on-chain situations. We do this by defining a common dataset of key/value pairs for insertion into the trie. The dataset is then inserted into the trie with root hashes being computed at specific intervals ("era_size"). This number represents the number of update operations per root calculation. 9 is used as the value for era_size: this was arrived at empirically from the Frontier mainnet: the mean number of insertions per commit on all secure tries from block #0 to #900,000 is 9.44.
+Common Trie benchmarks. The point of this is to give a controlled test between clients that reflects typical on-chain situations. We do this by defining a common dataset of key/value pairs for insertion into the trie. The dataset is then inserted into the trie with root hashes being computed at specific intervals ("era_size"). This number represents the number of update operations per root calculation.
 
 Sensible implementations may precompute the dataset to avoid the additional burden of SHA3 computation.
 
@@ -91,10 +91,11 @@ npm install
 node ./benchmarks/random.js
 ```
 
-
 ## Results
 
-Test ID is given as `pair_count`-`era_size`-`key_size`-`value_type`, where valid `value_type`s are `ran` (`SYMMETRIC = False`) and `mir` (`SYMMETRIC = True`). Note clients which do not do bulk insertion optimisations (C++, Python) will have the same time for each test.
+Test ID is given as `pair_count`-`era_size`-`key_size`-`value_type`, where valid `value_type`s are `ran` (`SYMMETRIC = False`) and `mir` (`SYMMETRIC = True`).
+
+The standard test is `1k-9-32-ran`. The 9 that is used as `era_size` is determined empirically from the Frontier mainnet: the mean number of insertions per commit on all secure tries from block #0 to #900,000 is 9.29.
 
 | Client      | Time (ms) | SHA3s |
 | ----------- | --------- | ----- |
@@ -107,11 +108,15 @@ Test ID is given as `pair_count`-`era_size`-`key_size`-`value_type`, where valid
 
 ### Other results (values other than 9 inserts/commit)
 
-| Test ID      | C++ time (ms) | SHA3s | CPython time (ms) |  PyPy time (ms) | SHA3s | Go time (ms) | SHA3s | Pure JS - No extensions (ms) |
-| ------------ | ---- | ----- | ------ | ----- |----- | ----- | ----- |---- |
-| 1k-3-32-ran  | 23.8   | 8469  | 369   | 45 |  7079  | 45.7  |      | 388  |
-| 1k-5-32-ran  | 23.8   | 8469  | 369   | 41 | 7079  | 28.5  |      | 374 |
-| 1k-1k-32-ran | 23.8   | 8469  | 369    | 46 | 7079  | 10.0  |     | 389 |
-| 1k-1k-32-mir | 23.9   | 8500  | 294    | 45 | 4228  | 8.0  |      | 382 |
+Note clients which do not do bulk insertion optimisations (C++, Python) will have the same time regardless of era_size.
+
+All times in ms.
+
+| Test ID      | C++  | CPython | PyPy | Go  | JS  |
+| ------------ | ------ | ----- | -- | ----- |-----|
+| 1k-3-32-ran  | 23.8   | 369   | 45 | 45.7  | 388 |
+| 1k-5-32-ran  | 23.8   | 369   | 41 | 28.5  | 374 |
+| 1k-1k-32-ran | 23.8   | 369   | 46 | 10.0  | 389 |
+| 1k-1k-32-mir | 23.9   | 294   | 45 | 8.0   | 382 |
 
 Note: PyPy times were measured on 1.7 GHz i7
