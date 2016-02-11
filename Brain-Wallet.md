@@ -13,7 +13,7 @@ FUNCTION toBrain(STRING seed) RETURNS SECRET
 END FUNCTION
 ```
 
-See [C++ implementation](https://github.com/ethereum/cpp-ethereum/blob/develop/libethcore/KeyManager.cpp#L215-L225) for an example.
+See [C++ implementation](https://github.com/ethereum/libethereum/blob/c24df8120f9ca54b4a22846064173b525f0b0ff7/libethcore/KeyManager.cpp#L215-L225) for an example.
 
 
 ### **Comments (Gustav):**
