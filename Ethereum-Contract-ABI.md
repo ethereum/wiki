@@ -243,8 +243,8 @@ The JSON format for a contract's interface is given by an array of function and/
 - `type`: `"function"` or `"constructor"` (can be omitted, defaulting to function);
 - `name`: the name of the function (only present for function types);
 - `inputs`: an array of objects, each of which contains:
-* `name`: the name of the parameter;
-* `type`: the canonical type of the parameter.
+  * `name`: the name of the parameter;
+  * `type`: the canonical type of the parameter.
 - `outputs`: an array of objects similar to `inputs`, can be omitted.
 
 An event description is a JSON object with fairly similar fields:
@@ -252,10 +252,10 @@ An event description is a JSON object with fairly similar fields:
 - `type`: always `"event"`
 - `name`: the name of the event;
 - `inputs`: an array of objects, each of which contains:
-* `name`: the name of the parameter;
-* `type`: the canonical type of the parameter.
-* `indexed`: `true` if the field is part of the log's topics, `false` if it one of the log's data segment.
-* `anonymous`: `true` if the event was declared as `anonymous`.
+  * `name`: the name of the parameter;
+  * `type`: the canonical type of the parameter.
+  * `indexed`: `true` if the field is part of the log's topics, `false` if it one of the log's data segment.
+- `anonymous`: `true` if the event was declared as `anonymous`.
 
 For example, 
 
