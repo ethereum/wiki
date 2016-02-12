@@ -1,4 +1,5 @@
  * Index access for types `bytes1`, ..., `bytes32` (only read access for now).
+ * Bugfix: Type checker crash for wrong number of base constructor parameters.
 
 ### 0.2.1 (2016-01-30)
 
