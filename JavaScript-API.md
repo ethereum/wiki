@@ -146,6 +146,8 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [getTransactionReceipt(hash)](#web3ethgettransactionreceipt)
     * [getTransactionCount(address)](#web3ethgettransactioncount)
     * [sendTransaction(object)](#web3ethsendtransaction)
+    * [sendRawTransaction(object)](#web3ethsendrawtransaction)
+    * [sign(object)](#web3ethsign)
     * [call(object)](#web3ethcall)
     * [estimateGas(object)](#web3ethestimategas)
     * [filter(array (, options) )](#web3ethfilter)
@@ -1430,6 +1432,60 @@ web3.eth.sendTransaction({data: code}, function(err, address) {
   if (!err)
     console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 });
+```
+
+***
+
+#### web3.eth.sendRawTransaction
+
+    web3.eth.sendRawTransaction(signedTransactionData [, callback])
+
+Sends an already signed transaction. For example can be signed using: https://github.com/SilentCicero/ethereumjs-accounts
+
+##### Parameters
+
+1. `String` - Signed transaction data in HEX format
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+##### Returns
+
+`String` - The 32 Bytes transaction hash as HEX string.
+
+If the transaction was a contract creation use [web3.eth.getTransactionReceipt()](#web3gettransactionreceipt) to get the contract address, after the transaction was mined.
+
+##### Example
+
+```js
+web3.eth.sendRawTransaction('0x6000350463c6888fa18114602d57005b600760043502', function(err, address) {
+  if (!err)
+    console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+});
+```
+
+***
+
+
+#### web3.eth.sign
+
+    web3.eth.sign(address, dataToSign, [, callback])
+
+Signs data from a specific account. This account needs to be unlocked.
+
+##### Parameters
+
+1. `String` - Address to sign with.
+2. `String` - Data to sign.
+3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+##### Returns
+
+`String` - The signed data.
+
+##### Example
+
+```js
+var result = web3.eth.sign("0xc4abd0339eb8d57087278718986382264244252f", "0xc6888fa8d57087278718986382264244252f8d57087278718986382264244252f");
+console.log(result); // "0x18986382264244252f8d57087278718986382264244252f18986382264244252f8d57087278718986382264244252f"
 ```
 
 ***
