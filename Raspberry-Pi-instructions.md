@@ -44,7 +44,7 @@ makepkg -si
 ```
 #### Building the client
 
-The instructions for building the client from here and on are identical with Ubuntu so the reader should refer to the [relevant page](https://github.com/ethereum/cpp-ethereum/wiki/Building-on-Ubuntu#choose-your-source). but use `cmake .. -DBUNDLE=minimal -DETHASHCL=0 -DEVMJIT=0` instead.
+The instructions for building the client from here and on are identical with another other Linux distro so the reader should refer to the [relevant page](https://github.com/ethereum/webthree-umbrella/wiki/Linux--Generic-Building). but use `cmake .. -DBUNDLE=minimal -DETHASHCL=0 -DEVMJIT=0` instead.
 
 Resources:
 
