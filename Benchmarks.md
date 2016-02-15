@@ -1,6 +1,22 @@
 # Trie
 
-## Common Trie Benchmarks
+## Block Processing
+
+The point of this benchmark is to give a controlled time trial for processing blocks including all of the guff that goes with block processing including PoW verification, transaction signature checking, EVM code execution, receipt verification, uncle validation and database population. In order to mitigate biases one way or another for each of those aspects in the benchmark, we use the first 1,000,000 blocks of the Frontier mainnet chain.
+
+### Method
+
+There are probably several ways of effecting this benchmark for each client (e.g. cpp-ethereum has the `--import` feature), but for now we're settling on a simple "sync from localhost" method.
+
+This involves setting up a client synced up to block 1,000,000 of the Frontier network (we used `eth`, specifically, but in principle it shouldn't matter which client is used). Following this, the client to be benchmarked is executed on the same machine with a clean database in the full block processing mode. It is initialised with the former client's address and allowed to synchronise. The process is timed until it eventually imports block 1,000,000.
+
+We did all tests on a standard Digital Ocean 4GB droplet running Ubuntu 14.04.3 x64.
+
+### Results
+
+TBD.
+
+## The Trie
 
 The point of this is to give a controlled test between clients that reflects typical on-chain situations. We do this by defining a common dataset of key/value pairs for insertion into the trie and root-calculation. There are two modes to reflect the two use cases of the trie in Ethereum:
 
