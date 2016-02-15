@@ -12,6 +12,14 @@ This involves setting up a client synced up to block 1,000,000 of the Frontier n
 
 We did all tests on a standard Digital Ocean 4GB droplet running Ubuntu 14.04.3 x64.
 
+### Code
+
+To automate and easily reproduce the experiments the following library has been created:
+
+https://github.com/ethcore/blockchain-sync
+
+The code base is currently under development, as new clients are being added to it.
+
 ### Results
 
 TBD.
