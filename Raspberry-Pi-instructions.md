@@ -14,7 +14,7 @@ http://archlinuxarm.org/forum/viewtopic.php?f=60&t=8366
 [Installation instructions for ARM](https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-ARM)
 
 ### cpp-ethereum
-First we install all necessary libaries as described here https://github.com/ethereum/cpp-ethereum/wiki/Building-on-ArchLinux (but without the qt libs):
+First we install all necessary libaries as described here https://github.com/ethereum/webthree-umbrella/wiki/Building-on-ArchLinux (but without the qt libs):
 
 These are the required packages from the official repositories:
 ```
