@@ -8,7 +8,7 @@
 ### Ethereum Clients
 - [Webthree (C++)](https://github.com/ethereum/webthree-umbrella/wiki)
 - [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
-- [pyeth (Python)](https://github.com/ethereum/pyethereum/wiki) 
+- [pyethapp (Python)](https://github.com/ethereum/pyethapp/wiki) 
 
 ### ÐApp Development
 - [ÐApp Developer Resources](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources)
