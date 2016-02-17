@@ -6,7 +6,7 @@ Note that the software is in still in proof-of-concept state. Things are changin
 
 ## Getting started.
 
-This tutorial assumes you have [C++ Ethereum installed](https://github.com/ethereum/cpp-ethereum/wiki). If this is the case, then Mix is already installed.
+This tutorial assumes you have [C++ Ethereum installed](https://gavofyork.gitbooks.io/turboethereum/content/chapter1.html), especially for Windows and MacOS, just grab the latest binary from the [release page](https://github.com/ethereum/mix/releases).
 
 ## Creating a new project
 
