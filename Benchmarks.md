@@ -40,7 +40,8 @@ bin/run-bench --rm -e <master enode> parity
 | Eth | EthereumJ | Geth | Parity
 --- |--- | --- | --- | ---
 Time | 4h 33m | 7h 7m | 8h 43m | 2h 31m
-
+CPU(% avg) | 123 | 90 | 70 | 107
+Memory | 921MB | 3.168GB | 1.5GB | 365MB
 
 ## The Trie
 
