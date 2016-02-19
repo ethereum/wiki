@@ -14,11 +14,26 @@ We did all tests on a standard Digital Ocean 4GB droplet running Ubuntu 14.04.3 
 
 ### Code
 
-To automate and easily reproduce the experiments the following library has been created:
+To automate the method described above, the following library has been created:
 
 https://github.com/ethcore/blockchain-sync
 
-The code base is currently under development, as new clients are being added to it.
+To benchmark a client, first, a "master" node (e.g. geth) has to be installed and synced up from the network up to a certain point (e.g. 1m blocks). Then, the master client should be restarted in "no-discovery" mode, e.g.:
+
+```
+geth --datadir /tmp/geth-master --nodiscover --port 30305 console
+```
+
+Next, the client to be benchmarked has to be installed and configured, if necessary. 
+
+The benchmarking script has to be passed the "master" node's enode address along with other optional arguments (run `bin/run-bench -h` for more info). 
+
+Command for benchmarking Parity:
+```
+bin/run-bench --rm -e <master enode> parity
+```
+
+*Note:* since the main purpose of this utility is to benchmark full blockchain processing times, certain optimisation options like `geth --fast` have been intentionally turned off.
 
 ### Results
 
