@@ -37,7 +37,10 @@ bin/run-bench --rm -e <master enode> parity
 
 ### Results
 
-TBD.
+| Eth | EthereumJ | Geth | Parity
+--- |--- | --- | --- | ---
+Time | 4h 33m | 7h 7m | 8h 43m | 2h 31m
+
 
 ## The Trie
 
