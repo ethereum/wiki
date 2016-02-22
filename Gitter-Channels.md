@@ -6,7 +6,7 @@ https://gitter.im/ethereum
 
 https://gitter.im/ethereum/go-ethereum
 
-## CPP 
+## C++ 
 
 https://gitter.im/ethereum/cpp-ethereum
 
