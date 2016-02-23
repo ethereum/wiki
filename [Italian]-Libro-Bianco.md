@@ -217,7 +217,7 @@ Si noti che i messaggi lavorano in maniera equivalente alle transazioni in termi
 
 ### Esecuzione del Codice
 
-Il codice nel contratti Ethereum è scritto in un linguaggio di basso livello, linguaggio bytecode a cascata, denominato "codice virtual machine Ethereum" o"codice EVM". Il codice consiste in una serie di bytes, dove ogni byte rappresenta un'operazione. In generale, l'esecuzione del codice è un loop infinito che consiste nel realizzare ripetutamente l'operazione al contatore del programma attuale (che inizia con zero)  e incrementando il contatore del programma di uno, fino a che si ottiene la fine del codice od un errore o `STOP` o è rilevato l'istruzione `RETURN`. Le operazioni hanno accesso a tre tipi di spazio nel quale registrare i dati:
+Il codice nei contratti Ethereum è scritto in un linguaggio di basso livello, linguaggio bytecode a cascata, denominato "codice virtual machine Ethereum" o"codice EVM". Il codice consiste in una serie di bytes, dove ogni byte rappresenta un'operazione. In generale, l'esecuzione del codice è un loop infinito che consiste nel realizzare ripetutamente l'operazione al contatore del programma attuale (che inizia con zero)  e incrementando il contatore del programma di uno, fino a che si ottiene la fine del codice od un errore o `STOP` o è rilevato l'istruzione `RETURN`. Le operazioni hanno accesso a tre tipi di spazio nel quale registrare i dati:
 
 * Lo **stack**, un last-in-first-out contenitore nel quale i valori possono essere spinti e spuntati
 * **Memoria**, un array di byte espandibile all'infinito
