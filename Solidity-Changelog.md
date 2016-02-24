@@ -1,3 +1,16 @@
+### 0.3.0 (UNRELEASED)
+
+BREAKING CHANGES:
+
+ * Added new keywords `assembly`, `foreign`, `fixed`, `ufixed`, `fixedNxM`, `ufixedNxM` (for various values of M and N), `timestamp`
+ * Number constant division does not round to integer, but to a fixed point type (e.g. `1 / 2 != 1`, but `1 / 2 == 0.5`).
+ * Library calls now default to use DELEGATECALL (e.g. called library functions see the same value as the calling function for `msg.value` and `msg.sender`), this can be changed with a compiler option.
+
+Features:
+
+ * Fixed point types (in progress)
+ * Inline assembly (in progress)
+
 ### 0.2.2 (2016-02-17)
 
  * Index access for types `bytes1`, ..., `bytes32` (only read access for now).
