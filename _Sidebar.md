@@ -28,6 +28,7 @@
 
 ### Infrastructure
 - [Morden Testnet](https://github.com/ethereum/wiki/wiki/Morden)
+- [Chain Spec Format](https://github.com/ethereum/wiki/wiki/Ethereum-Chain-Spec-Format)
 - [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
 - [URL Hint Protocol](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol)
 - [NatSpec Determination](https://github.com/ethereum/wiki/wiki/NatSpec-Determination)
