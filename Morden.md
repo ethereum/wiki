@@ -30,6 +30,12 @@ PyEthApp supports the morden network from v1.0.5 onwards:
 > geth --testnet
 ```
 
+#### Parity
+
+```
+> parity --chain=morden
+```
+
 
 ### Details
 
