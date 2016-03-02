@@ -1501,6 +1501,13 @@ Signs data from a specific account. This account needs to be unlocked.
 
 `String` - The signed data.
 
+After the hex prefix, characters correspond to ECDSA values like this:
+```
+r = signature[0:64]
+s = signature[64:128]
+v = signature[128:130]
+```
+
 ##### Example
 
 ```js
