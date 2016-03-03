@@ -23,7 +23,7 @@ First you need to get web3.js into your project. This can be done using the foll
 - meteor: `$meteor add ethereum:web3`
 - vanilla: link the `dist./web3.min.js`
 
-The you need to create a web3 instance, setting a provider.
+Then you need to create a web3 instance, setting a provider.
 To make sure you don't overwrite the already set provider when in mist, check first if the web3 is available:
 
 ```js
