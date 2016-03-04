@@ -417,10 +417,10 @@ web3.reset();
 
 ```js
 var hash = web3.sha3("Some ASCII string to be hashed");
-console.log(hash); // "b21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
+console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
 
 var hashOfHash = web3.sha3(hash, {encoding: 'hex'});
-console.log(hashOfHash); // "951b5476a2c80d7ee31877385456aa8a3351cd0e9a80b24ee16372705e3dec86"
+console.log(hashOfHash); // "0x951b5476a2c80d7ee31877385456aa8a3351cd0e9a80b24ee16372705e3dec86"
 ```
 
 ***
