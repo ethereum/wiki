@@ -79,11 +79,11 @@ Select `File > Save` to save project files. You should see the web preview in th
 Now we need to configure a scenario for debugging. Mix has its own blockchain that is reset on each debugging session. Scenarios are used to get the blockchain to a point where it is possible to make transactions and calls to a contract. A scenario is defined by a sequence of transactions that create DApp and all dependencies on the blockchain and set up DApp initial storage. 
 
 If the scenario panel on the right side is not open, open it by pressing `F7` or selecting `Windows > Show right view` from the menu. 
-A default scenario is already created (which contains the transaction which deploy the Sample contract). We don't need this anymore. Click on the green checkbox on the left side of the transaction. This will delete the transaction on the next rebuild. The rebuild button is blinking it means that the scenario needs to be rebuilt in order to apply changes. Click on it.
+A default scenario is already created (which contains the transaction that deploys the Sample contract). We don't need this anymore. Click on the green checkbox on the left side of the transaction. This will delete the transaction on the next rebuild. The rebuild button is blinking, which means that the scenario needs to be rebuilt in order to apply changes. Click on it.
 
 At this point we have a clean blockchain. Click on the icon "add Transaction..." which is represented by a flying blue plane. Be sure to have selected "Create Contract" and that the contract "Rating" is selected. Apply changes. 
 The contract is now deployed and you can use it from the web preview.
-Let's create a new transaction. Click an "add Transaction..." then select "Transact with Contract". The deployed contract "Rating - O" should be selected, this is the one which has been previously deployed. You want now to call the function "setRating". 
+Let's create a new transaction. Click on "add Transaction...", then select "Transact with Contract". The deployed contract "Rating - O" should be selected, this is the one which has been previously deployed. You now want to call the function "setRating". 
 Select the function and give some parameters (for instance Titanic for the first parameter and an integer for the second). Apply changes.
 
 Now let's test out contract. Type "Titanic" in the web preview query input and you should see the result returned. Enter a name and a rating in store fields and click `Save` to add a new rating. Note that all  transactions and calls made to the contract during state deployment and debugging session are recorded into the scenario panel to the right (you can hide calls by unselecting the option "Scenario > Display calls" in the mix menu).
@@ -138,27 +138,27 @@ This modal dialog displays three parts (see above):
 
  - *Deploy Scenario*
 
-"Deployment account" allow selecting the account that Mix will use to execute transactions.
+"Deployment account" allows selecting the account that Mix will use to execute transactions.
 
 "Gas Price" shows the default gas price of the network. You can also specify a different value. 
 
-"Deployment cost": depending on the value of the gas price that you want to use and the selected scenario. this will display the amount ether that the deployment need.
+"Deployment cost": depending on the value of the gas price that you want to use and the selected scenario, this will display the amount of ether that the deployment needs.
 
-"Deployed Contract": before any deployment this part is empty. This will be filled once the deployment is finished by all contract addresses that have been created.
+"Deployed Contract": before any deployment, this part is empty. This will be filled once the deployment is finished by all contract addresses that have been created.
 
-"Verifications". This will shows the number of verifications (number of blocks generated on top of the last block which contains the last deployed transactions). Mix keep track of all the transactions. If one is missing (unvalidated) it will be displayed in this panel.  
+"Verifications". This will show the number of verifications (number of blocks generated on top of the last block which contains the last deployed transactions). Mix keeps track of all the transactions. If one is missing (unvalidated), it will be displayed in this panel.  
 
 - **Package dapp**
 
 - *Generate local package*
 
-The action "Generate Package" will create the package.dapp in the specified folder
+The action "Generate Package" will create the package.dapp in the specified folder.
 
 "Local package Url" the content of this field can be pasted directly in AlethZero in order to use the dapp before uploading it.
 
 - *Upload and share package*
 
-This step has to be done outside of Mix. package.dapp file has to be hosted by a server in order to be available by all users.
+This step has to be done outside of Mix. The package.dapp file has to be hosted by a server in order to be available to all users.
 
 "Copy Base64" will copy the base64 value of the package to the clipboard.
 
@@ -166,9 +166,9 @@ This step has to be done outside of Mix. package.dapp file has to be hosted by a
 
 - **Package dapp**
 
-"Root Registrar address" is the account address of the root registrar contract
+"Root Registrar address" is the account address of the root registrar contract.
 
-"Http URL" is the url where resources are hosted (pastebin.com or similar)
+"Http URL" is the url where resources are hosted (pastebin.com or similar).
 
 "Ethereum URL" is the url that users will use in AlethZero or Mist to access your dapp.
 
