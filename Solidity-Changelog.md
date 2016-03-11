@@ -1,3 +1,6 @@
+ * Fixed point types (in progress)
+ * Inline assembly (in progress)
+
 ### 0.3.0 (UNRELEASED)
 
 BREAKING CHANGES:
@@ -7,10 +10,9 @@ BREAKING CHANGES:
  * Library calls now default to use DELEGATECALL (e.g. called library functions see the same value as the calling function for `msg.value` and `msg.sender`).
  * `<address>.delegatecall` as a low-level calling interface
 
-Features:
+Bugfixes:
+ * Fixed a bug in the optimizer that resulted in comparisons being wrong.
 
- * Fixed point types (in progress)
- * Inline assembly (in progress)
 
 ### 0.2.2 (2016-02-17)
 
