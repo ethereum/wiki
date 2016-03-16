@@ -50,7 +50,6 @@ The traditional compact way of encoding a hex string is to convert it into decim
 To solve both of these issues, we force the first nibble of the final bytestream to encode two flags, specifying terminator status and oddness of length (ignoring the 'T' symbol); these are placed, respectively, into the two least significant bits of the first nibble. In the case of an even-length hex string, we must introduce a second nibble (of value zero) to ensure the hex-string is even in length and thus can be represented by a whole number of bytes. Thus we construct the following encoding:
 
     def compact_encode(hexarray):
-        //'T' is represented as \x16
         term = 1 if hexarray[-1] == 16 else 0 
         if term: hexarray = hexarray[:-1]
         oddlen = len(hexarray) % 2
