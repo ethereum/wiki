@@ -81,7 +81,7 @@ Merkle Patricia trees solve the inefficiency issue by adding some extra complexi
 
 1. NULL (represented as the empty string)
 2. A two-item array `[ key, v ]` (aka kv node)
-3. A 17-item array `[ v0 ... v15, vt ]` (aka diverge node)
+3. A 17-item array `[ v0 ... v15, vt ]` (aka diverge or branch node)
 
 The idea is that in the event that there is a long path of nodes each with only one element, we shortcut the descent by setting up a kv node `[ key, value ]`, where the key gives the hexadecimal path to descend, in the compact encoding described above, and the value is just the hash of the node like in the standard radix tree. Also, we add another conceptual change: internal nodes can no longer have values, only leaves with no children of their own can; however, since to be fully generic we want the key/value store to be able to store keys like 'dog' and 'doge' at the same time, we simply add a terminator symbol (16) to the alphabet so there is never a value &quot;en-route&quot; to another value.
 
