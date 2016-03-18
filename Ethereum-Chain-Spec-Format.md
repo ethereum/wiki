@@ -52,7 +52,8 @@ The `accounts` object maps from addresses (40-nibble strings without the `0x` pr
 - `storage`: Object mapping hex-encoded integers for the account's storage at genesis.
 - `builtin`: Alternative to `code`, used to specify that the account's code is natively implemented. Value is an object with further fields:
   - "name": The name of the builtin code to execute as a string. e.g. `"identity"`, `"ecrecover"`.
-  - "linear": Specify a linear cost to calling this contract. Value is an object with two fields: `base` which is the basic cost in Wei and is always paid; and `word` which is the cost per word of input, rounded up.
+  - "pricing": Enum to specify the cost of calling this contract.
+    - "linear": Specify a linear cost to calling this contract. Value is an object with two fields: `base` which is the basic cost in Wei and is always paid; and `word` which is the cost per word of input, rounded up.
 
 ### Example
 
@@ -90,10 +91,10 @@ This is the Morden ECS JSON file
 		"enode://b1217cbaa440e35ed471157123fe468e19e8b5ad5bedb4b1fdbcbdab6fb2f5ed3e95dd9c24a22a79fdb2352204cea207df27d92bfd21bfd41545e8b16f637499@104.44.138.37:30303"
 	],
 	"accounts": {
-		"0000000000000000000000000000000000000001": { "balance": "1", "nonce": "1048576", "builtin": { "name": "ecrecover", "linear": { "base": 3000, "word": 0 } } },
-		"0000000000000000000000000000000000000002": { "balance": "1", "nonce": "1048576", "builtin": { "name": "sha256", "linear": { "base": 60, "word": 12 } } },
-		"0000000000000000000000000000000000000003": { "balance": "1", "nonce": "1048576", "builtin": { "name": "ripemd160", "linear": { "base": 600, "word": 120 } } },
-		"0000000000000000000000000000000000000004": { "balance": "1", "nonce": "1048576", "builtin": { "name": "identity", "linear": { "base": 15, "word": 3 } } },
+		"0000000000000000000000000000000000000001": { "balance": "1", "nonce": "1048576", "builtin": { "name": "ecrecover", "pricing": { "linear": { "base": 3000, "word": 0 } } } },
+		"0000000000000000000000000000000000000002": { "balance": "1", "nonce": "1048576", "builtin": { "name": "sha256", "pricing": { "linear": { "base": 60, "word": 12 } } } },
+		"0000000000000000000000000000000000000003": { "balance": "1", "nonce": "1048576", "builtin": { "name": "ripemd160", "pricing": { "linear": { "base": 600, "word": 120 } } } },
+		"0000000000000000000000000000000000000004": { "balance": "1", "nonce": "1048576", "builtin": { "name": "identity", "pricing": { "linear": { "base": 15, "word": 3 } } } },
 		"102e61f5d8f9bc71d0ad4a084df4e65e05ce0e1c": { "balance": "1606938044258990275541962092341162602522202993782792835301376", "nonce": "1048576" }
 	}
 }
