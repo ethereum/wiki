@@ -5,6 +5,7 @@ Known problems:
 - [My transaction is not confirmed](#my-transaction-is-not-confirmed)
 - [Account can't be unlocked](#account-cant-be-unlocked)
 - [Unable to import pre-sale wallet](#unable-to-import-presale-wallet)
+- [I send ether to the wallet contract but it doesn't show up](#i-send-ether-to-the-wallet-contract-but-it-doesnt-show-up)
 
 ## Please read first!
 
@@ -70,3 +71,9 @@ In some cases Mist looses the connection the underlying node and therefore can't
 ## Unable to import presale wallet
 
 Due to a bug importing a presale wallet can fail. It is possible to import the presale wallet manually following these instructions: https://github.com/ethereum/go-ethereum/wiki/Managing-your-accounts#importing-your-presale-wallet
+
+## I send ether to the wallet contract but it doesn't show up
+
+If you send ether to a contract wallet, it consumes more than the minimum of 21 000 gas for a normal value transfer, as the contract will also fire logs when receiving the transaction. Make sure you send at least 50 000 gas along with your transaction. 
+
+The transaction will otherwise be reverted and the ether stay at its origin address.
