@@ -24,7 +24,7 @@ If there are no errors the next step is to see if there are problems within Mist
 
 If there are none type `web3.eth.blockNumber` on the console and see if you get the latest block number. If you cannot find the problem create an issue on github and describe as good as possible what you have done and which error you got, preferable with a screenshot and log files included.
 
-# Start the node manually
+## Start the node manually
 
 Sometimes its useful to start the node manually to see what its doing:
 
