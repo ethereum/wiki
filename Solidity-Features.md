@@ -1,5 +1,5 @@
 This is a list to explain and demonstrate new Solidity features as soon as they are completed.
-It is used as a kind of changelog and items introduced at some point might be changed at a later point. The official reference is the [Documentation](https://ethereum.github.io/solidity/) which should always reflect the current state of the language.
+It is used as a kind of changelog and items introduced at some point might be changed at a later point. The official reference is the [Documentation](http://solidity.readthedocs.org/) which should always reflect the current state of the language.
 
 ## Special Type Treatment for Integer Literals
 
@@ -1154,3 +1154,27 @@ contract C {
 ```
 
 Write access is not supported, as it is actually quite difficult and blurs the distinction between value and reference types.
+
+## Inline Assembly
+
+[PT](https://www.pivotaltracker.com/story/show/103578058) Allow the use of EVM opcodes (and more) at any point where statements are allowed in Solidity. Full documentation with examples can be found in the official documentation. Small example:
+
+```
+contract C {
+    function fib() {
+	assembly {
+		let n := calldataload(4)
+		let a := 1
+		let b := a
+	loop:
+		jumpi(loopend, eq(n, 0))
+		a add swap1
+		n := sub(n, 1)
+		jump(loop)
+	loopend:
+		mstore(0, a)
+		return(0, 0x20)
+	}
+    }
+}
+```
