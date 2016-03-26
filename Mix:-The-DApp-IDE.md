@@ -84,9 +84,9 @@ A default scenario is already created (which contains the transaction that deplo
 At this point we have a clean blockchain. Click on the icon "add Transaction..." which is represented by a flying blue plane. Be sure to have selected "Create Contract" and that the contract "Rating" is selected. Apply changes. 
 The contract is now deployed and you can use it from the web preview.
 Let's create a new transaction. Click on "add Transaction...", then select "Transact with Contract". The deployed contract "Rating - O" should be selected, this is the one which has been previously deployed. You now want to call the function "setRating". 
-Select the function and give some parameters (for instance Titanic for the first parameter and an integer for the second). Apply changes. (If you get the error "web3.js - line 3748 - Uncaught invalid address", see [this discussion of how to resolve it](https://forum.ethereum.org/discussion/3530/web3-js-line-3748-uncaught-invalid-address).)
+Select the function and give some parameters (for instance Titanic for the first parameter and an integer for the second). Apply changes.
 
-Now let's test out contract. Type "Titanic" in the web preview query input and you should see the result returned. Enter a name and a rating in store fields and click `Save` to add a new rating. Note that all  transactions and calls made to the contract during state deployment and debugging session are recorded into the scenario panel to the right (you can hide calls by unselecting the option "Scenario > Display calls" in the mix menu).
+Now let's test out contract. Type "Titanic" in the web preview query input and you should see the result returned. Enter a name and a rating in store fields and click `Save` to add a new rating. (If you get the error "web3.js - line 3748 - Uncaught invalid address", see [this discussion of how to resolve it](https://forum.ethereum.org/discussion/3530/web3-js-line-3748-uncaught-invalid-address).) Note that all  transactions and calls made to the contract during state deployment and debugging session are recorded into the scenario panel to the right (you can hide calls by unselecting the option "Scenario > Display calls" in the mix menu).
 Now it is possible to debug a transaction. Expand one transaction (by clicking on the arrow on the right side) and on "Debug Transaction".
 
 ## Debugging
