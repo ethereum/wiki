@@ -7,9 +7,6 @@
  * Bugfix: error reporting with unknown source location caused a crash
  * Bugfix: tokens for variably-sized types were not converted to string properly
 
-
-Bugfixes:
-
 ### 0.3.0 (2016-03-11)
 
 BREAKING CHANGES:
