@@ -1,7 +1,14 @@
+ * Fixed point types (in progress)
+
 ### 0.3.1 (2016-03-31)
 
- * Fixed point types (in progress)
- * Inline assembly (in progress)
+ * Inline assembly
+ * Bugfix: array access with narrow types did not clean higher order bits
+ * Bugfix: error reporting with unknown source location caused a crash
+ * Bugfix: tokens for variably-sized types were not converted to string properly
+
+
+Bugfixes:
 
 ### 0.3.0 (2016-03-11)
 
