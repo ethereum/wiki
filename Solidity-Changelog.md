@@ -1,11 +1,11 @@
  * Fixed point types (in progress)
+ * Bugfix: Error reporting: tokens for variably-sized types were not converted to string properly
 
 ### 0.3.1 (2016-03-31)
 
  * Inline assembly
- * Bugfix: array access with narrow types did not clean higher order bits
- * Bugfix: error reporting with unknown source location caused a crash
- * Bugfix: tokens for variably-sized types were not converted to string properly
+ * Bugfix: Code generation: array access with narrow types did not clean higher order bits
+ * Bugfix: Error reporting: error reporting with unknown source location caused a crash
 
 ### 0.3.0 (2016-03-11)
 
