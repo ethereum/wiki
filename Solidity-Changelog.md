@@ -1,7 +1,9 @@
+### 0.3.1 (2016-03-31)
+
  * Fixed point types (in progress)
  * Inline assembly (in progress)
 
-### 0.3.0 (UNRELEASED)
+### 0.3.0 (2016-03-11)
 
 BREAKING CHANGES:
 
