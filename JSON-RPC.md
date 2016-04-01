@@ -90,7 +90,7 @@ Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ether
 
 ## The default block parameter
 
-The following methods have a extra default block parameter:
+The following methods have an extra default block parameter:
 
 - [eth_getBalance](#eth_getbalance)
 - [eth_getCode](#eth_getcode)
