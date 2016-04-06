@@ -1796,7 +1796,7 @@ The contract object exposes the contracts methods, which can be called using par
 ##### Parameters
 
 - `String|Number` - (optional) Zero or more parameters of the function.
-- `Object` - (optional) The (previous) last parameter can be a transaction object, see [web3.eth.sendTransaction](#web3ethsendtransaction) parameter 1 for more.
+- `Object` - (optional) The (previous) last parameter can be a transaction object, see [web3.eth.sendTransaction](#web3ethsendtransaction) parameter 1 for more. **Note**: `data` and `to` properties will not be taken into account.
 - `Function` - (optional) If you pass a callback as the last parameter the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
