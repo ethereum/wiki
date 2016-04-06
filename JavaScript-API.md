@@ -622,7 +622,7 @@ console.log(value); // "1000000000000000000"
 
 Converts a given number into a BigNumber instance.
 
-See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
+See the [note on BigNumber](#a-note-on-big-numbers-in-web3js).
 
 ##### Parameters
 
