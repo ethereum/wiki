@@ -231,7 +231,7 @@ console.log(version); // "0.2.0"
 
     web3.version.node
     // or async
-    web3.version.getClient(callback(error, result){ ... })
+    web3.version.getNode(callback(error, result){ ... })
 
 
 ##### Returns
