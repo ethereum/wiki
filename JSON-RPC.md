@@ -341,7 +341,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_protocolVersion","params":[]
 
 #### eth_syncing
 
-Returns an object object with data about the sync status or FALSE.
+Returns an object with data about the sync status or `false`.
 
 
 ##### Parameters
