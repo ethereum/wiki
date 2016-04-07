@@ -1735,7 +1735,7 @@ var abi = [{
 }, {
      name: 'myEvent',
      type: 'event',
-     inputs: [{name: 'a', type: 'int', indexed: true},{name: 'b', type: 'bool', indexed: false]
+     inputs: [{name: 'a', type: 'int', indexed: true},{name: 'b', type: 'bool', indexed: false}]
 }];
 
 // creation of contract object
