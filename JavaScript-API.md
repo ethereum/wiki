@@ -1783,9 +1783,6 @@ myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject] [,
 // Explicitly sending a transaction to this method
 myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
 
-// Explicitly sending a transaction to this method
-myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
-
 // Get the call data, so you can call the contract through some other means
 var myCallData = myContractInstance.myMethod.getData(param1 [, param2, ...]);
 // myCallData = '0x45ff3ff6000000000004545345345345..'
