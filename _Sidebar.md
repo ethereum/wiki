@@ -6,7 +6,7 @@
 - [FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
 
 ### Ethereum Clients
-- [Webthree (C++)](https://github.com/ethereum/webthree-umbrella/wiki)
+- [cpp-ethereum (C++)](www.ethdocs.org/en/latest/ethereum-clients/cpp-ethereum/)
 - [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
 - [pyethapp (Python)](https://github.com/ethereum/pyethapp/wiki) 
 
