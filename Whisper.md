@@ -1,3 +1,5 @@
+In a nutshell whisper is a communication protocol for DApps to communicate each other. 
+
 ### Use case
 
 * DApps that need to publish small amounts of information to each other and have the publication last some substantial amount of time. For example, a currency exchange DApp may use it to record an offer to sell some currency at a particular rate on an exchange. In this case, it may last anything between tens of minutes and days. The offer wouldn't be binding, merely a hint to get a potential deal started.
