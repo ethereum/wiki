@@ -353,7 +353,7 @@ contract c {
   {
       val2 = 123;
       val1 = sha3("foo"); // sha3(0x666f6f)
-      val3 = sha3(val2, "bar", 1031); //sha3(0x7b626172407)
+      val3 = sha3(val2, "bar", 1031); //sha3(0x7b6261720407)
   }
   uint256 val1;
   uint16 val2;
