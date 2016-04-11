@@ -18,9 +18,9 @@ If you want to look at some more sophisticated examples using web3.js check out 
 
 First you need to get web3.js into your project. This can be done using the following methods:
 
-- npm: `$ npm install web3`
-- bower: `$ bower install web3`
-- meteor: `$meteor add ethereum:web3`
+- npm: `npm install web3`
+- bower: `bower install web3`
+- meteor: `meteor add ethereum:web3`
 - vanilla: link the `dist./web3.min.js`
 
 Then you need to create a web3 instance, setting a provider.
