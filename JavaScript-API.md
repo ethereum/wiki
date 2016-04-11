@@ -726,7 +726,7 @@ This default address is used for the following methods (optionally you can overw
 var defaultAccount = web3.eth.defaultAccount;
 console.log(defaultAccount); // ''
 
-// set the default block
+// set the default account
 web3.eth.defaultAccount = '0x8888f1f195afa192cfee860698584c030f4c9db1';
 ```
 
