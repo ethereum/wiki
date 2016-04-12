@@ -86,7 +86,7 @@ When encoding **UNFORMATTED DATA** (byte arrays, account addresses, hashes, byte
 - WRONG: 0xf0f0f (must be even number of digits)
 - WRONG: 004200 (must be prefixed 0x)
 
-Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ethereum](https://github.com/ethereum/go-ethereum) provides JSON-RPC communication only over http.
+Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ethereum](https://github.com/ethereum/go-ethereum) provides JSON-RPC communication over http and IPC (unix socket Linux and OSX/named pipes on Windows). From version 1.4 go-ethereum has websocket support.
 
 ## The default block parameter
 
