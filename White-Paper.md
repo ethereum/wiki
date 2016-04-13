@@ -4,7 +4,8 @@ Satoshi Nakamoto's development of Bitcoin in 2009 has often been hailed as a rad
 
 ### Table of Contents
 
-* [History](#history)
+* [Introduction to Bitcoin and Existing Concepts](#introduction-to-bitcoin-and-existing-concepts)
+    * [History](#history)
     * [Bitcoin As A State Transition System](#bitcoin-as-a-state-transition-system)
     * [Mining](#mining)
     * [Merkle Trees](#merkle-trees)
