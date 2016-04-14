@@ -7,11 +7,25 @@ This is a format to describe any Ethereum-like chain. It is derived from the `ge
 It is JSON, with the top level being an object with six keys:
 
 - `name`: A string value specifying the chain name. e.g. "Frontier/Homestead", "Morden", "Olympic".
-- `engineName`: A string value specifying the consensus engine. e.g. "Ethash", "Null".
+- `engine`: A enum value specifying the consensus engine. e.g. "Ethash", "Null".
 - `params`: An object specifying various attributes of the consensus engine, allowing configuration.
 - `genesis`: An object specifying the header of the genesis block.
 - `nodes`: An array of strings, each one a node address in enode format.
 - `accounts`: An object specifying accounts of the genesis block. This includes builtin contracts and premines.
+
+#### Subformat: engine
+
+There are two valid engines, `Ethash` and `Null`.
+
+- `Null`: Nonoperative engine.
+- `Ethash`: Sealing engine used by ethereum.
+  - `params`: Engine specific params.
+    - `minimumDifficulty`: Integer specifying the minimum difficulty a block may have.
+    - `gasLimitBoundDivisor`: Integer specifying the according value in the Yellow Paper.
+    - `difficultyBoundDivisor`: Integer specifying the according value in the Yellow Paper.
+    - `durationLimit`: Integer specifying the boundary point at which difficulty is increased.
+    - `blockReward`: Integer specifying the reward given for authoring a block.
+    - `registrar`: `0x`-prefixed, 40-nibble datum of the address of the registrar contract on this chain.
 
 #### Subformat: params
 
@@ -21,12 +35,6 @@ Different consensus engines may allow different keys in the `params` object, how
 - `frontierCompatibilityModeLimit`: Integer specifying the number of the block that Frontier-compatibility mode finishes and Homestead mode begins.
 - `maximumExtraDataSize`: Integer specifying the maximum size in bytes of the extra_data field of the header.
 - `minGasLimit`: Integer specifying the minimum amount of gas a block may be limited at.
-- `minimumDifficulty`: Integer specifying the minimum difficulty a block may have.
-- `gasLimitBoundDivisor`: Integer specifying the according value in the Yellow Paper.
-- `difficultyBoundDivisor`: Integer specifying the according value in the Yellow Paper.
-- `durationLimit`: Integer specifying the boundary point at which difficulty is increased.
-- `blockReward`: Integer specifying the reward given for authoring a block.
-- `registrar`: `0x`-prefixed, 40-nibble datum of the address of the registrar contract on this chain.
 - `networkID`: Integer specifying the index of this chain on the network.
 
 Note: all integers are `0x`-prefixed, hex-encoded strings.
@@ -35,9 +43,8 @@ Note: all integers are `0x`-prefixed, hex-encoded strings.
 
 The keys in genesis specify the according fields in the chain's genesis block. All are hex-encoded, `0x` prefixed. The fields required are:
 
-- `nonce`
+- `seal`
 - `difficulty`
-- `mixHash`
 - `author`
 - `timestamp`
 - `parentHash`
@@ -64,25 +71,34 @@ This is the Morden ECS JSON file
 ```json
 {
 	"name": "Morden",
-	"engineName": "Ethash",
+	"engine": {
+		"Ethash": {
+			"params": {
+				"tieBreakingGas": false,
+				"gasLimitBoundDivisor": "0x0400",
+				"minimumDifficulty": "0x020000",
+				"difficultyBoundDivisor": "0x0800",
+				"durationLimit": "0x0d",
+				"blockReward": "0x4563918244F40000",
+				"registrar" : "0xc6d9d2cd449a754c494264e1809c50e34d64562b"
+			}
+		}
+	},
 	"params": {
 		"accountStartNonce": "0x0100000",
 		"frontierCompatibilityModeLimit": "0x789b0",
 		"maximumExtraDataSize": "0x20",
 		"tieBreakingGas": false,
-		"minGasLimit": "0x1388",
-		"gasLimitBoundDivisor": "0x0400",
-		"minimumDifficulty": "0x020000",
-		"difficultyBoundDivisor": "0x0800",
-		"durationLimit": "0x0d",
-		"blockReward": "0x4563918244F40000",
-		"registrar": "",
 		"networkID" : "0x2"
 	},
 	"genesis": {
-		"nonce": "0x00006d6f7264656e",
+		"seal": {
+			"ethereum": {
+				"nonce": "0x0000000000000042",
+				"mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+			}
+		},
 		"difficulty": "0x20000",
-		"mixHash": "0x00000000000000000000000000000000000000647572616c65787365646c6578",
 		"author": "0x0000000000000000000000000000000000000000",
 		"timestamp": "0x00",
 		"parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
