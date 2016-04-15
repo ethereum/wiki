@@ -1788,7 +1788,7 @@ var myCallData = myContractInstance.myMethod.getData(param1 [, param2, ...]);
 // myCallData = '0x45ff3ff6000000000004545345345345..'
 ```
 
-The contract object exposes the contracts methods, which can be called using parameters and a transaction object.
+The contract object exposes the contract's methods, which can be called using parameters and a transaction object.
 
 ##### Parameters
 
