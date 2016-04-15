@@ -1,6 +1,7 @@
  * Fixed point types (in progress)
  * Bugfix: Inline assembly parser: `byte` opcode was unusable
  * Bugfix: Error reporting: tokens for variably-sized types were not converted to string properly
+ * Bugfix: Dynamic arrays of structs were not deleted correctly.
 
 ### 0.3.1 (2016-03-31)
 
