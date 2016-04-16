@@ -8,7 +8,7 @@ The standards described below have sample implementations available [here](https
 
 All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinTransfer`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_maxValue`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_address` when generic, and otherwise if a more specific description exists (eg. `_from`, `_to`).
 
-# Transferable Fungibles
+# Transferable Fungibles (see [ERC 20](https://github.com/ethereum/EIPs/issues/20) for the latest)
 
 Also known as tokens, coins and sub-currencies.
 
