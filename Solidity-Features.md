@@ -409,6 +409,8 @@ contract c {
 ```
 contract test {
 	enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill };
+	ActionChoices choices;
+
 	function test()
 	{
 	    choices = ActionChoices.GoStraight;
@@ -417,8 +419,7 @@ contract test {
 	{
 	    d = uint256(choices);
 	}
-	ActionChoices choices;
-	}
+}
 ```
 
 ## Visibility Specifiers
