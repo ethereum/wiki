@@ -198,6 +198,6 @@ This will put your Ðapps static files into the build folder, above your `myDapp
 
 The last option `--path` will make the linking of all files relative, allowing you to start the app by simply clicking the `build/index.html`.
 
-Be aware that when running your app on the `file://` protocol, you won't be able to use client side routing, due to web security. Later in mist you will be able to use client side routing, as dapps are severed over the `eth://` protocol.
+Be aware that when running your app on the `file://` protocol, you won't be able to use client side routing, due to web security. Later in mist you will be able to use client side routing, as dapps are served over the `eth://` protocol.
 
 In the future you will be able to simply upload your Ðapp on swarm.
