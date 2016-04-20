@@ -141,7 +141,7 @@ Now you can use all dapp-styles classes and also overwrite all variables of the 
 
 To make your life as a Ðapp developer easier we provide some packages that help you build Ðapps faster.
 
-If you add the recommended packages above you should have the [ethereum:tools](https://atmospherejs.com/ethereum/tools), [accounts](https://atmospherejs.com/ethereum/accounts) and [ethereum:blocks](https://atmospherejs.com/ethereum/blocks) packages available.
+If you add the recommended packages above you should have the [ethereum:tools](https://atmospherejs.com/ethereum/tools), [ethereum:accounts](https://atmospherejs.com/ethereum/accounts) and [ethereum:blocks](https://atmospherejs.com/ethereum/blocks) packages available.
 
 These 3 packages give you the `EthTools`, `EthAccounts` and `Ethblocks` objects, which give you formatter functions,  a collection with the accounts from `web3.eth.accounts` (with auto updated balance) and a collection of the last 50 blocks.
 
