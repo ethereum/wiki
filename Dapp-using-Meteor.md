@@ -84,7 +84,7 @@ So to build a Ðapp we ideally create the following folder structure in our `myD
    - public
 ```
 
-**Note** The community provides also Meteor Ðapp Boilerplates like this on from Nick Dodson: https://github.com/SilentCicero/meteor-dapp-boilerplate
+**Note** The community provides also Meteor Ðapp Boilerplates like this one from Nick Dodson: https://github.com/SilentCicero/meteor-dapp-boilerplate
 
 ### Connect your Ðapp
 To connect our dapp we need to start `geth` with the right CORS headers in another terminal:
