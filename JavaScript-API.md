@@ -27,11 +27,12 @@ Then you need to create a web3 instance, setting a provider.
 To make sure you don't overwrite the already set provider when in mist, check first if the web3 is available:
 
 ```js
-if(typeof web3 !== 'undefined')
+if (typeof web3 !== 'undefined') {
   web3 = new Web3(web3.currentProvider);
-else
+} else {
   // set the provider you want from Web3.providers
   web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+}
 ```
 
 After that you can use the [API](web3js-api-reference) of the `web3` object.
