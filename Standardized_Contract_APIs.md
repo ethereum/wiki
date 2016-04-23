@@ -1,4 +1,4 @@
-**NOTE** The token API is currently debated as an ERC (Ethereum request for comment) and maybe be outdated: https://github.com/ethereum/EIPs/issues/20
+**NOTE** The token API is currently debated as an ERC (Ethereum request for comment) and may be outdated: https://github.com/ethereum/EIPs/issues/20
 
 ***
 
