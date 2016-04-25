@@ -14,7 +14,7 @@
 - [ÐApp Developer Resources](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources)
 - [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
 - [JSON RPC API](https://github.com/ethereum/wiki/wiki/JSON-RPC)
-- [Solidity](https://ethereum.github.io/solidity/docs/home/)
+- [Solidity](https://solidity.readthedocs.org/en/latest/)
 - [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
 - [Useful Ðapp Patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns)
 - [Standardized Contract APIs](https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs)
