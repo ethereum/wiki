@@ -69,6 +69,8 @@ You can change the port and listen address by giving a config option.
 | JSON-RPC 2.0 | &#x2713; | &#x2713; | &#x2713; |
 | Batch requests | &#x2713; |  &#x2713; |  &#x2713; |
 | HTTP | &#x2713; | &#x2713; | &#x2713; |
+| IPC | &#x2713; | &#x2713; | |
+| WS | | &#x2713; | |
 
 ## Output HEX values
 
