@@ -1,4 +1,5 @@
  * Fixed point types (in progress)
+ * Allow internal library functions to be called (by "inlining")
  * Bugfix: Remove some non-determinism in code generation.
 
 ### 0.3.1 (2016-04-18)
