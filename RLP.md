@@ -24,7 +24,7 @@ In code, this is:
 ```python
 def rlp_encode(input):
     if isinstance(input,str):
-        if len(input) == 1 and chr(input) < 128: return input
+        if len(input) == 1 and ord(input) < 128: return input
         else: return encode_length(len(input),128) + input
     elif isinstance(input,list):
         output = ''
