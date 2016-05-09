@@ -1,3 +1,11 @@
+_Note: The light client protocol is under development. See the following links for current state of the protocol specification._
+
+* https://github.com/zsfelfoldi/go-ethereum/wiki/Light-Ethereum-Subprotocol-%28LES%29
+* https://github.com/zsfelfoldi/go-ethereum/wiki/Client-Side-Flow-Control-model-for-the-LES-protocol
+
+***
+
+
 The purpose of the light client protocol is to allow users in low-capacity environments (embedded smart property environments, smartphones, browser extensions, some desktops, etc) to maintain a high-security assurance about the current state of some particular part of the Ethereum state or verify the execution of a transaction. Although full security is only possible for a full node, the light client protocol allows light nodes processing about 1KB of data per 2 minutes to receive data from the network about the parts of the state that are of concern to them, and be sure that the data is correct  provided that the majority of miners are correctly following the protocol, and perhaps even only provided that at least one honest verifying full node exists.
 
 ### Background: Patricia Merkle Trees
