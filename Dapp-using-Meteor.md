@@ -64,7 +64,7 @@ I recommend also to add the following packages:
 
 ### A short excursion into Meteors folder structure
 
-Meteor doesn't force you to have a specific folder structure, though some folders have specifc meaning and will be treated differently when bundling/running your application.
+Meteor doesn't force you to have a specific folder structure, though some folders have specific meaning and will be treated differently when bundling/running your application.
 
 Folders with specific treatment
 - `client` - files in a folder called `client` will only be loaded by the client part of your app and as we are building a Ðapp, that's where most of our files go.
