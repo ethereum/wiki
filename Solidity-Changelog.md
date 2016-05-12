@@ -1,6 +1,9 @@
  * Fixed point types (in progress)
+
+ * Fractional/rational constants (only usable with fixed point types, which are still in progress)
  * Allow internal library functions to be called (by "inlining")
  * Bugfix: Remove some non-determinism in code generation.
+ * Bugfix: Corrected usage of not / bnot / iszero in inline assembly
 
 ### 0.3.1 (2016-04-18)
 
