@@ -1513,7 +1513,7 @@ v = signature[128:130]
 
 ```js
 var result = web3.eth.sign("0x135a7de83802408321b74c322f8558db1679ac20",
-"0x9dd2c369a187b4e6b9c402f030e50743e619301ea62aa4c0737d4ef7e10a3d49");// second argument is web3.sha3("xyz")
+"0x9dd2c369a187b4e6b9c402f030e50743e619301ea62aa4c0737d4ef7e10a3d49"); // second argument is web3.sha3("xyz")
 console.log(result); // "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 ```
 
