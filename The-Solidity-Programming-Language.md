@@ -1,6 +1,6 @@
 # This page is not actively maintained.
 
-The current Solidity documentation can be found at http://ethereum.github.io/solidity/
+The current Solidity documentation can be found at http://solidity.readthedocs.io/en/latest/
 
 # Foreword
 
