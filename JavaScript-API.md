@@ -745,6 +745,8 @@ This default block is used for the following methods (optionally you can overrid
 - [web3.eth.getStorageAt()](#web3ethgetstorageat)
 - [web3.eth.call()](#web3ethcall)
 - [web3.eth.estimateGas()](#web3ethestimategas)
+- [contract.myMethod.call()](#contract-methods)
+- [contract.myMethod.estimateGas()](#contract-methods)
 
 ##### Values
 
@@ -1777,10 +1779,10 @@ var filter = myContractInstance.myEvent({a: 5}, function (error, result) {
 
 ```js
 // Automatically determines the use of call or sendTransaction based on the method type
-myContractInstance.myMethod(param1 [, param2, ...] [, transactionObject] [, callback]);
+myContractInstance.myMethod(param1 [, param2, ...] [, transactionObject] [, defaultBlock] [, callback]);
 
 // Explicitly calling this method
-myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject] [, callback]);
+myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject] [, defaultBlock] [, callback]);
 
 // Explicitly sending a transaction to this method
 myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
@@ -1796,6 +1798,7 @@ The contract object exposes the contract's methods, which can be called using pa
 
 - `String|Number` - (optional) Zero or more parameters of the function.
 - `Object` - (optional) The (previous) last parameter can be a transaction object, see [web3.eth.sendTransaction](#web3ethsendtransaction) parameter 1 for more. **Note**: `data` and `to` properties will not be taken into account.
+- `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
 - `Function` - (optional) If you pass a callback as the last parameter the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
