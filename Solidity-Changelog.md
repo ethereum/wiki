@@ -2,6 +2,7 @@
 
  * Fractional/rational constants (only usable with fixed point types, which are still in progress)
  * Allow internal library functions to be called (by "inlining")
+ * Running `solc` without arguments on a terminal will print help.
  * Bugfix: Remove some non-determinism in code generation.
  * Bugfix: Corrected usage of not / bnot / iszero in inline assembly
 
