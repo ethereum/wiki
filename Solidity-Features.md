@@ -408,7 +408,7 @@ contract c {
 
 ```
 contract test {
-	enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill };
+	enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
 	ActionChoices choices;
 
 	function test()
