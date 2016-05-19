@@ -95,4 +95,4 @@ PyEthApp supports the morden network from v1.0.5 onwards:
 ```
 
 ### Getting Ether
-One way to get Ether is by using the [Ethereum wei faucet](https://zerogox.com/ethereum/wei_faucet). Just type in your account address and enjoy some free ether.
+One way to get Ether is by using the [Ethereum wei faucet](http://faucet.ma.cx:3000/). Just type in your account address and enjoy some free ether.
