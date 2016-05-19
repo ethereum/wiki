@@ -32,6 +32,15 @@ CACHE_ROUNDS = 3                  # number of rounds in cache production
 ACCESSES = 64                     # number of accesses in hashimoto loop
 ```
 
+##### A note regarding "SHA3" hashes described in this specification
+
+Ethereum's development coincided with the development of the SHA3 standard, and the
+standards process made a late change in the padding of the finalized hash algorithm, so that Ethereum's
+"sha3_256" and "sha3_512" hashes are not standard sha3 hashes, but a variant often referred 
+to as "Keccak-256" and "Keccak-512" in other contexts. See discussion, e.g. [here](https://github.com/ethereum/EIPs/issues/59), [here](http://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use), or [here](http://bitcoin.stackexchange.com/questions/42055/what-is-the-approach-to-calculate-an-ethereum-address-from-a-256-bit-private-key/42057#42057).
+
+Please keep that in mind as "sha3" hashes are referred to in the description of the algorithm below.
+
 ### Parameters
 
 The parameters for Ethash's cache and dataset depend on the block number. The cache size and dataset size both grow linearly; however, we always take the highest prime below the linearly growing threshold in order to reduce the risk of accidental regularities leading to cyclic behavior.
