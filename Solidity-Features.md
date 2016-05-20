@@ -1179,3 +1179,11 @@ contract C {
     }
 }
 ```
+
+## Calling Internal Functions of Libraries
+
+Internal functions of libraries can now be called in the same way as internal functions of
+base classes can be called. This has the effect that the code of the library function
+is pulled into the assembly / binary of the caller, i.e. it does not generate an actual EVM call.
+
+Examples and more detailed documentation can be found in the [documentation](solidity.readthedocs.io/en/latest/contracts.html#libraries).
