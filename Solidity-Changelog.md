@@ -6,8 +6,9 @@
  * Running `solc` without arguments on a terminal will print help.
  * Bugfix: Remove some non-determinism in code generation.
  * Bugfix: Corrected usage of not / bnot / iszero in inline assembly
+ * Bugfix: Correctly clean bytesNN types before comparison
 
-### 0.3.1 (2016-04-18)
+### 0.3.2 (2016-04-18)
 
  * Bugfix: Inline assembly parser: `byte` opcode was unusable
  * Bugfix: Error reporting: tokens for variably-sized types were not converted to string properly
