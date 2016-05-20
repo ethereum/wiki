@@ -8,47 +8,14 @@ The standards described below have sample implementations available [here](https
 
 All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinTransfer`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_maxValue`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_address` when generic, and otherwise if a more specific description exists (eg. `_from`, `_to`).
 
-# Transferable Fungibles (see [ERC 20](https://github.com/ethereum/EIPs/issues/20) for the latest)
+## Transferable Fungibles (see [ERC 20](https://github.com/ethereum/EIPs/issues/20) for the latest)
 
 Also known as tokens, coins and sub-currencies.
 
 
-## TF Registries
+## TF Registries (see [ERC 22](https://github.com/ethereum/EIPs/issues/22) for the latest)
 
 Token registries contain information about tokens. There is at least one global registry (though other may create more like the global Registry) to which you can add your token. Adding your token to it would increase the experience of the user that the GUI Client can use or not.
-
-#### symbol
-
-```js
-setSymbol(string _s)
-symbol(address _token) constant returns (string)
-```
-
-Sets or returns a short sequence of letters that are used to represent the unit of the coin. When setting, it assumes the `msg.sender` is the token. Solidity string is on UTF-8 format so this should support any character supported by UTF-8. Symbols are chosen by the contract and it's up to the client to decide how to handle different currencies with similar or identical symbols.
-
-Examples or symbols: `USDX`, `BOB$`, `Ƀ`, `% of shares`.
-
-#### name
-
-```js
-setName(string _s)
-name(address _token) constant returns (string)
-```
-
-Sets or returns the name of a token. Solidity string is on UTF-8 format so this should support any character supported by UTF-8. Names are chosen by the contract and it's up to the client to decide how to handle different currencies with similar or identical names.
-
-Examples of names: `e-Dollar`, `BobToken`, `Bitcoin-Eth`.
-
-#### baseUnit
-
-```js
-setBaseUnit(uint _s)
-baseUnit(address _token) constant returns (uint256)
-```
-
-Sets or returns the base unit of a token. Although most tokens are displayed to the final user as containing decimal points, token values are unsigned integers counting in the smallest possible unit. The client should always display the total units divided by `baseUnit`. Base units can be any integer but we suggest only using powers of 10. At the moment there is no support for multiple sub-units.
-
-Example: Bob has a balance of 100000 BobTokens, whose base unit is 100. His balance will be displayed on the client as **BOB$1000.00**
 
 ## Registries
 
