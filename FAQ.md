@@ -44,7 +44,7 @@ Answers to questions about Ethereum
 There are several ways to answer this question, which are introduced on the dedicated [What is Ethereum](http://github.com/ethereum/wiki/wiki/What-is-Ethereum) wiki page.
 
 If you prefer to learn by watching videos, see:
- + [Introducing Ethereum](http://youtu.be/mRWNr3MA2jo) (Video, 10min)
+ + [Introducing Ethereum](https://www.youtube.com/watch?v=Clw-qf1sUZg) (Video, 10mi)
  + [Vitalik Buterin reveals Ethereum at Bitcoin Miami 2014](http://youtu.be/l9dpjN3Mwps) (Video, 28min)
  + [Singularity 1 on 1: Ethereum is a Decentralized Consensus Platform](http://youtu.be/fbEtivJIfIU) (Video, 69min)
  + [Our second Reddit "Ask Me Anything" for community selected questions](http://www.reddit.com/r/IAmA/comments/2bjmgb/hi_we_are_the_ethereum_project_team_ask_us/) (not actually a video)
