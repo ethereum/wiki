@@ -1,7 +1,9 @@
  * Fixed point types (in progress)
 
- * Fractional/rational constants (only usable with fixed point types, which are still in progress)
+### 0.3.3 (2016-05-27)
+
  * Allow internal library functions to be called (by "inlining")
+ * Fractional/rational constants (only usable with fixed point types, which are still in progress)
  * Inline assembly has access to internal functions (as jump labels)
  * Running `solc` without arguments on a terminal will print help.
  * Bugfix: Remove some non-determinism in code generation.
