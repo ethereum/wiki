@@ -1624,7 +1624,7 @@ web3.eth.filter(options, function(error, result){
     - `blockNumber`: `Number` - the block number where this log was in. `null` when its pending. `null` when its pending log.
     - `address`: `String`, 32 Bytes - address from which this log originated.
     - `data`: `String` - contains one or more 32 Bytes non-indexed arguments of the log.
-    - `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
+    - `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except if you declared the event with the `anonymous` specifier.)
 
 **Note** For event filter return values see [Contract Events](#contract-events)
 
