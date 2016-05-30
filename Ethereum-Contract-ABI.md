@@ -157,7 +157,7 @@ In total:
 It returns a single `bool`. If, for example, it were to return `false`, its output would be the single byte array `0x0000000000000000000000000000000000000000000000000000000000000000`, a single bool.
 
 If we wanted to call `bar` with the argument `[2.125, 8.5]`, we would pass 68 bytes total, broken down into:
-- `0x3e279860`: the Method ID. This is derived from the signature `bar(fixed128x128[2])`. Note that `fixed` is substituted for its canonical representation `fixed128x128`.
+- `0x3e279860`: the Method ID. This is derived from the signature `bar(fixed128x128[2])`. Note that `fixed` is replaced with its canonical representation `fixed128x128`.
 - `0x0000000000000000000000000000000220000000000000000000000000000000`: the first part of the first parameter, a fixed128x128 value `2.125`.
 - `0x0000000000000000000000000000000880000000000000000000000000000000`: the second part of the first parameter, a fixed128x128 value `8.5`.
 
@@ -167,7 +167,7 @@ In total:
 ```
 
 If we wanted to call `sam` with the arguments `"dave"`, `true` and `[1,2,3]`, we would pass 292 bytes total, broken down into:
-- `0xa5643bf2`: the Method ID. This is derived from the signature `sam(bytes,bool,uint256[])`. Note that `uint` is substituted for its canonical representation `uint256`.
+- `0xa5643bf2`: the Method ID. This is derived from the signature `sam(bytes,bool,uint256[])`. Note that `uint` is replaced with its canonical representation `uint256`.
 - `0x0000000000000000000000000000000000000000000000000000000000000060`: the location of the data part of the first parameter (dynamic type), measured in bytes from the start of the arguments block. In this case, `0x60`.
 - `0x0000000000000000000000000000000000000000000000000000000000000001`: the second parameter: boolean true.
 - `0x00000000000000000000000000000000000000000000000000000000000000a0`: the location of the data part of the third parameter (dynamic type), measured in bytes. In this case, `0xa0`.
