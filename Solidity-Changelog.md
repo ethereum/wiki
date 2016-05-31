@@ -1,5 +1,9 @@
  * Fixed point types (in progress)
 
+### 0.3.4 (2016-05-31)
+
+No change outside documentation.
+
 ### 0.3.3 (2016-05-27)
 
  * Allow internal library functions to be called (by "inlining")
