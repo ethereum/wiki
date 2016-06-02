@@ -1,4 +1,10 @@
+Features:
+
  * Fixed point types (in progress)
+
+Bugfixes:
+
+ * Dynamic return types were removed when fetching data from external calls, now they are replaced by an "unusable" type.
 
 ### 0.3.4 (2016-05-31)
 
