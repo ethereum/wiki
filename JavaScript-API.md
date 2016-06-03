@@ -744,7 +744,6 @@ This default block is used for the following methods (optionally you can overrid
 - [web3.eth.getTransactionCount()](#web3ethgettransactioncount)
 - [web3.eth.getStorageAt()](#web3ethgetstorageat)
 - [web3.eth.call()](#web3ethcall)
-- [web3.eth.estimateGas()](#web3ethestimategas)
 - [contract.myMethod.call()](#contract-methods)
 - [contract.myMethod.estimateGas()](#contract-methods)
 
@@ -1551,7 +1550,7 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
 
 #### web3.eth.estimateGas
 
-    web3.eth.estimateGas(callObject [, defaultBlock] [, callback])
+    web3.eth.estimateGas(callObject [, callback])
 
 Executes a message call or transaction, which is directly executed in the VM of the node, but never mined into the blockchain and returns the amount of the gas used.
 
