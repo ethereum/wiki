@@ -4,7 +4,8 @@ Features:
 
 Bugfixes:
 
- * Dynamic return types were removed when fetching data from external calls, now they are replaced by an "unusable" type.
+ * Type Checking: Dynamic return types were removed when fetching data from external calls, now they are replaced by an "unusable" type.
+ * Type Checking: Overrides by constructors were considered making a function non-abstract.
 
 ### 0.3.4 (2016-05-31)
 
