@@ -1,6 +1,7 @@
 Features:
 
  * Fixed point types (in progress)
+ * Context-dependent path remappings (different modules can use the same library in different versions)
 
 Bugfixes:
 
