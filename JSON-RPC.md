@@ -974,7 +974,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{see above}]
 {
   "id":1,
   "jsonrpc": "2.0",
-  "result": "0x0"
+  "result": "0x"
 }
 ```
 
