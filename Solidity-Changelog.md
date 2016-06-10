@@ -1,6 +1,11 @@
 Features:
 
  * Fixed point types (in progress)
+
+### 0.3.5 (2016-06-10)
+
+Features:
+
  * Context-dependent path remappings (different modules can use the same library in different versions)
 
 Bugfixes:
