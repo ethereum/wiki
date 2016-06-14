@@ -2,6 +2,10 @@ Features:
 
  * Fixed point types (in progress)
 
+Bugfixes:
+
+ * Commandline Interface: Crash if input was taken from stdin.
+
 ### 0.3.5 (2016-06-10)
 
 Features:
