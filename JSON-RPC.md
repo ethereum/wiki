@@ -1073,7 +1073,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0
     "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "size":  "0x027f07", // 163591
     "gasLimit": "0x9f759", // 653145
-    "minGasPrice": "0x9f759", // 653145
     "gasUsed": "0x9f759", // 653145
     "timestamp": "0x54e34e8e" // 1424182926
     "transactions": [{...},{ ... }] 
