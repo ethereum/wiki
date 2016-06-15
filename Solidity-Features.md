@@ -487,37 +487,16 @@ contract Derived is Base(0) {
 ```
 
 ## Detect failed CALLs
-[PT](https://github.com/ethereum/cpp-ethereum/pull/1212) If a CALL fails, due to an internal exception, call stack depth limit, or insufficient funds, it will return `false`. This was a deliberate design decision because call is low-level feature and thus it allows you to make a fine-grained choice about whether you want to propagate exceptions or not. This is also the only way to actually catch an exception currently.
+[PT](https://github.com/ethereum/cpp-ethereum/pull/1212) If a CALL fails, do not just silently continue. Currently, this issues a STOP but it will throw an exception once we have exceptions.
 ```js
 contract C {
-    event StackDepthLimitReached(uint16 depth);
-    uint16 depthCounter = 0;
-    function callStackDepth() {
-        depthCounter++;
-        if (!this.call(0xba3dbad8)) {
-            StackDepthLimitReached(depthCounter);
-        }
-    }
-
-    event InternalException(bool callResult);
-    function internalException() returns(bool) {
-        if (msg.sender == address(this)) {
-            throw;
-        }
-        InternalException(this.call(0xc10d9bbc));
-        return true;
-    }
-
-    event InsufficientFunds(bool callResult);
-    function insufficientFunds() returns(bool) {
-        InsufficientFunds(this.call.value(1)());
-        return true;
-    }
+  function willFail() returns (uint) {
+    address(709).call();
+    return 1;
+  }
 }
 ```
-* `callStackDepth` will result in an `StackDepthLimitReached(1025)` event being emitted.
-* `internalException` will return `true` and emit `InternalException(false)`.
-* `insufficientFunds` will return `true` and emit `InsufficientFunds(false)`.
+`willFail` will always return an empty byte array (unless someone finds the correct private key...).
 
 ## Basic features for arrays
 [PT](https://www.pivotaltracker.com/story/show/84119688) Byte arrays and generic arrays of fixed and dynamic size are supported in calldata and storage with the following features: Index access, copying (from calldata to storage, inside storage, both including implicit type conversion), enlarging and shrinking and deleting. Not supported are memory-based arrays (i.e. usage in non-external functions or local variables), array accessors and features like slicing.
