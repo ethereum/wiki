@@ -515,9 +515,9 @@ contract C {
     }
 }
 ```
-`callStackDepth` will result in an `StackDepthLimitReached(1025)` event being emitted.
-`internalException` will return `true` and emit `InternalException(false)`.
-`insufficientFunds` will return `true` and emit `InsufficientFunds(false)`.
+* `callStackDepth` will result in an `StackDepthLimitReached(1025)` event being emitted.
+* `internalException` will return `true` and emit `InternalException(false)`.
+* `insufficientFunds` will return `true` and emit `InsufficientFunds(false)`.
 
 ## Basic features for arrays
 [PT](https://www.pivotaltracker.com/story/show/84119688) Byte arrays and generic arrays of fixed and dynamic size are supported in calldata and storage with the following features: Index access, copying (from calldata to storage, inside storage, both including implicit type conversion), enlarging and shrinking and deleting. Not supported are memory-based arrays (i.e. usage in non-external functions or local variables), array accessors and features like slicing.
