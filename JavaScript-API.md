@@ -1509,6 +1509,8 @@ s = signature[64:128]
 v = signature[128:130]
 ```
 
+Note that if you are using `ecrecover`, you must add `27` to the value you get for `v`. This will result in either a `27` or a `28`.
+
 ##### Example
 
 ```js
