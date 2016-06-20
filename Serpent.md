@@ -465,7 +465,7 @@ Serpent recognises the following "special functions":
 
 * `def init():` - executed upon contract creation, accepts no parameters
 * `def shared():` - executed before running `init` and user functions
-* `def code():` - executed before any user functions
+* `def any():` - executed before any user functions
 
 There are also special commands for a few crypto operations; particularly:
 
