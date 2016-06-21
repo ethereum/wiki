@@ -16,6 +16,7 @@
 - [JSON RPC API](https://github.com/ethereum/wiki/wiki/JSON-RPC)
 - [Solidity](https://solidity.readthedocs.org/en/latest/)
 - [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
+- [Solidity Libraries](https://github.com/ethereum/wiki/wiki/Solidity-Libraries)
 - [Useful Ðapp Patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns)
 - [Standardized Contract APIs](https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs)
 - [ÐApp using Meteor](https://github.com/ethereum/wiki/wiki/Dapp-using-Meteor)
