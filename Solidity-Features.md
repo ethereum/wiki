@@ -376,14 +376,16 @@ contract test {
 ```
 
 ## Generic call Method
+**DO NOT USE THIS WHEN CALLING UNTRUSTED CODE:** it's dangerous like Javascript's eval().
 [PT](https://www.pivotaltracker.com/story/show/86084248) Address types (and contracts by inheritance) have a method `call` that can receive an arbitrary number of arguments of arbitrary types (which can be serialized in memory) and will invoke a message call on that address while the arguments are ABI-serialized. If the first type has a memory-length of exactly four bytes, it is not padded to 32 bytes, so it is possible to specify a function signature.
 ```js
 contract test {
   function f(address addr, uint a) {
-    addr.call(string4(string32(sha3("fun(uint256)"))), a);
+    addr.call(string4(string32(sha3("fun(uint256)"))), a); // ideally fun is code you wrote, otherwise you could be executing code of an attacker
   }
 }
 ```
+**DO NOT USE THIS WHEN CALLING UNTRUSTED CODE**
 
 ## Byte arrays
 [PT](https://www.pivotaltracker.com/story/show/87037182) Basic support for variable-length byte arrays. This includes
