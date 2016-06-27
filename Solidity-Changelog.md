@@ -1,6 +1,7 @@
 Features:
 
  * Fixed point types (in progress)
+ * Type Checker: Warning about unused return value of low-level calls and send.
 
 Bugfixes:
 
