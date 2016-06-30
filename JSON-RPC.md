@@ -581,8 +581,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407
 
 #### eth_getStorageAt
 
-Returns the value from a storage position at a given address.
-
+Returns the value from a storage position at a given address. 
 
 ##### Parameters
 
@@ -590,31 +589,49 @@ Returns the value from a storage position at a given address.
 2. `QUANTITY` - integer of the position in the storage.
 3. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
-
-```js
-params: [
-   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-   '0x0', // storage position at 0
-   '0x2' // state at block number 2
-]
-```
-
 ##### Returns
 
 `DATA` - the value at this storage position.
 
-
 ##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "0x2"],"id":1}'
+Calculating the correct position depends on the storage to retrieve. Consider the following contract deployed on `0x295a70b2de5e3953354a6a8344e616ed314d7251` from address `0x391694e7e0b0cce554cb130d723a9d27458f9298`.
 
-// Result
-{
-  "id":1,
-  "jsonrpc": "2.0",
-  "result": "0x03"
+```
+contract Storage {
+    uint pos0;
+    mapping(address => uint) pos1;
+    
+    function Storage() {
+        pos0 = 1234;
+        pos1[msg.sender] = 5678;
+    }
 }
+```
+
+Retrieving the value of pos0 is straight forward:
+
+```js
+curl --data '{"id": 1, "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"]}' localhost:8545
+
+{"jsonrpc":"2.0","id":1,"result":"0x00000000000000000000000000000000000000000000000000000000000004d2"}
+```
+
+Retrieving an element of the map is harder. The position of an element in the map is calculated with:
+```js
+keccack(LeftPad32(key, 0), LeftPad32(map position, 0))
+```
+
+This means to retrieve the storage on pos1["0x391694e7e0b0cce554cb130d723a9d27458f9298"] we need to calculate the position with:
+```js
+keccak("0x391694e7e0b0cce554cb130d723a9d27458f9298" || "0x0000000000000000000000000000000000000001")
+```
+Note, the input for the keccack hash function are raw bytes and are only hex encoded for printing purposes. The || denotes concatenation of the 2 byte arrays. This gives a position of `0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9`.
+
+```js
+curl --data '{"id": 1, "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"]}' localhost:8545
+
+{"jsonrpc":"2.0","id":1,"result":"0x000000000000000000000000000000000000000000000000000000000000162e"}
+
 ```
 
 ***
