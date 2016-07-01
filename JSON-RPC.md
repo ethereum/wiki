@@ -623,10 +623,16 @@ keccack(LeftPad32(key, 0), LeftPad32(map position, 0))
 
 This means to retrieve the storage on pos1["0x391694e7e0b0cce554cb130d723a9d27458f9298"] we need to calculate the position with:
 ```js
-keccak(decodeHex("000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298") || decodeHex("0000000000000000000000000000000000000000000000000000000000000001"))
+keccak(decodeHex("000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + "0000000000000000000000000000000000000000000000000000000000000001"))
 ```
-Note, the input for the keccack hash function are raw bytes! The || denotes concatenation of the 2 byte arrays. This gives a position of `0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9`.
-
+The geth console which comes with the web3 library can be used to make the calculation:
+```js
+> var key = "000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + "0000000000000000000000000000000000000000000000000000000000000001"
+undefined
+> web3.sha3(key, {"encoding": "hex"})
+"0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9"
+```
+Now to fetch the storage:
 ```js
 curl --data '{"id": 1, "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"]}' localhost:8545
 
