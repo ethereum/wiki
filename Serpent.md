@@ -448,7 +448,7 @@ Serpent also gives you access to many "special variables"; the full list is:
 
 * `tx.origin` - the sender of the transaction
 * `tx.gasprice` - gas price of the transaction
-* `msg.gas` - gas remaining
+* `msg.gas` - estimated gas by sender
 * `msg.sender` - the sender of the message
 * `msg.value` - the number of wei (smallest units of ether) sent with the message
 * `self` - the contract's own address
