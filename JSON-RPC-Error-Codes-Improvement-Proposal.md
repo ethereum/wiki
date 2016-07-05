@@ -45,7 +45,7 @@ They will be contained in the `data` field of the RPC error message as follows:
 |101 | Requires ether         | Should be used for actions which require somethin else, e.g. gas or a value.
 |102 | Gas too low           | Should be used when a to low value of gas was given.
 |103 | Gas limit exceeded   | Should be used when a limit is exceeded, e.g. for the gas limit in a block.
-|104 | Rejected           | Should be used when an action was rejected, e.g. because of its content (to long contract code, containing wrong characters ?, should differ from `-32602` - Invalid params).
+|104 | Rejected           | Should be used when an action was rejected, e.g. because of its content (too long contract code, containing wrong characters ?, should differ from `-32602` - Invalid params).
 |105 | Ether too low           | Should be used when a to low value of Ether was given.
 
 
