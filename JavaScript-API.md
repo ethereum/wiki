@@ -1510,7 +1510,7 @@ s = signature[64:128]
 v = signature[128:130]
 ```
 
-Note that if you are using `ecrecover`, you must add `27` to the value you get for `v` since `v` will be either `0` or `1`. This will result in either a `27` or a `28`.
+Note that if you are using `ecrecover`, `v` will be either `"00"` or `"01"`. As a result, in order to use this value, you will have to parse it to an integer and then add `27`. This will result in either a `27` or a `28`.
 
 ##### Example
 
