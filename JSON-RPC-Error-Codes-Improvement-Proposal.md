@@ -41,7 +41,7 @@ They will be contained in the `data` field of the RPC error message as follows:
 
 | Code    | Possible Return message | Description |
 | --------|-------------------------|-------------|
-|100 | X doesn't exist    | Should be used when something which should be there is not found. (Doesn't apply to eth_getTransactionBy* eth_getBlock*. They return a success with value `null`)
+|100 | X doesn't exist    | Should be used when something which should be there is not found. (Doesn't apply to eth_getTransactionBy* and eth_getBlock*. They return a success with value `null`)
 |101 | Requires ether         | Should be used for actions which require somethin else, e.g. gas or a value.
 |102 | Gas too low           | Should be used when a to low value of gas was given.
 |103 | Gas limit exceeded   | Should be used when a limit is exceeded, e.g. for the gas limit in a block.
