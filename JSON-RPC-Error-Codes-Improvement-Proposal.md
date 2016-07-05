@@ -42,11 +42,11 @@ They will be contained in the `data` field of the RPC error message as follows:
 | Code    | Possible Return message | Description |
 | --------|-------------------------|-------------|
 |100 | X doesn't exist    | Should be used when something which should be there is not found. (Doesn't apply to eth_getTransactionBy* eth_getBlock*. They return a success with value `null`)
-|101 | Requires ETHER         | Should be used for actions which require somethin else, e.g. gas or a value.
-|102 | GAS too low           | Should be used when a to low value of gas was given.
-|103 | GAS limit exceeded   | Should be used when a limit is exceeded, e.g. for the gas limit in a block.
+|101 | Requires ether         | Should be used for actions which require somethin else, e.g. gas or a value.
+|102 | Gas too low           | Should be used when a to low value of gas was given.
+|103 | Gas limit exceeded   | Should be used when a limit is exceeded, e.g. for the gas limit in a block.
 |104 | Rejected           | Should be used when an action was rejected, e.g. because of its content (to long contract code, containing wrong characters ?, should differ from `-32602` - Invalid params).
-|105 | ETHER too low           | Should be used when a to low value of Ether was given.
+|105 | Ether too low           | Should be used when a to low value of Ether was given.
 
 
 ## Possible future error codes?
