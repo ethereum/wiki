@@ -864,23 +864,23 @@ Signs data with a given address.
 ##### Parameters
 
 1. `DATA`, 20 Bytes - address
-2. `DATA`, Data to sign
+2. `DATA`, 32 Bytes - sha3 hash of data to sign
 
 ##### Returns
 
-`DATA`: Signed data
+`DATA`: Signature
 
 ##### Example
 
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sign","params":["0xd1ade25ccd3d550a7eb532ac759cac7be09c2719", "Schoolbus"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sign","params":["0x8a3106a3e50576d4b6794a0e74d3bb5f8c9acaab", "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"],"id":1}'
 
 // Result
 {
   "id":1,
   "jsonrpc": "2.0",
-  "result": "0x2ac19db245478a06032e69cdbd2b54e648b78431d0a47bd1fbab18f79f820ba407466e37adbe9e84541cab97ab7d290f4a64a5825c876d22109f3bf813254e8601"
+  "result": "0xbd685c98ec39490f50d15c67ba2a8e9b5b1d6d7601fca80b295e7d717446bd8b7127ea4871e996cdc8cae7690408b4e800f60ddac49d2ad34180e68f1da0aaf001"
 }
 ```
 
