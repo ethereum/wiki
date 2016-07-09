@@ -164,7 +164,7 @@ This step has to be done outside of Mix. The package.dapp file has to be hosted 
 
 "Host in pastebin.com" will open pastebin.com in a browser (you can then host your package as base64).
 
-- **Package dapp**
+- **Register**
 
 "Root Registrar address" is the account address of the root registrar contract.
 
