@@ -1,11 +1,13 @@
 Features:
 
  * Fixed point types (in progress)
+ * Add source location to AST output (in progress)
  * Type Checker: Warning about unused return value of low-level calls and send.
 
 Bugfixes:
 
  * Commandline Interface: Crash if input was taken from stdin.
+ * JSON output: Fix error about relative / absolute source file names.
 
 ### 0.3.5 (2016-06-10)
 
