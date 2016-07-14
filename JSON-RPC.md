@@ -14,11 +14,15 @@ See the [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API) f
 ## JSON-RPC Endpoint
 
 Default JSON-RPC endpoints:
-```
-C++: http://localhost:8545
-Go: http://localhost:8545
-Py: http://localhost:4000
-```
+
+|||
+|-------|:------------:|:
+| C++ |  http://localhost:8545 | 
+| Go |http://localhost:8545 | 
+| Parity | http://localhost:8080 | 
+| Py | http://localhost:4000 | 
+
+
 
 ### Go
 
