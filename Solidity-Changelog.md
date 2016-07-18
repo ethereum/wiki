@@ -1,9 +1,11 @@
 Features:
 
  * Fixed point types (in progress)
- * Source location and node id as part of AST output
- * Source location mappings for bytecode
+ * Formal verification: Take external effects on a contract into account.
  * Type Checker: Warning about unused return value of low-level calls and send.
+ * Output: Source location and node id as part of AST output
+ * Output: Source location mappings for bytecode
+ * Output: Formal verification as part of json compiler output.
 
 Bugfixes:
 
