@@ -1,7 +1,8 @@
 Features:
 
  * Fixed point types (in progress)
- * Add source location and node id to AST output (in progress)
+ * Source location and node id as part of AST output
+ * Source location mappings for bytecode
  * Type Checker: Warning about unused return value of low-level calls and send.
 
 Bugfixes:
