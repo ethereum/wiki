@@ -267,3 +267,21 @@ Many consortium chain applications require some node (eg. a regulator) to have s
 In some cases, these privileges are best implemented in layers on top of the base protocol; for example, in a chain where the issuing of new smart contracts is heavily restricted (or even where there is only one contract for the entire chain), one can implement such features into the code of the contracts themselves. In the case of privacy-preserving solutions, giving regulators the ability to view plaintext state can only be done in layers on top because the privacy-preserving solutions themselves will be built through layers on top.
 
 In other cases, these privileges are best implemented via changes to the underlying protocol. The simplest way to do this is to introduce some new opcodes, eg. `0xed = SSTORE_EXT` (set storage of external account), `0xee = WITHDRAW` (drain ETH from another account), `0xef = SET_CODE` (set code of another account), and give only one address the priviledge of using these opcodes (eg. address 254). Such a "privileged address" is a feature that is likely to be implemented in Ethereum in the future as part of the abstraction roadmap (in the public chain, only system-level contracts such as a hypothetical contract that would implement the contract creation function would have access to this priviledged address, so it will not be usable as a "backdoor" by any organizations or individuals, but in private and consortium chains it can be dual-purposed as a priviledge mechanism).
+
+### Changing the Consensus Set
+
+Once a consortium chain is launched, there will inevitably be reasons to change the set of consensus participants after the fact. This includes:
+
+* Induction of new members into the consortium
+* Removal of new members of the consortium
+* Change of the private keys used by one or more members of the consortium
+
+There are several approaches to handling this:
+
+* Have the consensus set be fixed in the config file, and make every consensus set change a hard fork
+* Store the consensus set in a contract, where the contract itself encodes rules for updating the consensus set
+* Use a secure external mechanism to store the consensus set (eg. the Ethereum public blockchain)
+
+A consensus abstraction should be able to cover all three modes if needed. If either (i) the consensus set is stored in an in-chain contract and the consensus algorithm does not provide instant finality (eg. DPOS), or (ii) the consensus set is stored in an external mechanism, then it is prudent to have a delay between when a consensus set change is made and when the change becomes active. The approach currently taken by the Casper proof of stake protocol planned for the public chain is to split blockchain time into 12-hour "epochs", and use the validator set defined at the start of the previous epoch (ie. a time which is always between 12 and 24 hours in the past) as the consensus set for the current block.
+
+The reason why you may want to use an external mechanism is to provide greater security assurances for frequently-offline nodes. Specifically, especially if the consensus set is small there is a risk that, over some period of time, a majority of historical keys will be compromised, and if an attacker obtains these keys they will be able to create an alternate chain and trick long-offline nodes that this chain is legitimate. Using an external mechanism to store consensus participants makes it much more difficult for this to happen; though this approach may not be appropriate for all applications and in many cases the consortium itself may be sufficiently large that a 50% historical key compromise is very unlikely. Note that a well-designed setup could even tolerate short-term failures of the external mechanism by using a consensus algorithm that can tolerate small divergences in perceived consensus mechanism; this would also require restricting the rate at which consensus participants could change and having a rule that if the mechanism is unavailable then the most recent available consensus set should be used (though this is highly theoretical).
