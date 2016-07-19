@@ -39,6 +39,7 @@
 - [Exchange Integration](https://github.com/ethereum/wiki/wiki/Exchange-Integration)
 - [Mining](https://github.com/ethereum/wiki/wiki/Mining)
 - [Licensing](https://github.com/ethereum/wiki/wiki/Licensing)
+- [Consortium Chain Development](https://github.com/ethereum/wiki/wiki/Consortium-Chain-Development)
 
 ### ÐΞV Technologies
 - [RLP Encoding](https://github.com/ethereum/wiki/wiki/RLP)
