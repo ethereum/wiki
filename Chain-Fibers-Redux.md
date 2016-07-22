@@ -88,7 +88,7 @@ The block is considered valid iff all assigned validators sign it. Signing it is
 
 ## Fishermen
 
-Fishermen (who might be called bounty hunters) are the freelance error-checkers of the system. The watch the validators in the hope that they can find wrong-doing. To help guarantee presence, payouts are designed to be huge. The costs of challenging are small but not insignificant.
+Fishermen (who might be called bounty hunters) are the freelance error-checkers of the system. They watch the validators in the hope that they can find wrong-doing. To help guarantee presence, payouts are designed to be huge. The costs of challenging are small but not insignificant.
 
 ### Fishermen: search for invalid or unavailable X-fiber blocks
 
