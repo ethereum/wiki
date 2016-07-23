@@ -66,6 +66,7 @@ There are multiple causes:
 
 ## Account can't be unlocked
 
+Please have a look at [these recommendations](https://github.com/ethereum/mist/issues/669).
 In some cases Mist looses the connection the underlying node and therefore can't unlock the account. To make sure your password is correct, you can [start geth manually](#start-the-node-manually) using `geth --unlock "0x123456543234565432345.."` and type the password, should it unlock successfully, then you know its Mist which lost the connection while unlocking.
 
 ## Unable to import presale wallet
