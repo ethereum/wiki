@@ -26,7 +26,7 @@ True, Meteor is a full stack framework and its main improvement is realtime web 
 
 ### Do I need to host my Ðapp on a server?
 
-No, using [meteor-build-client](https://github.com/frozeman/meteor-build-client) you can get all the static assets of you Ðapp to run without any server, though if you use a router like [iron-](https://atmospherejs.com/iron/router) or [flow-router](https://atmospherejs.com/meteorhacks/flow-router), you need to use hash (`index.html#!/mypath`) routes instead of clean HTML5 pushstate routes.
+No, using [meteor-build-client](https://github.com/frozeman/meteor-build-client) you can get all the static assets of your Ðapp to run without a server, though if you use a router like [iron-](https://atmospherejs.com/iron/router) or [flow-router](https://atmospherejs.com/meteorhacks/flow-router), you need to use hash (`index.html#!/mypath`) routes instead of clean HTML5 pushstate routes.
 
 ***
 
