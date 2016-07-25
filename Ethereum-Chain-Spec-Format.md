@@ -7,6 +7,7 @@ This is a format to describe any Ethereum-like chain. It is derived from the `ge
 It is JSON, with the top level being an object with six keys:
 
 - `name`: A string value specifying the chain name. e.g. "Frontier/Homestead", "Morden", "Olympic".
+- `forkName`: An optional string value specifying a sub-identifier, in case two different chains have equivalent genesis blocks.
 - `engine`: A enum value specifying the consensus engine. e.g. "Ethash", "Null".
 - `params`: An object specifying various attributes of the consensus engine, allowing configuration.
 - `genesis`: An object specifying the header of the genesis block.
