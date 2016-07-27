@@ -19,7 +19,7 @@ Default JSON-RPC endpoints:
 |-------|:------------:|:
 | C++ |  http://localhost:8545 | 
 | Go |http://localhost:8545 | 
-| Parity | http://localhost:8080 | 
+| Parity | http://localhost:8545 | 
 | Py | http://localhost:4000 | 
 
 
