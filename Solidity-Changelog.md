@@ -11,6 +11,7 @@ Bugfixes:
 
  * Commandline Interface: Crash if input was taken from stdin.
  * JSON output: Fix error about relative / absolute source file names.
+ * Code Generator: Dynamic allocation of empty array caused infinite loop.
 
 ### 0.3.5 (2016-06-10)
 
