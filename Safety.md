@@ -1,8 +1,14 @@
 # Ethereum Contract Security Techniques and Tips
 
-The recent attack on [The DAO](https://github.com/slockit/DAO) highlights the importance of security and proper software engineering of blockchain-based contracts. This document outlines collected security tips and techniques for smart contract development.
+The recent attack on [The DAO](https://github.com/slockit/DAO) highlights the importance of security and proper software engineering of blockchain-based contracts. This document outlines collected security tips and techniques for smart contract development. This material is provided as is - and may not reflect best practice. Pull requests are welcome.
 
-**The community is encouraged to keep this wiki updated: it becomes more complete as more contributions are added.**
+**Currently, this document is an early draft - and likely has substantial omissions or errors. This message will be removed in the future once a number of community members have reviewed this document.**
+
+#### Note for contributors
+
+This document is designed to provide a starting *security* baseline for intermediate Solidity programmers. It includes security philosophies, code idioms, known attacks, and software engineering techniques for blockchain contract programming - and aims to cover all communities, techniques, and tools that improve smart contract security. At this stage, this document is focused primarily on Solidity, a javascript-like language for Ethereum, but other languages are welcome.
+
+To contribute, see our [Contribution Guidelines](CONTRIBUTING.md).
 
 #### Additional Requested Content
 
@@ -125,7 +131,7 @@ ExternalContract(someAddress).deposit.value(100);
 
 #### Don't make control flow assumptions after external calls
 
-Whether using *raw calls* or *contract calls*, assume that malicious code will execute if `ExternalContract` is untrusted. Even if `ExternalContract` is not malicious, malicious code can be executed by any contracts *it* calls. One particular danger is malicious code may hijack the control flow, leading to race conditions. (See [Race Conditions](https://github.com/ConsenSys/smart-contract-best-practices/blob/master/smart-contracts.md#race-conditions) for a fuller discussion of this problem).
+Whether using *raw calls* or *contract calls*, assume that malicious code will execute if `ExternalContract` is untrusted. Even if `ExternalContract` is not malicious, malicious code can be executed by any contracts *it* calls. One particular danger is malicious code may hijack the control flow, leading to race conditions. (See [Race Conditions](https://github.com/ConsenSys/smart-contract-best-practices/#race-conditions) for a fuller discussion of this problem).
 
 <a name="favor-pull-over-push-payments"></a>
 
@@ -223,8 +229,6 @@ uint numerator = 5;
 uint denominator = 2;
 ```
 
-<a name="keep-fallback-functions-simple"></a>
-
 ### Remember that on-chain data is public
 
 Many applications require submitted data to be private up until some point in time in order to work. Games (eg. on-chain rock-paper-scissors) and auction mechanisms (eg. sealed-bid second-price auctions) are two major categories of examples. If you are building an application where privacy is an issue, take care to avoid requiring users to publish information too early.
@@ -239,6 +243,8 @@ Examples:
 ### In 2-party or N-party contracts, beware of the possibility that some participants may "drop offline" and not return
 
 Do not make refund or claim processes dependent on a specific party performing a particular action with no other way of getting the funds out. For example, in a rock-paper-scissors game, one common mistake is to not make a payout until both players submit their moves; however, a malicious player can "grief" the other by simply never submitting their move - in fact, if a player sees the other player's revealed move and determiners that they lost, they have no reason to submit their own move at all. This issue may also arise in the context of state channel settlement. When such situations are an issue, (1) provide a way of circumventing non-participating participants, perhaps through a time limit, and (2) consider adding an additional economic incentive for participants to submit information in all of the situations in which they are supposed to do so.
+
+<a name="keep-fallback-functions-simple"></a>
 
 ### Keep fallback functions simple
 
@@ -559,7 +565,7 @@ contract Auction {
 }
 ```
 
-When it tries to refund the old leader, it throws if the refund fails. This means that a malicious bidder can become the leader, while making sure that any refunds to their address will *always* fail. In this way, they can prevent anyone else from calling the `bid()` function, and stay the leader forever. A natural solution might be to continue even if the refund fails, under the theory that it's their own fault if they can't accept the refund. But this is vulnerable to the [Call Depth Attack](https://github.com/ConsenSys/smart-contract-best-practices/#call-depth-attack)! So instead, you should set up a [pull payment system](https://github.com/ConsenSys/smart-contract-best-practices/#favor-pull-payments-over-push-payments) instead, as described earlier.
+When it tries to refund the old leader, it throws if the refund fails. This means that a malicious bidder can become the leader, while making sure that any refunds to their address will *always* fail. In this way, they can prevent anyone else from calling the `bid()` function, and stay the leader forever. A natural solution might be to continue even if the refund fails, under the theory that it's their own fault if they can't accept the refund. But this is vulnerable to the [Call Depth Attack](https://github.com/ConsenSys/smart-contract-best-practices/#call-depth-attack)! So instead, you should set up a [pull payment system](https://github.com/ConsenSys/smart-contract-best-practices/#favor-pull-over-push-payments) instead, as described earlier.
 
 Another example is when a contract may iterate through an array to pay users (e.g., supporters in a crowdfunding contract). It's common to want to make sure that each payment succeeds. If not, one should throw. The issue is that if one call fails, you are reverting the whole payout system, meaning the loop will never complete. No one gets paid, because one address is forcing an error.
 
@@ -639,7 +645,7 @@ As we discussed in the [General Philosophy](#general-philosophy) section, it is 
 
 The approach we advocate is to "prepare for failure". It is impossible to know in advance whether your code is secure. However, you can architect your contracts in a way that allows them to fail gracefully, and with minimal damage. This section presents a variety of techniques that will help you prepare for failure.
 
-Note: There's always a risk when you add a new component to your system. A badly designed failsafe could itself become a vulnerability - as can the interaction between a number of well designed failsafes. Be thoughtful about each technique you use in your contracts, and consider carefully how they work together to create a robust system.
+Note: There's always a risk when you add a new component to your system. A badly designed fail-safe could itself become a vulnerability - as can the interaction between a number of well designed fail-safes. Be thoughtful about each technique you use in your contracts, and consider carefully how they work together to create a robust system.
 
 ### Upgrading Broken Contracts
 
@@ -739,12 +745,6 @@ Example:
 bool private stopped = false;
 address private owner;
 
-function toggleContractActive() public
-isAdmin() {
-    // You can add an additional modifier that restricts stopping a contract to be based on another action, such as a vote of users
-    stopped = !stopped;
-}
-
 modifier isAdmin() {
     if(msg.sender != owner) {
         throw;
@@ -752,16 +752,22 @@ modifier isAdmin() {
     _
 }
 
+function toggleContractActive() isAdmin public
+{
+    // You can add an additional modifier that restricts stopping a contract to be based on another action, such as a vote of users
+    stopped = !stopped;
+}
+
 modifier stopInEmergency { if (!stopped) _ }
 modifier onlyInEmergency { if (stopped) _ }
 
-function deposit() public
-stopInEmergency() {
+function deposit() stopInEmergency public
+{
     // some code
 }
 
-function withdraw() public
-onlyInEmergency() {
+function withdraw() onlyInEmergency public
+{
     // some code
 }
 ```
@@ -871,7 +877,7 @@ During testing, you can force an automatic deprecation by preventing any actions
 
 ```
 modifier isActive() {
-    if (now > SOME_BLOCK_NUMBER) {
+    if (block.number > SOME_BLOCK_NUMBER) {
         throw;
     }
     _
@@ -931,7 +937,7 @@ When launching a contract that will have substantial funds or is required to be 
 
 - [Solgraph](https://github.com/raineorshine/solgraph) - Generates a DOT graph that visualizes function control flow of a Solidity contract and highlights potential security vulnerabilities.
 
-- [solint](https://github.com/weifund/solint) - Another upcoming tool, will provide Solidity linting that helps you enforce consistent conventions and avoid errors in Solidity contracts.
+- [solint](https://github.com/weifund/solint) - Another upcoming tool, will provide Solidity linting that helps you enforce consistent conventions and avoid errors in your Solidity smart-contracts.
 
 
 
@@ -974,11 +980,12 @@ Here are some of them.  Feel free to add more.
 - https://medium.com/@peterborah/we-need-fault-tolerant-smart-contracts-ec1b56596dbc
 - https://pdaian.com/blog/chasing-the-dao-attackers-wake
 - http://www.comp.nus.edu.sg/~loiluu/papers/oyente.pdf
-- https://eprint.iacr.org/2015/460.pdf
 
-## Attribution
+## Reviewers
 
-This work, "Safety", is a derivative of ["Smart Contract Best Practices"](https://github.com/ConsenSys/smart-contract-best-practices), used under [CC BY](https://creativecommons.org/licenses/by-nc-sa/4.0). "Safety" is licensed under [CC BY](https://creativecommons.org/licenses/by-nc-sa/4.0) by the Ethereum community.
+The following people have reviewed this document (date and commit they reviewed in parentheses):
+
+-
 
 ## License
 
