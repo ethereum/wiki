@@ -987,6 +987,10 @@ The following people have reviewed this document (date and commit they reviewed 
 
 -
 
+## Attribution
+
+This work, "Safety", is a derivative of ["Smart Contract Best Practices"](https://github.com/ConsenSys/smart-contract-best-practices), used under CC BY. "Safety" is licensed under CC BY by the Ethereum community.
+
 ## License
 
 Licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/)
