@@ -125,7 +125,10 @@ address a = 0x0123456789abcdef0123;
 
 # Byte Strings
 
-Byte string literals are formed by a sequence of arbitrary characters contained between quote characters (`"`). They are generally interpreted as zero-terminated ASCII encoded text, similar to C. The terminating zero need not be supplied. An example would be: `"Hello, World!"`.
+Byte string literals are formed by a sequence of arbitrary characters contained between quote characters (`"`). They are generally interpreted as zero-terminated ASCII encoded text, similar to C. The terminating zero need not be supplied. An example would be:
+
+`var s = "Hello, World!";`
+
 
 # Reals
 
