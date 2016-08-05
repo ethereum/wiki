@@ -1719,8 +1719,6 @@ myContractInstance.transactionHash // The hash of the transaction, which created
 myContractInstance.address // undefined at start, but will be auto-filled later
 ```
 
-**Note** When you deploy a new contract, you should check for the next 12 blocks or so if the contract code is still at the address (using [web3.eth.getCode()](#web3ethgetcode)), to make sure a fork didn't change that.
-
 ##### Example
 
 ```js
