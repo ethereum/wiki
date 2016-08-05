@@ -10,6 +10,7 @@ Features:
 Bugfixes:
 
  * Commandline Interface: Crash if input was taken from stdin.
+ * Scanner: Correctly support unicode escape codes in strings.
  * JSON output: Fix error about relative / absolute source file names.
  * Code Generator: Dynamic allocation of empty array caused infinite loop.
  * Optimizer: Clear known state if two code paths are joined.
