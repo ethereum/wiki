@@ -13,6 +13,7 @@ Bugfixes:
  * Scanner: Correctly support unicode escape codes in strings.
  * JSON output: Fix error about relative / absolute source file names.
  * Code Generator: Dynamic allocation of empty array caused infinite loop.
+ * Code Generator: Correctly calculate gas requirements for memcpy precompile.
  * Optimizer: Clear known state if two code paths are joined.
 
 ### 0.3.5 (2016-06-10)
