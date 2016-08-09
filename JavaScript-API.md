@@ -1616,7 +1616,7 @@ web3.eth.filter(options, function(error, result){
 ##### Watch callback return value
 
 - `String` - When using the `"latest"` parameter, it returns the block hash of the last incoming block.
-- `String` - When using the "pending" parameter, it returns a transaction hash of the most recent pending transaction.
+- `String` - When using the `"pending"` parameter, it returns a transaction hash of the most recent pending transaction.
 - `Object` - When using manual filter options, it returns a log object as follows:
     - `logIndex`: `Number` - integer of the log index position in the block. `null` when its pending log.
     - `transactionIndex`: `Number` - integer of the transactions index position log was created from. `null` when its pending log.
