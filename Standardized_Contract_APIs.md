@@ -3,7 +3,7 @@ name: Standardized Contract APIs
 category: 
 ---
 
-Ethereum allows you to standardize common use cases that allow users and applications to more easily interact with each other. This includes sending currency units, registering names, making offers on exchanges, and other similar functions. A standard typically consists of function signatures for methods, eg. `send`, `register`, `delete`, providing the set of arguments and their formats in the [Ethereum contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI) language.
+Ethereum allows you to standardize common use cases that allow users and applications to more easily interact with each other. This includes currency units, registering names, making offers on exchanges, and other similar functions. A standard typically consists of function signatures for methods, eg. `send`, `register`, `delete`, providing the set of arguments and their formats in the [Ethereum contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI) language.
 
 The standards described below have sample implementations available [here](https://github.com/ethereum/dapp-bin/tree/master/standardized_contract_apis).
 
@@ -138,7 +138,7 @@ baseUnit(address _token) constant returns (uint256)
 
 Sets or returns the base unit of a token. Although most tokens are displayed to the final user as containing decimal points, token values are unsigned integers counting in the smallest possible unit. The client should always display the total units divided by `baseUnit`. Base units can be any integer but we suggest only using powers of 10. At the moment there is no support for multiple sub-units.
 
-Example: Bob has a balance of 100000 BobTokens, whose base unit is 100. His balance will be displayed on the client as **BOB$100.00**
+Example: Bob has a balance of 100000 BobTokens whose base unit is 100. His balance will be displayed on the client as **BOB$100.00**
 
 ## Registries
 
@@ -268,7 +268,7 @@ setFeeCurrency(address _feeCurrency)
 
 Sets the currency that the fee is paid in
 
-The latter two methods are optional; also, note that the fee may be charged either in ether or subcurrency; if the contract charges in ether then the `setFeeCurrency` method is unnecessary.
+The latter two methods are optional.  Also, note that the fee may be charged either in ether or subcurrency.  If the contract charges in ether then the `setFeeCurrency` method is unnecessary.
 
 
 ## Forwarding contracts (eg. multisig)
