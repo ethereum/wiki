@@ -1,13 +1,13 @@
 このチュートリアルはÐapp用Meteorアプリのセットアップ方法です。そしてこのチュートリアルは、「なぜMeteorが使われるべきなのか」という、いくつかの疑問にも答えることでしょう。
 
-1. [自分のÐappを作成](#create-your-%C3%90app)
-2. [自分のÐappをスタート](#start-your-%C3%90app)
-3. [自分のÐappに接続](#connect-your-%C3%90app)
-4. [自分のÐappを起動](#run-your-%C3%90app)
-5. [Ðapp stylesを追加](#add-%C3%90app-styles)
-6. [ethereum:elementsを使う](#using-ethereumelements)
-7. [Ðappコードの構造](#%C3%90app-code-structure)
-8. [自分のÐappをバンドル](#bundle-your-%C3%90app)
+1. [自分のÐappを作成](#自分のÐappを作成)
+2. [自分のÐappをスタート](#自分のÐappをスタート)
+3. [自分のÐappに接続](#自分のÐappに接続)
+4. [自分のÐappを起動](#自分のÐappを起動)
+5. [Ðapp stylesを追加](#Ðapp stylesを追加)
+6. [ethereum:elementsを使う](#use-ethereum-elements)
+7. [Ðappコードの構造](#Ðappコードの構造)
+8. [自分のÐappをバンドル](#自分のÐappをバンドル)
 
 
 ## FAQ
@@ -34,7 +34,7 @@ Meteorが完璧にフィットする5つの理由:
 
 ***
 
-## Create your Ðapp
+## 自分のÐappを作成
 
 Install Meteor if don't have already:
 
@@ -141,7 +141,8 @@ Now rename you `myDapp.css` to `myDapp.less` and add the following line inside:
 
 Now you can use all dapp-styles classes and also overwrite all variables of the framework. You can find them [in the repo](https://github.com/ethereum/dapp-styles/blob/master/constants.import.less). Overwrite them by copying them to your `myDapp.less` file and set different values.
 
-## Using ethereum packages
+<a name="use-ethereum-elements"></a>
+## ethereum:elementsを使う
 
 To make your life as a Ðapp developer easier we provide some packages that help you build Ðapps faster.
 
