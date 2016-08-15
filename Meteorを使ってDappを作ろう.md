@@ -1,32 +1,36 @@
 このチュートリアルはÐapp用Meteorアプリのセットアップ方法です。そしてこのチュートリアルは、「なぜMeteorが使われるべきなのか」という、いくつかの疑問にも答えることでしょう。
 
-1. [Create your Ðapp](#create-your-%C3%90app)
-2. [Start your Ðapp](#start-your-%C3%90app)
-3. [Connect your Ðapp](#connect-your-%C3%90app)
-4. [Run your Ðapp](#run-your-%C3%90app)
-5. [Add Ðapp styles](#add-%C3%90app-styles)
-6. [Using ethereum:elements](#using-ethereumelements)
-7. [Ðapp code structure](#%C3%90app-code-structure)
-8. [Bundle your Ðapp](#bundle-your-%C3%90app)
+1. [自分のÐappを作成](#create-your-%C3%90app)
+2. [自分のÐappをスタート](#start-your-%C3%90app)
+3. [自分のÐappに接続](#connect-your-%C3%90app)
+4. [自分のÐappを起動](#run-your-%C3%90app)
+5. [Ðapp stylesを追加](#add-%C3%90app-styles)
+6. [ethereum:elementsを使う](#using-ethereumelements)
+7. [Ðappコードの構造](#%C3%90app-code-structure)
+8. [自分のÐappをバンドル](#bundle-your-%C3%90app)
 
 
 ## FAQ
 
-### Isn't Meteor a full stack framework, how does that fit into Ðapp development
+### Meteorはフルスタックフレームワークですよね？Ðapp開発にどうフィットしますか？
 
-True, Meteor is a full stack framework and its main improvement is realtime web applications, but Meteor is also the first framework (i know of), which fully embraced *s*ingle *p*age *a*pp (SPA) development and provided all necessary tools.
+そのとおり。Meteorはフルスタックフレームワークで、そのメインの改良点といえばリアルタイムWebアプリケーションであるということです。しかし、Meteorはまた、完全なシングルページアプリケーション(SPA)開発を全面的に取り込み、全ての必要なツールを提供する最初のフレームワークでもあります。
 
-5 reasons why Meteor is a perfect fit:
+Meteorが完璧にフィットする5つの理由:
 
-1. Its purely written in JS and has all the tools a SPA needs (Templating engine, Model, on-the-fly compiling, bundling)
-2. You get a development environment, which has live reload, CSS injection and support for many pre-compilers (LESS, Coffeescript, etc) out of the box
-3. You can get all frontend code as single `index.html` with one `js` and `css` file plus your assets, using [meteor-build-client](https://github.com/frozeman/meteor-build-client). You can then host it everywhere or simple run the `index.html` itself or distribute it later on *swarm*.
-4. It embraces full reactivity, which make building consistent interface much easier (similar to angualr.js `$scope` or binding)
-5. It has a great model called Minimongo, which gives you a mongoDB like interface for a reactive in-memory database, which can also be [auto-persisted to localstorage](https://atmospherejs.com/frozeman/persistent-minimongo) or [indexedDB](https://atmospherejs.com/frozeman/persistent-minimongo2)
+1. ピュアなJSで書かれていて、SPAに必要な全てのツールを持っています。（テンプレートエンジン、モデル、on-the-flyコンパイリング、バンドリング）
 
-### Do I need to host my Ðapp on a server?
+2. ライブ・リロード、CSSインジェクションの機能を持ち、LESS・CoffeeScriptといった多くのプレコンパイラをサポートしている開発環境が手に入ります。
 
-No, using [meteor-build-client](https://github.com/frozeman/meteor-build-client) you can get all the static assets of your Ðapp to run without a server, though if you use a router like [iron-](https://atmospherejs.com/iron/router) or [flow-router](https://atmospherejs.com/meteorhacks/flow-router), you need to use hash (`index.html#!/mypath`) routes instead of clean HTML5 pushstate routes.
+3. [meteor-build-client](https://github.com/frozeman/meteor-build-client)を使うことで、たった一枚の `index.html` と一つづつの `js` and `css` ファイル、それに加えてあなたのassetだけで、全てのフロントエンドのコードを手に入れることができます。そして、あなたはそれをどこにでもホスティングできますし、`index.html` 自体をシンプルに起動することもできますし、*swarm* 上で配布することもできます。
+
+4. 完全なリアクティビティを持っており、一貫性のあるインターフェースをより簡単に作り上げます。（それはangular.jsの `$scope` や binding にも似ています）
+
+5. Minimongoという素晴らしいモデルを持っています。それは、リアクティブなin-memoryデータベースのためのインターフェースのようなmongoDBです。それはまた、[localstorage](https://atmospherejs.com/frozeman/persistent-minimongo) ないし [indexedDB](https://atmospherejs.com/frozeman/persistent-minimongo2) に自動的に永続化する機能を持っています。
+
+### 自分のÐappはサーバ上にホスティングする必要がありますか？
+
+いいえ、 [meteor-build-client](https://github.com/frozeman/meteor-build-client) を使うことで、あなたのÐappをstaticなassetに変換し、サーバ無しで動かすことができるようになります。けれども、もしあなたが [iron-](https://atmospherejs.com/iron/router) や [flow-router](https://atmospherejs.com/meteorhacks/flow-router) のようなrouterを使うなら、あなたは HTML5のpushstate routesを使う代わりに、ハッシュ (`index.html#!/mypath`) routesを使う必要があります。
 
 ***
 
