@@ -1,13 +1,13 @@
 このチュートリアルはÐapp用Meteorアプリのセットアップ方法です。そしてこのチュートリアルは、「なぜMeteorが使われるべきなのか」という、いくつかの疑問にも答えることでしょう。
 
-1. [自分のÐappを作成](#自分のÐappを作成)
-2. [自分のÐappをスタート](#自分のÐappをスタート)
-3. [自分のÐappに接続](#自分のÐappに接続)
-4. [自分のÐappを起動](#自分のÐappを起動)
+1. [マイÐappを作成](#マイÐappを作成)
+2. [マイÐappを始めよう](#マイÐappを始めよう)
+3. [マイÐappに接続](#マイÐappに接続)
+4. [マイÐappを起動](#マイÐappを起動)
 5. [Ðapp stylesを追加](#Ðapp stylesを追加)
 6. [ethereum:elementsを使う](#use-ethereum-elements)
 7. [Ðappコードの構造](#Ðappコードの構造)
-8. [自分のÐappをバンドル](#自分のÐappをバンドル)
+8. [マイÐappをバンドル](#マイÐappをバンドル)
 
 
 ## FAQ
@@ -28,55 +28,56 @@ Meteorが完璧にフィットする5つの理由:
 
 5. Minimongoという素晴らしいモデルを持っています。それは、リアクティブなin-memoryデータベースのためのインターフェースのようなmongoDBです。それはまた、[localstorage](https://atmospherejs.com/frozeman/persistent-minimongo) ないし [indexedDB](https://atmospherejs.com/frozeman/persistent-minimongo2) に自動的に永続化する機能を持っています。
 
-### 自分のÐappはサーバ上にホスティングする必要がありますか？
+### マイÐappはサーバ上にホスティングする必要がありますか？
 
 いいえ、 [meteor-build-client](https://github.com/frozeman/meteor-build-client) を使うことで、あなたのÐappをstaticなassetに変換し、サーバ無しで動かすことができるようになります。けれども、もしあなたが [iron-](https://atmospherejs.com/iron/router) や [flow-router](https://atmospherejs.com/meteorhacks/flow-router) のようなrouterを使うなら、あなたは HTML5のpushstate routesを使う代わりに、ハッシュ (`index.html#!/mypath`) routesを使う必要があります。
 
 ***
 
-## 自分のÐappを作成
+## マイÐappを作成
 
-Install Meteor if don't have already:
+Meteorのインストールがまだならインストールして:
 
 ```bash
 $ curl https://install.meteor.com/ | sh
 ```
 
-Then create an app:
+Ðappプロジェクトを作りましょう:
+
 ```bash
 $ meteor create myDapp
 $ cd myDapp
 ```
 
-Next add the web3 package:
+次に web3 package を追加:
+
 ```bash
 $ meteor add ethereum:web3
 ```
 
-I recommend also to add the following packages:
+次のpackageの追加も推奨します:
 
-- [ethereum:dapp-styles](https://atmospherejs.com/ethereum/dapp-styles) - The LESS/CSS framework which gives your dapp a nice Mist-consistent look.
-- [ethereum:tools](https://atmospherejs.com/ethereum/tools) - This package gives you the `EthTools` object with a set of formatting an conversion functions and template helpers for ether.
-- [ethereum:elements](https://atmospherejs.com/ethereum/elements) - A set of interface elements specifically made for ethereum, see this [Demo](http://ethereum-elements.meteor.com) for more.
-- [ethereum:accounts](https://atmospherejs.com/ethereum/accounts) - Gives you the reactive `EthAccounts` collection with all current available ethereum accounts, where balances will be automatically updated.
-- [ethereum:blocks](https://atmospherejs.com/ethereum/blocks) - Gives you the reactive `EthBlocks` collection with the latest 50 blocks. To get the lastest block use `EthBlocks.latest` (It will also have the latest default gasPrice)
-- [frozeman:template-var](https://atmospherejs.com/frozeman/template-var) - Gives you the `TemplateVar` object, that allows you to set reactive variables, which are template instance specific. See the [readme](https://atmospherejs.com/frozeman/template-var) for more.
-- [frozeman:persistent-minimongo2](https://atmospherejs.com/frozeman/persistent-minimongo2) - Allows you to auto persist your minimongo collection in local storage
+- [ethereum:dapp-styles](https://atmospherejs.com/ethereum/dapp-styles) - 素晴らしいMistライクな見た目を提供する LESS/CSS framework。
+- [ethereum:tools](https://atmospherejs.com/ethereum/tools) - Etherのための変換関数やテンプレートヘルパーを持つ `EthTools` オブジェクトを提供。
+- [ethereum:elements](https://atmospherejs.com/ethereum/elements) - Ethereumのために特別に作られたUI要素。[デモ](http://ethereum-elements.meteor.com/)
+- [ethereum:accounts](https://atmospherejs.com/ethereum/accounts) - 全ての利用可能なEthereumアカウントを持ったリアクティブな `EthAccounts` コレクション。Etherなどの残高が自動的に更新されます。
+- [ethereum:blocks](https://atmospherejs.com/ethereum/blocks) - 最新50ブロックを持つリアクティブな `EthBlocks` コレクション。たとえば最新ブロックを取得するために `EthBlocks.latest` を使用できます。（それはまた最新のデフォルトgas価格も保持しています）
+- [frozeman:template-var](https://atmospherejs.com/frozeman/template-var) - リアクティブ変数の利用が可能になる `TemplateVar` オブジェクト。テンプレートインスタンスに特化。[詳細](https://atmospherejs.com/frozeman/template-var)
+- [frozeman:persistent-minimongo2](https://atmospherejs.com/frozeman/persistent-minimongo2) - minimongoコレクションをlocalstorageに自動的に永続化。
 
 
-## Start your Ðapp
+## マイÐappを始めよう
 
-### A short excursion into Meteors folder structure
+### ちょっと寄り道：Meteorのフォルダ構成
+Meteorにはいくつか特別なフォルダがあって、あなたのアプリケーションのビルド時と起動時には特別な扱われ方をしますが、だからといって特別なフォルダ構成をあなたに強要するわけではありません。
 
-Meteor doesn't force you to have a specific folder structure, though some folders have specific meaning and will be treated differently when bundling/running your application.
+特別な扱われ方をするフォルダ
+- `client` - このフォルダのファイルはあなたのアプリのクライアント部分によってロードされます。Ðapp作成においてはファイルのほとんどがココに置かれるでしょう。
+- `lib` - このフォルダは同じフォルダ内の他のファイルよりも先にロードされます。initファイルやライブラリ、もしくはEthereumの特別なファイルを置くのに適しています。
+- `public` - MeteorにとってのDocumentRootのようなものです。
+- 他にも `server`, `tests`, `packages` などといった特別なフォルダがいくつかあります。より深く知りたいなら [Meteor docs](http://docs.meteor.com/#/full/structuringyourapp) をご覧あれ。
 
-Folders with specific treatment
-- `client` - files in a folder called `client` will only be loaded by the client part of your app and as we are building a Ðapp, that's where most of our files go.
-- `lib` - files in folders called `lib` will load before other files in the same folder. This is an ideal place your init files, libraries, or ethereum specific files.
-- `public` - a folder called `public` contains assets meteor will make available on the root of your webserver (or later bundled Ðapp)
-- There are a few more specific folders like `server`, `tests`, `packages`, etc. If you want to get to know them take a look at the [Meteor docs](http://docs.meteor.com/#/full/structuringyourapp)
-
-So to build a Ðapp we ideally create the following folder structure in our `myDapp` folder:
+というわけで、Ðappを作成するときには `myDapp` プロジェクトはこんなフォルダ構成が理想的です:
 
 ```
 - myDapp
@@ -88,7 +89,7 @@ So to build a Ðapp we ideally create the following folder structure in our `myD
    - public
 ```
 
-**Note** The community provides also Meteor Ðapp Boilerplates like this one from Nick Dodson: https://github.com/SilentCicero/meteor-dapp-boilerplate
+**Note** コミュニティではNick DodsonがMeteor Ðapp Boilerplatesを提供しています。 https://github.com/SilentCicero/meteor-dapp-boilerplate
 
 ### Connect your Ðapp
 To connect our dapp we need to start `geth` with the right CORS headers in another terminal:
