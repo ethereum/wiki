@@ -194,7 +194,7 @@ Then we encode the head parts of all four arguments. For the static types `uint2
  - `0x0000000000000000000000000000000000000000000000000000000000000123` (`0x123` padded to 32 bytes)
  - `0x0000000000000000000000000000000000000000000000000000000000000080` (offset to start of data part of second parameter, 4*32 bytes, exactly the size of the head part)
  - `0x3132333435363738393000000000000000000000000000000000000000000000` (`"1234567890"` padded to 32 bytes on the right)
- - `0x00000000000000000000000000000000000000000000000000000000000000e0` (offset to start of data part of fourth parameter = offset to start of data part of first dynamic parameter + size of data part of first dynamic parameter = 4*32 + 3*32 (see below))
+ - `0x00000000000000000000000000000000000000000000000000000000000000e0` (offset to start of data part of fourth parameter = offset to start of data part of first dynamic parameter + size of data part of first dynamic parameter = 4\*32 + 3\*32 (see below))
 
 After this, the data part of the first dynamic argument, `[0x456, 0x789]` follows:
 
