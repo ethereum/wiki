@@ -2,7 +2,7 @@
 
 1. [マイÐappを作成](#マイÐappを作成)
 2. [マイÐappを始めよう](#マイÐappを始めよう)
-3. [マイÐappに接続](#マイÐappに接続)
+3. [マイÐappを接続](#マイÐappを接続)
 4. [マイÐappを起動](#マイÐappを起動)
 5. [Ðapp stylesを追加](#Ðapp stylesを追加)
 6. [ethereum:elementsを使う](#use-ethereum-elements)
@@ -91,67 +91,71 @@ Meteorにはいくつか特別なフォルダがあって、あなたのアプ�
 
 **Note** コミュニティではNick DodsonがMeteor Ðapp Boilerplatesを提供しています。 https://github.com/SilentCicero/meteor-dapp-boilerplate
 
-### Connect your Ðapp
-To connect our dapp we need to start `geth` with the right CORS headers in another terminal:
+### マイÐappを接続
+dappを接続するためには、私達は正しいCORSヘッダを設定した `geth` をターミナルで起動する必要があります:
 
 ```bash
 $ geth --rpc --rpccorsdomain "http://localhost:3000"
 ```
 
-We also need to set the provider. Ideally we create a file in our lib folder called `init.js` and add the following line:
+私達はまた、providerをセットする必要もあります。libフォルダに `init.js` というファイルを作り、次の行を追記すると良いでしょう:
 
 ```js
 if(typeof web3 === 'undefined')
     web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 ```
 
-### Run your Ðapp
+### マイÐappを起動
 
-Now we can run our Ðapp by simply running:
+Ðappの起動はこんなにシンプルです:
 
 ```bash
 $ meteor
 ```
 
-If we go to `http://localhost:3000`, we should see a website appear and if we open the browser console we can use the web3 object to query the geth node:
+`http://localhost:3000` にアクセスすると、ちょっとしたWebページが表示されます。そこでブラウザコンソールを開けば、gethノードにクエリを実行するための web3 オブジェクトを使うことができます:
 
 ```js
 > web3.eth.accounts
 ['0xfff2b43a7433ddf50bb82227ed519cd6b142d382']
 ```
 
-## Add Ðapp styles
+## Ðapp stylesを追加
 
-If you want your Ðapp to nicely fit later into Mist and have follow the official look use the [dapp-styles css css/less framework](https://atmospherejs.com/ethereum/dapp-styles).
+ÐappのスタイルをMistや公式に合わせたいのなら、 [dapp-styles css css/less framework](https://atmospherejs.com/ethereum/dapp-styles) を使うべきです。
 
-*Note that they are under heavy development and the class names and elements may change.*
+*Note それらは頻繁にアップデートされているのでclass名や要素は変わるかもしれません*
 
-To add it simple add the following packages to your Ðapp:
+Ðapp stylesを使うためにやることは、単純に次のパッケージを追加するだけです:
 
 ```bash
 $ meteor add less
 $ meteor add ethereum:dapp-styles
 ```
 
-Now rename you `myDapp.css` to `myDapp.less` and add the following line inside:
+さて、 `myDapp.css` を `myDapp.less` に変更し、次の行を追加しましょう:
 
 ```css
 // libs
 @import '{ethereum:dapp-styles}/dapp-styles.less';
 ```
 
-Now you can use all dapp-styles classes and also overwrite all variables of the framework. You can find them [in the repo](https://github.com/ethereum/dapp-styles/blob/master/constants.import.less). Overwrite them by copying them to your `myDapp.less` file and set different values.
+これであなたはdapp-stylesのclassを使ったり、フレームワークの全てのstyleを上書きすることさえできます。全体は [in the repo](https://github.com/ethereum/dapp-styles/blob/master/constants.import.less) をご覧ください。あなたの `myDapp.less` ファイルにそれらをコピーして上書きし、値を変更してみましょう。
 
 <a name="use-ethereum-elements"></a>
 ## ethereum:elementsを使う
 
-To make your life as a Ðapp developer easier we provide some packages that help you build Ðapps faster.
+皆さんがÐapp開発者になるための敷居を下げるべく、私達はÐappの作成をより速く行うことを手助けするためのいくつかのパッケージを提供しています。
 
-If you add the recommended packages above you should have the [ethereum:tools](https://atmospherejs.com/ethereum/tools), [ethereum:accounts](https://atmospherejs.com/ethereum/accounts) and [ethereum:blocks](https://atmospherejs.com/ethereum/blocks) packages available.
+上記で推奨したパッケージを追加するなら、こちらのパッケージも使うと良いでしょう:
 
-These 3 packages give you the `EthTools`, `EthAccounts` and `Ethblocks` objects, which give you formatter functions,  a collection with the accounts from `web3.eth.accounts` (with auto updated balance) and a collection of the last 50 blocks.
+- [ethereum:tools](https://atmospherejs.com/ethereum/tools)
+- [ethereum:accounts](https://atmospherejs.com/ethereum/accounts)
+- [ethereum:blocks](https://atmospherejs.com/ethereum/blocks)
 
-Most of these functions are reactive so they should make building interfaces a breeze.
+これら3つのパッケージで `EthTools`, `EthAccounts` そして `Ethblocks` オブジェクトが使えるようになります。それらは、フォーマッター関数や `web3.eth.accounts` (自動更新される残高) のアカウントを持ったコレクション、そして最新50ブロックのコレクションを提供します。
+
+これらの関数のほとんどはリアクティブなので、インターフェース開発は順調に進むことでしょう。
 
 ### Example usage
 
