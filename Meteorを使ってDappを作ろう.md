@@ -157,12 +157,12 @@ $ meteor add ethereum:dapp-styles
 
 これらの関数のほとんどはリアクティブなので、インターフェース開発は順調に進むことでしょう。
 
-### Example usage
+### 使用例
 
-If you look into you `myDapp.html` you will find the `hello` template.
-Just add a helper called `{{currentBlock}}` some where between the `<template name="hello">..</template>` tags.
+`myDapp.html` を見てみると、そこには `hello` というtemplateがあることに気づくでしょう。
+`<template name="hello">..</template>` 内のどこかに `{{currentBlock}}` というヘルパーを追加してください。
+そして `myDapp.js` を開いて、 `currentBlock` ヘルパーの `counter: function..` の後に次のようにコードを追加してください:
 
-Now open the `myDapp.js` and add after the `counter: function..` the `currentBlock` helper:
 ```js
 Template.elements.helpers({
     counter: function () {
@@ -174,12 +174,11 @@ Template.elements.helpers({
   });
 ```
 
-Then initialize EthBlocks by adding `EthBlocks.init();` after `Session.setDefault('counter', 0);`
+それから、 `Session.setDefault('counter', 0);` の後に `EthBlocks.init();` を追加することでEthBlockを初期化してください。
 
-If you now check your Ðapp in the browser you should see the latest block number, which will increase once you mine.
+今あなたのDappをブラウザでチェックすると、最新のブロック番号が見られるでしょう。その番号はあなたが採掘を開始すると増えていきます。
 
-
-*For more examples please checkout the packages readmes and the [demo](http://ethereum-elements.meteor.com) ([source](https://github.com/frozeman/meteor-ethereum-elements-demo)) for more.*
+*詳しいサンプルは、パッケージのreadmeや [demo](http://ethereum-elements.meteor.com) ([source](https://github.com/frozeman/meteor-ethereum-elements-demo)) をご覧ください*
 
 ## Ðapp code structure
 
