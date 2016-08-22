@@ -8,7 +8,7 @@ Geth 1.4 has experimental pub/sub support. See [this](https://github.com/ethereu
 
 ## JavaScript API
 
-To talk to an ethereum node from inside a JavaScript application use the [web3.js](https://github.com/ethereum/web3.js) library, which gives an convenient interface for the RPC methods.
+To talk to an ethereum node from inside a JavaScript application use the [web3.js](https://github.com/ethereum/web3.js) library, which gives a convenient interface for the RPC methods.
 See the [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API) for more.
 
 ## JSON-RPC Endpoint
