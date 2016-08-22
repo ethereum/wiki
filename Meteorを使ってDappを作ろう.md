@@ -180,22 +180,26 @@ Template.elements.helpers({
 
 *詳しいサンプルは、パッケージのreadmeや [demo](http://ethereum-elements.meteor.com) ([source](https://github.com/frozeman/meteor-ethereum-elements-demo)) をご覧ください*
 
-## Ðapp code structure
+## Ðappコードの構造
 
-*This tutorial won't go into building apps with Meteor. For this please refer to the [Meteor's tutorials](https://www.meteor.com/tutorials/blaze/creating-an-app), [A list of good resources](https://www.meteor.com/tools/resources), [EventMinded](https://www.eventedmind.com) (payed tutorials) or books like [Building Single-page Web Apps with Meteor](https://www.packtpub.com/web-development/building-single-page-web-apps-meteor) or [Discover Meteor](http://discovermeteor.com).*
-
+*Meteorアプリをもっと知りたいなら、こちらを参照してください。
+[Meteor's tutorials](https://www.meteor.com/tutorials/blaze/creating-an-app)
+[A list of good resources](https://www.meteor.com/tools/resources)
+[EventMinded](https://www.eventedmind.com) (payed tutorials)
+[Building Single-page Web Apps with Meteor](https://www.packtpub.com/web-development/building-single-page-web-apps-meteor)
+[Discover Meteor](http://discovermeteor.com).*
 
 TODO
-Short:
-- put ethereum related stuff into `client/lib/ethereum/somefile.js`
-- use `myCollection.observe({added: func, changed: func, removed: func})` to communicate to ethereum, keep ethereum logic out of your app as much as possible. This way you just write and read from your reactive collections and the observe functions will handle the rest (e.g. sendTransactions)
-- Filters etc will add logs etc to your collections. So you keep all the callback mess out of your app logic.
+箇条書き:
+- `client/lib/ethereum/somefile.js` にEthereum関係のツールを置く
+- Ethereumと通信するために `myCollection.observe({added: func, changed: func, removed: func})` を使い、できるだけEthereumロジックと切り離しましょう。こうすることで、あなたはリアクティブ・コレクションからの読み書きに専念でき、Observe関数が残りを処理してくれます。 (e.g. sendTransactions)
+- Filterなどはあなたのコレクションにログなどを追加してくれ、あなたのアプリケーション・ロジックをコールバック地獄から解放するでしょう。
 
-For an example see the [Ethereum-Wallet](https://github.com/ethereum/meteor-dapp-wallet).
+例はこちら [Ethereum-Wallet](https://github.com/ethereum/meteor-dapp-wallet).
 
-## Bundle your Ðapp
+## マイÐappをバンドル
 
-To bundle your Ðapp into a local standalone file use [meteor-build-client](https://github.com/frozeman/meteor-build-client):
+あなたのDappをローカルのスタンドアロンなファイルに束ねるために、[meteor-build-client](https://github.com/frozeman/meteor-build-client) を使いましょう:
 
 ```bash
 $ npm install -g meteor-build-client
@@ -203,10 +207,10 @@ $ cd myDapp
 $ meteor-build-client ../build --path ""
 ```
 
-This will put your Ðapps static files into the build folder, above your `myDapp` folder.
+これはあなたのDappの静的ファイルをmyDappフォルダの上のbuildフォルダの中に生成します。
 
-The last option `--path` will make the linking of all files relative, allowing you to start the app by simply clicking the `build/index.html`.
+最後のオプションである  `--path` は全てのファイルのリンクを相対的にしてくれます。つまりあなたが `build/index.html` をクリックすることで簡単にアプリをスタートできるようになるということです。
 
-Be aware that when running your app on the `file://` protocol, you won't be able to use client side routing, due to web security. Later in mist you will be able to use client side routing, as dapps are served over the `eth://` protocol.
+あなたのアプリが `file://` プロトコルで動いていることに気をつけてください。Webセキュリティのためにあなたはクライアントサイドのルーティングを使うことはできません。いずれはDappが `eth://` プロトコルを通して提供されることで、Mist上でクライアントサイドのルーティングは使えるようになるでしょう。
 
-In the future you will be able to simply upload your Ðapp on swarm.
+将来、あなたは簡単にあなたのDappをswarm上にアップロードすることができるようになるでしょう。
