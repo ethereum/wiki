@@ -381,7 +381,7 @@ contract test {
 ```js
 contract test {
   function f(address addr, uint a) {
-    addr.call(string4(string32(sha3("fun(uint256)"))), a); // ideally fun is code you wrote, otherwise you could be executing code of an attacker
+    addr.call(bytes4(sha3("func(uint256)")), a); // ideally, func is code you wrote, otherwise you could be executing code of an attacker
   }
 }
 ```
