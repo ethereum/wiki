@@ -31,7 +31,7 @@ In order to install the Serpent python library and executable do:
     $ git checkout develop
     $ cd serpent
     $ make && sudo make install
-    $ python install setup.py
+    $ python setup.py install
 
 You can install pyethereum itself as well:
 
