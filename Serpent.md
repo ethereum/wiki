@@ -28,17 +28,17 @@ The important differences between Serpent and Python are:
 In order to install the Serpent python library and executable do:
 
     $ git clone https://github.com/ethereum/serpent.git
-    $ git checkout develop
     $ cd serpent
+    $ git checkout develop
     $ make && sudo make install
     $ python setup.py install
 
 You can install pyethereum itself as well:
 
     $ git clone https://github.com/ethereum/pyethereum.git
-    $ git checkout develop
     $ cd pyethereum
-    $ python install setup.py
+    $ git checkout develop
+    $ python setup.py install
 
 ### Tutorial
 
