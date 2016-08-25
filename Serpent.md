@@ -38,6 +38,7 @@ You can install pyethereum itself as well:
     $ git clone https://github.com/ethereum/pyethereum.git
     $ cd pyethereum
     $ git checkout develop
+    $ pip install -r requirements.txt
     $ python setup.py install
 
 ### Tutorial
