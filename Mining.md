@@ -8,7 +8,7 @@ The word mining originates in the context of the gold analogy for crypto currenc
 
 Ethereum Frontier like all blockchain technologies uses an incentive-driven model of security. Consensus is based on choosing the block with the highest total difficulty. 
 Miners produce blocks which the others check for validity. Among other well-formedness criteria, a block is only valid if it contains **proof of work** (PoW) of a given **difficulty**. 
-Note that in Ethereum 1.1, this is likely gonna be replaced by a **proof of stake** model.
+Note that in Ethereum 1.1, this is likely going to be replaced by a **proof of stake** model.
 
 The proof of work algorithm used is called [Ethash](https://github.com/ethereum/wiki/wiki/Ethash) (a modified version of [Dagger-Hashimoto](https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto)) involves finding a nonce input to the algorithm so that the result is below a certain threshold depending on the difficulty. The point in PoW algorithms is that there is no better strategy to find such a nonce than enumerating the possibilities while verification of a solution is trivial and cheap. If outputs have a uniform distribution, then we can guarantee that on average the time needed to find a nonce depends on the difficulty threshold, making it possible to control the time of finding a new block just by manipulating difficulty.
 
