@@ -76,7 +76,7 @@ You can change the port and listen address by giving a config option.
 | IPC | &#x2713; | &#x2713; | |
 | WS | | &#x2713; | |
 
-## Output HEX values
+## HEX value encoding
 
 At present there are two key datatypes that are passed over JSON: unformatted byte arrays and quantities. Both are passed with a hex encoding, however with different requirements to formatting:
 
