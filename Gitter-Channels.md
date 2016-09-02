@@ -36,6 +36,14 @@ https://gitter.im/ethereum/serpent
 
 https://gitter.im/ethereum/research
 
+https://gitter.im/ethereum/casper-scaling-and-protocol-economics
+
+https://gitter.im/ethereum/evm2.0-design
+
+https://gitter.im/ethereum/privacy-tech
+
+https://gitter.im/ethereum/formal-methods
+
 # Other
 
 https://gitter.im/ethereum/porting
