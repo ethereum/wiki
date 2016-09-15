@@ -89,11 +89,32 @@ A third alternative is to include censorship detection in the fork choice rule. 
 
 ### How does validator selection work, and what is stake grinding?
 
+In any chain-based proof of stake algorithm, there is a need for some mechanism which randomly selects which validator out of the currently active validator set can make the next block. For example, if the currently active validator set consists of Alice with 40 ether, Bob with 30 ether, Charlie with 20 ether and David with 10 ether, then you want there to be a 40% chance that Alice will be the next block creator, 30% chance that Bob will be, etc (in practice, you want to randomly select not just one validator, but rather an infinite sequence of validators, so that if Alice doesn't show up there is someone who can replace her after some time, but this doesn't change the fundamental problem). In non-chain-based algorithms randomness is also often needed for different reasons.
+
+"Stake grinding" is a class of attack where a validator performs some computation or takes some other step to try to bias the randomness in their own favor. For example:
+
+1. In [Peercoin](https://bitcointalk.org/index.php?topic=131901.0), a validator could "grind" through many combinations of parameters and find favorable parameters that would increase the probability of their coins generating a valid block.
+2. In one now-defunct implementation, the randomness for block N+1 was dependent on the signature of block N. This allowed a validator to repeatedly produce new signatures until they found one that allowed them to get the next block, thereby seizing control of the system forever.
+3. In NXT, the randomness for block N+1 is dependent on the validator that creates block N. This allows a validator to manipulate the randomness by simply skipping an opportunity to create a block. This carries an opportunity cost equal to the block reward, but sometimes the new random seed would give the validator an above-average number of blocks over the next few dozen blocks. See [here](http://vitalik.ca/files/randomness.html) for a more detailed analysis.
+
+(1) and (2) are easy to solve; the general approach is to require validators to deposit their coins well in advance, and not to use information that can be easily manipulated as source data for the randomness. There are several main strategies for solving problems like (3). The first is to use schemes based on [secret sharing](https://en.wikipedia.org/wiki/Secret_sharing) or [deterministic threshold signatures](https://eprint.iacr.org/2002/081.pdf) and have validators collaboratively generate the random value. These schemes are robust against all manipulation unless a majority of validators collude (in some cases though, depending on the implementation, between 33-50% of validators can interfere in the operation, leading to the protocol having a 67% liveness assumption).
+
+The second is to use cryptoeconomic schemes where validators commit to information (ie. publish `sha3(x)`) well in advance, and then must publish `x` in the block; `x` is then added into the randomness pool. There are two theoretical attack vectors against this:
+
+1. Manipulate `x` at commitment time. This is impractical because the randomness result would take many actors' values into account, and if even one of them is honest then the output will be a uniform distribution. A uniform distribution XORed together with arbitrarily many arbitrarily biased distributions still gives a uniform distribution.
+2. Selectively avoid publishing blocks. However, this attack costs one block reward of opportunity cost, and because the scheme prevents anyone from seeing any future validators except for the next, it almost never provides more than one block reward worth of revenue. The only exception is the case where, if a validator skips, the next validator in line AND the first child of that validator will both be the same validator; if these situations are a grave concern then we can punish skipping further via an explicit skipping penalty.
+
+The third is to use [Iddo Bentov's "majority beacon"](https://arxiv.org/pdf/1406.5694.pdf), which generates a random number by taking the bit-majority of the previous N random numbers generated through some other beacon (ie. the first bit of the result is 1 if the majority of the first bits in the source numbers is 1 and otherwise it's 0, the second bit of the result is 1 if the majority of the second bits in the source numbers is 1 and otherwise it's 0, etc). This gives a cost-of-exploitation of `~C * sqrt(N)` where `C` is the cost of exploitation of the underlying beacons. Hence, all in all, many known solutions to stake grinding exist; the problem is more like [differential cryptanalysis](https://en.wikipedia.org/wiki/Differential_cryptanalysis) than [the halting problem](https://en.wikipedia.org/wiki/Halting_problem) - an annoyance that proof of stake designers eventually understood and now know how to overcome, not a fundamental and inescapable flaw.
+
 ### Doesn't MC => MR mean that all consensus algorithms with a given security level are equally efficient (or in other words, equally wasteful)?
 
-### What about capital lockup costs?
+This is an argument that many have raised, perhaps best explained by [Paul Sztorc in this article](http://www.truthcoin.info/blog/pow-cheapest/). Essentially, if you create a way for people to earn $100, then people will be willing to spend anywhere up to $99.9 (including the cost of their own labor) in order to get it; hence, the theory goes, any algorithm with a given block reward will be equally "wasteful" in terms of the quantity of socially unproductive activity that is carried out in order to try to get the reward.
 
-### How centralized is proof of stake compared to proof of work?
+There are three flaws with this:
+
+1. 
+
+### What about capital lockup costs?
 
 ### Will exchanges in proof of stake pose a similar centralization risk to pools in proof of work?
 
