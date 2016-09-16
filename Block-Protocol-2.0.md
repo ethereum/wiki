@@ -94,7 +94,7 @@ We also want a few methods for dealing with tries as stacks:
         trie.update(int_to_bin(TRIELEN(trie)-1,32),'')
 
     def TRIEPUSH(trie,node):
-        trie.update(int_to_bin(TRIELEN(trie),3),node)
+        trie.update(int_to_bin(TRIELEN(trie),32),node)
 
 The mining function is tentative, and will be replaced once we know that we have better alternatives:
 
