@@ -21,5 +21,5 @@ As a Ðapp developer you have three main resources which allow Ðapp development
 - Mist [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/mist?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 - GO Ethereum [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/go-ethereum?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 - C++ Ethereum [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/cpp-ethereum?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-- [Swarm](https://gitter.im/ethereum/go-ethereum/swarm?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-- [Whisper](https://gitter.im/ethereum/whisper?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+- Swarm [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/swarm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- Whisper [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/whisper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
