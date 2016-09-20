@@ -22,5 +22,3 @@ Bleeding edge code can be cloned from the develop branch of their git repositori
 - https://github.com/ethereum/go-ethereum (Go)
 - https://github.com/ethereum/webthree-umbrella (C++)
 - https://github.com/ethereum/pyethapp (Python)
-
-To see the state of the latest Ethereum builds, see the [Buildbot instance](http://build.ethdev.com/console) for Go and Python and the [Jenkins instance](http://52.28.164.97/) for C++.
