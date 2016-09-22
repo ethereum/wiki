@@ -18,6 +18,9 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
     * `0x09` for PoC-4.
     * `0x17` for PoC-5.
     * `0x1c` for PoC-6.
+    * `61` for PV61
+    * `62` for PV62
+    * `63` for PV63
 * `networkId` should be 0 for testnet, 1 for mainnet.
 * `td`: Total Difficulty of the best chain. Integer, as found in block header.
 * `bestHash`: The hash of the best (i.e. highest TD) known block.
