@@ -218,57 +218,44 @@ contract DeleteExample {
 }
 ```
 
-## Conversions between Elementary Types
+## Преобразования между элементарными типами
 
-### Implicit Conversions
+### Неявные преобразования
 
-If an operator is applied to different types, the compiler tries to
-implicitly convert one of the operands to the type of the other (the same is
-true for assignments). In general, an implicit conversion between value-types
-is possible if it
-makes sense semantically and no information is lost: `uint8` is convertible to
-`uint16` and `int128` to `int256`, but `int8` is not convertible to `uint256`
-(because `uint256` cannot hold e.g. `-1`).
-Furthermore, unsigned integers can be converted to bytes of the same or larger
-size, but not vice-versa. Any type that can be converted to `uint160` can also
-be converted to `address`.
+Если оператор применяется к объектам различного типа, компилятор пытается неявно преобразовать тип одного из объектов к типу другого. (Аналогичное верно и для присвоений). В целом, неявные преобразования между типами возможны, если это имеет смысл семантически, и никакая информация не теряется в ходе преобразования. Например, `uint8` может преобразоваться в `uint16`, `int128` в`int256`, но int8`не может быть преобразован в `uint256` (Т.к. `uint256` не может содержать, например, `-1`).
 
-### Explicit Conversions
+Более того, `unsigned integers` могут быть преобразованы в `bytes` такого же или большего размера, но не наоборот. Любой тип, который может быть преобразован в `uint160`, также может быть преобразован и в `address`.
 
-If the compiler does not allow implicit conversion but you know what you are
-doing, an explicit type conversion is sometimes possible:
+### Явные преобразования
+
+Если компилятор не позволяет сделать неявное преобразование, но вы знаете, что вы делаете, иногда возможно осуществить явное преобразование типов:
 
 ```js
 int8 y = -3;
 uint x = uint(y);
 ```
 
-At the end of this code snippet, `x` will have the value `0xfffff..fd` (64 hex
-characters), which is -3 in two's complement representation of 256 bits.
+После исполнения этого кода, `x` будет содержать значение `0xfffff..fd` (64 hex символа), которое является двоичным представлением `-3`.
 
-If a type is explicitly converted to a smaller type, higher-order bits are
-cut off:
+Если тип явно приводится к типу, меньшего размера, биты более высокого порядка отрезаются:
 
 ```js
 uint32 a = 0x12345678;
-uint16 b = uint16(a); // b will be 0x5678 now
+uint16 b = uint16(a); // b будет равен 0x5678
 ```
 
-### Type Deduction
+### Автоматическое определение типа
 
-For convenience, it is not always necessary to explicitly specify the type of a
-variable, the compiler automatically infers it from the type of the first
-expression that is assigned to the variable:
+Для удобства, не всегда необходимо явно указывать тип переменной. Компилятор может автоматически определять его по типу первого выражения, которое присваивается в переменную.
+
 ```js
 uint20 x = 0x123;
 var y = x;
 ```
-Here, the type of `y` will be `uint20`. Using `var` is not possible for function
-parameters or return parameters.
+Здесь типом `y` будет `uint20`. Использование `var` недопустимо для параметров функций или возвращаемых параметров.
 
-Beware that currently, the type is only deduced from the first assignment, so
-the loop in the following snippet is infinite, as `i` will have the type
-`uint8` and any value of this type is smaller than `2000`.
+Необходимо иметь в виду, что тип определяется только по первому присвоению. Например, цикл в следующем примере будет бесконечным, т.к. `i` присвоится тип `uint8`, а любое значение этого типа меньше, чем `2000`.
+
 ```js
 for (var i = 0; i < 2000; i++)
 {
@@ -276,10 +263,10 @@ for (var i = 0; i < 2000; i++)
 }
 ```
 
-## Functions on addresses
+## Вызов функций на контракте, через адрес
 
-It is possible to query the balance of an address using the property `balance`
-and to send Ether (in units of wei) to an address using the `send` function:
+Можно запрашивать баланс адреса, используя переменную `balance`  и посылать Ether
+(количество измеряется в  wei) на адрес, использую функцию `send`:
 
 ```js
 address x = 0x123;
@@ -287,7 +274,7 @@ address myAddress = this;
 if (x.balance < 10 && myAddress.balance >= 10) x.send(10);
 ```
 
-Beware that if `x` is a contract address, its code (more specifically: its fallback function, if present) will be executed together with the `send` call (this is a limitation of the EVM and cannot be prevented). If that execution runs out of gas or fails in any way, the Ether transfer will be reverted. In this case, `send` returns `false`.
+Необходимо иметь в виду, что `x` - это адрес контракта, его код (точнее его функция обратного вызова, если существует) будет исполняться вместе с вызовом `send` (это ограничение EVM и не может быть предотвращено). Если этот вызов превысит лимит выделенного газа или завершится неудачей по каким-либо другим причинам, отправленные Ether будут возвращены. В этом случае `send` вернет `false`.
 
 Furthermore, to interface with contracts that do not adhere to the ABI (like the classic NameReg contract),
 the function `call` is provided which takes an arbitrary number of arguments of any type. These arguments are ABI-serialized (i.e. also padded to 32 bytes). One exception is the case where the first argument is encoded to exactly four bytes. In this case, it is not padded to allow the use of function signatures here.
