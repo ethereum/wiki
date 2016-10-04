@@ -134,8 +134,6 @@ Now, we can talk about the marginal/total distinction. In the case of capital lo
 
 ![](https://blog.ethereum.org/wp-content/uploads/2014/07/liquidity.png)
 
-Hence, the <i>total</i> cost of proof of stake is potentially much lower than the marginal cost of depositing 1 more ETH into the system multiplied by the amount of ether currently deposited.
-
 Note that this component of the argument unfortunately does not fully translate into reduction of the "safe level of issuance". It does help us because it shows that we can get substantial proof of stake participation even if we keep issuance very low; however, it also means that a large portion of the gains will simply be borne by validators as economic surplus.
 
 ### Will exchanges in proof of stake pose a similar centralization risk to pools in proof of work?
