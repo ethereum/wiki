@@ -52,9 +52,9 @@ contract GavCoin
   /// @param to The address of the recipient of the GavCoin
   /// @param valueInmGav The GavCoin value to send
   function send(address to, uint256 valueInmGAV) {
-    if (balances[message.caller] >= valueInmGAV) {
+    if (balances[msg.sender] >= valueInmGAV) {
       balances[to] += valueInmGAV;
-      balances[message.caller] -= valueInmGAV;
+      balances[msg.sender] -= valueInmGAV;
     }
   }
 
@@ -65,18 +65,8 @@ contract GavCoin
     balanceInmGAV = balances[who];
   }
 
-invariants:
-  /// @notice The sum total amount of GAV in the system is 1 million.
-  /// @dev This is the invariant development documentation
-  reduce(0, add, map(valueOf, balances)) == 100000000000;
-
-construction:
-  /// @notice Endows `message.caller.address()` with 1m GAV.
-  balances[message.caller] = 100000000000;
-
-state:
-  mapping balances(address) returns uint256 with function(address a) returns uint256 { return a; };
-};
+  mapping (address => uint256) balances;
+}
 ```
 
 ## User Documentation
