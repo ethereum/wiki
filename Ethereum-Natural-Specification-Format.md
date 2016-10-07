@@ -11,7 +11,7 @@ As an example consider the documentation of the following function:
   /// `message.caller.address()`, to an account accessible only by `to.address()
   /// @dev This should be the documentation of the function for the developer docs
   /// @param to The address of the recipient of the GavCoin
-  /// @param valueInmGav The GavCoin value to send
+  /// @param valueInmGAV The GavCoin value to send
   function send(address to, uint256 valueInmGAV) {
     if (balances[message.caller] >= valueInmGAV) {
       balances[to] += valueInmGAV;
