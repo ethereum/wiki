@@ -1063,7 +1063,7 @@ params: [
   - `logsBloom`: `DATA`, 256 Bytes - the bloom filter for the logs of the block. `null` when its pending block.
   - `transactionsRoot`: `DATA`, 32 Bytes - the root of the transaction trie of the block.
   - `stateRoot`: `DATA`, 32 Bytes - the root of the final state trie of the block.
-  - `receiptsRoot`: `DATA`, 32 Bytes - the root of the receipts trie of the block.
+  - `receiptRoot`: `DATA`, 32 Bytes - the root of the receipts trie of the block.
   - `miner`: `DATA`, 20 Bytes - the address of the beneficiary to whom the mining rewards were given.
   - `difficulty`: `QUANTITY` - integer of the difficulty for this block.
   - `totalDifficulty`: `QUANTITY` - integer of the total difficulty of the chain until this block.
