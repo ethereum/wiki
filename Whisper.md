@@ -27,7 +27,7 @@ Messages less than 64K bytes, typically around 256 bytes.
 ### Existing solutions
 
 * UDP: Similar in API-level, native multicasting. No TTL, security or privacy safeguards.
-* [0MQ](http://zeromq.org/): A distributed messaging system, no inherant privacy safeguards.
+* [0MQ](http://zeromq.org/): A distributed messaging system, no inherent privacy safeguards.
 * [Bitmessage](https://bitmessage.org/wiki/Main_Page): Similar in the basic approach of P2P network exchanging messages with baseline PKI for dark comms. Higher-level (e-mail replacement, only "several thousand/day", larger mails), fixed TTL and no hinting to optimise for throughput. Unclear incentivisation.
 * [TeleHash](https://github.com/telehash/telehash.org/blob/master/network.md#paths): Secure connection-orientated RTC comms. Similar in approach to BitTorrent (uses modified Kademila tech), but rather than discovering peers for a given hash, it routes to the recipient given its hash. Uses DHT to do deterministic routing therefore insecure against simple statistical packet-analysis attacks against a large-scale attacker. Connection oriented, so no TTL and not designed for asynchronous data publication.
 * [Tox](https://github.com/irungentoo/toxcore/blob/master/docs/updates/DHT.md): Higher-level (IM & AV chat) replacement.
