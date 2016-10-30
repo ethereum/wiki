@@ -24,7 +24,7 @@ For enterprise use cases, performance is likely to be highly important. There ha
 
 [https://github.com/ethereum/wiki/wiki/Benchmarks](https://github.com/ethereum/wiki/wiki/Benchmarks)
 
-However, a comprehensive set of benchmarks on all clients likely to be performant (C++, Go, Java, Parity) would be a very useful task. Regarding licensing, Go is LGPL licensed, C++ is GPL licensed but there is an effort (with outcome still uncertain) to relicense it to Apache, Java is MIT, and Parity is GPL.
+However, a comprehensive set of benchmarks on all clients likely to be performant (C++, Go, Haskell, Java, Parity) would be a very useful task. Regarding licensing, Go is LGPL licensed, C++ is GPL licensed but there is an effort (with outcome still uncertain) to relicense it to Apache, Java is MIT, and Parity is GPL.
 
 ### The config file
 
