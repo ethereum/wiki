@@ -28,6 +28,7 @@ The following elementary types exist:
 - `ufixed<M>x<N>`: unsigned variant of `fixed<M>x<N>`.
 - `fixed`, `ufixed`: synonyms for `fixed128x128`, `ufixed128x128` respectively (not to be used for computing the function selector).
 - `bytes<M>`: binary type of `M` bytes, `0 < M <= 32`.
+- `function`: equivalent to `bytes24`: an address, followed by a function selector
 
 The following (fixed-size) array type exists:
 - `<type>[M]`: a fixed-length array of the given fixed-length type.
