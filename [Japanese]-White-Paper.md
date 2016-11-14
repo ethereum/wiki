@@ -99,7 +99,7 @@ proof of work の背景にある技術は宇宙史に名を刻むほどの飛躍
 
 ### 状態遷移システム としての Bitcoin
 
-![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
+![statetransition.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/statetransition.png)
 
 技術的観点から見て、Bitcoin をはじめとした暗号通貨の帳簿は、全 bitcoin の所有状況をあらわす「状態」と、状態と取引(トランザクション、状態遷移関数のこと)から新たな状態を出力する「状態遷移関数」をもった、「状態遷移」のシステムと見てとれます。
 一般的銀行のシステムでは、たとえば「状態」はバランスシートにあたり、
@@ -151,7 +151,7 @@ Bitcoin における「状態 state」とは、全コインの集合 であり�
 
 ### 採掘
 
-![block_picture.jpg](http://vitalik.ca/files/block_picture.png)
+![block_picture.jpg](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/block.png)
 
 もし、アクセス対象として信用取引可能な 中央集約型 のサービスを使っているのであれば、
 このシステムの実装は至極簡単なものであったでしょう。
@@ -567,7 +567,7 @@ contract により生成され、外部での動作はしない、という点�
 
 ### Ethereum の 状態遷移関数
 
-![ethertransition.png](http://vitalik.ca/files/ethertransition.png?1)
+![ethertransition.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/ethertransition.png)
 
 Ethereum の 状態遷移関数, `APPLY(S,TX) -> S'` は次のように定義できます:
 
@@ -655,7 +655,7 @@ EVM コード における、形だけの実装が施された実行モデルは
 
 ### Blockchain と 採掘
 
-![apply_block_diagram.png](http://vitalik.ca/files/apply_block_diagram.png)
+![apply_block_diagram.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/apply_block_diagram.png)
 
 Ethereum の blockchain は多くの点で Bitcoin のそれと似ていますが、いくつか違う点があります。
 bockchain のアーキテクチャに関する Ethereum と Bitcoin の違いは、次のようになります。
