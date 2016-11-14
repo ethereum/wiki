@@ -431,7 +431,7 @@ The issuance model will be as follows:
 
 **Long-Term Supply Growth Rate (percent)**
 
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
+![SPV in bitcoin](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/inflation.png)
 
 _Despite the linear currency issuance, just like with Bitcoin over time the supply growth rate nevertheless tends to zero_
 
