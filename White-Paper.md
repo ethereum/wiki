@@ -102,11 +102,14 @@ Once step (1) has taken place, after a few minutes some miner will include the t
 
 ### Merkle Trees
 
-![SPV in bitcoin](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/spv_bitcoin.png)
+![SPV1 in bitcoin](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/spv1.png)
 
-_Left: it suffices to present only a small number of nodes in a Merkle tree to give a proof of the validity of a branch._
+_01: it suffices to present only a small number of nodes in a Merkle tree to give a proof of the validity of a branch._
 
-_Right: any attempt to change any part of the Merkle tree will eventually lead to an inconsistency somewhere up the chain._
+
+![SPV2 in bitcoin](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/spv2.png)
+
+_02: any attempt to change any part of the Merkle tree will eventually lead to an inconsistency somewhere up the chain._
 
 An important scalability feature of Bitcoin is that the block is stored in a multi-level data structure. The "hash" of a block is actually only the hash of the block header, a roughly 200-byte piece of data that contains the timestamp, nonce, previous block hash and the root hash of a data structure called the Merkle tree storing all transactions in the block. A Merkle tree is a type of binary tree, composed of a set of nodes with a large number of leaf nodes at the bottom of the tree containing the underlying data, a set of intermediate nodes where each node is the hash of its two children, and finally a single root node, also formed from the hash of its two children, representing the "top" of the tree. The purpose of the Merkle tree is to allow the data in a block to be delivered piecemeal: a node can download only the header of a block from one source, the small part of the tree relevant to them from another source, and still be assured that all of the data is correct. The reason why this works is that hashes propagate upward: if a malicious user attempts to swap in a fake transaction into the bottom of a Merkle tree, this change will cause a change in the node above, and then a change in the node above that, finally changing the root of the tree and therefore the hash of the block, causing the protocol to register it as a completely different block (almost certainly with an invalid proof of work).
 
