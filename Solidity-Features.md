@@ -209,6 +209,9 @@ change by overriding).
 
 ## Conversion between String and Hash types
 
+**This point needs to be added to
+ http://solidity.readthedocs.io/en/develop/types.html#explicit-conversions**
+
 [PT](https://www.pivotaltracker.com/story/show/85907772) The explicit conversion between `string` and `hash` types of equal size is now allowed. Example:
 
 ```js
