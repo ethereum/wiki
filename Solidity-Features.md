@@ -98,6 +98,8 @@ Note that, unfortunately, this only works directly on structs for now, so I woul
 
 ## Contract Inheritance
 
+**This point is already explained in the documentation **http://solidity.readthedocs.io/en/develop/contracts.html#inheritance
+
 [PT1](https://www.pivotaltracker.com/story/show/84976094)
 [PT2](https://www.pivotaltracker.com/story/show/86666936) Contracts can inherit from each other.
 
