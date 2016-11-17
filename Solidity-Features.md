@@ -75,6 +75,8 @@ contract Main {
 
 ## delete for structs
 
+**This section look very old.  `delete` now works for arrays too.**
+
 [PT](https://www.pivotaltracker.com/story/show/82574620) `delete` clears all members of a struct.
 
 ```js
