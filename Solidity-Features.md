@@ -55,6 +55,8 @@ requires arguments to be padded to multiples of 32 bytes. This is not a language
 
 ## Specify value and gas for function calls
 
+**http://solidity.readthedocs.io/en/develop/control-structures.html?highlight=value#external-function-calls** already explains this.
+
 [PT](https://www.pivotaltracker.com/story/show/84983014) External functions have member functions "gas" and "value" that allow to change the default amount of gas (all) and wei (0) sent to the called contract. "new expressions" also have the value member.
 
 ```js
