@@ -26,6 +26,8 @@ contract IntegerLiterals {
 
 ## Contracts Inherit all Members from Address
 
+**http://solidity.readthedocs.io/en/develop/types.html#members-of-addresses supersedes this section.**
+
 [PT](https://www.pivotaltracker.com/story/show/85006746) Contract types are implicitly convertible to `address` and explicitly convertible to and from all integer types. Furthermore, a contract type contains all members of the address type with the semantics applying to the contract's address, unless overwritten by the contract.
 
 ```js
