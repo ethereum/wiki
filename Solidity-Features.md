@@ -225,6 +225,8 @@ contract Test {
 
 ## Access to super
 
+**Some very similar explanations already exist http://solidity.readthedocs.io/en/develop/contracts.html?highlight=super#inheritance**
+
 [PT](https://www.pivotaltracker.com/story/show/86688340) In the following contract, the function `kill` is overridden by sibling classes. Due to the fact that the sibling classes do not know of each other, they can only call `mortal.kill()` with the effect that one of the overrides is completely bypassed. A reasonable implementation would call the kill functions in all classes in the inheritance hierarchy.
 ```js
 contract mortal { function kill() { suicide(msg.sender); } }
