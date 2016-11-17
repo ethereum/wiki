@@ -7,6 +7,8 @@ This page is **not** the official documentation for Solidity. It contains outdat
 
 ## Special Type Treatment for Integer Literals
 
+http://solidity.readthedocs.io/en/develop/types.html#rational-and-integer-literals supersedes this section.
+
 [PT](https://www.pivotaltracker.com/story/show/83393282) Expressions only involving integer literals are now essentially treated as "big integers" (i.e. they do not overflow) until they are actually used with a non-literal. The type of the expression is only determined at that point as the smallest integer type that can contain the resulting value. Example:
 
 ```js
