@@ -156,6 +156,8 @@ contract PriceFeed is owned, mortal, named("GoldFeed") {
 
 ## Function Modifiers
 
+**Mostly identical section exists in the documentation http://solidity.readthedocs.io/en/develop/contracts.html?highlight=modifier#function-modifiers**
+
 [PT](https://www.pivotaltracker.com/story/show/85007072) Modifiers can be used to easily change the behaviour of functions, for example to automatically check a condition prior to executing the function. They are inheritable properties of contracts and may be overridden by derived contracts.
 ```js
 contract owned {
