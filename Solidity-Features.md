@@ -110,17 +110,6 @@ contract test {
 ```
 
 
-## Constant variables
-[PT](https://www.pivotaltracker.com/story/show/86670364)
-Added `constant` specifier for uint, mapping and bytesXX types. Variables declared with `constant` specifier should be initialized at declaration time and can not be changed later. For now local variables can not be constant. Constant variables are not stored in Storage.
-
-```js
-contract Foo {
-	function getX() returns (uint r) { return x; }
-	uint constant x = 56;
-}
-```
-
 ## Anonymous Events
 [PT](https://www.pivotaltracker.com/story/show/89518344)
 Added `anonymous` specifier for Event. For the event declared as anonymous the hash of the signature of the event will not be added as a first topic. The format is
