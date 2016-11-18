@@ -93,6 +93,9 @@ contract c {
 ```
 
 ## SHA3 with arbitrary arguments
+
+**If this is still true (for `keccak256`), we need to add this to the official documentation.**
+
 [PT](https://www.pivotaltracker.com/story/show/86896766). `sha3()` can now take an arbitrary number and type of arguments.
 ```js
 contract c {
