@@ -243,16 +243,6 @@ For the structural gas estimation, the gas cost of each opcode is computed assum
 
 The functional gas estimation takes a different approach: For each function in a contract, the execution of this function is "simulated". As we want to provide an upper bound on the gas costs independent of the actual arguments, this is sometimes not accurate and may even result in "infinite" gas costs. Note that the gas costs of message-called functions are not included in the gas costs of a function.
 
-## Re-introduce string type
-
-[PT](https://www.pivotaltracker.com/story/show/95173586)
-`string` is added as a type which behaves exactly like `bytes` with the following differences:
- - index access is not allowed
- - it does not have a length member
-
-In the ABI encoding (wiki already changed), string is a dynamic type whose "number of elements" field is the number of bytes, not the number of characters.
-The encoding of the string is assumed to be UTF-8, but is not yet used inside Solidity.
-
 ## In-memory types
 
 [PT](https://www.pivotaltracker.com/n/projects/1189488/stories/88238440)
