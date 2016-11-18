@@ -170,21 +170,6 @@ contract Test {
 ```
 the ABI interface for Poo is Poo(address) when the Solidity interface is still Poo(Foo).
 
-## Accessor for Arrays
-[PT](https://www.pivotaltracker.com/story/show/88500646)
-For Arrays the accessor is generated which accepts the index as parameter and returns an array element
-```js
-contract test {
-    uint[3] public data;
-    function test() {
-        data[0] = 0;
-        data[1] = 1;
-        data[2] = 2;
-    }
-}
-```
-In the above contract if you tried to call the data(1) method of the test you would obtain the result 1.
-
 ## Overloading Functions
 [PT](https://www.pivotaltracker.com/story/show/85511572) Contracts can have multiple functions of the same name as long as the parameters differ in number or type. If such an overloaded function is referenced, it has to be called immediately to resolve the ambiguity using the types of the arguments. It is an error if not exactly one of the possible functions can be called with the given arguments.
 
