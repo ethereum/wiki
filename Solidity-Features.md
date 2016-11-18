@@ -109,30 +109,6 @@ contract test {
 }
 ```
 
-## Basic features for arrays
-[PT](https://www.pivotaltracker.com/story/show/84119688) Byte arrays and generic arrays of fixed and dynamic size are supported in calldata and storage with the following features: Index access, copying (from calldata to storage, inside storage, both including implicit type conversion), enlarging and shrinking and deleting. Not supported are memory-based arrays (i.e. usage in non-external functions or local variables), array accessors and features like slicing.
-Access to an array beyond its length will cause the execution to STOP (exceptions are planned for the future).
-```js
-contract ArrayExample {
-  uint[7][] data;
-  bytes byteData;
-  function assign(uint[4][] input, bytes byteInput) external {
-    data = input; // will assign uint[4] to uint[7] correctly, would produce type error if reversed
-    byteData = byteInput; // bytes are stored in a compact way
-  }
-  function indexAccess() {
-    data.length += 20;
-    data[3][5] = data[3][2];
-    byteData[2] = byteData[7]; // this will access sigle bytes
-  }
-  function clear() {
-    delete data[2]; // will clear all seven elements
-    data.length = 2; // clears everything after the second element
-    delete data; // clears the whole array
-  }
-}
-```
-
 ## Now Variable
 [PT](https://www.pivotaltracker.com/story/show/89728640) The global scope contains an immutable variable called `now` which is an alias to `block.timestamp`, i.e. it contains the timestamp of the current block.
 ```js
