@@ -28,26 +28,6 @@ contract Test {
 }
 ```
 
-## Fallback Functions
-
-[PT](https://www.pivotaltracker.com/story/show/87035858) A contract can have exactly one unnamed
-function. This function cannot have arguments and is executed on a call to the contract if
-none of the other functions matches the given function identifier (or if no data was supplied at all).
-
-```js
-contract Test {
-  function() { x = 1; }
-  uint x;
-}
-
-contract Caller {
-  function callTest(address testAddress) {
-    Test(testAddress).send(0);
-    // results in Test(testAddress).x becoming == 1.
-  }
-}
-```
-
 ## Events in Exported Interfaces
 
 **This point needs to be added to the Solidity documentation.**
