@@ -62,20 +62,6 @@ generates the JSON interface
 and the Solidity interface
 `contract c{event ev(uint256 indexed a,uint256 b);}`.
 
-## Visibility Specifiers
-
-**This section needs to be ported to the official documentation.  I could only find a small list in the cheatsheet section http://solidity.readthedocs.io/en/develop/miscellaneous.html?highlight=visibility%20specifiers#function-visibility-specifiers **
-
-[PT](https://www.pivotaltracker.com/story/show/86635568) Functions and storage variables can be specified as being `public`, `protected` or `private`, where the default for functions is `public` `protected` for storage variables. Public functions are part of the external interface and can be called externally, while for storage variables, an automatic accessor function is generated. Non-public functions are only visible inside a contract and its derived contracts (there is no distinction between `protected` and `private` for now).
-
-```js
-contract c {
-  function f(uint a) private returns (uint b) { return a + 1; }
-  uint public data;
-}
-```
-External functions can call `c.data()` to retrieve the value of `data` in storage, but are not able to call `f`.
-
 ## SHA3 with arbitrary arguments
 
 **If this is still true (for `keccak256`), we need to add this to the official documentation.**
@@ -96,89 +82,14 @@ contract c {
 ```
 
 ## Optional Parameter Names
+
+**Yoichi could not find this in the official documentation.**
+
 [PT](https://www.pivotaltracker.com/story/show/85594334). The names for function parameters and return parameters are now optional.
 ```js
 contract test {
   function func(uint k, uint) returns(uint){
     return k;
-  }
-}
-```
-
-## Generic call Method
-**DO NOT USE THIS WHEN CALLING UNTRUSTED CODE:** it's dangerous like Javascript's eval().
-[PT](https://www.pivotaltracker.com/story/show/86084248) Address types (and contracts by inheritance) have a method `call` that can receive an arbitrary number of arguments of arbitrary types (which can be serialized in memory) and will invoke a message call on that address while the arguments are ABI-serialized. If the first type has a memory-length of exactly four bytes, it is not padded to 32 bytes, so it is possible to specify a function signature.
-```js
-contract test {
-  function f(address addr, uint a) {
-    addr.call(bytes4(sha3("func(uint256)")), a); // ideally, func is code you wrote, otherwise you could be executing code of an attacker
-  }
-}
-```
-**DO NOT USE THIS WHEN CALLING UNTRUSTED CODE**
-
-## Byte arrays
-[PT](https://www.pivotaltracker.com/story/show/87037182) Basic support for variable-length byte arrays. This includes
- - `bytes` type for storage variables
- - `msg.data` is of `bytes` type and contains the calldata
- - functions taking arbitrary parameters (`call`, `sha3`, ...) can be called with `bytes` arguments.
- - copying between `msg.data` and `bytes` storage variables
-
-What is not possible yet:
- - function parameters of `bytes` type
- - local variables of `bytes` type
- - index or slice access
-
-```js
-contract c {
-  bytes data;
-  function() { data = msg.data; }
-  function forward(address addr) { addr.call(data); }
-  function getLength() returns (uint) { return addr.length; }
-  function clear() { delete data; }
-}
-```
-
-## Enums
-[PT](https://www.pivotaltracker.com/story/show/86670106) Solidity now supports enums. Enums are explicitly convertible to all integer types but implicit conversion is not allowed.
-
-```js
-contract test {
-	enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
-	ActionChoices choices;
-
-	function test()
-	{
-	    choices = ActionChoices.GoStraight;
-	}
-	function getChoice() returns (uint d)
-	{
-	    d = uint256(choices);
-	}
-}
-```
-
-## Visibility Specifiers
-
-[PT](https://www.pivotaltracker.com/story/show/86487946) The visibility of a function can be specified by giving at most one of the specifiers `external`, `public`, `inheritable` or `private`, where `public` is the default. "External" functions can only be called via message-calls, i.e. from other contracts or from the same contract using `this.function()` (note that this also prevents calls to overwritten functions in base classes). Furthermore, parameters of "external" functions are immutable. "Public" functions can be called from other contracts and from the same contract using stack-based calls. "Inheritable" and "private" functions can only be called via stack-based calls, while "inheritable" functions are only visible in the contract itself and its derived contracts and "private" functions are not even visible in derived contracts.
-
-```js
-contract Base {
-  function exte() external { }
-  function publ() public /* can be omitted */ { }
-  function inhe() inheritable { priv(); }
-  function priv() private { }
-}
-contract Derived is Base {
-  function g() {
-    this.exte();
-    // impossible: exte();
-    this.publ();
-    publ();
-    // impossible: this.inhe();
-    inhe();
-    // impossible: this.priv();
-    // impossible: priv();
   }
 }
 ```
