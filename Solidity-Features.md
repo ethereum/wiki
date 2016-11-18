@@ -109,14 +109,6 @@ contract test {
 }
 ```
 
-## Now Variable
-[PT](https://www.pivotaltracker.com/story/show/89728640) The global scope contains an immutable variable called `now` which is an alias to `block.timestamp`, i.e. it contains the timestamp of the current block.
-```js
-contract TimedContract {
-  uint timeout = now + 4 weeks;
-}
-```
-
 ## HashXX and StringXX to bytesXX
 [Link to PT] (https://www.pivotaltracker.com/story/show/88146508)
 + We replace `hash(XX*8)` and `stringXX` by `bytesXX`.
