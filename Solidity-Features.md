@@ -234,6 +234,8 @@ Assuming the contract `Code` is deployed at the address `0x12345`, calling `f()`
 
 ## Gas Estimation
 
+**Yoichi thinks these descriptions should be ported to the official documentation.**
+
 [PT](https://www.pivotaltracker.com/story/show/90098268) Solidity provides two ways to compute an upper bound on the gas usage of code: A structural one, which can be used to identify expensive statements and a functional one which tries to give an exact gas estimation for each function.
 Some gas costs depend on the state of the virtual machine, e.g. on the cost of `sha3` depends on the length of the argument and writing to storage has different costs depending on whether the storage slot had the value zero or not.
 
