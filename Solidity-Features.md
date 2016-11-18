@@ -133,6 +133,8 @@ contract test {
 
 ## Common Subexpression Elimination for Memory and Storage
 
+**Seems to be missing from the official documentation.**
+
 [PT](https://www.pivotaltracker.com/story/show/90785926)
 This adds support for memory and storage operations to the common subexpression eliminator. This makes it possible to e.g. stretch the equality inference engine across SSTORE, MSTORE and even SHA3 computations (which go via memory). Without optimizer (because of packed storage), there are 4 SLOAD, 3 SSTORE and 4 SHA3 operations. The optimizer reduces those to a single SLOAD, SHA3 and SSTORE each.
 ```js
