@@ -76,24 +76,6 @@ contract c {
 ```
 External functions can call `c.data()` to retrieve the value of `data` in storage, but are not able to call `f`.
 
-## Numeric Literals with Ether Subdenominations
-[PT](https://www.pivotaltracker.com/story/show/84986568) Numeric literals can also be followed by the common ether subdenominations and the value of the assigned to variable will be multiplied by the proper amount.
-```js
-contract c {
-  function c()
-  {
-      val1 = 1 wei;    // 1
-      val2 = 1 szabo;  // 1 * 10 ** 12
-      val3 = 1 finney; // 1 * 10 ** 15
-      val4 = 1 ether;  // 1 * 10 ** 18
- }
-  uint256 val1;
-  uint256 val2;
-  uint256 val3;
-  uint256 val4;
-}
-```
-
 ## SHA3 with arbitrary arguments
 
 **If this is still true (for `keccak256`), we need to add this to the official documentation.**
