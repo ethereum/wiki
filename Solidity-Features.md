@@ -299,21 +299,6 @@ The EVM does not allow `CALL` to be used with variably-sized return values. Beca
 
 Memory-stored objects as local variables are correctly zero-initialised: Members of structs and elements of fixed-size arrays are recursively initialised, dynamic arrays are set to zero length. `delete x` assigns a new zero-initialised value to `x`.
 
-## Positive integers conversion to signed
-
-[PT](https://www.pivotaltracker.com/n/projects/1189488/stories/92691082)
-Positive integer literals are now convertible to signed if in value range.
-```js
-int8 x = 2;
-```
-
-## Exceptions in Solidity
-
-[PT](https://www.pivotaltracker.com/n/projects/1189488/stories/92929256)
-Currently, there are two situations, where exceptions can happen in Solidity: If you access an array beyond its length (i.e. x[i] where i >= x.length) or if a function called via a message call does not finish properly (i.e. it runs out of gas or throws an exception itself). In such cases, Solidity will trigger an "invalid jump" and thus cause the EVM to revert all changes made to the state.
-
-It is planned to also throw and catch exceptions manually.
-
 ## Structs in Memory
 
 [PT](https://www.pivotaltracker.com/n/projects/1189488/stories/84119690)
@@ -352,16 +337,6 @@ contract C {
     x = "Hello, World!";
     return "Hello, World!";
   }
-}
-```
-
-## Strings as Mapping Keys
-
-Strings are allowed as keys for mappings.
-```js
-contract C {
-  mapping (string => uint) counter;
-  function inc(string _s) { counter[_s]++; }
 }
 ```
 
@@ -405,21 +380,6 @@ The address is a hex string that is optionally prefixed with `0x`.
 
 If solc is called with the option `--link`, all input files are interpreted to be unlinked binaries (hex-encoded) and are linked in-place (if the input is read from stdin, it is written to stdout).
 All options except `--libraries` are ignored (including `-o`).
-
-## Throw
-
-[PT](https://www.pivotaltracker.com/story/show/96275370)
-
-throw is a statement that triggers a solidity exception and thus can be used to revert changes made during the transaction. It does not take any parameters and jumps to the error tag.
-```js
-contract Sharer {
-    function sendHalf(address addr) returns (uint balance) {
-        if (!addr.send(msg.value/2))
-            throw; // also reverts the transfer to Sharer
-        return address(this).balance;
-    }
-}
-```
 
 ## Tightly Stored Byte Arrays and Strings
 
@@ -522,36 +482,9 @@ contract User
 }
 ```
 
-## Destructuring Assignments
-
-[PT](https://www.pivotaltracker.com/story/show/99085194) Inline tuples can be created and assigned to newly declared local variables or already existing lvalues. This makes it possible to access multiple return values from functions.
-
-``` function f() returns (uint, uint, uint) { return (1,2,3); }```
-```js
-var (a,b,c) = f();
-var (,x,) = f();
-var (,y) = f();
-var (z,) = f();
-```
-For newly declared variables it is not possible to specify the types of variables, they will be inferred from the assigned value. Any component in the assigned tuple can be left out. If the first or last element is left out, they can consume an arbitrary number of values. At the end of this code, we will have:
-`a == 1`, `b == 2`, `c == 3`, `x == 2`, `y == 3`, `z == 1`.
-
-For newly constructed tuples, elements may not be left out, except for one special case that allows to distiguish between 1-tuples and single expressions: `(x)` is equivalent to `x`, but `(x,)` is a 1-tuple containing `x`.
-
-Assigning to pre-existing lvalues is similar to declaring multiple variables and also allows wildcards:
-
-```js
-contract c {
-  string s;
-  struct Data {uint a; uint b;}
-  mapping(uint => Data) data;
-  function f() {
-    (s, data[45]) = ("abc", Data(1, 2));
-  }
-}
-```
-
 ## `.push()` for Dynamic Storage Arrays
+
+**Yoichi thinks this needs to be ported to the official documentation.**
 
 [PT](https://www.pivotaltracker.com/story/show/105439966) Dynamically-sized storage arrays have a member function `push`, such that
 `var l = arr.push(el);` is equivalent to `arr[arr.length++] = el; var l = arr.length;`.
@@ -565,113 +498,3 @@ contract c {
   }
 }
 ```
-
-## Allocation of Dynamic Memory Arrays
-
-[PT](https://www.pivotaltracker.com/story/show/101688050) Dynamic memory arrays can be allocated in the following way:
-
-```js
-contract c {
-  function f() {
-    uint[] memory x = new uint[](100);
-    uint[][] memory twoDim = new uint[][](20);
-    for (uint i = 0; i < twoDim.length; i++)
-      twoDim[i] = new uint[](30);
-  }
-}
-```
-
-This is a **breaking change** because of the way NewExpressions are parsed: Expressions of the form
-`new ContractName.value(10)()` have to be changed to `(new ContractName).value(10)()`.
-
-## Support for addmod and mulmod
-
-[PT](https://www.pivotaltracker.com/story/show/108433524) Modular arithmetics outside of the 256 bit field is provided by the `addmod` and `mulmod` functions. `addmod(x, y, z)` computes `(x+y) % z`, only that it uses unbounded integers for the computations. Similarly, `mulmod(x, y, z)` computes `(x*y) % z`.
-
-## Attaching Library Functions to Types
-
-[PT](https://www.pivotaltracker.com/story/show/101773928) At the contract level, statements of the form `using Lib for Type;` are possible, where `Lib` has to be the name of a library and `Type` can either be the name of a type or `*`. The effect is that all functions in `Lib` are attached to variables of type `Type` (or just all, if `Y` is `*`) as member functions and expressions of the form `x.function(a, b)` are essentially equivalent to `Lib.function(x, a, b)`.
-
-```js
-library Lib {
-  function sum(uint[] storage self) returns (uint s) {
-    for (uint i = 0; i < self.length; i++)
-      s += self[i];
-  }
-}
-contract C {
-  using Lib for uint[];
-  uint[] data;
-  function f() {
-    data.push(data.sum());
-  }
-}
-```
-
-## More Flexible Import
-
-[PT](https://www.pivotaltracker.com/story/show/102848776) The import statement will behave as a subset of the [ES6 import](http://exploringjs.com/es6/ch_modules.html). The `export` keyword is not available, all symbols will be exported and there is no "default export". The import statement behaves as follows:
-
-`import "filename";`: will import all symbols from `"filename"` (and symbols imported there) into the current global scope (different than in ES6 but backwards-compatible for Solidity).
-
-`import * as symbolName from "filename";` creates a new global symbol `symbolName` whose members are all symbols from `"filename"`.
-
-`import {symbol1 as alias, symbol2} from "filename";` creates new global symbols `alias` and `symbol2` which reference `symbol1` and `symbal2` from `"filename"`, respectively.
-
-Another syntax that is not part of ES6, but probably convenient:
-
-`import "filename" as symbolName;` is equivalent to `import * as symbolName from "filename";`.
-
-### Path Resolution
-
-In the above, `filename` is always treated as a path to a file with `/` as directory separator, `.` as the current directory and `..` as the parent directory. Path names that do not start with `./` or `../` are treated as absolute paths and the compiler has to be instructed how to resolve the first element of that path. Using `.` or `..` is only valid at the beginning of the path. This hierarchy does not need to strictly map onto the filesystem, it can also map to resources discovered via e.g. ipfs, http or git.
-
-When the compiler is invoked, it is not only possible to specify how to discover the first element of a path, but it is possible to specify path prefix remappings so that e.g. `github.com/ethereum/dapp-bin/library` is remapped to `/usr/local/dapp-bin/library` and the compiler will read the files from there. If remapping keys are prefixes of each other, the longest is tried first. This allows for a "fallback-remapping" with e.g. "" maps to "/usr/local/include/solidity".
-
-### Changes to solc Interface
-
-For solc, these remappings are provided as `key=value` arguments, where the `=value` part is optional (and defaults to `key` in that case). All remapping values that are regular files are compiled (including their dependencies). This mechanism is completely backwards-compatible (as long as no filename contains a `=`) and thus not a breaking change. solc will only read files in directory(ies) where input files reside or in remapping targets.
-
-## Index access for fixed bytes type
-
-[PT](https://www.pivotaltracker.com/story/show/108246592) Single bytes of expressions of type `bytes8`, ..., `bytes32` are accessible using `[i]`. Example:
-
-```js
-contract C {
-  function f(bytes32 a, uint i) returns (byte) { return a[i]; }
-}
-```
-
-Write access is not supported, as it is actually quite difficult and blurs the distinction between value and reference types.
-
-## Inline Assembly
-
-[PT](https://www.pivotaltracker.com/story/show/103578058) Allow the use of EVM opcodes (and more) at any point where statements are allowed in Solidity. Full documentation with examples can be found in the official documentation. Small example:
-
-```js
-contract C {
-    function fib() {
-	assembly {
-		let n := calldataload(4)
-		let a := 1
-		let b := a
-	loop:
-		jumpi(loopend, eq(n, 0))
-		a add swap1
-		n := sub(n, 1)
-		jump(loop)
-	loopend:
-		mstore(0, a)
-		return(0, 0x20)
-	}
-    }
-}
-```
-
-## Calling Internal Functions of Libraries
-
-Internal functions of libraries can now be called in the same way as internal functions of
-base classes can be called. This has the effect that the code of the library function
-is pulled into the assembly / binary of the caller, i.e. it does not generate an actual EVM call.
-
-Examples and more detailed documentation can be found in the [documentation](http://solidity.readthedocs.io/en/latest/contracts.html#libraries).
