@@ -151,6 +151,9 @@ contract test {
 }
 ```
 ## External Types
+
+**Yoichi could not find this in the official documentation.**
+
 [PT](https://www.pivotaltracker.com/story/show/88772706)
 All functions with visibility more than internal should have external types (ABI types) otherwise raise an error.
 For Contract type external type is address type.
