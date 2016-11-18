@@ -28,25 +28,6 @@ contract Test {
 }
 ```
 
-## Events
-
-[PT](https://www.pivotaltracker.com/story/show/86896642) Events allow the convenient usage of the EVM logging facilities. Events are inheritable members of contracts. When they are called, they cause
-the arguments to be stored in the transaction's log. Up to three parameters can receive the
-attribute `indexed` which will cause the respective arguments to be treated as log topics instead
-of data. The hash of the signature of the event is always one of the topics. All non-indexed
-arguments will be stored in the data part of the log. Example:
-```js
-contract ClientReceipt {
-  event Deposit(address indexed _from, hash indexed _id, uint _value);
-  function deposit(hash _id) {
-    Deposit(msg.sender, _id, msg.value);
-  }
-}
-```
-Here, the call to `Deposit` will behave identical to
-`log3(msg.value, 0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20, sha3(msg.sender), _id);`. Note that the large hex number is equal to the sha3-hash of "Deposit(address,hash256,uint256)", the event's
-signature.
-
 ## Fallback Functions
 
 [PT](https://www.pivotaltracker.com/story/show/87035858) A contract can have exactly one unnamed
