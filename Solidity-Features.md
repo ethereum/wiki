@@ -64,6 +64,8 @@ and the Solidity interface
 
 ## Visibility Specifiers
 
+**This section needs to be ported to the official documentation.  I could only find a small list in the cheatsheet section http://solidity.readthedocs.io/en/develop/miscellaneous.html?highlight=visibility%20specifiers#function-visibility-specifiers **
+
 [PT](https://www.pivotaltracker.com/story/show/86635568) Functions and storage variables can be specified as being `public`, `protected` or `private`, where the default for functions is `public` `protected` for storage variables. Public functions are part of the external interface and can be called externally, while for storage variables, an automatic accessor function is generated. Non-public functions are only visible inside a contract and its derived contracts (there is no distinction between `protected` and `private` for now).
 
 ```js
