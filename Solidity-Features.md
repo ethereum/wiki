@@ -216,6 +216,8 @@ contract c {
 
 ## Bare Callcode
 
+**Yoichi thinks these descriptions should be ported to the official documentation.**
+
 [PT](https://www.pivotaltracker.com/story/show/94682212) The address type receives a method `callcode` which is similar to `call`, but uses `CALLCODE` instead of `CALL` when the function is invoked. This means that the code at the given address will be executed in the context of the current contract. Example:
 
 ```js
