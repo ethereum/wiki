@@ -194,6 +194,9 @@ Of course overloading a function does not need inheritance, i.e. `f(uint a)` cou
 Overloaded functions are also present in the external interface. It is an error if two externally visible functions differ by their Solidity types but not by their external types, e.g. `f(Derived _d)` and `f(address _a)` both end up accepting an `address` type for the ABI although they are considered different inside Solidity.
 
 ## Merging of Basic Blocks
+
+**Yoichi could not find this in the official documentation.**
+
 [PT](https://www.pivotaltracker.com/story/show/89148124) Blocks of assembly instructions that do not contain jumps, stops or returns are moved and modified according to the following rules:
 
 * if the control never simply flows into a block, but it is jumped to unconditionally, the block is moved, eliminating the jump
