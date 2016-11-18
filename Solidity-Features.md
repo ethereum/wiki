@@ -214,17 +214,6 @@ contract c {
 }
 ```
 
-## Interface contracts
-
-[PT](https://www.pivotaltracker.com/story/show/88344782) Contracts can be marked as "not fully implemented" by containing at least one abstract function. A function is abstract if it does not have a body defined.
-
-```js
-contract base { function foo(); }
-contract derived is base { function foo() {} }
-```
-
-For example in the above, foo is an abstract function and as such the base contract is an interface contract. All non-interface contracts that derive from it must implement its abstract functions.
-
 ## Bare Callcode
 
 [PT](https://www.pivotaltracker.com/story/show/94682212) The address type receives a method `callcode` which is similar to `call`, but uses `CALLCODE` instead of `CALL` when the function is invoked. This means that the code at the given address will be executed in the context of the current contract. Example:
