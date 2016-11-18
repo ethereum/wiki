@@ -94,18 +94,6 @@ contract test {
 }
 ```
 
-## Import Statement
-[PT](https://www.pivotaltracker.com/story/show/87165660) We can now import other contracts and/or standard library contracts using the `import` keyword.
-```js
-import "mortal";
-
-contract Test is mortal {
-    // since we import the standard library "mortal" contract and we inherit from it
-    // we can call the kill() function that it provides
-    function killMe() { kill();}
-}
-```
-
 ## Inline members initialization
 [PT](https://www.pivotaltracker.com/story/show/84982976) Inline members can be initialized at declaration time.
 ```js
