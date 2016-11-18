@@ -171,6 +171,9 @@ contract Test {
 the ABI interface for Poo is Poo(address) when the Solidity interface is still Poo(Foo).
 
 ## Overloading Functions
+
+**This seems to be missing from the official documentation.**
+
 [PT](https://www.pivotaltracker.com/story/show/85511572) Contracts can have multiple functions of the same name as long as the parameters differ in number or type. If such an overloaded function is referenced, it has to be called immediately to resolve the ambiguity using the types of the arguments. It is an error if not exactly one of the possible functions can be called with the given arguments.
 
 ```js
