@@ -109,18 +109,6 @@ contract test {
 }
 ```
 
-## Detect failed CALLs
-[PT](https://github.com/ethereum/cpp-ethereum/pull/1212) If a CALL fails, do not just silently continue. Currently, this issues a STOP but it will throw an exception once we have exceptions.
-```js
-contract C {
-  function willFail() returns (uint) {
-    address(709).call();
-    return 1;
-  }
-}
-```
-`willFail` will always return an empty byte array (unless someone finds the correct private key...).
-
 ## Basic features for arrays
 [PT](https://www.pivotaltracker.com/story/show/84119688) Byte arrays and generic arrays of fixed and dynamic size are supported in calldata and storage with the following features: Index access, copying (from calldata to storage, inside storage, both including implicit type conversion), enlarging and shrinking and deleting. Not supported are memory-based arrays (i.e. usage in non-external functions or local variables), array accessors and features like slicing.
 Access to an array beyond its length will cause the execution to STOP (exceptions are planned for the future).
