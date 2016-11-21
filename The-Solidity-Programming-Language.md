@@ -4,6 +4,8 @@ The current Solidity documentation can be found at http://solidity.readthedocs.i
 
 # Foreword
 
+**Yoichi: no foreword of this detail can be found in the official documentation.**
+
 Solidity is roughly speaking, an object-oriented language designed for writing contracts in Ethereum. Contracts are (typically) small programs which govern the behaviour of accounts within the Ethereum state. These programs operate within the context of the Ethereum environment. Such accounts are able to pass messages between themselves as well as doing practically Turing complete computation.
 
 Solidity is perhaps the first example of a *contract-oriented* programming language; a slight tweak on the notion of object-orientation. While closely related to object-oriented languages, this is a language designed specifically to help express agreements that must encode ideas and relationships relevant to Real Life, or some formal model thereof. As such we see notions such as ownership, identity, protections and restrictions forming a core part of the vocabulary and idiomatic grammar.
@@ -13,6 +15,8 @@ We see language grammar actually tieing in with many of the aspects of this: the
 # Basic Contract Anatomy
 
 ## Hello, World!
+
+** Yoichi: this example is missing from the official documentation**
 
 No language would be complete without a Hello World program. Operating within the Ethereum environment, Solidity has no obvious way of "outputting" a string. The closest we can do is to use a log event to place a string into the blockchain:
 
@@ -26,6 +30,8 @@ contract HelloWorld {
 This contract, if placed on the blockchain and called, would create a log entry on the blockchain of type `Print` with a parameter `"Hello, World!"`. Easy, eh?
 
 ## The Contract
+
+**Yoichi: This example is missing from the official documentation**
 
 The contract is the basic structure of Solidity. It is a prototype of an object which lives on the blockchain. A contract may be instantiated into a contract-account (or 'object', or sometimes just 'account') at which point it gets a uniquely identifying address with which it may be called. The address here is similar to a reference or pointer in C-like languages, or just a plain old object in Javascript. Like plain objects in many object-oriented languages, contracts can never run themselves - they may only be called, or, put another way, they can only react to the receipt of a message; they can never be proactive.
 
@@ -61,6 +67,8 @@ contract Simple {
 Unlike in Javascript, all variables must be declared prior to use and typed. However, for convenience, `var` is provided as a way to automatically determine the type through the expression it is initialised to. In this case, the type is `uint`, but more on the types later.
 
 ## Simple Types
+
+**Yoichi: this kind of list of types is missing from the official documentation.**
 
 The type system in Solidity revolves largely around the 256-bit word size of the EVM. To this end, there are 4 major types, each of which are specifically 256-bits wide:
 
