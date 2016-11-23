@@ -156,8 +156,6 @@ contract Simple {
 }
 ```
 
-Parameters are not allowed to be altered; they are so-called *constant* values and as such may not be used on the left-hand side of an expression.
-
 Returning information through the message is equally simple using the same syntax with the `returns` keyword. For example, suppose we wished to return two results: the sum and the product of the two given integers, then we would write:
 
 ```
@@ -169,7 +167,7 @@ contract Simple {
 }
 ```
 
-Return parameters are always reset to zero; if they are not explicitly set, then they 
+Return parameters are always reset to zero; if they are not explicitly set, then they stay to be zero.
 
 ## Arithmetic & Flow-control
 
