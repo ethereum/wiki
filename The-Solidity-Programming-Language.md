@@ -118,6 +118,8 @@ var y = 69.42;	// here, "var" is equivalent to "real".
 
 ## Literals
 
+https://github.com/ethereum/solidity/pull/1427
+
 Solidity includes three types of literals; these are used for expressing specific, well-known values.
 
 # Integers
