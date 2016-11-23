@@ -146,6 +146,9 @@ Reals are formed similar to integers except that they include a decimal point an
 
 ## Parameters and Returns
 
+**being transferred
+https://github.com/ethereum/solidity/pull/1428**
+
 Messages can have arbitrary input and output data. Since functions are our way of expressing how messages should be handled, they need a way of expressing how this data should be utilised. As such, like in Javascript and C, functions may take parameters as input; unlike in Javascript and C, they may so return arbitrary parameters as output. The input parameters, and types, must be named, type followed by name. For example, suppose we want our contract to accept messages that present two integers, we would write something like:
 
 ```
