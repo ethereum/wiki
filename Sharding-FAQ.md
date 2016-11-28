@@ -497,8 +497,7 @@ periods of 12-24 hours but not less are safe.
 
 There are two possible paths to overcoming this challenge.
 
-### Can we force more of the state to be held user-side so that transactions
-can be validated without requiring validators to hold all state data?
+### Can we force more of the state to be held user-side so that transactions can be validated without requiring validators to hold all state data?
 
 The techniques here tend to involve requiring users to store state data
 and provide Merkle proofs along with every transaction that they send. A
@@ -510,17 +509,16 @@ information that the transaction must verify; because Merkle proofs are
 O(log(n)) sized, the proof for a transaction that accesses a constant
 number of objects would also be O(log(n)) sized.
 
-![lightproof.png](images/image03.png)
-
-The subset of objects in a Merkle tree that would need to be provided in
-a Merkle proof of a transaction that accesses several state objects
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image03.png" style="width:450px"></img>
+<small><i>The subset of objects in a Merkle tree that would need to be provided in
+a Merkle proof of a transaction that accesses several state objects</i></small>
 
 Implementing this scheme in its pure form has two flaws. First, it
 introduces O(log(n)) overhead, although one could argue that this
 O(log(n)) overhead is not as bad as it seems because it ensures that the
-validator can always simply keep state data in memory and thus does
+validator can always simply keep state data in memory and thus it
 never needs to deal with the overhead of accessing the hard
-drive^[[8]](#ftnt8)^. Second, it can easily be applied if the state
+drive<sup>[8](#ftnt_ref8)</sup>. Second, it can easily be applied if the state
 objects that are accessed by a transaction are static, but is more
 difficult to apply if the objects in question are dynamic - that is, if
 the transaction execution has code of the form read(f(read(x))) where
@@ -529,7 +527,7 @@ other state read. In this case, the address that the transaction sender
 thinks the transaction will be reading at the time that they send the
 transaction may well differ from the address that is actually read when
 the transaction is included in a block, and so the Merkle proof may be
-insufficient.^[[9]](#ftnt9)^
+insufficient<sup>[8](#ftnt_ref9)</sup>.
 
 A compromise approach is to allow transaction senders to send a proof
 that incorporates the most likely possibilities for what data would be
@@ -538,7 +536,7 @@ accepted, and if the state unexpectedly changes and the proof is
 insufficient then either the sender must resend or some helper node in
 the network resends the transaction adding the correct proof. Developers
 would then be free to make transactions that have dynamic
-behavior^[[b]](#cmnt2)^^[[c]](#cmnt3)^^[[d]](#cmnt4)^, but the more
+behavior, but the more
 dynamic the behavior gets the less likely transactions would be to
 actually get included into blocks.
 
@@ -562,8 +560,7 @@ that that data does not need to be sent again; if k transactions are
 sent within one reshuffling period, then this decreases the average size
 of a Merkle proof from log(n) to log(n) - log(k).
 
-### I hear talk about separating data availability verification and state
-calculation, and how this might solve this problem. How does this work?
+### I hear talk about separating data availability verification and state calculation, and how this might solve this problem. How does this work?
 
 A blockchain can be viewed as a cryptoeconomic system that incentivizes
 validators to make economic claims about certain facts, so as to achieve
@@ -613,32 +610,34 @@ picking fairly large samples, it is difficult to bias the randomness by
 more than a certain amount.
 
 The simplest way to show this is through the [binomial
-distribution](https://www.google.com/url?q=https://en.wikipedia.org/wiki/Binomial_distribution&sa=D&ust=1480305371233000&usg=AFQjCNFV2GQXbEKuYDpa-qEuuOj4-2T46Q),
+distribution](https://en.wikipedia.org/wiki/Binomial_distribution),
 as described above; if one wishes to avoid a sample of size N being more
 than 50% corrupted by an attacker, and an attacker has p% of the global
 stake pool, the chance of the attacker being able to get such a majority
 during one round is:
 
-![CodeCogsEqn.gif](images/image00.gif)
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image00.gif"></img>
 
 Here’s a table for what this probability would look like in practice for
 various values of N and p:
 
-+----------------+----------------+----------------+----------------+----------------+
-|                | N = 50         | N = 100        | N = 150        | N = 250        |
-+----------------+----------------+----------------+----------------+----------------+
-| p = 0.4        | 0.0978         | 0.0271         | 0.0082         | 0.0009         |
-+----------------+----------------+----------------+----------------+----------------+
-| p = 0.33       | 0.0108         | 0.0004         | 1.83 \* 10-5   | 3.98 \* 10-8   |
-+----------------+----------------+----------------+----------------+----------------+
-| p = 0.25       | 0.0001         | 6.63 \* 10-8   | 4.11 \* 10-11  | 1.81 \* 10-17  |
-+----------------+----------------+----------------+----------------+----------------+
-| p = 0.2        | 2.09 \* 10-6   | 2.14 \* 10-11  | 2.50 \* 10-16  | 3.96 \* 10-26  |
-+----------------+----------------+----------------+----------------+----------------+
+<table>
+<tr>
+<td>                </td><td> N = 50         </td><td> N = 100        </td><td> N = 150        </td><td> N = 250        </td>
+</tr><tr>
+<td> p = 0.4        </td><td> 0.0978         </td><td> 0.0271         </td><td> 0.0082         </td><td> 0.0009         </td>
+</tr><tr>
+<td> p = 0.33       </td><td> 0.0108         </td><td> 0.0004         </td><td> 1.83 \* 10-5   </td><td> 3.98 \* 10-8   </td>
+</tr><tr>
+<td> p = 0.25       </td><td> 0.0001         </td><td> 6.63 \* 10-8   </td><td> 4.11 \* 10-11  </td><td> 1.81 \* 10-17  </td><
+</tr><tr>
+<td> p = 0.2        </td><td> 2.09 \* 10-6   </td><td> 2.14 \* 10-11  </td><td> 2.50 \* 10-16  </td><td> 3.96 \* 10-26  </td>
+</tr>
+</table>
 
 Hence, for N \>= 150, the chance that any given random seed will lead to
 a sample favoring the attacker is very small
-indeed.^[[10]](#ftnt10)^^[[11]](#ftnt11)^ What this means from the
+indeed<sup>[10](#ftnt_ref10),[11](#ftnt_ref11)</sup>. What this means from the
 perspective of security of randomness is that the attacker needs to have
 a very large degree of freedom in order to break the sampling process
 outright. Most vulnerabilities in proof-of-stake randomness do not allow
@@ -653,26 +652,26 @@ Now, let’s look at the risk of attacks being made that try to influence
 the randomness more marginally, for purposes of profit rather than
 outright takeover.  For example, suppose that there is an algorithm
 which pseudorandomly selects 1000 validators out of some very large set
-(each validator getting a reward of \$1), an attacker has 10% of the
+(each validator getting a reward of $1), an attacker has 10% of the
 stake so the attacker’s average “honest” revenue 100, and at a cost of
-\$1 the attacker can manipulate the randomness to “re-roll the dice”
+$1 the attacker can manipulate the randomness to “re-roll the dice”
 (and the attacker can do this an unlimited number of times).
 
 Due to the [central limit
-theorem](https://www.google.com/url?q=https://en.wikipedia.org/wiki/Central_limit_theorem&sa=D&ust=1480305371247000&usg=AFQjCNG1pZ3Gkwb_t6Xs5NBUetOu_JL3aQ),
+theorem](https://en.wikipedia.org/wiki/Central_limit_theorem),
 the standard deviation of the number of samples, and based [on other
 known results in
-math](https://www.google.com/url?q=http://math.stackexchange.com/questions/89030/expectation-of-the-maximum-of-gaussian-random-variables&sa=D&ust=1480305371248000&usg=AFQjCNFxXrCoULpdIvR0cC0MWfJcC4cutQ) the
+math](http://math.stackexchange.com/questions/89030/expectation-of-the-maximum-of-gaussian-random-variables) the
 expected maximum of N random samples is slightly under M + S \* sqrt(2
 \* log(N)) where M is the mean and S is the standard deviation. Hence
 the reward for manipulating the randomness and effectively re-rolling
 the dice (ie. increasing N) drops off sharply, eg. with 0 re-trials your
-expected reward is \$100, with one re-trial it's \$105.5, with two it's
-\$108.5, with three it's \$110.3, with four it's \$111.6, with five it's
-\$112.6 and with six it's \$113.5. Hence, after five retrials it stops
+expected reward is $100, with one re-trial it's $105.5, with two it's
+$108.5, with three it's $110.3, with four it's $111.6, with five it's
+$112.6 and with six it's $113.5. Hence, after five retrials it stops
 being worth it. As a result, an economically motivated attacker with ten
-percent of stake will inefficiently spend \$5 to get an additional
-revenue of \$13, for a net surplus of \$8.
+percent of stake will inefficiently spend $5 to get an additional
+revenue of $13, for a net surplus of $8.
 
 However, this kind of logic assumes that one single round of re-rolling
 the dice is expensive. Many older proof of stake algorithms have a
@@ -680,7 +679,7 @@ the dice is expensive. Many older proof of stake algorithms have a
 making a computation locally on one’s computer; algorithms with this
 vulnerability are certainly unacceptable in a sharding context. Newer
 algorithms (see the “validator selection” section in the [proof of stake
-FAQ](https://www.google.com/url?q=https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQ&sa=D&ust=1480305371249000&usg=AFQjCNHmRyepqmc7tFvng6PXi6O-5FceUg))
+FAQ](https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQ))
 have the property that re-rolling the dice can only be done by
 voluntarily giving up one’s spot in the block creation process, which
 entails giving up rewards and fees. The best way to mitigate the impact
@@ -688,14 +687,14 @@ of marginal economically motivated attacks on sample selection is to
 find ways to increase this cost. One method to increase the cost by a
 factor of sqrt(N) from N rounds of voting is the [majority-bit method
 devised by Iddo
-Bentov](https://www.google.com/url?q=https://arxiv.org/pdf/1406.5694.pdf&sa=D&ust=1480305371249000&usg=AFQjCNHqEIkEiENB6ACvT57bwqzaLeFo5A);
+Bentov](https://arxiv.org/pdf/1406.5694.pdf);
 the Mauve Paper’s sharding algorithm expects to use this approach.
 
 Another form of random number generation that is not exploitable by
 minority coalitions is the deterministic threshold signature approach
 most researched and advocated by Dominic Williams. The strategy here is
 to use a [deterministic threshold
-signature](https://www.google.com/url?q=https://eprint.iacr.org/2002/081.pdf&sa=D&ust=1480305371250000&usg=AFQjCNGPbVim6FKd_gbIRO77C6kCDa9eew) to
+signature](https://eprint.iacr.org/2002/081.pdf) to
 generate the random seed from which samples are selected. Deterministic
 threshold signatures have the property that the value is guaranteed to
 be the same regardless of which of a given set of participants provides
@@ -723,8 +722,7 @@ One might argue that the deterministic threshold signature approach
 works better in consistency-favoring contexts and other approaches work
 better in availability-favoring contexts.
 
-### What are the concerns about sharding through random sampling in a Zamfir
-model?
+### What are the concerns about sharding through random sampling in a Zamfir model?
 
 In a Zamfir model, the fact that validators are randomly sampled doesn’t
 matter: whatever the sample is, either the attacker can bribe the great
@@ -746,7 +744,7 @@ One mechanism that we can rely on is the existence of outside shards
 that we can submit evidence to. If there is a 51% attack against a chain
 and data on that chain is unavailable, then we can come up with
 challenge-response mechanisms where users (sometimes called
-“fishermen”^[[12]](#ftnt12)^) can issue challenges claiming that certain
+“fishermen”<sup>[12](#ftnt_ref12)</sup> can issue challenges claiming that certain
 data is unavailable, and until responses are published users would know
 not to trust that chain. We can also try to detect situations where one
 chain is “under attack”, and have a global “manager” mechanism crank up
@@ -781,7 +779,7 @@ malfeasance can always be proven. However, it has a major weakness if we
 use it to verify data availability itself: while data availability can
 be proven, if necessary by simply providing the data, data
 unavailability at time X can never be proven to validators who can only
-perform checks at times greater than X. If the above scheme is applied
+perform checks after time X. If the above scheme is applied
 directly, malicious actors can publish a block containing some
 unavailable data, then allow the challenge-response game to escalate,
 then suddenly publish the data, making everyone who had earlier
@@ -791,15 +789,13 @@ attackers may well “wear down” challengers with false alarms to the
 point where no one bothers challenging anymore, at which point they make
 their actual attack.
 
-### What if all validators check data availability for all block headers by
-randomly sampling only a few pieces of data?
+### What if all validators check data availability for all block headers by randomly sampling only a few pieces of data?
 
 Then attacks where only one piece out of a million is missing could
 still go through, and pass nearly all validator checks with very high
 probability.
 
-### Require the data to be erasure-coded and have a ZK-SNARK proving that
-this was done?
+### Require the data to be erasure-coded and have a ZK-SNARK proving that this was done?
 
 Now we’re talking. However, this is a very cryptographically complex
 approach, particularly since the fast Fourier transforms involved in
@@ -810,11 +806,7 @@ like n = O(c\^2 / log\^3(c)), and especially if we’re also targeting
 fast block times it’s hard to tell if, after all the overhead, there
 will be any real performance gains left.
 
-### Let’s walk back a bit. Do we actually need any of this complexity if we
-have instant shuffling? Doesn’t instant shuffling basically mean that
-each shard directly pulls validators from the global validator pool so
-it operates just like a blockchain, and so sharding doesn’t actually
-introduce any new complexities?
+### Let’s walk back a bit. Do we actually need any of this complexity if we have instant shuffling? Doesn’t instant shuffling basically mean that each shard directly pulls validators from the global validator pool so it operates just like a blockchain, and so sharding doesn’t actually introduce any new complexities?
 
 Kind of. First of all, it’s worth noting that proof of work and simple
 proof of stake, even without sharding, both have very low security in a
@@ -832,7 +824,7 @@ finality then we need to come up with a chain of reasoning for why a
 validator would be willing to make a very strong claim on a chain based
 solely on a random sample, when the validator itself is convinced that
 the Zamfir model is true and so the random sample could potentially be
-corrupted?
+corrupted.
 
 ### How can we use griefing factors to analyze this?
 
@@ -841,8 +833,8 @@ strategy under that protocol that reaches finality, show how under
 normal conditions this strategy is profit-maximizing, and then also show
 that the strategy has a bounded griefing factor. A griefing factor can
 be defined roughly as follows: actor A under protocol P with strategy S
-has a griefing factor x if malicious actors willing to spend \$k can
-make the actor lose \$k \* x. Note that griefing factors are often
+has a griefing factor x if malicious actors willing to spend $k can
+make the actor lose $k \* x. Note that griefing factors are often
 situation dependent and may depend on x, as well as other factors like
 the portion of the validator set that the attacker controls, but it
 would be nice to show an upper bound on the griefing factor in a given
@@ -855,23 +847,18 @@ According to the rules of the protocol, for a new chain to reach the
 same degree of finality as an existing chain (so that non-colluding
 nodes switch to it), there must be at least ⅔ of validators on the new
 chain. There must also be at least ⅔ of validators on the old chain, and
-so at least ⅓ of validators (which are thus by definition malicious)
-must be on both chains; we’ll call this fraction ⅓ + p. For the new
+so at least ⅓ of validators must be on both chains (they are thus by definition malicious);
+we’ll call this fraction ⅓ + p. For the new
 chain to get started, at least ⅔ of validators must be on it, and these
 ⅔ must all be malicious. Hence, when the old chain is discarded, we can
 expect it to contain ⅓ + p of malicious validators, and at most ⅓ honest
 validators (as the attack requires ⅔ malicious validators to pull off).
-We’ve thus established that there are at least as many attackers as
+We’ve thus established that there are at least as many malicious validators as
 honest validators on the old chain.
 
-There is also a rule in Casper that by the default strategy, honest
-validators will only make bets with a value-at-loss \~125% of the
-exponential moving average of the value-at-loss that the validators
-before them committed. Hence, we can bound honest validator losses at
-1.5x attacker losses (as while the attackers are participating in the
-old chain, both sides lose equally, and once the attackers stop
-participating in the old chain, the exponential moving average stops
-going up and declines twice as quickly as it had gone up). Hence, the
+Because of the mechanics of how honest validators make their bets based
+on the sizes of existing bets, we can bound honest validator losses at
+1.5x attacker losses; hence, the
 griefing factor is 1.5. If we increase the finalization threshold from ⅔
 to ¾, then this value can be reduced to 0.67.
 
@@ -897,7 +884,7 @@ come from the increased penalties), until eventually each block on the
 malicious chain drains the attacker’s entire balance, and the attacker
 will then lose their entire deposit in O(n) time. Note that this is an
 adaptation of [Sztorcian
-consensus](https://www.google.com/url?q=http://www.truthcoin.info/papers/truthcoin-whitepaper.pdf&sa=D&ust=1480305371260000&usg=AFQjCNEso-d-bV1KyDUS6uknTZuxXiXNBA),
+consensus](http://www.truthcoin.info/papers/truthcoin-whitepaper.pdf),
 which also works by “raising the stakes” only in the case of great
 contention.
 
@@ -906,14 +893,11 @@ way to implement these kinds of protocols, and proving guarantees about
 them, but this is one general kind of approach that seems very
 promising.
 
-### But doesn’t this still mean that an attacker can consume a small amount
-of capital to make a single shard work very poorly for a medium amount
-of time?
+### But doesn’t this still mean that an attacker can consume a small amount of capital to make a single shard work very poorly for a medium amount of time?
 
 Yes.
 
-### So we actually didn’t solve the trilemma, we weaseled out of it by
-pulling back a bit on the security model?
+### So we actually didn’t solve the trilemma, we weaseled out of it by pulling back a bit on the security model?
 
 Kind of. Note that attackers can reduce the “chain quality” of a shard,
 but they still can’t finalize any bad state with less than O(n) capital.
@@ -926,26 +910,27 @@ by sending transactions with high transaction fees, forcing legitimate
 users to outbid you to get in. This attack is unavoidable; you could
 compensate with flexible gas limits, and you could even try “transparent
 sharding” schemes that try to automatically re-allocate nodes to shards
-based on usage, but if some particular application is non-parallelizable
-Amdahl’s law means that there is nothing you can do. The attack that is
+based on usage, but if some particular application is non-parallelizable,
+Amdahl’s law guarantees that there is nothing you can do. The attack that is
 opened up here (reminder: it only works in the Zamfir model, not
 honest/uncoordinated majority) is arguably not substantially worse than
-the transaction spam attack. So we’ve reached the known limit for
-single-shard security and can arguably call it a day.
+the transaction spam attack. Hence, we've reached the known limit for 
+the security of a single shard, and there is no value in trying to
+go further.
 
 ### You mentioned transparent sharding. I’m 12 years old and what is this?
 
 Basically, we do not expose the concept of “shards” directly to
 developers, and do not permanently assign state objects to specific
 shards. Instead, the protocol has an ongoing built-in load-balancing
-process that shifts objects around between shards; if a shard gets too
-big or consumes too much gas it can be split in half, if two shards get
+process that shifts objects around between shards. If a shard gets too
+big or consumes too much gas it can be split in half; if two shards get
 too small and talk to each other very often they can be combined
-together, if all shards get too small one shard can be deleted and its
+together; if all shards get too small one shard can be deleted and its
 contents moved to various other shards, etc.
 
 Imagine if Donald Trump realized that people travel between New York and
-London a lot, but there’s a stupid ocean in the way, so he could just
+London a lot, but there’s an ocean in the way, so he could just
 take out his scissors, cut out the ocean, glue the US east coast and
 Western Europe together and put the Atlantic beside the South Pole -
 it’s kind of like that.
@@ -1022,7 +1007,8 @@ promising research directions for advanced sharding.
 
 One of the challenges in sharding is that when a call is made, there is
 by default no hard protocol-provided guarantee that any asynchronous
-operations created by that call will be made; rather, it is up to some
+operations created by that call will be made within any particular timeframe, or even made at all;
+rather, it is up to some
 party to send a transaction in the destination shard triggering the
 receipt. This is okay for many applications, but in some cases it may be
 problematic for several reasons:
@@ -1031,7 +1017,7 @@ problematic for several reasons:
     a given receipt. If the sending of a transaction benefits many
     parties, then there could be **tragedy-of-the-commons effects** where
     the parties try to wait longer until someone else sends the
-    transaction, or simply decide that sending the transaction is not
+    transaction (ie. play "chicken"), or simply decide that sending the transaction is not
     worth the transaction fees for them individually.
 -   **Gas prices across shards may be volatile**, and in some cases
     performing the first half of an operation compels the user to
@@ -1057,13 +1043,11 @@ portion of these penalties is given to the validator that finally
 includes the block as a reward. This keeps the state transition function
 simple, while still strongly incentivizing the correct behavior.
 
-### Wait, but what if an attacker sends a cross-shard call from every shard
-into shard X at the same time? Wouldn’t it be mathematically impossible
-to include all of these calls in time?
+### Wait, but what if an attacker sends a cross-shard call from every shard into shard X at the same time? Wouldn’t it be mathematically impossible to include all of these calls in time?
 
-Correct, and this is a problem. Here is a proposed solution. In order to
+Correct; this is a problem. Here is a proposed solution. In order to
 make a cross-shard call from shard A to shard B, the caller must
-pre-purchase “congealed shard B gas^[[e]](#cmnt5)^^[[f]](#cmnt6)^” (this
+pre-purchase “congealed shard B gas” (this
 is done via a transaction in shard B, and recorded in shard B).
 Congealed shard B gas has a fast demurrage rate: once ordered, it loses
 1/k of its remaining potency every block. A transaction on shard A can
@@ -1079,7 +1063,7 @@ receipts, we can make the penalties fairer by exempting validators who
 fill up the “receipt space” of their blocks with as many receipts as
 possible, starting with the oldest ones.
 
-Under this pre-purchase mechanism, a user that wants to undertake a
+Under this pre-purchase mechanism, a user that wants to perform a
 cross-shard operation would first pre-purchase gas for all shards that
 the operation would go into, over-purchasing to take into account the
 demurrage. If the operation would create a receipt that triggers an
@@ -1093,8 +1077,7 @@ insulated from changes in the gas price market, unless validators
 voluntarily lose large quantities of money from receipt non-inclusion
 penalties.
 
-### Congealed gas? This sounds interesting for reliable intra-shard
-scheduling, not just cross-shard.
+### Congealed gas? This sounds interesting for reliable intra-shard scheduling, not just cross-shard.
 
 Indeed; you could buy congealed shard A gas inside of shard A, and send
 a guaranteed cross-shard call from shard A to itself. Though note that
@@ -1102,8 +1085,7 @@ this scheme would only support scheduling at very short time intervals,
 and the scheduling would not be exact to the block; it would only be
 guaranteed to happen within some period of time.
 
-### Does guaranteed scheduling, both intra-shard and cross-shard, help
-against majority collusions trying to censor transactions?
+### Does guaranteed scheduling, both intra-shard and cross-shard, help against majority collusions trying to censor transactions?
 
 Yes. If a user fails to get a transaction in because colluding
 validators are filtering the transaction and not accepting any blocks
@@ -1115,21 +1097,19 @@ without shutting down the guaranteed scheduling feature outright and
 greatly restricting the entire protocol, and so malicious validators
 would not be able to do it easily.
 
-### Could sharded blockchains do a better job of dealing with network
-partitions?
+### Could sharded blockchains do a better job of dealing with network partitions?
 
 The schemes described in this document would offer no improvement over
 non-sharded blockchains; realistically, every shard would end up with
 some nodes on both sides of the partition. There have been calls (eg.
 from [IPFS’s Juan
-Benet](https://www.google.com/url?q=https://www.youtube.com/watch?v%3DcU-n_m-snxQ&sa=D&ust=1480305371276000&usg=AFQjCNE2wAr1STveAGtZmPNzUvHhvOJ_wA))
+Benet](https://www.youtube.com/watch?v=cU-n_m-snxQ))
 for building scalable networks with the specific goal that networks can
 split up into shards as needed and thus continue operating as much as
 possible under network partition conditions, but there are nontrivial
 cryptoeconomic challenges in making this work well.
 
-The first is that if we want to have location-based sharding so that,
-for example, geographic network partitions minimally hinder intra-shard
+One major challenge is that if we want to have location-based sharding so that geographic network partitions minimally hinder intra-shard
 cohesion (with the side effect of having very low intra-shard latencies
 and hence very fast intra-shard block times), then we need to have a way
 for validators to choose which shards they are participating in. This is
@@ -1155,10 +1135,10 @@ shards could even be used for data-publishing and messaging.
 ### What are the unique challenges of pushing scaling past n = O(c\^2)?
 
 There are several considerations. First, the algorithm would need to be
-converted from a 2-layer algorithm to a stackable n-layer algorithm;
+converted from a two-layer algorithm to a stackable n-layer algorithm;
 this is possible, but is complex. Second, n / c (ie. the ratio between
 the total computation load of the network and the capacity of one node)
-is a value that happens to be close to two constants: first, a timespan
+is a value that happens to be close to two constants: first, if measured in blocks, a timespan
 of several hours, which is an acceptable “maximum security confirmation
 time”, and second, the ratio between rewards and deposits (an early
 computation suggests a 32 ETH deposit size and a 0.05 ETH block reward
@@ -1181,13 +1161,13 @@ virtually free.
 * * * * *
 <a name="footnotes"></a>
 
-[[1]](<a name="ftnt_ref1"></a>) Merklix tree == Merkle Patricia tree
+1. <a name="ftnt_ref1"></a> Merklix tree == Merkle Patricia tree
 
-[[2]](<a name="ftnt_ref2"></a>) Later proposals from the NUS group do manage to shard
+2. <a name="ftnt_ref2"></a> Later proposals from the NUS group do manage to shard
 state; they do this via the receipt and state-compacting techniques that
 I describe in later sections in this document.
 
-[[3]](#ftnt_ref3) There are reasons to be conservative here.
+3. <a name="ftnt_ref3"></a> There are reasons to be conservative here.
 Particularly, note that if an attacker comes up with worst-case
 transactions whose ratio between processing time and block space
 expenditure (bytes, gas, etc) is much higher than usual, then the system
@@ -1197,14 +1177,14 @@ the fact that block processing only takes \~1-5% of block time has the
 primary role of protecting against centralization risk but serves double
 duty of protecting against denial of service risk. In the specific case
 of Bitcoin, its current worst-case [known quadratic execution
-vulnerability](https://www.google.com/url?q=https://bitcoin.org/en/bitcoin-core/capacity-increases-faq%23size-bump&sa=D&ust=1480305371282000&usg=AFQjCNEeZGklRGPUGjOmf3sC7YnNrO3RgQ) arguably
+vulnerability](https://bitcoin.org/en/bitcoin-core/capacity-increases-faq#size-bump) arguably
 limits any scaling at present to \~5-10x, and in the case of Ethereum,
 while all known vulnerabilities are being or have been removed after the
 denial-of-service attacks, there is still a risk of further
 discrepancies particularly on a smaller scale. In Bitcoin NG, the need
 for the former is removed, but the need for the latter is still there.
 
-[[4]](#ftnt_ref4) A further reason to be cautious is that increased
+4. <a name="ftnt_ref4"></a> A further reason to be cautious is that increased
 state size corresponds to reduced throughput, as nodes will find it
 harder and harder to keep state data in RAM and so need more and more
 disk accesses, and databases, which often have an O(log(n)) access time,
@@ -1214,29 +1194,29 @@ the last Ethereum denial-of-service attack, which bloated the state by
 processing down by forcing further state accesses to hit disk instead of
 RAM.
 
-[[5]](#ftnt_ref5) In sharded blockchains, there may not necessarily be
+5. <a name="ftnt_ref5"></a> In sharded blockchains, there may not necessarily be
 in-lockstep consensus on a single global state, and so the protocol
 never asks nodes to try to compute a global state root; in fact, in the
 protocols presented in later sections, each shard has its own state, and
 for each shard there is a mechanism for committing to the state root for
 that shard, which represents that shard’s state
 
-[[6]](#ftnt_ref6) \#MEGA
+6. <a name="ftnt_ref6"></a> \#MEGA
 
-[[7]](#ftnt_ref7) If a non-scalable blockchain upgrades into a scalable
+7. <a name="ftnt_ref7"></a> If a non-scalable blockchain upgrades into a scalable
 blockchain, the author’s recommended path is that the old chain’s state
 should simply become a single shard in the new chain.
 
-[[8]](#ftnt_ref8) Recent Ethereum denial-of-service attacks have proven
+8. <a name="ftnt_ref8"></a> Recent Ethereum denial-of-service attacks have proven
 that hard drive access is a primary bottleneck to blockchain
 scalability.
 
-[[9]](#ftnt_ref9) You could ask: well why don’t validators fetch Merkle
+9. <a name="ftnt_ref9"></a> You could ask: well why don’t validators fetch Merkle
 proofs just-in-time? Answer: because doing so is a \~100-1000ms
 roundtrip, and executing an entire complex transaction within that time
 could be prohibitive.
 
-[[10]](#ftnt_ref10)  One hybrid solution that combines the normal-case
+10. <a name="ftnt_ref10"></a>  One hybrid solution that combines the normal-case
 efficiency of small samples with the greater robustness of larger
 samples is a multi-layered sampling scheme: have a consensus between 50
 nodes that requires 80% agreement to move forward, and then only if that
@@ -1245,7 +1225,7 @@ consensus fails to be reached then fall back to a 250-node sample. N =
 against attackers with p = 0.4, so this does not harm security at all
 under an honest or uncoordinated majority model.
 
-[[11]](#ftnt_ref11) The probabilities given are for one single shard;
+11. <a name="ftnt_ref11"></a> The probabilities given are for one single shard;
 however, the random seed affects O(c) shards and the attacker could
 potentially take over any one of them. If we want to look at O(c) shards
 simultaneously, then there are two cases. First, if the grinding process
@@ -1259,35 +1239,6 @@ profit-motivated manipulation attack is to increase their participation
 across all shards in any case, and so that is the case that we are
 already investigating.
 
-[[12]](#ftnt_ref12) See [Ethcore’s Polkadot
-paper](https://www.google.com/url?q=https://github.com/polkadot-io/polkadotpaper/raw/master/PolkaDotPaper.pdf&sa=D&ust=1480305371281000&usg=AFQjCNHS6Th5BSM3SdoN1yJp2OXKOkFoGw) for
+12. <a name="ftnt_ref12"></a> See [Ethcore’s Polkadot
+paper](https://github.com/polkadot-io/polkadotpaper/raw/master/PolkaDotPaper.pdf) for
 further description of how their “fishermen” concept works.
-
-[[a]](#cmnt_ref1)This can be put later imo, its not much relevant to the
-problem definition.
-
-[[b]](#cmnt_ref2)We can make the tx referenced data as economically
-incentivised cache. Transaction sender can fill the cache (with
-dependent state and merkle proof) as they wish, even leave the cache
-entire empty. Then we can calculate tx cost based on cache hit/miss,
-with hit cost way low than miss since it incurs network costs.
-
-[[c]](#cmnt_ref3)This will bring another interesting question that, what
-if the cache includes some obsolete state A in height N, which is
-changed at height N+1? One solution could be to find a way to check
-cache validity quickly.
-
-[[d]](#cmnt_ref4)If we're thinking in the epoch-based model, then
-validators can take a Merkle proof of key X at block N and keep it
-updated in the process of executing blocks with no additional
-information, so I'm not worried about that.
-
-The idea of having transactions commit to their reads, and get charged
-lots of gas for reads outside the cache, is definitely very interesting;
-I will think more about this.
-
-[[e]](#cmnt_ref5)Interesting idea. What if I purchase some "congealed
-gas" and use it to make within-shard call from A to A? Do I get a
-general event timer? It could be very useful.
-
-[[f]](#cmnt_ref6)Yep! I should add a footnote there.
