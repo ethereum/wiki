@@ -623,8 +623,8 @@ during one round is:
 Here’s a table for what this probability would look like in practice for
 various values of N and p:
 
-<table>..
-<tr>
+<table>
+<tr>..
 <td>                </td><td> N = 50         </td><td> N = 100        </td><td> N = 150        </td><td> N = 250        </td>
 </tr><tr>
 <td> p = 0.4        </td><td> 0.0978         </td><td> 0.0271         </td><td> 0.0082         </td><td> 0.0009         </td>
