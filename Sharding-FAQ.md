@@ -3,8 +3,8 @@
 Currently, all blockchain protocols rely on a model where all nodes
 store all state (account balances, contract code and storage, etc) and
 process all transactions. This provides a large amount of security, but
-greatly limits blockchains’ scalability - a blockchain cannot process
-more transactions than a single node in the network. Because of this,
+greatly limits blockchains’ scalability: a blockchain cannot process
+more transactions than a single node in the network. In large part because of this,
 Bitcoin is limited to \~3-7 transactions per second, Ethereum to 7-15,
 etc. However, this poses a question: are there ways to create a new kind
 of blockchain mechanism, one which departs from the model where
@@ -28,7 +28,7 @@ than small values of N.
 
 The second is to simply increase the block size limit. This can work to
 some extent, and in some situations may well be the correct
-prescription, as block sizes may well be constrained more by politics
+prescription as block sizes may well be constrained more by politics
 than by realistic technical considerations,
 but regardless of one’s beliefs about any individual case such an
 approach inevitably has its limits: if one goes too far, then nodes 
@@ -68,7 +68,7 @@ storage) available to each node, and **n** to refer to the size of the
 ecosystem in some abstract sense; we assume that transaction load, state
 size, and the market cap of a cryptocurrency are all proportional to **n**.
 
-### Some Bitcoin users claim that because of Metcalfe’s law, the market cap of a cryptocurrency should be proportional to n\^2, and not n. Do they have a point?
+### Some people claim that because of Metcalfe’s law, the market cap of a cryptocurrency should be proportional to n\^2, and not n. Do they have a point?
 
 No.
 
@@ -98,13 +98,13 @@ choices is very significant.
 
 Furthermore, even if the value of a cryptocurrency is proportional to
 O(k \* log(k)) with k users, if we accept the above explanation as the
-reason why this is so then that also implies that transaction volume is
+reason why this is the case, then that also implies that transaction volume is
 also O(k \* log(k)), as the log(k) value per user theoretically comes
 from that user exercising log(k) connections through the network, and
 state size should also in many cases grow with O(k \* log(k)) as there
 are at least some kinds of state that are relationship-specific rather
 than user-specific. Hence, assuming n = O(k \* log(k)) and basing
-everything off of n (size of the ecosystem) and c (a single node’s
+everything off of **n** (size of the ecosystem) and **c** (a single node’s
 computing power) is a perfectly fine model for us to use.
 
 ### What are some moderately simple but only partial ways of solving the scalability problem?
@@ -128,7 +128,7 @@ across nodes.
 
 Particularly, note that this requires changes at the P2P level, as a
 broadcast model is not scalable since it requires every node to download
-and re-broadcast O(n) data (every transaction that is being sent)
+and re-broadcast O(n) data (every transaction that is being sent),
 whereas our decentralization criterion assumes that every node only has
 access to O(c) resources of all kinds.
 
@@ -136,7 +136,7 @@ access to O(c) resources of all kinds.
 
 [Bitcoin-NG](https://www.google.com/url?q=http://hackingdistributed.com/2015/10/14/bitcoin-ng/&sa=D&ust=1480305371200000&usg=AFQjCNFUUZstMrcmGGD_-KtPFIH_woQnsA) can
 increase scalability somewhat by means of an alternative blockchain
-design where it is much safer for nodes to be spending large portions of
+design that makes it much safer for the network if nodes are spending large portions of
 their CPU time verifying blocks. In simple PoW blockchains, there are
 high centralization risks and the safety of consensus is weakened if
 capacity is increased to the point where more than about 5% of nodes’
@@ -208,7 +208,7 @@ processing.
 -   **State root**: the root hash of the Merkle tree representing the
     state<sup>[5](#ftnt_ref5)</sup>
 
-<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image02.png" style="width:450px"></img>
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image02.png" style="width:450px"></img><br>
 <small><i>The Ethereum state tree, and how the state root fits into the block
 structure</i></small>
 
