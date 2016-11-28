@@ -105,14 +105,13 @@ than user-specific. Hence, assuming n = O(k \* log(k)) and basing
 everything off of n (size of the ecosystem) and c (a single node’s
 computing power) is a perfectly fine model for us to use.
 
-### What are some moderately simple but only partial ways of solving the
-scalability problem?
+### What are some moderately simple but only partial ways of solving the scalability problem?
 
 Many sharding proposals (eg. [this early BFT sharding proposal from Loi
 Luu et al at
 NUS](https://www.google.com/url?q=https://www.comp.nus.edu.sg/~loiluu/papers/elastico.pdf&sa=D&ust=1480305371197000&usg=AFQjCNG5rrdRIK4Fa7F0LL-uZIT8cb_2Mg),
 as well as [this Merklix
-tree](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371197000&usg=AFQjCNHbrNMmM-nED6c1QFUYVzI6ncv90w)<sup>[[1]](#ftnt_ref1)</sup>[ approach
+tree](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371197000&usg=AFQjCNHbrNMmM-nED6c1QFUYVzI6ncv90w)<sup>[1](#ftnt_ref1)</sup> [approach
 that has been suggested for Bitcoin](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371198000&usg=AFQjCNEzsOAIJtZpIm3D0KqeCUATkVGtXg))
 attempt to either only shard transaction processing or only shard state,
 without touching the other<sup>[2](#ftnt_ref2)</sup>. These efforts are admirable
@@ -142,7 +141,7 @@ capacity is increased to the point where more than about 5% of nodes’
 CPU time is spent verifying blocks; Bitcoin-NG’s design alleviates this
 problem. However, this can only increase the scalability of transaction
 capacity by a constant factor of perhaps
-5-50x^[[3]](#ftnt3)^,^[[4]](#ftnt4)^, and does not increase the
+5-50x<sup>[3](#ftnt_ref3),[4](#ftnt_ref4)</sup>, and does not increase the
 scalability of state. That said, Bitcoin-NG-style approaches are not
 mutually exclusive with sharding, and the two can certainly be
 implemented at the same time.
@@ -162,13 +161,11 @@ that the current state legitimately follows from the history. These
 approaches do solve a legitimate problem, although it is worth noting
 that one can rely on cryptoeconomics instead of pure cryptography to
 solve the same problem in a much simpler way - see Ethereum’s current
-implementations of fast syncing and warp syncing. Neither solution does
+implementations of [fast syncing](https://github.com/ethereum/go-ethereum/pull/1889) and [warp syncing](https://github.com/ethcore/parity/wiki/Warp-Sync). Neither solution does
 anything to alleviate state size or the limits of online transaction
 processing.
 
-### Waah, cryptography and computer science are hard! Define “state”,
-“history”, “transactions”, “Merkle proof”, “receipt” and “light client”
-for me before we move further!
+### Waah, cryptography and computer science are hard! Define “state”, “history”, “transactions”, “Merkle proof”, “receipt” and “light client” for me before we move further!
 
 -   **State**: a set of information that represents the “current state” of a
     system; determining whether or not a transaction is valid, as well
@@ -207,12 +204,11 @@ for me before we move further!
     state or receipts by asking for and verifying Merkle proofs of the
     relevant data on an as-needed basis.
 -   **State root**: the root hash of the Merkle tree representing the
-    state^[[5]](#ftnt5)^
+    state<sup>[5](#ftnt_ref5)</sup>
 
-![chaindiag.png](images/image02.png)
-
-The Ethereum state tree, and how the state root fits into the block
-structure
+![chaindiag.png](https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image02.png)
+<small><i>The Ethereum state tree, and how the state root fits into the block
+structure</i></small>
 
 ### What is the basic idea behind sharding?
 
