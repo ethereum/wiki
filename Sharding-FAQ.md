@@ -149,8 +149,8 @@ mutually exclusive with sharding, and the two can certainly be
 implemented at the same time.
 
 Channel-based strategies (lightning network, Raiden, etc) can scale
-transaction capacity by a constant factor but not state, and also come
-with their own unique sets of tradeoffs and limitations; on-chain
+transaction capacity by a constant factor but cannot scale state storage, and also come
+with their own unique sets of tradeoffs and limitations particularly involving denial-of-service attacks; on-chain
 scaling via sharding (plus other techniques) and off-chain scaling via
 channels are arguably both necessary and complementary.
 
@@ -200,7 +200,7 @@ processing.
     data. Logs in Ethereum are receipts; in sharded models, receipts are
     used to facilitate asynchronous cross-shard communication.
 -   **Light client**: a way of interacting with a blockchain that only
-    requires a very small amount (we’ll say O(log(c)), though O(c) scaled down by a large constant factor is also an acceptable model) of computational
+    requires a very small amount (we’ll say O(1), though O(log(c)) may also be accurate in some cases) of computational
     resources, keeping track of only the block headers of the chain by
     default and acquiring any needed information about transactions,
     state or receipts by asking for and verifying Merkle proofs of the
@@ -220,7 +220,7 @@ addresses starting with 0x00 into one shard, all addresses starting with
 0x01 into another shard, etc. In simpler forms of sharding, each shard
 also has its own transaction history, and the effect of transactions in
 some shard k are limited to the state of shard k. However, the effect of a transaction
-may depend on <i>events that earlier took place</i> in other shards; a
+may depend on <i>events that earlier took place in other shards</i>; a
 canonical example is transfer of money, where money can be moved from
 shard i to shard j by first creating a “debit” transaction that destroys
 coins in shard i, and then creating a “credit” transaction that creates
@@ -488,7 +488,9 @@ verifying a block on a shard requires knowing the state of that shard,
 and so every time validators are reshuffled, validators need to download
 the entire state for the new shard(s) that they are in. This requires
 both a strong state size control policy (ie. economically ensuring that the size of the state does not grow too large, whether by deleting old accounts, restricting the rate of creating new accounts or a combination of the two) and a fairly long reshuffling
-time to work well. Currently, the Parity client can download and verify
+time to work well.
+
+Currently, the Parity client can download and verify
 a full Ethereum state snapshot via “warp-sync” in \~10 minutes; if we
 reduce by 5x to compensate for temporary issues related to past DoS
 attacks and increase by 20x to compensate for increased usage (10 tx/sec
@@ -511,7 +513,7 @@ information that the transaction must verify; because Merkle proofs are
 O(log(n)) sized, the proof for a transaction that accesses a constant
 number of objects would also be O(log(n)) sized.
 
-<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image03.png" width="450"></img>
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image03.png" width="450"></img><br>
 <small><i>The subset of objects in a Merkle tree that would need to be provided in
 a Merkle proof of a transaction that accesses several state objects</i></small>
 
@@ -624,8 +626,7 @@ Here’s a table for what this probability would look like in practice for
 various values of N and p:
 
 <table>
-<tr>..
-<td>                </td><td> N = 50         </td><td> N = 100        </td><td> N = 150        </td><td> N = 250        </td>
+<tr><td>                </td><td> N = 50         </td><td> N = 100        </td><td> N = 150        </td><td> N = 250        </td>
 </tr><tr>
 <td> p = 0.4        </td><td> 0.0978         </td><td> 0.0271         </td><td> 0.0082         </td><td> 0.0009         </td>
 </tr><tr>
@@ -634,20 +635,19 @@ various values of N and p:
 <td> p = 0.25       </td><td> 0.0001         </td><td> 6.63 * 10<sup>-8</sup>   </td><td> 4.11 * 10<sup>-11</sup>  </td><td> 1.81 * 10-17  </td><
 </tr><tr>
 <td> p = 0.2        </td><td> 2.09 * 10<sup>-6</sup>   </td><td> 2.14 * 10<sup>-11</sup>  </td><td> 2.50 * 10<sup>-16</sup>  </td><td> 3.96 * 10<sup>-26</sup>  </td>
-</tr>
-</table>
+</tr></table>
 
 Hence, for N >= 150, the chance that any given random seed will lead to
 a sample favoring the attacker is very small
 indeed<sup>[10](#ftnt_ref10),[11](#ftnt_ref11)</sup>. What this means from the
 perspective of security of randomness is that the attacker needs to have
-a very large degree of freedom in order to break the sampling process
+a very large amount of freedom in choosing the random values order to break the sampling process
 outright. Most vulnerabilities in proof-of-stake randomness do not allow
 the attacker to simply choose a seed; at worst, they give the attacker
-many chances to select a favorable seed. If one is very worried about
+many chances to select the most favorable seed out of many pseudorandomly generated options. If one is very worried about
 this, one can simply set N to a greater value, and add a moderately hard
 key-derivation function to the process of computing the randomness, so
-that it takes more than 2100 computational steps to find a way to bias
+that it takes more than 2<sup>100</sup> computational steps to find a way to bias
 the randomness sufficiently.
 
 Now, let’s look at the risk of attacks being made that try to influence
@@ -754,7 +754,7 @@ the rewards and penalties on that chain so that continuing the attack
 becomes more and more expensive. We can create mechanisms where such a
 global mechanism “checkpoints” agreement on the state of a shard,
 preventing that shard from regressing to a point before that checkpoint
-(the Mauve Paper 4.0’s sharding mechanism does this through its finality
+(the Mauve Paper’s sharding mechanism does this through its finality
 betting scheme).
 
 Challenge-response mechanisms generally rely on a principle of
@@ -874,6 +874,8 @@ because the honest validators reason that past a certain point in the
 curve, the other validators are not looking at the data directly -
 rather, they are just looking at what other validators did.
 
+Note that this argument applies both in the Zamfir model and the "very very adaptive adversary" model (eg. where an adversary can instantly hack computers but is bounded in the number of computers that it can hack).
+
 ### Can we use an honest minority assumption to get around this?
 
 Most likely yes. We can have a protocol where validators only start the
@@ -960,7 +962,7 @@ determines that it is efficient to do so.
 
 The process becomes much easier if you view the transaction history as
 being already settled, and are simply trying to calculate the state
-transition function. There are several approaches. One can be described
+transition function. There are several approaches; one fairly simple approach can be described
 as follows:
 
 -   A transaction may specify a set of shards that it can operate in
@@ -1037,10 +1039,10 @@ after some number of blocks. However, this requires every client on each
 shard to actively inspect all other shards in the process of calculating
 the state transition function, which is arguably a source of
 inefficiency. The best known compromise approach is this: when a receipt
-from shard A at height height\_a is included in shard B at height
-height\_b, if the difference in block heights exceeds MAX\_HEIGHT, then
-all validators in shard B between height\_a + MAX\_HEIGHT and
-height\_b are penalized, and this penalty increases exponentially. A
+from shard A at height `height_a` is included in shard B at height
+`height_b`, if the difference in block heights exceeds `MAX_HEIGHT`, then
+all validators in shard B that created blocks from `height_a + MAX_HEIGHT + 1` to
+`height_b - 1` are penalized, and this penalty increases exponentially. A
 portion of these penalties is given to the validator that finally
 includes the block as a reward. This keeps the state transition function
 simple, while still strongly incentivizing the correct behavior.
@@ -1079,7 +1081,7 @@ insulated from changes in the gas price market, unless validators
 voluntarily lose large quantities of money from receipt non-inclusion
 penalties.
 
-### Congealed gas? This sounds interesting for reliable intra-shard scheduling, not just cross-shard.
+### Congealed gas? This sounds interesting for not just cross-shard operations, but also reliable intra-shard scheduling
 
 Indeed; you could buy congealed shard A gas inside of shard A, and send
 a guaranteed cross-shard call from shard A to itself. Though note that
