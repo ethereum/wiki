@@ -469,7 +469,7 @@ identity”. The precise value of the proof of work solution then chooses
 which shard they have to make their next block on. They can then spend
 an O(1)-sized amount of work to create a block on that shard, and the
 value of that proof of work solution determines which shard they can
-work on next, and so on. Note that all of these approaches make proof of
+work on next, and so on<sup>[8](#ftnt_ref8)</sup>. Note that all of these approaches make proof of
 work “stateful” in some way; the necessity of this is fundamental.
 
 ### What are the tradeoffs in making sampling more or less frequent?
@@ -522,7 +522,7 @@ introduces O(log(n)) overhead, although one could argue that this
 O(log(n)) overhead is not as bad as it seems because it ensures that the
 validator can always simply keep state data in memory and thus it
 never needs to deal with the overhead of accessing the hard
-drive<sup>[8](#ftnt_ref8)</sup>. Second, it can easily be applied if the state
+drive<sup>[9](#ftnt_ref9)</sup>. Second, it can easily be applied if the state
 objects that are accessed by a transaction are static, but is more
 difficult to apply if the objects in question are dynamic - that is, if
 the transaction execution has code of the form `read(f(read(x)))` where
@@ -531,7 +531,7 @@ other state read. In this case, the address that the transaction sender
 thinks the transaction will be reading at the time that they send the
 transaction may well differ from the address that is actually read when
 the transaction is included in a block, and so the Merkle proof may be
-insufficient<sup>[9](#ftnt_ref9)</sup>.
+insufficient<sup>[10](#ftnt_ref10)</sup>.
 
 A compromise approach is to allow transaction senders to send a proof
 that incorporates the most likely possibilities for what data would be
@@ -639,7 +639,7 @@ various values of N and p:
 
 Hence, for N >= 150, the chance that any given random seed will lead to
 a sample favoring the attacker is very small
-indeed<sup>[10](#ftnt_ref10),[11](#ftnt_ref11)</sup>. What this means from the
+indeed<sup>[11](#ftnt_ref11),[12](#ftnt_ref12)</sup>. What this means from the
 perspective of security of randomness is that the attacker needs to have
 a very large amount of freedom in choosing the random values order to break the sampling process
 outright. Most vulnerabilities in proof-of-stake randomness do not allow
@@ -746,7 +746,7 @@ One mechanism that we can rely on is the existence of outside shards
 that we can submit evidence to. If there is a 51% attack against a chain
 and data on that chain is unavailable, then we can come up with
 challenge-response mechanisms where users (sometimes called
-“fishermen”<sup>[12](#ftnt_ref12)</sup> can issue challenges claiming that certain
+“fishermen”<sup>[13](#ftnt_ref13)</sup> can issue challenges claiming that certain
 data is unavailable, and until responses are published users would know
 not to trust that chain. We can also try to detect situations where one
 chain is “under attack”, and have a global “manager” mechanism crank up
@@ -1211,16 +1211,18 @@ that shard, which represents that shard’s state
 blockchain, the author’s recommended path is that the old chain’s state
 should simply become a single shard in the new chain.
 
-8. <a name="ftnt_ref8"></a> Recent Ethereum denial-of-service attacks have proven
+8. <a name="ftnt_ref8"></a> For this to be secure, some further conditions must be satisfied; particularly, the proof of work must be non-outsourceable in order to prevent the attacker from determining which <i>other miners' identities</i> are available for some given shard and mining on top of those.
+
+9. <a name="ftnt_ref9"></a> Recent Ethereum denial-of-service attacks have proven
 that hard drive access is a primary bottleneck to blockchain
 scalability.
 
-9. <a name="ftnt_ref9"></a> You could ask: well why don’t validators fetch Merkle
+10. <a name="ftnt_ref10"></a> You could ask: well why don’t validators fetch Merkle
 proofs just-in-time? Answer: because doing so is a \~100-1000ms
 roundtrip, and executing an entire complex transaction within that time
 could be prohibitive.
 
-10. <a name="ftnt_ref10"></a>  One hybrid solution that combines the normal-case
+11. <a name="ftnt_ref11"></a>  One hybrid solution that combines the normal-case
 efficiency of small samples with the greater robustness of larger
 samples is a multi-layered sampling scheme: have a consensus between 50
 nodes that requires 80% agreement to move forward, and then only if that
@@ -1229,7 +1231,7 @@ consensus fails to be reached then fall back to a 250-node sample. N =
 against attackers with p = 0.4, so this does not harm security at all
 under an honest or uncoordinated majority model.
 
-11. <a name="ftnt_ref11"></a> The probabilities given are for one single shard;
+12. <a name="ftnt_ref12"></a> The probabilities given are for one single shard;
 however, the random seed affects O(c) shards and the attacker could
 potentially take over any one of them. If we want to look at O(c) shards
 simultaneously, then there are two cases. First, if the grinding process
@@ -1243,6 +1245,6 @@ profit-motivated manipulation attack is to increase their participation
 across all shards in any case, and so that is the case that we are
 already investigating.
 
-12. <a name="ftnt_ref12"></a> See [Ethcore’s Polkadot
+13. <a name="ftnt_ref13"></a> See [Ethcore’s Polkadot
 paper](https://github.com/polkadot-io/polkadotpaper/raw/master/PolkaDotPaper.pdf) for
 further description of how their “fishermen” concept works.
