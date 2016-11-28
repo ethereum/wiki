@@ -9,11 +9,12 @@ Bitcoin is limited to \~3-7 transactions per second, Ethereum to 7-15,
 etc. However, this poses a question: are there ways to create a new kind
 of blockchain mechanism, one which departs from the model where
 literally every computer in the network literally checks every
-transaction, and instead create an approach where a small subset of
-nodes verify every transaction - sufficiently many nodes that the system
-is still highly secure, but sufficiently few that the system can process
-many groups of transactions in parallel, and thus greatly increase its
-transaction throughput?
+transaction, and instead only requires small subset of
+nodes to verify each transaction? As long as there are sufficiently many
+nodes verifying each transaction that the system is still highly secure,
+but sufficiently few that the system can process many groups of
+transactions in parallel, could we not use such a technique to greatly
+increase a blockchain's throughput?
 
 ### What are some trivial but flawed ways of solving the problem?
 
@@ -27,12 +28,13 @@ than small values of N.
 
 The second is to simply increase the block size limit. This can work to
 some extent, and in some situations may well be the correct
-prescription, as in some scenarios many argue that the block size is
-constrained more by politics than by realistic technical considerations,
+prescription, as block sizes may well be constrained more by politics
+than by realistic technical considerations,
 but regardless of one’s beliefs about any individual case such an
-approach inevitably has its limits: if one goes too far, then one enters
-a scenario where the network relies on a very small number of
-supercomputers running the blockchain, and this leads to great
+approach inevitably has its limits: if one goes too far, then nodes 
+running on consumer hardware will drop out, the
+network will start to rely exclusively on a very small number of
+supercomputers running the blockchain, and this can lead to great
 centralization risk.
 
 The third is “merge mining”, a technique where there are many chains,
@@ -80,7 +82,7 @@ has n users that’s n-1 potential connections through the network that
 each individual user could benefit from.
 
 In practice, [empirical research
-suggests](https://www.google.com/url?q=https://en.wikipedia.org/wiki/Metcalfe%2527s_law&sa=D&ust=1480305371193000&usg=AFQjCNFNuA1k-g8TAVgzc9pNBPhr6YHGFQ) that
+suggests](https://en.wikipedia.org/wiki/Metcalfe%27s_law) that
 the value of a network with n users is close to “n^2 proportionality for
 small values of n and (n × log n) proportionality for large values of
 n.” This makes sense because for small values, the argument holds true,
@@ -109,10 +111,10 @@ computing power) is a perfectly fine model for us to use.
 
 Many sharding proposals (eg. [this early BFT sharding proposal from Loi
 Luu et al at
-NUS](https://www.google.com/url?q=https://www.comp.nus.edu.sg/~loiluu/papers/elastico.pdf&sa=D&ust=1480305371197000&usg=AFQjCNG5rrdRIK4Fa7F0LL-uZIT8cb_2Mg),
+NUS](https://www.comp.nus.edu.sg/~loiluu/papers/elastico.pdf),
 as well as [this Merklix
-tree](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371197000&usg=AFQjCNHbrNMmM-nED6c1QFUYVzI6ncv90w)<sup>[1](#ftnt_ref1)</sup> [approach
-that has been suggested for Bitcoin](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371198000&usg=AFQjCNEzsOAIJtZpIm3D0KqeCUATkVGtXg))
+tree](http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation)<sup>[1](#ftnt_ref1)</sup> approach
+that has been suggested for Bitcoin)
 attempt to either only shard transaction processing or only shard state,
 without touching the other<sup>[2](#ftnt_ref2)</sup>. These efforts are admirable
 and may lead to some gains in efficiency, but they run into the
@@ -153,7 +155,7 @@ scaling via sharding (plus other techniques) and off-chain scaling via
 channels are arguably both necessary and complementary.
 
 There exist approaches that use advanced cryptography, such as
-[Mimblewimble](https://www.google.com/url?q=https://scalingbitcoin.org/papers/mimblewimble.txt&sa=D&ust=1480305371201000&usg=AFQjCNGOoxhua5xG9sqNwpKOlH8nY2jozA) and
+[Mimblewimble](https://scalingbitcoin.org/papers/mimblewimble.txt) and
 strategies based on ZK-SNARKs, to solve one specific part of the scaling
 problem: initial full node synchronization. Instead of verifying the
 entire history from genesis, nodes could verify a cryptographic proof
@@ -162,7 +164,7 @@ approaches do solve a legitimate problem, although it is worth noting
 that one can rely on cryptoeconomics instead of pure cryptography to
 solve the same problem in a much simpler way - see Ethereum’s current
 implementations of [fast syncing](https://github.com/ethereum/go-ethereum/pull/1889) and [warp syncing](https://github.com/ethcore/parity/wiki/Warp-Sync). Neither solution does
-anything to alleviate state size or the limits of online transaction
+anything to alleviate state size growth or the limits of online transaction
 processing.
 
 ### Waah, cryptography and computer science are hard! Define “state”, “history”, “transactions”, “Merkle proof”, “receipt” and “light client” for me before we move further!
@@ -187,7 +189,7 @@ processing.
 -   **Merkle tree**: a cryptographic hash tree structure that can store a
     very large amount of data, where authenticating each individual
     piece of data only takes O(log(n)) space and time. See
-    [here](https://www.google.com/url?q=https://easythereentropy.wordpress.com/2014/06/04/understanding-the-ethereum-trie/&sa=D&ust=1480305371204000&usg=AFQjCNGWsyZYi2PGLBl8GAbLdAc7xewo7A) for
+    [here](https://easythereentropy.wordpress.com/2014/06/04/understanding-the-ethereum-trie) for
     details. In Ethereum, the transaction set of each block, as well as
     the state, is kept in a Merkle tree, where the roots of the trees
     are committed to in a block.
@@ -198,7 +200,7 @@ processing.
     data. Logs in Ethereum are receipts; in sharded models, receipts are
     used to facilitate asynchronous cross-shard communication.
 -   **Light client**: a way of interacting with a blockchain that only
-    requires a very small amount (we’ll say O(1)) of computational
+    requires a very small amount (we’ll say O(log(c)), though O(c) scaled down by a large constant factor is also an acceptable model) of computational
     resources, keeping track of only the block headers of the chain by
     default and acquiring any needed information about transactions,
     state or receipts by asking for and verifying Merkle proofs of the
@@ -206,7 +208,7 @@ processing.
 -   **State root**: the root hash of the Merkle tree representing the
     state<sup>[5](#ftnt_ref5)</sup>
 
-![chaindiag.png](https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image02.png)
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image02.png" style="width:450px"></img>
 <small><i>The Ethereum state tree, and how the state root fits into the block
 structure</i></small>
 
@@ -225,7 +227,7 @@ coins in shard i, and then creating a “credit” transaction that creates
 coins in shard j, pointing to a receipt created by the debit transaction
 as proof that the credit is legitimate.
 
-![sharded\_receipts.png](images/image01.png)
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image01.png" style="width:450px"></img>
 
 In more complex forms of sharding, transactions may in some cases have
 effects that spread out across several shards and may also synchronously
@@ -247,7 +249,7 @@ in a way where each shard has an “economic strength” of O(n), despite
 only having O(n / c) worth of economic power actively verifying that
 shard at any one time? As this document argues, there are many
 challenges and tradeoffs involved, but most likely yes we
-can^[[6]](#ftnt6)^.
+can<sup>[6](#ftnt_ref6)</sup>.
 
 ### How can different kinds of applications fit into a sharded blockchain?
 
@@ -270,7 +272,7 @@ different and have weaker functionality compared to the mechanisms that
 are available for intra-shard communication. Some of the functionality
 that is currently available in non-scalable blockchains would, in a
 scalable blockchain, only be available for intra-shard
-communication.^[[7]](#ftnt7)^
+communication.<sup>[7](#ftnt_ref7)</sup>
 
 However, asynchronous interaction is not always easy. To see why,
 consider the following example courtesy of Andrew Miller. Suppose that a
@@ -283,8 +285,9 @@ reverts everything unless both reservations succeed. If the two are on
 different shards, however, this is not so easy; even without
 cryptoeconomic / decentralization concerns, this is essentially the
 problem of [atomic database
-transactions](https://www.google.com/url?q=https://en.wikipedia.org/wiki/Atomicity_(database_systems)&sa=D&ust=1480305371211000&usg=AFQjCNFxDxDZBUejXdarbpAOHTtPNgKL0Q).
-With asynchronous messages only, the simplest solution is first to
+transactions](https://en.wikipedia.org/wiki/Atomicity_(database_systems)).
+
+With asynchronous messages only, the simplest solution is to first
 reserve the plane, then reserve the hotel, then once both reservations
 succeed confirm both; the reservation mechanism would prevent anyone
 else from reserving (or at least would ensure that enough spots are open
@@ -301,7 +304,7 @@ applications (eg. currencies) are easily parallelizable, whereas others
 
 There are properties of sharded blockchains that we know for a fact are
 impossible to achieve. [Amdahl’s
-law](https://www.google.com/url?q=https://en.wikipedia.org/wiki/Amdahl%2527s_law&sa=D&ust=1480305371212000&usg=AFQjCNEx7Q1pzjm397vT_1rerHDtCC9WEw) states
+law](https://en.wikipedia.org/wiki/Amdahl%27s_law) states
 that in any scenario where applications have any non-parallelizable
 component, once parallelization is easily available the
 non-parallelizable component quickly becomes the bottleneck. In a
@@ -316,9 +319,7 @@ application types and application interactions, but a sharded
 architecture will always necessarily fall behind a single-shard
 architecture in at least some ways at scales exceeding O(c).
 
-### What are the security models that we are operating under? What is the
-difference between traditional byzantine fault tolerance models and more
-cryptoeconomic approaches such as the Zamfir model?
+### What are the security models that we are operating under? What is the difference between traditional byzantine fault tolerance models and more cryptoeconomic approaches such as the Zamfir model?
 
 There are several competing models under which the safety of blockchain
 designs is evaluated. The first is an honest majority (or honest
@@ -330,8 +331,7 @@ that all validators are rational in a game-theoretic sense (except the
 attacker, who is motivated to make the network fail in some way), but no
 more than some fraction (often between ¼ and ½) are capable of
 coordinating their actions. Bitcoin proof of work with [Eyal and Sirer’s
-selfish mining
-fix](https://www.google.com/url?q=https://arxiv.org/abs/1311.0243&sa=D&ust=1480305371214000&usg=AFQjCNHg93qowrT5-23IJjuQrSsKnwjFFQ) is
+selfish mining fix](https://arxiv.org/abs/1311.0243) is
 robust up to ½ under the honest majority assumption, and up to ¼ under
 the uncoordinated majority assumption.
 
@@ -374,14 +374,14 @@ The goal is to try to ensure that any behavior even by a majority
 coalition that infringes on the protocol’s guarantees or reduces
 performance is costly, and to maximize this cost. Note that some kinds
 of attacks (eg. [P + epsilon
-attacks](https://www.google.com/url?q=https://blog.ethereum.org/2015/01/28/p-epsilon-attack/&sa=D&ust=1480305371217000&usg=AFQjCNFQ3OthJoqjDtfXjxTFAZJ2cDWvXA))
+attacks](https://blog.ethereum.org/2015/01/28/p-epsilon-attack/)
 have a high budget requirement but low cost - the attacker must credibly
 commit to spending a lot of money if necessary, but if they succeed
 attacks are very cheap.
 
 The honest majority model is arguably highly unrealistic and has already
 been empirically disproven - see the [SPV mining
-fork](https://www.google.com/url?q=https://www.reddit.com/r/Bitcoin/comments/3c305f/if_you_are_using_any_wallet_other_than_bitcoin/csrsrf9/&sa=D&ust=1480305371218000&usg=AFQjCNE2Ysz1JaJR2apf3sHO7XJm4Wa4Vg) for
+fork](https://www.reddit.com/r/Bitcoin/comments/3c305f/if_you_are_using_any_wallet_other_than_bitcoin/csrsrf9/) for
 a practical example. It proves too much - for example, an honest
 majority model would imply that honest miners are willing to voluntarily
 burn their own money if doing so punishes attackers in some way. The
@@ -396,8 +396,7 @@ able to massively reduce the cost of consensus, as 51% attacks become an
 event that could be recovered from. We will evaluate sharding in the
 context of both uncoordinated majority and Zamfir models.
 
-### How can we break the trilemma in an honest or uncoordinated majority
-model?
+### How can we break the trilemma in an honest or uncoordinated majority model?
 
 In short, random sampling. Each shard is assigned a certain number of
 validators (eg. 150), and the validator that makes a block on each shard
@@ -415,7 +414,7 @@ supermajority on the global set, and if the size of the sample is 150,
 then with 99.999% probability the honest majority condition will be
 satisfied on the sample. If you assume a ¾ honest supermajority on the
 global set, then that probability increases to 99.999999998% (see
-[here](https://www.google.com/url?q=https://en.wikipedia.org/wiki/Binomial_distribution&sa=D&ust=1480305371220000&usg=AFQjCNFduEFXrNalDsN2mE8F_u43ZO-iGw) for
+[here](https://en.wikipedia.org/wiki/Binomial_distribution) for
 calculation details).
 
 Hence, we have:
@@ -435,8 +434,7 @@ At least in the honest / uncoordinated majority setting. In the Zamfir
 model (or alternatively, in the “very very adaptive adversary” model),
 things are not so easy, but we will get to this later.
 
-### How do you actually do this sampling in proof of work, and in proof of
-stake?
+### How do you actually do this sampling in proof of work, and in proof of stake?
 
 In proof of stake, it is easy. There already is an “active validator
 set” that is kept track of in the state, and one can simply sample from
