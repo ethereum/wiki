@@ -112,10 +112,10 @@ Many sharding proposals (eg. [this early BFT sharding proposal from Loi
 Luu et al at
 NUS](https://www.google.com/url?q=https://www.comp.nus.edu.sg/~loiluu/papers/elastico.pdf&sa=D&ust=1480305371197000&usg=AFQjCNG5rrdRIK4Fa7F0LL-uZIT8cb_2Mg),
 as well as [this Merklix
-tree](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371197000&usg=AFQjCNHbrNMmM-nED6c1QFUYVzI6ncv90w)<sup>[[1]](#ftnt_ref1)</sup>[ approach
+tree](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371197000&usg=AFQjCNHbrNMmM-nED6c1QFUYVzI6ncv90w)[[1]](#ftnt_ref1)[ approach
 that has been suggested for Bitcoin](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371198000&usg=AFQjCNEzsOAIJtZpIm3D0KqeCUATkVGtXg))
 attempt to either only shard transaction processing or only shard state,
-without touching the other<sup>[[2]](#ftnt_ref2)</sup>. These efforts are admirable
+without touching the other[[2]](#ftnt_ref2). These efforts are admirable
 and may lead to some gains in efficiency, but they run into the
 fundamental problem that they only solve one of the two bottlenecks. We
 want to be able to process 10,000+ transactions per second without
