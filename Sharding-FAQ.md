@@ -208,7 +208,7 @@ processing.
 -   **State root**: the root hash of the Merkle tree representing the
     state<sup>[5](#ftnt_ref5)</sup>
 
-<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image02.png" style="width:450"></img><br>
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image02.png" width="450"></img><br>
 <small><i>The Ethereum state tree, and how the state root fits into the block
 structure</i></small>
 
