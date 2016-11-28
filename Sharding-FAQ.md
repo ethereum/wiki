@@ -672,7 +672,7 @@ expected reward is $100, with one re-trial it's $105.5, with two it's
 $108.5, with three it's $110.3, with four it's $111.6, with five it's
 $112.6 and with six it's $113.5. Hence, after five retrials it stops
 being worth it. As a result, an economically motivated attacker with ten
-percent of stake will inefficiently spend $5 to get an additional
+percent of stake will (socially wastefully) spend $5 to get an additional
 revenue of $13, for a net surplus of $8.
 
 However, this kind of logic assumes that one single round of re-rolling
