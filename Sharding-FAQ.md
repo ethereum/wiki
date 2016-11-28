@@ -219,15 +219,15 @@ We split the state up into K = O(n / c) partitions that we call
 addresses starting with 0x00 into one shard, all addresses starting with
 0x01 into another shard, etc. In simpler forms of sharding, each shard
 also has its own transaction history, and the effect of transactions in
-some shard k are limited to the state of shard k; however, the effect
-may depend on events that earlier took place in other shards - a
+some shard k are limited to the state of shard k. However, the effect of a transaction
+may depend on <i>events that earlier took place</i> in other shards; a
 canonical example is transfer of money, where money can be moved from
 shard i to shard j by first creating a “debit” transaction that destroys
 coins in shard i, and then creating a “credit” transaction that creates
 coins in shard j, pointing to a receipt created by the debit transaction
 as proof that the credit is legitimate.
 
-<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image01.png" style="width:450px"></img>
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image01.png" width="400"></img>
 
 In more complex forms of sharding, transactions may in some cases have
 effects that spread out across several shards and may also synchronously
@@ -266,15 +266,18 @@ generating a receipt, a transaction on shard B “consuming” the receipt
 and performing some action based on it, and possibly sending a
 “callback” to shard A containing some response. Generalizing this
 pattern is easy, and is not difficult to incorporate into a high-level
-programming language; particularly, note that the in-protocol mechanisms
+programming language.
+
+However, note that the in-protocol mechanisms
 that would be used for asynchronous cross-shard communication would be
 different and have weaker functionality compared to the mechanisms that
 are available for intra-shard communication. Some of the functionality
 that is currently available in non-scalable blockchains would, in a
 scalable blockchain, only be available for intra-shard
-communication.<sup>[7](#ftnt_ref7)</sup>
+communication.<sup>[7](#ftnt_ref7)</sup>.
 
-However, asynchronous interaction is not always easy. To see why,
+Doing what one wants to do on a
+blockchain using only asynchronous tools is not always easy. To see why,
 consider the following example courtesy of Andrew Miller. Suppose that a
 user wants to purchase a plane ticket and reserve a hotel, and wants to
 make sure that the operation is atomic - either both reservations
@@ -300,7 +303,7 @@ If an individual application has more than O(c) usage, then that
 application would need to exist across multiple chains. The feasibility
 of doing this depends on the specifics of the application itself; some
 applications (eg. currencies) are easily parallelizable, whereas others
-(eg. certain kinds of market designs) can only be processed serially.
+(eg. certain kinds of market designs) cannot be parallelized and must be processed serially.
 
 There are properties of sharded blockchains that we know for a fact are
 impossible to achieve. [Amdahl’s
@@ -380,9 +383,9 @@ commit to spending a lot of money if necessary, but if they succeed
 attacks are very cheap.
 
 The honest majority model is arguably highly unrealistic and has already
-been empirically disproven - see the [SPV mining
+been empirically disproven - see Bitcoin's [SPV mining
 fork](https://www.reddit.com/r/Bitcoin/comments/3c305f/if_you_are_using_any_wallet_other_than_bitcoin/csrsrf9/) for
-a practical example. It proves too much - for example, an honest
+a practical example. It proves too much: for example, an honest
 majority model would imply that honest miners are willing to voluntarily
 burn their own money if doing so punishes attackers in some way. The
 uncoordinated majority assumption may be realistic; there is also an
@@ -417,7 +420,7 @@ global set, then that probability increases to 99.999999998% (see
 [here](https://en.wikipedia.org/wiki/Binomial_distribution) for
 calculation details).
 
-Hence, we have:
+Hence, at least in the honest / uncoordinated majority setting, we have:
 
 -   **Decentralization** (each node stores only O(c) data, as it’s a light
     client in O(c) shards and so stores O(1) \* O(c) = O(c) data worth
@@ -430,7 +433,7 @@ Hence, we have:
     O(n)-sized validator pool in order to stand a chance of taking over
     the network).
 
-At least in the honest / uncoordinated majority setting. In the Zamfir
+In the Zamfir
 model (or alternatively, in the “very very adaptive adversary” model),
 things are not so easy, but we will get to this later.
 
@@ -450,7 +453,7 @@ security.
 
 In proof of work, it is more difficult, as with “direct” proof of work
 schemes one cannot prevent miners from applying their work to a given
-shard. It may be possible to use proof-of-file-access forms of proof of
+shard. It may be possible to use [proof-of-file-access forms](https://www.microsoft.com/en-us/research/publication/permacoin-repurposing-bitcoin-work-for-data-preservation/) of proof of
 work to lock individual miners to individual shards, but it is hard to
 ensure that miners cannot quickly download or generate data that can be
 used for other shards and thus circumvent such a mechanism. The best
@@ -484,8 +487,7 @@ reshuffling carries a very high amount of overhead. Specifically,
 verifying a block on a shard requires knowing the state of that shard,
 and so every time validators are reshuffled, validators need to download
 the entire state for the new shard(s) that they are in. This requires
-both a strong state size control policy (ie. not having many empty
-“dust” accounts lying around the state) and a fairly long reshuffling
+both a strong state size control policy (ie. economically ensuring that the size of the state does not grow too large, whether by deleting old accounts, restricting the rate of creating new accounts or a combination of the two) and a fairly long reshuffling
 time to work well. Currently, the Parity client can download and verify
 a full Ethereum state snapshot via “warp-sync” in \~10 minutes; if we
 reduce by 5x to compensate for temporary issues related to past DoS
@@ -501,15 +503,15 @@ There are two possible paths to overcoming this challenge.
 
 The techniques here tend to involve requiring users to store state data
 and provide Merkle proofs along with every transaction that they send. A
-transaction would be sent along with a Merkle proof, and this proof
+transaction would be sent along with a Merkle proof-of-correct-execution, and this proof
 would allow a node that only has the state root to calculate the new
-state root. This proof would consist of the subset of objects in the
+state root. This proof-of-correct-execution would consist of the subset of objects in the
 trie that would need to be traversed to access and verify the state
 information that the transaction must verify; because Merkle proofs are
 O(log(n)) sized, the proof for a transaction that accesses a constant
 number of objects would also be O(log(n)) sized.
 
-<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image03.png" style="width:450px"></img>
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image03.png" width="450"></img>
 <small><i>The subset of objects in a Merkle tree that would need to be provided in
 a Merkle proof of a transaction that accesses several state objects</i></small>
 
@@ -521,13 +523,13 @@ never needs to deal with the overhead of accessing the hard
 drive<sup>[8](#ftnt_ref8)</sup>. Second, it can easily be applied if the state
 objects that are accessed by a transaction are static, but is more
 difficult to apply if the objects in question are dynamic - that is, if
-the transaction execution has code of the form read(f(read(x))) where
+the transaction execution has code of the form `read(f(read(x)))` where
 the address of some state read depends on the execution result of some
 other state read. In this case, the address that the transaction sender
 thinks the transaction will be reading at the time that they send the
 transaction may well differ from the address that is actually read when
 the transaction is included in a block, and so the Merkle proof may be
-insufficient<sup>[8](#ftnt_ref9)</sup>.
+insufficient<sup>[9](#ftnt_ref9)</sup>.
 
 A compromise approach is to allow transaction senders to send a proof
 that incorporates the most likely possibilities for what data would be
@@ -620,22 +622,22 @@ during one round is:
 
 Here’s a table for what this probability would look like in practice for
 various values of N and p:
-
+..
 <table>
 <tr>
 <td>                </td><td> N = 50         </td><td> N = 100        </td><td> N = 150        </td><td> N = 250        </td>
 </tr><tr>
 <td> p = 0.4        </td><td> 0.0978         </td><td> 0.0271         </td><td> 0.0082         </td><td> 0.0009         </td>
 </tr><tr>
-<td> p = 0.33       </td><td> 0.0108         </td><td> 0.0004         </td><td> 1.83 \* 10-5   </td><td> 3.98 \* 10-8   </td>
+<td> p = 0.33       </td><td> 0.0108         </td><td> 0.0004         </td><td> 1.83 * 10-5   </td><td> 3.98 * 10-8   </td>
 </tr><tr>
-<td> p = 0.25       </td><td> 0.0001         </td><td> 6.63 \* 10-8   </td><td> 4.11 \* 10-11  </td><td> 1.81 \* 10-17  </td><
+<td> p = 0.25       </td><td> 0.0001         </td><td> 6.63 * 10<sup>-8</sup>   </td><td> 4.11 * 10<sup>-11</sup>  </td><td> 1.81 * 10-17  </td><
 </tr><tr>
-<td> p = 0.2        </td><td> 2.09 \* 10-6   </td><td> 2.14 \* 10-11  </td><td> 2.50 \* 10-16  </td><td> 3.96 \* 10-26  </td>
+<td> p = 0.2        </td><td> 2.09 * 10<sup>-6</sup>   </td><td> 2.14 * 10<sup>-11</sup>  </td><td> 2.50 * 10<sup>-16</sup>  </td><td> 3.96 * 10<sup>-26</sup>  </td>
 </tr>
 </table>
 
-Hence, for N \>= 150, the chance that any given random seed will lead to
+Hence, for N >= 150, the chance that any given random seed will lead to
 a sample favoring the attacker is very small
 indeed<sup>[10](#ftnt_ref10),[11](#ftnt_ref11)</sup>. What this means from the
 perspective of security of randomness is that the attacker needs to have
