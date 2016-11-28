@@ -47,8 +47,7 @@ size increase. If only a few miners participate in merge-mining each
 chain, then the centralization risk is mitigated, but the security
 benefits of merge mining are also greatly reduced.
 
-### This sounds like there’s some kind of scalability trilemma at play. What
-is this trilemma and can we break through it?
+### This sounds like there’s some kind of scalability trilemma at play. What is this trilemma and can we break through it?
 
 The trilemma claims that blockchain systems can only at most have two of
 the following three properties:
@@ -61,15 +60,13 @@ the following three properties:
 -   **Security** (defined as being secure against attackers with up to O(n)
     resources)
 
-In the rest of this document, we’ll continue using c to refer to the
+In the rest of this document, we’ll continue using **c** to refer to the
 size of computational resources (including computation, bandwidth and
-storage) available to each node, and n to refer to the size of the
+storage) available to each node, and **n** to refer to the size of the
 ecosystem in some abstract sense; we assume that transaction load, state
-size, and the market cap of a cryptocurrency are all proportional to n.
+size, and the market cap of a cryptocurrency are all proportional to **n**.
 
-### Some Bitcoin users claim that because of Metcalfe’s law, the market cap
-of the cryptocurrency should be proportional to n\^2, and not n. Do they
-have a point?
+### Some Bitcoin users claim that because of Metcalfe’s law, the market cap of a cryptocurrency should be proportional to n\^2, and not n. Do they have a point?
 
 No.
 
@@ -115,9 +112,8 @@ Many sharding proposals (eg. [this early BFT sharding proposal from Loi
 Luu et al at
 NUS](https://www.google.com/url?q=https://www.comp.nus.edu.sg/~loiluu/papers/elastico.pdf&sa=D&ust=1480305371197000&usg=AFQjCNG5rrdRIK4Fa7F0LL-uZIT8cb_2Mg),
 as well as [this Merklix
-tree](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371197000&usg=AFQjCNHbrNMmM-nED6c1QFUYVzI6ncv90w)^[[1]](#ftnt1)^[ approach
-from Bitcoin
-land](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371198000&usg=AFQjCNEzsOAIJtZpIm3D0KqeCUATkVGtXg))
+tree](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371197000&usg=AFQjCNHbrNMmM-nED6c1QFUYVzI6ncv90w)<sup>[1]</sup>[ approach
+that has been suggested for Bitcoin](https://www.google.com/url?q=http://www.deadalnix.me/2016/11/06/using-merklix-tree-to-shard-block-validation&sa=D&ust=1480305371198000&usg=AFQjCNEzsOAIJtZpIm3D0KqeCUATkVGtXg))
 attempt to either only shard transaction processing or only shard state,
 without touching the other^[[2]](#ftnt2)^. These efforts are admirable
 and may lead to some gains in efficiency, but they run into the
