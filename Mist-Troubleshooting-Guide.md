@@ -29,7 +29,7 @@ If there are none type `web3.eth.blockNumber` on the console and see if you get 
 
 Sometimes its useful to start the node manually to see what its doing:
 
-Stop Mist if its still running and open a command prompt on Windows or a terminal on OSX or Linux. Navigate to the location where you have unpacked Mist. You should see a `resource/node/geth` sub directory on windows and linux and a `Mist.app/Contents/Frameworks/node/geth` on MacOSX with the geth binary inside. Navigate to that directory (`cd my/path`) and type the following command:
+Stop Mist if its still running and open a command prompt on Windows or a terminal on OSX or Linux. You can start the node manually and see its output on the command line. Navigate to `%APPDATA%\Mist\binaries\geth` on Windows and look for the geth.exe. On Linux go to `.config/Mist/binaries/geth` and on Mac to `~/Library/Application Support/Mist/binaries/geth`. Navigate to that directory (`cd my/path`, on windows use cmd.exe for that) and type the following command:
 
 Windows: `geth.exe --fast --cache 512`
 OSX/Linux: `./geth --fast --cache 512`
