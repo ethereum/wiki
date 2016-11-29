@@ -435,7 +435,10 @@ Hence, at least in the honest / uncoordinated majority setting, we have:
 
 In the Zamfir
 model (or alternatively, in the “very very adaptive adversary” model),
-things are not so easy, but we will get to this later.
+things are not so easy, but we will get to this later. Note that because of
+the imperfections of sampling, the security threshold does decrease from ½
+to ⅓, but this is still a surprisingly low loss of security for what may be
+a 100-1000x gain in scalability with no loss of decentralization.
 
 ### How do you actually do this sampling in proof of work, and in proof of stake?
 
