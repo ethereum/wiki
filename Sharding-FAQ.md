@@ -167,7 +167,7 @@ implementations of [fast syncing](https://github.com/ethereum/go-ethereum/pull/1
 anything to alleviate state size growth or the limits of online transaction
 processing.
 
-### Waah, cryptography and computer science are hard! Define “state”, “history”, “transactions”, “Merkle proof”, “receipt” and “light client” for me before we move further!
+### State size, history, cryptoeconomics, oh my! Define some of these terms before we move further!
 
 -   **State**: a set of information that represents the “current state” of a
     system; determining whether or not a transaction is valid, as well
