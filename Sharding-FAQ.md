@@ -257,7 +257,9 @@ The easiest scenario to satisfy is one where there are very many
 applications that individually do not have too many users only very
 occasionally and loosely interact with each other; in this case,
 applications can simply live on separate shards and use cross-shard
-communication via receipts to talk to each other.
+communication via receipts to talk to each other. Note that in all
+models proposed here, **users and application developers can freely
+choose which shard to publish a contract or send a transaction on**.
 
 If applications do need to talk to each other, the challenge is much
 easier if the interaction can be made asynchronous - that is, if the
