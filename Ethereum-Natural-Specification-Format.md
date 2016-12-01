@@ -13,9 +13,9 @@ As an example consider the documentation of the following function:
   /// @param to The address of the recipient of the GavCoin
   /// @param valueInmGAV The GavCoin value to send
   function send(address to, uint256 valueInmGAV) {
-    if (balances[message.caller] >= valueInmGAV) {
+    if (balances[msg.sender] >= valueInmGAV) {
       balances[to] += valueInmGAV;
-      balances[message.caller] -= valueInmGAV;
+      balances[msg.sender] -= valueInmGAV;
     }
 ```
 
