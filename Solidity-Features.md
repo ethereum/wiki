@@ -383,17 +383,6 @@ The address is a hex string that is optionally prefixed with `0x`.
 If solc is called with the option `--link`, all input files are interpreted to be unlinked binaries (hex-encoded) and are linked in-place (if the input is read from stdin, it is written to stdout).
 All options except `--libraries` are ignored (including `-o`).
 
-## Tightly Stored Byte Arrays and Strings
-
-[PT](https://www.pivotaltracker.com/story/show/101758652)
-
-Byte arrays (`bytes`) and strings (`string`) are stored more tightly packed in storage:
-Short values (less than 32 bytes) are stored directly together with the length:
-`<value><length * 2>` (the 31 higher-significant bytes contain the value, the least significant byte contains the doubled length)
-Long values (at least 32 bytes) are stored as they were stored before, just that the length is doubled and the least significant bit is set to one to indicate "long string".
-
-Example: "abcdef" is stored as `0x61626364656600000...000d` while `"abcabcabc....abc"` (of length 40) is stored as `0x0000000...0051` in the main slot, and `616263616263...` is stored in the data slots.
-
 ## Internal Types for Libraries
 
 [PT](https://www.pivotaltracker.com/story/show/101774798) Storage reference types are allowed to be passed to library functions. Together with this change, it is now possible to access internal types of other contracts and libraries and a compiler version stamp is added at the beginning of library runtime code.
