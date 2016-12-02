@@ -45,7 +45,18 @@ theoretically can increase throughput by a factor of N without
 compromising security. However, this also has the problem that it
 increases the computational and storage load on each miner by a factor
 of N, and so in fact this solution is simply a stealthy form of block
-size increase. If only a few miners participate in merge-mining each
+size increase.
+
+Even if this is deemed acceptable, there is still the
+defect that the chains are not truly "tied together"; only a small
+amount of economic incentive is required to convince the miners to
+abandon or compromise one specific chain. This possibility is in
+fact quite real; there have been [actual historical incidents](http://bitcoin.stackexchange.com/questions/3472/what-is-the-story-behind-the-attack-on-coiledcoin)
+of merge-mined chains being attacked, as well as developers who
+have explicitly advocated using merge mining attacks as [a "governance" feature](http://www.truthcoin.info/blog/contracts-oracles-sidechains/), destroying
+chains that are not "profitable" to a given coalition.
+
+If only a few miners participate in merge-mining each
 chain, then the centralization risk is mitigated, but the security
 benefits of merge mining are also greatly reduced.
 
