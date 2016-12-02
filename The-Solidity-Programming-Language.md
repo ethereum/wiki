@@ -16,7 +16,7 @@ We see language grammar actually tieing in with many of the aspects of this: the
 
 ## Hello, World!
 
-** Yoichi: this example is missing from the official documentation**
+**Yoichi: this example is missing from the official documentation**
 
 No language would be complete without a Hello World program. Operating within the Ethereum environment, Solidity has no obvious way of "outputting" a string. The closest we can do is to use a log event to place a string into the blockchain:
 
