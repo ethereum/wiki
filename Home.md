@@ -7,9 +7,9 @@ Users signed in with GitHub can edit and add pages using the [browser](https://h
 
 ## Status
 
-### Homestead
+### Spurious Dragon
 
-The second major live release of Ethereum aka Homestead was released on 2016 Feb 29, and a successful hard fork took place on 2016 Mar 14! Development continues towards the versions named Metropolis and Serenity (v1.1). Homestead is aiming for [Ðapp developers](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources) as well as end users for limited categories of applications, and Metropolis is aiming for end users with the release of the Mist browser. Serenity is meant to move from consensus through [Proof-of-Work](https://github.com/ethereum/wiki/wiki/Ethash) to [Proof-of-Stake](https://blog.ethereum.org/2015/08/01/introducing-casper-friendly-ghost/).
+The fourth major live release of Ethereum aka Spurious Dragon was released in Nov 2016. Development continues towards the versions named Metropolis and Serenity (v1.1). Spurious Dragon is aiming for [Ðapp developers](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources) as well as end users for limited categories of applications, and has a number of security enhancements compared to previous versions, and the upcoming Metropolis is aiming for end users with the release of the Mist browser. Serenity is meant to move from consensus through [Proof-of-Work](https://github.com/ethereum/wiki/wiki/Ethash) to [Proof-of-Stake](https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQ).
 
 ## Getting started
 To get the basic concepts of Ethereum visit the Ethereum homepage over at [http://ethereum.org](http://ethereum.org/). If you want to get a deeper understanding, start by reading the [whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper) and the [design rationale](https://github.com/ethereum/wiki/wiki/Design-Rationale). For a more formal review, read the [yellow paper](http://gavwood.com/Paper.pdf). See the [development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for quick start to developing smart contracts.
