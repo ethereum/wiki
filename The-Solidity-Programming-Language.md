@@ -121,10 +121,3 @@ var y = 69.42;	// here, "var" is equivalent to "real".
 https://github.com/ethereum/solidity/pull/1427
 
 Solidity includes three types of literals; these are used for expressing specific, well-known values.
-
-# Integers
-
-Being ported in PR #1455
-
-Integer literals are formed from a sequence of numbers in the range 0-9. They are interpreted as decimals. Examples include `69` and `01000000`.
-
