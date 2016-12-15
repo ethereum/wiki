@@ -128,10 +128,3 @@ Being ported in PR #1455
 
 Integer literals are formed from a sequence of numbers in the range 0-9. They are interpreted as decimals. Examples include `69` and `01000000`.
 
-__The following paragraph needs to be ported to the document.__
-
-In terms of literals, addresses are formed from the characters `0x` followed directly by a sequence of pairs of hexadecimal numbers, in the range 0-9 and a-f (not case sensitive). They are interpreted as hexadecimal-encoded bytes. Examples include:
-
-```
-address a = 0x0123456789abcdef0123;
-```
