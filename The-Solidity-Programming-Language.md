@@ -115,9 +115,3 @@ If we were to assign a decimal, `var` would become equivalent to a real:
 var x = 69;		// here, "var" is equivalent to "uint".
 var y = 69.42;	// here, "var" is equivalent to "real".
 ```
-
-## Literals
-
-https://github.com/ethereum/solidity/pull/1427
-
-Solidity includes three types of literals; these are used for expressing specific, well-known values.
