@@ -41,6 +41,11 @@
 - [Licensing](https://github.com/ethereum/wiki/wiki/Licensing)
 - [Consortium Chain Development](https://github.com/ethereum/wiki/wiki/Consortium-Chain-Development)
 
+### Research
+
+- [Proof of Stake FAQ](https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQ)
+- [Sharding FAQ](https://github.com/ethereum/wiki/wiki/Sharding-FAQ)
+
 ### ÐΞV Technologies
 - [RLP Encoding](https://github.com/ethereum/wiki/wiki/RLP)
 - [RLPx Node Discovery Protocol](https://github.com/ethereum/wiki/wiki/Node-discovery-protocol-(RLPx))
