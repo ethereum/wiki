@@ -1,8 +1,8 @@
 # Ethereum Contract Security Techniques and Tips
 
-The recent attack on [The DAO](https://github.com/slockit/DAO) highlights the importance of security and proper software engineering of blockchain-based contracts. This document outlines collected security tips and techniques for smart contract development.
-
 **The community is encouraged to keep this wiki updated: it becomes more complete as more contributions are added.**
+
+Currently this wiki is out-of-date and see its source ["Smart Contract Best Practices"](https://github.com/ConsenSys/smart-contract-best-practices) for more recent updates and corrections.
 
 #### Additional Requested Content
 
