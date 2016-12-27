@@ -20,7 +20,7 @@ If only a few miners participate in merge-mining each chain, then the centraliza
 
 The trilemma claims that blockchain systems can only at most have two of the following three properties:
 
--   **Decentralization** (defined as the system being able to run in a scenario where each participant only has access to O(c) resources, ie. a regular laptop or small VPS) -   
+- **Decentralization** (defined as the system being able to run in a scenario where each participant only has access to O(c) resources, ie. a regular laptop or small VPS) -   
 - **Scalability** (defined as being able to process O(n) \> O(c) transactions)    
 - **Security** (defined as being secure against attackers with up to O(n) resources)
 
@@ -158,7 +158,7 @@ If validators are not reshuffled immediately, there is one further opportunity t
 
 A blockchain can be viewed as a cryptoeconomic system that incentivizes validators to make economic claims about certain facts, so as to achieve consensus and allow users to efficiently determine information about the state of the system. These claims can be broken down into several categories:
 
--  **Data availability**: a block header containing a Merkle root of a transaction tree effectively claims “I believe that the data that this Merkle tree points to is readily accessible by any node through the network” 
+- **Data availability**: a block header containing a Merkle root of a transaction tree effectively claims “I believe that the data that this Merkle tree points to is readily accessible by any node through the network” 
 - **Order**: a chain of block headers effectively claims “I believe that this data came in roughly this order”
 - **State calculation**: a block header containing a state root effectively claims “I believe that the transaction history referenced by this hash leads to a state whose root hash is X”
 
