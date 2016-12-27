@@ -269,7 +269,9 @@ The co-placement problem can be mitigated by introducing a notion of “sequenti
 
 The process becomes much easier if you view the transaction history as being already settled, and are simply trying to calculate the state transition function. There are several approaches; one fairly simple approach can be described as follows:
 
--   A transaction may specify a set of shards that it can operate in -   In order for the transaction to be effective, it must be included at the same block height in all of these shards. -   Transactions within a block must be put in order of their hash (this ensures a canonical order of execution)
+-   A transaction may specify a set of shards that it can operate in
+-   In order for the transaction to be effective, it must be included at the same block height in all of these shards.
+-   Transactions within a block must be put in order of their hash (this ensures a canonical order of execution)
 
 A client on shard X, if it sees a transaction with shards (X, Y), requests a Merkle proof from shard Y verifying (i) the presence of that transaction on shard Y, and (ii) what the pre-state on shard Y is for those bits of data that the transaction will need to access. If then executes the transaction and commits to the execution result. Note that this process may be highly inefficient if there are many transactions with many different “block pairings” in each block; for this reason, it may be optimal to simply require blocks to specify sister shards, and then calculation can be done more efficiently at a per-block level. This is the basis for how such a scheme could work; one could imagine more complex designs. However, when making a new design, it’s always important to make sure that low-cost denial of service attacks cannot arbitrarily slow state calculation down.
 
@@ -319,7 +321,8 @@ There are several considerations. First, the algorithm would need to be converte
 
 Going above c\^2 would likely entail further weakening the kinds of security guarantees that a system can provide, and allowing attackers to attack individual shards in certain ways for extended periods of time at medium cost, although it should still be possible to prevent invalid state from being finalized and to prevent finalized state from being reverted unless attackers are willing to pay an O(n) cost. However, the rewards are large - a super-quadratically sharded blockchain could be used as a general-purpose tool for nearly all decentralized applications, and could sustain transaction fees that makes its use virtually free.
 
-* * * * * <a name="footnotes"></a>
+
+### Footnotes
 
 1. <a name="ftnt_ref1"></a> Merklix tree == Merkle Patricia tree
 
