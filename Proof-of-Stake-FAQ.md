@@ -38,23 +38,23 @@ Note that Ittay Eyal and Emin Gun Sirer's [selfish mining](https://bitcoinmagazi
 
 In many early proof of stake algorithms, including Peercoin, there are only rewards for producing blocks, and no penalties. This has the unfortunate consequence that, in the case that there are multiple competing chain, it is in a validator's incentive to try to make blocks on top of every chain at once, just to be sure:
 
-![](http://vitalik.ca/files/possec.png)
+![](https://raw.githubusercontent.com/vbuterin/diagrams/master/possec.png)
 
 In proof of work, doing so would require splitting one's computing power in half, and so would not be lucrative:
 
-![](http://vitalik.ca/files/powsec.png)
+![](https://github.com/vbuterin/diagrams/blob/master/powsec.png?raw=true)
 
 The result is that if all actors are narrowly economically rational, then even if there are no attackers, a blockchain may never reach consensus. If there is an attacker, then the attacker need only overpower altruistic nodes (who would exclusively stake on the original chain), and not rational nodes (who would stake on both the original chain and the attacker's chain), in contrast to proof of work, where the attacker must overpower both altruists and rational nodes (or at least credibly threaten to: see [P + epsilon attacks](https://blog.ethereum.org/2015/01/28/p-epsilon-attack/)). Some argue that stakeholders have an incentive to act correctly and only stake on the longest chain in order to "preserve the value of their investment", however this ignores that this incentive suffers from [tragedy of the commons](https://en.wikipedia.org/wiki/Tragedy_of_the_commons) problems: each individual stakeholder might only have a 1% chance of being "pivotal" (ie. being in a situation where if they participate in an attack then it succeeds and if they do not participate it fails), and so the bribe needed to convince them personally to join an attack would be only 1% of the size of their deposit; hence, the required combined bribe would be only 0.5-1% of the total sum of all deposits. Additionally, this argument implies that any zero-chance-of-failure situation is not a stable equilibrium, as if the chance of failure is zero then everyone has a 0% chance of being pivotal.
 
 This can be solved via two strategies. The first, described in broad terms under the name "Slasher" [here](https://blog.ethereum.org/2014/01/15/slasher-a-punitive-proof-of-stake-algorithm/) and developed further by Iddo Bentov [here](https://arxiv.org/pdf/1406.5694.pdf), involves penalizing validators if they simultaneously create blocks on multiple chains, by means of including proof of misbehavior (ie. two conflicting signed block headers) into the blockchain as a later point in time at which point the malfeasant validator's deposit is deducted appropriately. This changes the incentive structure thus:
 
-![](http://vitalik.ca/files/slasher1sec.png)
+![](https://github.com/vbuterin/diagrams/blob/master/slasher1sec.png?raw=true)
 
 Note that for this algorithm to work, the validator set needs to be determined well ahead of time. Otherwise, if a validator has 1% of the stake, then if there are two branches A and B then 0.99% of the time the validator will be eligible to stake only on A and not on B, 0.99% of the time the validator will be eligible to stake on B and not on A, and only 0.01% of the time will the validator will be eligible to stake on both. Hence, the validator can with 99% efficiency probabilistically double-stake: stake on A if possible, stake on B if possible, and only if the choice between both is open stake on the longer chain. This can only be avoided if the validator selection is the same for every block on both branches, which requires the validators to be selected at a time before the fork takes place (in these algorithms it is assumed that forks will not last longer than a few hours; this is often achieved through a "revert limit" that simply forbids nodes from accepting long-range forks, for more on this see the section on weak subjectivity below). This has its own flaws, including opening up medium-range validator collusion risks (ie. situations where, for example, 25 out of 30 consecutive validators get together and agree ahead of time to implement a 51% attack on the previous 19 blocks), but if these risks are deemed acceptable then it works well.
 
 The second strategy is to simply punish validators for creating blocks on the _wrong_ chain. That is, if there are two competing chains, A and B, then if a validator creates a block on B, they get a reward of +R on B, but the block header can be included into A (in Casper this is called a "dunkle") and on A the validator suffers a penalty of -F (possibly F = R). This changes the economic calculation thus:
 
-![](http://vitalik.ca/files/slasher2sec.png)
+![](https://github.com/vbuterin/diagrams/blob/master/slasher2sec.png?raw=true)
 
 The intuition here is that we can replicate the economics of proof of work inside of proof of stake. In proof of work, there is also a penalty for creating a block on the wrong chain, but this penalty is implicit in the external environment: miners have to spend extra electricity and obtain or rent extra hardware. Here, we simply make the penalties explicit. This mechanism has the disadvantage that it imposes slightly more risk on validators (although the effect should be smoothed out over time), but has the advantage that it does not require validators to be known ahead of time.
 
