@@ -133,4 +133,4 @@ Now, we build the tree:
     G: [ '\x35', 'coin' ]
     C: [ '\x20\x6f\x72\x73\x65', 'stallion' ]
 
-Where a node is referenced inside a node, what is included is H(rlp.encode(x)) where H(x) = sha3(x) if len(x) >= 32 else x and rlp.encode is the [RLP](https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP) encoding function. Note that when updating a trie, you will need to store the key/value pair (sha3(x), x) in a persistent lookup table when you create a node with length >= 32, but if the node is shorter than that then you do not need to store anything when length < 32 for the obvious reason that the function f(x) = x is reversible.
+Where a node is referenced inside a node, what is included is H(rlp.encode(x)) where H(x) = sha3(x) if len(x) >= 32 else x and rlp.encode is the [RLP](https://github.com/ethereum/wiki/wiki/RLP) encoding function. Note that when updating a trie, you will need to store the key/value pair (sha3(x), x) in a persistent lookup table when you create a node with length >= 32, but if the node is shorter than that then you do not need to store anything when length < 32 for the obvious reason that the function f(x) = x is reversible.
