@@ -9,6 +9,7 @@
 - [cpp-ethereum (C++)](http://www.ethdocs.org/en/latest/ethereum-clients/cpp-ethereum/)
 - [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
 - [pyethapp (Python)](https://github.com/ethereum/pyethapp/wiki) 
+- [ethereumj (Java)](https://github.com/ethereum/ethereumj)
 
 ### ÐApp Development
 - [Safety](https://github.com/ethereum/wiki/wiki/Safety)
