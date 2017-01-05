@@ -118,4 +118,4 @@ This is the Morden ECS JSON file
 	}
 }
 ```
-Note: the builtin accounts seem to provide some core functionality.  Running without them included in the chain definition file may result in unexpected behavior.  
+Note: the builtin accounts enable usage of Solidity language.  Running without them included in the chain definition file may result in unexpected behavior.  
