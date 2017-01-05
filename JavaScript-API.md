@@ -1689,11 +1689,22 @@ var myContractInstance = MyContract.at(myContractAddress);
 
 // Or deploy a new contract:
 
-// Deploy the contract asyncronous:
+// Deploy the contract asyncronous from Solidity file:
+...
+const fs = require("fs");
+const solc = require('solc')
+
+let source = fs.readFileSync('nameContract.sol', 'utf8');
+let compiledContract = solc.compile(source, 1);
+let abi = compiledContract.contracts['nameContract'].interface;
+let bytecode = compiledContract.contracts['nameContract'].bytecode;
+let gasEstimate = web3.eth.estimateGas({data: bytecode});
+let contract = web3.eth.contract(JSON.parse(abi));
+
 var myContractReturned = MyContract.new(param1, param2, {
-   data: myContractCode,
-   gas: 300000,
-   from: mySenderAddress}, function(err, myContract){
+   from:mySenderAddress,
+   data:bytecode,
+   gas:gasEstimate}, function(err, myContract){
     if(!err) {
        // NOTE: The callback will fire twice!
        // Once the contract has the transactionHash property set and once its deployed on an address.
