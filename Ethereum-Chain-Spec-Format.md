@@ -90,6 +90,7 @@ This is the Morden ECS JSON file
 		"frontierCompatibilityModeLimit": "0x789b0",
 		"maximumExtraDataSize": "0x20",
 		"tieBreakingGas": false,
+		"minGasLimit": "0x1388",
 		"networkID" : "0x2"
 	},
 	"genesis": {
