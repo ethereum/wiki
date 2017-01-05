@@ -1699,7 +1699,7 @@ let compiledContract = solc.compile(source, 1);
 let abi = compiledContract.contracts['nameContract'].interface;
 let bytecode = compiledContract.contracts['nameContract'].bytecode;
 let gasEstimate = web3.eth.estimateGas({data: bytecode});
-let contract = web3.eth.contract(JSON.parse(abi));
+let MyContract = web3.eth.contract(JSON.parse(abi));
 
 var myContractReturned = MyContract.new(param1, param2, {
    from:mySenderAddress,
