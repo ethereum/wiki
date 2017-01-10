@@ -1866,15 +1866,15 @@ You can use events like [filters](#web3ethfilter) and they have the same methods
 
 `Object` - An event object as follows:
 
-- `args`: `Object` - The arguments coming from the event.
-- `event`: `String` - The event name.
-- `logIndex`: `Number` - integer of the log index position in the block.
-- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
-- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
 - `address`: `String`, 32 Bytes - address from which this log originated.
+- `args`: `Object` - The arguments coming from the event.
 - `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when its pending.
 - `blockNumber`: `Number` - the block number where this log was in. `null` when its pending.
-
+- `logIndex`: `Number` - integer of the log index position in the block.
+- `event`: `String` - The event name.
+- `removed`: `bool` -  indicate if the transaction this event was created from was removed from the blockchain (due to orphaned block) or never get to it (due to rejected transaction).
+- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
+- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
 
 ##### Example
 
