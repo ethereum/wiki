@@ -163,7 +163,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [compile.lll(string)](#web3ethcompilelll)
     * [compile.solidity(string)](#web3ethcompilesolidity)
     * [compile.serpent(string)](#web3ethcompileserpent)
-    * [namereg()](#web3ethnamereg)
+    * [namereg](#web3ethnamereg)
     * [sendIBANTransaction](#web3ethsendibantransaction)
     * [iban](#web3ethiban)
       * [fromAddress](#web3ethibanfromaddress)
@@ -2095,15 +2095,15 @@ console.log(code); // "0x603880600c6000396000f3006001600060e060020a600035048063c
 
 ***
 
-#### web3.eth.namereg()
+#### web3.eth.namereg
 
-    web3.eth.namereg()
+    web3.eth.namereg
 
 Returns GlobalRegistrar object.
 
 ##### Usage
 
-see [namereg()](https://github.com/ethereum/web3.js/blob/master/example/namereg.html) example.
+see [namereg](https://github.com/ethereum/web3.js/blob/master/example/namereg.html) example.
 
 ***
 
