@@ -5,15 +5,6 @@ This page is **not** the official documentation for Solidity. It contains outdat
 
 **Do not use example code on this page**
 
-## ABI requires arguments to be padded to 32 bytes
-
-**The Solidity compiler does not seem to have this explanation.  It's arguable if this should be ported there.**
-
-**This section can be removed after https://github.com/ethereum/solidity/pull/1413 is merged.**
-
-[PT](https://www.pivotaltracker.com/story/show/85006670) The latest version of the ABI specification
-requires arguments to be padded to multiples of 32 bytes. This is not a language feature that can be demonstrated as code examples. Please see the automated tests `SolidityEndToEndTests::packing_unpacking_types` and `SolidityEndToEndTests::packing_signed_types`.
-
 ## Conversion between String and Hash types
 
 **hash types do not exist anymore
