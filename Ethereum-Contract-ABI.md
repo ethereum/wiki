@@ -241,12 +241,20 @@ In effect, a log entry using this ABI is described as:
 
 The JSON format for a contract's interface is given by an array of function and/or event descriptions. A function description is a JSON object with the fields:
 
-- `type`: `"function"` or `"constructor"` (can be omitted, defaulting to function);
-- `name`: the name of the function (only present for function types);
+- `type`: `"function"`, `"constructor"`, or `"fallback"` (the [unnamed "default" function](http://solidity.readthedocs.io/en/develop/contracts.html#fallback-function));
+- `name`: the name of the function;
 - `inputs`: an array of objects, each of which contains:
   * `name`: the name of the parameter;
   * `type`: the canonical type of the parameter.
-- `outputs`: an array of objects similar to `inputs`, can be omitted.
+- `outputs`: an array of objects similar to `inputs`, can be omitted if function doesn't return anything;
+- `constant`: `true` if function is [specified to not modify blockchain state](http://solidity.readthedocs.io/en/develop/contracts.html#constant-functions);
+- `payable`: `true` if function accepts ether, defaults to `false`.
+
+`type` can be omitted, defaulting to `"function"`.
+
+Constructor and fallback function never have `name` or `outputs`. Fallback function doesn't have `inputs` either.
+
+Sending non-zero ether to non-payable function will throw. Don't do it.
 
 An event description is a JSON object with fairly similar fields:
 
