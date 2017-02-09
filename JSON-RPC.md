@@ -1016,7 +1016,7 @@ Makes a call or transaction, which won't be added to the blockchain and returns 
 
 ##### Parameters
 
-See [eth_call](#eth_call) parameters, expect that all properties are optional.
+See [eth_call](#eth_call) parameters, expect that all properties are optional. If no gas limit is specified geth uses the block gas limit from the pending block as an upper bound. As a result the returned estimate might not be enough to executed the call/transaction when the amount of gas is higher than the pending block gas limit.
 
 ##### Returns
 
