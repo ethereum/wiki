@@ -152,13 +152,13 @@ Most of these functions are reactive so they should make building interfaces a b
 If you look into you `myDapp.html` you will find the `hello` template.
 Just add a helper called `{{currentBlock}}` some where between the `<template name="hello">..</template>` tags.
 
-Now open the `myDapp.js` and add after the `counter: function..` the `currentBlock` helper:
+Now open the `myDapp.js` and add after the `counter() {..}` the `currentBlock` helper:
 ```js
 Template.elements.helpers({
-    counter: function () {
+    counter() {
       ...
     },
-    currentBlock: function(){
+    currentBlock() {
         return EthBlocks.latest.number;
     }
   });
