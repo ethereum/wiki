@@ -870,8 +870,8 @@ By adding a prefix to the message makes the calculated signature recognisable as
 ##### Parameters
 message, account
 
-1. `DATA`, N Bytes - message to sign
-2. `DATA`, 20 Bytes - address
+1. `DATA`, 20 Bytes - address
+2. `DATA`, N Bytes - message to sign
 
 ##### Returns
 
@@ -881,7 +881,7 @@ message, account
 
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sign","params":["0xdeadbeaf", "0x9b2055d370f73ec7d8a03e965129118dc8f5bf83"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sign","params":["0x9b2055d370f73ec7d8a03e965129118dc8f5bf83", "0xdeadbeaf"],"id":1}'
 
 // Result
 {
