@@ -32,7 +32,7 @@ No.
 
 ### Why not?
 
-Metcalfe’s law claims that the value of a network is proportional to the square of the number of users, because if a network has n users then the network has value for each user, but then the value for each individual user it itself proportional to the number of users because if a network has n users that’s n-1 potential connections through the network that each individual user could benefit from.
+Metcalfe’s law claims that the value of a network is proportional to the square of the number of users, because if a network has n users then the network has value for each user, but then the value for each individual user is itself proportional to the number of users because if a network has n users that’s n-1 potential connections through the network that each individual user could benefit from.
 
 In practice, [empirical research suggests](https://en.wikipedia.org/wiki/Metcalfe%27s_law) that the value of a network with n users is close to “n^2 proportionality for small values of n and (n × log n) proportionality for large values of n.” This makes sense because for small values, the argument holds true, but once a system gets bigger, two effects slow the growth down. First, growth in practice often happens in communities, and so in a medium-scale network the network often already provides most of the connections that each user cares about. Second, connections are often substitutes from each other, and you could argue that people only derive \~O(log(k)) value from having k connections - having 23 brands of deodorant to choose from is nice, but it’s not that much better than having 22 choices, whereas the difference between one choice and zero choices is very significant.
 
