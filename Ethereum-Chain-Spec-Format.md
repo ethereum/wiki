@@ -1,5 +1,3 @@
-**Please note: this document is a suggested standard and has not yet been accepted.**
-
 This is a format to describe any Ethereum-like chain. It is derived from the `genesis.json` format but includes parameters to change and configure the consensus algorithm, to specify infrastructure information, to specify boot nodes and to specify any built-in contracts together with their cost.
 
 ### Format
