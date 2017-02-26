@@ -64,19 +64,19 @@ The intuition here is that we can replicate the economics of proof of work insid
 
 Partially synchronous proof of stake algorithms allow validators to send one or more types of signed messages, and specify two kinds of conditions:
 
-* **Finality conditions** - a function `f(MESSAGES, HASH) -> {0, 1}`, where MESSAGES is a set of messages and HASH is a value (think: a block hash or state root). If a client sees a set of messages where a subset of those messages satisfies a finality condition for HASH, then HASH is finalized.
-* **Slashing conditions** - a function `f(MESSAGES, VALIDATOR) -> {0, 1}` where MESSAGES is a set of messages and VALIDATOR is a particular validator. This function is executed inside the state of a blockchain, and can be assumed to be executed very far in the future, after it can be safely assumed that all messages relevant to the slashing condition have been included into the chain but before any validators can withdraw their deposits. If a slashing condition is satisfied for any given validator, then the validator's deposit is destroyed.
+* **Finality conditions** - a function `f(MESSAGES, HASH) -> {0, 1}`, where `MESSAGES` is a set of messages and `HASH` is a value (think: a block hash or state root). If a client sees a set of messages where a subset of those messages satisfies a finality condition for `HASH`, then `HASH` is finalized.
+* **Slashing conditions** - a function `f(MESSAGES, VALIDATOR) -> {0, 1}` where `MESSAGES` is a set of messages and VALIDATOR is a particular validator. This function is executed inside the state of a blockchain, and can be assumed to be executed very far in the future, after it can be safely assumed that all messages relevant to the slashing condition have been included into the chain but before any validators can withdraw their deposits. If a slashing condition is satisfied for any given validator, then the validator's deposit is destroyed.
 
-One example of a finality condition would be: if MESSAGES contains messages of the form `COMMIT(HASH, view)`, for any specific view, signed by 2/3 of all validators weighted by deposited stake, then HASH is finalized.
+One example of a finality condition would be: if `MESSAGES` contains messages of the form `COMMIT(HASH, view)`, for any specific `view`, signed by 2/3 of all validators weighted by deposited stake, then `HASH` is finalized.
 
 To illustrate the different forms that slashing conditions can take, we will give two examples of slashing conditions (hereinafter, "P of all validators" is shorthand for "P of all validators weighted by deposited stake):
 
-1. If MESSAGES contains messages of the form `COMMIT(HASH1, view)` and `COMMIT(HASH2, view)` for the same view but differing HASH1 and HASH2 signed by the same validator, then that validator is slashed.
-2. If MESSAGES contains a message of the form `COMMIT(HASH, view1)`, then UNLESS either view1 = -1 or there also exist messages of the form `PREPARE(HASH, view1, view2)` for some specific view2, where view2 < view1, signed by 2/3 of all validators, then the validator that made the COMMIT is slashed.
+1. If `MESSAGES` contains messages of the form `COMMIT(HASH1, view)` and `COMMIT(HASH2, view)` for the same `view` but differing `HASH1` and `HASH2` signed by the same validator, then that validator is slashed.
+2. If `MESSAGES` contains a message of the form `COMMIT(HASH, view1)`, then UNLESS either view1 = -1 or there also exist messages of the form `PREPARE(HASH, view1, view2)` for some specific `view2`, where `view2 < view1`, signed by 2/3 of all validators, then the validator that made the COMMIT is slashed.
 
 There are two important desiderata for a suitable set of slashing conditions to have:
 
-* **Accountable safety** - if conflicting HASH1 and HASH2 (ie. HASH1 and HASH2 are different, and neither is a descendant of the other) are finalized, then at least 1/3 of all validators must have violated some slashing condition.
+* **Accountable safety** - if conflicting `HASH1` and `HASH2` (ie. `HASH1` and `HASH2` are different, and neither is a descendant of the other) are finalized, then at least 1/3 of all validators must have violated some slashing condition.
 * **Plausible liveness** - unless at least 1/3 of all validators have violated some slashing condition, there exists a set of messages that 2/3 of validators can produce that finalize some value.
 
 If we have a set of slashing conditions that satisfies both properties, then we can incentivize participants to send messages, and start benefiting from economic finality.
