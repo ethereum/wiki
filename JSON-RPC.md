@@ -220,7 +220,7 @@ Returns Keccak-256 (*not* the standardized SHA3-256) of the given data.
 
 ```js
 params: [
-  '0x68656c6c6f20776f726c64'
+  "0x68656c6c6f20776f726c64"
 ]
 ```
 
