@@ -45,7 +45,7 @@ A possible sketch of the interface is as follows:
 * `broadcastMessage(msg)`: broadcast a message.
 * `getMostRecent(conf_level)`: get the most recent block that satisfies a given confirmation level. In proof of work or DPOS, `conf_level` would represent the number of confirmations, so it would return the nth last block in the chain; in PBFT confirmation is binary (ie. final confirmation is instant) so it always returns the most recent confirmed block.
 
-Note that public chain consensus also requires an incentivization model, ie. a way to reward consensus participants who perform well and possibly penalize participants who perform badly. We two abstract this by providing two options:
+Note that public chain consensus also requires an incentivization model, ie. a way to reward consensus participants who perform well and possibly penalize participants who perform badly. We abstract this by providing two options:
 
 1. A function `finalize` that gets automatically called after processing every transaction in a block, which makes modifications to the state and may use the block as input.
 2. A function `initialize` that gets automatically called before processing every transaction in a block, which makes modifications to the state and may use the block as input.
@@ -60,8 +60,8 @@ In a private chain context, there are three consensus algorithms that make the m
 
 PBFT and DPOS (taken purely as a consensus algorithm, not including the ability of some class of token holders to vote on delegates) each have their own advantages and disadvantages. Specifically:
 
-* PBFT has academically robust formal proofs for various properties (safety, liveness, etc) under a partially sychronous network model assuming at least 67% of nodes are online and honest
-* PBFT has instant finalty - once a transaction is confirmed once, reverts are impossible. DPOS consensus is probabilistic much like proof of work (in fact, slightly worse, as attackers can see if they have the ability to revert short-range forks ahead of time), and so while a notion of "de-facto finality" is possible, it takes several minutes to reach
+* PBFT has academically robust formal proofs for various properties (safety, liveness, etc) under a partially synchronous network model assuming at least 67% of nodes are online and honest
+* PBFT has instant finality - once a transaction is confirmed once, reverts are impossible. DPOS consensus is probabilistic much like proof of work (in fact, slightly worse, as attackers can see if they have the ability to revert short-range forks ahead of time), and so while a notion of "de-facto finality" is possible, it takes several minutes to reach
 * DPOS can support an unlimited number of nodes, whereas PBFT becomes very inefficient above about 30 nodes because every node has to send messages to and receive messages from every other node during every round. DPOS does this because each round consists only of one randomly selected validator making a block
 * DPOS is conceptually simpler to understand and implement and intuitively see why it converges
 * In a synchronous network model, DPOS can survive up to 49% Byzantine faults, higher than the 33% of PBFT; additionally, DPOS can survive even more faults if they consist of nodes going offline rather than trying to attack the network
