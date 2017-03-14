@@ -5,3 +5,4 @@ This is a list of collections of Solidity code. Please add to this list, preserv
 * [Solidity Standard Library](https://github.com/ethereum/wiki/wiki/Solidity-standard-library): This is a proof-of-concept standard library that is included with Solidity itself.
 * [standard-contracts](https://github.com/androlo/standard-contracts/): Andreas Olofsson's collection of libraries that handle bits, bytes, encoding, decoding, and crypto.
 * [stringutils](https://github.com/Arachnid/solidity-stringutils): Nick Johnson's string & slice utility library
+* [Zeppelin](https://github.com/OpenZeppelin/zeppelin-solidity): OpenZeppelin library for writing secure smart contracts. 
