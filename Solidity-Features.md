@@ -5,22 +5,6 @@ This page is **not** the official documentation for Solidity. It contains outdat
 
 **Do not use example code on this page**
 
-## Conversion between String and Hash types
-
-**hash types do not exist anymore
- http://solidity.readthedocs.io/en/develop/types.html#explicit-conversions**
-
-[PT](https://www.pivotaltracker.com/story/show/85907772) The explicit conversion between `string` and `hash` types of equal size is now allowed. Example:
-
-```js
-contract Test {
-  function convert(hash160 h, string20 s) returns (string20 res_s, hash160 res_h) {
-    res_s = string20(h);
-    res_h = hash160(s);
-  }
-}
-```
-
 ## Events in Exported Interfaces
 
 **This point needs to be added to the Solidity documentation.**
