@@ -418,20 +418,3 @@ contract User
   }
 }
 ```
-
-## `.push()` for Dynamic Storage Arrays
-
-**Yoichi thinks this needs to be ported to the official documentation.**
-
-[PT](https://www.pivotaltracker.com/story/show/105439966) Dynamically-sized storage arrays have a member function `push`, such that
-`var l = arr.push(el);` is equivalent to `arr[arr.length++] = el; var l = arr.length;`.
-
-```js
-contract c {
-  struct Account { address owner; uint balance; }
-  Account[] accounts;
-  function newAccount(address _owner, uint _balance) {
-    accounts.push(Account(_owner, _balance));
-  }
-}
-```
