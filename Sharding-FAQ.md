@@ -2,7 +2,7 @@
 
 # Introduction
 
-Currently, in all blockchain protocols each node stores all state (account balances, contract code and storage, etc) and process all transactions. This provides a large amount of security, but greatly limits scalability: a blockchain cannot process more transactions than a single node. In large part because of this, Bitcoin is limited to \~3-7 transactions per second, Ethereum to 7-15, etc. However, this poses a question: are there ways to create a new mechanism, where only small subset of nodes to verify each transaction? As long as there are sufficiently many nodes verifying each transaction that the system is still highly secure, but sufficiently few that the system can process many transactions in parallel, could we not use such a technique to greatly increase a blockchain's throughput?
+Currently, in all blockchain protocols each node stores all state (account balances, contract code and storage, etc) and process all transactions. This provides a large amount of security, but greatly limits scalability: a blockchain cannot process more transactions than a single node. In large part because of this, Bitcoin is limited to \~3-7 transactions per second, Ethereum to 7-15, etc. However, this poses a question: are there ways to create a new mechanism, where only small subset of nodes verify each transaction? As long as there are sufficiently many nodes verifying each transaction that the system is still highly secure, but sufficiently few that the system can process many transactions in parallel, could we not use such a technique to greatly increase a blockchain's throughput?
 
 ### What are some trivial but flawed ways of solving the problem?
 
