@@ -58,19 +58,6 @@ contract c {
 }
 ```
 
-## Optional Parameter Names
-
-**Yoichi could not find this in the official documentation.**
-
-[PT](https://www.pivotaltracker.com/story/show/85594334). The names for function parameters and return parameters are now optional.
-```js
-contract test {
-  function func(uint k, uint) returns(uint){
-    return k;
-  }
-}
-```
-
 ## Inline members initialization
 
 **This point seems to be missing from the official documentation.**
