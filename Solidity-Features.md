@@ -288,22 +288,6 @@ contract C {
 }
 ```
 
-## Flexible String Literals
-
-[PT](https://www.pivotaltracker.com/n/projects/1189488/stories/98462528)
-String literals can be implicitly converted to `bytesX` (if they are not too long),
-`string` and `bytes`, especially, they can be much longer than 32 bytes.
-
-```js
-contract C {
-  bytes32 x;
-  function greet() returns (string) {
-    x = "Hello, World!";
-    return "Hello, World!";
-  }
-}
-```
-
 ## Libraries (without inheritance)
 
 [PT](https://www.pivotaltracker.com/n/projects/1189488/stories/82180360)
