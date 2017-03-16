@@ -7,7 +7,7 @@ After talking to Marek we came to the conclusion, that the current return value 
 
 If you send a contract creation transaction, you get the contract address back, but not the transaction hash. 
 
-Additional with the new proposal, we could even let non-constant contract functions return values, like gavin wanted to do it in https://github.com/ethereum/dapp-bin/blob/master/wallet/wallet2.sol#L237 (Currently thats impossible and that contract would be wrong)
+Additional with the new proposal, we could even let non-constant contract functions return values, like gavin wanted to do it in https://github.com/ethereum/dapp-bin/blob/master/wallet/wallet2.sol#L237 (Currently that's impossible and that contract would be wrong)
 
 ## Proposal
 

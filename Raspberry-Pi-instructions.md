@@ -14,7 +14,7 @@ Plugin the sd card, LAN connection and the power supply and lets start!
 In order to connect to your pi follow those instructions: https://www.raspberrypi.org/documentation/remote-access/ssh
 
 Currently there are two users, `root` and `pi`.
-The passwords are `root` and `raspberry`, respectivly. The first thing you should do is change that. Otherwise everyone can see your IP in netstats and just log into your Raspberry Pi.
+The passwords are `root` and `raspberry`, respectively. The first thing you should do is change that. Otherwise everyone can see your IP in netstats and just log into your Raspberry Pi.
 Log in and type `passwd <user>` to update the password for each user.
 
 
@@ -67,7 +67,7 @@ This has been tested on the Raspberry Pi 2 only.
 
 ## Just get the binaries
 
-Alternativly, you can use the linux system of your choice and and get the arm binaries here:
+Alternatively, you can use the linux system of your choice and get the arm binaries here:
 * https://build.ethdev.com/builds/ARM%20Go%20develop%20branch/geth-ARM-latest.tar.bz2 (go)
 * \<link will follow> (cpp-ethereum)
 
@@ -81,7 +81,7 @@ http://archlinuxarm.org/forum/viewtopic.php?f=60&t=8366
 [Installation instructions for ARM](https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-ARM)
 
 ### cpp-ethereum
-First we install all necessary libaries as described here https://github.com/ethereum/cpp-ethereum/wiki/Building-on-ArchLinux (but without the qt libs):
+First we install all necessary libraries as described here https://github.com/ethereum/cpp-ethereum/wiki/Building-on-ArchLinux (but without the qt libs):
 
 These are the required packages from the official repositories:
 ```

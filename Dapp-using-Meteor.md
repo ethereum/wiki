@@ -69,13 +69,13 @@ I recommend also to add the following packages:
 
 ### A short excursion into Meteors folder structure
 
-Meteor doesn't force you to have a specifc folder structure, though some folders have specifc meaning and will be treated differently when bundling/running your application.
+Meteor doesn't force you to have a specific folder structure, though some folders have specific meaning and will be treated differently when bundling/running your application.
 
 Folders with specific treatment
-- `client` - files in a folder called `client` will only be loaded by the client part of your app and as we are building a Ðapp, thats where most of our files go.
-- `lib` - files in folders called `lib` will load before other files in the same folder. This is an ideal place your init files, libraries, or ethereum specifc files.
+- `client` - files in a folder called `client` will only be loaded by the client part of your app and as we are building a Ðapp, that's where most of our files go.
+- `lib` - files in folders called `lib` will load before other files in the same folder. This is an ideal place your init files, libraries, or ethereum specific files.
 - `public` - a folder called `public` contains assets meteor will make available on the root of your webserver (or later bundled Ðapp)
-- There are a few more specifc folders like `server`, `tests`, `packages`, etc. If you want to get to know them take a look at the [Meteor docs](http://docs.meteor.com/#/full/structuringyourapp)
+- There are a few more specific folders like `server`, `tests`, `packages`, etc. If you want to get to know them take a look at the [Meteor docs](http://docs.meteor.com/#/full/structuringyourapp)
 
 So to build a Ðapp we ideally create the following folder structure in our `myDapp` folder:
 

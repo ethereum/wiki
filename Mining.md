@@ -32,7 +32,7 @@ Note that mining 'real' Ether will start with the Frontier release. On the Olymp
 
 The successful PoW miner of the winning block receives:
 * A **static block reward** for the 'winning' block, consisting of exactly 5.0 Ether
-* All of the gas expended within the block, that is, all the gas consumed by the execution of all the transactions in the block submitted by the winning miner is compensated for by the senders. The gascost incurred is  credited to the miner's account as part of the consensus protocoll. Over time, it's expected these will dwarf the static block reward.
+* All of the gas expended within the block, that is, all the gas consumed by the execution of all the transactions in the block submitted by the winning miner is compensated for by the senders. The gascost incurred is  credited to the miner's account as part of the consensus protocol. Over time, it's expected these will dwarf the static block reward.
 - An extra reward for including Uncles as part of the block, in the form of an extra 1/32 per Uncle included  
 
 Uncles are stale blocks, ie with parent that are ancestors (max 6 blocks back) of the including block.

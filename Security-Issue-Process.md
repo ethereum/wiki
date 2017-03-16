@@ -25,7 +25,7 @@ Partly inspired by [OWASP Risk Rating](https://www.owasp.org/index.php/OWASP_Ris
 * Blockchain consensus. Potential of blockchain fork?
 * Financial damage. Loss of ether?
 * Privacy. E.g. revealing who sent a tx or who owns an address.
-* Availability. Can it impact availablity of node(s)?
+* Availability. Can it impact availability of node(s)?
 
 ### Technical description
 

@@ -34,7 +34,7 @@ The Bloom filter used in the `TopicFilter` message type is a means a identifying
 
 Blooms are formed by the bitwise OR operation on a number of bloomed topics. The bloom function takes the abridged topic (the first four bytes of the SHA3 of the ÐApp/user level topic description) and projects them onto a 512-bit slice; in total, three bits are marked for each bloomed topic.
 
-The projection function is defined as a mapping from a a 4-byte slice `S` to a 512-bit slice `D`; for ease of explanation, `S` will dereference to bytes, whereas `D` will dereference to bits.
+The projection function is defined as a mapping from a 4-byte slice `S` to a 512-bit slice `D`; for ease of explanation, `S` will dereference to bytes, whereas `D` will dereference to bits.
 
 ```
 LET D[*] = 0

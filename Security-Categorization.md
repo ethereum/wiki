@@ -94,7 +94,7 @@ The wire protocol should be secure against the following issues:
 
 * Leveldb
   * Check for hidden limits in leveldb and other libraries that might trigger inconsistent failures outside the VM, similar to http://bitcoinmagazine.com/3668/bitcoin-network-shaken-by-blockchain-fork/
-* Crytopgraphic libraries
+* Cryptographic libraries
   * secp256k1 with a Go bridge (https://github.com/obscuren/secp256k1-go)
   * A fork of the official golang sha3 package (https://github.com/obscuren/sha3) (Reason for using a sha3 fork is because the official sha3 has switched to FIPS-202 which Ethereum can't use because genesis addresses have been generated using an earlier version of sha3)
   * Official ripemd package (code.google.com/p/go.crypto/ripemd160)

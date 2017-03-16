@@ -11,7 +11,7 @@ This tutorial assumes basic knowledge of how Ethereum works, including the conce
 
 The important differences between Serpent and Python are:
 
-* Python numbers have potentially unlimited size, Serpent numbers wrap around 2<sup>256</sup>. For example, in Serpent the expression `3^(2^254)` suprisingly evaluates to 1, even though in reality the actual integer is too large to be recorded in its entirety within the universe.
+* Python numbers have potentially unlimited size, Serpent numbers wrap around 2<sup>256</sup>. For example, in Serpent the expression `3^(2^254)` surprisingly evaluates to 1, even though in reality the actual integer is too large to be recorded in its entirety within the universe.
 * Serpent has no decimals.
 * There is no way to take a Serpent array and access its length; this sometimes leads to inconveniences like needing to type `return([a,b,c], 3)` instead of Python's `return [a,b,c]`. Future versions may change this specifically in the case of array literals.
 * Serpent has no concept of strings (at this point); if you make an expression like `x = "george"`, the compiler converts that into a number using ASCII encoding, so you get 103 * 256<sup>5</sup> + 101 * 256<sup>4</sup> + 111 * 256<sup>3</sup> + 114 * 256<sup>2</sup> + 103 * 256 + 101 = 113685359126373. These numbers can be converted back into strings, so you can still represent strings, but they are limited to 32 characters in length. Future versions may change this to turn strings into char arrays, which would be accessible via `getch(str, i) -> byte` and `setch(str, i, byte)`

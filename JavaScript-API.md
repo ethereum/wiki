@@ -2003,7 +2003,7 @@ This method should be called, when we want to store a string in the local leveld
 
 ##### Returns
 
-`Boolean` - `true` if successfull, otherwise `false`.
+`Boolean` - `true` if successful, otherwise `false`.
 
 ##### Example
 
@@ -2052,7 +2052,7 @@ This method should be called, when we want to store binary data in HEX form in t
 
 ##### Returns
 
-`Boolean` - `true` if successfull, otherwise `false`.
+`Boolean` - `true` if successful, otherwise `false`.
 
 ##### Example
 ```js

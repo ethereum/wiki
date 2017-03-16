@@ -1,5 +1,5 @@
 ---
-name: First Steps wih Ethereum JSON RPC
+name: First Steps with Ethereum JSON RPC
 category: 
 ---
 
