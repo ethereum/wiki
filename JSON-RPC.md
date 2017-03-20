@@ -15,7 +15,7 @@ See the [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API) f
 
 Default JSON-RPC endpoints:
 
-|||
+| Client | URL |
 |-------|:------------:|
 | C++ |  http://localhost:8545 | 
 | Go |http://localhost:8545 | 
