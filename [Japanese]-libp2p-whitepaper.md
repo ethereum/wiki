@@ -1,16 +1,17 @@
 **NOTE:** *This is a work-in-progress*
 
-Ethereum が成功ををおさめるために、そして、ethereum が達成されるという究極の目標のためには、Ethereum は多くのセキュアな分散型データシステムを採用する必要がある。一般化されたチューリング完全性、拡張可能な状態をもつブロックチェーンはこの構成要素の一つですが、その潜在能力を十分に発揮し、分散アプリケーション DApps を構築するには、データシステム一式を付け加える必要があります。各分散データシステムは特定の需要を解決します。一般にはどのデータシステムが究極的に必要とされるのかを予測するのは困難です、というのは非中央集約化のパラダイムはすぐに比較可能でなく、今までの中央集約型設計のシステムとは似てもにつかわないものなのです。
+Ethereum が成功ををおさめるために、そして、Ethereum が達成されるという究極の目標のためには、Ethereum は多くのセキュアな分散型データシステムを採用する必要がある。一般化されたチューリング完全性、拡張可能な状態をもつブロックチェーンはこの構成要素の一つですが、その潜在能力を十分に発揮し、分散アプリケーション DApps を構築するには、データシステム一式を付け加える必要があります。各分散データシステムは特定の需要を解決します。一般にはどのデータシステムが究極的に必要とされるのかを予測するのは困難です、というのは非中央集約化のパラダイムはすぐに比較可能でなく、今までの中央集約型設計のシステムとは似てもにつかわないものなのです。
 
-データシステムには３種類あって、とりわけ現行の大規模不特定多数のユーザアプリケーション（MMAやMMORPGsのようなweb上モバイルアプリ）で必要とされます。トランザクションのデータベース(Ethereum) に加え、出版およびダウンロードするためのシステムが、ひとつの一般化された低級「掲示板」に加えて、必要となることでしょう。
+データシステムには３種類あって、とりわけ現行の大規模不特定多数のユーザアプリケーション（ MMA や MMORPGs のような web上モバイルアプリ ）で必要とされます。トランザクションのデータベース ( Ethereum ) に加え、出版およびダウンロードするためのシステムが、ひとつの一般化された低級「掲示板」に加えて、必要となることでしょう。
 
-しかし、将来も含めてたくさんのそのようなタイプの分散コミュニケーションシステムを想像にえがくことができます。たとえば、identity-based RTC に対するものです。これらの各構成要素は数々の shared prerequisities を要します。peer-discovery/recoiding, network will-formedness, transport-level buffering, scheduling/framing, authentication/security などです。これらのsaltに値するコンピュータサイエンティストは誰でも、手早く「抽象的な実戦の機会」をつかむことができます！  
+しかし、将来も含めてたくさんのそのようなタイプの分散コミュニケーションシステムを想像にえがくことができます。たとえば、identity-based RTC に対するものです。これらの各構成要素は数々の shared prerequisities を要します。 peer-discovery / recoiding , network will-formedness , transport-level buffering , scheduling / framing , authentication / security などです。これらのsaltに値するコンピュータサイエンティストは誰でも、手早く「抽象的な実戦の機会」をつかむことができます！  
 
 ### What it is
 
-libp2p (aka ÐΞVp2p) は 軽量抽象レイヤ を提供することを目的とし、それにより低級アルゴリズムやある透明な枠組におけるプロトコルやサービスが、結果としてのプロトコルのユースケースを決定することなく、提供されます。
+libp2p ( aka ÐΞVp2p ) は 軽量抽象レイヤ を提供することを目的とし、それにより低級アルゴリズムやある透明な枠組におけるプロトコルやサービスが、結果としてのプロトコルのユースケースを決定することなく、提供されます。
 
 その特別な目的は、言語に依存しないAPIおよび仕様を提供することです。以下の要件を満たします。
+
 - *Universal:* Pairwise addressing (ala Telehash), broadcast (ala Bitcoin), groupwise (some DHT designs & filesharing) are all reasonable. There may be others. It should provide only the network structure, not dictate usage over it.
 - *Ubiquitous:* The same peer-set/-network should be able to be used for all protocols.
 - *Secure:* Encryption between physical peers is a given. Peer introduction can provide a good level of defence against systematic MitM attacks.
