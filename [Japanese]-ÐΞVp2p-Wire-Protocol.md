@@ -40,7 +40,7 @@ message-ID は、0x10からはじまるもの (0x00-0x10 は ÐΞVp2p messages �
 `0x01` [`reason`: `P`] 
 
 peer に対し、disconnection が執行されることを知らせます。; 受信されれば、直ちに peer は disconnect するのがよいでしょう。送信のとき、行儀のよいホストは、つながっている複数の peer に対して、disconnect するための相手の機会 (read: wait 2 seconds) を与えてから、自身を disconnect するものです。
-* `reason` は、オプショナルの integer で、disconnect の理由を次の中から一つ選びます:
+* `reason` は、オプションの integer で、disconnect の理由を次の中から一つ選びます:
   * `0x00` Disconnect requested;
   * `0x01` TCP sub-system error;
   * `0x02` Breach of protocol, e.g. a malformed message, bad RLP, incorrect magic number &c.;
