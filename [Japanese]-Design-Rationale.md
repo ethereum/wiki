@@ -1,3 +1,7 @@
+設計原理
+[English version](https://github.com/ethereum/wiki/wiki/Design-Rationale)
+
+
 Ethereum が既に試されテストされてきた5年前からあるビットコインのような
 古くからある暗号通貨の様々なアイディアを借りて出来てきたとしても、
 Ethereumには現在のプロトコルの機能を提供するための大半の一般的な方法とは異なる様々な点がある。
