@@ -6,7 +6,7 @@
 2. [マイÐappを始めよう](#マイÐappを始めよう)
 3. [マイÐappを接続](#マイÐappを接続)
 4. [マイÐappを起動](#マイÐappを起動)
-5. [Ðapp\ stylesを追加](#Ðapp stylesを追加)
+5. [Ðapp stylesを追加](#Ðapp-stylesを追加)
 6. [ethereum:elementsを使う](#use-ethereum-elements)
 7. [Ðappコードの構造](#Ðappコードの構造)
 8. [マイÐappをバンドル](#マイÐappをバンドル)
