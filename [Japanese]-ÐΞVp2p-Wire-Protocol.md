@@ -26,7 +26,9 @@ message-ID は、0x10からはじまるもの (0x00-0x10 は ÐΞVp2p messages �
 ### P2P
 
 **Hello**
-`0x00` [`p2pVersion`: `P`, `clientId`: `B`, [[`cap1`: `B_3`, `capVersion1`: `P`], [`cap2`: `B_3`, `capVersion2`: `P`], `...`], `listenPort`: `P`, `nodeId`: `B_64`] コネクション上で最初に送られるパケットで、双方から一度だけ送信されます。Hello が受信されるまで、ほかのメッセージは一切送信されないでしょう。
+`0x00` [`p2pVersion`: `P`, `clientId`: `B`, [[`cap1`: `B_3`, `capVersion1`: `P`], [`cap2`: `B_3`, `capVersion2`: `P`], `...`], `listenPort`: `P`, `nodeId`: `B_64`] 
+
+コネクション上で最初に送られるパケットで、双方から一度だけ送信されます。Hello が受信されるまで、ほかのメッセージは一切送信されないでしょう。
 * `p2pVersion` Specifies the implemented version of the P2P protocol. Now must be 1.
 * `clientId` は、クライアントソフトウェアの個体番号で、人が読みやすいように string としています。 (e.g. "Ethereum(++)/1.0.0").
 * `cap` は peer の capability (装備) の名前を特定するもので、長さ3 の ASCII string です。現在サポートされているものとしては、`eth`, `shh` があります。
@@ -35,7 +37,9 @@ message-ID は、0x10からはじまるもの (0x00-0x10 は ÐΞVp2p messages �
 * `nodeId` はノードの個体認証で、512-bit のハッシュ値を特定し、ノードを識別します。
 
 **Disconnect**
-`0x01` [`reason`: `P`] peer に対し、disconnection が執行されることを知らせます。; 受信されれば、直ちに peer は disconnect するのがよいでしょう。送信のとき、行儀のよいホストは、つながっている複数の peer に対して、disconnect するための相手の機会 (read: wait 2 seconds) を与えてから、自身を disconnect するものです。
+`0x01` [`reason`: `P`] 
+
+peer に対し、disconnection が執行されることを知らせます。; 受信されれば、直ちに peer は disconnect するのがよいでしょう。送信のとき、行儀のよいホストは、つながっている複数の peer に対して、disconnect するための相手の機会 (read: wait 2 seconds) を与えてから、自身を disconnect するものです。
 * `reason` は、オプショナルの integer で、disconnect の理由を次の中から一つ選びます:
   * `0x00` Disconnect requested;
   * `0x01` TCP sub-system error;
@@ -52,10 +56,14 @@ message-ID は、0x10からはじまるもの (0x00-0x10 は ÐΞVp2p messages �
   * `0x10` Some other reason specific to a subprotocol.
 
 **Ping**
-`0x02` [] Requests an immediate reply of `Pong` from the peer.
+`0x02` [] 
+
+Requests an immediate reply of `Pong` from the peer.
 
 **Pong**
-`0x03` [] Reply to peer's `Ping` packet.
+`0x03` [] 
+
+Reply to peer's `Ping` packet.
 
 **NotImplemented (was GetPeers)**
 `0x04`
