@@ -1,8 +1,10 @@
 ** This documnet is still on the way of fixing tons of crapped tranlations. It is something like compiling python code with lisp compiler. Do not trust this translation until completion. ** 
 
-** このドキュメントは、数々の誤訳を含みます。翻訳を訂正が急がれるべきドキュメントです。**
+** このドキュメントは、数々の誤訳を含みます。翻訳の訂正が急がれるべきドキュメントです。**
 
-HPoC 2015
+<br>
+
+# HPoC 2015
 
 昨年われわれは、暗号通貨とCryptoeconomic のテクノロジーが主流のものとなるのを妨げる幾つかの技術的、経済的な難しい問題を叙述し、
 "Hard Problems of Cryptocurrency" という文書を掲示しました。
