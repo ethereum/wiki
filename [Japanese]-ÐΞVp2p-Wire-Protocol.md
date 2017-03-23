@@ -1,4 +1,4 @@
-Ethereum / Whisper 等を実行するノード間の p2p コミュニケーションは、既存の ÐΞV 技術や、[RLP](https://github.com/ethereum/wiki/wiki/RLP) のような標準規格を利用した wire-protocol によって管理されるよう設計されています。当ドキュメントはこのプロトコルを包括的に特定することを目的とします。
+Ethereum / Whisper 等を実行するノード間の p2p コミュニケーションは、既存の ÐΞV テクノロジーや、[RLP](https://github.com/ethereum/wiki/wiki/RLP) のような標準規格を利用した wire-protocol によって管理されるよう設計されています。当ドキュメントはこのプロトコルを包括的に特定することを目的とします。
 
 ### Low-Level
 
@@ -11,7 +11,7 @@ RLPx はパケットを送受信するための設備を提供します。RLPx �
 
 ### Payload Contents
 
-以上のコネクションに対し、RLP 符号化のされた、数々の異なる payload「乗客」の type があります。
+コネクションに対し、RLP 符号化のされた、数々の異なる payload「乗客」の type があります。
 この ''type'' はいつも RLP の最初のエントリによって決定され、integer として解釈されます。
 
 ÐΞVp2p は、基礎となる wire protocol 上に構築された任意のサブプロトコル ( _capabilities_ として知られたもの) をサポートする目的で設計されます。各サブプロトコルは、必要に応じ、message-ID 空間 の大きさ として与えられます（そのようなプロトコルはすべて、いくつ message-ID を必要とするのかを静的に特定しなければなりません。）
@@ -26,17 +26,17 @@ message-ID は、0x10からはじまるもの (0x00-0x10 は ÐΞVp2p messages �
 ### P2P
 
 **Hello**
-`0x00` [`p2pVersion`: `P`, `clientId`: `B`, [[`cap1`: `B_3`, `capVersion1`: `P`], [`cap2`: `B_3`, `capVersion2`: `P`], `...`], `listenPort`: `P`, `nodeId`: `B_64`] First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
+`0x00` [`p2pVersion`: `P`, `clientId`: `B`, [[`cap1`: `B_3`, `capVersion1`: `P`], [`cap2`: `B_3`, `capVersion2`: `P`], `...`], `listenPort`: `P`, `nodeId`: `B_64`] コネクション上で最初に送られるパケットで、双方から一度だけ送信されます。Hello が受信されるまで、ほかのメッセージは一切送信されないでしょう。
 * `p2pVersion` Specifies the implemented version of the P2P protocol. Now must be 1.
-* `clientId` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
-* `cap` Specifies a peer capability name as a length-3 ASCII string. Current supported capabilities are `eth`, `shh`.
-* `capVersion` Specifies a peer capability version as a positive integer. Current supported versions are 34 for `eth`, and 1 for `shh`.
-* `listenPort` specifies the port that the client is listening on (on the interface that the present connection traverses). If 0 it indicates the client is not listening.
-* `nodeId` is the Unique Identity of the node and specifies a 512-bit hash that identifies this node.
+* `clientId` は、クライアントソフトウェアの個体番号で、人が読みやすいように string としています。 (e.g. "Ethereum(++)/1.0.0").
+* `cap` は peer の capability (装備) の名前を特定するもので、長さ3 の ASCII string です。現在サポートされているものとしては、`eth`, `shh` があります。
+* `capVersion` は peer の capability (装備) のバージョンを特定するもので、正の integer です。現在サポートされているバージョンは、`eth` の 34 および、 `shh` の 1 です。
+* `listenPort` は、クライアントが listen (待機) するポートを特定します。（現在のコネクションのインターフェース上にのったものの中から選びます）もし、0 であれば、クライアントは listen (待機) していません。
+* `nodeId` はノードの個体認証で、512-bit のハッシュ値を特定し、ノードを識別します。
 
 **Disconnect**
-`0x01` [`reason`: `P`] Inform the peer that a disconnection is imminent; if received, a peer should disconnect immediately. When sending, well-behaved hosts give their peers a fighting chance (read: wait 2 seconds) to disconnect to before disconnecting themselves.
-* `reason` is an optional integer specifying one of a number of reasons for disconnect:
+`0x01` [`reason`: `P`] peer に対し、disconnection が執行されることを知らせます。; 受信されれば、直ちに peer は disconnect するのがよいでしょう。送信のとき、行儀のよいホストは、つながっている複数の peer に対して、disconnect するための相手の機会 (read: wait 2 seconds) を与えてから、自身を disconnect するものです。
+* `reason` は、オプショナルの integer で、disconnect の理由を次の中から一つ選びます:
   * `0x00` Disconnect requested;
   * `0x01` TCP sub-system error;
   * `0x02` Breach of protocol, e.g. a malformed message, bad RLP, incorrect magic number &c.;
@@ -65,13 +65,15 @@ message-ID は、0x10からはじまるもの (0x00-0x10 は ÐΞVp2p messages �
 
 ### Node identity and reputation
 
-The identity of a ÐΞVp2p node is a secp256k1 public key.
+あるひとつの ÐΞVp2p node の個体認証は、あるひとつの secp256k1 public key です。　
 
-Nodes are free to store ratings for given IDs (how useful the node has been in the past) and give preference accordingly. Nodes may also track node IDs (and their provenance) in order to help determine potential man-in-the-middle attacks.
-Clients are free to mark down new nodes and use the node ID as a means of determining a node's reputation.
+Node は自由に、与えられた複数の ID に対する評価レートを保存し、それに応じたパフォーマンスを与えることができます。
+Node は、man-in-the-middle 攻撃のポテンシャルを図るために、node ID をトラッキングしているかもしれません。
+クライアントは自由に、新しい node を書き記したり、node の評判を決定する手段として、node ID を使ったりすることが可能です。
 
 ### Session Management
 
-Upon connecting, all clients (i.e. both sides of the connection) must send a `Hello` message. Upon receiving the `Hello` message and verifying compatibility of the network and versions, a session is active and any other P2P messages may be sent.
+コネクション時、すべてのクライアント（つまり、コネクションの双方）は、`Hello` メッセージを送信しなければなりません。
+`Hello` メッセージ受信するときは、ネットワークとの親和性とバージョンを検証し、セッションがアクティブとなり、任意の P2P メッセージが送信されます。
 
-At any time, a Disconnect message may be sent.
+いつ何時でも、Disconnect メッセージは送信されます。
