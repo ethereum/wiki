@@ -1,24 +1,27 @@
-Ethereum / Whisper 等を実行するノード間の p2p コミュニケーションは、既存の ÐΞV 技術や、[RLP](https://github.com/ethereum/wiki/wiki/RLP) のような標準規格を利用した wire-protocol によって管理されるよう設計されています。 
-当ドキュメントはこのプロトコルをわかりやすく使用を定めることを目的とします。
+Ethereum / Whisper 等を実行するノード間の p2p コミュニケーションは、既存の ÐΞV 技術や、[RLP](https://github.com/ethereum/wiki/wiki/RLP) のような標準規格を利用した wire-protocol によって管理されるよう設計されています。当ドキュメントはこのプロトコルを包括的に特定することを目的とします。
 
 ### Low-Level
 
-ÐΞVp2p ノードは、RLPx という暗号化および認可をうけた transport protocol を使用してメッセージを送信することで、通信します。peer は、どのTCPポート上でも自由にコネクションすることができますが、デフォルトでは、30303 番ポートを利用します。
-TCP は、connection-oriented の媒体を提供しますが、ÐΞVp2p ノードは、パケット単位でコミュニケートします。
-Though TCP provides a connection-oriented medium, ÐΞVp2p nodes communicate in terms of packets.
+ÐΞVp2p ノードは、RLPx という暗号化され認証をうけた transport protocol を使用してメッセージを送信することで、通信します。
+peer は、どのTCPポート上でも自由に通信できますが、デフォルトでは、30303 番ポートを利用します。
+TCP は、connection-oriented の媒体を提供するのに対し、ÐΞVp2p ノードは、パケット単位でコミュニケートします。
 RLPx はパケットを送受信するための設備を提供します。RLPx に関して詳しくは [protocol specification](https://github.com/ethereum/devp2p/tree/master/rlpx.md) をご覧ください。 
 
-ÐΞVp2p ノードは、RLPx discovery protocol DHT を介して peer を発見します。peer コネクションは、クライアント特有の RPC API へ、端点である peer を供給することによっても、初期化することが可能です。
+ÐΞVp2p ノードは、RLPx discovery protocol DHT を介して peer を発見します。また、peer コネクションは、クライアント特有の RPC API へ、端点である peer を供給することによっても、初期化することが可能です。
 
 ### Payload Contents
-以上のコネクションに対し、RLP符号化のされた、数々の異なる payload「乗客」のタイプがあります。
-この ''type'' はいつもRLPの最初のエントリによって決定され、integer として解釈されます。
 
-ÐΞVp2p は、基礎となる wire protocol 上に構築された任意のサブプロトコル (_capabilities_ として知られたもの) をサポートする目的で設計されます。各サブプロトコルは、必要に応じて、message-ID space を最大限利用するかたちで与えられます（そのようなプロトコルはすべて、いくつ message ID を必要とするのかを静的に特定しなければなりません。）
+以上のコネクションに対し、RLP 符号化のされた、数々の異なる payload「乗客」の type があります。
+この ''type'' はいつも RLP の最初のエントリによって決定され、integer として解釈されます。
+
+ÐΞVp2p は、基礎となる wire protocol 上に構築された任意のサブプロトコル ( _capabilities_ として知られたもの) をサポートする目的で設計されます。各サブプロトコルは、必要に応じ、message-ID 空間 の大きさ として与えられます（そのようなプロトコルはすべて、いくつ message-ID を必要とするのかを静的に特定しなければなりません。）
 コネクションをし、`Hello` message を受信する間、双方の peer は、どのサブプロトコルを共有するのかについて同等の情報を保持し、
-message ID space の合成変換をもとに合意形成を得ることができます。
+message-ID 空間 の合成の上で、合意形成を得ることができます。
 
-Message IDs are assumed to be compact from ID 0x10 onwards (0x00-0x10 is reserved for ÐΞVp2p messages) and given to each shared (equal-version, equal name) sub-protocol in alphabetic order. Sub-protocols that are not shared are ignored. If multiple versions are shared of the same (equal name) sub-protocol, the numerically highest wins, others are ignored.
+message-ID は、0x10からはじまるもの (0x00-0x10 は ÐΞVp2p messages 用に予約されています) のコンパクト符号化とし、
+アルファベット順に並んだ各共有サブプロトコル（同じ名前かつ同じバージョンのもの）に付与されます。
+共有されないサブプロトコルは無視されます。もし、複数のバージョンが同じサブプロトコルとして共有されれば、数値の大きい方が勝ち、他は無視されます。
+
 
 ### P2P
 
