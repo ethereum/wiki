@@ -1,20 +1,14 @@
-暗号学において、形式であり、かつシステマティックなThe science of cryptography, which has existed to some degree for millennia but in a formal and systematized form for less than fifty years, can be most simply defined as the study of communication in an adversarial environment. In a similar vein, we can define cryptoeconomics as a field that goes one step further: the study of economic interaction in an adversarial environment. To distinguish itself from traditional economics, which certainly studies both economic interaction and adversaries, cryptoeconomics generally focuses on interactions that take place over network protocols. Particular domains of cryptoeconomics include:
+The science of cryptography, which has existed to some degree for millennia but in a formal and systematized form for less than fifty years, can be most simply defined as the study of communication in an adversarial environment. In a similar vein, we can define cryptoeconomics as a field that goes one step further: the study of economic interaction in an adversarial environment. To distinguish itself from traditional economics, which certainly studies both economic interaction and adversaries, cryptoeconomics generally focuses on interactions that take place over network protocols. Particular domains of cryptoeconomics include:
 
 1. オンライン上の信頼と評価のシステム
-
 2. 暗号化されたトークンと暗号通貨と、より一般的なデジタルのアセット
-
 3. 自動執行されるスマートコントラクト
-
 4. コンセンサスアルゴリズム
-
 5. アンチスパム・アンチ市民アタックのアルゴリズム
-
 6. コンピューターのリソース売買のための利益が循環するマーケットプレイス
-
 7. 分散形の社会福祉システム、互助システム
-
 8. 分散形の政府(営利または非営利）
+
 * Online trust and reputation systems
 * Cryptographic tokens / cryptocurrencies, and more generally digital assets
 * Self-executing "smart" contracts
@@ -46,7 +40,6 @@ In traditional applied cryptography, security assumptions tend to look something
 1. どの個人も、全てのコンピュータリソースの25%以上を持って、システムを壊すことが出来ない
 2. どの個人も、全ての資産の25%以上を持ってシステムを壊すことが出来ないこと。（Proof of stake)
 3. ある種の保証を行うためのコンピュータリソースの総量に対して支払われるべき費用の総額が、納得できる額を遥かに超えてしまわないこと
-
 4. 互助主義者や、間抜けものや、政治的、個人的にシステムに反対するものがいることは否定できないが、大多数のユーザーは、論理的に経済的な合理性を中心として行動するであろうこと。l
 5. The number of users of a system is large, and users can appear or disappear at any time, although at least some users are persistent
 6. Censorship is impossible, and any two nodes can send messages to each other relatively quickly.
@@ -61,7 +54,6 @@ There will also be additional security assumptions specific to certain problems.
 
 The decentralized consensus technology used in Bitcoin is impressive to a very large extent because of its simplicity. A 30-year-old problem in computer science was solved via a mechanism which is simple to implement, and so simple to understand that even some semi-technical teenagers can describe the entirety of how it works. However, at the same time the technology in its current form is very limited. The scalability in Bitcoin is very crude; the fact that every full node needs to process every transaction is a large roadblock to the future success of the platform, and a factor preventing its effective use in micropayments (arguably the one place where it is the most useful). Timestamping is flawed, and proof-of-computation algorithms are very limited in the types of computation that they can support. The fact that the original solution was so "easy", however, suggests that there is still a large opportunity to improve, and there are a number of directions in which improvement could be directed.
 
-### 1. Blockchain Scalability
 ### 1. ブロックチェーンのスケーラビリティ
 
 現在最も大きなブロックチェーンの問題は、
@@ -81,7 +73,7 @@ Ideally, a blockchain design should exist that works, and has similar security p
 * Ideally, after some number of blocks (perhaps logarithmic in the total size of the network) every transaction should require 51% of network hashpower to reverse. However, solutions where transactions can pay very small fees for a lower "level" of security are acceptable, though one should take care to avoid situations where an attacker can profit by performing one attack to reverse very many small transactions at the same time
 * Ideally, the solution should work for and maintain as many properties as possible of a generalized account-based blockchain (eg. Ethereum), though solutions specific to currency, domain registrations or other specialized use caes are acceptable
 
-### 2. Timestamping
+
 ### 2. タイムスタンプ
 
 
@@ -100,8 +92,9 @@ However, this solution requires an important ingredient: the blockchain must be 
 * The system should exist without relying on any kind of proof-of-work.
 * External systems may end up relying on this system; hence, it should remain secure against attackers controlling < 25% of nodes regardless of incentives.
 
-### 3. Arbitrary Proof of Computation
-### 3. 人為的なコンピュテーションの証拠
+
+### 3. ありとあらゆる Proof of Computation について
+
 Perhaps the holy grail of the study zero-knowledge proofs is the concept of an arbitrary proof of computation: given a program P with input I, the challenge is to create a zero-knowledge proof that you ran P with input I and received output O, such that the proof can be verified quickly (ie. in polylogarithmic or ideally constant time) even if the original computation took a very large number of steps to complete. In an ideal setup, the proof would even hide the value of I, just proving that you ran P with some output with result O, and if I needs to be made public it can be embedded into the program. Such a primitive, if possible, would have massive implications for cryptocurrency:
 
 1. ブロックチェーンのスケーラビリティは、マイナーが一連のトランザクションを含めねければ、一層簡単に解くことが出来る。
@@ -123,8 +116,9 @@ There is a large amount of existing research on this topic, including a protocol
 * The runtime of `POC_VERIFY` should be either constant or logarithmic in the number of steps, and at most linear in the maximum memory usage of the program.
 * The protocol should require no trusted third parties. If TTPs are required, the protocol should include a mechanism for simulating one efficiently using secure multiparty computation.
 
-### 4. Code Obfuscation
+
 ### 4. コードの不明瞭さ
+
 どのようにシンプルに冗長に、双方のキーの暗号化のために、よくテストされたアルゴリズムに暗号化するかについては、
 古くから我々は良く知ってきた。同じキーは暗号化と復号化に必要とされる場所で、そして、公開鍵暗号では、
 同じ鍵は
@@ -148,9 +142,9 @@ PがAから来たのかBから北のかを分かることは出来ない。
 
 For many years now we have known how to encrypt data. Simple, robust and well-tested algorithms exist for both symmetric key encryption, where the same key is needed to encrypt and decrypt, and public key encryption, where the encryption key and decryption key are different and one cannot be derived from the other. However, there is another kind of encryption that can potentially be very useful, but for which we currently have no viable algorithm: the encryption of programs. The holy grail is to create an obfuscator `O`, such that given any program P the obfuscator can produce a second program `O(P) = Q` such that `P` and `Q` return the same output if given the same input and, importantly, `Q` reveals no information whatsoever about the internals of `P`. One can hide inside of `Q` a password, a secret encryption key, or one can simply use `Q` to hide the proprietary workings of the algorithm itself.
 
-## 5 Hash-Based Cryptography 
-暗号通貨の境界線にみ
-量子コンピューターの問題である。現在、量子コンピュータは余りにも実現困難であるようにも見えなくなってきている。
+## 5 Hash-Based Cryptography
+
+現在、量子コンピュータは余りにも実現困難であるようにも見えなくなってきている。
 全ての量子コンピューターもしくは"断熱型の量子コンピューター",は、
 極端に限られたプログラムを極めて速い速度で解くことを得意としている。
 しかしながら、起こりにくいこととはいえ、米軍は既に量子コンピューターを手に入れているかもしれない。
@@ -195,6 +189,7 @@ ASICが理想的には、任意のコンピュテーションをシンプルなC
 
 
 ### 8. Proof of Stake
+
 マイニングの中央集権化の解決策の他のアプローチには、マイニングを一切行わないことがある、そしてそれぞれのノードの重さを図る他のメカニズムによってコンセンサスに至る。
 現在最も有名な代替案はProof of Stake である。即ち、"CPUパワーの1つのユニット"としてのコンセンサスのモデルを扱う代わりに、
 1つの投票が、1津の通貨のユニットとしての1つのボートとなる。
