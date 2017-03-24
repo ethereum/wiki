@@ -12,9 +12,10 @@
 * Dapp の中で、リアルタイムでない僅かな情報もしくは普通の相互会話を提供するようなもの。
 例として、小さなチャット部屋があります。
 
-* DApps that need to provide dark (plausible denial over perfect network traffic analysis) comms to two correspondents that know nothing of each other but a hash. This could be a DApp for a whistleblower to communicate to a known journalist exchange some small amount of verifiable material and arrange between themselves for some other protocol (Swarm, perhaps) to handle the bulk transfer.
+* DApps の中で、ブラックな（ネットワーク全解析で得た尤もらしい情報をもとに得た「否定」に関する（密告などの））コミュニケーションを、ハッシュ値以外の互いの情報を知らない二人ができるようにするもの。これは、例えば、内部告発者が著名なジャーナリストとコミュニケーションし、少量の確認材料を交換することで、その本体（密告文、密告データなど）を取り扱うために別のプロトコルへ移動するお膳立てをするような、DApp が考えられるでしょう。
 
-In general, think transactions, but without the eventual archival, any necessity of being bound to what is said or automated execution & state change.
+一般的には、取引（成果物となる文書は除きます）や、過去の言及に遡る必要があるもの、あるいは自動執行と状態変化、といったものを考えればよいでしょう。
+
 
 ### Specs
 
