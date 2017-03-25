@@ -19,22 +19,23 @@
 
 ### Specs
 
-* **Low-level** API only exposed to DApps, never to users.
-* **Low-bandwidth** Not designed for large data transfers.
-* **Uncertain-latency** Not designed for RTC.
-* **Dark** No reliable methods for tracing packets or 
-* Typical usage:
+* **Low-level**: API は DApp が利用するもので、ユーザーが利用するものではありません。
+* **Low-bandwidth** 大量のデータ転送のための設計ではありません。
+* **Uncertain-latency** RTCのための設計ではありません。
+* **Dark** パケットのトラッキングに利用するものではありません。 
+* 典型的な使用方法:
   * Low-latency, 1-1 or 1-N signalling messages.
   * High latency, high TTL 1-* publication messages.
 
-Messages less than 64K bytes, typically around 256 bytes.
+Message は 64K bytes より小さく、典型的なものとしては約 256 bytes です。
 
 ### Existing solutions
 
-* UDP: Similar in API-level, native multicasting. No TTL, security or privacy safeguards.
-* [0MQ](http://zeromq.org/): A distributed messaging system, no inherent privacy safeguards.
-* [Bitmessage](https://bitmessage.org/wiki/Main_Page): Similar in the basic approach of P2P network exchanging messages with baseline PKI for dark comms. Higher-level (e-mail replacement, only "several thousand/day", larger mails), fixed TTL and no hinting to optimise for throughput. Unclear incentivisation.
-* [TeleHash](https://github.com/telehash/telehash.org/blob/master/network.md#paths): Secure connection-orientated RTC comms. Similar in approach to BitTorrent (uses modified Kademila tech), but rather than discovering peers for a given hash, it routes to the recipient given its hash. Uses DHT to do deterministic routing therefore insecure against simple statistical packet-analysis attacks against a large-scale attacker. Connection oriented, so no TTL and not designed for asynchronous data publication.
+* UDP: API レベルで類似している。本質的に multicast するための仕様。TTL や、security、privacy safeguard といった仕様はない。
+* [0MQ](http://zeromq.org/): 分散メッセージシステムの一つ。privacy safeguard は内在しない。
+* [Bitmessage](https://bitmessage.org/wiki/Main_Page): これは、P2P ネットワークが秘密の会話をするのに公開鍵暗号書名を基準に、メッセージをやりとりするという、基本的な方法と似ています。より高いレベルでは（ e-mail の代わりとなりますが、ただし数千ものメールをやりとりする場合のみ ）、TTL が固定され、通信データを optimise する機能はありません。これを利用する動機付けは不明瞭です。
+* [TeleHash](https://github.com/telehash/telehash.org/blob/master/network.md#paths): secure な connection-oriented RTC comms（匿名のコミュニケーション） です。BitTorrent (uses modified Kademila tech) と方法が似ていますが、与えられたハッシュに対して peer をみつけるというよりかはむしろ、ハッシュ値が付与された受信者を辿ります。DHT を使用して、決定論的 routing を行います。そのため、大規模攻撃者とは性質の異なる、シンプルな統計的パケット解析攻撃に対してのセキュリティはありません。
+connection oriented であるため、TTL や非同期データ発信のための設計はありません。
 * [Tox](https://github.com/irungentoo/toxcore/blob/master/docs/updates/DHT.md): Higher-level (IM & AV chat) replacement.
 
 ### Basic Design
