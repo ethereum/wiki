@@ -45,8 +45,9 @@ Uses the `"shh"` protocol string of ÐΞVP2P.
 Rest coming soon, once I've finished prototyping. Gav.
 
 
+<hr>
 
------ 以下、英語構文、プロトコルの説明ともに厳格なものでなく、翻訳を中断します -----
+以下、英語構文が厳格でなく、翻訳を中断しています
 
 ### Considerations for Defeating Traffic Analysis
 
