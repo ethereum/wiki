@@ -46,7 +46,7 @@ Rest coming soon, once I've finished prototyping. Gav.
 
 
 
------ 以下、英語構文が厳格でなく、プロトコルの説明も曖昧な箇所が見られ、翻訳を中断しています -----
+----- 以下、英語構文、プロトコルの説明ともに厳格なものでなく、翻訳を中断します -----
 
 ### Considerations for Defeating Traffic Analysis
 
