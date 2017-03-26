@@ -49,6 +49,8 @@ Rest coming soon, once I've finished prototyping. Gav.
 
 以下、厳格な英語構文が見られないため、原文を掲載し、部分的翻訳に止めます。
 
+<hr>
+
 ### Considerations for Defeating Traffic Analysis
 
 
