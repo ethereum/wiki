@@ -47,7 +47,7 @@ Rest coming soon, once I've finished prototyping. Gav.
 
 <hr>
 
-以下、英語構文が厳格でなく、翻訳を中断しています
+以下、厳格な英語構文が見られないため、原文を掲載し、部分的翻訳に止めます。
 
 ### Considerations for Defeating Traffic Analysis
 
@@ -60,19 +60,69 @@ Bitmassage プロトコルは、メッセージをネットワーク上で、見
 上に上げているものでその他のものは全て、とりわけ、メッセージの発信地と到達地を隠すためのどんな手段も持ち合わせていません。
 私は、送信者、受信者の所在を隠し、転送中に、受信者か送信者、もしくは両方の特定をすることができなくなるようにすることこそが、Whisper protocol の核となる題材であると、考えています。
 
-Tor system は、二つのノードの間で、たとえ他方の所在がわからなくとも、コネクションを設営することができ、その裏では、Rendezvous protocol が使用されています。その仕組みは、すでにご存知の方も多いと思われますが、そこで起こることは、ある隠れたサービス（TCP/IP protocol に置ける port で待機するサーバと同等のもの）が、ランダムに一つの数字を選び、（たいては6だったと思います）すなわち6つの 'introducer' node  を選びます。
+Tor system は、二つのノードの間で、たとえ他方の所在がわからなくとも、コネクションを設営することができ、その裏では、Rendezvous protocol が使用されています。
 
+その仕組みは、すでにご存知の方も多いと思われますが、そこで起こることは、ある隠れたサービス（TCP/IP protocol における port で待機するサーバと同等のもの）が、一つの数字を選び、（たいては6だったと思います）すなわち6つの 'introducer' node  をランダムに選びます。
 
-Most readers of this will already understand how it works, but what happens is that a hidden service (the equivalent of a server listening on a port in the TCP/IP protocol) selects at random a number (I think, usually 6) 'introducer' nodes. In order to do this it establishes the standard 3-hop chain to each of the introducers, and when a user wants to establish a connection with a hidden service, they propagate a request to connect with hidden service that is associated with a particular public key. I'm not sure about how this request is propagated, obviously it would also have to be done through a circuit or the rendezvous introducer node knows who might be about to establish a circuit. Once one's client knows a valid rendezvous node it then establishes a connection to it and requests to have traffic relayed through its' circuit to the hidden service.
+Most readers of this will already understand how it works, but what happens is that a hidden service (the equivalent of a server listening on a port in the TCP/IP protocol) selects at random a number (I think, usually 6) 'introducer' nodes. 
 
-I think there really isn't a better way to implement 'dark' parts of the connection protocol, because there has to be a different identity for a relay node as a client node, the same principle applies in Ethereum. However, using the rendezvous, it again makes possible something for connections between nodes that know each other (though they don't know the account or identity of the initiator) something other than the uniform 3 hop circuit. For generating a circuit to an exit node in Tor, it is of no danger that your client knows the identity of the relays in each hop along the way, but to do that *within* the network compromises location obfuscation security, tying your ethereum identity with your router identity (I think it may need to be explicitly pointed out that routing function is something that Ethereum nodes will perform).  When connecting to a rendezvous, you do not thereby reveal your location to the rendezvous, and the rendezvous does not know the location of the hidden service either, and establishing these connections only requires a public directory to be created for routers. It is not consequential information for an attacker and can be revealed directly by probing for a relevant server at your IP addresses anyway.
+introducer 間を 3-hop となるように chain を作成し、あるユーザがコネクションを確立しようとすると、introducer は、ある公開鍵で繋がる隠れたネットワークサービスにコネクションのリクエストを伝播します。
+
+In order to do this it establishes the standard 3-hop chain to each of the introducers, 
+and when a user wants to establish a connection with a hidden service, 
+they propagate a request to connect with hidden service that is associated with a particular public key. 
+
+このリクエストの伝播の仕方は、私はあまり詳しくないのですが、明らかに、ある回路を通して行われるか、
+さもなければ、その、rendezvouce introducer node が、誰がその回路を作ろうとしているのかを知り（得）ます。
+
+I'm not sure about how this request is propagated, 
+obviously it would also have to be done through a circuit 
+or the rendezvous introducer node knows who might be about to establish a circuit. 
+
+一度クライアントが有効な一つの　redezvous node を知れば、rendezvous node へのコネクションを設立し、隠れたネットワークへ、その回路を通して、交通をリレーするようリクエストします。
+
+Once one's client knows a valid rendezvous node it then establishes a connection to it and requests to have traffic relayed through its' circuit to the hidden service.
+
+コネクションプロトコルの 'dark' な部分を実装するいい方法は、他にないと思います。
+というのは、client node としての relay node には別々の 識別番号 があるべきで、これと同じ原理が Ethereum に当てはまります。
+ 
+I think there really isn't a better way to implement 'dark' parts of the connection protocol, 
+because there has to be a different identity for a relay node as a client node, the same principle applies in Ethereum. 
+
+しかし、rendezvous を使えば、一様な 3 hop 回路より他についての情報はお互いに知っている（しかし、initiator の個体認証やaccountについては知らない）ノードでは、コネクションを再び行うことが可能です。
+
+However, using the rendezvous, it again makes possible something for connections between nodes that know each other (though they don't know the account or identity of the initiator) something other than the uniform 3 hop circuit. 
+
+Tor で exit node への回路を生成するには、あなたのクライアントがその途中の各 hop における 中継ノード の identity を知るということは危険のない状態から起因するものであるが、しかし、それをそのネットワーク内部で行うことは所在がありまいなセキュリティを確約するもので、そのことにより、あなたの ethereum identity と router identity が結びつけられます。
+
+For generating a circuit to an exit node in Tor, it is of no danger that your client knows the identity of the relays in each hop along the way, but to do that *within* the network compromises location obfuscation security, tying your ethereum identity with your router identity (I think it may need to be explicitly pointed out that routing function is something that Ethereum nodes will perform).  
+
+rendezvous に接続するときは、あなたは、rendezvous にたいし、自分の所在を明らかにせず、rendezvous は hidden service の所在でさえ知らず、これらの接続を確立するのに必要なものは、router のために作られた一つの公共ディレクトリだけです。
+それは、攻撃者に対して、有益な情報でなく、あなたのIP address に関連するサーバーを解明することによって直接的に明らかになるものです。
+
+When connecting to a rendezvous, you do not thereby reveal your location to the rendezvous, and the rendezvous does not know the location of the hidden service either, and establishing these connections only requires a public directory to be created for routers. It is not consequential information for an attacker and can be revealed directly by probing for a relevant server at your IP addresses anyway.
+
+私がここでの議論に対し行いたい貢献は以下の2点です。
 
 The contribution I would like to make to the discussion is this: 
 
+1. whisper protocol は Tor のような所在を不明にするシステムを通じて動作するべきでということです。こればかりでなく、whisper protocol は、それゆえに Tor で用いられているような、隠れたサービスのための rendezvous protocol のような形式を使用する必要もあるはずです。
+
 1. It is implied that the whisper protocol has to work through a system of location obfuscation relays like Tor. Not only this, but it must therefore also be using some form of the rendezvous protocol used in Tor for hidden services.
+
+2. しかしながら、Tor がまずはじめに、 web server が あなたの IP address をログに書き留めることをやめさせ、次に rendezvous protocol の形式で所在不明の内容物の内部で TCP/IP routing と等価なものを実装する能力を加えましたが、
+HTTP で使われるような 一つの session (connectionless) protocol というよりかはむしろオープンであるようなコネクションと 3 hop nodes の一様な使用を促すのが、最初の目的の結果として生まれたものです。
+私の提案は、特定のコネクションの需要に依存して、所在を隠蔽するプロセスをかき混ぜることで、悪意のあるノードがある攻撃者のためにデータ収集をしているような状況においてでも交通解析が一層見通しが悪くなるようになります。 
 
 2. However, as Tor was originally designed first to be a way to stop webservers logging your IP address in association with a session cookie and record, then secondarily added the ability to implement the equivalent of TCP/IP routing (listening ports) within the context of location obfuscation in the form of the rendezvous protocol, it is an artifact, a legacy of the first purpose that leads to the uniform utilisation of 3 hop nodes and connections that remain open rather than a session (connectionless) protocol like used in HTTP. What I suggest is that, depending on the needs of a particular connection, there can be occasion to mix up the obfuscation process so that it is further obscured from traffic analysis in the case of malicious nodes performing data gathering for an attacker. 
 
-Instead of a connection like is normal between a browser and web server, for example, which is usually left open because of the latency of reestablishing such a connection, to make further requests, instead there can be a session cookie, and then you can alter the way your client sends data through the 'connection' to a hidden node. The connection, between two routing nodes, could be direct, 1 proxy intermediary, 2, or 3, it could use shared secrets instead and route fragments of datagrams across multiple heteregenous circuits, as well, and the receiver would then wait for sufficient fragments to assemble the original packets. Indeed, it could be possible in the case of (not quite related to whisper, but to the distributed data storage protocol) larger streams, break the stream up into parts and alter the obfuscation method through the process, further confusing the traffic analysis data.
+ブラウザと web server の間における普通のコネクションの代わりに、例えば、再接続の可能性のために、普通はオープンであって、
+さらにリクエストをするために、一つのセッションクッキーがありえますがその代わりに、そして、ある一つの hidden node への 'コネクション' を通して、あなたのクライアントがデータを送信するその方法を代替することができます。
+
+Instead of a connection like is normal between a browser and web server, for example, which is usually left open because of the latency of reestablishing such a connection, to make further requests, instead there can be a session cookie, and then you can alter the way your client sends data through the 'connection' to a hidden node. 
+
+
+The connection, between two routing nodes, could be direct, 1 proxy intermediary, 2, or 3, it could use shared secrets instead and route fragments of datagrams across multiple heteregenous circuits, as well, and the receiver would then wait for sufficient fragments to assemble the original packets. 
+Indeed, it could be possible in the case of (not quite related to whisper, but to the distributed data storage protocol) larger streams, break the stream up into parts and alter the obfuscation method through the process, further confusing the traffic analysis data.
 
 The same considerations apply, fundamentally, the only differences have to do with the size of the data being transmitted, whether it's for a messaging system or distributed filesystem. The other criteria for deciding how to scramble the routing is latency. For some purposes one wants lower latency, and other purposes, greater security is vitally important. When in the process streams are fragmented into parts, it can also increase security to apply an All Or Nothing Transform to the entire package, then if part is intercepted but not the complete message, it is impossible to assemble the data, not even for cryptanalysis purposes.
