@@ -1,19 +1,21 @@
 この項では、 Whisper Wire Specification に加え、最初の proof-of-concept にたいし、Whisper protocol の全貌を詳細に記し、最終設計への
 見通しを定めます。プロトタイプに磨きをかけるようにして、Whisper protocol の枠組みの中で、進化させたものです。
 それにより、仕様に準拠した Whisper の実装を開発することができるはずです。このドキュメントは、基礎となる仕様のみを与えることを目的とします。Whisper の実装へとつながる多くの側面はゲーム理論によるもので、仕様に置いて処方されているものがベストなものではなく、
-むしろ、個々の開発チームのためが決定できるように残してあります。
+むしろ個々の開発チームが選択できるようにしています。
 
 ### What Whisper Is (and Is Not)
 
-Whisper は DHTs と datagram メッセージシステム（例. UDP）両方の側面を合体させたものです。ですので、これら両方と似たものであったり、比較できるものであったりし、質量とエネルギーの双対関係に似ていないともいいません。（基礎的かつ美しい自然の原理に対する純粋な冒涜行為であることに関しては物理学者にお詫び申し上げます）
+Whisper は DHT と datagram メッセージシステム（例. UDP）両方の側面を合体させたものです。ですので、これら両方と似たものであったり、比較できるものであったりします。質量とエネルギーの双対関係に似ていなくもありません。（基礎的かつ美しい自然の原理に対する純粋な冒涜行為であることに関しては物理学者にお詫び申し上げます）
 
 Whisper combines aspects of both DHTs and datagram messaging systems (e.g. UDP). As such it may be likened and compared to both, not dissimilar to the matter/energy duality (apologies to physicists for the blatant abuse of a fundamental and beautiful natural principle).
 
 Whisper は、純粋な identity(身元) に基づいたメッセージシステムです。
-Whisper は、低級の（アプリケーションを特定しない）ものではありますが、特徴をもっていますが、簡単にアクセス可能な低級ハードウェアの要素、特性によって偏りがないような、特に、シンギュラーな（特異な）端点をもたずに、簡単にアクセス可能な API です。
+Whisper は、低級の（アプリケーションを特定しない）ものですが、簡単にアクセス可能な API です。
+これは、低級ハードウェアの要素および特性によって偏りがないような、とりわけシンギュラーな（特異な）端点をもちません、
+
 Whisper is a pure identity-based messaging system. Whisper provides a low-level (non-application-specific) but easily-accessible API without being based upon or prejudiced by the low-level hardware attributes and characteristics, particularly the notion of singular endpoints.
 
-Whisper は、「 entry 毎に設定可能な TTL と、署名や暗号化の慣習（道具）を伴った、ひとつの DHT 」として捉えることができるのかもしれません。このような考え方で、Whisper は、複数 (のkey）からの参照をもつ、唯一のものとはかぎらない複数の entry を保持する能力を提供します。
+Whisper は、言い換えると「 entry 毎に設定可能な TTL と、署名や暗号化の慣習（道具）を伴った、ひとつの DHT 」として捉えることができるのかもしれません。このような考え方で、Whisper は、複数 (のkey）からの参照をもつ、唯一のものとはかぎらない複数の entry を保持する能力を提供します。
 
 Alternatively, Whisper may be likened to a DHT with a per-entry configurable TTL and conventions for the signing and encryption of values. In this sense, Whisper provides the ability to have multiply-indexable, non-unique entries (i.e. the same entry having multiple keys, some or all of which may be the same as other entries).
 
