@@ -20,7 +20,6 @@ Answers to questions about Ethereum
   * [Where can I learn Solidity?](#where-can-i-learn-solidity)
   * [Where can I learn Serpent?](#where-can-i-learn-serpent)
   * [Where can I learn LLL?](#where-can-i-learn-lll)
-  * [Where can I learn Solidity?](#where-can-i-learn-solidity)
   * [How to test contracts?](#how-to-test-contracts)
   * [How to deploy contracts automatically?](#how-to-deploy-contracts-automatically)
   * [Where to find example contracts?](#where-to-find-example-contracts)
