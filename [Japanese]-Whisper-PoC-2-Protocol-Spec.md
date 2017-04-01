@@ -27,7 +27,7 @@ Alternatively, Whisper may be likened to a DHT with a per-entry configurable TTL
 As such, Whisper is not a typical communications system. It is not designed to replace or substitute TCP/IP, UDP, HTTP or any other traditional protocols; it is not designed to provide a connection oriented system, nor for simply delivering data betwixt a pair of specific network endpoints; it does not have a primary goal of maximising bandwidth or minimising latency (though as with any transmission system, these are concerns).
 
 Whisper は、新しいパラダイム化におけるアプリケーション開発のために特別に設計された新しいプロトコルです。
-それは徹底的に、効率的かつ容易な複製や発信をするために設計されています。同時に、低級の部分非同期コミュニケーションは重要な一つのも目標です。価値の低い交通の低減あるいは後回しにすることがもう一つの目標です（これはQoSの向上を探訪するようなものです）。
+それは徹底的に、効率的かつ容易な複製や発信をするために設計されています。同時に、低級の部分非同期コミュニケーションは一つの重要な目標です。価値の低い交通の低減あるいは後回しにすることがもう一つの目標です（これはQoSの向上を探訪するようなものです）。
 それは、大規模かつたくさんのデータ探索、信号による交渉や、適切な転送を必要とする次世代型分散アプリケーション（ÐApp）を構築するときに用いる、必要最低限な構成かつ完全なプライバシーの合理的保証が期待される、建築資材となるように設計されています。
 
 Whisper is a new protocol designed expressly for a new paradigm of application development. It is designed from the ground up for easy and efficient multi-casting and broadcasting. Similarly, low-level partially-asynchronous communications is an important goal. Low-value traffic reduction or retardation is another goal (which might also be likened to the quest for QoS). It is designed to be a building block in next generation ÐApps which require large-scale many-to-many data-discovery, signal negotiation and modest transmissions with an absolute minimum of fuss and the expectation that one has a very reasonable assurance of complete privacy.
