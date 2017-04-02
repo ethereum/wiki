@@ -34,6 +34,8 @@ Whisper is a new protocol designed expressly for a new paradigm of application d
 
 ### Pitch-Black Darkness
 
+Whisper は、DAppコンテンツと究極的にはユーザアクティビティに関し,リークする情報の量をユーザが設定できる、という理念に基づいて動作します。情報のリークについて理解するには、単なる暗号化と、*darkness*(不透明化)を区別して考えることが重要です。
+多くのプロトコルでは、これら双方の p2p まわりあるいは従来型サーバクライアント方式まわりの設計は、ある水準の暗号化を提供します。いくつかは、暗号化方式はプロトコルの本質的な部分で、単独で適用され、その根本的な要求に答えます。非中央集約化と暗号化は、倫理的な「ポスト・スノーデン期」
 Whisper operates around the notion of being user-configurable with regard to how much information it leaks concerning the ÐApp content and ultimately, the user activities. To understand information leakage, it is important to distinguish between mere encryption, and *darkness*. Many protocols, both those designed around p2p and more traditional client/server models provide a level of encryption. For some, encryption forms an intrinsic part of the protocol and, applied alone, delivers its primary requirement. While decentralising and encrypting is a great start on building a legitimately "post-Snowden" Web, it is not the end.
 
 Even with encrypted communications, well-funded attackers are still able to compromise ones privacy, often quite easily. Bulk metadata collection becomes the new battleground, and is at once dismissed as a privacy concern by authorities yet trumpeted as the Next Big Thing by big-data outfits. In the case of a simple client/server model, metadata betrays with which hosts one communicates - this is often plenty enough to compromise privacy given that content is, in many cases, largely determinable from the host.
