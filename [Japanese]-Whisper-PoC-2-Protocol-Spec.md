@@ -35,14 +35,28 @@ Whisper is a new protocol designed expressly for a new paradigm of application d
 ### Pitch-Black Darkness
 
 Whisper は、DAppコンテンツと究極的にはユーザアクティビティに関し,リークする情報の量をユーザが設定できる、という理念に基づいて動作します。情報のリークについて理解するには、単なる暗号化と、*darkness*(不透明化)を区別して考えることが重要です。
-多くのプロトコルでは、これら双方の p2p まわりあるいは従来型サーバクライアント方式まわりの設計は、ある水準の暗号化を提供します。いくつかは、暗号化方式はプロトコルの本質的な部分で、単独で適用され、その根本的な要求に答えます。非中央集約化と暗号化は、倫理的な「ポスト・スノーデン期」
+多くのプロトコルでは、これら双方の p2p まわりあるいは従来型サーバクライアント方式まわりの設計は、ある水準の暗号化を提供します。いくつかは、暗号化方式はプロトコルの本質的な部分で、単独で適用され、その根本的な要求に答えます。非中央集約化と暗号化は、倫理的な「ポスト・スノーデン期」のウェブを構築する大きな一歩であり、これははじまりにすぎません。
+
 Whisper operates around the notion of being user-configurable with regard to how much information it leaks concerning the ÐApp content and ultimately, the user activities. To understand information leakage, it is important to distinguish between mere encryption, and *darkness*. Many protocols, both those designed around p2p and more traditional client/server models provide a level of encryption. For some, encryption forms an intrinsic part of the protocol and, applied alone, delivers its primary requirement. While decentralising and encrypting is a great start on building a legitimately "post-Snowden" Web, it is not the end.
 
+暗号化通信においてでさえ、資金の潤沢な攻撃者は、個人のプライバシーを危険に晒すことが可能で、それはしばしばいとも簡単に行われます。
+壊れたメタデータの集まりは、通信解読の新しい戦場となり、ビッグデータなどによる次世代型産業として公ではあるものの権威により、あるひとつのプライバシーへの関心は、重要視されなくなります。単純なサーバークライアント モデルでは、メタデータは通信するホストと共謀して裏切りを行うものです。
+通信の内容がホストから大部分決定可能な状況において、プライバシーが漏れるということは、これは、しばしば十分なデータ量があるということです。
 Even with encrypted communications, well-funded attackers are still able to compromise ones privacy, often quite easily. Bulk metadata collection becomes the new battleground, and is at once dismissed as a privacy concern by authorities yet trumpeted as the Next Big Thing by big-data outfits. In the case of a simple client/server model, metadata betrays with which hosts one communicates - this is often plenty enough to compromise privacy given that content is, in many cases, largely determinable from the host.
+
+非中央集約型のシステムにおいて、例えば、一つの基本となるルートを持たない（non-routed）しかし暗号化されたVoIPあるいはTelehashコミュニケーションでは、ネットワークを監視することでの攻撃では転送の特定の内容を決定することはできないかもhしれませんが、プロバイダ（ISP）の管理するIPアドレスログの助けがあれば、誰と、いつ、どれくらいの頻度で、通信しているのかを決定することができます。
+様々な法治国家におけるある種の法の適用に対し、これは十分に、関心に値するプライバシの欠如です。
 
 With decentralised communications systems, e.g. a basic non-routed but encrypted VoIP call or Telehash communication, a network packet-sniffing attacker may not be able to determine the specific content of a transmission, but with the help of ISP IP address logs they would be able to determine to whom one communicated, when and how often. For certain types of applications in various jurisdictions, this is enough to be a concerning lack of privacy.
 
+暗号化され、第三者のリレーノードを通して、パケットが転送される場合においてさえ、ある決まった（誰の目にも明らかな）転送情報の収集家であれば、ネットワーク定数の知識やネットワーク参加者が有限でしかないという事実を用いて、タイミングと帯域を選ぶことで、統計的攻撃をすることが可能です。（ノードは、同じ二つの peer の間で。極小のレイテンシでもってメッセージをやりとりする傾向にあるということや、同じリレーを介して通信しようとするノードのペアがすべてではないということなどのネットワークの知識があれば情報をあつめることができます。）
+この種の攻撃を和らげる方法はあり、複数の第三者のリレーノードを使い、ランダムにそれらを切り替える、あるいは厳格な枠組みを利用することですが、双方ともに不完全なもので、致命的な非効率性へとつながりかねません。
+
 Even with encryption and packet forwarding through a third relay node, there is still ample room for a determined bulk transmissions-collector to execute statistical attacks on timing and bandwidth, effectively using their knowledge of certain network invariants and the fact that only a finite amount of actors are involved (i.e. that nodes tend to forward messages between the same two peers with minimal latency and that there aren't all that many pairs of nodes that are trying to communicate via the same relay). There are ways to mitigate this attack vector, such as using multiple third-party relays and switching between them randomly or to use very strict framing, however both are imperfect and can lead to substantial inefficiencies.
+
+真の dark システムとは、完全にメタデータの漏洩を防ぐものです。
+その最大のセキュリティモードの操作において、Whisper は（帯域とレイテンシの相当な代償を得て）100%　dark な操作となります。
+さらによいことに、これは、peer間の仲介ノード（背骨となるすべてのネットワークをつなぐデバイス）からのメタデータの集合に適用されるだけでなく、より大変な "100% - 2" 攻撃 でさえ、除外します。つまり、晒されたネットワーク上のすべてのノードが、他の誰にも知られずに通信したい人たちのためのDAppを走らせるノードの組を保護するものです。
 
 A truly dark system is one that is utterly uncompromising in information leakage from metadata. At its most secure mode of operation, Whisper can (at a considerable cost of bandwidth and latency) deliver 100% dark operation. Even better, this applies not only for metadata collection from inter-peer conduits (i.e. backbone dragnet devices), but even against a much more arduous "100% - 2" attack; i.e. where every node in the network were compromised (though functional) save a pair running ÐApps for people that wanted to communicate without anybody else knowing.
 
