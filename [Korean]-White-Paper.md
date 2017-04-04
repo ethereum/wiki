@@ -50,7 +50,7 @@
 
 ### 상태변환시스템으로서의 비트코인(Bitcoin As A State Transition System)
 
-![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
+![statetransition.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/statetransition.png)
 
 기술적인 관점에서 보았을 때, 비트코인과 같은 암호화 화폐의 장부는 하나의 상태변환시스템(state transition system)으로 생각해볼 수 있다. 이 시스템은, 현재 모든 비트코인의 소유권 현황으로 이루어진 하나의 “상태(state)” 와 이 현재 상태와 트랜잭션을 받아서 그 결과로써 새로운 상태를 출력해주는 “상태변환함수(state transition function)”로 구성되어 있다. 표준 은행 시스템에 비유하자면 상태는 모든 계좌잔고표(balance sheet)이고 트랜잭션은 A에서 B로 $X를 송금하라는 요청이며, 상태변환함수에 의해 A의 계좌에서는 $X가 감소하고 B의 계좌에서는 $X가 증가한다. 만약 처음에 A의 계좌에 있는 금액이 $X 이하인 경우에는 상태변환함수가 에러를 리턴한다.
 이러한 상태변환를 비트코인 장부에서는 다음과 같이 정의할 수 있다.
