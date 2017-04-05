@@ -61,23 +61,58 @@ Even with encryption and packet forwarding through a third relay node, there is 
 A truly dark system is one that is utterly uncompromising in information leakage from metadata. At its most secure mode of operation, Whisper can (at a considerable cost of bandwidth and latency) deliver 100% dark operation. Even better, this applies not only for metadata collection from inter-peer conduits (i.e. backbone dragnet devices), but even against a much more arduous "100% - 2" attack; i.e. where every node in the network were compromised (though functional) save a pair running ÐApps for people that wanted to communicate without anybody else knowing.
 
 ### Routing and Lack Thereof
+基礎的なところでは、少なくともコンピュータサイエンスの現況では、あらゆるシステムは決定的ルーティングと darkness とを天秤にかけています。
+これらとWhisperとの違いのひとつはユーザーが、ルーティングの効率性とプライバシーとの天秤を設定することが出きるという事です、
 
 Fundamentally, at least with the present state of computer science, all systems present a trade off between the efficiency of deterministic (and thus supposedly optimal) routing and darkness (or, put another way, routing privacy). One of Whisper's differences is in providing a user-configurable trade-off between ones routing privacy and ones routing efficiency.
 
+最大限に dark となるように設定した状態では、Whisper ノードは全体として反応し、
+データを受けとって、記録をし、情報転送の利便性を最大化するようにして、それらを伝播します。これらの情報の集まりは *topic* として知られるものを含みます。Topic は、ひとつのセキュアな確率論的ルーティングの端点、あるいは、ひとつの DHT multi-key の双方どちらとも捉えることができます
+
 At its most dark, Whisper nodes are entirely reactive - they receive and record pieces of data and forward them trying to maximise the utility of information transmission to the peers. These pieces of information include what is known as a *topic*, which may be viewed both as a secure-probabilistic routing endpoint and/or a DHT multi-key.
+
+しかし、Whisper は二つの方法を確率論的に利用してルーティングができるようにも設計されています。双方が極小ルートの情報を破棄する方法と、双方が大規模のメタデータの集合を利用した統計的攻撃に例外的に耐性をもつ方法です。
 
 However, Whisper is also designed to be able to route probabilistically using two methods, both giving away minimal routing information and both being exceptionally resilient to statistical attacks from large-scale metadata collection.
 
-The first builds on the functionality of the ÐΞV-p2p backend. This backend provides the ability of Whisper to rate peers and, over time, probabilistically alter (or *steer*) its set of peers to those which tend to deliver useful (on-topic, timely, required for ones ÐApps to function) information. Ultimately, as the network evolves and the peer-set is steered, the number of hops between this peer and any others that tend to be good conduits of useful information (be they the emitters or simply the well-positioned hubs) will tend to 0.
+ひとつめの方法は、ÐΞV-p2p バックエンドの機能上に構築します。
+このバックエンドは、peer を評価し、時間軸上で役立つ情報を配達する peer の集合を確率論的に設定します。
+究極的に、ネットワークが成長し、peer の集合が切り替えられるにつれて、この peer と役立つ情報を提供する他のすべての peer との ホップ数 は０に収束します。
 
-Peer steering also provides the incentive for nodes to provide useful information to peers. The fear of being identified as an under-performing peer and thus being rotated out in favour of other nodes gives all nodes incentive to cooperate and share the most useful information. Useful in this case means provably difficult to author (use of a proof-of-work function helps here); a low time-to-live; and well-corresponding to any provided information on what might be useful (read on for more).
+The first builds on the functionality of the ÐΞV-p2p backend.
+This backend provides the ability of Whisper to rate peers and, over time, probabilistically alter (or *steer*) its set of peers to those which tend to deliver useful (on-topic, timely, required for ones ÐApps to function) information.
+Ultimately, as the network evolves and the peer-set is steered, the number of hops between this peer and any others that tend to be good conduits of useful information (be they the emitters or simply the well-positioned hubs) will tend to 0.
 
-The second is more dynamic. Nodes are informed by their ÐApps over what sort of topics are useful. Nodes are then allowed to advertise to each peer describing these topics. Topics may be described, using masks or Bloom filters, and thus in an incomplete manner, to reduce the amount of information leaked and make passive statistical attacks arbitrarily difficult to execute. The determination of the amount of information to give to peers is both made through an explicit setting from the user and through topic/traffic modelling: "Given the information coming from this peer and my models of information distribution made from total traffic, am I receiving the amount of useful valuable information that I would expect to receive? If so, narrowing it down with additional description information to the peer may be warranted."
+Peer の選定作業は、ノードが peer にとって役立つ情報を提供するインセンティブをも与えます。
+パフォーマンスの悪い peer として認識され、他のノードと取り替えられるという恐怖は、
+協力して、最も有用な情報を共有するインセンティブをすべてのノードに与えます。
+ここで意味するところの有用とは、簡単にだれでも著作できるようなものではない、ことで、
+（ここで proof of work が役に立ちます）、低い time-to-live と「有用であろう提供済みの他の情報にたいしても、性質の良い対等性をもつものです。
+
+Peer steering also provides the incentive for nodes to provide useful information to peers.
+The fear of being identified as an under-performing peer and thus being rotated out in favour of other nodes gives all nodes incentive to cooperate and share the most useful information.
+Useful in this case means provably difficult to author (use of a proof-of-work function helps here); a low time-to-live; and well-corresponding to any provided information on what might be useful (read on for more).
+
+ふたつめの方法はより、動的なものです。
+ノードは、DApp にから、どの種の topic が有用であるかを知らされます。
+そのとき、ノードは、その topic を記述する各 peer に対し、宣伝することを許可されます。
+topic は、マスクや Bloom filter を用いて、記述されるかもしれん。ですので、完全な方法とはいかないまでも、漏洩する情報を減らし、passove statistical 攻撃をすべて遂行困難にします。
+peer に与える情報量の決定は、ユーザが明示的に設定するか、topic/traffic モデルに基づいて行うかの双方です。「このpeer からの情報と、全トラフィックからの情報分散した私のモデルが与えられたとして、わたしは、期待しただけの価値ある情報量をえることができるのか？もし、得られるならば、情報の負荷によって、それの占める場所を狭めることが必要かもしれません。」
+
+The second is more dynamic.
+Nodes are informed by their ÐApps over what sort of topics are useful.
+Nodes are then allowed to advertise to each peer describing these topics. Topics may be described, using masks or Bloom filters, and thus in an incomplete manner, to reduce the amount of information leaked and make passive statistical attacks arbitrarily difficult to execute.
+The determination of the amount of information to give to peers is both made through an explicit setting from the user and through topic/traffic modelling: "Given the information coming from this peer and my models of information distribution made from total traffic, am I receiving the amount of useful valuable information that I would expect to receive? If so, narrowing it down with additional description information to the peer may be warranted."
+
+これらの設定は peer 毎、DApp 毎に設定することさえ可能です。
+proof of work アルゴリズムを最大限に利用し、DOS attack と everything-but 攻撃の方法による変化を最小化します。
 
 These settings can even be configured per-peer (more trusted/longer-lasting peers may be afforded greater amounts of information), and per-ÐApp (those ÐApps that may be more sensitive could be afforded less advertising than others). We can also make use of proof-of-work algorithms to minimise the changes of both DoS attacks and 'everything-but' attacks (where a peer is flooded with almost-useful information prompting it to give away more about its true requirements than it would do otherwise).
 
-Through combining and reducing the Blooms/masks, weaker Nth-level information can be provided to peers about their peers' interests, forming a probabilistic topic-reception vortex around nodes, the "topic-space" gravity-well getting weaker and less certain the farther away with the network hop distance from any interested peers.
+Bloom filter / mask を結合し、減らすことで、weaker Nth-level の情報が、peer に関心あるものを提供されることが可能で、確率論的にノードのあたりでtopicを吸収する渦を生成し、
+topic　空間の重力が弱まって、関心をもつどのpeerからもnetwork のホップ数で遠ざけられたものはほぼさだかではありません。
 
+Through combining and reducing the Blooms/masks, weaker Nth-level information can be provided to peers about their peers' interests, forming a probabilistic topic-reception vortex around nodes, the "topic-space" gravity-well getting weaker and less certain the farther away with the network hop distance from any interested peers.
 ## Basic Protocol Elements
 
 ### Envelopes
