@@ -8,14 +8,14 @@ var myIdentity = shh.newIdentity();
 
 shh.post({
   "from": myIdentity,
-  "topic": [ web3.fromAscii(appName) ],
+  "topics": [ web3.fromAscii(appName) ],
   "payload": [ web3.fromAscii(myName), web3.fromAscii("What is your name?") ],
   "ttl": 100,
   "priority": 1000
 });
 
 var replyWatch = shh.watch({
-  "topic": [ web3.fromAscii(appName), myIdentity ],
+  "topics": [ web3.fromAscii(appName), myIdentity ],
   "to": myIdentity
 });
 // could be "topic": [ web3.fromAscii(appName), null ] if we wanted to filter all such
@@ -52,7 +52,7 @@ broadcastWatch.arrived(function(m)
 `post` takes a JSON object containing four key parameters: 
 
 ```js
-shh.post({ "topic": t, "payload": p, "ttl": ttl, "workToProve": work });
+shh.post({ "topics": t, "payload": p, "ttl": ttl, "workToProve": work });
 ```
 
 - `topic`, provided as either a list of, or a single, arbitrary data items that are used to encode the abstract topic of this message, later used to filter messages for those that are of interest;
