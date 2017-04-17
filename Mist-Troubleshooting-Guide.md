@@ -38,7 +38,7 @@ You can optionally increase the log level by adding `--verbosity 5`.
 
 # Known problems
 
-## "Your computers time it out of sync!" error
+## "Your computers time is out of sync!" error
 If the time of your computers is deviated the wallet isn't able to connect with the network. The wallet is able to detect if time synchronisation is turned off. Please enable time synchronisation:
 - Windows: http://windows.microsoft.com/en-gb/windows/set-clock#1TC=windows-7
 - OSX: https://support.apple.com/kb/PH21911?locale=en_US
