@@ -2,10 +2,10 @@
 
 There are currently 8 implementations of the Ethereum protocol:
 
-* Go [http://github.org/ethereum/go-ethereum](http://github.org/ethereum/go-ethereum)
-* C++ [http://github.org/ethereum/cpp-ethereum](http://github.org/ethereum/cpp-ethereum)
-* Python [http://github.org/ethereum/pyethereum](http://github.org/ethereum/pyethereum)
-* Javascript [http://github.org/ethereum/ethereumjs-lib](http://github.org/ethereum/ethereumjs-lib)
+* Go [http://github.com/ethereum/go-ethereum](http://github.com/ethereum/go-ethereum)
+* C++ [http://github.com/ethereum/cpp-ethereum](http://github.com/ethereum/cpp-ethereum)
+* Python [http://github.com/ethereum/pyethereum](http://github.com/ethereum/pyethereum)
+* Javascript [http://github.com/ethereum/ethereumjs-lib](http://github.com/ethereum/ethereumjs-lib)
 * Java [https://github.com/ethereum/ethereumj](https://github.com/ethereum/ethereumj)
 * Haskell [https://github.com/jamshidh/ethereumH](https://github.com/jamshidh/ethereumH)
 * Rust (Parity) [https://github.com/ethcore/parity](https://github.com/ethcore/parity)
