@@ -97,7 +97,7 @@ We use an algorithm inspired by the [FNV hash](https://en.wikipedia.org/wiki/Fow
 FNV_PRIME = 0x01000193
 
 def fnv(v1, v2):
-    return (v1 * FNV_PRIME ^ v2) % 2**32
+    return ((v1 * FNV_PRIME) ^ v2) % 2**32
 ```
 
 ### Full dataset calculation
