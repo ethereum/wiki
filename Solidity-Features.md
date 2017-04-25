@@ -263,28 +263,3 @@ The EVM does not allow `CALL` to be used with variably-sized return values. Beca
 
 Memory-stored objects as local variables are correctly zero-initialised: Members of structs and elements of fixed-size arrays are recursively initialised, dynamic arrays are set to zero length. `delete x` assigns a new zero-initialised value to `x`.
 
-## Structs in Memory
-
-[PT](https://www.pivotaltracker.com/n/projects/1189488/stories/84119690)
-Structs can be passed around as function arguments, be returned from functions
-and created in memory.
-
-```js
-contract C {
-    struct S { uint a; uint b; }
-    struct A { uint x; uint y; S s; }
-    A data;
-    function f() internal returns (A) {
-        // Construct structs inline, pass to a function and return from it.
-        // Memory is allocated only once, pointers are passed around.
-        // Construction by member name is possible.
-        return g(A(5, 7, S({b: 1, a: 2})));
-    }
-    function g(A _a) internal returns (A) {
-        _a.s.b = 2;
-        data = _a; // performs a copy
-        return _a;
-    }
-}
-```
-
