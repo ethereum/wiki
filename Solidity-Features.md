@@ -39,22 +39,3 @@ generates the JSON interface
 and the Solidity interface
 `contract c{event ev(uint256 indexed a,uint256 b);}`.
 
-## SHA3 with arbitrary arguments
-
-**If this is still true (for `keccak256`), we need to add this to the official documentation.**
-
-[PT](https://www.pivotaltracker.com/story/show/86896766). `sha3()` can now take an arbitrary number and type of arguments.
-```js
-contract c {
-  function c()
-  {
-      val2 = 123;
-      val1 = sha3("foo"); // sha3(0x666f6f)
-      val3 = sha3(val2, "bar", 1031); //sha3(0x7b6261720407)
-  }
-  uint256 val1;
-  uint16 val2;
-  uint256 val3;
-}
-```
-
