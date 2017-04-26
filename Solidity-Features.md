@@ -58,18 +58,3 @@ contract c {
 }
 ```
 
-## Inline members initialization
-
-**This point seems to be missing from the official documentation.**
-
-[PT](https://www.pivotaltracker.com/story/show/84982976) Inline members can be initialized at declaration time.
-```js
-contract test {
-  function test(){
-    m_b = 6;
-  }
-  uint m_a = 5;
-  uint m_b;
-}
-```
-
