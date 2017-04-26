@@ -134,26 +134,3 @@ contract Test {
 ```
 the ABI interface for Poo is Poo(address) when the Solidity interface is still Poo(Foo).
 
-## Overloading Functions
-
-**This seems to be missing from the official documentation.**
-
-[PT](https://www.pivotaltracker.com/story/show/85511572) Contracts can have multiple functions of the same name as long as the parameters differ in number or type. If such an overloaded function is referenced, it has to be called immediately to resolve the ambiguity using the types of the arguments. It is an error if not exactly one of the possible functions can be called with the given arguments.
-
-```js
-contract Base {
-  function f(uint a) {}
-}
-contract Derived is Base {
-  function f(uint8 b) {}
-  function g() {
-    // f(250); would create a type error since 250 can be implicitly
-    // converted both to a uint8 and to a uint type
-    f(2000); // calls f from Base
-  }
-}
-```
-Of course overloading a function does not need inheritance, i.e. `f(uint a)` could as well have been defined directly in `Derived`.
-
-Overloaded functions are also present in the external interface. It is an error if two externally visible functions differ by their Solidity types but not by their external types, e.g. `f(Derived _d)` and `f(address _a)` both end up accepting an `address` type for the ABI although they are considered different inside Solidity.
-
