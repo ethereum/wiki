@@ -157,23 +157,3 @@ Of course overloading a function does not need inheritance, i.e. `f(uint a)` cou
 
 Overloaded functions are also present in the external interface. It is an error if two externally visible functions differ by their Solidity types but not by their external types, e.g. `f(Derived _d)` and `f(address _a)` both end up accepting an `address` type for the ABI although they are considered different inside Solidity.
 
-## Merging of Basic Blocks
-
-**Yoichi could not find this in the official documentation.**
-
-[PT](https://www.pivotaltracker.com/story/show/89148124) Blocks of assembly instructions that do not contain jumps, stops or returns are moved and modified according to the following rules:
-
-* if the control never simply flows into a block, but it is jumped to unconditionally, the block is moved, eliminating the jump
-* blocks that are never jumped to are removed
-
-These optimizations might sound not very powerful, but together with "Common Subexpression Elimination" (which is does much more than its name might suggest), the following contract is optimized to store `8` in the mapping and return the value without any jump.
-
-```js
-contract c {
-  function () returns (uint) { return g(8); }
-  function g(uint pos) internal returns (uint) { setData(pos, 8); return getData(pos); }
-  function setData(uint pos, uint value) internal { data[pos] = value; }
-  function getData(uint pos) internal { return data[pos]; }
-  mapping(uint => uint) data;
-}
-```
