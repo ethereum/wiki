@@ -1,2 +1,3 @@
-*NOTE: This is intended largely as a vague overview and a* **historical reference**. *For specific details and the latest specification, see [Ethereum Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI), [Ethereum Natural Specification Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format) and [Solidity Tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial).*
+# This page has moved
 
+The current Solidity documentation can be found at http://solidity.readthedocs.io/en/latest/
