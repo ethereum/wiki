@@ -118,7 +118,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei)
   * [toWei(numberStringOrBigNumber, unit)](#web3towei)
   * [toBigNumber(numberOrHexString)](#web3tobignumber)
-  * [isAddress(hexString)](#web3isAddress)
+  * [isAddress(hexString)](#web3isaddress)
   * [net](#web3net)
     * [listening/getListening](#web3netlistening)
     * [peerCount/getPeerCount](#web3ethpeercount)
@@ -630,11 +630,9 @@ See the [note on BigNumber](#a-note-on-big-numbers-in-web3js).
 
 1. `Number|String` - A number, number string or HEX string of a number.
 
-
 ##### Returns
 
 `BigNumber` - A BigNumber instance representing the given value.
-
 
 ##### Example
 
@@ -643,6 +641,29 @@ var value = web3.toBigNumber('200000000000000000000001');
 console.log(value); // instanceOf BigNumber
 console.log(value.toNumber()); // 2.0000000000000002e+23
 console.log(value.toString(10)); // '200000000000000000000001'
+```
+
+***
+
+#### web3.isAddress
+
+    web3.isAddress(HexString);
+
+Checks if the given string is an address.
+
+##### Parameters
+
+1. `String` - An HEX string.
+
+##### Returns
+
+`Boolean` - `false` if it's not on a valid address format. Returns `true` if it's an all lowercase or all uppercase valid address. If it's a mixed case address, it checks using `web3.isChecksumAddress()`.
+
+##### Example
+
+```js
+var isAddress = web3.isAddress("0x8888f1f195afa192cfee860698584c030f4c9db1");
+console.log(isAddress); // true
 ```
 
 ***
