@@ -195,7 +195,7 @@ STARTGAS 와 GASPRICE 필드는 이더리움의 앤티-서비스거부(anti-DoS)
 
 ### 이더리움 상태 변환 함수(Ethereum State Transition Function)
 
-![ethertransition.png](http://vitalik.ca/files/ethertransition.png?1)
+![ethertransition.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/ethertransition.png)
 
 이더리움 상태 전이 함수 APPLY(S, TX) -> S’ 는 다음처럼 정의될 수 있다.
 트랜잭션이 형식에 제대로 맞는지(즉, 올바른 갯수의 값을 가지고 있는지) 체크하고, 서명이 유효한지, 논스가 발신처 어카운트의 논스와 일치하는지를 체크한다. 그렇지 않다면 오류를 반환한다.
@@ -237,7 +237,7 @@ EVM 코드의 공식 실행 모델은 놀랍도록 단순하다. 이더리움 �
 
 ### 블록체인과 채굴(Blockchain and Mining)
 
-![apply_block_diagram.png](http://vitalik.ca/files/apply_block_diagram.png)
+![apply_block_diagram.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/apply_block_diagram.png)
 
 이더리움 블록체인은 여러면에서 비트코인 블록체인과 유사하나, 어느정도 차이점들이 있다. 이더리움과 비트코인에서의 각 블록체인 구조에 대한 주요 차이점으로는 비트코인과는 달리 이더리움 블록은 트랜잭션 리스트와 가장 최근의 상태(state) 복사본을 가지고 있다는 것이다. 그것 외에도, 두개의 다른 값 - 블록 넘버와 difficulty - 이 또한 블록내에 저장된다. 기본적인 이더리움 블록 검증 알고리즘은 다음과 같다.
 
@@ -467,7 +467,7 @@ BLK_LIMIT_FACTOR 와 EMA_FACTOR은  상수이며 각각 잠정적으로 65536와
 
 ** 이더 장기 공급 성장률(%)**
 
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
+![SPV in bitcoin](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/inflation.png)
 
 _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러한 것처럼, 발행된 총 이더에 대한 신규 이더의 발행률은 그 비중이 0을 향하여 계속 줄어들게 된다._
 
