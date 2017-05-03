@@ -113,7 +113,7 @@ The mining function is tentative, and will be replaced once we know that we have
 
 ### Mining Process
 
-![Mining Process](https://www.ethereum.org/gh_wiki/500px-Minerchart3.png)
+![Mining Process](https://raw.githubusercontent.com/ethereum/www/master-postsale/src/extras/gh_wiki/500px-Minerchart3.png)
 
 
 When mining a block, a miner goes through the following process:
