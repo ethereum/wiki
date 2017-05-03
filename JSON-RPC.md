@@ -604,7 +604,7 @@ Returns the value from a storage position at a given address.
 `DATA` - the value at this storage position.
 
 ##### Example
-Calculating the correct position depends on the storage to retrieve. Consider the following contract deployed on `0x295a70b2de5e3953354a6a8344e616ed314d7251` from address `0x391694e7e0b0cce554cb130d723a9d27458f9298`.
+Calculating the correct position depends on the storage to retrieve. Consider the following contract deployed at `0x295a70b2de5e3953354a6a8344e616ed314d7251` by address `0x391694e7e0b0cce554cb130d723a9d27458f9298`.
 
 ```
 contract Storage {
