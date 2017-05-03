@@ -8,7 +8,7 @@ There are many kinds of consensus algorithms, and many ways to assign rewards to
 
 In chain-based proof of stake, the algorithm pseudo-randomly selects a validator during each time slot (eg. every period of 10 seconds might be a time slot), and assigns that validator the right to create a single block, and this block must point to some previous block (normally the block at the end of the previously longest chain), and so over time most blocks converge into a single constantly growing chain.
 
-In BFT-style proof of stake, validators are randomly assigned the right to _propose_ blocks, but _agreeing on which block is canonical_ is done through a multi-round process where every validator sends a "vote" for some specific block during each round, and at the end of the process all (honest and online) validators permanently agree on whether or not any given block is part of the chain.
+In BFT-style proof of stake, validators are randomly assigned the right to _propose_ blocks, but _agreeing on which block is canonical_ is done through a multi-round process where every validator sends a "vote" for some specific block during each round, and at the end of the process all (honest and online) validators permanently agree on whether or not any given block is part of the chain. Note that blocks may still be _chained together_; the key difference is that consensus on a block can come within one block, and does not depend on the length or size of the chain after it.
 
 ### What are the benefits of proof of stake as opposed to proof of work?
 
@@ -222,3 +222,7 @@ From a centralization perspective, in both [Bitcoin](https://blockchain.info/poo
 Additionally, pooling in PoS is discouraged because it has a much higher trust requirement - a proof of stake pool can pretend to be hacked, destroy its participants' deposits and claim a reward for it. On the other hand, the ability to earn interest on one's coins without oneself running a node, even if trust is required, is something that many may find attractive; all in all, the centralization balance is an empirical question for which the answer is unclear until the system is actually running for a substantial period of time. With sharding, we expect pooling incentives to reduce further, as (i) there is even less concern about variance, and (ii) in a sharded model, transaction verification load is proportional to the amount of capital that one puts in, and so there are no direct infrastructure savings from pooling.
 
 A final point is that centralization is less harmful in proof of stake than in proof of work, as there are much cheaper ways to recover from successful 51% attacks; one does not need to switch to a new mining algorithm.
+
+### Can proof of stake be used in private/consortium chains?
+
+Generally, yes; any proof of stake algorithm can be used as a consensus algorithm in private/consortium chain settings. The only change is that the way the validator set is selected would be different: it would start off as a set of trusted users that everyone agrees on, and then it would be up to the validator set to vote on adding in new validators.
