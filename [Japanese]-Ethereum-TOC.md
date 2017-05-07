@@ -13,7 +13,7 @@
 第4期となる Ethereum のメジャー版リリースとなる Spurious Dragon は 2016年 11月にリリースされました。
 現在も Metropolis および Srenity (v1.1) のリリースへ向けて、開発が続いています。
 Spurious Dragon は、限られたカテゴリのアプリのエンドユーザおよび、[Ðapp developers](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources) を対象とした目的のものであり、以前のものと比べ、セキュリティの非常に強固なものとなっています。
-来たら Metropolis のリリースの目的は、Mist browser のリリースによるエンドユーザためのものです。
+来たら Metropolis のリリースの目的は、Mist browser のリリースによるエンドユーザのためのものです。
 Serenity のリリースは、コンセンサス (合意形成) プロトコルを、 [Proof-of-Work](https://github.com/ethereum/wiki/wiki/Ethash) から [Proof-of-Stake](https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQ) へと切り替えることを目的としています。
 
 
