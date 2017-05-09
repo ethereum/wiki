@@ -1975,7 +1975,7 @@ myEvent.stopWatching();
 ****
 
 #### web3.eth.getCompilers
-
+## Compiling features being depreciated https://github.com/ethereum/EIPs/issues/209
     web3.eth.getCompilers([callback])
 
 Gets a list of available compilers.
