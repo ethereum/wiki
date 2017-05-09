@@ -11,7 +11,7 @@ Known problems:
 
 Wallet or [Mist](https://github.com/ethereum/mist)? The current version of Mist only runs the [wallet dapp](https://github.com/ethereum/meteor-dapp-wallet), this is due to missing features in Mist itself and so that we are able to release earlier. So the wallet is Mist, in wallet mode.
 
-Mist is a [electron](https://github.com/atom/electron) application, means its a desktop hybrid application with a web interface. This allows faster development and changes of the Mist interface and helps with the browser part of Mist. Therefor some problems can come from [electron](https://github.com/atom/electron) itself.
+Mist is a [electron](https://github.com/atom/electron) application, means its a desktop hybrid application with a web interface. This allows faster development and changes of the Mist interface and helps with the browser part of Mist. Therefore some problems can come from [electron](https://github.com/atom/electron) itself.
 
 Please note that Mist is still in beta and problems can be expected. This guide will help you troubleshooting some of the most common problems. Some steps require the use of the command line or the developer console that Mist offers. If you need assistance you can ask for help on https://gitter.im/ethereum/mist.
 
