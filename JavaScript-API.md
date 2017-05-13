@@ -2253,13 +2253,13 @@ This method should be called, when we want to post whisper message to the networ
   - `to`: `String`, 60 Bytes  HEX - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
   - `topics`: `Array of Strings` - Array of topics `Strings`, for the receiver to identify messages.
   - `payload`: `String|Number|Object` - The payload of the message. Will be autoconverted to a HEX string before.
-  - `priority`: `Number` - The integer of the priority in a rang from ... (?).
+  - `priority`: `Number` - The integer of the priority in a range from ... (?).
   - `ttl`: `Number` - integer of the time to live in seconds.
 2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-`Boolean` - returns `true` if the message was send, otherwise `false`.
+`Boolean` - returns `true` if the message was sent, otherwise `false`.
 
 
 ##### Example
