@@ -24,6 +24,8 @@ https://gitter.im/ethereum/ethereumj
 
 # DApp Development
 
+https://gitter.im/ethereum/welcome
+
 https://gitter.im/ethereum/web3.js
 
 https://gitter.im/ethereum/mist
@@ -57,5 +59,4 @@ https://gitter.im/ethereum/light-client
 https://gitter.im/ethereum/whisper
 
 https://gitter.im/ethereum/go-ethereum/swarm
-
 
