@@ -251,14 +251,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 
 #### net_version
 
-Returns the current network protocol version.
+Returns the current network id.
 
 ##### Parameters
 none
 
 ##### Returns
 
-`String` - The current network protocol version
+`String` - The current network id.
+- `"1"`: Ethereum Mainnet
+- `"2"`: Morden Testnet  (deprecated)
+- `"3"`: Ropsten Testnet
+- `"4"`: Rinkeby Testnet
+- `"42"`: Kovan Testnet
 
 ##### Example
 ```js
@@ -269,7 +274,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67
 {
   "id":67,
   "jsonrpc": "2.0",
-  "result": "59"
+  "result": "3"
 }
 ```
 
