@@ -20,7 +20,7 @@ If only a few miners participate in merge-mining each chain, then the centraliza
 
 The trilemma claims that blockchain systems can only at most have two of the following three properties:
 
-- **Decentralization** (defined as the system being able to run in a scenario where each participant only has access to O(c) resources, ie. a regular laptop or small VPS) -   
+- **Decentralization** (defined as the system being able to run in a scenario where each participant only has access to O(c) resources, ie. a regular laptop or small VPS)   
 - **Scalability** (defined as being able to process O(n) \> O(c) transactions)    
 - **Security** (defined as being secure against attackers with up to O(n) resources)
 
@@ -67,51 +67,89 @@ There exist approaches that use advanced cryptography, such as [Mimblewimble](ht
 
 ### What is the basic idea behind sharding?
 
-We split the state up into K = O(n / c) partitions that we call “shards”. For example, a sharding scheme on Ethereum might put all addresses starting with 0x00 into one shard, all addresses starting with 0x01 into another shard, etc. In simpler forms of sharding, each shard also has its own transaction history, and the effect of transactions in some shard k are limited to the state of shard k. However, the effect of a transaction may depend on <i>events that earlier took place in other shards</i>; a canonical example is transfer of money, where money can be moved from shard i to shard j by first creating a “debit” transaction that destroys coins in shard i, and then creating a “credit” transaction that creates coins in shard j, pointing to a receipt created by the debit transaction as proof that the credit is legitimate.
+We split the state up into K = O(n / c) partitions that we call “shards”. For example, a sharding scheme on Ethereum might put all addresses starting with 0x00 into one shard, all addresses starting with 0x01 into another shard, etc. In the simplest form of sharding, each shard also has its own transaction history, and the effect of transactions in some shard k are limited to the state of shard k. One simple example would be a multi-asset blockchain, where there are K shards and each shard stores the balances and processes the transactions associated with one particular asset. In more advanced forms of sharding, some form of cross-shard communication capability, where transactions on one shard can trigger events on other shards, is also included.
+
+### What might a basic design of a sharded blockchain look like?
+
+A simple approach is as follows. There exist nodes called **collators** that accept transactions on shard `k` (depending on the protocol, collators either choose which `k` or are randomly assigned some `k`) and create **collations**. A collation has a **collation header**, a short message of the form "This is a collation of transactions on shard `k`. It expects the previous state root of shard `k` to be 0x12bc57, the Merkle root of the transactions in this collation is 0x3f98ea, and the state root after processing these transactions should be 0x5d0cc1. Signed, collators #1, 2, 4, 5, 6, 8, 11, 13 ... 98, 99".
+
+A block must then contain a collation header for each shard. A block is valid if:
+
+1. The pre-state root given in each collation matches the current state root of the associated shard
+2. All transactions in all collations are valid
+3. The post-state root given in the collation matches the result of executing the transactions in the collation on top of the given pre-state
+4. The collation is signed by at least two thirds of the collators registered for that shard
+
+Note that there are now several "levels" of nodes that can exist in such a system:
+
+* **Super-full node** - processes all transactions in all collations and maintains the full state for all shards.
+* **Top-level node** - processes all top-level blocks, but does not process or try to download the transactions in each collation. Instead, it accepts it on faith that a collation is valid if two thirds of the collators in that shard say that it is valid.
+* **Single-shard node** - acts as a top-level node, but also processes all transactions and maintains the full state for some specific shard.
+* **Light node** - downloads and verifies the block headers of the top-level blocks only; does not process any collation headers or transactions unless it needs to read some specific entry in the state of some specific shard, in which case it downloads the Merkle branch to the most recent collation header for that shard and from there downloads the Merkle proof of the desired value in the state.
+
+### What are the challenges here?
+
+* **Cross shard communication** - the above design supports no cross-shard communication. How do we add cross-shard communication safely?
+* **Single-shard takeover attacks** - what if an attacker takes over the majority of the collators in one single shard, either to prevent any collations from getting enough signatures or, worse, to submit collations that are invalid?
+* **Fraud detection** - if an invalid collation does get made, how can nodes (including light nodes) be reliably informed of this so that they can verify the fraud and reject the collation if it is truly fraudulent?
+* **The data availability problem** - as a subset of fraud detection, what about the specific case where data is missing from a collation?
+* **Superquadratic sharding** - in the special case where n > c^2, in the simple design given above there would be more than O(c) collation headers, and so an ordinary node would not be able to process even just the top-level blocks. Hence, more than two levels of indirection between transactions and top-level block headers are required (ie. we need "shards of shards"). What is the simplest and best way to do this?
+
+However, the effect of a transaction may depend on <i>events that earlier took place in other shards</i>; a canonical example is transfer of money, where money can be moved from shard i to shard j by first creating a “debit” transaction that destroys coins in shard i, and then creating a “credit” transaction that creates coins in shard j, pointing to a receipt created by the debit transaction as proof that the credit is legitimate.
+
+### How can we facilitate cross-shard communication?
+
+The easiest scenario to satisfy is one where there are very many applications that individually do not have too many users, and which only very occasionally and loosely interact with each other; in this case, applications can live on separate shards and use cross-shard communication via receipts to talk to each other.
+
+This typically involves breaking up each transaction into a "debit" and a "credit". For example, suppose that we have a transaction where account A on shard M wishes to send 100 coins to account B on shard N. The steps would looks as follows:
+
+1. Send a transaction on shard M which (i) deducts the balance of A by 100 coins, and (ii) creates a receipt. A receipt is an object which is not saved in the state directly, but where the fact that the receipt was generated can be verified via a Merkle proof.
+2. Wait for the first transaction to be included (sometimes waiting for finalization is required; this depends on the system).
+3. Send a transaction on shard N which includes a the Merkle proof of the receipt from (1). This transaction also checks in the state of shard N to make sure that this receipt is "unspent"; if it is, then it increases the balance of B by 100 coins, and saves in the state that the receipt is spent.
+4. Optionally, the transaction in (3) also saves a receipt, which can then be used to perform further actions on shard M that are contingent on the original operation succeeding.
 
 <img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image01.png" width="400"></img>
 
 In more complex forms of sharding, transactions may in some cases have effects that spread out across several shards and may also synchronously ask for data from the state of multiple shards.
 
-One can view shards in the simpler schemes as being loosely connected, semi-independent blockchains that are all part of a common network. In a simple version of the scheme, each user maintains a light client on all shards, and validators fully download and track a few shards that they are assigned to at some particular time; this approach can support values of n up to O(c\^2), where the number of shards is K = O(c). More complex versions use shards-of-shards schemes to increase the maximum n that can be supported up to O(exp(c)).
-
-A major challenge with sharding is determining the mechanism by which the histories of each shard are agreed upon and the state of each shard is determined - the question is, can we break the trilemma and do this in a way where each shard has an “economic strength” of O(n), despite only having O(n / c) worth of economic power actively verifying that shard at any one time? As this document argues, there are many challenges and tradeoffs involved, but most likely yes we can<sup>[6](#ftnt_ref6)</sup>.
-
 ### How can different kinds of applications fit into a sharded blockchain?
 
-The easiest scenario to satisfy is one where there are very many applications that individually do not have too many users only very occasionally and loosely interact with each other; in this case, applications can simply live on separate shards and use cross-shard communication via receipts to talk to each other. Note that in all models proposed here, **users and application developers can freely choose which shard to publish a contract or send a transaction on**.
-
-If applications do need to talk to each other, the challenge is much easier if the interaction can be made asynchronous - that is, if the interaction can be done in the form of the application on shard A generating a receipt, a transaction on shard B “consuming” the receipt and performing some action based on it, and possibly sending a “callback” to shard A containing some response. Generalizing this pattern is easy, and is not difficult to incorporate into a high-level programming language.
+Some applications require no cross-shard interaction at all; multi-asset blockchains, and blockchains with completely heterogeneous applications that require no interoperability, are the simplest cases. If applications do need to talk to each other, the challenge is much easier if the interaction can be made asynchronous - that is, if the interaction can be done in the form of the application on shard A generating a receipt, a transaction on shard B “consuming” the receipt and performing some action based on it, and possibly sending a “callback” to shard A containing some response. Generalizing this pattern is easy, and is not difficult to incorporate into a high-level programming language.
 
 However, note that the in-protocol mechanisms that would be used for asynchronous cross-shard communication would be different and have weaker functionality compared to the mechanisms that are available for intra-shard communication. Some of the functionality that is currently available in non-scalable blockchains would, in a scalable blockchain, only be available for intra-shard communication.<sup>[7](#ftnt_ref7)</sup>.
 
-Doing what one wants to do on a blockchain using only asynchronous tools is not always easy. To see why, consider the following example courtesy of Andrew Miller. Suppose that a user wants to purchase a plane ticket and reserve a hotel, and wants to make sure that the operation is atomic - either both reservations succeed or neither do. If the plane ticket and hotel booking applications are on the same shard, this is easy: create a transaction that attempts to make both reservations, and throws an exception and reverts everything unless both reservations succeed. If the two are on different shards, however, this is not so easy; even without cryptoeconomic / decentralization concerns, this is essentially the problem of [atomic database transactions](https://en.wikipedia.org/wiki/Atomicity_(database_systems)).
+### What is the plane-and-hotel problem?
 
-With asynchronous messages only, the simplest solution is to first reserve the plane, then reserve the hotel, then once both reservations succeed confirm both; the reservation mechanism would prevent anyone else from reserving (or at least would ensure that enough spots are open to allow all reservations to be confirmed) for some period of time. With cross-shard synchronous transactions, the problem is easier, but the challenge of creating a sharding solution capable of making cross-shard atomic synchronous transactions is itself decidedly nontrivial.
+The following example is courtesy of Andrew Miller. Suppose that a user wants to purchase a plane ticket and reserve a hotel, and wants to make sure that the operation is atomic - either both reservations succeed or neither do. If the plane ticket and hotel booking applications are on the same shard, this is easy: create a transaction that attempts to make both reservations, and throws an exception and reverts everything unless both reservations succeed. If the two are on different shards, however, this is not so easy; even without cryptoeconomic / decentralization concerns, this is essentially the problem of [atomic database transactions](https://en.wikipedia.org/wiki/Atomicity_(database_systems)).
+
+With asynchronous messages only, the simplest solution is to first reserve the plane, then reserve the hotel, then once both reservations succeed confirm both; the reservation mechanism would prevent anyone else from reserving (or at least would ensure that enough spots are open to allow all reservations to be confirmed) for some period of time. However, this means that the mechanism relies on an extra security assumptions: that cross-shard messages from one shard can get included in another shard within some fixed period of time.
+
+With cross-shard synchronous transactions, the problem is easier, but the challenge of creating a sharding solution capable of making cross-shard atomic synchronous transactions is itself decidedly nontrivial.
 
 If an individual application has more than O(c) usage, then that application would need to exist across multiple chains. The feasibility of doing this depends on the specifics of the application itself; some applications (eg. currencies) are easily parallelizable, whereas others (eg. certain kinds of market designs) cannot be parallelized and must be processed serially.
 
 There are properties of sharded blockchains that we know for a fact are impossible to achieve. [Amdahl’s law](https://en.wikipedia.org/wiki/Amdahl%27s_law) states that in any scenario where applications have any non-parallelizable component, once parallelization is easily available the non-parallelizable component quickly becomes the bottleneck. In a general computation platform like Ethereum, it is easy to come up with examples of non-parallelizable computation: a contract that keeps track of an internal value x and sets x = sha3(x, tx\_data) upon receiving a transaction is a simple example. No sharding scheme can give individual applications of this form more than O(c) performance. Hence, it is likely that over time sharded blockchain protocols will get better and better at being able to handle a more and more diverse set of application types and application interactions, but a sharded architecture will always necessarily fall behind a single-shard architecture in at least some ways at scales exceeding O(c).
 
-### What are the security models that we are operating under? What is the difference between traditional byzantine fault tolerance models and more cryptoeconomic approaches such as the Zamfir model?
+### What are the security models that we are operating under?
 
-There are several competing models under which the safety of blockchain designs is evaluated. The first is an honest majority (or honest supermajority) assumption, where we assume that there is some set of validators and up to ½ (or ⅓ or ¼) of those validators are controlled by an attacker; the remaining validators honestly follow the protocol. A stronger model is the uncoordinated majority assumption, where we assume that all validators are rational in a game-theoretic sense (except the attacker, who is motivated to make the network fail in some way), but no more than some fraction (often between ¼ and ½) are capable of coordinating their actions. Bitcoin proof of work with [Eyal and Sirer’s selfish mining fix](https://arxiv.org/abs/1311.0243) is robust up to ½ under the honest majority assumption, and up to ¼ under the uncoordinated majority assumption.
+There are several competing models under which the safety of blockchain designs is evaluated:
 
-In any majority model, an important question is: when does “the attacker” get to choose which nodes they corrupt? Many protocols randomly select and assign the subset of validators that is responsible for some consensus task ahead of time; if the attacker can choose nodes after this assignment process takes place (eg. by hacking nodes, or via the operators of the nodes connecting with each other and colluding), ie. the attacker is an **adaptive adversary**, then they may be able to wreak havoc with the protocol only corrupting a few nodes, but if the attacker must choose before (ie. the attacker is a non-adaptive or **oblivious adversary**) then the attacker must still corrupt a large fraction of all nodes in order to stand a chance of corrupting any subset.
+* **Honest majority** (or honest supermajority): we assume that there is some set of validators and up to ½ (or ⅓ or ¼) of those validators are controlled by an attacker, and the remaining validators honestly follow the protocol
+* **Uncoordinated majority**: we assume that all validators are rational in a game-theoretic sense (except the attacker, who is motivated to make the network fail in some way), but no more than some fraction (often between ¼ and ½) are capable of coordinating their actions.
+* **Coordinated choice**: we assume that all validators are controlled by the same actor, or are fully capable of coordinating on the economically optimal choice between themselves. We can talk about the **cost to the coalition** of achieving some undesirable outcome.
+* **Bribing attacker model**: we take the uncoordinated majority model, but instead of making the attacker be one of the participants, the attacker sits outside the protocol, and has the ability to bribe any participants to change their behavior. Attackers are modeled as having a **budget**, which is the maximum that they are willing to pay, and we can talk about their **cost**, the amount that they _end up paying_ to disrupt the protocol equilibrium.
 
-An even stronger model is the Zamfir model. The Zamfir model has the following properties:
+Bitcoin proof of work with [Eyal and Sirer’s selfish mining fix](https://arxiv.org/abs/1311.0243) is robust up to ½ under the honest majority assumption, and up to ¼ under the uncoordinated majority assumption. [Schellingcoin](https://blog.ethereum.org/2014/03/28/schellingcoin-a-minimal-trust-universal-data-feed/) is robust up to ½ under the honest majority and uncoordinated majority assumptions, has ε (ie. slightly more than zero) cost of attack in a coordinated choice model, and has a P + ε budget requirement and ε cost in a bribing attacker model due to [P + epsilon attacks](https://blog.ethereum.org/2015/01/28/p-epsilon-attack/).
 
--   **Majorities may be dishonest and may collude**. Collusion can happen either through cryptoeconomic bribery via reputation or smart contracts, socially organized cartels, or in more extreme versions of the model through 51% of the coins actually being controlled by one actor who physically has the private keys. -   **The attacker has some “budget”** that they are theoretically willing to spend (either by losing the money through in-protocol costs or penalties or by bribing others). This budget is proportional to O(n), though as we will see below there are some limited attacks that may succeed with only an O(c) budget and which cannot be defended against. -   The Zamfir model sometimes includes an **honest/uncoordinated minority assumption**, where for example at least ⅛ of any “economic set” (eg. miners, validators) is assumed to be honest (or at least uncoordinated) at any given time. The presence of altruists capable of making bribes or voluntarily accepting losses is also sometimes assumed, although it is always assumed that the capital available for altruists to burn is much lower than the attacker’s budget.
-
-The goal is to try to ensure that any behavior even by a majority coalition that infringes on the protocol’s guarantees or reduces performance is costly, and to maximize this cost. Note that some kinds of attacks (eg. [P + epsilon attacks](https://blog.ethereum.org/2015/01/28/p-epsilon-attack/) have a high budget requirement but low cost - the attacker must credibly commit to spending a lot of money if necessary, but if they succeed attacks are very cheap.
+Hybrid models also exist; for example, even in the coordinated choice and bribing attacker models, it is common to make an **honest minority assumption** that some portion (perhaps 1-15%) of validators will act altruistically regardless of incentives.
 
 The honest majority model is arguably highly unrealistic and has already been empirically disproven - see Bitcoin's [SPV mining fork](https://www.reddit.com/r/Bitcoin/comments/3c305f/if_you_are_using_any_wallet_other_than_bitcoin/csrsrf9/) for a practical example. It proves too much: for example, an honest majority model would imply that honest miners are willing to voluntarily burn their own money if doing so punishes attackers in some way. The uncoordinated majority assumption may be realistic; there is also an intermediate model where the majority of nodes is honest but has a budget, so they shut down if they start to lose too much money.
 
-The Zamfir model has in some cases been criticized as being unrealistically adversarial, although its proponents argue that if a protocol is designed with the Zamfir model in mind then it should be able to massively reduce the cost of consensus, as 51% attacks become an event that could be recovered from. We will evaluate sharding in the context of both uncoordinated majority and Zamfir models.
+The bribing attacker model has in some cases been criticized as being unrealistically adversarial, although its proponents argue that if a protocol is designed with the bribing attacker model in mind then it should be able to massively reduce the cost of consensus, as 51% attacks become an event that could be recovered from. We will evaluate sharding in the context of both uncoordinated majority and bribing attacker models.
 
-### How can we break the trilemma in an honest or uncoordinated majority model?
+### How can we solve the single-shard takeover attack in an uncoordinated majority model?
 
-In short, random sampling. Each shard is assigned a certain number of validators (eg. 150), and the validator that makes a block on each shard is taken from the sample for that shard. Samples can be reshuffled either semi-frequently (eg. once every 12 hours) or maximally frequently (ie. there is no real independent sampling process, validators are randomly selected for each shard from a global pool every block).
+In short, random sampling. Each shard is assigned a certain number of collators (eg. 150), and the collators that approve blocks on each shard are taken from the sample for that shard. Samples can be reshuffled either semi-frequently (eg. once every 12 hours) or maximally frequently (ie. there is no real independent sampling process, collators are randomly selected for each shard from a global pool every block).
 
 The result is that even though only a few nodes are verifying and creating blocks on each shard at any given time, the level of security is in fact not much lower, in an honest/uncoordinated majority model, than what it would be if every single node was verifying and creating blocks. The reason is simple statistics: if you assume a ⅔ honest supermajority on the global set, and if the size of the sample is 150, then with 99.999% probability the honest majority condition will be satisfied on the sample. If you assume a ¾ honest supermajority on the global set, then that probability increases to 99.999999998% (see [here](https://en.wikipedia.org/wiki/Binomial_distribution) for calculation details).
 
@@ -155,18 +193,6 @@ Note that validators’ transaction inclusion strategies under this approach wou
 
 If validators are not reshuffled immediately, there is one further opportunity to increase efficiency. We can expect validators to store data from proofs of transactions that have already been processed, so that that data does not need to be sent again; if k transactions are sent within one reshuffling period, then this decreases the average size of a Merkle proof from log(n) to log(n) - log(k).
 
-### I hear talk about separating data availability verification and state calculation, and how this might solve this problem. How does this work?
-
-A blockchain can be viewed as a cryptoeconomic system that incentivizes validators to make economic claims about certain facts, so as to achieve consensus and allow users to efficiently determine information about the state of the system. These claims can be broken down into several categories:
-
-- **Data availability**: a block header containing a Merkle root of a transaction tree effectively claims “I believe that the data that this Merkle tree points to is readily accessible by any node through the network” 
-- **Order**: a chain of block headers effectively claims “I believe that this data came in roughly this order”
-- **State calculation**: a block header containing a state root effectively claims “I believe that the transaction history referenced by this hash leads to a state whose root hash is X”
-
-Current blockchains heavily conflate all three. Particularly, note that even in systems that do not have a notion of Merkle state trees, state calculation and data availability are heavily intertwined, as those systems have a notion of a “valid transaction” where validity is state-dependent - for example, a transaction might only be valid if, in the current state, the sender account has the funds to pay for it. This conflation is in some ways convenient, but it also greatly reduces the scope of blockchain designs that are possible.
-
-One could imagine a design that separates out these three components, or at least separates out state calculation from the other two parts. This could be accomplished by having a system where shards do NOT include state roots by default, and where there are no rules on transaction “validity” beyond basic formatting checks; a transaction that would be previously considered “invalid” would now in many cases simply be considered ineffective. Shard shuffling could happen every block without concerns about state fetching, as validators would not need to make any state calculations in order to include blocks. A separate process would then calculate state for all shards; this process could be made much more robust, as it can assume that the data that it operates on is all available (more on why this is very important in later sections).
-
 ### How is the randomness for random sampling generated?
 
 First of all, it is important to note that even if random number generation is heavily exploitable, this is not a fatal flaw for the protocol; rather, it simply means that there is a medium to high centralization incentive. The reason is that because the randomness is picking fairly large samples, it is difficult to bias the randomness by more than a certain amount.
@@ -195,71 +221,31 @@ Another form of random number generation that is not exploitable by minority coa
 
 One might argue that the deterministic threshold signature approach works better in consistency-favoring contexts and other approaches work better in availability-favoring contexts.
 
-### What are the concerns about sharding through random sampling in a Zamfir model?
+### What are the concerns about sharding through random sampling in a bribing attacker or coordinated choice model?
 
-In a Zamfir model, the fact that validators are randomly sampled doesn’t matter: whatever the sample is, either the attacker can bribe the great majority of the sample to do as the attacker pleases, or the attacker controls a majority of the sample directly and can direct the sample to perform arbitrary actions at low cost (O(c) cost, to be precise).
+In a bribing attacker or coordinated choice model, the fact that validators are randomly sampled doesn’t matter: whatever the sample is, either the attacker can bribe the great majority of the sample to do as the attacker pleases, or the attacker controls a majority of the sample directly and can direct the sample to perform arbitrary actions at low cost (O(c) cost, to be precise).
 
-At that point, the attacker has the ability to conduct 51% attacks against that sample. The threat is further magnified because there is a risk of cross-shard contagion: if the attacker corrupts the state of a shard, the attacker can then start to send unlimited quantities of funds out to other shards and perform other cross-shard mischief. All in all, security in the Zamfir model is not much better than that of simply creating O(c) altcoins.
+At that point, the attacker has the ability to conduct 51% attacks against that sample. The threat is further magnified because there is a risk of cross-shard contagion: if the attacker corrupts the state of a shard, the attacker can then start to send unlimited quantities of funds out to other shards and perform other cross-shard mischief. All in all, security in the bribing attacker or coordinated choice model is not much better than that of simply creating O(c) altcoins.
 
 ### How can we improve on this?
 
-One major category of solution to this problem is the use of challenge-response mechanisms. Challenge-response mechanisms generally rely on a principle of escalation: fact X is initially accepted as true if at least k validators sign a claim (backed by a deposit) that it is. However, if this happens, there is some challenge period during which 2k validators can sign a claim stating that it is false. If this happens, 4k validators can sign a claim stating that the claim is in fact true, and so forth until one side either gives up or most validators have signed claims, at which point every validator and client themselves checks whether or not X is true. If X is ruled true, everyone who made a claim saying so is rewarded and everyone who made a contradictory claim is penalized, and vice versa.
+Basically, by comprehensively solving the problem of fraud detection.
+
+One major category of solution to this problem is the use of challenge-response mechanisms. Challenge-response mechanisms generally rely on a principle of escalation: fact X (eg. "collation #17293 in shard #54 is valid") is initially accepted as true if at least k validators sign a claim (backed by a deposit) that it is. However, if this happens, there is some challenge period during which 2k validators can sign a claim stating that it is false. If this happens, 4k validators can sign a claim stating that the claim is in fact true, and so forth until one side either gives up or most validators have signed claims, at which point every validator and client themselves checks whether or not X is true. If X is ruled true, everyone who made a claim saying so is rewarded and everyone who made a contradictory claim is penalized, and vice versa.
 
 Looking at this mechanism, you can prove that malicious actors lose an amount of money proportional to the number of actors that they forced to look at the given piece of data. Forcing *all* users to look at the data requires a large portion of validators to sign a claim which is false, which can be used to penalize all of them, so the cost of forcing all users to look at a piece of data is O(n); this prevents the challenge-response mechanism from being used as a denial-of-service vector.
 
-### What is the data availability problem?
+### What is the data availability problem, and how can we use erasure codes to solve it?
 
-Escalation techniques (and interactive verification techniques generally) are good at detecting faults that are uniquely attributable - that is, faults that generate clear evidence that can be used to convince even actors that were offline at the time that the fault took place and who was responsible. Incorrect execution is one example of such a fault: if you claim that 2 * 2 = 5, and sign this message, then everyone can prove that you acted maliciously. Even if the underlying computation takes a trillion steps, there are cryptoeconomic techniques that can be used to unambiguously prove who was faulty.
+See https://github.com/ethereum/research/wiki/A-note-on-data-availability-and-erasure-coding
 
-Data availability is not a uniquely attributable fault. To see why, consider two plausible executions of an abstract protocol.
+### So this means that we can actually create scalable sharded blockchains where the cost of making anything bad happen is proportional to the size of the entire validator set?
 
-Option 1:
-
-* Node A should have published data D at time T1, but instead (maliciously) publishes D at time T3 > T1
-* Node B detects that D was unavailable at time T2, with T1 < T2 < T3, and complains.
-
-Option 2:
-
-* Node A publishes data D at time T1 as intended.
-* Node B sees this at T2, but nevertheless complains, as part of an attempt to degrade the quality of the protocol execution.
-
-To a node that only observed D after T3, the two executions are indistinguishable. Hence, by the principles of cryptoeconomic fault penalization, we can only slightly penalize A, and we must penalize both A and B (if we do not penalize B, an epsilon-sized bribing attacker could convince B to complain in all situations).
-
-Therefore, the following attack vector exists. An attacker could publish blocks that contain unavailable data, and then wait for challengers. If there are challengers, the attacker waits for the challenge and immediately publishes the underlying data, costing both themselves and the challenger. Eventually, the challengers would get tired of losing money, and the attacker would be able to get their bad blocks confirmed unimpeded.
-
-### Can we use an honest minority assumption to get around this?
-
-Most likely yes. We can have a protocol where a minority of a random sample that is responsible for a given shard can "block" the data from being finalized. This block would happen at some cost, but we assume that the minority is altruistic (or otherwise willing to simply follow the default protocol) and willing to lose money in exchange for preventing finality. If finality is blocked, an exponential ramp-up process would start by which more validators are introduced into the shard. If the attacker is economically small, then the honest majority that is pouring into that shard would very quickly (specifically, in logarithmic time) become larger than the attacker, and correct and available blocks would get confirmed.
-
-There are still many details to be ironed out in terms of the optimal way to implement these kinds of protocols, and proving guarantees about them, but this is one general kind of approach that seems very promising.
-
-### But doesn’t this still mean that an attacker can consume a small amount of capital to make a single shard work very poorly for a medium amount of time?
-
-Yes.
-
-### So we actually didn’t solve the trilemma, we weaseled out of it by pulling back a bit on the security model?
-
-Kind of. Note that attackers can reduce the “chain quality” of a shard with O(c) capital, but they still can’t finalize any bad state with less than O(n) capital.
-
-### Isn’t this terrible?
-
-Not really. There is one trivial attack by which an attacker can always burn O(c) capital to temporarily reduce the quality of a shard: spam it by sending transactions with high transaction fees, forcing legitimate users to outbid you to get in. This attack is unavoidable; you could compensate with flexible gas limits, and you could even try “transparent sharding” schemes that try to automatically re-allocate nodes to shards based on usage, but if some particular application is non-parallelizable, Amdahl’s law guarantees that there is nothing you can do. The attack that is opened up here (reminder: it only works in the Zamfir model, not honest/uncoordinated majority) is arguably not substantially worse than the transaction spam attack. Hence, we've reached the known limit for the security of a single shard, and there is no value in trying to go further.
-
-### What if all validators check data availability for all block headers by randomly sampling only a few pieces of data, and reject blocks that do not pass the probabilistic availability check?
-
-Then attacks where only one piece out of a million is missing could still go through, and pass nearly all validator checks with very high probability.
-
-### Require the data to be erasure-coded?
-
-Now we’re talking. However, erasure coding introduces inefficiencies of its own. Particularly, note that naive forms of erasure coding take O(d^2) time to encode or decode d bytes of data. Hence, if we want the process of creating a single block to take O(c) computational resources, the size of the block would be limited to O(c^0.5), and each shard would take O(log(c)) resources for a client to verify the code so it would support O(c / log(c)) shards, hence the total scalability would be limited to O(c^1.5 / log(c)). Note that there is a large hidden constant factor on the log(c), though on the other hand the constant factors on the O(d^2) are quite favorable, so in general this can give some gains in scalability but not large gains.
-
-We can achieve further gains by using fast Fourier transforms to make erasure coding computations and decodings more efficient; this would allow each shard to have O(c / log(c)) size, giving O(c^2 / log^2(c)) total scalability. Another way to achieve gains is to use multi-dimensional erasure codes - for example, a Reed-Solomon code using multivariate polynomials instead of univariate polynomials. This has a complexity of O(d^(1 + 1/k)) for d dimensions, and also has the benefit that one can prove the incorrectness of a code by proving the incorrectness of one particular axis; the main cost is that the amount of redundant data required to achieve the same level of blows up quickly, limiting k to 2 or 3 for practical purposes.
-
-Note that the production of the erasure coded data can be split among many validators. If there is m^2 data, then the production of a single "row" (or column) of the code takes O(m^2) time, and O(m^2) rows/columns need to be produced; with FFTs the production of a single row can be done in O(m * log(m)) time. This can be a route for expanding the erasure coding technique to achieve quadratic or super-quadratic sharding.
+There is one trivial attack by which an attacker can always burn O(c) capital to temporarily reduce the quality of a shard: spam it by sending transactions with high transaction fees, forcing legitimate users to outbid you to get in. This attack is unavoidable; you could compensate with flexible gas limits, and you could even try “transparent sharding” schemes that try to automatically re-allocate nodes to shards based on usage, but if some particular application is non-parallelizable, Amdahl’s law guarantees that there is nothing you can do. The attack that is opened up here (reminder: it only works in the Zamfir model, not honest/uncoordinated majority) is arguably not substantially worse than the transaction spam attack. Hence, we've reached the known limit for the security of a single shard, and there is no value in trying to go further.
 
 ### Let’s walk back a bit. Do we actually need any of this complexity if we have instant shuffling? Doesn’t instant shuffling basically mean that each shard directly pulls validators from the global validator pool so it operates just like a blockchain, and so sharding doesn’t actually introduce any new complexities?
 
-Kind of. First of all, it’s worth noting that proof of work and simple proof of stake, even without sharding, both have very low security in a Zamfir model; a block is only truly “finalized” in the Zamfirian sense after O(n) time (as if only a few blocks have passed, then the economic cost of replacing the chain is simply the cost of starting a double-spend from before the block in question). Casper solves this problem by adding its finality mechanism, so that the economic security margin increases exponentially rather than linearly. Validators are willing to make exponentially large bets because they (i) see that other validators are making bets, and (ii) have personally verified all state transitions, so they can conclude that there is no chance that they are signing on an invalid chain. In a sharded chain, if we want economic finality then we need to come up with a chain of reasoning for why a validator would be willing to make a very strong claim on a chain based solely on a random sample, when the validator itself is convinced that the Zamfir model is true and so the random sample could potentially be corrupted.
+Kind of. First of all, it’s worth noting that proof of work and simple proof of stake, even without sharding, both have very low security in a bribing attacker model; a block is only truly “finalized” in the economic sense after O(n) time (as if only a few blocks have passed, then the economic cost of replacing the chain is simply the cost of starting a double-spend from before the block in question). Casper solves this problem by adding its finality mechanism, so that the economic security margin immediately increases to the maximum. In a sharded chain, if we want economic finality then we need to come up with a chain of reasoning for why a validator would be willing to make a very strong claim on a chain based solely on a random sample, when the validator itself is convinced that the bribing attacker and coordinated choice models may be true and so the random sample could potentially be corrupted.
 
 ### You mentioned transparent sharding. I’m 12 years old and what is this?
 
