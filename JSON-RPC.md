@@ -308,7 +308,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":
 
 #### net_peerCount
 
-Returns number of peers currenly connected to the client.
+Returns number of peers currently connected to the client.
 
 ##### Parameters
 none
