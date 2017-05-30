@@ -15,4 +15,4 @@ See also [Russian version (русский перевод)](https://github.com/et
 
 ***
 
-English version moved to a new [site](https://ethereum.github.io/solidity/docs/home/).
+English version moved to a new [site](https://solidity.readthedocs.io/en/latest/).
