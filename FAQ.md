@@ -233,7 +233,6 @@ Community
 + [Make It Rain](https://github.com/EtherCasts/make-it-rain) ([@EtherCasts](https://github.com/EtherCasts))
 + [Chronos](https://github.com/mquandalle/chronos) ([@mquandalle](https://github.com/mquandalle))
 + [Artworld-Ethereum](https://github.com/robmyers/artworld-ethereum) ([@robmyers](https://github.com/robmyers))
-+ [Eris](https://github.com/project-douglas/eris) ([@project-douglas](https://github.com/project-douglas), [@compleatang](https://github.com/compleatang), [@dennismckinnon](https://github.com/dennismckinnon))
 + [CryptoCoinWatch](https://github.com/EtherCasts/cryptocoinwatch) ([@EtherCasts](https://github.com/EtherCasts))
 + [Occam's Run](https://github.com/d11e9/Occams-Run) ([@d11e9](https://github.com/d11e9))
 + [TrustDavis](https://github.com/EtherCasts/trustdavis) ([@EtherCasts](https://github.com/EtherCasts))
