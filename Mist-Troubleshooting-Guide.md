@@ -1,5 +1,5 @@
 Known problems:
-- ["Your computers time it out of sync!" error](#your-computers-time-it-out-of-sync-error)
+- ["Your computers time is out of sync!" error](#your-computers-time-it-out-of-sync-error)
 - [Unable to find peers](#unable-to-find-peers)
 - [Mist is synchronized but is stuck during the last part](#mist-is-synchronized-but-is-stuck-during-the-last-part)
 - [My transaction is not confirmed](#my-transaction-is-not-confirmed)
