@@ -30,10 +30,22 @@ If there are none type `web3.eth.blockNumber` on the console and see if you get 
 
 Sometimes its useful to start the node manually to see what its doing:
 
-Stop Mist if its still running and open a command prompt on Windows or a terminal on OSX or Linux. You can start the node manually and see its output on the command line. Navigate to `%APPDATA%\Mist\binaries\geth` on Windows and look for the geth.exe. On Linux go to `.config/Mist/binaries/geth` and on Mac to `~/Library/Application Support/Mist/binaries/geth`. Navigate to that directory (`cd my/path`, on windows use cmd.exe for that) and type the following command:
+Stop Mist and any other ethereum client, if they are still running. You can start the node manually and see its output on the command line. 
 
-Windows: `geth.exe --fast --cache 1024`
-OSX/Linux: `./geth --fast --cache 1024`
+**Windows**
+- Open cmd.exe
+- Navigate to geth directory by running `cd %APPDATA%\Mist\binaries\geth` and look for `geth.exe`
+- Execute the following command: `geth.exe --fast --cache 1024`
+
+**Linux**
+- Open your terminal of choice
+- Go to `.config/Mist/binaries/geth`
+- Run `./geth --fast --cache 1024`
+
+**Mac**
+- Open Terminal.app
+- Run `cd ~/Library/Application\ Support/Mist/binaries/geth`
+- Run `./geth --fast --cache 1024`
 
 You can optionally increase the log level by adding `--verbosity 5`.
 
