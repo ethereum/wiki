@@ -1,5 +1,5 @@
 Known problems:
-- [Ether is not shown in the wallet](#ether-not-shown-in-the-wallet)
+- [Ether is not shown in the wallet](#ether-is-not-shown-in-the-wallet)
 - ["Your computers time is out of sync!" error](#your-computers-time-it-out-of-sync-error)
 - [Unable to find peers](#unable-to-find-peers)
 - [Mist is synchronized but is stuck during the last part](#mist-is-synchronized-but-is-stuck-during-the-last-part)
@@ -40,12 +40,14 @@ You can optionally increase the log level by adding `--verbosity 5`.
 # Known problems
 
 ## Ether is not shown in the wallet
-Mist and Ethereum Wallet displays downloaded data from the blockchain. If you run into this issue, first make sure you are synced with the network. You can also check your balance at a service like [EtherScan](https://etherscan.io) 
+Mist and Ethereum Wallet displays downloaded data from the blockchain. If you run into this issue, first make sure you are synced with the network. You can also check your balance at a service like [EtherScan](https://etherscan.io).
 
-Mist: look at the bottom-left corner 
+Mist: look at the bottom-left corner.
+
 ![Mist sync](https://user-images.githubusercontent.com/47108/26845307-77d738aa-4acc-11e7-86a7-e7af4a8e3fe3.png)
 
-Ethereum Wallet: look at the top bar
+Ethereum Wallet: look at the top bar.
+
 ![Ethereum wallet sync](https://user-images.githubusercontent.com/47108/26846108-22f4fd2e-4acf-11e7-876d-8fa5e5c2d875.png)
 
 
