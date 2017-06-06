@@ -1,4 +1,5 @@
 Known problems:
+- [Ether is not shown in the wallet](#ether-not-shown-in-the-wallet)
 - ["Your computers time is out of sync!" error](#your-computers-time-it-out-of-sync-error)
 - [Unable to find peers](#unable-to-find-peers)
 - [Mist is synchronized but is stuck during the last part](#mist-is-synchronized-but-is-stuck-during-the-last-part)
@@ -31,12 +32,22 @@ Sometimes its useful to start the node manually to see what its doing:
 
 Stop Mist if its still running and open a command prompt on Windows or a terminal on OSX or Linux. You can start the node manually and see its output on the command line. Navigate to `%APPDATA%\Mist\binaries\geth` on Windows and look for the geth.exe. On Linux go to `.config/Mist/binaries/geth` and on Mac to `~/Library/Application Support/Mist/binaries/geth`. Navigate to that directory (`cd my/path`, on windows use cmd.exe for that) and type the following command:
 
-Windows: `geth.exe --fast --cache 512`
-OSX/Linux: `./geth --fast --cache 512`
+Windows: `geth.exe --fast --cache 1024`
+OSX/Linux: `./geth --fast --cache 1024`
 
 You can optionally increase the log level by adding `--verbosity 5`.
 
 # Known problems
+
+## Ether is not shown in the wallet
+Mist and Ethereum Wallet displays downloaded data from the blockchain. If you run into this issue, first make sure you are synced with the network. You can also check your balance at a service like [EtherScan](https://etherscan.io) 
+
+Mist: look at the bottom-left corner 
+![Mist sync](https://user-images.githubusercontent.com/47108/26845307-77d738aa-4acc-11e7-86a7-e7af4a8e3fe3.png)
+
+Ethereum Wallet: look at the top bar
+![Ethereum wallet sync](https://user-images.githubusercontent.com/47108/26846108-22f4fd2e-4acf-11e7-876d-8fa5e5c2d875.png)
+
 
 ## "Your computers time is out of sync!" error
 If the time of your computers is deviated the wallet isn't able to connect with the network. The wallet is able to detect if time synchronisation is turned off. Please enable time synchronisation:
