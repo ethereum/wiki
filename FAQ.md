@@ -54,7 +54,7 @@ If you prefer to learn by watching videos, see:
 - Forums: https://forum.ethereum.org
 - Github: https://github.com/ethereum
 - Blog: https://blog.ethereum.org
-- Wiki: http://wiki.ethereum.org
+- Wiki: http://wiki.ethereum.org [Not working anymore]
 - Meetups: http://ethereum.meetup.com
 - Whitepaper: http://ethereum.org/ethereum.html
 - Yellow Paper: http://gavwood.com/paper.pdf
@@ -62,6 +62,7 @@ If you prefer to learn by watching videos, see:
 - Youtube: http://www.youtube.com/ethereumproject
 - Google+: http://google.com/+EthereumOrgOfficial
 - IRC Freenode: #ethereum (http://bitly.com/IRC_ethereum for weblink)
+- Stack Exchange: https://ethereum.stackexchange.com
 
 ### Where can I find the main project repositories?
 
