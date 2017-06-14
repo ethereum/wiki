@@ -109,7 +109,7 @@ This typically involves breaking up each transaction into a "debit" and a "credi
 
 1. Send a transaction on shard M which (i) deducts the balance of A by 100 coins, and (ii) creates a receipt. A receipt is an object which is not saved in the state directly, but where the fact that the receipt was generated can be verified via a Merkle proof.
 2. Wait for the first transaction to be included (sometimes waiting for finalization is required; this depends on the system).
-3. Send a transaction on shard N which includes a the Merkle proof of the receipt from (1). This transaction also checks in the state of shard N to make sure that this receipt is "unspent"; if it is, then it increases the balance of B by 100 coins, and saves in the state that the receipt is spent.
+3. Send a transaction on shard N which includes the Merkle proof of the receipt from (1). This transaction also checks in the state of shard N to make sure that this receipt is "unspent"; if it is, then it increases the balance of B by 100 coins, and saves in the state that the receipt is spent.
 4. Optionally, the transaction in (3) also saves a receipt, which can then be used to perform further actions on shard M that are contingent on the original operation succeeding.
 
 <img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image01.png" width="400"></img>
