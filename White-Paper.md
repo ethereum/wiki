@@ -254,7 +254,7 @@ In general, there are three types of applications on top of Ethereum. The first 
 
 ### Token Systems
 
-On-blockchain token systems have many applications ranging from sub-currencies representing assets such as USD or gold to company stocks, individual tokens representing smart property, secure unforgeable coupons, and even token systems with no ties to conventional value at all, used as point systems for incentivization. Token systems are surprisingly easy to implement in Ethereum. The key point to understand is that all a currency, or token system, fundamentally is a database with one operation: subtract X units from A and give X units to B, with the proviso that (i) A had at least X units before the transaction and (2) the transaction is approved by A. All that it takes to implement a token system is to implement this logic into a contract.
+On-blockchain token systems have many applications ranging from sub-currencies representing assets such as USD or gold to company stocks, individual tokens representing smart property, secure unforgeable coupons, and even token systems with no ties to conventional value at all, used as point systems for incentivization. Token systems are surprisingly easy to implement in Ethereum. The key point to understand is that a currency, or token system, is just a database with one operation: subtract X units from A and give X units to B, with the proviso that (i) A had at least X units before the transaction and (ii) the transaction is approved by A. All that it takes to implement a token system is to implement this logic into a contract.
 
 The basic code for implementing a token system in Serpent looks as follows:
 
