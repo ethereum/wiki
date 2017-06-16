@@ -55,7 +55,7 @@ category:
 
 ### 상태변환시스템으로서의 비트코인(Bitcoin As A State Transition System)
 
-![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
+![statetransition.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/statetransition.png)
 
 기술적인 관점에서 보았을 때, 비트코인과 같은 암호화 화폐의 장부는 하나의 상태변환시스템(state transition system)으로 생각해볼 수 있다. 이 시스템은, 현재 모든 비트코인의 소유권 현황으로 이루어진 하나의 “상태(state)” 와 이 현재 상태와 트랜잭션을 받아서 그 결과로써 새로운 상태를 출력해주는 “상태변환함수(state transition function)”로 구성되어 있다. 표준 은행 시스템에 비유하자면 상태는 모든 계좌잔고표(balance sheet)이고 트랜잭션은 A에서 B로 $X를 송금하라는 요청이며, 상태변환함수에 의해 A의 계좌에서는 $X가 감소하고 B의 계좌에서는 $X가 증가한다. 만약 처음에 A의 계좌에 있는 금액이 $X 이하인 경우에는 상태변환함수가 에러를 리턴한다.
 이러한 상태변환를 비트코인 장부에서는 다음과 같이 정의할 수 있다.
@@ -82,7 +82,7 @@ category:
 
 ### 채굴
 
-![block_picture.jpg](http://vitalik.ca/files/block_picture.png)
+![block_picture.jpg](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/block.png)
 
 만일 우리가 위에서 기술한 내용을 신뢰를 기반으로 하는 중앙집권화된 서비스 방식으로 구현하자면 매우 간단한 일이 될텐데, 왜냐하면 중앙 서버 하드드라이브에 상태변화의 과정을 저장만 하면 되기 때문이다.  그러나 비트코인에서는,  탈중앙화된 통화시스템을 구축하고자 하는 것이며, 이를 위해서는  모든 사람이 수긍할 수 있는 트랜잭션 순서 합의 시스템을 상태변화시스템과 결합해야만 한다. 비트코인의 분산 합의 과정은 네트워크에 "블록(blocks)"이라 불리는 트랜잭션 패키지를 계속적으로 생성하고자 시도하는  노드들을 필요로 한다. 이 네트워크는 약 10분마다 하나의 블록을 생성하도록 계획되어 있고 각 블록은 타임스탬프, 논스(nonce), 이전 블록에 대한 참조(이전 블록의 해시), 그리고 이전 블록 이후에 발생한 모든 트랜잭션의 목록을 포함한다. 이 과정을 통해서 지속적으로 성장하는 블록체인이 생성되게 되는데, 비트코인 장부의 최신상태(state)를 나타내기 위해 지속적인 업데이트가 이루어진다.
 
@@ -200,7 +200,7 @@ STARTGAS 와 GASPRICE 필드는 이더리움의 앤티-서비스거부(anti-DoS)
 
 ### 이더리움 상태 변환 함수(Ethereum State Transition Function)
 
-![ethertransition.png](http://vitalik.ca/files/ethertransition.png?1)
+![ethertransition.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/ethertransition.png)
 
 이더리움 상태 전이 함수 APPLY(S, TX) -> S’ 는 다음처럼 정의될 수 있다.
 트랜잭션이 형식에 제대로 맞는지(즉, 올바른 갯수의 값을 가지고 있는지) 체크하고, 서명이 유효한지, 논스가 발신처 어카운트의 논스와 일치하는지를 체크한다. 그렇지 않다면 오류를 반환한다.
@@ -242,7 +242,7 @@ EVM 코드의 공식 실행 모델은 놀랍도록 단순하다. 이더리움 �
 
 ### 블록체인과 채굴(Blockchain and Mining)
 
-![apply_block_diagram.png](http://vitalik.ca/files/apply_block_diagram.png)
+![apply_block_diagram.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/apply_block_diagram.png)
 
 이더리움 블록체인은 여러면에서 비트코인 블록체인과 유사하나, 어느정도 차이점들이 있다. 이더리움과 비트코인에서의 각 블록체인 구조에 대한 주요 차이점으로는 비트코인과는 달리 이더리움 블록은 트랜잭션 리스트와 가장 최근의 상태(state) 복사본을 가지고 있다는 것이다. 그것 외에도, 두개의 다른 값 - 블록 넘버와 difficulty - 이 또한 블록내에 저장된다. 기본적인 이더리움 블록 검증 알고리즘은 다음과 같다.
 
@@ -472,7 +472,7 @@ BLK_LIMIT_FACTOR 와 EMA_FACTOR은  상수이며 각각 잠정적으로 65536와
 
 ** 이더 장기 공급 성장률(%)**
 
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
+![SPV in bitcoin](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/inflation.png)
 
 _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러한 것처럼, 발행된 총 이더에 대한 신규 이더의 발행률은 그 비중이 0을 향하여 계속 줄어들게 된다._
 
@@ -502,9 +502,9 @@ _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러�
 
 ### 확장성(Scalability)
 
-이더리움에 대한 한 가지 공통된 의문점은 확장성 부분이다. 비트코인과 마찬가지로 이더리움도 모든 이체작업이 네크워크 상의 전체 노드에 의해서 일일이 검증 및 작업이 되어야 한다는 약점이 있다. 비트코인의 경우, 현재 전체 블록체인의 크기가 약 15GB에 이르며, 그 크기는 매 시간 1MB씩 꾸준히 늘어나고 있다. VISA의 경우 초당 2,000여 건의 이체작업을 처리하는데, 이는 매 3초당 1MB씩의 확장(시간 당 1GB, 매 년 8TB)을 의미한다. 이더리움도 비슷한 문제를 겪을 것이고, 단순히 화폐로써의 역할 만하는 비트코인에 비한다면, 온갖 종류의 탈중앙화된 어플리케이션들(Dapps: Decentralized applications)을 포괄하는 이더리움은 이 부분에서 훨씬 더 많은 문제를 겪을 수도 있을 것이다. 하지만 한 가지 다른 점은, 이더리움은 ‘전체 블록체인 히스토리’가 아닌, 단지 ‘상태 정보(the state)’만 가지고 있으면 된다는 점이다. 
+이더리움에 대한 한 가지 공통된 의문점은 확장성 부분이다. 비트코인과 마찬가지로 이더리움도 모든 이체작업이 네크워크 상의 전체 노드에 의해서 일일이 검증 및 작업이 되어야 한다는 약점이 있다. 비트코인의 경우, 현재 전체 블록체인의 크기가 약 15GB에 이르며, 그 크기는 매 시간 1MB씩 꾸준히 늘어나고 있다. VISA의 경우 초당 2,000여 건의 이체작업을 처리하는데, 이는 매 3초당 1MB씩의 확장(시간 당 1GB, 매 년 8TB)을 의미한다. 이더리움도 비슷한 문제를 겪을 것이고, 단순히 화폐로서의 역할 만하는 비트코인에 비한다면, 온갖 종류의 탈중앙화된 어플리케이션들(Dapps: Decentralized applications)을 포괄하는 이더리움은 이 부분에서 훨씬 더 많은 문제를 겪을 수도 있을 것이다. 하지만 한 가지 다른 점은, 이더리움은 ‘전체 블록체인 히스토리’가 아닌, 단지 ‘상태 정보(the state)’만 가지고 있으면 된다는 점이다. 
 
-만일 개개의 모든 노드가 전체 블록체인을 보관해야 한다면, 아래와 같은 문제가 생길 수 있다. 블록체인의 크기가 점점 커져 100TB에 육박하게 되었다고 생각해보자. 이 정도 수준으로 보관해야하는 블록체인의 크기가 커지면, 오직 소수의 사업가나 기업 형태의 참여자만이 이를 감당할 수 있게 된다. 다수의 일반 사용자들은 ‘라이트 SPV(Simple Payment Verification)’ 노드만들 사용하게 될 것이다. 이렇게 되면, 전체 블록체인의 내역을 가진 소수의 참여자들이 결탁하여, 장부내역을 수정하거나 블록보상량을 바꿔치기 하는 등의 조작행위가 일어날 수 있을 것이다. 단순한 ‘라이트 노드(light node)’로써는 이러한 조작을 감지할 방법이 없다. 물론 ‘전체 블록체인를 소유한 노드(full node)’ 중에서도 선의의 참가자가 있을지 모른다. 그러나 다수의 ‘완전노드(full node)’가 작심하여 블록체인 조작을 시도한다면, 이를 발견하는 시점에서는 이미 늦었다고 봐야 할 것이다. 실제로 비트코인이 현재 이와 비슷한 문제에 처할 위험이 있다고 경고받고 있으며, 해당 문제를 완화시키는 방법에 대하여는 [Peter Todd에 의해 논의된 바](http://sourceforge.net/p/bitcoin/mailman/message/31709140/) 있다.
+만일 개개의 모든 노드가 전체 블록체인을 보관해야 한다면, 아래와 같은 문제가 생길 수 있다. 블록체인의 크기가 점점 커져 100TB에 육박하게 되었다고 생각해보자. 이 정도 수준으로 보관해야하는 블록체인의 크기가 커지면, 오직 소수의 사업가나 기업 형태의 참여자만이 이를 감당할 수 있게 된다. 다수의 일반 사용자들은 ‘라이트 SPV(Simple Payment Verification)’ 노드만들 사용하게 될 것이다. 이렇게 되면, 전체 블록체인의 내역을 가진 소수의 참여자들이 결탁하여, 장부내역을 수정하거나 블록보상량을 바꿔치기 하는 등의 조작행위가 일어날 수 있을 것이다. 단순한 ‘라이트 노드(light node)’로서는 이러한 조작을 감지할 방법이 없다. 물론 ‘전체 블록체인를 소유한 노드(full node)’ 중에서도 선의의 참가자가 있을지 모른다. 그러나 다수의 ‘완전노드(full node)’가 작심하여 블록체인 조작을 시도한다면, 이를 발견하는 시점에서는 이미 늦었다고 봐야 할 것이다. 실제로 비트코인이 현재 이와 비슷한 문제에 처할 위험이 있다고 경고받고 있으며, 해당 문제를 완화시키는 방법에 대하여는 [Peter Todd에 의해 논의된 바](http://sourceforge.net/p/bitcoin/mailman/message/31709140/) 있다.
 
 위의 문제를 해결키 위해, 가까운 시일 안에 두 가지의 전략을 추가로 도입할 예정이다. 첫번째로 이더리움도 기본적으로 블록체인 기술을 바탕으로 한 채굴 알고리즘을 사용하고 있기 때문에, 모든 채굴자들은 ‘완전노드(full node)’가 되도록 의무화 될 것이며, 이는 필요한 최소한의 완전노드 숫자를 확보할 수 있도록 해줄 것이다 . 두번째로, 이체내역 검증 작업 이후 블록체인에 ‘중간상태 트리루트(an intermediate state tree root)’를 도입하는 것이다. 이렇게 되면, 아무리 블록생성 작업이 소수의 노드에 집중되더라도, 단 하나의 선의의 노드(honest node)만 존재한다면 검증 프로토콜(verification protocol)을 통해 이 문제를 해결할 수 있다. 
 
