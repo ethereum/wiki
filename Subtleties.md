@@ -1,5 +1,3 @@
-THIS DOCUMENT HAS BEEN LAST UPDATED IN MARCH 2015 AND SOME SUBTLETIES HAVE CHANGED SINCE, ESPECIALLY CONCERNING REVERTING ETHER TRANSFERS IN CASE OF OUT-OF-GAS.
-
 ## Memory
 
 * Storage is a key/value store where keys and values are both 32 bytes
@@ -11,19 +9,26 @@ THIS DOCUMENT HAS BEEN LAST UPDATED IN MARCH 2015 AND SOME SUBTLETIES HAVE CHANG
 ## Nonces
 
 * If an externally-owned account sends a transaction, its nonce is incremented before execution
-* If an externally-owned account creates a contract, its nonce is incremented before execution
+* If an externally-owned account creates a contract, its nonce is incremented before execution. The contract's nonce starts at 1 and not 0
 * If a contract sends a message, no nonce increments happen
-* If a contract creates a contract, the nonce is incremented before the rest of the sub-execution
-* The pre-increment nonce is used to determine the contract address
-* Nonce increments are never reverted
+* If a contract creates a contract, the following steps happen in the following order:
+    * The new ("inner") contract's address is calculated as `sha3(rlp.encode([outer_contract_address, outer_contract_nonce]))`
+    * The "outer" contract's nonce is incremented by 1
+    * The inner contract's nonce is set to 1
+    * The inner contract's code and storage are emptied
+    * A call is made with the code being the init code (that's the memory slice provided by the CREATE opcode)
+    * If the call returns an exception, all is reverted except for the outer contract's nonce increment
+    * If the call returns 24000 or more bytes, this is considered an exception
+    * If the call returns x < 24000 bytes, the outer call is charged x * 200 gas. If there is not enough gas then this is also considered an exception; if there is, then the creation succeeds and the inner contract's code is set to the return data of the call.
 
 ## Exceptional conditions
 
 * The following count as exceptions:
     * Execution running out of gas
-    * An operation trying to take more slots off the stack than are available on the stack
+    * An operation trying to take more slots off the stack than are available on the stack, or put more than 1024 items onto the stack
     * Jumping to a bad jump destination
     * An invalid opcode (note: the code of an account is assumed to be followed by an infinite tail of STOP instructions, so the program counter "walking off" the end of the code is not an invalid opcode exception. However, jumping outside the code is an exception, because STOP is not a valid jump destination)
+    * The REVERT opcode at 0xfd (starting from Metropolis; pre-Metropolis 0xfd is simply an invalid opcode)
 * If a transaction triggers an exception, then:
     * The value transfer from sender to recipient still takes place
     * The fee transfer from sender to miner still takes place
@@ -45,9 +50,8 @@ THIS DOCUMENT HAS BEEN LAST UPDATED IN MARCH 2015 AND SOME SUBTLETIES HAVE CHANG
     * All gas is consumed
     * All other execution is reverted
     * The current implementations add `0` onto the stack, but it does not matter, since with 0 gas remaining the parent execution will instaquit anyway
-* After a successful `CREATE` operation's sub-execution, if the operation returns `x`, `5 * len(x)` gas is subtracted from the remaining gas before the contract is created. If the remaining gas is less than `5 * len(x)`, then no gas is subtracted, the code of the created contract becomes the empty string, but this is not treated as an exceptional condition - no reverts happen.
-* If a contract tries to `CALL` or `CREATE` a contract with either (i) insufficient balance, or (ii) stack depth already at maximum (1024), the sub-execution and transfer do not occur at all, no gas gets consumed, and 0 is added to the stack.
-* Because of the depth limit, a contract may not be aware that a call that it is about to make is going to fail. Contract programmers should be very careful about this, and either use the 0 pushed to the stack to catch errors or use, eg, the identity contract to "test the waters" before making a substantial number of calls.
+* If a contract tries to `CALL` or `CREATE` a contract with insufficient balance, the sub-execution and transfer do not occur at all, no gas gets consumed, and 0 is added to the stack.
+* A `CALL` or `CREATE` can consume at most 63/64 of the gas remaining at the time the `CALL` is made; if a `CALL` asks for more than this prescribed maximum, then the inner call will only have the prescribed maximum gas regardless of how much gas was asked for.
 
 ## Arithmetic
 
@@ -57,14 +61,14 @@ THIS DOCUMENT HAS BEEN LAST UPDATED IN MARCH 2015 AND SOME SUBTLETIES HAVE CHANG
 
 ### Other operations
 
-* The `CREATE` opcode takes three values: endowment (ie. initial amount of ether), memory start and memory length, and pushes onto the stack the address of the new contract. `CREATE` gives the initializing sub-execution all the gas that you have (and if gas remains then it gets refunded back to the parent execution)
+* The `CREATE` opcode takes three values: value (ie. initial amount of ether), memory start and memory length, and pushes onto the stack the address of the new contract. `CREATE` gives the initializing sub-execution all the gas that you have (and if gas remains then it gets refunded back to the parent execution)
 * The `CALL` opcode takes seven values: gas, recipient, ether value, memory location of start of input data, length of input data, memory location to put start of output data, length of output data. It puts onto the stack either 1 for success (ie. did not run out of gas) or 0 for failure.
-* When a contract calls `SUICIDE`, its ether is immediately sent to the desired address, but the contract continues existing until the end of transaction execution. Note that this leads to the interesting effect that, unlike Bitcoin where funds can be locked away forever but never destroyed, if a contract either SUICIDEs into itself or receives ether in the context of the same transaction execution after it has SUICIDED that ether is actually destroyed.
+* When a contract calls `SELFDESTRUCT`, its ether is immediately sent to the desired address, but the contract continues existing until the end of transaction execution. Note that this leads to the interesting effect that, unlike Bitcoin where funds can be locked away forever but never destroyed, if a contract either SELFDESTRUCTs into itself or receives ether in the context of the same transaction execution after it has SELFDESTRUCTed that ether is actually destroyed.
 * If contract A calls contract B calls contract A, then the inner execution of A will have its own, fresh, memory, stack and PC, but it will modify and read the same balance and storage.
 * If contract initialization returns an empty array, then no contract will be created. This allows you to "abuse" contract initialization as an atomic multi-operation, which might be useful in some protocols where you want to do multiple things but you don't want some of them to be able to process without others.
 * `JUMP` and `JUMPI` instructions are only allowed to jump onto destinations that are (1) occupied by a `JUMPDEST` opcode, and (2) are not inside `PUSH` data. Note that properly processing these conditions requires preprocessing the code; a particularly pathological use case is `PUSH2 JUMPDEST PUSH1 PUSH2 JUMPDEST PUSH1 PUSH2 JUMPDEST PUSH1 ...`, as this code has all `JUMPDEST`s invalid but an alternative piece of code equivalent to this but only with the leading `PUSH2` replaced with another op (eg. `BALANCE`) will have all `JUMPDESTS`s valid.
 * `CALL` has a multi-part gas cost:
-    * 40 base
+    * 700 base
     * 9000 additional if the value is nonzero
     * 25000 additional if the destination account does not yet exist (note: there is a difference between zero-balance and nonexistent!)
 * `CALLCODE` operates similarly to call, except without the potential for a 25000 gas surcharge.
