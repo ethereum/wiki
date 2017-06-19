@@ -123,6 +123,18 @@ Note that all of this is a problem only in the very limited case where a majorit
 
 Additionally, the social authentication can if needed even be automated in several ways. One is to bake it into natural user workflow: a [BIP 70](https://github.com/bitcoin/bips/blob/master/bip-0070.mediawiki)-style payment request could include a recent block hash, and the user's client software would make sure that they are on the same chain as the vendor before approving a payment (or for that matter, any on-chain interaction). The other is to use Jeff Coleman's [universal hash time](https://www.youtube.com/watch?v=phXohYF0xGo). If UHT is used, then a successful attack chain would need to be generated secretly _at the same time_ as the legitimate chain was being built, requiring a majority of validators to secretly collude for that long.
 
+### Does weak subjectivity mean that a proof of stake chain must be "anchored" into a proof of work chain to be secure?
+
+In short, no.
+
+### Elaborate?
+
+Weak subjectivity is a totally reasonable security assumption. The only way it could not be is if you assume that powerful corporate or nation state actors have the ability to somehow convince an entire community that block hash B was the block hash of block XXXYYY when most of them saw at the time and have stored in their own computers that the block hash of block XXXYYY was A, and then also assume that such powerful actors **do not** have the ability to trick users into accepting a different location from where they download their client software.
+
+Furthermore, the "anchoring" that advocates of such a scheme describe is not even all that secure. All anchoring proves is that a given block hash was _produced_ at time T' < T; it does not prove that it was _published_ at that time. Hence, a PoS chain anchored into a PoW chain could simply be attacked by a majority coalition that produces both chains in parallel, anchors both, publishes one, and then four months later publishes the other one.
+
+One could get around this by embedding a fully-functional "light client" of the PoS chain into the PoW chain, which would reject the double-anchoring, but this would require the PoW chain to be feature-rich enough _to be able_ to implement such a client - a property which most actually existing proof of work chains do not possess.
+
 ### Can one economically penalize censorship in proof of stake?
 
 Unlike reverts, censorship is much more difficult to prove. The blockchain itself cannot directly tell the difference between "user A tried to send transaction X but it was unfairly censored", "user A tried to send transaction X but it never got in because the transaction fee was insufficient" and "user A never tried to send transaction X at all". However, there are a number of techniques that can be used to mitigate censorship issues.
