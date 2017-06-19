@@ -1693,10 +1693,10 @@ var MyContract = web3.eth.contract(abiArray);
 var contractInstance = MyContract.at([address]);
 
 // deploy new contract
-var contractInstance = MyContract.new([contructorParam1] [, contructorParam2], {data: '0x12345...', from: myAccount, gas: 1000000});
+var contractInstance = MyContract.new([constructorParam1] [, constructorParam2], {data: '0x12345...', from: myAccount, gas: 1000000});
 
 // Get the data to deploy the contract manually
-var contractData = MyContract.new.getData([contructorParam1] [, contructorParam2], {data: '0x12345...'});
+var contractData = MyContract.new.getData([constructorParam1] [, constructorParam2], {data: '0x12345...'});
 // contractData = '0x12345643213456000000000023434234'
 ```
 
@@ -1710,7 +1710,7 @@ var myContractInstance = MyContract.at(myContractAddress);
 
 // Or deploy a new contract:
 
-// Deploy the contract asyncronous from Solidity file:
+// Deploy the contract asynchronous from Solidity file:
 ...
 const fs = require("fs");
 const solc = require('solc')
