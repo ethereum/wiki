@@ -52,11 +52,12 @@ Note that public chain consensus also requires an incentivization model, ie. a w
 
 Note that either `finalize` or `initialize` may simply consist of a call to some standard contract with the block header as data; the Ethereum public chain plans to move to such an approach in the long term. In consortium chains, there is no need to use these functions for incentivization; however, they may be useful for other purposes (eg. to automatically run scheduled operations). Hence, because the utility of these operations is not strictly related to consensus incentivization, they should not be viewed as part of the consensus interface; rather, they should be viewed as transaction processing rules.
 
-In a private chain context, there are three consensus algorithms that make the most sense:
+In a private chain context, there are several consensus algorithms that make the most sense:
 
 * **Proof of authority** - essentially, one client with one particular private key makes all of the blocks
 * **PBFT** (or some other traditional byzantine-fault-tolerant consensus algorithm)
 * **DPOS** (or some other chain-based limited-validator consensus algorithm)
+* **Casper** (Ethereum's [proof of stake](https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQ) candidate) with a fixed validator set
 
 PBFT and DPOS (taken purely as a consensus algorithm, not including the ability of some class of token holders to vote on delegates) each have their own advantages and disadvantages. Specifically:
 
@@ -65,6 +66,8 @@ PBFT and DPOS (taken purely as a consensus algorithm, not including the ability 
 * DPOS can support an unlimited number of nodes, whereas PBFT becomes very inefficient above about 30 nodes because every node has to send messages to and receive messages from every other node during every round. DPOS does this because each round consists only of one randomly selected validator making a block
 * DPOS is conceptually simpler to understand and implement and intuitively see why it converges
 * In a synchronous network model, DPOS can survive up to 49% Byzantine faults, higher than the 33% of PBFT; additionally, DPOS can survive even more faults if they consist of nodes going offline rather than trying to attack the network
+
+Casper is intended as a _cryptoeconomic_ algorithm where anyone can become a validator by depositing money. However, it can be repurposed for permissioned contexts by simply specifying a fixed validator set. This approach is worth exploring once Casper is implemented across major Ethereum clients.
 
 Proof of authority may be required in some cases where particular safety properties are required and Ethereum's technologies are used more to provide deterministic and verifiable execution and auditing properties rather than decentralization in the traditional sense. Hence, it makes sense to implement all three and give each user the choice of which one to use for any given application.
 
