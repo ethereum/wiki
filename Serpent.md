@@ -106,17 +106,12 @@ The letter `i` is meant for integers, and for fixed-length (up to 32 byte) strin
 Now, what if you want to actually run the contract? That is where [pyethereum](https://github.com/ethereum/pyethereum) comes in. Open up a Python console in the same directory, and run:
 
     >>> from ethereum import tester as t
-    >>> s = t.state()
-    >>> c = s.abi_contract('mul2.se')
-    >>> c.double(42)
+    >>> c = t.Chain()
+    >>> x = s.contract('mul2.se')
+    >>> x.double(42)
     84
 
 The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `c.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
-
-Note that if you want to send a transaction to such a contract in the testnet or livenet, you will need to package up the transaction data for "call function double with an integer as an input with data 42". The command line instruction for this is *deprecated*:
-
-<del>    $ serpent encode_abi double i 42
-    eee97206000000000000000000000000000000000000000000000000000000000000002a</del>
 
 ### Example: Name Registry
 
@@ -138,22 +133,16 @@ Here, we see a few parts in action. First, we have the `key` and `value` variabl
 Now, paste the code into `namecoin.se`, if you wish try compiling it to LLL, opcodes or EVM, and let's try it out in the pyethereum tester environment:
 
     >>> from ethereum import tester as t
-    >>> s = t.state()
-    >>> c = s.abi_contract('namecoin.se')
-    >>> c.register(0x67656f726765, 45)
+    >>> c = t.Chain()
+    >>> x = c.contract('namecoin.se')
+    >>> x.register(0x67656f726765, 45)
     1
-    >>> c.register(0x67656f726765, 20)
+    >>> x.register(0x67656f726765, 20)
     0
-    >>> c.register(0x6861727279, 65)
+    >>> x.register(0x6861727279, 65)
     1
-    >>> c.ask(0x6861727279)
+    >>> x.ask(0x6861727279)
     65
-
-If we wanted to encode the transaction data for that first call, we would do: 
-
-
-<del>	 $ serpent encode_abi register ii 0x67656f726765 45
-	d66d6c10000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d</del>
 
 ### Including files, and calling other contracts
 
@@ -175,9 +164,9 @@ returnten.se:
 And open Python:
 
     >>> from ethereum import tester as t
-    >>> s = t.state()
-    >>> c = s.abi_contract('returnten.se')
-    >>> c.returnten()
+    >>> c = t.Chain()
+    >>> x = c.contract('returnten.se')
+    >>> x.returnten()
     10
 
 Note that here we introduced several new features. Particularly:
