@@ -25,12 +25,12 @@
 - [Ethereum development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial)
 - [Mix Tutorial](https://github.com/ethereum/wiki/wiki/Mix:-The-DApp-IDE)
 - [Mix Features](https://github.com/ethereum/wiki/wiki/Mix-Features)
+- [Viper](https://github.com/ethereum/viper)
 - [Serpent](https://github.com/ethereum/wiki/wiki/Serpent)
 - [LLL](https://github.com/ethereum/cpp-ethereum/wiki/LLL)
 - [Mutan](https://github.com/obscuren/mutan)
 
 ### Infrastructure
-- [Morden Testnet](https://github.com/ethereum/wiki/wiki/Morden)
 - [Chain Spec Format](https://github.com/ethereum/wiki/wiki/Ethereum-Chain-Spec-Format)
 - [Inter-exchange Client Address Protocol](https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol)
 - [URL Hint Protocol](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol)
@@ -64,8 +64,6 @@
 - [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
 - [Bad Block Reporting](http://github.com/ethereum/wiki/wiki/Bad-Block-Reporting)
 - [Bad Chain Canary](http://github.com/ethereum/wiki/wiki/Bad-Chain-Canary)
-- [Extra Data](http://github.com/ethereum/wiki/wiki/Extra-Data)
-- [Brain Wallet](https://github.com/ethereum/wiki/wiki/Brain-Wallet)
 
 ### Ethash/Dashimoto
 - [Ethash](https://github.com/ethereum/wiki/wiki/Ethash)
