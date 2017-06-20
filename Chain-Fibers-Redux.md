@@ -1,3 +1,5 @@
+_This article describes a scalability proposal made by Gavin Wood in 2015. Many of the principles have been a key inspiration for subsequent "[sharding](https://github.com/ethereum/wiki/wiki/Sharding-FAQ)" proposals._
+
 # Blockchain Scalability: Chain-Fibers Redux
 
 ## History
