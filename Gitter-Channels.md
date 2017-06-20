@@ -1,16 +1,14 @@
 https://gitter.im/ethereum
 
-# Node Software ("Clients")
-
-## Go
+## Geth (Go client)
 
 https://gitter.im/ethereum/go-ethereum
 
-## C++ 
+## cpp-ethereum (C++ client)
 
 https://gitter.im/ethereum/cpp-ethereum
 
-## Python 
+## pyethereum (Python client)
 
 https://gitter.im/ethereum/pyethapp - the client
 
@@ -18,11 +16,11 @@ https://gitter.im/ethereum/pyethereum - the core library (evm, blocks, txs, ...)
 
 https://gitter.im/ethereum/pydevp2p - p2p network  
 
-## Java
+## EthereumJ (Java client)
 
 https://gitter.im/ethereum/ethereumj
 
-# DApp Development
+## DApp Development
 
 https://gitter.im/ethereum/welcome
 
@@ -34,7 +32,7 @@ https://gitter.im/ethereum/solidity
 
 https://gitter.im/ethereum/serpent
 
-# Research
+## Research
 
 https://gitter.im/ethereum/research
 
@@ -46,11 +44,11 @@ https://gitter.im/ethereum/privacy-tech
 
 https://gitter.im/ethereum/formal-methods
 
-# Other
+## Other
 
 https://gitter.im/ethereum/porting
 
-# Protocol
+## Protocol
 
 https://gitter.im/ethereum/devp2p
 
