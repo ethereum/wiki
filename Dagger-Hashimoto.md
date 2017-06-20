@@ -1,1 +1,1 @@
-Weird. This page doesn't exist. O_O
+Dagger Hashimoto has been superseded by [Ethash](http://github.com/ethereum/wiki/wiki/Ethash).
