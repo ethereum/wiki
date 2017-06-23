@@ -21,7 +21,7 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
     * `61` for PV61
     * `62` for PV62
     * `63` for PV63
-* `networkId` should be 0 for testnet, 1 for mainnet.
+* `networkId`: 0=Olympic (disused), 1=Frontier (mainnet), 2=Morden (disused), 3=Ropsten (testnet), 4=[Rinkeby](https://www.rinkeby.io/)
 * `td`: Total Difficulty of the best chain. Integer, as found in block header.
 * `bestHash`: The hash of the best (i.e. highest TD) known block.
 * `genesisHash`: The hash of the Genesis block.
