@@ -7,9 +7,10 @@
 
 ### Ethereum Clients
 - [cpp-ethereum (C++)](http://www.ethdocs.org/en/latest/ethereum-clients/cpp-ethereum/)
-- [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
-- [pyethapp (Python)](https://github.com/ethereum/pyethapp/wiki) 
 - [ethereumj (Java)](https://github.com/ethereum/ethereumj)
+- [Geth (Go)](https://github.com/ethereum/go-ethereum/wiki) 
+- [Parity (Rust)](https://github.com/paritytech/parity/wiki)
+- [pyethapp (Python)](https://github.com/ethereum/pyethapp/wiki) 
 
 ### ÐApp Development
 - [Safety](https://github.com/ethereum/wiki/wiki/Safety)
