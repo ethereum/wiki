@@ -15,10 +15,11 @@ The fourth major live release of Ethereum aka Spurious Dragon was released in No
 To get the basic concepts of Ethereum visit the Ethereum homepage over at [http://ethereum.org](http://ethereum.org/). If you want to get a deeper understanding, start by reading the [whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper) and the [design rationale](https://github.com/ethereum/wiki/wiki/Design-Rationale). For a more formal review, read the [yellow paper](http://paper.gavwood.com/).
 
 ## Don't get lost
-Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FAQ](https://github.com/ethereum/wiki/wiki/FAQ). There are separate wikis for information relevant to the [C++](https://github.com/ethereum/webthree-umbrella/wiki) and [Go](https://github.com/ethereum/go-ethereum/wiki) implementations (Python and Javascript coming soon),
+Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FAQ](https://github.com/ethereum/wiki/wiki/FAQ). There are separate wikis for information relevant to the [C++](https://github.com/ethereum/webthree-umbrella/wiki), [Go](https://github.com/ethereum/go-ethereum/wiki) and [Rust](https://github.com/paritytech/parity/wiki) implementations (Python and Javascript coming soon).
 
 ## Downloads
 Bleeding edge code can be cloned from the develop branch of their git repositories:
 - https://github.com/ethereum/go-ethereum (Go)
 - https://github.com/ethereum/webthree-umbrella (C++)
 - https://github.com/ethereum/pyethapp (Python)
+- https://github.com/paritytech/parity (Rust)
