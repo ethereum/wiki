@@ -152,9 +152,9 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 ### Where can I learn LLL, the Lisp-like language?
 
 + Specifications
-  + [The LLL Language](https://github.com/ethereum/cpp-ethereum/wiki/LLL-PoC-6)
+  + [The LLL Language](https://github.com/ethereum/cpp-ethereum/wiki/LLL-PoC-6/7a575cf91c4572734a83f95e970e9e7ed64849ce)
 + Examples
-  + [LLL examples for PoC 6](https://github.com/ethereum/cpp-ethereum/wiki/LLL%20Examples%20for%20PoC%205)
+  + [LLL examples for PoC 5](https://github.com/ethereum/cpp-ethereum/wiki/LLL-Examples-for-PoC-5/7a575cf91c4572734a83f95e970e9e7ed64849ce)
 + Videos
   + [Programming Society with Asm](https://www.youtube.com/watch?v=xO1AxsYAkU8)
 
