@@ -26,13 +26,17 @@ The update and delete operations for radix trees are simple, and can be defined 
         return hash(newnode)
 
     def delete(node,key):
-        if key == '' or node is NULL:
+        if node is NULL:
             return NULL
         else:
             curnode = db.get(node)
             newnode = curnode.copy()
-            newindex = delete(curnode[key[0]],key[1:])
-            newnode[key[0]] = newindex
+            if key == '':
+                newnode[-1] = NULL
+            else: 
+                newindex = delete(curnode[key[0]],key[1:])
+                newnode[key[0]] = newindex
+
             if len(filter(x -> x is not NULL, newnode)) == 0:
                 return NULL
             else:
