@@ -208,6 +208,13 @@ var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 ```
 
+###### Example using HTTP Basic Authentication
+```js
+var Web3 = require('web3');
+var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545", 0, BasicAuthUsername, BasicAuthPassword));
+//Note: HttpProvider takes 4 arguments (host, timeout, user, password)
+```
+
 ***
 
 #### web3.version.api
