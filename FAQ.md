@@ -98,7 +98,7 @@ If you prefer to learn by watching videos, see:
 
 ### How to install the clients from source?
 
-+ [Building AlethZero (C++)](https://github.com/ethereum/cpp-ethereum)
++ [Building AlethZero (C++)](https://github.com/ethereum/cpp-ethereum#building-from-source)
 + [Building Mist (Go)](https://github.com/ethereum/go-ethereum/wiki/Building-Ethereum%28Go%29)
 + [Installing Pyethereum (Python)](https://github.com/ethereum/pyethereum#quickstart)
 + [Installing EthereumJ (Java)](https://github.com/ethereum/ethereumj#maven)
