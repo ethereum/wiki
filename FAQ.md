@@ -56,7 +56,7 @@ If you prefer to learn by watching videos, see:
 - Blog: https://blog.ethereum.org
 - Wiki: http://wiki.ethereum.org [Not working anymore]
 - Meetups: http://ethereum.meetup.com
-- Whitepaper: http://ethereum.org/ethereum.html
+- Whitepaper: https://github.com/ethereum/wiki/wiki/White-Paper
 - Yellow Paper: http://gavwood.com/paper.pdf
 - Facebook: https://www.facebook.com/ethereumproject
 - Youtube: http://www.youtube.com/ethereumproject
