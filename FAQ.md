@@ -81,7 +81,7 @@ If you prefer to learn by watching videos, see:
 
 ### Where can I find official releases?
 
-+ [Releases for AlethZero](https://github.com/ethereum/cpp-ethereum)
++ [Releases for AlethZero](https://github.com/ethereum/cpp-ethereum/releases)
 + [Releases for Mist](https://github.com/ethereum/go-ethereum/releases)
 + [Releases for Pyethereum](https://github.com/ethereum/pyethereum/releases)
 
@@ -98,7 +98,7 @@ If you prefer to learn by watching videos, see:
 
 ### How to install the clients from source?
 
-+ [Building AlethZero (C++)](https://github.com/ethereum/cpp-ethereum/wiki)
++ [Building AlethZero (C++)](https://github.com/ethereum/cpp-ethereum)
 + [Building Mist (Go)](https://github.com/ethereum/go-ethereum/wiki/Building-Ethereum%28Go%29)
 + [Installing Pyethereum (Python)](https://github.com/ethereum/pyethereum#quickstart)
 + [Installing EthereumJ (Java)](https://github.com/ethereum/ethereumj#maven)
