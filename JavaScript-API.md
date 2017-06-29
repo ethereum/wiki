@@ -1458,9 +1458,9 @@ If the transaction was a contract creation use [web3.eth.getTransactionReceipt()
 // compiled solidity source code using https://chriseth.github.io/cpp-ethereum/
 var code = "603d80600c6000396000f3007c01000000000000000000000000000000000000000000000000000000006000350463c6888fa18114602d57005b6007600435028060005260206000f3";
 
-web3.eth.sendTransaction({data: code}, function(err, address) {
+web3.eth.sendTransaction({data: code}, function(transactionId, err) {
   if (!err)
-    console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+    console.log(transactionId); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 });
 ```
 
