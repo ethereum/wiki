@@ -1699,7 +1699,7 @@ You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethe
 var MyContract = web3.eth.contract(abiArray);
 
 // instantiate by address
-var contractInstance = MyContract.at([address]);
+var contractInstance = MyContract.at(address);
 
 // deploy new contract
 var contractInstance = MyContract.new([constructorParam1] [, constructorParam2], {data: '0x12345...', from: myAccount, gas: 1000000});
