@@ -20,6 +20,7 @@ Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FA
 ## Downloads
 Bleeding edge code can be cloned from the develop branch of their git repositories:
 - https://github.com/ethereum/go-ethereum (Go)
-- https://github.com/ethereum/webthree-umbrella (C++)
-- https://github.com/ethereum/pyethapp (Python)
 - https://github.com/paritytech/parity (Rust)
+- https://github.com/ethereum/pyethapp (Python)
+- https://github.com/ethereum/cpp-ethereum (C++)
+- https://github.com/ethereum/ethereumj (Java)
