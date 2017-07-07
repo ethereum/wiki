@@ -479,16 +479,16 @@ The concept of an arbitrary state transition function as implemented by the Ethe
 #### Further Reading
 
 1. Davis, J. 10 October 2011. "The Crypto-Currency: Bitcoin and its mysterious inventor". The New Yorker. <http://www.newyorker.com/magazine/2011/10/10/the-crypto-currency>. Retrieved 31 October 2014. Accessed 7 July 2017.
-2. Intrinsic value: http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/
-2. Smart property: https://en.bitcoin.it/wiki/Smart_Property
-3. Smart contracts: https://en.bitcoin.it/wiki/Contracts
-4. B-money: http://www.weidai.com/bmoney.txt
-5. Reusable proofs of work: http://www.finney.org/~hal/rpow/ 
-6. Secure property titles with owner authority: http://szabo.best.vwh.net/securetitle.html
-7. Bitcoin whitepaper: http://bitcoin.org/bitcoin.pdf
-8. Namecoin: https://namecoin.org/
+2. Unknown author. Unknown date. Intrinsic value: http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/. Unable to access 7 July 2017.
+2. Smart property: https://en.bitcoin.it/wiki/Smart_Property. Accessed 7 July 2017.
+3. Smart contracts: https://en.bitcoin.it/wiki/Contracts. Accessed 7 July 2017.
+4. B-money: http://www.weidai.com/bmoney.txt. Accessed 7 July 2017.
+5. Reusable proofs of work: http://www.finney.org/~hal/rpow/. Unable to access 7 July 2017.
+6. Secure property titles with owner authority: http://szabo.best.vwh.net/securetitle.html. Unable to access 7 July 2017.
+7. Bitcoin whitepaper: http://bitcoin.org/bitcoin.pdf. Accessed 7 July 2017.
+8. Namecoin: https://namecoin.org/. Accessed 7 July 2017.
 9. Zooko's triangle: http://en.wikipedia.org/wiki/Zooko's_triangle
-10. Colored coins whitepaper: https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit
+10. Colored coins whitepaper: https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit. Accessed 7 July 2017.
 11. Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec
 12. Decentralized autonomous corporations, Bitcoin Magazine: http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/
 13. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification
