@@ -468,7 +468,7 @@ The Ethereum protocol was originally conceived as an upgraded version of a crypt
 
 The concept of an arbitrary state transition function as implemented by the Ethereum protocol provides for a platform with unique potential; rather than being a closed-ended, single-purpose protocol intended for a specific array of applications in data storage, gambling or finance, Ethereum is open-ended by design, and we believe that it is extremely well-suited to serving as a foundational layer for a very large number of both financial and non-financial protocols in the years to come.
 
-## Notes and Further Reading
+## Notes, References and Further Reading
 
 #### Notes
 
@@ -476,7 +476,7 @@ The concept of an arbitrary state transition function as implemented by the Ethe
 2. Technically, the median of the 11 previous blocks.
 3. Internally, 2 and "CHARLIE" are both numbers, with the latter being in big-endian base 256 representation. Numbers can be at least 0 and at most 2<sup>256</sup>-1.
 
-#### Further Reading
+#### References
 1a. Nakamoto, S. 31 October 2008. "Bitcoin: A Peer-to-Peer Electronic Cash System". Also known as the Bitcoin whitepaper. http://nakamotoinstitute.org/bitcoin/. http://bitcoin.org/bitcoin.pdf. https://github.com/saivann/bitcoinwhitepaper. Accessed 7 July 2017.  
 1b. Davis, J. 10 October 2011. "The Crypto-Currency: Bitcoin and its mysterious inventor". The New Yorker. <http://www.newyorker.com/magazine/2011/10/10/the-crypto-currency>. Retrieved 31 October 2014. Accessed 7 July 2017.
 2. Unknown author. Unknown date. "Intrinsic value". http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/. Unable to access 7 July 2017.  
@@ -496,15 +496,15 @@ The concept of an arbitrary state transition function as implemented by the Ethe
 16. Dogecoin. http://dogecoin.com/. Accessed 7 July 2017.  
 17. Last edited on 29 June 2017. "Denial-of-service attack". Wikipedia. https://en.wikipedia.org/wiki/Denial-of-service_attack. Accessed 7 July 2017.
 
-Needs renumbering and maybe also reordering:
-9. Zooko's triangle: http://en.wikipedia.org/wiki/Zooko's_triangle  
-11. Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec  
-13. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification  
-14. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree  
-15. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree   
-16. GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf  
-17. StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html  
-18. Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y  
-19. Ethereum RLP: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP  
-20. Ethereum Merkle Patricia trees: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree  
-21. Peter Todd on Merkle sum trees: http://sourceforge.net/p/bitcoin/mailman/message/31709140/  
+#### Further reading:
+1. Zooko's triangle: http://en.wikipedia.org/wiki/Zooko's_triangle  
+2. Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec  
+3. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification  
+4. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree  
+5. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree   
+6. GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf  
+7. StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html  
+8. Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y  
+9. Ethereum RLP: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP  
+10. Ethereum Merkle Patricia trees: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree  
+11. Peter Todd on Merkle sum trees: http://sourceforge.net/p/bitcoin/mailman/message/31709140/  
