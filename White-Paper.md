@@ -477,34 +477,33 @@ The concept of an arbitrary state transition function as implemented by the Ethe
 3. Internally, 2 and "CHARLIE" are both numbers, with the latter being in big-endian base 256 representation. Numbers can be at least 0 and at most 2<sup>256</sup>-1.
 
 #### Further Reading
-1a. Nakamoto, S. 31 October 2008. "Bitcoin: A Peer-to-Peer Electronic Cash System". Also known as the Bitcoin whitepaper. http://nakamotoinstitute.org/bitcoin/. http://bitcoin.org/bitcoin.pdf. https://github.com/saivann/bitcoinwhitepaper. Accessed 7 July 2017.
+1a. Nakamoto, S. 31 October 2008. "Bitcoin: A Peer-to-Peer Electronic Cash System". Also known as the Bitcoin whitepaper. http://nakamotoinstitute.org/bitcoin/. http://bitcoin.org/bitcoin.pdf. https://github.com/saivann/bitcoinwhitepaper. Accessed 7 July 2017.  
 1b. Davis, J. 10 October 2011. "The Crypto-Currency: Bitcoin and its mysterious inventor". The New Yorker. <http://www.newyorker.com/magazine/2011/10/10/the-crypto-currency>. Retrieved 31 October 2014. Accessed 7 July 2017.
-2. Unknown author. Unknown date. "Intrinsic value". http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/. Unable to access 7 July 2017.
-3. Assia, Y.; Vitalik, B.; Haki, M.; Meni R.; and Rotem, L. U.d. "Colored coins whitepaper". https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit. Accessed 7 July 2017.
-4. Last modified 10 May 2016. "Smart property". Bitcoin Wiki. https://en.bitcoin.it/wiki/Smart_Property. Accessed 7 July 2017.
-5. Last modified 6 July 2017. "Namecoin". https://namecoin.org/. Accessed 7 July 2017.
-6. Last modified 24 June 2017. "Smart contracts". Bitcoin Wiki. https://en.bitcoin.it/wiki/Contracts. Accessed 7 July 2017.
-7. Decentralized autonomous corporations, Bitcoin Magazine: http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/
-8. "Blind signature". Last modified 29 March 2017. Wikipedia. https://en.wikipedia.org/wiki/Blind_signature. Accessed 7 July 2017.
-9. Dai, W. U.d. "B-money". http://www.weidai.com/bmoney.txt. Accessed 7 July 2017.
-10. Hal, F. Reusable proofs of work: http://www.finney.org/~hal/rpow/. Unable to access 7 July 2017.
-11. Black, A. U.d. Hashcash. http://www.hashcash.org/. Accessed 7 July 2017.
-12. Last modified 15 June 2017. "Sybil attack". Wikipedia. https://en.wikipedia.org/wiki/Sybil_attack. Accessed 7 July 2017.
+2. Unknown author. Unknown date. "Intrinsic value". http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/. Unable to access 7 July 2017.  
+3. Assia, Y.; Vitalik, B.; Haki, M.; Meni R.; and Rotem, L. U.d. "Colored coins whitepaper".   https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit. Accessed 7 July 2017.
+4. Last modified 10 May 2016. "Smart property". Bitcoin Wiki. https://en.bitcoin.it/wiki/Smart_Property. Accessed 7 July 2017.  
+5. Last modified 6 July 2017. "Namecoin". https://namecoin.org/. Accessed 7 July 2017.  
+6. Last modified 24 June 2017. "Smart contracts". Bitcoin Wiki. https://en.bitcoin.it/wiki/Contracts. Accessed 7 July 2017.  
+7. Buterin, V. Sep 19, 2013. "Bootstrapping A Decentralized Autonomous Corporation: Part I". Bitcoin Magazine. http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i. Accessed 7 July 2017.    
+8. "Blind signature". Last modified 29 March 2017. Wikipedia. https://en.wikipedia.org/wiki/Blind_signature. Accessed 7 July 2017.  
+9. Dai, W. U.d. "B-money". http://www.weidai.com/bmoney.txt. Accessed 7 July 2017.    
+10. Hal, F. Reusable proofs of work: http://www.finney.org/~hal/rpow/. Unable to access 7 July 2017.  
+11. Black, A. U.d. Hashcash. http://www.hashcash.org/. Accessed 7 July 2017.  
+12. Last modified 15 June 2017. "Sybil attack". Wikipedia. https://en.wikipedia.org/wiki/Sybil_attack. Accessed 7 July 2017.  
 13. Last modified 30 June 2017. "SHA-2". Wikipedia.https://en.wikipedia.org/wiki/SHA-2.  Accessed 7 July 2017.
 14. Szabo, N. 1998. "Secure property titles with owner authority". http://szabo.best.vwh.net/securetitle.html. Unable to access 7 July 2017. Alternative link here: http://nakamotoinstitute.org/secure-property-titles/. Accessed 7 July 2017.
-15. Last edited on 27 June 2017. "Elliptic Curve Digital Signature Algorithm". Wikipedia. https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm. Accessed 7 July 2017.
-16. Dogecoin. http://dogecoin.com/. Accessed 7 July 2017.
+15. Last edited on 27 June 2017. "Elliptic Curve Digital Signature Algorithm". Wikipedia.  https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm. Accessed 7 July 2017.  
+16. Dogecoin. http://dogecoin.com/. Accessed 7 July 2017.  
 
-9. Zooko's triangle: http://en.wikipedia.org/wiki/Zooko's_triangle
-10. 
-11. Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec
+9. Zooko's triangle: http://en.wikipedia.org/wiki/Zooko's_triangle  
+11. Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec  
 
-13. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification
-14. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree
-15. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree
-16. GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf
-17. StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html
-18. Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y
-19. Ethereum RLP: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP
-20. Ethereum Merkle Patricia trees: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree
-21. Peter Todd on Merkle sum trees: http://sourceforge.net/p/bitcoin/mailman/message/31709140/
+13. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification  
+14. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree  
+15. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree   
+16. GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf  
+17. StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html  
+18. Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y  
+19. Ethereum RLP: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP  
+20. Ethereum Merkle Patricia trees: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-Patricia-Tree  
+21. Peter Todd on Merkle sum trees: http://sourceforge.net/p/bitcoin/mailman/message/31709140/  
