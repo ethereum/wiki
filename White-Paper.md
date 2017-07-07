@@ -79,7 +79,7 @@ If we had access to a trustworthy centralized service, this system would be triv
 The algorithm for checking if a block is valid, expressed in this paradigm, is as follows:
 
 1. Check if the previous block referenced by the block exists and is valid.
-2. Check that the timestamp of the block is greater than that of the previous block<sup>[Note 3]</sup> and less than 2 hours into the future
+2. Check that the timestamp of the block is greater than that of the previous block<sup>[Note 2]</sup> and less than 2 hours into the future
 3. Check that the proof of work on the block is valid.
 4. Let `S[0]` be the state at the end of the previous block.
 5. Suppose `TX` is the block's transaction list with `n` transactions. For all `i` in `0...n-1`, set `S[i+1] = APPLY(S[i],TX[i])` If any application returns an error, exit and return false.
@@ -204,13 +204,13 @@ For example, suppose that the contract's code is:
     if !self.storage[calldataload(0)]:
         self.storage[calldataload(0)] = calldataload(32)
 
-Note that in reality the contract code is written in the low-level EVM code; this example is written in Serpent, one of our high-level languages, for clarity, and can be compiled down to EVM code. Suppose that the contract's storage starts off empty, and a transaction is sent with 10 ether value, 2000 gas, 0.001 ether gasprice, and 64 bytes of data, with bytes 0-31 representing the number `2` and bytes 32-63 representing the string `CHARLIE`.<sup>[Note 4] The process for the state transition function in this case is as follows:
+Note that in reality the contract code is written in the low-level EVM code; this example is written in Serpent, one of our high-level languages, for clarity, and can be compiled down to EVM code. Suppose that the contract's storage starts off empty, and a transaction is sent with 10 ether value, 2000 gas, 0.001 ether gasprice, and 64 bytes of data, with bytes 0-31 representing the number `2` and bytes 32-63 representing the string `CHARLIE`.<sup>[Note 3]</sup> The process for the state transition function in this case is as follows:
 
 1. Check that the transaction is valid and well formed.
 2. Check that the transaction sender has at least 2000 * 0.001 = 2 ether. If they do, then subtract 2 ether from the sender's account.
 3. Initialize gas = 2000; assuming the transaction is 170 bytes long and the byte-fee is 5, subtract 850 so that there is 1150 gas left.
 3. Subtract 10 more ether from the sender's account, and add it to the contract's account.
-4. Run the code. In this case, this is simple: it checks if the contract's storage at index `2` is used<sup>[Note 2]</sup>, notices that it is not, and so it sets the storage at index `2` to the value `CHARLIE`. Suppose this takes 187 gas, so the remaining amount of gas is 1150 - 187 = 963
+4. Run the code. In this case, this is simple: it checks if the contract's storage at index `2` is used<sup>[Note 4]</sup>, notices that it is not, and so it sets the storage at index `2` to the value `CHARLIE`. Suppose this takes 187 gas, so the remaining amount of gas is 1150 - 187 = 963
 5. Add 963 * 0.001 = 0.963 ether back to the sender's account, and return the resulting state.
 
 If there was no contract at the receiving end of the transaction, then the total transaction fee would simply be equal to the provided `GASPRICE` multiplied by the length of the transaction in bytes, and the data sent alongside the transaction would be irrelevant.
@@ -473,9 +473,9 @@ The concept of an arbitrary state transition function as implemented by the Ethe
 #### Notes
 
 1. A sophisticated reader may notice that in fact a Bitcoin address is the hash of the elliptic curve public key[<sup>[15]</sup>](https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm), and not the public key itself. However, it is in fact perfectly legitimate cryptographic terminology to refer to the pubkey hash as a public key itself. This is because Bitcoin's cryptography can be considered to be a custom digital signature algorithm, where the public key consists of the hash of the ECC pubkey; the signature consists of the ECC pubkey concatenated with the ECC signature; and the verification algorithm involves checking the ECC pubkey in the signature against the ECC pubkey hash provided as a public key, and then verifying the ECC signature against the ECC pubkey.
-2. Note that for those not familiar with arrays in programming languages, the index starts at 0, and increments by 1. So the nth item in an array has an index of n-1. So in the case in question, the item in the list with an index of 2, is the 3rd item, which has a value of 0.
-3. Technically, the median of the 11 previous blocks.
-4. Internally, 2 and "CHARLIE" are both numbers, with the latter being in big-endian base 256 representation. Numbers can be at least 0 and at most 2<sup>256</sup>-1.
+2. Technically, the median of the 11 previous blocks.
+3. Internally, 2 and "CHARLIE" are both numbers, with the latter being in big-endian base 256 representation. Numbers can be at least 0 and at most 2<sup>256</sup>-1.
+4. Note that for those not familiar with arrays in programming languages, the index starts at 0, and increments by 1. So the nth item in an array has an index of n-1. So in the case in question, the item in the list with an index of 2, is the 3rd item, which has a value of 0.
 
 #### References
 1a. Nakamoto, S. 31 October 2008. "Bitcoin: A Peer-to-Peer Electronic Cash System". Also known as the Bitcoin whitepaper. http://nakamotoinstitute.org/bitcoin/. http://bitcoin.org/bitcoin.pdf. https://github.com/saivann/bitcoinwhitepaper. Accessed 7 July 2017.  
