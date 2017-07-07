@@ -496,9 +496,9 @@ The concept of an arbitrary state transition function as implemented by the Ethe
 16. Dogecoin. http://dogecoin.com/. Accessed 7 July 2017.  
 17. Last edited on 29 June 2017. "Denial-of-service attack". Wikipedia. https://en.wikipedia.org/wiki/Denial-of-service_attack. Accessed 7 July 2017.
 
+Needs renumbering and maybe also reordering:
 9. Zooko's triangle: http://en.wikipedia.org/wiki/Zooko's_triangle  
 11. Mastercoin whitepaper: https://github.com/mastercoin-MSC/spec  
-
 13. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification  
 14. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree  
 15. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree   
