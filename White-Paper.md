@@ -79,7 +79,7 @@ If we had access to a trustworthy centralized service, this system would be triv
 The algorithm for checking if a block is valid, expressed in this paradigm, is as follows:
 
 1. Check if the previous block referenced by the block exists and is valid.
-2. Check that the timestamp of the block is greater than that of the previous block<sup>[2]</sup> and less than 2 hours into the future
+2. Check that the timestamp of the block is greater than that of the previous block<sup>[Note 2]</sup> and less than 2 hours into the future
 3. Check that the proof of work on the block is valid.
 4. Let `S[0]` be the state at the end of the previous block.
 5. Suppose `TX` is the block's transaction list with `n` transactions. For all `i` in `0...n-1`, set `S[i+1] = APPLY(S[i],TX[i])` If any application returns an error, exit and return false.
