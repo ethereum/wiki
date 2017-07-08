@@ -105,9 +105,9 @@ The letter `i` is meant for integers, and for fixed-length (up to 32 byte) strin
 
 Now, what if you want to actually run the contract? That is where [pyethereum](https://github.com/ethereum/pyethereum) comes in. Open up a Python console in the same directory, and run:
 
-    >>> from ethereum import tester as t
+    >>> from ethereum.tools import tester as t
     >>> c = t.Chain()
-    >>> x = s.contract('mul2.se')
+    >>> x = c.contract('mul2.se')
     >>> x.double(42)
     84
 
