@@ -107,7 +107,7 @@ Now, what if you want to actually run the contract? That is where [pyethereum](h
 
     >>> from ethereum.tools import tester as t
     >>> c = t.Chain()
-    >>> x = c.contract('mul2.se')
+    >>> x = c.contract('mul2.se', language='serpent')
     >>> x.double(42)
     84
 
