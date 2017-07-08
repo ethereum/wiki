@@ -111,7 +111,7 @@ Now, what if you want to actually run the contract? That is where [pyethereum](h
     >>> x.double(42)
     84
 
-The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `c.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
+The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `x.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
 
 ### Example: Name Registry
 
