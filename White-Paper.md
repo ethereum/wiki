@@ -32,7 +32,7 @@ Satoshi Nakamoto's development of Bitcoin in 2008[<sup>[1a]</sup>](http://nakamo
     * [Mining Centralization](#mining-centralization)
     * [Scalability](#scalability)
 * [Conclusion](#conclusion)
-* [Notes, References and Further Reading](#notes%2c%-references-and-further-reading)
+* [Notes, References and Further Reading](#notes-references-and-further-reading)
 
 ## Introduction to Bitcoin and Existing Concepts
 
