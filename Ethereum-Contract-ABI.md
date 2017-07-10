@@ -271,8 +271,8 @@ For example,
 ```js
 contract Test {
 function Test(){ b = 0x12345678901234567890123456789012; }
-event Event(uint indexed a, bytes32 b)
-event Event2(uint indexed a, bytes32 b)
+event Event(uint indexed a, bytes32 b);
+event Event2(uint indexed a, bytes32 b);
 function foo(uint a) { Event(a, b); }
 bytes32 b;
 }
@@ -285,10 +285,6 @@ would result in the JSON:
 "type":"event",
 "inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
 "name":"Event"
-}, {
-"type":"event",
-"inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
-"name":"Event2"
 }, {
 "type":"event",
 "inputs": [{"name":"a","type":"uint256","indexed":true},{"name":"b","type":"bytes32","indexed":false}],
