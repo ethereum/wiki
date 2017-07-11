@@ -886,7 +886,7 @@ web3.eth.isSyncing(function(error, sync){
     // or async
     web3.eth.getCoinbase(callback(error, result){ ... })
 
-This property is read only and returns the coinbase address were the mining rewards go to.
+This property is read only and returns the coinbase address where the mining rewards go to.
 
 ##### Returns
 
