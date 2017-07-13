@@ -20,7 +20,6 @@ Answers to questions about Ethereum
   * [Where can I learn Serpent?](#where-can-i-learn-serpent-the-python-like-language)
   * [Where can I learn LLL?](#where-can-i-learn-lll-the-lisp-like-language)
   * [How to test contracts?](#how-to-test-contracts)
-  * [How to deploy contracts automatically?](#how-to-deploy-contracts-automatically)
   * [Where to find example contracts?](#where-to-find-example-contracts)
 * [ÐApps](#Ðapps)
   * [Where can I learn about the Ethereum APIs?](#where-can-i-learn-about-the-ethereum-apis)
@@ -165,10 +164,6 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 
 + [EVM Contract Simulator](https://github.com/EtherCasts/evm-sim/) ([@EtherCasts](https://github.com/EtherCasts))
 + [Pyethereum Tester](https://github.com/ethereum/pyethereum/blob/master/ethereum/tests/test_contracts.py) ([@ethereum](https://github.com/ethereum))
-
-### How to deploy contracts automatically?
-
-+ [Ethereum Package Manager](https://github.com/project-douglas/epm)
 
 ### Where to find example contracts?
 
