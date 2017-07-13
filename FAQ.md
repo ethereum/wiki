@@ -29,7 +29,6 @@ Answers to questions about Ethereum
 * [IRC](#irc)
   * [How can I join the Ethereum IRC channels?](#how-can-i-join-the-ethereum-irc-channels)
   * [Where can I find the Ethereum IRC logs?](#where-can-i-find-the-ethereum-irc-logs)
-  * [Where can I learn about the ZeroGox bot?](#where-can-i-learn-about-the-zerogox-bot)
 * [More Questions and Answers](#more-questions-and-answers)
 
 <!-- toc stop -->
@@ -226,14 +225,6 @@ Community
 ### How can I join the Ethereum IRC channels?
 
 + [Chat with the ethereum dev community on IRC!](https://forum.ethereum.org/discussion/1495/chat-with-the-ethereum-dev-community-on-irc)
-
-### Where can I find the Ethereum IRC logs?
-
-+ [The ZeroGox logs](https://zerogox.com/bot/log)
-
-### Where can I learn about the ZeroGox bot?
-
-+ [The ZeroGox bot](https://zerogox.com/bot)
 
 # More Questions and Answers
 
