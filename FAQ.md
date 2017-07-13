@@ -164,7 +164,7 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 ### How to test contracts?
 
 + [EVM Contract Simulator](https://github.com/EtherCasts/evm-sim/) ([@EtherCasts](https://github.com/EtherCasts))
-+ [Pyethereum Tester](https://github.com/ethereum/pyethereum/blob/master/tests/test_contracts.py) ([@ethereum](https://github.com/ethereum))
++ [Pyethereum Tester](https://github.com/ethereum/pyethereum/blob/master/ethereum/tests/test_contracts.py) ([@ethereum](https://github.com/ethereum))
 
 ### How to deploy contracts automatically?
 
