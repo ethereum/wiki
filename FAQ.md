@@ -156,8 +156,8 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 ### Where can I learn Solidity, the JavaScript-like language?
 
 + Specifications
-  + [Solidity, Docs and ABI](https://github.com/ethereum/cpp-ethereum/wiki/Solidity%2C-Docs-and-ABI)
-  + [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
+  + [Solidity Documentation](http://solidity.readthedocs.io/en/latest/index.html)
+
 + Tutorials
   + [Solidity Tutorial](http://solidity.readthedocs.io/en/latest/)
   + [Contract Writing in Solidity](https://dappsforbeginners.wordpress.com)
