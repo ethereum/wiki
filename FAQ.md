@@ -14,7 +14,6 @@ Answers to questions about Ethereum
   * [How to install the clients from source?](#how-to-install-the-clients-from-source)
 * [Mining](#mining)
   * [How can I mine Ether?](#how-can-i-mine-ether)
-  * [How to get free testnet Ether?](#how-to-get-free-testnet-ether)
 * [Contracts](#contracts)
   * [Where can I learn about contract development?](#where-can-i-learn-about-contract-development)
   * [Where can I learn Solidity?](#where-can-i-learn-solidity-the-javascript-like-language)
@@ -123,10 +122,6 @@ With the eth client
 # Only force mine to acquire ether or stress test
 $ eth --force-mining --mining on [YOUR OPTIONS...]
 ```
-
-### How to get free testnet Ether?
-
-+ [ZeroGox Wei Faucet](https://zerogox.com/ethereum/wei_faucet) ([@caktux](https://github.com/caktux))
 
 ## Contracts
 
