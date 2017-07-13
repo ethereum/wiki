@@ -175,7 +175,6 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 + LLL
   + [By Gavin Wood](https://github.com/ethereum/cpp-ethereum/wiki/LLL-Examples-for-PoC-5/7a575cf91c4572734a83f95e970e9e7ed64849ce) ([@gavofyork](https://github.com/gavofyork))
   + [By Dennis Mckinnon](https://github.com/dennismckinnon/Ethereum-Contracts) ([@dennismckinnon](https://github.com/dennismckinnon))
-  + [By Project Douglas](https://github.com/project-douglas/eris/tree/master/contracts) ([@project-douglas](https://github.com/project-douglas))
   + [By Doug A.](https://github.com/d11e9/g3) ([@dlle9](https://github.com/d11e9))
 
 ## ÐApps
@@ -205,11 +204,8 @@ Official
 
 Community
 
-+ [C3D](https://github.com/project-douglas/c3d) ([@project-douglas](https://github.com/project-douglas))
 + [Emacs LLL Mode](https://github.com/robmyers/lll-mode) ([@robmyers](https://github.com/robmyers))
 + [Emacs Serpent Mode](https://github.com/robmyers/serpent-mode) ([@robmyers](https://github.com/robmyers))
-+ [EPM](https://github.com/project-douglas/epm) ([@project-douglas](https://github.com/project-douglas))
-+ [EPM Sublime Plugin](https://github.com/project-douglas/epm-sublime) ([@project-douglas](https://github.com/project-douglas))
 + [Ethos Browser](https://github.com/projectdnet/ethos) ([@projectdnet](https://github.com/projectdnet))
 + [EVM-Sim](https://github.com/EtherCasts/evm-sim/) ([@EtherCasts](https://github.com/EtherCasts))
 + [MintChalk](http://www.mintchalk.com/) ([@mintchalk](https://github.com/mintchalk))
