@@ -206,7 +206,6 @@ Community
 
 + [Emacs LLL Mode](https://github.com/robmyers/lll-mode) ([@robmyers](https://github.com/robmyers))
 + [Emacs Serpent Mode](https://github.com/robmyers/serpent-mode) ([@robmyers](https://github.com/robmyers))
-+ [Ethos Browser](https://github.com/projectdnet/ethos) ([@projectdnet](https://github.com/projectdnet))
 + [EVM-Sim](https://github.com/EtherCasts/evm-sim/) ([@EtherCasts](https://github.com/EtherCasts))
 + [MintChalk](http://www.mintchalk.com/) ([@mintchalk](https://github.com/mintchalk))
 + [Poly-Eth](https://github.com/projectdnet/poly-eth) ([@projectdnet](https://github.com/projectdnet))
