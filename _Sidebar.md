@@ -60,7 +60,7 @@
 - [Wire protocol](https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol)
 - [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 - [Subtleties](https://github.com/ethereum/wiki/wiki/Subtleties)
-- [Solidity, Docs & ABI](https://github.com/ethereum/wiki/wiki/Solidity,-Docs-and-ABI)
+- [Solidity Documentation](https://solidity.readthedocs.io/en/latest/)
 - [NatSpec Format](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format)
 - [Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
 - [Bad Block Reporting](http://github.com/ethereum/wiki/wiki/Bad-Block-Reporting)
