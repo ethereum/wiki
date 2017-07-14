@@ -1,18 +1,18 @@
-### Merkle Patricia Tree Specification
+# Merkle Patricia Trie Specification (also Merkle Patricia Tree)
 
-Merkle Patricia trees provide a cryptographically authenticated data structure that can be used to store all (key, value) bindings, although for the scope of this paper we are restricting keys and values to strings (to remove this restriction, just use any serialization format for other data types). They are fully deterministic, meaning that a Patricia tree with the same (key,value) bindings is guaranteed to be exactly the same down to the last byte and therefore have the same root hash, provide the holy grail of O(log(n)) efficiency for inserts, lookups and deletes, and are much easier to understand and code than more complex comparison-based alternatives like red-black trees.
+Merkle Patricia tries provide a cryptographically authenticated data structure that can be used to store all (key, value) bindings, although for the scope of this paper we are restricting keys and values to strings (to remove this restriction, just use any serialization format for other data types). They are fully deterministic, meaning that a Patricia trie with the same (key,value) bindings is guaranteed to be exactly the same down to the last byte and therefore have the same root hash, provide the holy grail of O(log(n)) efficiency for inserts, lookups and deletes, and are much easier to understand and code than more complex comparison-based alternatives like red-black tries.
 
-### Preamble: Basic Radix Trees
+## Preamble: Basic Radix Tries
 
-In a basic radix tree, every node looks as follows:
+In a basic radix trie, every node looks as follows:
 
     [i0, i1 ... in, value]
 
-Where i0 ... in represent the symbols of the alphabet (often binary or hex). value is the terminal value at the node, and the values in the i0 ... in slots are either NULL or pointers to (in our case, hashes of) other nodes. This forms a basic (key, value) store; for example, if you are interested in the value that is currently mapped to dog in the tree, you would first convert dog into the alphabet (giving `64 6f 67`), and then descend down the tree following that path until at the end of the path you read the value. That is, you would first look up the root hash in a flat key/value DB to find the root node of the trie (which is basically an array of keys to other nodes), use the value at index `6` as a key (and look it up in the flat key/value DB) to get the node one level down, then pick index `4` of that to lookup the next value, then pick index `6` of that, and so on, until, once you followed the path: `root -> 6 -> 4 -> 6 -> 15 -> 6 -> 7`, you look up the value of the node that you have and return the result.
+Where i0 ... in represent the symbols of the alphabet (often binary or hex). value is the terminal value at the node, and the values in the i0 ... in slots are either NULL or pointers to (in our case, hashes of) other nodes. This forms a basic (key, value) store; for example, if you are interested in the value that is currently mapped to dog in the trie, you would first convert dog into the alphabet (giving `64 6f 67`), and then descend down the trie following that path until at the end of the path you read the value. That is, you would first look up the root hash in a flat key/value DB to find the root node of the trie (which is basically an array of keys to other nodes), use the value at index `6` as a key (and look it up in the flat key/value DB) to get the node one level down, then pick index `4` of that to lookup the next value, then pick index `6` of that, and so on, until, once you followed the path: `root -> 6 -> 4 -> 6 -> 15 -> 6 -> 7`, you look up the value of the node that you have and return the result.
 
 Note there is a difference between looking something up in the the "trie" vs the underlying flat key/value "DB". They both define key/values arrangements, but the underlying DB can do a traditional 1 step lookup of a key, while looking up a key in the trie requires multiple underlying DB lookups to get to the final value as described above. To eliminate ambiguity, let's refer to the latter as a `path`.
 
-The update and delete operations for radix trees are simple, and can be defined roughly as follows:
+The update and delete operations for radix tries are simple, and can be defined roughly as follows:
 
     def update(node,path,value):
         if path == '':
@@ -45,17 +45,17 @@ The update and delete operations for radix trees are simple, and can be defined 
                 db.put(hash(newnode),newnode)
                 return hash(newnode)
 
-The "Merkle" part of the radix tree arises in the fact that a deterministic cryptographic hash of a node is used as the pointer to the node (for every lookup in the key/value DB `key == sha3(rlp(value))`, rather than some 32-bit or 64-bit memory location as might happen in a more traditional tree implemented in C. This provides a form of cryptographic authentication to the data structure; if the root hash of a given tree is publicly known, then anyone can provide a proof that the tree has a given value at a specific path by providing the nodes going up each step of the way. It is impossible for an attacker to provide a proof of a (path, value) pair that does not exist since the root hash is ultimately based on all hashes below it, so any modification would change the root hash.
+The "Merkle" part of the radix trie arises in the fact that a deterministic cryptographic hash of a node is used as the pointer to the node (for every lookup in the key/value DB `key == sha3(rlp(value))`, rather than some 32-bit or 64-bit memory location as might happen in a more traditional trie implemented in C. This provides a form of cryptographic authentication to the data structure; if the root hash of a given trie is publicly known, then anyone can provide a proof that the trie has a given value at a specific path by providing the nodes going up each step of the way. It is impossible for an attacker to provide a proof of a (path, value) pair that does not exist since the root hash is ultimately based on all hashes below it, so any modification would change the root hash.
 
 While traversing a path 1 nibble at a time as described above, most nodes contain a 17-element array. 1 index for each possible value held by the next hex character (nibble) in the path, and 1 to hold the final target value in the case that the path has been fully traversed. These 17-element array nodes are called `branch` nodes.
 
-### Main specification: Merkle Patricia Tree
+# Main specification: Merkle Patricia Trie
 
-However, radix trees have one major limitation: their inefficiency. If you want to store just one (path,value) binding where the path is (in the case of the ethereum state trie), 64 characters long (number of nibbles in `bytes32`), you will need over a kilobyte of extra space to store one level per character, and each lookup or delete will take the full 64 steps. The Patricia tree introduced here solves this issue.
+However, radix tries have one major limitation: their inefficiency. If you want to store just one (path,value) binding where the path is (in the case of the ethereum state trie), 64 characters long (number of nibbles in `bytes32`), you will need over a kilobyte of extra space to store one level per character, and each lookup or delete will take the full 64 steps. The Patricia trie introduced here solves this issue.
 
-### Optimization
+## Optimization
 
-Merkle Patricia trees solve the inefficiency issue by adding some extra complexity to the data structure. A node in a Merkle Patricia tree is one of the following:
+Merkle Patricia tries solve the inefficiency issue by adding some extra complexity to the data structure. A node in a Merkle Patricia trie is one of the following:
 
 1. `NULL` (represented as the empty string)
 2. `branch` A 17-item node `[ v0 ... v15, vt ]`
@@ -70,7 +70,7 @@ The optimization above however introduces some ambiguity.
 
 When traversing paths in nibbles, we may end up with an odd number of nibbles to traverse, but because all data is stored in `bytes` format, it is not possible to differentiate between, for instance, the nibble `1`, and the nibbles `01` (both must be stored as `<01>`). To specify odd length, the partial path is prefixed with a flag.
 
-### Specification: Compact encoding of hex sequence with optional terminator
+## Specification: Compact encoding of hex sequence with optional terminator
 
 The flagging of both *odd vs. even remaining partial path length* and *leaf vs. extension node* as described above reside in the first nibble of the partial path of any 2-item node. They result in the th following:
 
@@ -111,7 +111,7 @@ Examples:
 
 
 
-Here is the extended code for getting a node in the Merkle Patricia tree:
+Here is the extended code for getting a node in the Merkle Patricia trie:
 
     def get_helper(node,path):
         if path == []: return node
@@ -154,4 +154,26 @@ Now, we build such a trie with the following key/value pairs in the underlying D
     hashG:    [ <35>, 'coin' ]
 
 
-Where a node is referenced inside a node, what is included is H(rlp.encode(x)) where H(x) = sha3(x) if len(x) >= 32 else x and rlp.encode is the [RLP](https://github.com/ethereum/wiki/wiki/RLP) encoding function. Note that when updating a tree, you will need to store the key/value pair (sha3(x), x) in a persistent lookup table when you create a node with length >= 32, but if the node is shorter than that then you do not need to store anything when length < 32 for the obvious reason that the function f(x) = x is reversible.
+Where a node is referenced inside a node, what is included is H(rlp.encode(x)) where H(x) = sha3(x) if len(x) >= 32 else x and rlp.encode is the [RLP](https://github.com/ethereum/wiki/wiki/RLP) encoding function. Note that when updating a trie, you will need to store the key/value pair (sha3(x), x) in a persistent lookup table when you create a node with length >= 32, but if the node is shorter than that then you do not need to store anything when length < 32 for the obvious reason that the function f(x) = x is reversible.
+
+## Tries in Ethereum
+All of the merkle tries in Ethereum use a Merkle Patricia Trie. 
+
+From a block header there are 3 roots from 3 of these tries.
+
+1. stateRoot
+2. transactionsRoot
+3. receiptsRoot
+
+### State Trie
+There is one global state trie, and it updates over time. In it, a `path` is always: `sha3(ethereumAddress)` and a `value` is always: `rlp(ethereumAccount)`. More specifically an ethereum `account` is a 4 item array of `[nonce,balance,storageRoot,codeHash]`. At this point it's worth noting that this `storageRoot` is the root of another patricia trie:
+
+### Storage Trie
+Storage trie is where *all* contract data lives. There is a separate storage trie for each account. A `path` in this trie is somewhat complex but they depend on this: (here)[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getstorageat]. 
+
+### Transactions Trie
+Every block has its own Transactions trie. A `path` here is: `rlp(transactionIndex)`. transactionIndex is its index within the block it's mined. The ordering is mostly decided by a miner so this data is unknown until mined.
+
+### Receipts Trie
+Every block has its own Receipts trie. A `path` here is: `rlp(transactionIndex)`. transactionIndex is its index within the block it's mined.
+
