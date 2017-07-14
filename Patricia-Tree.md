@@ -169,11 +169,11 @@ From a block header there are 3 roots from 3 of these tries.
 There is one global state trie, and it updates over time. In it, a `path` is always: `sha3(ethereumAddress)` and a `value` is always: `rlp(ethereumAccount)`. More specifically an ethereum `account` is a 4 item array of `[nonce,balance,storageRoot,codeHash]`. At this point it's worth noting that this `storageRoot` is the root of another patricia trie:
 
 ### Storage Trie
-Storage trie is where *all* contract data lives. There is a separate storage trie for each account. A `path` in this trie is somewhat complex but they depend on this: (here)[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getstorageat]. 
+Storage trie is where *all* contract data lives. There is a separate storage trie for each account. A `path` in this trie is somewhat complex but they depend on this: (here)[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getstorageat].
 
 ### Transactions Trie
-Every block has its own Transactions trie. A `path` here is: `rlp(transactionIndex)`. transactionIndex is its index within the block it's mined. The ordering is mostly decided by a miner so this data is unknown until mined.
+There is a separate transactions trie for every block. A `path` here is: `rlp(transactionIndex)`. transactionIndex is its index within the block it's mined. The ordering is mostly decided by a miner so this data is unknown until mined. After a block is mined, the transaction trie never updates.
 
 ### Receipts Trie
-Every block has its own Receipts trie. A `path` here is: `rlp(transactionIndex)`. transactionIndex is its index within the block it's mined.
+Every block has its own Receipts trie. A `path` here is: `rlp(transactionIndex)`. transactionIndex is its index within the block it's mined. Never updates.
 
