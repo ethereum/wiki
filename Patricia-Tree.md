@@ -8,9 +8,9 @@ In a basic radix tree, every node looks as follows:
 
     [i0, i1 ... in, value]
 
-Where i0 ... in represent the symbols of the alphabet (often binary or hex). value is the terminal value at the node, and the values in the i0 ... in slots are either NULL or pointers to (in our case, hashes of) other nodes. This forms a basic (key, value) store; for example, if you are interested in the value that is currently mapped to dog in the tree, you would first convert dog into the alphabet (giving `64 6f 67`), and then descend down the tree following that path until at the end of the path you read the value. That is, you would first look up the root hash in a flat key/value DB to find the root node of the trie (which is basically an array of keys to other nodes), use the value at index `6` (and look it up in the flat key/value DB) to get the node one level down, then pick key `4` of that to lookup the next value, then pick key `6` of that, and so on, until, once you followed the path: `root -> 6 -> 4 -> 6 -> f -> 6 -> 7`, you look up the value of the node that you have and return the result.
+Where i0 ... in represent the symbols of the alphabet (often binary or hex). value is the terminal value at the node, and the values in the i0 ... in slots are either NULL or pointers to (in our case, hashes of) other nodes. This forms a basic (key, value) store; for example, if you are interested in the value that is currently mapped to dog in the tree, you would first convert dog into the alphabet (giving `64 6f 67`), and then descend down the tree following that path until at the end of the path you read the value. That is, you would first look up the root hash in a flat key/value DB to find the root node of the trie (which is basically an array of keys to other nodes), use the value at index `6` as a key (and look it up in the flat key/value DB) to get the node one level down, then pick index `4` of that to lookup the next value, then pick index `6` of that, and so on, until, once you followed the path: `root -> 6 -> 4 -> 6 -> 15 -> 6 -> 7`, you look up the value of the node that you have and return the result.
 
-Note there is a difference between looking something up in the the "trie" vs the underlying flat key/value "DB". They both define key/values arrangements, but the underlying DB can do a traditional 1 step lookup of a key, while looking up a key in the trie requires multiple DB lookups to get to the final value as described above. To eliminate ambiguity, let's refer to the latter as a `path`.
+Note there is a difference between looking something up in the the "trie" vs the underlying flat key/value "DB". They both define key/values arrangements, but the underlying DB can do a traditional 1 step lookup of a key, while looking up a key in the trie requires multiple underlying DB lookups to get to the final value as described above. To eliminate ambiguity, let's refer to the latter as a `path`.
 
 The update and delete operations for radix trees are simple, and can be defined roughly as follows:
 
@@ -47,33 +47,32 @@ The update and delete operations for radix trees are simple, and can be defined 
 
 The "Merkle" part of the radix tree arises in the fact that a deterministic cryptographic hash of a node is used as the pointer to the node (for every lookup in the key/value DB `key == sha3(rlp(value))`, rather than some 32-bit or 64-bit memory location as might happen in a more traditional tree implemented in C. This provides a form of cryptographic authentication to the data structure; if the root hash of a given tree is publicly known, then anyone can provide a proof that the tree has a given value at a specific path by providing the nodes going up each step of the way. It is impossible for an attacker to provide a proof of a (path, value) pair that does not exist since the root hash is ultimately based on all hashes below it, so any modification would change the root hash.
 
-However, radix trees have one major limitation: their inefficiency. If you want to store just one (path,value) binding where the path is (in the case of the ethereum state trie), 64 characters long (number of nibbles in `bytes32`), you will need over a kilobyte of extra space to store one level per character, and each lookup or delete will take the full 64 steps. The Patricia tree introduced here solves this issue.
-
+While traversing a path 1 nibble at a time as described above, most nodes contain a 17-element array. 1 index for each possible value held by the next hex character (nibble) in the path, and 1 to hold the final target value in the case that the path has been fully traversed. These 17-element array nodes are called `branch` nodes.
 
 ### Main specification: Merkle Patricia Tree
 
-While traversing a path 1 nibble at a time as described above, most nodes contain a 17-element array. 1 index for each possible value held by the next hex character (nibble) in the path, and 1 to hold the final target value in the case that the path has been fully traversed. These 17-element array nodes are called `branch` nodes.
+However, radix trees have one major limitation: their inefficiency. If you want to store just one (path,value) binding where the path is (in the case of the ethereum state trie), 64 characters long (number of nibbles in `bytes32`), you will need over a kilobyte of extra space to store one level per character, and each lookup or delete will take the full 64 steps. The Patricia tree introduced here solves this issue.
 
 ### Optimization
 
 Merkle Patricia trees solve the inefficiency issue by adding some extra complexity to the data structure. A node in a Merkle Patricia tree is one of the following:
 
 1. `NULL` (represented as the empty string)
-2. `branch` A 17-item array `[ v0 ... v15, vt ]`
-3. `leaf` A 2-item array `[ encodedPath, value ]`
-4. `extension` A 2-item array `[ encodedPath, key ]`
+2. `branch` A 17-item node `[ v0 ... v15, vt ]`
+3. `leaf` A 2-item node `[ encodedPath, value ]`
+4. `extension` A 2-item node `[ encodedPath, key ]`
 
-With 64 character paths it is inevitable that after traversing the first few layers of the trie, you will reach a node where no divergent path exists for the rest (or at least part) of the way down. It would be naive to require such a node to have empty values in every index (one for each of the 16 hex characters) besides the target index (next nibble in the path). Instead we shortcut the descent by setting up a `extension` node `[ encodedPath, key ]`, where `encodedPath` contains the "partial path" to skip ahead, in the compact encoding described above, and the `key` is for the next db lookup.
+With 64 character paths it is inevitable that after traversing the first few layers of the trie, you will reach a node where no divergent path exists for at least part of the way down. It would be naive to require such a node to have empty values in every index (one for each of the 16 hex characters) besides the target index (next nibble in the path). Instead we shortcut the descent by setting up a `extension` node of the form `[ encodedPath, key ]`, where `encodedPath` contains the "partial path" to skip ahead (using compact encoding described below), and the `key` is for the next db lookup.
 
 In the case of a `leaf` node, which can be determined by a flag in the first nibble of `encodedPath`, the situation above occurs and also the "partial path" to skip ahead completes the full remainder of a path. In this case `value` is the target value itself.
 
-The optimization above however introduces an ambiguity.
+The optimization above however introduces some ambiguity.
 
 When traversing paths in nibbles, we may end up with an odd number of nibbles to traverse, but because all data is stored in `bytes` format, it is not possible to differentiate between, for instance, the nibble `1`, and the nibbles `01` (both must be stored as `<01>`). To specify odd length, the partial path is prefixed with a flag.
 
 ### Specification: Compact encoding of hex sequence with optional terminator
 
-The flagging of both *odd vs. even remaining partial path length* and *leaf vs. extension node* as described above reside in the first nibble of the partial path. They result in the th following:
+The flagging of both *odd vs. even remaining partial path length* and *leaf vs. extension node* as described above reside in the first nibble of the partial path of any 2-item node. They result in the th following:
 
     hex char    bits    |    node type partial     path length
     ----------------------------------------------------------
@@ -110,7 +109,7 @@ Examples:
     > [ f, 1, c, b, 8]
     '3f 1c b8'
 
-For a `branch` node, a 17-item array `[ v0 ... v15, vt ]`, each item in v0...v15 should always be a key to a node or blank, and vt should always be a value or blank. So to store a value in one item of v0...v15, we should instead store a two-item array node, where index `0` is the result of compact encoding an empty nibbles list **with** terminator.
+
 
 Here is the extended code for getting a node in the Merkle Patricia tree:
 
