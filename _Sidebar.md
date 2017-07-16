@@ -2,7 +2,7 @@
 - [Home](https://github.com/ethereum/wiki/wiki/)
 - [Ethereum Whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper)
 - [Design Rationale](https://github.com/ethereum/wiki/wiki/Design-Rationale)
-- [Ethereum Yellow Paper](http://paper.gavwood.com)
+- [Ethereum Yellow Paper](https://ethereum.github.io/yellowpaper/paper.pdf)
 - [FAQ](https://github.com/ethereum/wiki/wiki/FAQ)
 
 ### Ethereum Clients
