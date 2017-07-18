@@ -47,14 +47,14 @@ The parameters for Ethash's cache and dataset depend on the block number. The ca
 
 ```python
 def get_cache_size(block_number):
-    sz = CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * (block_number // EPOCH_LENGTH)
+    sz = CACHE_BYTES_INIT + CACHE_BYTES_GROWTH * (block_number / EPOCH_LENGTH)
     sz -= HASH_BYTES
     while not isprime(sz / HASH_BYTES):
         sz -= 2 * HASH_BYTES
     return sz
 
 def get_full_size(block_number):
-    sz = DATASET_BYTES_INIT + DATASET_BYTES_GROWTH * (block_number // EPOCH_LENGTH)
+    sz = DATASET_BYTES_INIT + DATASET_BYTES_GROWTH * (block_number / EPOCH_LENGTH)
     sz -= MIX_BYTES
     while not isprime(sz / MIX_BYTES):
         sz -= 2 * MIX_BYTES
