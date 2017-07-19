@@ -731,7 +731,7 @@ contract TokenCreator {
 }
 ```
 
-## Libraries
+## Библиотеки
 
 Libraries are similar to contracts, but their purpose is that they are deployed only once at a specific address and their code is reused using the `CALLCODE` feature of the EVM. This means that if library functions are called, their code is executed in the context of the calling contract, i.e. `this` points to the calling contract and especially the storage from the calling contract can be accessed (this is not yet possible from solidity).
 
@@ -768,7 +768,7 @@ Restrictions for libraries in comparison to contracts:
 
 (these might be lifted at a later point)
 
-## Constructor Arguments
+## Параметры конструктора
 
 A Solidity contract expects constructor arguments after the end of the contract data itself.
 This means that you pass the arguments to a contract by putting them after the
