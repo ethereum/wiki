@@ -184,7 +184,7 @@ We have released the node discovery part of RLPx in PoC 8
 and it seems to be working for most people.
 
 **What are the next steps?**  
-We will implement the remaining parts of the protocol (Encrytion
+We will implement the remaining parts of the protocol (Encryption
 Handshake, authenticated packets) and define a peer selection
 strategy.
 
@@ -387,7 +387,7 @@ Having completed the bounty website just before, Ian and Konstantine are nearing
 In the last two weeks we have also been working on reaching out to various exchanges and possible parters for Ethereum as we move forward to the genesis release.	
 
 **What are the next steps?**  
-Release the website! Continue reaching out to various entites that could potentially align themselves with Ethereum. We also have raw video footage that will be processed once Ian is free for doing the website design.
+Release the website! Continue reaching out to various entities that could potentially align themselves with Ethereum. We also have raw video footage that will be processed once Ian is free for doing the website design.
 
 ###Ether Academy Website/Ethdev Website
 

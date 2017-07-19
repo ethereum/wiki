@@ -294,7 +294,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":
 
 #### net_peerCount
 
-Returns number of peers currenly connected to the client.
+Returns number of peers currently connected to the client.
 
 ##### Parameters
 none
@@ -1143,7 +1143,7 @@ params: [
   - `blockNumber`: `QUANTITY` - block number where this transaction was in. `null` when its pending.
   - `transactionIndex`: `QUANTITY` - integer of the transactions index position in the block. `null` when its pending.
   - `from`: `DATA`, 20 Bytes - address of the sender.
-  - `to`: `DATA`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
+  - `to`: `DATA`, 20 Bytes - address of the receiver. `null` when it's a contract creation transaction.
   - `value`: `QUANTITY` - value transferred in Wei.
   - `gasPrice`: `QUANTITY` - gas price provided by the sender in Wei.
   - `gas`: `QUANTITY` - gas provided by the sender.
@@ -1617,7 +1617,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_newPendingTransactionFilter"
 #### eth_uninstallFilter
 
 Uninstalls a filter with given id. Should always be called when watch is no longer needed.
-Additonally Filters timeout when they aren't requested with [eth_getFilterChanges](#eth_getfilterchanges) for a period of time.
+Additionally Filters timeout when they aren't requested with [eth_getFilterChanges](#eth_getfilterchanges) for a period of time.
 
 
 ##### Parameters
@@ -1856,7 +1856,7 @@ params: [
 
 ##### Returns
 
-`Boolean` - returns `true` if submitting went through succesfully and `false` otherwise.
+`Boolean` - returns `true` if submitting went through successfully and `false` otherwise.
 
 
 ##### Example
@@ -2264,7 +2264,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_newFilter","params":[{"topic
 #### shh_uninstallFilter
 
 Uninstalls a filter with given id. Should always be called when watch is no longer needed.
-Additonally Filters timeout when they aren't requested with [shh_getFilterChanges](#shh_getfilterchanges) for a period of time.
+Additionally Filters timeout when they aren't requested with [shh_getFilterChanges](#shh_getfilterchanges) for a period of time.
 
 
 ##### Parameters

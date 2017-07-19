@@ -11,7 +11,7 @@ The distance between two addresses is the MSB first numerical value of their XOR
 
 # Peer table format
 
-The peer table consists of rows, initially only one, at most 255 (typically much less). Each row contains at most _k_ peers (data structures containing information about said peer such as their peer address, network address, a timestamp, signature by the peer and possibly various other meta-data), where _k_ is a parameter (not necessarily global) with typical values betwen 5 and 20.
+The peer table consists of rows, initially only one, at most 255 (typically much less). Each row contains at most _k_ peers (data structures containing information about said peer such as their peer address, network address, a timestamp, signature by the peer and possibly various other meta-data), where _k_ is a parameter (not necessarily global) with typical values between 5 and 20.
 
 This parameter, _k_, determines the redundancy of the network: the peer selection algorithm described in this page aims to maintain exactly _k_ peers in each row. If several different protocols requiring routing are used on the network, each protocol _p_ can specify its own redundancy requirement _k_<sub>_p_</sub>, in which case the corresponding _k_<sub>_p_</sub> number of peers supporting that protocol are maintained. Participants must specify what protocols they support.
 

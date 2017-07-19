@@ -57,7 +57,7 @@ Submission and payment to the collators happens much as existing transaction sub
 
 ## Collators
 
-Collators maintain presence on at least two peer sub-network overlays; the Validators overlay, and one or more fiber overlays. The fiber overlays may provide directed transaction propogation. Collators "collate" on a set of fibers. They maintain a full fiber-chain for each fiber they collate over, and can accept all transactions that involve any combination of their fiber set. The greater this combination, then the greater their "transaction net", but the greater their overall disk/memory footprint.
+Collators maintain presence on at least two peer sub-network overlays; the Validators overlay, and one or more fiber overlays. The fiber overlays may provide directed transaction propagation. Collators "collate" on a set of fibers. They maintain a full fiber-chain for each fiber they collate over, and can accept all transactions that involve any combination of their fiber set. The greater this combination, then the greater their "transaction net", but the greater their overall disk/memory footprint.
 
 ### Collators: validate transaction
 
@@ -76,7 +76,7 @@ A Cross Fiber Block is created from the total information collated. This include
 
 ## Validators
 
-Validators (who might be better named auditors) are bonded particpants, chosen regularly from the highest bidders, who take a small fee for the ultimate maintenence of the network. Their job, as a whole, is to form a judiciary and ultimate authority over the validity and transaction contents of the chain. We generally assume that they are mostly benevolent and cannot all be bribed. Being bonded, validators may also be called to audit and stake their bond on an opinion over validity or information-availability.
+Validators (who might be better named auditors) are bonded particpants, chosen regularly from the highest bidders, who take a small fee for the ultimate maintenance of the network. Their job, as a whole, is to form a judiciary and ultimate authority over the validity and transaction contents of the chain. We generally assume that they are mostly benevolent and cannot all be bribed. Being bonded, validators may also be called to audit and stake their bond on an opinion over validity or information-availability.
 
 ### Validators: all placed in PoS-consensus master block
 

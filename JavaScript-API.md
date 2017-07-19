@@ -407,7 +407,7 @@ Converts any value into HEX.
 
 ##### Parameters
 
-1. `String|Number|Object|Array|BigNumber` - The value to parse to HEX. If its an object or array it will be `JSON.stringify` first. If its a BigNumber it will make it the HEX value of a number.
+1. `String|Number|Object|Array|BigNumber` - The value to parse to HEX. If it's an object or array it will be `JSON.stringify` first. If it's a BigNumber it will make it the HEX value of a number.
 
 ##### Returns
 
@@ -1233,7 +1233,7 @@ Returns a transaction matching the given transaction hash.
   - `blockNumber`: `Number` - block number where this transaction was in. `null` when its pending.
   - `transactionIndex`: `Number` - integer of the transactions index position in the block. `null` when its pending.
   - `from`: `String`, 20 Bytes - address of the sender.
-  - `to`: `String`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
+  - `to`: `String`, 20 Bytes - address of the receiver. `null` when it's a contract creation transaction.
   - `value`: `BigNumber` - value transferred in Wei.
   - `gasPrice`: `BigNumber` - gas price provided by the sender in Wei.
   - `gas`: `Number` - gas provided by the sender.
@@ -1318,7 +1318,7 @@ Returns the receipt of a transaction by transaction hash.
   - `transactionHash`: `String`, 32 Bytes - hash of the transaction.
   - `transactionIndex`: `Number` - integer of the transactions index position in the block.
   - `from`: `String`, 20 Bytes - address of the sender.
-  - `to`: `String`, 20 Bytes - address of the receiver. `null` when its a contract creation transaction.
+  - `to`: `String`, 20 Bytes - address of the receiver. `null` when it's a contract creation transaction.
   - `cumulativeGasUsed `: `Number ` - The total amount of gas used when this transaction was executed in the block.
   - `gasUsed `: `Number ` -  The amount of gas used by this specific transaction alone.
   - `contractAddress `: `String` - 20 Bytes - The contract address created, if the transaction was a contract creation, otherwise `null`.
@@ -1693,7 +1693,7 @@ The contract object exposes the contracts methods, which can be called using par
 
 ##### Returns
 
-`String` - If its a call the result data, if its a send transaction a created contract address, or the transaction hash, see [web3.eth.sendTransaction](#web3ethsendtransaction) for details.
+`String` - If it's a call the result data, if it's a send transaction a created contract address, or the transaction hash, see [web3.eth.sendTransaction](#web3ethsendtransaction) for details.
 
 
 ##### Example
@@ -2003,7 +2003,7 @@ This method should be called, when we want to store a string in the local leveld
 
 ##### Returns
 
-`Boolean` - `true` if successfull, otherwise `false`.
+`Boolean` - `true` if successful, otherwise `false`.
 
 ##### Example
 
@@ -2052,7 +2052,7 @@ This method should be called, when we want to store binary data in HEX form in t
 
 ##### Returns
 
-`Boolean` - `true` if successfull, otherwise `false`.
+`Boolean` - `true` if successful, otherwise `false`.
 
 ##### Example
 ```js

@@ -213,7 +213,7 @@ The full documentation format, that includes developer-specific documentation in
 }
 ```
 
-This file would be hashed and distributed (either on a centralised website or, more preferably, through Swarm). It would be referenced by the Ethereum Singleton Trust contract in order to allow people or organisations that you know or trust to help inform you of its audit results and trustworth. Of course if you were a coder you could audit it manually (in this case it's pretty trivial) and determine how well the formal documentation matches the code, and also submit newer versions, perhaps in different languages that incorporate changes you feel are required to better descibe its actions & ramifications.
+This file would be hashed and distributed (either on a centralised website or, more preferably, through Swarm). It would be referenced by the Ethereum Singleton Trust contract in order to allow people or organisations that you know or trust to help inform you of its audit results and trustworth. Of course if you were a coder you could audit it manually (in this case it's pretty trivial) and determine how well the formal documentation matches the code, and also submit newer versions, perhaps in different languages that incorporate changes you feel are required to better describe its actions & ramifications.
 
 ### The ABI-Description File
 
