@@ -489,7 +489,7 @@ Converts any ASCII string to a HEX string.
 ##### Parameters
 
 1. `String` - An ASCII string to be converted to HEX.
-2. `Number` - The number of bytes the returned HEX string should have. 
+2. `Number` - (optional) The number of bytes the returned HEX string should have. 
 
 ##### Returns
 
