@@ -1976,7 +1976,7 @@ events.get(function(error, logs){ ... });
 ...
 
 // would stop and uninstall the filter
-myEvent.stopWatching();
+events.stopWatching();
 ```
 
 ****
