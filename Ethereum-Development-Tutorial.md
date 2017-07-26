@@ -72,7 +72,7 @@ The instruction at position 2 is CALLDATALOAD, which pops one value from the sta
 
     PC: 3 STACK: [54] MEM: [], STORAGE: {}
 
-SLOAD pops one from the stack, and pushes the value in contract storage at that index. Since the contract is used for the first time, it has nothing there, so zero.
+SLOAD pops one from the stack, and pushes the value in contract storage at that index onto the stack. Since the contract is used for the first time, it has nothing there, so zero.
 
     PC: 4 STACK: [0] MEM: [], STORAGE: {}
 
