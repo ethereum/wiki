@@ -294,7 +294,7 @@ Both `call` and `callcode` are very low-level functions and should only be used 
 Note that contracts inherit all members of address, so it is possible to query the balance of the
 current contract using `this.balance`.
 
-## Перечисления
+## Перечисления(Enums)
 
 Перечисления - один из путей создания пользовательского типа в Solidity. Они явно конвертируемы в целочисленные типы и обратно, но неявные приведения не разрешены.
 
