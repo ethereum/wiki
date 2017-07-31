@@ -294,10 +294,9 @@ Both `call` and `callcode` are very low-level functions and should only be used 
 Note that contracts inherit all members of address, so it is possible to query the balance of the
 current contract using `this.balance`.
 
-## Enums
+## Перечисления
 
-Enums are one way to create a user-defined type in Solidity. They are explicitly convertible
-to and from all integer types but implicit conversion is not allowed.
+Перечисления - один из путей создания пользовательского типа в Solidity. Они явно конвертируемы в целочисленные типы и обратно, но неявные приведения не разрешены.
 
 ```js
 contract test {
@@ -308,11 +307,11 @@ contract test {
     {
         choice = ActionChoices.GoStraight;
     }
-    // Since enum types are not part of the ABI, the signature of "getChoice"
-    // will automatically be changed to "getChoice() returns (uint8)"
-    // for all matters external to Solidity. The integer type used is just
-    // large enough to hold all enum values, i.e. if you have more values,
-    // `uint16` will be used and so on.
+    // Так как перечисления не являются частью ABI, сигнатура функции "getChoice"
+    // будет автоматически заменена на "getChoice() returns (uint8)" для
+    // всех внешних по отношению к Solidity вызовов. Используемый целочисленный 
+    // тип достаточно большой для хранения всех значений перечисления, т.е. если
+    // у вас будет больше значений, то будет использоваться `uint16` и так далее.
     function getChoice() returns (ActionChoices)
     {
         return choice;
