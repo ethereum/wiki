@@ -132,7 +132,7 @@ Here, we see a few parts in action. First, we have the `key` and `value` variabl
 
 Now, paste the code into `namecoin.se`, if you wish try compiling it to LLL, opcodes or EVM, and let's try it out in the pyethereum tester environment:
 
-    >>> from ethereum import tester as t
+    >>> from ethereum.tools import tester as t
     >>> c = t.Chain()
     >>> x = c.contract('namecoin.se')
     >>> x.register(0x67656f726765, 45)
