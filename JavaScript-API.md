@@ -4,7 +4,7 @@ To make your app work on Ethereum, you can use the `web3` object provided by the
 
 `web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols. Working  [examples can be found here](https://github.com/ethereum/web3.js/tree/master/example).
 
-If you want to look at some more sophisticated examples using web3.js check out these [useful app patterns](https://github.com/ethereum/wiki/wiki/Useful-app-Patterns).
+If you want to look at some more sophisticated examples using web3.js check out these [useful app patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns).
 
 ## Getting Started
 
