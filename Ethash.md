@@ -100,6 +100,8 @@ def fnv(v1, v2):
     return ((v1 * FNV_PRIME) ^ v2) % 2**32
 ```
 
+Please note, even the yellow paper specifies fnv as v1*(FNV_PRIME ^ v2), all current implementations consistently use the above definition.
+
 ### Full dataset calculation
 
 Each 64-byte item in the full 1 GB dataset is computed as follows:
