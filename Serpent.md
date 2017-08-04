@@ -134,7 +134,7 @@ Now, paste the code into `namecoin.se`, if you wish try compiling it to LLL, opc
 
     >>> from ethereum.tools import tester as t
     >>> c = t.Chain()
-    >>> x = c.contract('namecoin.se')
+    >>> x = c.contract('namecoin.se', language='serpent')
     >>> x.register(0x67656f726765, 45)
     1
     >>> x.register(0x67656f726765, 20)
@@ -163,9 +163,9 @@ returnten.se:
 
 And open Python:
 
-    >>> from ethereum import tester as t
+    >>> from ethereum.tools import tester as t
     >>> c = t.Chain()
-    >>> x = c.contract('returnten.se')
+    >>> x = c.contract('returnten.se', language='serpent')
     >>> x.returnten()
     10
 
