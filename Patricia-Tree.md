@@ -128,7 +128,7 @@ Here is the extended code for getting a node in the Merkle Patricia trie:
             return get_helper(curnode[path[0]],path[1:])
 
     def get(node,path):
-        path = []
+        path2 = []
         for i in range(len(path)):
             path2.push(int(ord(path) / 16))
             path2.push(ord(path) % 16)
