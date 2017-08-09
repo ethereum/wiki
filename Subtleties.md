@@ -30,10 +30,11 @@
     * An invalid opcode (note: the code of an account is assumed to be followed by an infinite tail of STOP instructions, so the program counter "walking off" the end of the code is not an invalid opcode exception. However, jumping outside the code is an exception, because STOP is not a valid jump destination)
     * The REVERT opcode at 0xfd (starting from Metropolis; pre-Metropolis 0xfd is simply an invalid opcode)
 * If a transaction triggers an exception, then:
-    * The value transfer from sender to recipient still takes place
+    * The value transfer from sender to recipient still sometimes takes place
     * The fee transfer from sender to miner still takes place
     * The entire `STARTGAS` is added to `gas_used`
-    * All other execution is reverted
+    * All other execution during the exception-causing message call (or contract creation) is reverted
+    * When a transaction contains multiple message calls and contract creations, only some of them might be reverted.
 * If a contract-producing transaction triggers an exception, then:
     * The fee transfer from sender to miner still takes place
     * The endowment is subtracted from the sender's account
