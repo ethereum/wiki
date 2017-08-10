@@ -1301,10 +1301,7 @@ Returns a transaction matching the given transaction hash.
 ##### Example
 
 ```js
-var blockNumber = 668;
-var indexOfTransaction = 0
-
-var transaction = web3.eth.getTransaction(blockNumber, indexOfTransaction);
+var transaction = web3.eth.getTransaction('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b');
 console.log(transaction);
 /*
 {
