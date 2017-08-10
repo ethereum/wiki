@@ -285,7 +285,7 @@ nameReg.call("register", "MyName");
 nameReg.call(bytes4(sha3("fun(uint256)")), a);
 ```
 
-`call` returns a boolean indicating whether the invoked function terminated (`true`) or caused an EVM exception (`false`). It is not possible to access the actual data returned (for this we would need to know the encoding and size in advance).
+`call` возвращает булево значение, показывающее, завершился ли вызов функции успешно (`true`) или брошено исключение EVM (`false`). Доступ к возвращенным данным невозможен (для этого нам заранее понадобятся кодировка и размер).
 
 In a similar way, the function `callcode` can be used: The difference is that only the code of the given address is used, all other aspects (storage, balance, ...) are taken from the current contract. The purpose of `callcode` is to use library code which is stored in another contract. The user has to ensure that the layout of storage in both contracts is suitable for callcode to be used.
 
