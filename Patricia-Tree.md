@@ -8,7 +8,7 @@ In a basic radix trie, every node looks as follows:
 
     [i0, i1 ... in, value]
 
-Where i0 ... in represent the symbols of the alphabet (often binary or hex). value is the terminal value at the node, and the values in the i0 ... in slots are either NULL or pointers to (in our case, hashes of) other nodes. This forms a basic (key, value) store; for example, if you are interested in the value that is currently mapped to dog in the trie, you would first convert dog into the alphabet (giving `64 6f 67`), and then descend down the trie following that path until at the end of the path you read the value. That is, you would first look up the root hash in a flat key/value DB to find the root node of the trie (which is basically an array of keys to other nodes), use the value at index `6` as a key (and look it up in the flat key/value DB) to get the node one level down, then pick index `4` of that to lookup the next value, then pick index `6` of that, and so on, until, once you followed the path: `root -> 6 -> 4 -> 6 -> 15 -> 6 -> 7`, you look up the value of the node that you have and return the result.
+Where `i0 ... in` represent the symbols of the alphabet (often binary or hex), `value` is the terminal value at the node, and the values in the `i0 ... in` slots are either `NULL` or pointers to (in our case, hashes of) other nodes. This forms a basic (key, value) store; for example, if you are interested in the value that is currently mapped to `dog` in the trie, you would first convert `dog` into letters of the alphabet (giving `64 6f 67`), and then descend down the trie following that path until at the end of the path you read the value. That is, you would first look up the root hash in a flat key/value DB to find the root node of the trie (which is basically an array of keys to other nodes), use the value at index `6` as a key (and look it up in the flat key/value DB) to get the node one level down, then pick index `4` of that to lookup the next value, then pick index `6` of that, and so on, until, once you followed the path: `root -> 6 -> 4 -> 6 -> 15 -> 6 -> 7`, you look up the value of the node that you have and return the result.
 
 Note there is a difference between looking something up in the the "trie" vs the underlying flat key/value "DB". They both define key/values arrangements, but the underlying DB can do a traditional 1 step lookup of a key, while looking up a key in the trie requires multiple underlying DB lookups to get to the final value as described above. To eliminate ambiguity, let's refer to the latter as a `path`.
 
@@ -169,11 +169,11 @@ From a block header there are 3 roots from 3 of these tries.
 There is one global state trie, and it updates over time. In it, a `path` is always: `sha3(ethereumAddress)` and a `value` is always: `rlp(ethereumAccount)`. More specifically an ethereum `account` is a 4 item array of `[nonce,balance,storageRoot,codeHash]`. At this point it's worth noting that this `storageRoot` is the root of another patricia trie:
 
 ### Storage Trie
-Storage trie is where *all* contract data lives. There is a separate storage trie for each account. A `path` in this trie is somewhat complex but they depend on this: (here)[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getstorageat].
+Storage trie is where *all* contract data lives. There is a separate storage trie for each account. A `path` in this trie is somewhat complex but they depend on [this](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getstorageat).
 
 ### Transactions Trie
-There is a separate transactions trie for every block. A `path` here is: `rlp(transactionIndex)`. transactionIndex is its index within the block it's mined. The ordering is mostly decided by a miner so this data is unknown until mined. After a block is mined, the transaction trie never updates.
+There is a separate transactions trie for every block. A `path` here is: `rlp(transactionIndex)`. `transactionIndex` is its index within the block it's mined. The ordering is mostly decided by a miner so this data is unknown until mined. After a block is mined, the transaction trie never updates.
 
 ### Receipts Trie
-Every block has its own Receipts trie. A `path` here is: `rlp(transactionIndex)`. transactionIndex is its index within the block it's mined. Never updates.
+Every block has its own Receipts trie. A `path` here is: `rlp(transactionIndex)`. `transactionIndex` is its index within the block it's mined. Never updates.
 
