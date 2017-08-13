@@ -490,7 +490,7 @@ The concept of an arbitrary state transition function as implemented by the Ethe
 8. "Blind signature". Last modified 29 March 2017. Wikipedia. https://en.wikipedia.org/wiki/Blind_signature. Accessed 7 July 2017.  
 9. Dai, W. U.d. "B-money". http://www.weidai.com/bmoney.txt. Accessed 7 July 2017.    
 10. Hal, F. Reusable proofs of work: http://www.finney.org/~hal/rpow/. Unable to access 7 July 2017.  
-11. Black, A. U.d. Hashcash. http://www.hashcash.org/. Accessed 7 July 2017.  
+11. Back, A. U.d. Hashcash. http://www.hashcash.org/. Accessed 7 July 2017.  
 12. Last edited on 15 June 2017. "Sybil attack". Wikipedia. https://en.wikipedia.org/wiki/Sybil_attack. Accessed 7 July 2017.  
 13. Last edited on 30 June 2017. "SHA-2". Wikipedia.https://en.wikipedia.org/wiki/SHA-2.  Accessed 7 July 2017.
 14. Szabo, N. 1998. "Secure property titles with owner authority". http://szabo.best.vwh.net/securetitle.html. Unable to access 7 July 2017. Alternative link here: http://nakamotoinstitute.org/secure-property-titles/. Accessed 7 July 2017.
