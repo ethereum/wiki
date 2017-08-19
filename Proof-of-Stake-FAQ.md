@@ -42,7 +42,7 @@ Note that Ittay Eyal and Emin Gun Sirer's [selfish mining](https://bitcoinmagazi
 
 ### What is the "nothing at stake" problem and how can it be fixed?
 
-In many early (all chain-based) proof of stake algorithms, including Peercoin, there are only rewards for producing blocks, and no penalties. This has the unfortunate consequence that, in the case that there are multiple competing chain, it is in a validator's incentive to try to make blocks on top of every chain at once, just to be sure:
+In many early (all chain-based) proof of stake algorithms, including Peercoin, there are only rewards for producing blocks, and no penalties. This has the unfortunate consequence that, in the case that there are multiple competing chains, it is in a validator's incentive to try to make blocks on top of every chain at once, just to be sure:
 
 ![](https://raw.githubusercontent.com/vbuterin/diagrams/master/possec.png)
 
