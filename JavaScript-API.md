@@ -960,7 +960,7 @@ The gas price is determined by the x latest blocks median gas price.
 
 `BigNumber` - A BigNumber instance of the current gas price in wei.
 
-See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
+See the [note on BigNumber](#a-note-on-big-numbers-in-web3js).
 
 ##### Example
 
@@ -1082,7 +1082,7 @@ Get the balance of an address at a given block.
 
 `String` - A BigNumber instance of the current balance for the given address in wei.
 
-See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
+See the [note on BigNumber](#a-note-on-big-numbers-in-web3js).
 
 ##### Example
 
