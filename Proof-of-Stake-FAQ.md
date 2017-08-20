@@ -4,7 +4,7 @@ Proof of stake is a category of consensus algorithms for public blockchains, whi
 
 In general, a proof of stake algorithm looks as follows. The blockchain keeps track of a set of **validators**, and anyone who holds the blockchain's base cryptocurrency (in Ethereum's case, ether) can become a validator by sending a special type of transaction that **locks up their ether into a deposit**. The process of creating and agreeing to new blocks is then done through a **consensus algorithm** that all current validators can participate in.
 
-There are many kinds of consensus algorithms, and many ways to assign rewards to validators who participate in the consensus algorithm, so there are many "flavors" of proof of stake. From an algorithmic perspective, there are two major types: **chain-based proof of stake** and **BFT-style proof of stake**.
+There are many kinds of consensus algorithms, and many ways to assign rewards to validators who participate in the consensus algorithm, so there are many "flavors" of proof of stake. From an algorithmic perspective, there are two major types: **chain-based proof of stake** and **[BFT](https://en.wikipedia.org/wiki/Byzantine_fault_tolerance)-style proof of stake**.
 
 In chain-based proof of stake, the algorithm pseudo-randomly selects a validator during each time slot (eg. every period of 10 seconds might be a time slot), and assigns that validator the right to create a single block, and this block must point to some previous block (normally the block at the end of the previously longest chain), and so over time most blocks converge into a single constantly growing chain.
 
