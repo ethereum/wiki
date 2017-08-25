@@ -56,6 +56,11 @@ For this to work, the amount of space that a transaction needs to be able to acc
 * The gas cost of calling another contract is independent of the size of the contract code. This means the calling is too expensive if the target contract code is small, and too cheap if it is large.
 * There are no discounts for calling contracts that are frequently called, even though such contracts are more likely to be part of the cache.
 
+### Transaction fee payments
+
+* It would be nice if it were possible for a transaction to be sent with a fee that ramps up automatically up to some limie, eg. if the transaction was sent during block 4202030, then the gasprice might be `min((5 * 10**8) * 1.25 ** (block.number - 4202030), 10**11)`, ramping up exponentially from a min of 0.5 gwei to a max of 100 gwei. This would reduce the load on transaction fee estimation software and generally increase fee efficiency.
+* Currently it's very difficult to detect in-protocol what a reasonable gas price for a transaction would be, and mechanisms for doing this can be easily gamed especially by miners. Can we improve on this?
+
 ### Rent
 
 There is a mismatch between storage filling gas cost and the externality the storage imposes on the network: you create an account or a new SSTORE key once, but everyone must bear the load forever. One possible fix is to require accounts to pay some rent per unit time.
