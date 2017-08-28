@@ -1,6 +1,5 @@
 # Welcome to the Ethereum Wiki
 
-
 This is the community-maintained wiki covering all sorts of information on the next-generation peer-to-peer technology platform **Ethereum**, as well as sister protocols such as Whisper and Swarm.
 
 Users signed in with GitHub can edit and add pages using the [browser](https://help.github.com/articles/editing-wiki-pages-via-the-online-interface) or [locally](https://help.github.com/articles/adding-and-editing-wiki-pages-locally).
