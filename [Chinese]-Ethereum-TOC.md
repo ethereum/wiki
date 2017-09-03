@@ -6,9 +6,9 @@
 
 ## 狀態
 
-### Homestead
+### Spurious Dragon
 
-第二次主要的 Ethereum 上線，也就是 Homestead，在 2016年2月29日釋出，並在 2016年3月14日成功硬分叉！Ethereum 開發持續往下個版本 Metropolis 與 Serenity (v1.1) 前進中。 Homestead 的目標為提供 [Ðapp 開發者](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources) 與終端用戶一些類別有限的應用，而 Metropolis 旨在提供終端用戶 Mist 瀏覽器。 Serenity 將把取得共識的機制從 [Proof-of-Work](https://github.com/ethereum/wiki/wiki/Ethash) 轉換為 [Proof-of-Stake](https://blog.ethereum.org/2015/08/01/introducing-casper-friendly-ghost/) 。
+第四次主要的 Ethereum 上線，也就是 Spurious Dragon，在 2016年11月釋出。Ethereum 開發持續往下個版本 Metropolis 與 Serenity (v1.1) 前進中。 Spurious Dragon 的目標為提供 [Ðapp 開發者](https://github.com/ethereum/wiki/wiki/Dapp-Developer-Resources) 與終端用戶一些類別有限的應用，較先前的版本有很多安全上的加強，而即將到來的 Metropolis 旨在提供終端用戶 Mist 瀏覽器。 Serenity 將把取得共識的機制從 [Proof-of-Work](https://github.com/ethereum/wiki/wiki/Ethash) 轉換為 [Proof-of-Stake](https://blog.ethereum.org/2015/08/01/introducing-casper-friendly-ghost/) 。進一步的發布將集中在通過分片以及虛擬機改進增加大規模的可擴展性以及其他功能。
 
 ## 入門
 
@@ -23,5 +23,7 @@
 - https://github.com/ethereum/go-ethereum (Go)
 - https://github.com/ethereum/webthree-umbrella (C++)
 - https://github.com/ethereum/pyethapp (Python)
+- https://github.com/paritytech/parity (Rust)
+- https://github.com/ethereum/ethereumj (Java)
 
 想知道最新 Ethereum 的建置狀態，Go 與 Python 可見 [Buildbot 實例](http://build.ethdev.com/console)， C++ 可見 [Jenkins 實例](http://52.28.164.97/)。
