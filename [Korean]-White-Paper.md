@@ -1,9 +1,9 @@
 ### 차세대 스마트 컨트랙트와 탈중앙화된 어플리케이션 플랫폼 
 (A Next-Generation Smart Contract and Decentralized Application Platform)
 
-사토시 나카모토가 2009년 개발한 비트코인은 종종 화폐와 통화분야에서 매우 근본적인 혁신으로 묘사되어 왔는데, 이것은 비트코인이 어떤 담보나 내재적인 가치를 가지지 않으며 중앙화된 발행기관이나 통제기관도 없는 디지털 자산의 첫번째 사례였기 때문이다. 하지만 비트코인 실험의 더욱 중요한 측면은 비트코인을 떠받치고 있는 분산합의수단으로서의 블록체인 기술이며, 이에 대한 관심이 급격하게 늘어나고 있다.
+사토시 나카모토가 2008[<sup>[1a]</sup>](http://nakamotoinstitute.org/bitcoin/)[<sup>[1b]</sup>](http://www.newyorker.com/magazine/2011/10/10/the-crypto-currency)–2009년[<sup>[1c]</sup>](https://en.bitcoin.it/wiki/Category:History)[<sup>[1d]</sup>](https://blockexplorer.com/block/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f) 개발한 비트코인은 종종 화폐와 통화분야에서 매우 근본적인 혁신으로 묘사되어 왔는데, 이것은 비트코인이 어떤 담보나 내재적인 가치를[<sup>[2]</sup>](https://bitcoinmagazine.com/articles/you-say-bitcoin-has-no-intrinsic-value-twenty-two-reasons-to-think-again-1399454061/) 가지지 않으며 중앙화된 발행기관이나 통제기관도 없는 디지털 자산의 첫번째 사례였기 때문이다. 하지만 비트코인 실험의 더욱 중요한 측면은 비트코인을 떠받치고 있는 분산합의수단으로서의 블록체인 기술이며, 이에 대한 관심이 급격하게 늘어나고 있다.
 
-블록체인 기술을 이용한 대안적 어플리케이션들에는 다음과 같은 것들이 자주 거론되고 있다. 사용자 정의 화폐와 금융상품을 블록체인 위에 표현하는 컬러드 코인("colored coins"), 물리적 대상의 소유권을 표현하는 스마트 자산("smart property"), 도메인 이름과 같은 비동질적 자산을 기록하는 네임코인("Namecoin"), 임의적인 계약규칙을 구현한 코드에 의해 다지털 자산을 관리하는 좀 더 복잡한 형태의 스마트 컨트랙트 ("smart contracts"), 더 나아가 블록체인을 기반으로 한 탈중앙화된 자율 조직( "decentralized autonomous organizations" , DAOs) 등이다.
+블록체인 기술을 이용한 대안적 어플리케이션들에는 다음과 같은 것들이 자주 거론되고 있다. 사용자 정의 화폐와 금융상품을 블록체인 위에 표현하는 컬러드 코인("colored coins"),[<sup>[3]</sup>](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) 물리적 대상의 소유권을 표현하는 스마트 자산("smart property"),[<sup>[4]</sup>](https://en.bitcoin.it/wiki/Smart_Property) 도메인 이름과 같은 비동질적 자산을 기록하는 네임코인("Namecoin"),[<sup>[5]</sup>](http://namecoin.org) 임의적인 계약규칙을 구현한 코드에 의해 다지털 자산을 관리하는 좀 더 복잡한 형태의 스마트 컨트랙트 ("smart contracts"),[<sup>[6]</sup>](https://en.bitcoin.it/wiki/Contracts) 더 나아가 블록체인을 기반으로 한 탈중앙화된 자율 조직( "decentralized autonomous organizations" , DAOs)[<sup>[7]</sup>](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) 등이다.
 
 이더리움이 제공하려는 것은 완벽한 튜링완전(turing-complete) 프로그래밍 언어가 심어진 블록체인이다. 이 프로그래밍 언어는, 코딩된 규칙에 따라 '어떤 상태'를 다르게 변환시키는 기능(arbitrary state transition functions)이 포함된 "계약(contracts)"을 유저들이 작성할 수 있게 함으로써 앞서 설명한 시스템들을 구현 가능하게 할 뿐만 아니라 우리가 아직 상상하지 못한 다른 많은 어플리케이션도 매우 쉽게 만들 수 있도록 도와줄 것이다.
 
@@ -513,7 +513,7 @@ _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러�
 
 이더리움 프로토콜이 제공하는 ‘임의상태변환(arbitrary state transition function)’이라는 개념은 고유의 잠재력을 지닌 플랫폼을 탄생시킨다. 기존의 자료저장공간이나 도박, 금융 등의 하나의 목적에 특화된 폐쇠형 구조(close-ended)와는 달리, 이더리움은 자유롭게 조정이 가능한 구조(open-ended)이다. 우리는 이것이 몇 년 이내에, 금융부문이든 비금융부문이든 엄청나게 많은 종류의 서비스를 설계할 수 있도록 돕는 것에 특화된 기반이 될 것이라고 믿는다.
 
-## 주석과 추가자료
+## 주석, 참고문헌 및 추가자료
 
 #### 주석
 
@@ -522,6 +522,28 @@ _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러�
 2. 기술적으로는, 이전 11개 블록의 중간값(median)이다.
 
 3. 내부적으로는 2와 “CHARLIE” 모두 숫자이다. 다만 “CHARLIE”는 ‘빅 엔디언(big-endian)’ 기반의 256비트로 표시한 것이다. 숫자는 0부터 2<sup>256</sup>-1까지 사용한다.
+
+
+#### 참고문헌
+
+1a. Nakamoto, S. 31 October 2008. "Bitcoin: A Peer-to-Peer Electronic Cash System". Also known as the Bitcoin whitepaper. http://nakamotoinstitute.org/bitcoin/. http://bitcoin.org/bitcoin.pdf. https://github.com/saivann/bitcoinwhitepaper. Accessed 7 July 2017.  
+1b. Davis, J. 10 October 2011. "The Crypto-Currency: Bitcoin and its mysterious inventor". The New Yorker. <http://www.newyorker.com/magazine/2011/10/10/the-crypto-currency>. Retrieved 31 October 2014. Accessed 7 July 2017.
+2. Unknown author. Unknown date. "Intrinsic value". http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/. Unable to access 7 July 2017.  
+3. Assia, Y.; Vitalik, B.; Haki, M.; Meni R.; and Rotem, L. U.d. "Colored coins whitepaper".   https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit. Accessed 7 July 2017.
+4. Last edited on 10 May 2016. "Smart property". Bitcoin Wiki. https://en.bitcoin.it/wiki/Smart_Property. Accessed 7 July 2017.  
+5. Last modified 6 July 2017. "Namecoin". https://namecoin.org/. Accessed 7 July 2017.  
+6. Last edited on 24 June 2017. "Smart contracts". Bitcoin Wiki. https://en.bitcoin.it/wiki/Contracts. Accessed 7 July 2017.  
+7. Buterin, V. Sep 19, 2013. "Bootstrapping A Decentralized Autonomous Corporation: Part I". Bitcoin Magazine. http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i. Accessed 7 July 2017.    
+8. "Blind signature". Last modified 29 March 2017. Wikipedia. https://en.wikipedia.org/wiki/Blind_signature. Accessed 7 July 2017.  
+9. Dai, W. U.d. "B-money". http://www.weidai.com/bmoney.txt. Accessed 7 July 2017.    
+10. Hal, F. Reusable proofs of work: http://www.finney.org/~hal/rpow/. Unable to access 7 July 2017.  
+11. Back, A. U.d. Hashcash. http://www.hashcash.org/. Accessed 7 July 2017.  
+12. Last edited on 15 June 2017. "Sybil attack". Wikipedia. https://en.wikipedia.org/wiki/Sybil_attack. Accessed 7 July 2017.  
+13. Last edited on 30 June 2017. "SHA-2". Wikipedia.https://en.wikipedia.org/wiki/SHA-2.  Accessed 7 July 2017.
+14. Szabo, N. 1998. "Secure property titles with owner authority". http://szabo.best.vwh.net/securetitle.html. Unable to access 7 July 2017. Alternative link here: http://nakamotoinstitute.org/secure-property-titles/. Accessed 7 July 2017.
+15. Last edited on 27 June 2017. "Elliptic Curve Digital Signature Algorithm". Wikipedia.  https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm. Accessed 7 July 2017.  
+16. Dogecoin. http://dogecoin.com/. Accessed 7 July 2017.  
+17. Last edited on 29 June 2017. "Denial-of-service attack". Wikipedia. https://en.wikipedia.org/wiki/Denial-of-service_attack. Accessed 7 July 2017.
 
 #### 추가자료
 
