@@ -110,9 +110,9 @@ on the type of `X` being
 - `int<M>`: `enc(X)` is the big-endian two's complement encoding of `X`, padded on the higher-order (left) side with `0xff` for negative `X` and with zero bytes for positive `X` such that the length is a multiple of 32 bytes.
 - `bool`: as in the `uint8` case, where `1` is used for `true` and `0` for `false`
 - `fixed<M>x<N>`: `enc(X)` is `enc(X * 2**N)` where `X * 2**N` is interpreted as a `int256`.
-- `fixed`: as in the `fixed128x128` case
+- `fixed`: as in the `fixed128x19` case
 - `ufixed<M>x<N>`: `enc(X)` is `enc(X * 2**N)` where `X * 2**N` is interpreted as a `uint256`.
-- `ufixed`: as in the `ufixed128x128` case
+- `ufixed`: as in the `ufixed128x19` case
 - `bytes<M>`: `enc(X)` is the sequence of bytes in `X` padded with zero-bytes to a length of 32.
 
 Note that for any `X`, `len(enc(X))` is a multiple of 32.
@@ -158,9 +158,9 @@ In total:
 It returns a single `bool`. If, for example, it were to return `false`, its output would be the single byte array `0x0000000000000000000000000000000000000000000000000000000000000000`, a single bool.
 
 If we wanted to call `bar` with the argument `[2.125, 8.5]`, we would pass 68 bytes total, broken down into:
-- `0xab55044d`: the Method ID. This is derived from the signature `bar(fixed128x128[2])`. Note that `fixed` is replaced with its canonical representation `fixed128x128`.
-- `0x0000000000000000000000000000000220000000000000000000000000000000`: the first part of the first parameter, a fixed128x128 value `2.125`.
-- `0x0000000000000000000000000000000880000000000000000000000000000000`: the second part of the first parameter, a fixed128x128 value `8.5`.
+- `0xab55044d`: the Method ID. This is derived from the signature `bar(fixed128x19[2])`. Note that `fixed` is replaced with its canonical representation `fixed128x19`.
+- `0x0000000000000000000000000000000220000000000000000000000000000000`: the first part of the first parameter, a fixed128x19 value `2.125`.
+- `0x0000000000000000000000000000000880000000000000000000000000000000`: the second part of the first parameter, a fixed128x19 value `8.5`.
 
 In total:
 ```
