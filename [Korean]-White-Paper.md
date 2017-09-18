@@ -357,7 +357,7 @@ DAO 코딩에 관한 일반적인 개요는 다음과 같다. 가장 간단한 �
 
 ### 수정된 GHOST 도입(Modified GHOST Implementation)
 
-GHOST(Greedy Heaviest Observed Subtree)프로토콜은  Yonatan Sompolinsky and Aviv Zohar 에 의해  [2013년 12월](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf)에 처음 소개된 혁신이다. GHOST의 문제의식은, 현재 빠른 확인시간(confirmation times)을 가지고 있는 블록체인들이 높은 스테일(stale) 비율로 인해 보안성 저하라는 문제를 겪고 있다는 것인데, 이는  블록들이 네트워크를 통해 전파되는데 일정한 시간이 걸리기 때문이라는 것이다. 만일 채굴자 A가 하나의 블록을 채굴했는데, 이 블록이 채굴자 B에게 전파되기전에 채굴자 B가 다른 또 하나의 블록을 채굴했다고 하면, 채굴자 B의 블록은 결국 낭비될 것이고, 네트워크 보안에 기여하지 못하게 될 것이다. 
+GHOST(Greedy Heaviest Observed Subtree)프로토콜은  Yonatan Sompolinsky and Aviv Zohar 에 의해  [2013년 12월](http://www.cs.huji.ac.il/~yoni_sompo/pubs/15/btc_scalability_full.pdf)에 처음 소개된 혁신이다. GHOST의 문제의식은, 현재 빠른 확인시간(confirmation times)을 가지고 있는 블록체인들이 높은 스테일(stale) 비율로 인해 보안성 저하라는 문제를 겪고 있다는 것인데, 이는  블록들이 네트워크를 통해 전파되는데 일정한 시간이 걸리기 때문이라는 것이다. 만일 채굴자 A가 하나의 블록을 채굴했는데, 이 블록이 채굴자 B에게 전파되기전에 채굴자 B가 다른 또 하나의 블록을 채굴했다고 하면, 채굴자 B의 블록은 결국 낭비될 것이고, 네트워크 보안에 기여하지 못하게 될 것이다. 
 
 게다가 중앙집중화(centralization) 이슈도 있다; 만일 채굴자 A가 30%의 해시파워를, 그리고 B가 10%의 해시파워를 가지고 있다면, A가  스테일 블록을 생산할 위험성은 매번 70%가 될 것이고(왜냐하면 다른 30%의 경우에는 A가 마지막 블록을 만들게 되었고, 따라서 즉각적으로 채굴데이터를 가지게 되기 때문이다), 반면 B는 매번 90%의 경우에 스테일 블록을 생산하게 될 위험성을 가지고 있다. 따라서 만일 블록 주기가 스테일 비율이 높은 것에 필요한 만큼 충분히  짧다면, A는 단순히 크기가 크다라는 사실 자체만으로 훨씬 더 높은 효율성을 가지게 된다. 이러한 두가지 효과가 결합되어서, 블록주기가 짧은 블록체인에서는,  높은 해시파워 점유율을 가진 단일한 풀이  채굴과정에 대한 사실상의 통제권을 가지게 될 가능성이 매우 높아진다.
 
@@ -562,7 +562,7 @@ _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러�
 13. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification
 14. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree
 15. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree
-16. GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf
+16. GHOST: http://www.cs.huji.ac.il/~yoni_sompo/pubs/15/btc_scalability_full.pdf
 17. StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html
 18. Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y
 19. Ethereum RLP: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP
