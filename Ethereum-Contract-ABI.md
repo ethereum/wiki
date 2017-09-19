@@ -1,3 +1,5 @@
+This specification is now maintained as part of the [Solidity documentation](https://solidity.readthedocs.io/en/develop/abi-spec.html).
+
 # Functions
 
 ## Basic design
@@ -39,6 +41,8 @@ The following non-fixed-size types exist:
 - `<type>[]`: a variable-length array of the given fixed-length type.
 
 ### Formal Specification of the Encoding
+
+This specification is now maintained as part of the [Solidity documentation](https://solidity.readthedocs.io/en/develop/abi-spec.html).
 
 We will now formally specify the encoding, such that it will have the following
 properties, which are especially useful if some arguments are nested arrays:
@@ -135,6 +139,8 @@ actually used.
 
 ## Examples
 
+This specification is now maintained as part of the [Solidity documentation](https://solidity.readthedocs.io/en/develop/abi-spec.html).
+
 Given the contract:
 
 ```js
@@ -187,6 +193,8 @@ In total:
 
 ### Use of Dynamic Types
 
+This specification is now maintained as part of the [Solidity documentation](https://solidity.readthedocs.io/en/develop/abi-spec.html).
+
 A call to a function with the signature `f(uint,uint32[],bytes10,bytes)` with values `(0x123, [0x456, 0x789], "1234567890", "Hello, world!")` is encoded in the following way:
 
 We take the first four bytes of `sha3("f(uint256,uint32[],bytes10,bytes)")`, i.e. `0x8be65246`.
@@ -226,6 +234,8 @@ All together, the encoding is (newline after function selector and each 32-bytes
 
 # Events
 
+This specification is now maintained as part of the [Solidity documentation](https://solidity.readthedocs.io/en/develop/abi-spec.html).
+
 Events are an abstraction of the Ethereum logging/event-watching protocol. Log entries provide the contract's address, a series of up to four topics and some arbitrary length binary data. Events leverage the existing function ABI in order to interpret this (together with an interface spec) as a properly typed structure.
 
 Given an event name and series of event parameters, we split them into two sub-series: those which are indexed and those which are not. Those which are indexed, which may number up to 3, are used alongside the Keccak hash of the event signature to form the topics of the log entry. Those which as not indexed form the byte array of the event.
@@ -238,6 +248,8 @@ In effect, a log entry using this ABI is described as:
 - `data`: `abi_serialise(EVENT_NON_INDEXED_ARGS)` (`EVENT_NON_INDEXED_ARGS` is the series of `EVENT_ARGS` that are not indexed, `abi_serialise` is the ABI serialisation function used for returning a series of typed values from a function, as described above).
 
 # JSON
+
+This specification is now maintained as part of the [Solidity documentation](https://solidity.readthedocs.io/en/develop/abi-spec.html).
 
 The JSON format for a contract's interface is given by an array of function and/or event descriptions. A function description is a JSON object with the fields:
 
@@ -298,6 +310,8 @@ would result in the JSON:
 ```
 
 # Example Javascript Usage
+
+This specification is now maintained as part of the [Solidity documentation](https://solidity.readthedocs.io/en/develop/abi-spec.html).
 
 ```js
 var Test = eth.contract(
@@ -379,16 +393,3 @@ Event result:
   } ...
 ]
 ```
-
-### JUST DONE! [develop branch]
-**NOTE: THIS IS OLD - IGNORE IT unless reading for historical purposes**
-
-- Internal LogFilter, log-entry matching mechanism and eth_installFilter needs to support matching multiple values (OR semantics) *per* topic index (at present it will only match topics with AND semantics and set-inclusion, not per-index).
-
-i.e. at present you can only ask for each of a number of given topic values to be matched throughout each topic:
-
-- `topics: [69, 42, "Gav"]` would match against logs with 3 topics `[42, 69, "Gav"]`, `["Gav", 69, 42]` but **not** against logs with topics `[42, 70, "Gav"]`.
-
-we need to be able to provide one of a number of topic values, and, each of these options for each topic index:
-
-- `topics: [[69, 42], [] /* anything */, "Gav"]` should match against logs with 3 topics `[42, 69, "Gav"]`, `[42, 70, "Gav"]` but **not** against `["Gav", 69, 42]`.
