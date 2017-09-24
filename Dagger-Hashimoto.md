@@ -81,7 +81,7 @@ params = {
       "diff": 2**14,                    # Difficulty (adjusted during block evaluation)
       "epochtime": 100000,              # Length of an epoch in blocks (how often the dataset is updated)
       "k": 1,                           # Number of parents of a node
-      "w": w,                          # Used for modular exponentiation hashing
+      "w": w,                           # Used for modular exponentiation hashing
       "accesses": 200,                  # Number of dataset accesses during hashimoto
       "P": SAFE_PRIME_512               # Safe Prime for hashing and random number generation
 }
@@ -148,7 +148,7 @@ The algorithm used to generate the actual set of DAGs used to compute the work f
 def get_prevhash(n):
     from pyethereum.blocks import GENESIS_PREVHASH 
     from pyethreum import chain_manager
-    if num <= 0:
+    if n <= 0:
         return hash_to_int(GENESIS_PREVHASH)
     else:
         prevhash = chain_manager.index.get_block_by_number(n - 1)
