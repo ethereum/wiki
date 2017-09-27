@@ -1331,7 +1331,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","para
      logs: [{
          // logs as returned by getFilterLogs, etc.
      }, ...]
-     status: 1
+     status: 0x1
   }
 }
 ```
