@@ -1330,7 +1330,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","para
      contractAddress: '0xb60e8dd61c5d32be8058bb8eb970870f07233155' // or null, if none was created
      logs: [{
          // logs as returned by getFilterLogs, etc.
-     }, ...]
+     }, ...],
      status: '0x1'
   }
 }
