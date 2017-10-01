@@ -57,7 +57,7 @@ web3.eth.getBlock(48, function(error, result){
 
 Batch requests allow queuing up requests and processing them at once.
 
-**Note** Batch requests are not faster! In fact making many requests at once will in some cases be faster, as requests are processed asynchronous. Batch requests are mainly useful to ensure the serial processing of requests.
+**Note** Batch requests are not faster! In fact making many requests at once will in some cases be faster, as requests are processed asynchronously. Batch requests are mainly useful to ensure the serial processing of requests.
 
 ```js
 var batch = web3.createBatch();
@@ -88,7 +88,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string
 // "131242344353464564564574574567477"
 ```
 
-The next example wouldn't work as we have more than 20 floating points, therefore it is recommended to keep you balance always in *wei* and only transform it to other units when presenting to the user:
+The next example wouldn't work as we have more than 20 floating points, therefore it is recommended to always keep your balance in *wei* and only transform it to other units when presenting to the user:
 ```js
 var balance = new BigNumber('13124.234435346456466666457455567456');
 
@@ -204,7 +204,7 @@ The `web3` object provides all methods.
 ```js
 var Web3 = require('web3');
 // create an instance of web3 using the HTTP provider.
-// NOTE in mist web3 is already available, so check first if its available before instantiating
+// NOTE in mist web3 is already available, so check first if it's available before instantiating
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 ```
 
@@ -369,7 +369,7 @@ web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545')); // 8
 
     web3.currentProvider
 
-Will contain the current provider, if one is set. This can be used to check if mist etc. set already a provider.
+Will contain the current provider, if one is set. This can be used to check if mist etc. has set already a provider.
 
 
 ##### Returns
