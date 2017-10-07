@@ -72,7 +72,7 @@ When traversing paths in nibbles, we may end up with an odd number of nibbles to
 
 ## Specification: Compact encoding of hex sequence with optional terminator
 
-The flagging of both *odd vs. even remaining partial path length* and *leaf vs. extension node* as described above reside in the first nibble of the partial path of any 2-item node. They result in the th following:
+The flagging of both *odd vs. even remaining partial path length* and *leaf vs. extension node* as described above reside in the first nibble of the partial path of any 2-item node. They result in the following:
 
     hex char    bits    |    node type partial     path length
     ----------------------------------------------------------
