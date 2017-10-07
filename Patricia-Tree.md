@@ -154,9 +154,9 @@ Now, we build such a trie with the following key/value pairs in the underlying D
     hashG:    [ <35>, 'coin' ]
 
 
-Where one node is referenced inside another node, what is included is `H(rlp.encode(x))`, where `H(x) = sha3(x) if len(x) >= 32 else x` and `rlp.encode` is the [RLP](https://github.com/ethereum/wiki/wiki/RLP) encoding function.
+When one node is referenced inside another node, what is included is `H(rlp.encode(x))`, where `H(x) = sha3(x) if len(x) >= 32 else x` and `rlp.encode` is the [RLP](https://github.com/ethereum/wiki/wiki/RLP) encoding function.
 
-Note that when updating a trie, one needs to store the key/value pair `(sha3(x), x)` in a persistent lookup table if the newly-created node has length >= 32. However, if the node is shorter than that, one does not need to store anything, since the function f(x) = x is reversible.
+Note that when updating a trie, one needs to store the key/value pair `(sha3(x), x)` in a persistent lookup table _if_ the newly-created node has length >= 32. However, if the node is shorter than that, one does not need to store anything, since the function f(x) = x is reversible.
 
 ## Tries in Ethereum
 All of the merkle tries in Ethereum use a Merkle Patricia Trie. 
