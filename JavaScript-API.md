@@ -1379,11 +1379,6 @@ Returns the receipt of a transaction by transaction hash.
   - `contractAddress `: `String` - 20 Bytes - The contract address created, if the transaction was a contract creation, otherwise `null`.
   - `logs `:  `Array` - Array of log objects, which this transaction generated.
 
-It also returns _either_ :
-
-  - `root` : `DATA` 32 bytes of post-transaction stateroot (pre Byzantium)
-  - `status`: `QUANTITY` either `1` (success) or `0` (failure) 
-
 ##### Example
 ```js
 var receipt = web3.eth.getTransactionReceipt('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b');
