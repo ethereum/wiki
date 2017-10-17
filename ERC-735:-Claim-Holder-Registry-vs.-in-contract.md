@@ -1,4 +1,4 @@
-This is part of the discussion for https://github.com/ethereum/EIPs/issues/735 ([Related ERC comment](https://github.com/ethereum/EIPs/issues/735#issuecomment-337284218))
+This is part of the discussion for https://github.com/ethereum/EIPs/issues/735 ([Related comment](https://github.com/ethereum/EIPs/issues/735#issuecomment-337284218))
 This is a collaborative list of PROs and CONs to gather advantages for both sides. 
 
 ### Central claim registry
