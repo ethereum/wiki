@@ -732,7 +732,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHa
 
 #### eth_getBlockTransactionCountByNumber
 
-Returns the number of transactions in a block from a block matching the given block number.
+Returns the number of transactions in a block matching the given block number.
 
 
 ##### Parameters
