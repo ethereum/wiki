@@ -560,18 +560,13 @@ It might be that you run into Out-of-Gas for `sha256`, `ripemd160` or `ecrecover
 
 Furthermore, all functions of the current contract are callable directly including the current function.
 
-# Control Structures
+# Управляющие структуры
 
-Most of the control structures from C/JavaScript are available in Solidity
-except for `switch` and `goto`. So
-there is: `if`, `else`, `while`, `for`, `break`, `continue`, `return`, with
-the usual semantics known from C / JavaScript.
+Большинство управляющих структур из C/JavaScript доступны в Solidity, за исключением `switch` и `goto`. А именно, доступны: `if`, `else`, `while`, `for`, `break`, `continue`, `return`, с обычным синтаксисом, известным из C / JavaScript.
 
-Parentheses can *not* be omitted for conditionals, but curly brances can be omitted
-around single-statement bodies.
+Условия необходимо писать в скобках, за исключением случаем с одним простым условием.
 
-Note that there is no type conversion from non-boolean to boolean types as
-there is in C and JavaScript, so `if (1) { ... }` is _not_ valid Solidity.
+Обратите внимание, что преобразования типов из нелогических в логический не существует, как в C и JavaScript, таким образом выражение `if (1) { ... }` является некорректным в Solidity.
 
 ## Function Calls
 
