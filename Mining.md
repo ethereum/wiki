@@ -26,13 +26,13 @@ As a special case, when you start up your node from scratch, mining will only st
 Note that mining 'real' Ether will start with the Frontier release. On the Olympics testnet, the [Frontier pre-release](http://ethereum.gitbooks.io/frontier-guide/), the ether mined have no value (but see [Olympic rewards](https://blog.ethereum.org/2015/05/09/olympic-frontier-pre-release/)). 
 
 The successful PoW miner of the winning block receives:
-* A **static block reward** for the 'winning' block, consisting of exactly 5.0 Ether
+* A **static block reward** for the 'winning' block, consisting of exactly 3.0 Ether
 * All of the gas expended within the block, that is, all the gas consumed by the execution of all the transactions in the block submitted by the winning miner is compensated for by the senders. The gascost incurred is  credited to the miner's account as part of the consensus protocol. Over time, it's expected these will dwarf the static block reward.
 - An extra reward for including Uncles as part of the block, in the form of an extra 1/32 per Uncle included  
 
 Uncles are stale blocks, ie with parent that are ancestors (max 6 blocks back) of the including block.
 Valid uncles are rewarded in order to neutralise the effect of network lag on the dispersion of mining rewards, thereby increasing security. 
-Uncles included in a block formed by the successful PoW miner receive 7/8 of the static block reward = 4.375 ether
+Uncles included in a block formed by the successful PoW miner receive 7/8 of the static block reward = 2.625 ether
 A maximum of 2 uncles allowed per block.
 
 ## Ethash DAG
