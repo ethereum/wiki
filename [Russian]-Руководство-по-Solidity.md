@@ -1157,10 +1157,10 @@ Either add `--libraries "Math:0x12345678901234567890 Heap:0xabcdef0123456" to yo
 
 If `solc` is called with the option `--link`, all input files are interpreted to be unlinked binaries (hex-encoded) in the `__LibraryName____`-format given above and are linked in-place (if the input is read from stdin, it is written to stdout). All options except `--libraries` are ignored (including `-o`) in this case.
 
-## Tips and Tricks
+## Советы и подсказки
 
- * Use `delete` on arrays to delete all its elements.
- * Use shorter types for struct elements and sort them such that short types are grouped together. This can lower the gas costs as multiple SSTORE operations might be combined into a single (SSTORE costs 5000 or 20000 gas, so this is what you want to optimise). Use the gas price estimator (with optimiser enabled) to check!
+ * Используйте `delete` для массивов, чтобы удалить все их элементы
+ * Используйте короткие типы для элементов структуры и сортируйте их так, чтобы короткие типы были сгруппированы вместе. Это может уменьшить затраты газа, так как множественные SSTORE операции могут быть объединены в одну (SSTORE стоит 5000 или 20000 газа, вы точно захотите это оптимизировать). Используйте оценщик цены стоимости газа (с включенным оптимизатором) для проверки!
  * Make your state variables public - the compiler will create [getters](#accessor-functions) for you for free.
  * If you end up checking conditions on input or state a lot at the beginning of your functions, try using [modifiers](#function-modifiers)
  * If your contract has a function called `send` but you want to use the built-in send-function, use `address(contractVariable).send(amount)`.
