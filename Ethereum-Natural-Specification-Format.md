@@ -1,3 +1,8 @@
+---
+name: Ethereum Natural Specification Format
+category: 
+---
+
 Solidity contracts can have a special form of comments that form the basis of the Ethereum Natural Specification Format. For a usage example please check [here](https://github.com/ethereum/wiki/wiki/Natspec-Example/).
 
 # Documentation Example

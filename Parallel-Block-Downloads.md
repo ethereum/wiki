@@ -1,3 +1,8 @@
+---
+name: Parallel Block Downloads
+category: 
+---
+
 New network protocol & strategy.
 
 ### Goals

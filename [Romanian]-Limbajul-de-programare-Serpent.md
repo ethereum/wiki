@@ -1,3 +1,8 @@
+---
+name: Limbajul de Programare Serpent
+category: 
+---
+
 ###Operatiile limbajului de programare Serpent
 
 Aritmetica

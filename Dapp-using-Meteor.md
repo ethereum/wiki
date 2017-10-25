@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 This tutorial will show you how to setup a Meteor app to be used as a Ðapp and probably answer a few questions on why Meteor should be used.
+=======
+---
+name: DAPP Using Meteor
+category: 
+---
+
+This tutorial will show you how to setup a Meteor app to be used as a Ðapp and probably answer a few questions on why Meteor should used.
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 1. [Create your Ðapp](#create-your-%C3%90app)
 2. [Start your Ðapp](#start-your-%C3%90app)

@@ -1,3 +1,8 @@
+---
+name: Registrar ABI
+category: 
+---
+
 ### Registrar
 
 Read-only interface that all registrars must implement

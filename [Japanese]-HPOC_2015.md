@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 ** This documnet is still on the way of fixing tons of crapped tranlations. It is something like compiling python code with lisp compiler. Do not trust this translation until completion. ** 
+=======
+---
+name: HPOC 2015
+category: 
+---
+
+HPoC 2015
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 ** このドキュメントは、数々の誤訳を含みます。翻訳の訂正が急がれるべきドキュメントです。**
 

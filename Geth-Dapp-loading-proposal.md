@@ -1,3 +1,8 @@
+---
+name: Geth DAPP Loading Proposal
+category: 
+---
+
 To have a simple way to load and start Dapps vinay and I came up with a great idea:
 
 1. Dapp packages can be downloaded as .zip/.rlp/.dapp

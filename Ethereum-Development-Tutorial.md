@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 **OUTDATED** *This document can contain outdated information, specific API's might be different.* A more recent tutorial can be found [here](https://blog.ethereum.org/2016/07/12/build-server-less-applications-mist/)
 
 The purpose of this page is to serve as an introduction to the basics of Ethereum that you will need to understand from a development standpoint, in order to produce contracts and decentralized applications. For a general introduction to Ethereum, see [the white paper](https://github.com/ethereum/wiki/wiki/White-Paper), and for a full technical spec see the [yellow](http://gavwood.com/Paper.pdf) papers, although those are not prerequisites for this page; that is to say, this page is meant as an alternative introduction to Ethereum specifically targeted towards application developers.
+=======
+---
+name: Ethereum Development Tutorial
+category: 
+---
+
+The purpose of this page is to serve as an introduction to the basics of Ethereum that you will need to understand from a development standpoint, in order to produce contracts and decentralized applications. For a general introduction to Ethereum, see [the white paper](https://github.com/ethereum/wiki/wiki/White-Paper), and for a full technical spec see the [yellow](http://gavwood.com/Paper.pdf) papers, although those are not prerequisites for this page; that is to say, this page is meant as an alternative introduction to Ethereum specifically targeted toward application developers.
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 ### Introduction
 

@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 The science of cryptography, which has existed to some degree for millennia but in a formal and systematized form for less than fifty years, can be most simply defined as the study of communication in an adversarial environment. In a similar vein, we can define cryptoeconomics as a field that goes one step further: the study of economic interaction in an adversarial environment. To distinguish itself from traditional economics, which certainly studies both economic interaction and adversaries, cryptoeconomics generally focuses on interactions that take place over network protocols. Particular domains of cryptoeconomics include:
+=======
+---
+name: Cryptocurrency Current Problems
+category: 
+---
+
+暗号学において、形式であり、かつシステマティックなThe science of cryptography, which has existed to some degree for millennia but in a formal and systematized form for less than fifty years, can be most simply defined as the study of communication in an adversarial environment. In a similar vein, we can define cryptoeconomics as a field that goes one step further: the study of economic interaction in an adversarial environment. To distinguish itself from traditional economics, which certainly studies both economic interaction and adversaries, cryptoeconomics generally focuses on interactions that take place over network protocols. Particular domains of cryptoeconomics include:
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 1. オンライン上の信頼と評価のシステム
 2. 暗号化されたトークンと暗号通貨と、より一般的なデジタルのアセット

@@ -1,3 +1,8 @@
+---
+name: Libro Bianco
+category: 
+---
+
 Ethereum: Libro Bianco - White Paper (di Leonardo Maria Pedretti: lm.pedretti@gmail.com)
 [Linkedin](https://www.linkedin.com/in/leonardompedretti)
 

@@ -1,3 +1,8 @@
+---
+name: Contract Metadata Docs
+category: 
+---
+
 This is the main entry point for NatSpec and generally details a safe and efficient _standard_ for ethereum contract metadata distribution.
 
 By metadata we mean all information related to a contract that is thought to be relevant to and immutably linked to a specific version of a contract on the ethereum blockchain.

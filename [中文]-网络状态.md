@@ -1,3 +1,8 @@
+---
+name: Network Status
+category: 
+---
+
 Special thanks to Kyle Chen for translation.
 
 # 网络状态监控

@@ -1,3 +1,8 @@
+---
+name: Mix Improvement Proposal
+category: 
+---
+
 how it currently looks, its working well for very simple scripts, but its hard to impossible to use for any advanced javascript application, using require.js, common.js, bower, npm, angualr.js, ember, canjs, meteor or any more advanced js framework. As the current deploy method forces you to do things in a simplistic way (linking ethereum.js, contracts files and add the contract variable)
 
 This also makes it hard to test your application as the deploy process is the one, which uploads the contracts as well and nobody want to deploy its app and contracts without being able to thoroughly test them on the main/test net beforehand.

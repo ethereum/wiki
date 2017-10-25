@@ -1,3 +1,8 @@
+---
+name: Adaptive Peer Time
+category: 
+---
+
 ### Goals
 
 At present, a single mining peer with its clock substantially (> 25% of the expected block time) ahead of the other peers will cause problems on the network. Forks are common as peers are inconsistently forced to ignore the future blocks.

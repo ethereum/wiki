@@ -1,3 +1,8 @@
+---
+name: Home
+category: 
+---
+
 # Welcome to the Ethereum Wiki
 
 This is the community-maintained wiki covering all sorts of information on the next-generation peer-to-peer technology platform **Ethereum**, as well as sister protocols such as Whisper and Swarm.

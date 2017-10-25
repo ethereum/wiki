@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+---
+name: Glossary
+category: 
+---
+
+One of the things that cryptocurrency, and really any new genre of technology, is notorious for is the sheer quantity of vocabulary that gets generated to describe all of the new concepts. Anyone dealing with peer-to-peer internet software on anything more than a casual basis needs to deal with concepts of cryptography, including hashes, signatures and public and private keys, symmetric and asymmetric encryption, denial of service protection, as well as arcane constructions such as distributed hash tables and webs of trust. New Bitcoin users are forced to contend with learning not just the common basics of cryptography, but also additional internal jargon such as "blocks", "confirmations", "mining", "SPV clients" and "51% attacks", as well as economic concepts like incentive-compatibility and the fine nuances of centralization and decentralization. Ethereum, being a decentralized application development platform based on a generalization of a cryptocurrency, necessarily incorporates both of these sets of concepts, as well as adding many of its own. To help anyone new to Ethereum, whether they are in it as cryptocurrency enthusiasts, business owners, social or political visionaries, web developers or are simply ordinary people looking to see how the technology can improve their lives, the following list is intended to provide a basic summary of the vocabulary that Ethereum users often tend to use:
+
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 ### Cryptography
 
 See also: http://en.wikipedia.org/wiki/Public-key_cryptography

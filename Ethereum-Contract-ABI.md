@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 This specification is now maintained as part of the [Solidity documentation](https://solidity.readthedocs.io/en/develop/abi-spec.html).
+=======
+---
+name: Ethereum Contract ABI
+category: 
+---
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 # Functions
 

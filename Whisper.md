@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 In a nutshell whisper is a communication protocol for DApps to communicate with each other. 
+=======
+---
+name: Whisper
+category: 
+---
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 ### Use case
 

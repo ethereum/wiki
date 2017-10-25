@@ -1,3 +1,8 @@
+---
+name: Node Discovery Protocol
+category: 
+---
+
 In a nutshell:
 * Aimed at discovering _RLPx nodes_ to connect to
 * UDP-based RPC protocol ([kademlia](https://en.wikipedia.org/wiki/Kademlia)-like)

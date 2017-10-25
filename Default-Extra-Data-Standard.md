@@ -1,3 +1,8 @@
+---
+name: Extra Data
+category: 
+---
+
 Implementations are encouraged to follow this protocol for populating the `extraData` field of mined blocks.
 
 `extraData` should be an RLP list whose first element is a version identifier encoded as a canonical RLP positive integer. All other items in the list are determined by the version ID.

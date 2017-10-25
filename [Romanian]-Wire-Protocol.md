@@ -1,3 +1,8 @@
+---
+name: Wire Protocol
+category: 
+---
+
 ###Wire Protocol
 
 Comunicatiile peer-to-peer intre noduri care opereaza clienti Ethereum sunt create pentru a fi guvernate de un simplu protocol wire, care utilizeaza tehnologii  si standarde Ethereum existente , cum ar fi RLP, care este practic oriunde.

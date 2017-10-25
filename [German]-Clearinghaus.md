@@ -1,3 +1,8 @@
+---
+name: Clearinghaus
+category: 
+---
+
 ### Einleitung
 Bei manchen Finanzinstrumente wie ["Future"] (http://de.wikipedia.org/wiki/Future) (keine Geldtermingeschäfte) können sich die Parteien gegen Zahlungsausfälle gegenüber dem  Geschäftspartner (i.d.R. bei einem Clearinghaus) absichern. Im Wesentlichen liefert eine Clearingstelle diese Garantie über ein Verfahren, bei dem die Gewinne und Verluste, die sich aus dem börslichen Handel dieser Features über die Vertragslaufzeit ergeben, durch tägliche Abrechnung in Bargeld umgewandelt werden.
 ### Tägliche Abrechnung

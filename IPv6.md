@@ -1,3 +1,8 @@
+---
+name: IPv6
+category: 
+---
+
 ### Goals
 
 Allow IPv6 to be used over the ethereum peer network

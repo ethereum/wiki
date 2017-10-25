@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 **OUTDATED** *This document can contain outdated information.*
+=======
+---
+name: Mix Features
+category: 
+---
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 # Block Mining
 

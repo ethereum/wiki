@@ -1,3 +1,8 @@
+---
+name: NatSpec Status
+category: 
+---
+
 # Network Status Monitoring
 
 The [Ethereum (centralised) network status monitor](https://ethstats.net) (known sometimes as "eth-netstats") is a web-based application to monitor the health of the testnet/mainnet through a group of nodes.
