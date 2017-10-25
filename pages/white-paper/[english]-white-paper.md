@@ -48,7 +48,7 @@ The mechanism behind proof of work was a breakthrough in the space because it si
 
 ### Bitcoin As A State Transition System
 
-![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
+![statetransition.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/statetransition.png)
 
 From a technical standpoint, the ledger of a cryptocurrency such as Bitcoin can be thought of as a state transition system, where there is a "state" consisting of the ownership status of all existing bitcoins and a "state transition function" that takes a state and a transaction and outputs a new state which is the result. In a standard banking system, for example, the state is a balance sheet, a transaction is a request to move $X from A to B, and the state transition function reduces the value in A's account by $X and increases the value in B's account by $X. If A's account has less than $X in the first place, the state transition function returns an error. Hence, one can formally define:
 
@@ -76,7 +76,7 @@ The first half of the first step prevents transaction senders from spending coin
 
 ### Mining
 
-![block_picture.jpg](http://vitalik.ca/files/block_picture.png)
+![block_picture.jpg](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/block.png)
 
 If we had access to a trustworthy centralized service, this system would be trivial to implement; it could simply be coded exactly as described, using a centralized server's hard drive to keep track of the state. However, with Bitcoin we are trying to build a decentralized currency system, so we will need to combine the state transaction system with a consensus system in order to ensure that everyone agrees on the order of transactions. Bitcoin's decentralized consensus process requires nodes in the network to continuously attempt to produce packages of transactions called "blocks". The network is intended to produce roughly one block every ten minutes, with each block containing a timestamp, a nonce, a reference to (ie. hash of) the previous block and a list of all of the transactions that have taken place since the previous block. Over time, this creates a persistent, ever-growing, "blockchain" that constantly updates to represent the latest state of the Bitcoin ledger.
 
@@ -189,7 +189,7 @@ Note that the gas allowance assigned by a transaction or contract applies to the
 
 ### Ethereum State Transition Function
 
-![ethertransition.png](http://vitalik.ca/files/ethertransition.png?1)
+![ethertransition.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/ethertransition.png)
 
 The Ethereum state transition function, `APPLY(S,TX) -> S'` can be defined as follows:
 
@@ -232,7 +232,7 @@ The formal execution model of EVM code is surprisingly simple. While the Ethereu
 
 ### Blockchain and Mining
 
-![apply_block_diagram.png](http://vitalik.ca/files/apply_block_diagram.png)
+![apply_block_diagram.png](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/apply_block_diagram.png)
 
 The Ethereum blockchain is in many ways similar to the Bitcoin blockchain, although it does have some differences. The main difference between Ethereum and Bitcoin with regard to the blockchain architecture is that, unlike Bitcoin, Ethereum blocks contain a copy of both the transaction list and the most recent state. Aside from that, two other values, the block number and the difficulty, are also stored in the block. The basic block validation algorithm in Ethereum is as follows:
 
@@ -435,7 +435,7 @@ The issuance model will be as follows:
 
 **Long-Term Supply Growth Rate (percent)**
 
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
+![SPV in bitcoin](https://raw.githubusercontent.com/ethereumbuilders/GitBook/master/en/vitalik-diagrams/inflation.png)
 
 _Despite the linear currency issuance, just like with Bitcoin over time the supply growth rate nevertheless tends to zero_
 
