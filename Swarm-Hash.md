@@ -5,8 +5,7 @@ category:
 
 # Introduction
 
-Swarm Hash (a.k.a. [`bzzhash`](https://github.com/ethersphere/go-ethereum/tree/bzz/bzz/bzzhash)) is a Merkle tree hash designed for the purpose of efficient storage and retrieval in content-addressed storage, both local and networked. While it is used in [Swarm](https://github.com/ethereum/go-ethereum/wiki/Swarm---distributed-preimage-archive), there is nothing Swarm-specific in it and the authors recommend it as a drop-in substitute of sequential-iterative hash functions (like SHA3) whenever one is used for referencing integrity-sensitive content, as it constitutes an improvement in terms of performance and usability without compromising security. For instance in the [URL Hint Protocol](https://github.com/ethereum/wiki/wiki/URL-Hint-Protocol).
-
+Swarm Hash (a.k.a. [`bzzhash`](https://github.com/ethersphere/go-ethereum/cmd/swarm)) is a Merkle tree hash designed for the purpose of efficient storage and retrieval in content-addressed storage, both local and networked. While it is used in [Swarm](https://github.com/ethereum/go-ethereum/wiki/Swarm---distributed-preimage-archive), there is nothing Swarm-specific in it and the authors recommend it as a drop-in substitute of sequential-iterative hash functions (like SHA3) whenever one is used for referencing integrity-sensitive content.
 In particular, it can take advantage of parallelisms (including SMP and massively-parallel architectures such as GPU's) for faster calculation and verification, can be used to verify the integrity of partial content without having to transmit all of it. Proofs of security to the underlying hash function carry over to Swarm Hash.
 
 # Description
@@ -25,7 +24,7 @@ A strict Swarm Hash is one where every chunk with the possible exception of thos
 
 The strict interpretation is unique in that only one hash value matches a particular content. The strict interpretation is only vulnerable to length extension attacks if the length of the content is a multiple of the chunk size, and the number of leaf chunks is an integer power of branching size (the fix maximum chunk size divided by hash length).
 
-A [parallelized implementation in Go](https://github.com/ethersphere/go-ethereum/tree/bzz/bzz) is available as well as [a command-line tool](https://github.com/ethersphere/go-ethereum/tree/bzz/bzz/bzzhash) for hashing files on the local filesystem using the strict interpretation.
+A [parallelized implementation in Go](https://github.com/ethersphere/go-ethereum/swarm/storage/chunker.go) is available as well as [a command-line tool](https://github.com/ethersphere/go-ethereum/s) for hashing files on the local filesystem using the strict interpretation.
 
 # Loose interpretations
 
@@ -38,5 +37,5 @@ However, it might open the door for different applications where this does not c
 - [Merkle tree](http://en.wikipedia.org/wiki/Merkle_tree)
 - [Length extension attack on wikipedia](http://en.wikipedia.org/wiki/Length_extension_attack)
 - [IETF RFC4880](https://tools.ietf.org/html/rfc4880)
-- [bzzhash code](https://github.com/ethersphere/go-ethereum/tree/bzz/bzz/bzzhash)
+- [bzzhash code](https://github.com/ethersphere/go-ethereum/swarm)
 - [Swarm documentation and draft specs](https://github.com/ethereum/go-ethereum/wiki/Swarm---distributed-preimage-archive)

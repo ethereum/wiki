@@ -4,7 +4,7 @@ As a Ðapp developer you have three main resources which allow Ðapp development
 
 - [Web3 JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API) - This is the main JavaScript SDK to use when you want to interact with a nodes API
 - [JSON RPC API](https://github.com/ethereum/wiki/wiki/JSON-RPC) - This is the low level JSON RPC 2.0 interface to interface with a node. This API is used by the [Web3 JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API).
-- [Solidity Documentation](https://ethereum.github.io/solidity/docs/home/) - Solidity is the Ethereum developed Smart Contract language, which compiles to EVM (Ethereum Virtual Machine) opcodes.
+- [Solidity Documentation](https://solidity.readthedocs.org/en/latest/) - Solidity is the Ethereum developed Smart Contract language, which compiles to EVM (Ethereum Virtual Machine) opcodes.
 
 ### Other Resources:
 
@@ -15,3 +15,11 @@ As a Ðapp developer you have three main resources which allow Ðapp development
 ### Useful read
 - [FAQ](https://github.com/ethereum/wiki/wiki/FAQ) - Collection of links, useful for understanding the Ethereum eco system.
 - [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) - Great explanation of Blockchain related terms.
+
+### Gitter Chats
+- web3.js [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/web3.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- Mist [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/mist?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- GO Ethereum [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/go-ethereum?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- C++ Ethereum [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/cpp-ethereum?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- Swarm [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/swarm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+- Whisper [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ethereum/whisper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)

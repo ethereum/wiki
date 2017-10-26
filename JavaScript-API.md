@@ -1,21 +1,56 @@
+<<<<<<< HEAD
+# Web3 JavaScript app API
+=======
 ---
 name: Javascript API
 category: 
 ---
 
 # Web3 JavaScript Ðapp API
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
-To make your Ðapp work on Ethereum, you can use the `web3` object provided by the [web3.js library](https://github.com/ethereum/web3.js). Under the hood it communicates to a local node through [RPC calls](https://github.com/ethereum/wiki/wiki/JSON-RPC). web3.js works with any Ethereum node, which exposes an RPC layer.
+To make your app work on Ethereum, you can use the `web3` object provided by the [web3.js library](https://github.com/ethereum/web3.js). Under the hood it communicates to a local node through [RPC calls](https://github.com/ethereum/wiki/wiki/JSON-RPC). web3.js works with any Ethereum node, which exposes an RPC layer.
 
 `web3` contains the `eth` object - `web3.eth` (for specifically Ethereum blockchain interactions) and the `shh` object - `web3.shh` (for Whisper interaction). Over time we'll introduce other objects for each of the other web3 protocols. Working  [examples can be found here](https://github.com/ethereum/web3.js/tree/master/example).
 
-If you want to look at some more sophisticated examples using web3.js check out these [useful Ðapp patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns).
+If you want to look at some more sophisticated examples using web3.js check out these [useful app patterns](https://github.com/ethereum/wiki/wiki/Useful-Ðapp-Patterns).
 
-## Using callbacks
+## Getting Started
 
-As this API is designed to work with a local RPC node and all its functions are by default use synchronous HTTP requests.con
+* [Adding web3](#adding-web3)
+* [Using Callbacks](#using-callbacks)
+* [Batch requests](#batch-requests)
+* [A note on big numbers in web3.js](#a-note-on-big-numbers-in-web3js)
+* [-> API Reference](#web3js-api-reference)
 
-If you want to make asynchronous request, you can pass an optional callback as the last parameter to most functions.
+### Adding web3
+
+First you need to get web3.js into your project. This can be done using the following methods:
+
+- npm: `npm install web3`
+- bower: `bower install web3`
+- meteor: `meteor add ethereum:web3`
+- vanilla: link the `dist./web3.min.js`
+
+Then you need to create a web3 instance, setting a provider.
+To make sure you don't overwrite the already set provider when in mist, check first if the web3 is available:
+
+```js
+if (typeof web3 !== 'undefined') {
+  web3 = new Web3(web3.currentProvider);
+} else {
+  // set the provider you want from Web3.providers
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+}
+```
+
+After that you can use the [API](web3js-api-reference) of the `web3` object.
+
+### Using callbacks
+
+As this API is designed to work with a local RPC node, all its functions use synchronous HTTP requests by default.
+
+If you want to make an asynchronous request, you can pass an optional callback as the last parameter to most functions.
 All callbacks are using an [error first callback](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/) style:
 
 ```js
@@ -27,9 +62,11 @@ web3.eth.getBlock(48, function(error, result){
 })
 ```
 
-## Batch requests
+### Batch requests
 
 Batch requests allow queuing up requests and processing them at once.
+
+**Note** Batch requests are not faster! In fact making many requests at once will in some cases be faster, as requests are processed asynchronously. Batch requests are mainly useful to ensure the serial processing of requests.
 
 ```js
 var batch = web3.createBatch();
@@ -38,9 +75,9 @@ batch.add(web3.eth.contract(abi).at(address).balance.request(address, callback2)
 batch.execute();
 ```
 
-## A note on big numbers in web3.js
+### A note on big numbers in web3.js
 
-You will always get a BigNumber object for balance values as JavaScript is not able to handle big numbers correctly.
+You will always get a BigNumber object for number values as JavaScript is not able to handle big numbers correctly.
 Look at the following examples:
 
 ```js
@@ -60,7 +97,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string
 // "131242344353464564564574574567477"
 ```
 
-The next example wouldn't work as we have more than 20 floating points, therefore it is recommended to keep you balance always in *wei* and only transform it to other units when presenting to the user:
+The next example wouldn't work as we have more than 20 floating points, therefore it is recommended to always keep your balance in *wei* and only transform it to other units when presenting to the user:
 ```js
 var balance = new BigNumber('13124.234435346456466666457455567456');
 
@@ -68,20 +105,20 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 // "13145.23443534645646666646" // you number would be cut after the 20 floating point
 ```
 
-## Web3 Javascript Ðapp API Reference
+## Web3.js API Reference
 
 * [web3](#web3)
   * [version](#web3versionapi)
      * [api](#web3versionapi)
-     * [node](#web3versionnode)
-     * [network](#web3versionnetwork)
-     * [ethereum](#web3versionethereum)
-     * [whisper](#web3versionwhisper)
+     * [node/getNode](#web3versionnode)
+     * [network/getNetwork](#web3versionnetwork)
+     * [ethereum/getEthereum](#web3versionethereum)
+     * [whisper/getWhisper](#web3versionwhisper)
   * [isConnected()](#web3isconnected)
   * [setProvider(provider)](#web3setprovider)
   * [currentProvider](#web3currentprovider)
   * [reset()](#web3reset)
-  * [sha3(string)](#web3sha3)
+  * [sha3(string, options)](#web3sha3)
   * [toHex(stringOrNumber)](#web3tohex)
   * [toAscii(hexString)](#web3toascii)
   * [fromAscii(textString, [padding])](#web3fromascii)
@@ -90,7 +127,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei)
   * [toWei(numberStringOrBigNumber, unit)](#web3towei)
   * [toBigNumber(numberOrHexString)](#web3tobignumber)
-  * [isAddress(hexString)](#web3isAddress)
+  * [isAddress(hexString)](#web3isaddress)
   * [net](#web3net)
     * [listening/getListening](#web3netlistening)
     * [peerCount/getPeerCount](#web3ethpeercount)
@@ -119,6 +156,8 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
     * [getTransactionReceipt(hash)](#web3ethgettransactionreceipt)
     * [getTransactionCount(address)](#web3ethgettransactioncount)
     * [sendTransaction(object)](#web3ethsendtransaction)
+    * [sendRawTransaction(object)](#web3ethsendrawtransaction)
+    * [sign(object)](#web3ethsign)
     * [call(object)](#web3ethcall)
     * [estimateGas(object)](#web3ethestimategas)
     * [filter(array (, options) )](#web3ethfilter)
@@ -149,7 +188,8 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
       * [toString](#web3ethibantostring)
   * [db](#web3db)
     * [putString(name, key, value)](#web3dbputstring)
-    * [getString(name, key)](#web3dbgetstring)
+    * [getString(-       var rXArray = stringToNumberArray(form.rX.value);
+name, key)](#web3dbgetstring)
     * [putHex(name, key, value)](#web3dbputhex)
     * [getHex(name, key)](#web3dbgethex)
   * [shh](#web3shh)
@@ -173,8 +213,15 @@ The `web3` object provides all methods.
 ```js
 var Web3 = require('web3');
 // create an instance of web3 using the HTTP provider.
-// NOTE in mist web3 is already available, so check first if its available before instantiating
+// NOTE in mist web3 is already available, so check first if it's available before instantiating
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+```
+
+###### Example using HTTP Basic Authentication
+```js
+var Web3 = require('web3');
+var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545", 0, BasicAuthUsername, BasicAuthPassword));
+//Note: HttpProvider takes 4 arguments (host, timeout, user, password)
 ```
 
 ***
@@ -183,8 +230,6 @@ var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
 ```js
 web3.version.api
-// or async
-web3.version.getApi(callback(error, result){ ... })
 ```
 
 ##### Returns
@@ -204,7 +249,7 @@ console.log(version); // "0.2.0"
 
     web3.version.node
     // or async
-    web3.version.getClient(callback(error, result){ ... })
+    web3.version.getNode(callback(error, result){ ... })
 
 
 ##### Returns
@@ -333,7 +378,7 @@ web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545')); // 8
 
     web3.currentProvider
 
-Will contain the current provider, if one is set. This can be used to check if mist etc. set already a provider.
+Will contain the current provider, if one is set. This can be used to check if mist etc. has set already a provider.
 
 
 ##### Returns
@@ -375,26 +420,25 @@ web3.reset();
 
 #### web3.sha3
 
-    web3.sha3(string [, callback])
+    web3.sha3(string [, options])
 
 ##### Parameters
 
-1. `String` - The string to hash using the SHA3 algorithm
-2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
-
+1. `String` - The string to hash using the Keccak-256 SHA3 algorithm
+1. `Object` - (optional) Set `encoding` to `hex` if the string to hash is encoded in hex. A leading `0x` will be automatically ignored.
 
 ##### Returns
 
-`String` - The SHA3 of the given data.
+`String` - The Keccak-256 SHA3 of the given data.
 
 ##### Example
 
 ```js
-var str = web3.sha3("Some ASCII string to be hashed");
-console.log(str); // "0x536f6d6520415343494920737472696e6720746f20626520686173686564"
+var hash = web3.sha3("Some string to be hashed");
+console.log(hash); // "0xed973b234cf2238052c9ac87072c71bcf33abc1bbd721018e0cca448ef79b379"
 
-var hash = web3.sha3(str);
-console.log(hash); // "0xb21dbc7a5eb6042d91f8f584af266f1a512ac89520f43562c6c1e37eab6eb0c4"
+var hashOfHash = web3.sha3(hash, {encoding: 'hex'});
+console.log(hashOfHash); // "0x85dd39c91a64167ba20732b228251e67caed1462d4bcf036af88dc6856d0fdcc"
 ```
 
 ***
@@ -454,7 +498,7 @@ Converts any ASCII string to a HEX string.
 ##### Parameters
 
 1. `String` - An ASCII string to be converted to HEX.
-2. `Number` - The number of bytes the returned HEX string should have. 
+2. `Number` - (optional) The number of bytes the returned HEX string should have. 
 
 ##### Returns
 
@@ -596,17 +640,15 @@ console.log(value); // "1000000000000000000"
 
 Converts a given number into a BigNumber instance.
 
-See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
+See the [note on BigNumber](#a-note-on-big-numbers-in-web3js).
 
 ##### Parameters
 
 1. `Number|String` - A number, number string or HEX string of a number.
 
-
 ##### Returns
 
 `BigNumber` - A BigNumber instance representing the given value.
-
 
 ##### Example
 
@@ -615,6 +657,29 @@ var value = web3.toBigNumber('200000000000000000000001');
 console.log(value); // instanceOf BigNumber
 console.log(value.toNumber()); // 2.0000000000000002e+23
 console.log(value.toString(10)); // '200000000000000000000001'
+```
+
+***
+
+#### web3.isAddress
+
+    web3.isAddress(HexString);
+
+Checks if the given string is an address.
+
+##### Parameters
+
+1. `String` - An HEX string.
+
+##### Returns
+
+`Boolean` - `false` if it's not on a valid address format. Returns `true` if it's an all lowercase or all uppercase valid address. If it's a mixed case address, it checks using `web3.isChecksumAddress()`.
+
+##### Example
+
+```js
+var isAddress = web3.isAddress("0x8888f1f195afa192cfee860698584c030f4c9db1");
+console.log(isAddress); // true
 ```
 
 ***
@@ -700,7 +765,7 @@ This default address is used for the following methods (optionally you can overw
 var defaultAccount = web3.eth.defaultAccount;
 console.log(defaultAccount); // ''
 
-// set the default block
+// set the default account
 web3.eth.defaultAccount = '0x8888f1f195afa192cfee860698584c030f4c9db1';
 ```
 
@@ -710,13 +775,15 @@ web3.eth.defaultAccount = '0x8888f1f195afa192cfee860698584c030f4c9db1';
 
     web3.eth.defaultBlock
 
-This default block is used for the following methods (optionally you can overwrite the defaultBlock by passing it as the last parameter):
+This default block is used for the following methods (optionally you can override it by passing the defaultBlock parameter):
 
 - [web3.eth.getBalance()](#web3ethgetbalance)
 - [web3.eth.getCode()](#web3ethgetcode)
 - [web3.eth.getTransactionCount()](#web3ethgettransactioncount)
 - [web3.eth.getStorageAt()](#web3ethgetstorageat)
 - [web3.eth.call()](#web3ethcall)
+- [contract.myMethod.call()](#contract-methods)
+- [contract.myMethod.estimateGas()](#contract-methods)
 
 ##### Values
 
@@ -828,7 +895,7 @@ web3.eth.isSyncing(function(error, sync){
     // or async
     web3.eth.getCoinbase(callback(error, result){ ... })
 
-This property is read only and returns the coinbase address were the mining rewards go to.
+This property is read only and returns the coinbase address where the mining rewards go to.
 
 ##### Returns
 
@@ -902,7 +969,7 @@ The gas price is determined by the x latest blocks median gas price.
 
 `BigNumber` - A BigNumber instance of the current gas price in wei.
 
-See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
+See the [note on BigNumber](#a-note-on-big-numbers-in-web3js).
 
 ##### Example
 
@@ -1024,7 +1091,7 @@ Get the balance of an address at a given block.
 
 `String` - A BigNumber instance of the current balance for the given address in wei.
 
-See the [note on BigNumber](#a-note-on-big-numbers-in-javascript).
+See the [note on BigNumber](#a-note-on-big-numbers-in-web3js).
 
 ##### Example
 
@@ -1127,7 +1194,7 @@ Returns a block matching the block number or block hash.
 ##### Example
 
 ```js
-var info = web3.eth.block(3150);
+var info = web3.eth.getBlock(3150);
 console.log(info);
 /*
 {
@@ -1243,10 +1310,7 @@ Returns a transaction matching the given transaction hash.
 ##### Example
 
 ```js
-var blockNumber = 668;
-var indexOfTransaction = 0
-
-var transaction = web3.eth.getTransaction(blockNumber, indexOfTransaction);
+var transaction = web3.eth.getTransaction('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b');
 console.log(transaction);
 /*
 {
@@ -1398,13 +1462,96 @@ If the transaction was a contract creation use [web3.eth.getTransactionReceipt()
 ```js
 
 // compiled solidity source code using https://chriseth.github.io/cpp-ethereum/
-var code = "603d80600c6000396000f3007c01000000000000000000000000000000000000000000000000000000006000350463c6888fa18114602d57005b600760043502
-8060005260206000f3";
+var code = "603d80600c6000396000f3007c01000000000000000000000000000000000000000000000000000000006000350463c6888fa18114602d57005b6007600435028060005260206000f3";
 
-web3.eth.sendTransaction({data: code}, function(err, address) {
+web3.eth.sendTransaction({data: code}, function(err, transactionHash) {
   if (!err)
-    console.log(address); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+    console.log(transactionHash); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 });
+```
+
+***
+
+#### web3.eth.sendRawTransaction
+
+    web3.eth.sendRawTransaction(signedTransactionData [, callback])
+
+Sends an already signed transaction. For example can be signed using: https://github.com/SilentCicero/ethereumjs-accounts
+
+##### Parameters
+
+1. `String` - Signed transaction data in HEX format
+2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+##### Returns
+
+`String` - The 32 Bytes transaction hash as HEX string.
+
+If the transaction was a contract creation use [web3.eth.getTransactionReceipt()](#web3gettransactionreceipt) to get the contract address, after the transaction was mined.
+
+##### Example
+
+```js
+var Tx = require('ethereumjs-tx');
+var privateKey = new Buffer('e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109', 'hex')
+
+var rawTx = {
+  nonce: '0x00',
+  gasPrice: '0x09184e72a000', 
+  gasLimit: '0x2710',
+  to: '0x0000000000000000000000000000000000000000', 
+  value: '0x00', 
+  data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057'
+}
+
+var tx = new Tx(rawTx);
+tx.sign(privateKey);
+
+var serializedTx = tx.serialize();
+
+//console.log(serializedTx.toString('hex'));
+//f889808609184e72a00082271094000000000000000000000000000000000000000080a47f74657374320000000000000000000000000000000000000000000000000000006000571ca08a8bbf888cfa37bbf0bb965423625641fc956967b81d12e23709cead01446075a01ce999b56a8a88504be365442ea61239198e23d1fce7d00fcfc5cd3b44b7215f
+
+web3.eth.sendRawTransaction('0x' + serializedTx.toString('hex'), function(err, hash) {
+  if (!err)
+    console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
+});
+```
+
+***
+
+
+#### web3.eth.sign
+
+    web3.eth.sign(address, dataToSign, [, callback])
+
+Signs data from a specific account. This account needs to be unlocked.
+
+##### Parameters
+
+1. `String` - Address to sign with.
+2. `String` - Data to sign.
+3. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
+
+##### Returns
+
+`String` - The signed data.
+
+After the hex prefix, characters correspond to ECDSA values like this:
+```
+r = signature[0:64]
+s = signature[64:128]
+v = signature[128:130]
+```
+
+Note that if you are using `ecrecover`, `v` will be either `"00"` or `"01"`. As a result, in order to use this value, you will have to parse it to an integer and then add `27`. This will result in either a `27` or a `28`.
+
+##### Example
+
+```js
+var result = web3.eth.sign("0x135a7de83802408321b74c322f8558db1679ac20",
+    "0x9dd2c369a187b4e6b9c402f030e50743e619301ea62aa4c0737d4ef7e10a3d49"); // second argument is web3.sha3("xyz")
+console.log(result); // "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 ```
 
 ***
@@ -1439,13 +1586,13 @@ console.log(result); // "0x00000000000000000000000000000000000000000000000000000
 
 #### web3.eth.estimateGas
 
-    web3.eth.estimateGas(callObject [, defaultBlock] [, callback])
+    web3.eth.estimateGas(callObject [, callback])
 
 Executes a message call or transaction, which is directly executed in the VM of the node, but never mined into the blockchain and returns the amount of the gas used.
 
 ##### Parameters
 
-See [web3.eth.sendTransaction](#web3ethsendtransaction), expect that all properties are optional.
+See [web3.eth.sendTransaction](#web3ethsendtransaction), except that all properties are optional.
 
 ##### Returns
 
@@ -1503,7 +1650,7 @@ web3.eth.filter(options, function(error, result){
 ##### Watch callback return value
 
 - `String` - When using the `"latest"` parameter, it returns the block hash of the last incoming block.
-- `String` - When using the `"pending"` parameter, it returns a transaction hash of the last add pending transaction.
+- `String` - When using the `"pending"` parameter, it returns a transaction hash of the most recent pending transaction.
 - `Object` - When using manual filter options, it returns a log object as follows:
     - `logIndex`: `Number` - integer of the log index position in the block. `null` when its pending log.
     - `transactionIndex`: `Number` - integer of the transactions index position log was created from. `null` when its pending log.
@@ -1512,7 +1659,7 @@ web3.eth.filter(options, function(error, result){
     - `blockNumber`: `Number` - the block number where this log was in. `null` when its pending. `null` when its pending log.
     - `address`: `String`, 32 Bytes - address from which this log originated.
     - `data`: `String` - contains one or more 32 Bytes non-indexed arguments of the log.
-    - `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except you declared the event with the `anonymous` specifier.)
+    - `topics`: `Array of Strings` - Array of 0 to 4 32 Bytes `DATA` of indexed log arguments. (In *solidity*: The first topic is the *hash* of the signature of the event (e.g. `Deposit(address,bytes32,uint256)`), except if you declared the event with the `anonymous` specifier.)
 
 **Note** For event filter return values see [Contract Events](#contract-events)
 
@@ -1556,13 +1703,13 @@ You can read more about events [here](https://github.com/ethereum/wiki/wiki/Ethe
 var MyContract = web3.eth.contract(abiArray);
 
 // instantiate by address
-var contractInstance = MyContract.at([address]);
+var contractInstance = MyContract.at(address);
 
 // deploy new contract
-var contractInstance = MyContract.new([contructorParam1] [, contructorParam2], {data: '0x12345...', from: myAccount, gas: 1000000});
+var contractInstance = MyContract.new([constructorParam1] [, constructorParam2], {data: '0x12345...', from: myAccount, gas: 1000000});
 
 // Get the data to deploy the contract manually
-var contractData = MyContract.new.getData([contructorParam1] [, contructorParam2], {data: '0x12345...'});
+var contractData = MyContract.new.getData([constructorParam1] [, constructorParam2], {data: '0x12345...'});
 // contractData = '0x12345643213456000000000023434234'
 ```
 
@@ -1576,11 +1723,22 @@ var myContractInstance = MyContract.at(myContractAddress);
 
 // Or deploy a new contract:
 
-// Deploy the contract asyncronous:
+// Deploy the contract asynchronous from Solidity file:
+...
+const fs = require("fs");
+const solc = require('solc')
+
+let source = fs.readFileSync('nameContract.sol', 'utf8');
+let compiledContract = solc.compile(source, 1);
+let abi = compiledContract.contracts['nameContract'].interface;
+let bytecode = compiledContract.contracts['nameContract'].bytecode;
+let gasEstimate = web3.eth.estimateGas({data: bytecode});
+let MyContract = web3.eth.contract(JSON.parse(abi));
+
 var myContractReturned = MyContract.new(param1, param2, {
-   data: myContractCode,
-   gas: 300000,
-   from: mySenderAddress}, function(err, myContract){
+   from:mySenderAddress,
+   data:bytecode,
+   gas:gasEstimate}, function(err, myContract){
     if(!err) {
        // NOTE: The callback will fire twice!
        // Once the contract has the transactionHash property set and once its deployed on an address.
@@ -1606,8 +1764,6 @@ myContractInstance.transactionHash // The hash of the transaction, which created
 myContractInstance.address // undefined at start, but will be auto-filled later
 ```
 
-**Note** When you deploy a new contract, you should check for the next 12 blocks or so if the contract code is still at the address (using [web3.eth.getCode()](#web3ethgetcode)), to make sure a fork didn't change that.
-
 ##### Example
 
 ```js
@@ -1627,7 +1783,7 @@ var abi = [{
 }, {
      name: 'myEvent',
      type: 'event',
-     inputs: [{name: 'a', type: 'int', indexed: true},{name: 'b', type: 'bool', indexed: false]
+     inputs: [{name: 'a', type: 'int', indexed: true},{name: 'b', type: 'bool', indexed: false}]
 }];
 
 // creation of contract object
@@ -1667,13 +1823,10 @@ var filter = myContractInstance.myEvent({a: 5}, function (error, result) {
 
 ```js
 // Automatically determines the use of call or sendTransaction based on the method type
-myContractInstance.myMethod(param1 [, param2, ...] [, transactionObject] [, callback]);
+myContractInstance.myMethod(param1 [, param2, ...] [, transactionObject] [, defaultBlock] [, callback]);
 
 // Explicitly calling this method
-myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject] [, callback]);
-
-// Explicitly sending a transaction to this method
-myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
+myContractInstance.myMethod.call(param1 [, param2, ...] [, transactionObject] [, defaultBlock] [, callback]);
 
 // Explicitly sending a transaction to this method
 myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
@@ -1683,12 +1836,13 @@ var myCallData = myContractInstance.myMethod.getData(param1 [, param2, ...]);
 // myCallData = '0x45ff3ff6000000000004545345345345..'
 ```
 
-The contract object exposes the contracts methods, which can be called using parameters and a transaction object.
+The contract object exposes the contract's methods, which can be called using parameters and a transaction object.
 
 ##### Parameters
 
-- `String|Number` - (optional) Zero or more parameters of the function.
-- `Object` - (optional) The (previous) last parameter can be a transaction object, see [web3.eth.sendTransaction](#web3ethsendtransaction) parameter 1 for more.
+- `String|Number|BigNumber` - (optional) Zero or more parameters of the function. If passing in a string, it must be formatted as a hex number, e.g. "0xdeadbeef" If you have already created BigNumber object, then you can just pass it too.
+- `Object` - (optional) The (previous) last parameter can be a transaction object, see [web3.eth.sendTransaction](#web3ethsendtransaction) parameter 1 for more. **Note**: `data` and `to` properties will not be taken into account.
+- `Number|String` - (optional) If you pass this parameter it will not use the default block set with [web3.eth.defaultBlock](#web3ethdefaultblock).
 - `Function` - (optional) If you pass a callback as the last parameter the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
@@ -1746,15 +1900,15 @@ You can use events like [filters](#web3ethfilter) and they have the same methods
 
 `Object` - An event object as follows:
 
-- `args`: `Object` - The arguments coming from the event.
-- `event`: `String` - The event name.
-- `logIndex`: `Number` - integer of the log index position in the block.
-- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
-- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
 - `address`: `String`, 32 Bytes - address from which this log originated.
+- `args`: `Object` - The arguments coming from the event.
 - `blockHash`: `String`, 32 Bytes - hash of the block where this log was in. `null` when its pending.
 - `blockNumber`: `Number` - the block number where this log was in. `null` when its pending.
-
+- `logIndex`: `Number` - integer of the log index position in the block.
+- `event`: `String` - The event name.
+- `removed`: `bool` -  indicate if the transaction this event was created from was removed from the blockchain (due to orphaned block) or never get to it (due to rejected transaction).
+- `transactionIndex`: `Number` - integer of the transactions index position log was created from.
+- `transactionHash`: `String`, 32 Bytes - hash of the transactions this log was created from.
 
 ##### Example
 
@@ -1802,7 +1956,7 @@ Will call the callback for all events which are created by this contract.
 
 ##### Parameters
 
-1. `Object` - Additional filter options, see [filters](#web3ethfilter) parameter 1 for more. By default filterObject has field 'address' set to address of the contract. Also first topic is the signature of event.
+1. `Object` - Additional filter options, see [filters](#web3ethfilter) parameter 1 for more. By default filterObject has field 'address' set to address of the contract. This method sets the topic to the signature of event, and does not support additional topics.
 2. `Function` - (optional) If you pass a callback as the last parameter it will immediately start watching and you don't need to call `myEvent.watch(function(){})`. See [this note](#using-callbacks) for details.
 
 ##### Callback return
@@ -1828,13 +1982,13 @@ events.get(function(error, logs){ ... });
 ...
 
 // would stop and uninstall the filter
-myEvent.stopWatching();
+events.stopWatching();
 ```
 
 ****
 
 #### web3.eth.getCompilers
-
+## Compiling features being depreciated https://github.com/ethereum/EIPs/issues/209
     web3.eth.getCompilers([callback])
 
 Gets a list of available compilers.
@@ -1983,7 +2137,7 @@ Returns GlobalRegistrar object.
 
 ##### Usage
 
-see [namereg](https://github.com/ethereum/web3.js/blob/master/example/namereg.html) example
+see [namereg](https://github.com/ethereum/web3.js/blob/master/example/namereg.html) example.
 
 ***
 
@@ -2112,13 +2266,13 @@ This method should be called, when we want to post whisper message to the networ
   - `to`: `String`, 60 Bytes  HEX - (optional) The identity of the receiver. When present whisper will encrypt the message so that only the receiver can decrypt it.
   - `topics`: `Array of Strings` - Array of topics `Strings`, for the receiver to identify messages.
   - `payload`: `String|Number|Object` - The payload of the message. Will be autoconverted to a HEX string before.
-  - `priority`: `Number` - The integer of the priority in a rang from ... (?).
+  - `priority`: `Number` - The integer of the priority in a range from ... (?).
   - `ttl`: `Number` - integer of the time to live in seconds.
 2. `Function` - (optional) If you pass a callback the HTTP request is made asynchronous. See [this note](#using-callbacks) for details.
 
 ##### Returns
 
-`Boolean` - returns `true` if the message was send, otherwise `false`.
+`Boolean` - returns `true` if the message was sent, otherwise `false`.
 
 
 ##### Example

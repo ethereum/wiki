@@ -6,9 +6,9 @@ category:
 ### 차세대 스마트 컨트랙트와 탈중앙화된 어플리케이션 플랫폼 
 (A Next-Generation Smart Contract and Decentralized Application Platform)
 
-사토시 나카모토가 2009년 개발한 비트코인은 종종 화폐와 통화분야에서 매우 근본적인 혁신으로 묘사되어 왔는데, 이것은 비트코인이 어떤 담보나 내재적인 가치를 가지지 않으며 중앙화된 발행기관이나 통제기관도 없는 디지털 자산의 첫번째 사례였기 때문이다. 하지만 비트코인 실험의 더욱 중요한 측면은 비트코인을 떠받치고 있는 분산합의수단으로서의 블록체인 기술이며, 이에 대한 관심이 급격하게 늘어나고 있다.
+사토시 나카모토가 2008[<sup>[1a]</sup>](http://nakamotoinstitute.org/bitcoin/)[<sup>[1b]</sup>](http://www.newyorker.com/magazine/2011/10/10/the-crypto-currency)–2009년[<sup>[1c]</sup>](https://en.bitcoin.it/wiki/Category:History)[<sup>[1d]</sup>](https://blockexplorer.com/block/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f) 개발한 비트코인은 종종 화폐와 통화분야에서 매우 근본적인 혁신으로 묘사되어 왔는데, 이것은 비트코인이 어떤 담보나 내재적인 가치를[<sup>[2]</sup>](https://bitcoinmagazine.com/articles/you-say-bitcoin-has-no-intrinsic-value-twenty-two-reasons-to-think-again-1399454061/) 가지지 않으며 중앙화된 발행기관이나 통제기관도 없는 디지털 자산의 첫번째 사례였기 때문이다. 하지만 비트코인 실험의 더욱 중요한 측면은 비트코인을 떠받치고 있는 분산합의수단으로서의 블록체인 기술이며, 이에 대한 관심이 급격하게 늘어나고 있다.
 
-블록체인 기술을 이용한 대안적 어플리케이션들에는 다음과 같은 것들이 자주 거론되고 있다. 사용자 정의 화폐와 금융상품을 블록체인 위에 표현하는 컬러드 코인("colored coins"), 물리적 대상의 소유권을 표현하는 스마트 자산("smart property"), 도메인 이름과 같은 비동질적 자산을 기록하는 네임코인("Namecoin"), 임의적인 계약규칙을 구현한 코드에 의해 다지털 자산을 관리하는 좀 더 복잡한 형태의 스마트 컨트랙트 ("smart contracts"), 더 나아가 블록체인을 기반으로 한 탈중앙화된 자율 조직( "decentralized autonomous organizations" , DAOs) 등이다.
+블록체인 기술을 이용한 대안적 어플리케이션들에는 다음과 같은 것들이 자주 거론되고 있다. 사용자 정의 화폐와 금융상품을 블록체인 위에 표현하는 컬러드 코인("colored coins"),[<sup>[3]</sup>](https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) 물리적 대상의 소유권을 표현하는 스마트 자산("smart property"),[<sup>[4]</sup>](https://en.bitcoin.it/wiki/Smart_Property) 도메인 이름과 같은 비동질적 자산을 기록하는 네임코인("Namecoin"),[<sup>[5]</sup>](http://namecoin.org) 임의적인 계약규칙을 구현한 코드에 의해 다지털 자산을 관리하는 좀 더 복잡한 형태의 스마트 컨트랙트 ("smart contracts"),[<sup>[6]</sup>](https://en.bitcoin.it/wiki/Contracts) 더 나아가 블록체인을 기반으로 한 탈중앙화된 자율 조직( "decentralized autonomous organizations" , DAOs)[<sup>[7]</sup>](http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i/) 등이다.
 
 이더리움이 제공하려는 것은 완벽한 튜링완전(turing-complete) 프로그래밍 언어가 심어진 블록체인이다. 이 프로그래밍 언어는, 코딩된 규칙에 따라 '어떤 상태'를 다르게 변환시키는 기능(arbitrary state transition functions)이 포함된 "계약(contracts)"을 유저들이 작성할 수 있게 함으로써 앞서 설명한 시스템들을 구현 가능하게 할 뿐만 아니라 우리가 아직 상상하지 못한 다른 많은 어플리케이션도 매우 쉽게 만들 수 있도록 도와줄 것이다.
 
@@ -218,11 +218,11 @@ GAS = STARTGAS 로 초기화 한후, 트랜잭션에서 사용된 바이트에 �
 실제로 컨트랙트 코드는 로우-레벨 EVM 코드로 작성되나, 이 예제는 이해하기 쉽게 하기 위해, 이더리움 하이-레벨 언어중 하나인 Serpent 로 작성하였다. 이 코드는 EVM 코드로 컴파일 될 수 있다. 컨트랙트의 스토리지는 비어있다고 가정하고, 트랜잭션이 10 ether, 2000 gas, 0.001ether gasprice, 64 바이트의 데이터(0-31 바이트까지는 숫자 2를 나타내고, 32-63 바이트는 CHARLIE 라는 문자열)를 보낸다고 가정하자. 이 경우 상태 변환 함수의 프로세스는 다음과 같다.
 
 1. 트랜잭션이 유효하고 형식에 제대로 맞는지 확인한다.
-2. 트랜잭션 발송처가 최소 2000 * 0.001=2 ether를 가지고 있는지 확인하고, 그럴 경우, 발송처의 어카운트에서 2 ether를 뺀다.
-gas=2000으로 초기화 한 후, 트랜잭션은 170바이트 길이를 가지고, 바이트당 수수료는 5라고 가정하면, 850을 빼야 하고 결국 1150 gas가 남게된다.
-3. 송신처 어카운트에서 추가 10 ether를 빼고 이것을 컨트랙트 어카운트에 더한다.
-4. 코드를 실행시킨다. 이 경우는 간단한데, 컨트랙트의 index 2에 해당하는 스토리지가 사용되었는지 확인하고 (이 경우, 사용되지 않았다.) index 2에 해당하는 스토리지 값을  CHARLIE 로 설정한다. 이 작업에 187 gas 가 소비됐다고 가정하면, 남아있는 gas 의 양은 1150 - 187 = 963 이 된다.
-5. 963*0.001 = 0.963 ether를 송신처의 어카운트로 되돌려주고, 결과 상태를 반환한다.
+2. 트랜잭션 발송처가 최소 2000 * 0.001 = 2 ether를 가지고 있는지 확인하고, 그럴 경우, 발송처의 어카운트에서 2 ether를 뺀다.
+3. gas = 2000으로 초기화 한 후, 트랜잭션은 170바이트 길이를 가지고, 바이트당 수수료는 5라고 가정하면, 850을 빼야 하고 결국 1150 gas가 남게된다.
+4. 발송처 어카운트에서 추가 10 ether를 빼고 이것을 컨트랙트 어카운트에 더한다.
+5. 코드를 실행시킨다. 이 경우는 간단한데, 컨트랙트의 index 2에 해당하는 스토리지가 사용되었는지 확인하고 (이 경우, 사용되지 않았다.) index 2에 해당하는 스토리지 값을  CHARLIE 로 설정한다. 이 작업에 187 gas 가 소비됐다고 가정하면, 남아있는 gas 의 양은 1150 - 187 = 963 이 된다.
+6. 963*0.001 = 0.963 ether를 송신처의 어카운트로 되돌려주고, 결과 상태를 반환한다.
 
 트랜잭션의 수신처에 컨트랙트가 없으면, 총 트랜잭션 수수료는 제공된 GASPRICE와 트랜잭션의 바이트 수를 곱한 값과 같아지고, 트랜잭션과 함께 보내진 데이터는 관련이 없어지게 된다.
 
@@ -293,7 +293,7 @@ Serpent 에서 토큰시스템을 실행하는 기본적은 코드는 아래와 
 3. 입금된 이더의 달러가치를 기록하며 (환율은 Data feed 컨트랙트로 쿼리를 보냄으로써 계산한다), 이를 $X라 한다
 4. 30일 이후, 당시의 환율을 적용한 금액을 계산하여 A에게는 $X를 송금하고 당시 총금액에 나머지를 B에게 송금하도록 A 또는 B가 컨트랙트를 다시 활성화 시킬 수 있게끔 한다. 
 
-위와 같은 컨트랙트는 가상통화를 이용한 상거래의 향후 발전 가능성을 제시한다. 가상화폐 상거래 활성화의 장애물 중 하나는 가상화폐의 높은 변동성이다; 다수의 유저들과 상인들은 가상화폐 혹은 블록체인자산이 제공하는 보안성과 편의성에 대한 니즈가 있지만, 단 하루만의 그들의 자산가치가 23% 하락할지도 모른다는 리스크는 피하고 싶어한다. 이 문제에 대한 지금까지의 가장 보편적인 솔루션은 자산 발행자가 자산에 대한 보증을 서는 것이었다: 이는 곧, 빌헹자가 하위화폐를 만들어서 그를 통해서 통화량을 조절할 수 있는 권한을 갖고, 누군가가 일정 단위의 하위화폐를 지불하였을 때 그에 상응하는 특정한 베이스 자산 (예, USD, 금)으로 교환해주는 방식을 뜻한다. 이 방식을 본 사례에 적용한다면, 가상화폐 발행자는 가상화폐를 지불하는 자에게 그에 상응하는 베이스자산을 제공할 것이라고 공개적인 약속을 하는 것이다. 이 메커니즘은 비(非)가상화폐 혹은 비(非)디지털자산을 블록체인 자산화(化)자산화 시키는 결과를 낳는다—물론 가상화폐 발행자를 신뢰할 수 있다면 말이다.  
+위와 같은 컨트랙트는 가상통화를 이용한 상거래의 향후 발전 가능성을 제시한다. 가상화폐 상거래 활성화의 장애물 중 하나는 가상화폐의 높은 변동성이다; 다수의 유저들과 상인들은 가상화폐 혹은 블록체인자산이 제공하는 보안성과 편의성에 대한 니즈가 있지만, 단 하루만의 그들의 자산가치가 23% 하락할지도 모른다는 리스크는 피하고 싶어한다. 이 문제에 대한 지금까지의 가장 보편적인 솔루션은 자산 발행자가 자산에 대한 보증을 서는 것이었다: 이는 곧, 발행자가 하위화폐를 만들어서 그를 통해서 통화량을 조절할 수 있는 권한을 갖고, 누군가가 일정 단위의 하위화폐를 지불하였을 때 그에 상응하는 특정한 베이스 자산 (예, USD, 금)으로 교환해주는 방식을 뜻한다. 이 방식을 본 사례에 적용한다면, 가상화폐 발행자는 가상화폐를 지불하는 자에게 그에 상응하는 베이스자산을 제공할 것이라고 공개적인 약속을 하는 것이다. 이 메커니즘은 비(非)가상화폐 혹은 비(非)디지털자산을 블록체인 자산화(化)자산화 시키는 결과를 낳는다—물론 가상화폐 발행자를 신뢰할 수 있다면 말이다.  
  
 다만, 현실적으로는 자산 발행인을 언제나 신뢰를 할 수 없으며, 몇몇 사례를 보면, 우리의 금융인프라는 자산보증 서비스가 존재하기에는 너무 취약하거나, 때로는 적대적이기도 하다. 파생상품은 이에 대한 대안을 제공해준다. 여기서 자산을 보증하기 위한 펀드를 제공하는 역활을 하나의 자산 발행자가 하는 것이 아니라
 암호화 담보자산(cryptographic reference asset, 예: 이더)의 가격이 올라갈 것이라는 데에 베팅을 하는 투자자들(speculators)의 탈중앙화된 시장이 그 역할을 담당하게 된다.
@@ -362,7 +362,7 @@ DAO 코딩에 관한 일반적인 개요는 다음과 같다. 가장 간단한 �
 
 ### 수정된 GHOST 도입(Modified GHOST Implementation)
 
-GHOST(Greedy Heaviest Observed Subtree)프로토콜은  Yonatan Sompolinsky and Aviv Zohar 에 의해  [2013년 12월](http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf)에 처음 소개된 혁신이다. GHOST의 문제의식은, 현재 빠른 확인시간(confirmation times)을 가지고 있는 블록체인들이 높은 스테일(stale) 비율로 인해 보안성 저하라는 문제를 겪고 있다는 것인데, 이는  블록들이 네트워크를 통해 전파되는데 일정한 시간이 걸리기 때문이라는 것이다. 만일 채굴자 A가 하나의 블록을 채굴했는데, 이 블록이 채굴자 B에게 전파되기전에 채굴자 B가 다른 또 하나의 블록을 채굴했다고 하면, 채굴자 B의 블록은 결국 낭비될 것이고, 네트워크 보안에 기여하지 못하게 될 것이다. 
+GHOST(Greedy Heaviest Observed Subtree)프로토콜은  Yonatan Sompolinsky and Aviv Zohar 에 의해  [2013년 12월](http://www.cs.huji.ac.il/~yoni_sompo/pubs/15/btc_scalability_full.pdf)에 처음 소개된 혁신이다. GHOST의 문제의식은, 현재 빠른 확인시간(confirmation times)을 가지고 있는 블록체인들이 높은 스테일(stale) 비율로 인해 보안성 저하라는 문제를 겪고 있다는 것인데, 이는  블록들이 네트워크를 통해 전파되는데 일정한 시간이 걸리기 때문이라는 것이다. 만일 채굴자 A가 하나의 블록을 채굴했는데, 이 블록이 채굴자 B에게 전파되기전에 채굴자 B가 다른 또 하나의 블록을 채굴했다고 하면, 채굴자 B의 블록은 결국 낭비될 것이고, 네트워크 보안에 기여하지 못하게 될 것이다. 
 
 게다가 중앙집중화(centralization) 이슈도 있다; 만일 채굴자 A가 30%의 해시파워를, 그리고 B가 10%의 해시파워를 가지고 있다면, A가  스테일 블록을 생산할 위험성은 매번 70%가 될 것이고(왜냐하면 다른 30%의 경우에는 A가 마지막 블록을 만들게 되었고, 따라서 즉각적으로 채굴데이터를 가지게 되기 때문이다), 반면 B는 매번 90%의 경우에 스테일 블록을 생산하게 될 위험성을 가지고 있다. 따라서 만일 블록 주기가 스테일 비율이 높은 것에 필요한 만큼 충분히  짧다면, A는 단순히 크기가 크다라는 사실 자체만으로 훨씬 더 높은 효율성을 가지게 된다. 이러한 두가지 효과가 결합되어서, 블록주기가 짧은 블록체인에서는,  높은 해시파워 점유율을 가진 단일한 풀이  채굴과정에 대한 사실상의 통제권을 가지게 될 가능성이 매우 높아진다.
 
@@ -423,7 +423,7 @@ BLK_LIMIT_FACTOR 와 EMA_FACTOR은  상수이며 각각 잠정적으로 65536와
 메시지들도 같은 방법으로 작동한다. 우리가 제시한 해답의 의미를 더 잘 이해하기 위해, 아래와 같은 몇가지 보기를 생각해보자.
 
 * 한 악의적 공격자가 무한 순환을 실행하는 계약을 만들어 채굴자로 하여금 무한 순환을 실행하도록 거래를 보냈다고 하자. 채굴자는 거래를 진행하고 무한 순환을 실행해 가스를 다 소모해서 실행 도중에 멈춘다고 하더라도, 거래는 여전히 유효하고 채굴자는 여전히 공격자에게 이미 실행된  각 계산 단계마다의 수수료를 요구할 수 있다. 
-* 한 악의적 공격자가 채굴자에게 계산을 오랫동안 계속하게 할 목적으로 아주 긴 무한 순환 프로그램을 짰다고 하자. 계산이 끝났을 때 아주 조금의 블록만이 생성되어 채굴자가 수수료를 요구하기 위해 그 거래를 포함하는게 불가능하게 만드는 게 악의적 공격자의 목적이다. 하지만, 그 공격자는 실제 실행되는 계산 단계의 상한선을 규정하는 STARTGAS 명령어에 대한 값을 제출해야만 하고, 따라서 채굴자는 해당 계산이 과도하게 많은 단계의 수를 필요로 한다는 것을 계산 전에 미리 알게 된다.
+* 한 악의적 공격자가 채굴자에게 계산을 오랫동안 계속하게 할 목적으로 아주 긴 무한 순환 프로그램을 짰다고 하자. 계산이 끝났을 때 몇몇 블럭이 추가로 생성되어 채굴자가 수수료를 요구하기 위해 그 거래를 포함하는게 불가능하게 만드는 게 악의적 공격자의 목적이다. 하지만, 그 공격자는 실제 실행되는 계산 단계의 상한선을 규정하는 STARTGAS 명령어에 대한 값을 제출해야만 하고, 따라서 채굴자는 해당 계산이 과도하게 많은 단계의 수를 필요로 한다는 것을 계산 전에 미리 알게 된다.
 * 예를 들어send(A,contract.storage[A]); contract.storage[A] = 0, 같은 명령이 들어간 계약이 있다고 하자. 한 악의적 공격자가 이 계약을 본 후 첫번째 계산 단계만 실행시키고 두번째 단계는 실행할 수 없을 만큼의(예를 들어 예금 인출만 한 다음  장부에 기록되는 스텝은 실행되지 않게) 가스만 넣고 거래를 진행시켰다고 하자.  계약 작성자는 이런 공격에 대해 방어를 걱정할 필요가 없다. 왜냐하면 계산 실행이 도중에 멈추면, 해당 변화도 원상복구되기 때문이다.
 * 어떤 금융 계약이 9개의 금융상품 자료값의 평균을 취해 위험을 최소화하도록 작동하고 있다고 하자. 그 중 DAOs 섹션에서 설명된 것 같은 가변주소요청 메커니즘을 통해 변경가능하도록 디자인 된 하나의 자료값을 악의적 공격자가 취한다고 하자. 그렇게 함으로써 이 금융 계약으로부터 펀드를 찾으려는 모든 시도에 대해 가스가 다 소모되도록 시도하게 된다. 하지만 금융 계약은 이 문제를 막기 위해 메시지 위에 가스 한도를 설정해 두는 것으로 공격을 방어할 수 있다..
 
@@ -518,7 +518,7 @@ _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러�
 
 이더리움 프로토콜이 제공하는 ‘임의상태변환(arbitrary state transition function)’이라는 개념은 고유의 잠재력을 지닌 플랫폼을 탄생시킨다. 기존의 자료저장공간이나 도박, 금융 등의 하나의 목적에 특화된 폐쇠형 구조(close-ended)와는 달리, 이더리움은 자유롭게 조정이 가능한 구조(open-ended)이다. 우리는 이것이 몇 년 이내에, 금융부문이든 비금융부문이든 엄청나게 많은 종류의 서비스를 설계할 수 있도록 돕는 것에 특화된 기반이 될 것이라고 믿는다.
 
-## 주석과 추가자료
+## 주석, 참고문헌 및 추가자료
 
 #### 주석
 
@@ -527,6 +527,28 @@ _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러�
 2. 기술적으로는, 이전 11개 블록의 중간값(median)이다.
 
 3. 내부적으로는 2와 “CHARLIE” 모두 숫자이다. 다만 “CHARLIE”는 ‘빅 엔디언(big-endian)’ 기반의 256비트로 표시한 것이다. 숫자는 0부터 2<sup>256</sup>-1까지 사용한다.
+
+
+#### 참고문헌
+
+1a. Nakamoto, S. 31 October 2008. "Bitcoin: A Peer-to-Peer Electronic Cash System". Also known as the Bitcoin whitepaper. http://nakamotoinstitute.org/bitcoin/. http://bitcoin.org/bitcoin.pdf. https://github.com/saivann/bitcoinwhitepaper. Accessed 7 July 2017.  
+1b. Davis, J. 10 October 2011. "The Crypto-Currency: Bitcoin and its mysterious inventor". The New Yorker. <http://www.newyorker.com/magazine/2011/10/10/the-crypto-currency>. Retrieved 31 October 2014. Accessed 7 July 2017.
+2. Unknown author. Unknown date. "Intrinsic value". http://bitcoinmagazine.com/8640/an-exploration-of-intrinsic-value-what-it-is-why-bitcoin-doesnt-have-it-and-why-bitcoin-does-have-it/. Unable to access 7 July 2017.  
+3. Assia, Y.; Vitalik, B.; Haki, M.; Meni R.; and Rotem, L. U.d. "Colored coins whitepaper".   https://docs.google.com/a/buterin.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit. Accessed 7 July 2017.
+4. Last edited on 10 May 2016. "Smart property". Bitcoin Wiki. https://en.bitcoin.it/wiki/Smart_Property. Accessed 7 July 2017.  
+5. Last modified 6 July 2017. "Namecoin". https://namecoin.org/. Accessed 7 July 2017.  
+6. Last edited on 24 June 2017. "Smart contracts". Bitcoin Wiki. https://en.bitcoin.it/wiki/Contracts. Accessed 7 July 2017.  
+7. Buterin, V. Sep 19, 2013. "Bootstrapping A Decentralized Autonomous Corporation: Part I". Bitcoin Magazine. http://bitcoinmagazine.com/7050/bootstrapping-a-decentralized-autonomous-corporation-part-i. Accessed 7 July 2017.    
+8. "Blind signature". Last modified 29 March 2017. Wikipedia. https://en.wikipedia.org/wiki/Blind_signature. Accessed 7 July 2017.  
+9. Dai, W. U.d. "B-money". http://www.weidai.com/bmoney.txt. Accessed 7 July 2017.    
+10. Hal, F. Reusable proofs of work: http://www.finney.org/~hal/rpow/. Unable to access 7 July 2017.  
+11. Back, A. U.d. Hashcash. http://www.hashcash.org/. Accessed 7 July 2017.  
+12. Last edited on 15 June 2017. "Sybil attack". Wikipedia. https://en.wikipedia.org/wiki/Sybil_attack. Accessed 7 July 2017.  
+13. Last edited on 30 June 2017. "SHA-2". Wikipedia.https://en.wikipedia.org/wiki/SHA-2.  Accessed 7 July 2017.
+14. Szabo, N. 1998. "Secure property titles with owner authority". http://szabo.best.vwh.net/securetitle.html. Unable to access 7 July 2017. Alternative link here: http://nakamotoinstitute.org/secure-property-titles/. Accessed 7 July 2017.
+15. Last edited on 27 June 2017. "Elliptic Curve Digital Signature Algorithm". Wikipedia.  https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm. Accessed 7 July 2017.  
+16. Dogecoin. http://dogecoin.com/. Accessed 7 July 2017.  
+17. Last edited on 29 June 2017. "Denial-of-service attack". Wikipedia. https://en.wikipedia.org/wiki/Denial-of-service_attack. Accessed 7 July 2017.
 
 #### 추가자료
 
@@ -545,7 +567,7 @@ _매년 신규발행량이 일정함에도 불구하고, 비트코인이 그러�
 13. Simplified payment verification: https://en.bitcoin.it/wiki/Scalability#Simplifiedpaymentverification
 14. Merkle trees: http://en.wikipedia.org/wiki/Merkle_tree
 15. Patricia trees: http://en.wikipedia.org/wiki/Patricia_tree
-16. GHOST: http://www.cs.huji.ac.il/~avivz/pubs/13/btc_scalability_full.pdf
+16. GHOST: http://www.cs.huji.ac.il/~yoni_sompo/pubs/15/btc_scalability_full.pdf
 17. StorJ and Autonomous Agents, Jeff Garzik: http://garzikrants.blogspot.ca/2013/01/storj-and-bitcoin-autonomous-agents.html
 18. Mike Hearn on Smart Property at Turing Festival: http://www.youtube.com/watch?v=Pu4PAMFPo5Y
 19. Ethereum RLP: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP

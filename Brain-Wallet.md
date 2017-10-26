@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+listenyouchickenheadiwantakeyphrase
+=======
 ---
 name: Brain Wallet
 category: 
@@ -36,3 +39,4 @@ This would make our brainwallets much harder to crack, and perhaps even allowing
 1. https://rya.nc/cracking_cryptocurrency_brainwallets.pdf
 2. https://github.com/ethereum/go-ethereum/blob/master/crypto/crypto_test.go#L65
 3. https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25

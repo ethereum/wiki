@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+Mix has been discontinued. Please use https://remix.ethereum.org
+=======
 ---
 name: Mix The DAPP IDE
 category: 
@@ -179,3 +182,4 @@ This step has to be done outside of Mix. package.dapp file has to be hosted by a
 "Gas Price" shows the default gas price of the network. You can also specify a different value.
 
 "Registration Cost" will display the amount of ether you need to register your dapp url.
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25

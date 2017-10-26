@@ -62,7 +62,7 @@ Während das Bitcoin-Protokoll für das Handling einer Währung mehr als ausreic
 
 ### Colored Coins
 
-Der erste Versuch zur Implementierung eines Systems zur Verarbeitung von elektronischen Besitzständen, kundenspezifischen Währungen und Vermögenswerten auf Basis der Blockkette wurde realisiert als ein "Overlay-Protokoll" auf dem Bitcoin. Um einen Vergleich anzustellen: Etwa so, wie [HTTP] (http://de.wikipedia.org/wiki/Http) als eine obere Schicht des [TCP-Protokolls] (http://de.wikipedia.org/wiki/Transmission_Control_Protocol), so wie im [Interent-Protkoll-Stack](http://de.wikipedia.org/wiki/Internet_Protocol) definiert.
+Der erste Versuch zur Implementierung eines Systems zur Verarbeitung von elektronischen Besitzständen, kundenspezifischen Währungen und Vermögenswerten auf Basis der Blockkette wurde realisiert als ein "Overlay-Protokoll" auf dem Bitcoin. Um einen Vergleich anzustellen: Etwa so, wie [HTTP] (http://de.wikipedia.org/wiki/Http) als eine obere Schicht des [TCP-Protokolls] (http://de.wikipedia.org/wiki/Transmission_Control_Protocol), so wie im [Internet-Protokoll-Stack](http://de.wikipedia.org/wiki/Internet_Protocol) definiert.
 
 Das [Colored Coins - Protokoll] (https://docs.google.com/a/ursium.com/document/d/1AnkP_cVZTCMLIzw4DvsW6M8Q2JC0lIzrTLuoWu2z1BE/edit) lässt sich annähernd wie folgt beschreiben:
 

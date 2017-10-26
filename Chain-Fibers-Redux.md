@@ -1,7 +1,11 @@
+<<<<<<< HEAD
+_This article describes a scalability proposal made by Gavin Wood in 2015. Many of the principles described here have been a key inspiration for subsequent "[sharding](https://github.com/ethereum/wiki/wiki/Sharding-FAQ)" proposals._
+=======
 ---
 name: Chain Fibers Redux
 category: 
 ---
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 # Blockchain Scalability: Chain-Fibers Redux
 
@@ -18,7 +22,7 @@ The subtleties lie in precisely what governs the division of subspaces (my origi
 
 Basic idea is to have a number of chains (e.g. N), each detailing the state-transitions for only a strata of the entire system state (i.e. a state subspace). Following from programming terminology, these might be termed "fibers". Accounts thus belong to a subspace and as such a single fiber; the fiber to which they belong can be determined simply from the first log2(N) bits of the address. N can increase or decrease, and is a value maintained within the housekeeping information on the "Master Chain".
 
-The Master Chain in maintained by a set of bonded Validators V, with the number of validators proportional to N. A random selection of validators validate each block produced, and validators ultimately vote to form consensus over the Master Chain. Each block of the Master Chain maintains a reference to the header of each fiber.
+The Master Chain is maintained by a set of bonded Validators V, with the number of validators proportional to N. A random selection of validators validate each block produced, and validators ultimately vote to form consensus over the Master Chain. Each block of the Master Chain maintains a reference to the header of each fiber.
 
 Transaction collators produce blocks (accepting fees from transactors), and pay Validators some of the fees collected to include the hash of their block in the main chain. Blocks are produced across a particular "home set" of fibers; this is basically just the set of fibers of which they maintain the State Trie. Their blocks may involve transactions over one or many of these fibers, though none outside their "home set".
 
@@ -93,7 +97,7 @@ The block is considered valid iff all assigned validators sign it. Signing it is
 
 ## Fishermen
 
-Fishermen (who might be called bounty hunters) are the freelance error-checkers of the system. The watch the validators in the hope that they can find wrong-doing. To help guarantee presence, payouts are designed to be huge. The costs of challenging are small but not insignificant.
+Fishermen (who might be called bounty hunters) are the freelance error-checkers of the system. They watch the validators in the hope that they can find wrong-doing. To help guarantee presence, payouts are designed to be huge. The costs of challenging are small but not insignificant.
 
 ### Fishermen: search for invalid or unavailable X-fiber blocks
 

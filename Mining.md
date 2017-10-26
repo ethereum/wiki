@@ -13,9 +13,13 @@ The word mining originates in the context of the gold analogy for crypto currenc
 
 Ethereum Frontier like all blockchain technologies uses an incentive-driven model of security. Consensus is based on choosing the block with the highest total difficulty. 
 Miners produce blocks which the others check for validity. Among other well-formedness criteria, a block is only valid if it contains **proof of work** (PoW) of a given **difficulty**. 
-Note that in Ethereum 1.1, this is likely gonna be replaced by a **proof of stake** model.
+Note that in Ethereum 1.1, this is likely going to be replaced by a **proof of stake** model.
 
+<<<<<<< HEAD
+The proof of work algorithm used is called [Ethash](https://github.com/ethereum/wiki/wiki/Ethash) (a modified version of [Dagger-Hashimoto](https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto)) involves finding a nonce input to the algorithm so that the result is below a certain threshold depending on the difficulty. The point in PoW algorithms is that there is no better strategy to find such a nonce than enumerating the possibilities while verification of a solution is trivial and cheap. If outputs have a uniform distribution, then we can guarantee that on average the time needed to find a nonce depends on the difficulty threshold, making it possible to control the time of finding a new block just by manipulating difficulty.
+=======
 The proof of work algorithm used is called [Ethash](https://github.com/ethereum/wiki/wiki/Ethash) (a modified version of [Dagger-Hashimoto](https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto) involves finding a nonce input to the algorithm so that the result is below a certain threshold depending on the difficulty. The point in PoW algorithms is that there is no better strategy to find such a nonce than enumerating the possibilities while verification of a solution is trivial and cheap. If outputs have a uniform distribution, then we can guarantee that on average the time needed to find a nonce depends on the difficulty threshold, making it possible to control the time of finding a new block just by manipulating difficulty.
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 The difficulty dynamically adjusts so that on average one block is produced by the entire network every 12 seconds (ie., 12 s block time). This heartbeat basically punctuates the synchronisation of system state and guarantees that maintaining a fork (to allow double spend) or rewriting history is impossible unless the attacker possesses more than half of the network mining power (so called 51% attack).
 
@@ -31,13 +35,13 @@ As a special case, when you start up your node from scratch, mining will only st
 Note that mining 'real' Ether will start with the Frontier release. On the Olympics testnet, the [Frontier pre-release](http://ethereum.gitbooks.io/frontier-guide/), the ether mined have no value (but see [Olympic rewards](https://blog.ethereum.org/2015/05/09/olympic-frontier-pre-release/)). 
 
 The successful PoW miner of the winning block receives:
-* A **static block reward** for the 'winning' block, consisting of exactly 5.0 Ether
-* All of the gas expended within the block, that is, all the gas consumed by the execution of all the transactions in the block submitted by the winning miner is compensated for by the senders. The gascost incurred is  credited to the miner's account as part of the consensus protocoll. Over time, it's expected these will dwarf the static block reward.
+* A **static block reward** for the 'winning' block, consisting of exactly 3.0 Ether
+* All of the gas expended within the block, that is, all the gas consumed by the execution of all the transactions in the block submitted by the winning miner is compensated for by the senders. The gascost incurred is  credited to the miner's account as part of the consensus protocol. Over time, it's expected these will dwarf the static block reward.
 - An extra reward for including Uncles as part of the block, in the form of an extra 1/32 per Uncle included  
 
 Uncles are stale blocks, ie with parent that are ancestors (max 6 blocks back) of the including block.
 Valid uncles are rewarded in order to neutralise the effect of network lag on the dispersion of mining rewards, thereby increasing security. 
-Uncles included in a block formed by the successful PoW miner receive 7/8 of the static block reward = 4.375 ether
+Uncles included in a block formed by the successful PoW miner receive 7/8 of the static block reward = 2.625 ether
 A maximum of 2 uncles allowed per block.
 
 ## Ethash DAG

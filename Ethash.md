@@ -5,7 +5,7 @@ category:
 
 **This spec is REVISION 23. Whenever you substantively (ie. not clarifications) update the algorithm, please update the revision number in this sentence. Also, in all implementations please include a spec revision number**
 
-Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version of Dagger-Hashimoto, although it can no longer appropriately be called that since many of the original features of both algorithms have been drastically changed in the last month of research and development. See [https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto](https://github.com/ethereum/wiki/wiki/Dagger-Hashimoto) for the original version.
+Ethash is the planned PoW algorithm for Ethereum 1.0. It is the latest version of Dagger-Hashimoto, although it can no longer appropriately be called that since many of the original features of both algorithms have been drastically changed in the last month of research and development. See [https://github.com/ethereum/wiki/blob/master/Dagger-Hashimoto.md](https://github.com/ethereum/wiki/blob/master/Dagger-Hashimoto.md) for the original version.
 
 The general route that the algorithm takes is as follows:
 
@@ -26,7 +26,7 @@ We employ the following definitions:
 WORD_BYTES = 4                    # bytes in word
 DATASET_BYTES_INIT = 2**30        # bytes in dataset at genesis
 DATASET_BYTES_GROWTH = 2**23      # dataset growth per epoch
-CACHE_BYTES_INIT = 2**24          # bytes in dataset at genesis
+CACHE_BYTES_INIT = 2**24          # bytes in cache at genesis
 CACHE_BYTES_GROWTH = 2**17        # cache growth per epoch
 CACHE_MULTIPLIER=1024             # Size of the DAG relative to the cache
 EPOCH_LENGTH = 30000              # blocks per epoch
@@ -36,6 +36,15 @@ DATASET_PARENTS = 256             # number of parents of each dataset element
 CACHE_ROUNDS = 3                  # number of rounds in cache production
 ACCESSES = 64                     # number of accesses in hashimoto loop
 ```
+
+##### A note regarding "SHA3" hashes described in this specification
+
+Ethereum's development coincided with the development of the SHA3 standard, and the
+standards process made a late change in the padding of the finalized hash algorithm, so that Ethereum's
+"sha3_256" and "sha3_512" hashes are not standard sha3 hashes, but a variant often referred 
+to as "Keccak-256" and "Keccak-512" in other contexts. See discussion, e.g. [here](https://github.com/ethereum/EIPs/issues/59), [here](http://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use), or [here](http://bitcoin.stackexchange.com/questions/42055/what-is-the-approach-to-calculate-an-ethereum-address-from-a-256-bit-private-key/42057#42057).
+
+Please keep that in mind as "sha3" hashes are referred to in the description of the algorithm below.
 
 ### Parameters
 
@@ -93,8 +102,10 @@ We use an algorithm inspired by the [FNV hash](https://en.wikipedia.org/wiki/Fow
 FNV_PRIME = 0x01000193
 
 def fnv(v1, v2):
-    return (v1 * FNV_PRIME ^ v2) % 2**32
+    return ((v1 * FNV_PRIME) ^ v2) % 2**32
 ```
+
+Please note, even the yellow paper specifies fnv as v1*(FNV_PRIME ^ v2), all current implementations consistently use the above definition.
 
 ### Full dataset calculation
 
@@ -124,7 +135,7 @@ def calc_dataset(full_size, cache):
 
 ### Main Loop
 
-Now, we specify the main "hashimoto"-like loop, where we aggregate data from the full dataset in order to produce our final value for a particular header and nonce. In the code below, `header` represents the SHA3-256 _hash_ of the RLP representation of a _truncated_ block header, that is, of a header excluding the fields **mixHash** and **nonce**. `nonce` is the eight bytes of a 64 bit unsigned integer in big-endian order. So `nonce[::-1]` is the eight-byte little-endian representation of that value:
+Now, we specify the main "hashimoto"-like loop, where we aggregate data from the full dataset in order to produce our final value for a particular header and nonce. In the code below, `header` represents the SHA3-256 _hash_ of the [RLP](https://github.com/ethereum/wiki/wiki/RLP) representation of a _truncated_ block header, that is, of a header excluding the fields **mixHash** and **nonce**. `nonce` is the eight bytes of a 64 bit unsigned integer in big-endian order. So `nonce[::-1]` is the eight-byte little-endian representation of that value:
 
 ```python
 def hashimoto(header, nonce, full_size, dataset_lookup):

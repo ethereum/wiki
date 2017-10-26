@@ -19,15 +19,12 @@ Answers to questions about Ethereum
   * [How to install the clients from source?](#how-to-install-the-clients-from-source)
 * [Mining](#mining)
   * [How can I mine Ether?](#how-can-i-mine-ether)
-  * [How to get free testnet Ether?](#how-to-get-free-testnet-ether)
 * [Contracts](#contracts)
   * [Where can I learn about contract development?](#where-can-i-learn-about-contract-development)
-  * [Where can I learn Solidity?](#where-can-i-learn-solidity)
-  * [Where can I learn Serpent?](#where-can-i-learn-serpent)
-  * [Where can I learn LLL?](#where-can-i-learn-lll)
-  * [Where can I learn Solidity?](#where-can-i-learn-solidity)
+  * [Where can I learn Solidity?](#where-can-i-learn-solidity-the-javascript-like-language)
+  * [Where can I learn Serpent?](#where-can-i-learn-serpent-the-python-like-language)
+  * [Where can I learn LLL?](#where-can-i-learn-lll-the-lisp-like-language)
   * [How to test contracts?](#how-to-test-contracts)
-  * [How to deploy contracts automatically?](#how-to-deploy-contracts-automatically)
   * [Where to find example contracts?](#where-to-find-example-contracts)
 * [ÐApps](#Ðapps)
   * [Where can I learn about the Ethereum APIs?](#where-can-i-learn-about-the-ethereum-apis)
@@ -37,7 +34,6 @@ Answers to questions about Ethereum
 * [IRC](#irc)
   * [How can I join the Ethereum IRC channels?](#how-can-i-join-the-ethereum-irc-channels)
   * [Where can I find the Ethereum IRC logs?](#where-can-i-find-the-ethereum-irc-logs)
-  * [Where can I learn about the ZeroGox bot?](#where-can-i-learn-about-the-zerogox-bot)
 * [More Questions and Answers](#more-questions-and-answers)
 
 <!-- toc stop -->
@@ -49,7 +45,11 @@ Answers to questions about Ethereum
 There are several ways to answer this question, which are introduced on the dedicated [What is Ethereum](http://github.com/ethereum/wiki/wiki/What-is-Ethereum) wiki page.
 
 If you prefer to learn by watching videos, see:
+<<<<<<< HEAD
+ + [Introducing Ethereum](https://www.youtube.com/watch?v=Clw-qf1sUZg) (Video, 10mi)
+=======
  + [Vitalik Buterin explains Ethereum](https://www.youtube.com/watch?v=TDGq4aeevgY) (Video, 3min)
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
  + [Vitalik Buterin reveals Ethereum at Bitcoin Miami 2014](http://youtu.be/l9dpjN3Mwps) (Video, 28min)
  + [Singularity 1 on 1: Ethereum is a Decentralized Consensus Platform](http://youtu.be/fbEtivJIfIU) (Video, 69min)
  + [Our second Reddit "Ask Me Anything" for community selected questions](http://www.reddit.com/r/IAmA/comments/2bjmgb/hi_we_are_the_ethereum_project_team_ask_us/) (not actually a video)
@@ -60,14 +60,15 @@ If you prefer to learn by watching videos, see:
 - Forums: https://forum.ethereum.org
 - Github: https://github.com/ethereum
 - Blog: https://blog.ethereum.org
-- Wiki: http://wiki.ethereum.org
+- Wiki: http://wiki.ethereum.org [Not working anymore]
 - Meetups: http://ethereum.meetup.com
-- Whitepaper: http://ethereum.org/ethereum.html
+- Whitepaper: https://github.com/ethereum/wiki/wiki/White-Paper
 - Yellow Paper: http://gavwood.com/paper.pdf
 - Facebook: https://www.facebook.com/ethereumproject
 - Youtube: http://www.youtube.com/ethereumproject
 - Google+: http://google.com/+EthereumOrgOfficial
 - IRC Freenode: #ethereum (http://bitly.com/IRC_ethereum for weblink)
+- Stack Exchange: https://ethereum.stackexchange.com
 
 ### Where can I find the main project repositories?
 
@@ -103,7 +104,7 @@ If you prefer to learn by watching videos, see:
 
 ### How to install the clients from source?
 
-+ [Building AlethZero (C++)](https://github.com/ethereum/cpp-ethereum/wiki)
++ [Building AlethZero (C++)](https://github.com/ethereum/cpp-ethereum#building-from-source)
 + [Building Mist (Go)](https://github.com/ethereum/go-ethereum/wiki/Building-Ethereum%28Go%29)
 + [Installing Pyethereum (Python)](https://github.com/ethereum/pyethereum#quickstart)
 + [Installing EthereumJ (Java)](https://github.com/ethereum/ethereumj#maven)
@@ -129,10 +130,6 @@ With the eth client
 $ eth --force-mining --mining on [YOUR OPTIONS...]
 ```
 
-### How to get free testnet Ether?
-
-+ [ZeroGox Wei Faucet](https://zerogox.com/ethereum/wei_faucet) ([@caktux](https://github.com/caktux))
-
 ## Contracts
 
 ### Where can I learn about contract development?
@@ -157,29 +154,24 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
 ### Where can I learn LLL, the Lisp-like language?
 
 + Specifications
-  + [The LLL Language](https://github.com/ethereum/cpp-ethereum/wiki/LLL-PoC-6)
+  + [The LLL Language](https://github.com/ethereum/cpp-ethereum/wiki/LLL-PoC-6/7a575cf91c4572734a83f95e970e9e7ed64849ce)
 + Examples
-  + [LLL examples for PoC 6](https://github.com/ethereum/cpp-ethereum/wiki/LLL%20Examples%20for%20PoC%205)
+  + [LLL examples for PoC 5](https://github.com/ethereum/cpp-ethereum/wiki/LLL-Examples-for-PoC-5/7a575cf91c4572734a83f95e970e9e7ed64849ce)
 + Videos
   + [Programming Society with Asm](https://www.youtube.com/watch?v=xO1AxsYAkU8)
 
 ### Where can I learn Solidity, the JavaScript-like language?
 
-+ Specifications
-  + [Solidity, Docs and ABI](https://github.com/ethereum/cpp-ethereum/wiki/Solidity%2C-Docs-and-ABI)
-  + [Solidity Features](https://github.com/ethereum/wiki/wiki/Solidity-Features)
++ Documentation
+  + [Solidity Documentation](http://solidity.readthedocs.io/en/latest/index.html)
+
 + Tutorials
-  + [Solidity Tutorial](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial)
   + [Contract Writing in Solidity](https://dappsforbeginners.wordpress.com)
 
 ### How to test contracts?
 
 + [EVM Contract Simulator](https://github.com/EtherCasts/evm-sim/) ([@EtherCasts](https://github.com/EtherCasts))
-+ [Pyethereum Tester](https://github.com/ethereum/pyethereum/blob/master/tests/test_contracts.py) ([@ethereum](https://github.com/ethereum))
-
-### How to deploy contracts automatically?
-
-+ [Ethereum Package Manager](https://github.com/project-douglas/epm)
++ [Pyethereum Tester](https://github.com/ethereum/pyethereum/blob/master/ethereum/tests/test_contracts.py) ([@ethereum](https://github.com/ethereum))
 
 ### Where to find example contracts?
 
@@ -189,9 +181,8 @@ $ eth --force-mining --mining on [YOUR OPTIONS...]
   + [By Rob Myers](https://github.com/robmyers/artworld-ethereum) ([@robmyers](https://github.com/robmyers))
   + [By Tyler Florez](https://github.com/qualiabyte/ethereum-contracts) ([@qualiabyte](https://github.com/qualiabyte))
 + LLL
-  + [By Gavin Wood](https://github.com/ethereum/cpp-ethereum/wiki/LLL%20Examples%20for%20PoC%205) ([@gavofyork](https://github.com/gavofyork))
+  + [By Gavin Wood](https://github.com/ethereum/cpp-ethereum/wiki/LLL-Examples-for-PoC-5/7a575cf91c4572734a83f95e970e9e7ed64849ce) ([@gavofyork](https://github.com/gavofyork))
   + [By Dennis Mckinnon](https://github.com/dennismckinnon/Ethereum-Contracts) ([@dennismckinnon](https://github.com/dennismckinnon))
-  + [By Project Douglas](https://github.com/project-douglas/eris/tree/master/contracts) ([@project-douglas](https://github.com/project-douglas))
   + [By Doug A.](https://github.com/d11e9/g3) ([@dlle9](https://github.com/d11e9))
 
 ## ÐApps
@@ -221,15 +212,10 @@ Official
 
 Community
 
-+ [C3D](https://github.com/project-douglas/c3d) ([@project-douglas](https://github.com/project-douglas))
 + [Emacs LLL Mode](https://github.com/robmyers/lll-mode) ([@robmyers](https://github.com/robmyers))
 + [Emacs Serpent Mode](https://github.com/robmyers/serpent-mode) ([@robmyers](https://github.com/robmyers))
-+ [EPM](https://github.com/project-douglas/epm) ([@project-douglas](https://github.com/project-douglas))
-+ [EPM Sublime Plugin](https://github.com/project-douglas/epm-sublime) ([@project-douglas](https://github.com/project-douglas))
-+ [Ethos Browser](https://github.com/projectdnet/ethos) ([@projectdnet](https://github.com/projectdnet))
 + [EVM-Sim](https://github.com/EtherCasts/evm-sim/) ([@EtherCasts](https://github.com/EtherCasts))
 + [MintChalk](http://www.mintchalk.com/) ([@mintchalk](https://github.com/mintchalk))
-+ [Poly-Eth](https://github.com/projectdnet/poly-eth) ([@projectdnet](https://github.com/projectdnet))
 
 ### Where can I find example ÐApps?
 
@@ -239,7 +225,6 @@ Community
 + [Make It Rain](https://github.com/EtherCasts/make-it-rain) ([@EtherCasts](https://github.com/EtherCasts))
 + [Chronos](https://github.com/mquandalle/chronos) ([@mquandalle](https://github.com/mquandalle))
 + [Artworld-Ethereum](https://github.com/robmyers/artworld-ethereum) ([@robmyers](https://github.com/robmyers))
-+ [Eris](https://github.com/project-douglas/eris) ([@project-douglas](https://github.com/project-douglas), [@compleatang](https://github.com/compleatang), [@dennismckinnon](https://github.com/dennismckinnon))
 + [CryptoCoinWatch](https://github.com/EtherCasts/cryptocoinwatch) ([@EtherCasts](https://github.com/EtherCasts))
 + [Occam's Run](https://github.com/d11e9/Occams-Run) ([@d11e9](https://github.com/d11e9))
 + [TrustDavis](https://github.com/EtherCasts/trustdavis) ([@EtherCasts](https://github.com/EtherCasts))
@@ -249,14 +234,6 @@ Community
 ### How can I join the Ethereum IRC channels?
 
 + [Chat with the ethereum dev community on IRC!](https://forum.ethereum.org/discussion/1495/chat-with-the-ethereum-dev-community-on-irc)
-
-### Where can I find the Ethereum IRC logs?
-
-+ [The ZeroGox logs](https://zerogox.com/bot/log)
-
-### Where can I learn about the ZeroGox bot?
-
-+ [The ZeroGox bot](https://zerogox.com/bot)
 
 # More Questions and Answers
 

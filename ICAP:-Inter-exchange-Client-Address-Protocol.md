@@ -56,7 +56,7 @@ XE81ETHXREGGAVOFYORK
 Split into:
 
 - `XE` The country code for Ethereum;
-- `66` The checksum;
+- `81` The checksum;
 - `ETH` The asset identifier within the client account - in this case, "ETH" is the only valid asset identifier, since Ethereum's base registry contract supports only this asset;
 - `XREG` The institution code for the account - in this case, Ethereum's base registry contract;
 - `GAVOFYORK` The client identifier within the institution - in this case, a direct payment with no additional data to whatever primary address is associated with the name "GAVOFYORK" in Ethereum's base registry contract;

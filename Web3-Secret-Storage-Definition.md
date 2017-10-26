@@ -24,7 +24,7 @@ For PBKDF2, the `kdfparams` include:
 - `salt`: salt passed to PBKDF;
 - `dklen`: length for the derived key. Must be >= 32.
 
-One the file's key has been derived, it should be verified through the derivation of the MAC. The MAC should be calculated as the SHA3 (keccak-256) hash of the byte array formed as the concatenations of the second-leftmost 16 bytes of the derived key with the `ciphertext` key's contents, i.e.:
+Once the file's key has been derived, it should be verified through the derivation of the MAC. The MAC should be calculated as the SHA3 (keccak-256) hash of the byte array formed as the concatenations of the second-leftmost 16 bytes of the derived key with the `ciphertext` key's contents, i.e.:
 
 ```
 KECCAK(DK[16..31] ++ <ciphertext>)

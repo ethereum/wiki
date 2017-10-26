@@ -20,16 +20,16 @@ RLP encoding is defined as follows:
 
 * For a single byte whose value is in the `[0x00, 0x7f]` range, that byte is its own RLP encoding.
 * Otherwise, if a string is 0-55 bytes long, the RLP encoding consists of a single byte with value **0x80** plus the length of the string followed by the string. The range of the first byte is thus `[0x80, 0xb7]`.
-* If a string is more than 55 bytes long, the RLP encoding consists of a single byte with value **0xb7** plus the length of the length of the string in binary form, followed by the length of the string, followed by the string. For example, a length-1024 string would be encoded as `\xb9\x04\x00` followed by the string. The range of the first byte is thus `[0xb8, 0xbf]`.
+* If a string is more than 55 bytes long, the RLP encoding consists of a single byte with value **0xb7** plus the length in bytes of the length of the string in binary form, followed by the length of the string, followed by the string. For example, a length-1024 string would be encoded as `\xb9\x04\x00` followed by the string. The range of the first byte is thus `[0xb8, 0xbf]`.
 * If the total payload of a list (i.e. the combined length of all its items) is 0-55 bytes long, the RLP encoding consists of a single byte with value **0xc0** plus the length of the list followed by the concatenation of the RLP encodings of the items. The range of the first byte is thus `[0xc0, 0xf7]`.
-* If the total payload of a list is more than 55 bytes long, the RLP encoding consists of a single byte with value **0xf7** plus the length of the length of the payload in binary form, followed by the length of the payload, followed by the concatenation of the RLP encodings of the items. The range of the first byte is thus `[0xf8, 0xff]`.
+* If the total payload of a list is more than 55 bytes long, the RLP encoding consists of a single byte with value **0xf7** plus the length in bytes of the length of the payload in binary form, followed by the length of the payload, followed by the concatenation of the RLP encodings of the items. The range of the first byte is thus `[0xf8, 0xff]`.
 
 In code, this is:
 
 ```python
 def rlp_encode(input):
     if isinstance(input,str):
-        if len(input) == 1 and chr(input) < 128: return input
+        if len(input) == 1 and ord(input) < 128: return input
         else: return encode_length(len(input),128) + input
     elif isinstance(input,list):
         output = ''
@@ -63,6 +63,6 @@ The encoded integer 15 ('\x0f') = `[ 0x0f ]`
 
 The encoded integer 1024 ('\x04\x00') = `[ 0x82, 0x04, 0x00 ]`
 
-The [set theoretical representation](http://en.wikipedia.org/wiki/Set-theoretic_definition_of_natural_numbers) of two, `[ [], [[]], [ [], [[]] ] ] = [ 0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0 ]`
+The [set theoretical representation](http://en.wikipedia.org/wiki/Set-theoretic_definition_of_natural_numbers) of three, `[ [], [[]], [ [], [[]] ] ] = [ 0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0 ]`
 
 The string "Lorem ipsum dolor sit amet, consectetur adipisicing elit" = `[ 0xb8, 0x38, 'L', 'o', 'r', 'e', 'm', ' ', ... , 'e', 'l', 'i', 't' ]`

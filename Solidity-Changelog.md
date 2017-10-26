@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+This page moved to [https://github.com/ethereum/solidity/blob/develop/Changelog.md](https://github.com/ethereum/solidity/blob/develop/Changelog.md)
+=======
 ---
 name: Solidity Changelog
 category: 
@@ -71,3 +74,4 @@ category:
  * Bugfix: Correctly compute gas requirements for callcode.
 
 ### 0.1.0 (2015-07-10)
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25

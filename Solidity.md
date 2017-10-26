@@ -1,3 +1,6 @@
+<<<<<<< HEAD:Solidity.asciidoc
+# This page has moved
+=======
 ---
 name: Solidity
 category: 
@@ -125,4 +128,6 @@ Do you wish to allow this?
 ```
 
 Of course, they might be a bit more cunning and send it to an anonymous address, however, by differentiating friends' (and other known people) addresses from anonymous or untrusted addresses both visibly and clearly, we can imagine a mechanism that, at least for simple contracts, allow users a good level of security without excessive harm to their experience.
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25:Solidity.md
 
+The current Solidity documentation can be found at http://solidity.readthedocs.io/en/latest/

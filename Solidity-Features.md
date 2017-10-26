@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+visit https://solidity.readthedocs.io/en/develop/
+=======
 ---
 name: Solidity Features
 category: 
@@ -1082,3 +1085,4 @@ contract c {
 }
 
 ```
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25

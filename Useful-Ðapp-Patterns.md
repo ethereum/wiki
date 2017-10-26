@@ -9,6 +9,9 @@ The example patterns can possibly change, so don't rely fully on them as of yet.
 
 ## Examples
 
+- 3 ways of instantiating web3:   
+https://gist.github.com/frozeman/fbc7465d0b0e6c1c4c23
+
 - Contract deployment by code:    
 (Outdated, use `web3.contract(abiArray).new({}, function(e, res){...})`)
 https://gist.github.com/frozeman/655a9325a93ac198416e

@@ -1,13 +1,19 @@
+<<<<<<< HEAD
+**OUTDATED** *This document can contain outdated information, specific API's might be different.* A more recent tutorial can be found [here](https://blog.ethereum.org/2016/07/12/build-server-less-applications-mist/)
+
+The purpose of this page is to serve as an introduction to the basics of Ethereum that you will need to understand from a development standpoint, in order to produce contracts and decentralized applications. For a general introduction to Ethereum, see [the white paper](https://github.com/ethereum/wiki/wiki/White-Paper), and for a full technical spec see the [yellow](http://gavwood.com/Paper.pdf) papers, although those are not prerequisites for this page; that is to say, this page is meant as an alternative introduction to Ethereum specifically targeted towards application developers.
+=======
 ---
 name: Ethereum Development Tutorial
 category: 
 ---
 
 The purpose of this page is to serve as an introduction to the basics of Ethereum that you will need to understand from a development standpoint, in order to produce contracts and decentralized applications. For a general introduction to Ethereum, see [the white paper](https://github.com/ethereum/wiki/wiki/White-Paper), and for a full technical spec see the [yellow](http://gavwood.com/Paper.pdf) papers, although those are not prerequisites for this page; that is to say, this page is meant as an alternative introduction to Ethereum specifically targeted toward application developers.
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 ### Introduction
 
-Ethereum is a platform that is intended to allow people to easily write decentralized applications (Đapps) using blockchain technology. A decentralized application is an application which serves some specific purpose to its users, but which has the important property that the application itself does not depend on any specific party existing. Rather than serving as a front-end for selling or providing a specific party's services, a Đapp is a tool for people and organizations on different sides of an interaction use to come together without any centralized intermediary.
+Ethereum is a platform that is intended to allow people to easily write decentralized applications (Đapps) using blockchain technology. A decentralized application is an application which serves some specific purpose to its users, but which has the important property that the application itself does not depend on any specific party existing. Rather than serving as a front-end for selling or providing a specific party's services, a Đapp is a tool for people and organizations on different sides of an interaction used to come together without any centralized intermediary.
 
 Even necessary "intermediary" functions that are typically the domain of centralized providers, such as filtering, identity management, escrow and dispute resolution, are either handled directly by the network or left open for anyone to participate, using tools like internal token systems and reputation systems to ensure that users get access to high-quality services. Early examples of Đapps include BitTorrent for file sharing and Bitcoin for currency. Ethereum takes the primary developments used by BitTorrent and Bitcoin, the peer to peer network and the blockchain, and generalizes them in order to allow developers to use these technologies for any purpose.
 
@@ -75,7 +81,7 @@ The instruction at position 2 is CALLDATALOAD, which pops one value from the sta
 
     PC: 3 STACK: [54] MEM: [], STORAGE: {}
 
-SLOAD pops one from the stack, and pushes the value in contract storage at that index. Since the contract is used for the first time, it has nothing there, so zero.
+SLOAD pops one from the stack, and pushes the value in contract storage at that index onto the stack. Since the contract is used for the first time, it has nothing there, so zero.
 
     PC: 4 STACK: [0] MEM: [], STORAGE: {}
 
@@ -119,7 +125,7 @@ There are two types of transactions: a sending transaction and a contract creati
 
     PUSH1 16 DUP PUSH1 12 PUSH1 0 CODECOPY PUSH1 0 RETURN STOP PUSH1 0 CALLDATALOAD SLOAD NOT PUSH1 9 JUMPI STOP PUSH1 32 CALLDATALOAD PUSH1 0 CALLDATALOAD SSTORE
 
-The key opcodes are CODECOPY, copying the 16 bytes of code starting from byte 12 into memory starting at index 0, and RETURN, returning memory bytes 0-16, ie. code byes 12-28 (feel free to "run" the execution manually on paper to verify that those parts of the code and memory actually get copied and returned). Code bytes 12-28 are, of course, the actual code as we saw above.
+The key opcodes are CODECOPY, copying the 16 bytes of code starting from byte 12 into memory starting at index 0, and RETURN, returning memory bytes 0-16, ie. code bytes 12-28 (feel free to "run" the execution manually on paper to verify that those parts of the code and memory actually get copied and returned). Code bytes 12-28 are, of course, the actual code as we saw above.
 
 ### Gas
 
@@ -147,7 +153,7 @@ Every minute, a miner produces a new block (the concept of mining in Ethereum is
 
 Because of the way the Patricia tree works, if few changes are made then most parts of the tree will be exactly the same as in the last block; hence, there is no need to store data twice as nodes in the new tree will simply be able to point back to the same memory address that stores the nodes of the old tree in places where the new tree and the old tree are exactly the same. If a thousand pieces of data are changed between block `N` and block `N + 1`, even if the total size of the tree is many gigabytes, the amount of new data that needs to be stored for block `N + 1` is at most a few hundred kilobytes and often substantially less (especially if multiple changes happen inside the same contract). Every block contains the hash of the previous block (this is what makes the block set a "chain") as well as ancillary data like the block number, timestamp, address of the miner and gas limit.
 
-### Graphical Interfaces
+### Graphical Interfaces (*OUTDATED API*)
 
 A contract by itself is a powerful thing, but it is not a complete Đapp. A Đapp, rather, is defined as a combination of a contract and a graphical interface for using that contract (note: this is only true for now; future versions of Ethereum will include whisper, a protocol for allowing nodes in a Đapp to send direct peer-to-peer messages to each other without the blockchain). Right now, the interface is implemented as an HTML/CSS/JS webpage, with a special Javascript API in the form of the `eth` object for working with the Ethereum blockchain. The key parts of the Javascript API are as follows:
 

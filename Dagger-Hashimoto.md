@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+Dagger Hashimoto has been superseded by [Ethash](http://github.com/ethereum/wiki/wiki/Ethash).
+=======
 ---
 name: Dagger Hashimoto
 category: 
@@ -336,3 +339,4 @@ Special thanks to feedback from:
 * Tim Hughes
 * Matthew Wampler-Doty
 * Thaddeus Dryja
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25

@@ -1,7 +1,11 @@
+<<<<<<< HEAD
+**OUTDATED** *This document can contain outdated information.*
+=======
 ---
 name: Mix Features
 category: 
 ---
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
 # Block Mining
 
@@ -32,9 +36,9 @@ var theContract = parent.contract;
 	number: <span id="n"></span>
 <script>
 	function update() {
-		document.getElementById('n').innerHTML = web3.eth.number;
+		document.getElementById('n').innerHTML = web3.eth.blockNumber;
 	}
-	web3.eth.watch('chain').happened(update);
+	web3.eth.filter('latest', update);
 </script>
 </body>
 </html>

@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+# This page has moved
+=======
 ---
 name: Solidity Tutorial
 category: 
@@ -12,7 +15,12 @@ of the language.
 
 See also [Russian version (русский перевод)](https://github.com/ethereum/wiki/wiki/%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE-Solidity)  
 >>>>>>> 787d2cbb44d0ad68fdc567516393c19127d08270
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
-***
+The current Solidity documentation can be found at http://solidity.readthedocs.io/en/latest/
 
+<<<<<<< HEAD
+See also [Russian version (русский перевод)](https://github.com/ethereum/wiki/wiki/%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE-Solidity)  
+=======
 English version moved to a new [site](https://solidity.readthedocs.io/en/latest/).
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25

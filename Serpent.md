@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 ---
 name: Serpent
 category: 
@@ -5,9 +7,20 @@ category:
 
 See https://github.com/ethereum/wiki/wiki/Serpent-1.0-(old) for Serpent 1.0.
 
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 Serpent is one of the high-level programming languages used to write Ethereum contracts. The language, as suggested by its name, is designed to be very similar to Python; it is intended to be maximally clean and simple, combining many of the efficiency benefits of a low-level language with ease-of-use in programming style, and at the same time adding special domain-specific features for contract programming. The latest version of the Serpent compiler, available [on github](http://github.com/ethereum/serpent), is written in C++, allowing it to be easily included in any client.
 
 This tutorial assumes basic knowledge of how Ethereum works, including the concept of blocks, transactions, contracts and messages and the fact that contracts take a byte array as input and provide a byte array as output. If you do not, then go [here](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for a basic tutorial.
+
+This documentation is not complete and these examples may further help:
+
+https://github.com/AugurProject/augur-core/tree/master/tests/serpent_tests
+
+https://github.com/ethereum/serpent/tree/develop/examples
+
+https://github.com/AugurProject/augur-core/tree/master/src
+
+https://github.com/ethereum/dapp-bin
 
 ### Differences Between Serpent and Python
 
@@ -24,14 +37,19 @@ The important differences between Serpent and Python are:
 
 In order to install the Serpent python library and executable do:
 
-    $ sudo pip install ethereum-serpent
-
-If you want a library you can directly call from C++, instead do:
-
-    $ git clone http://github.com/ethereum/serpent
+    $ git clone https://github.com/ethereum/serpent.git
     $ cd serpent
-    $ make
-    $ sudo make install
+    $ git checkout develop
+    $ make && sudo make install
+    $ python setup.py install
+
+You can install pyethereum itself as well:
+
+    $ git clone https://github.com/ethereum/pyethereum.git
+    $ cd pyethereum
+    $ git checkout develop
+    $ pip install -r requirements.txt
+    $ python setup.py install
 
 ### Tutorial
 
@@ -97,18 +115,13 @@ The letter `i` is meant for integers, and for fixed-length (up to 32 byte) strin
 
 Now, what if you want to actually run the contract? That is where [pyethereum](https://github.com/ethereum/pyethereum) comes in. Open up a Python console in the same directory, and run:
 
-    >>> from ethereum import tester as t
-    >>> s = t.state()
-    >>> c = s.abi_contract('mul2.se')
-    >>> c.double(42)
-    [84]
+    >>> from ethereum.tools import tester as t
+    >>> c = t.Chain()
+    >>> x = c.contract('mul2.se', language='serpent')
+    >>> x.double(42)
+    84
 
-The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `c.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
-
-Note that if you want to send a transaction to such a contract in the testnet or livenet, you will need to package up the transaction data for "call function double with an integer as an input with data 42". The command line instruction for this is *deprecated*:
-
-<del>    $ serpent encode_abi double i 42
-    eee97206000000000000000000000000000000000000000000000000000000000000002a</del>
+The second line initializes a new state (ie. a genesis block). The third line creates a new contract, and creates an object in Python which represents it. You can use `x.address` to access this contract's address. The fourth line calls the contract with argument 42, and we see 84 predictably come out.
 
 ### Example: Name Registry
 
@@ -129,23 +142,17 @@ Here, we see a few parts in action. First, we have the `key` and `value` variabl
 
 Now, paste the code into `namecoin.se`, if you wish try compiling it to LLL, opcodes or EVM, and let's try it out in the pyethereum tester environment:
 
-    >>> from ethereum import tester as t
-    >>> s = t.state()
-    >>> c = s.abi_contract('namecoin.se')
-    >>> c.register(0x67656f726765, 45)
-    [1]
-    >>> c.register(0x67656f726765, 20)
-    [0]
-    >>> c.register(0x6861727279, 65)
-    [1]
-    >>> c.ask(0x6861727279)
-    [65]
-
-If we wanted to encode the transaction data for that first call, we would do: 
-
-
-<del>	 $ serpent encode_abi register ii 0x67656f726765 45
-	d66d6c10000000000000000000000000000000000000000000000000000067656f726765000000000000000000000000000000000000000000000000000000000000002d</del>
+    >>> from ethereum.tools import tester as t
+    >>> c = t.Chain()
+    >>> x = c.contract('namecoin.se', language='serpent')
+    >>> x.register(0x67656f726765, 45)
+    1
+    >>> x.register(0x67656f726765, 20)
+    0
+    >>> x.register(0x6861727279, 65)
+    1
+    >>> x.ask(0x6861727279)
+    65
 
 ### Including files, and calling other contracts
 
@@ -158,7 +165,7 @@ mul2.se:
 
 returnten.se:
 
-    extern mul2.se: [double:i:i]
+    extern mul2.se: [double:[int256]:int256]
     
     MUL2 = create('mul2.se')
     def returnten():
@@ -166,11 +173,11 @@ returnten.se:
 
 And open Python:
 
-    >>> from ethereum import tester as t
-    >>> s = t.state()
-    >>> c = s.abi_contract('returnten.se')
-    >>> c.returnten()
-    [10]
+    >>> from ethereum.tools import tester as t
+    >>> c = t.Chain()
+    >>> x = c.contract('returnten.se', language='serpent')
+    >>> x.returnten()
+    10
 
 Note that here we introduced several new features. Particularly:
 
@@ -180,7 +187,7 @@ Note that here we introduced several new features. Particularly:
 
 `create` is self-explanatory; it creates a contract and returns the address to the contract. 
 
-The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. To generate `extern mul2.se: [double:i:i]` use
+The way `extern` works is that you declare a class of contract, in this case `mul2`, and then list in an array the names of the functions, in this case just `double`. To generate `extern mul2.se: [double:[int256]:int256]` use
 	
 	$ serpent mk_signature mul2.se
 
@@ -333,12 +340,12 @@ If a contract calls one of its functions, then it will autodetect which argument
 
 However, if a contract wants to call another contract that takes arrays as arguments, then you will need to put a "signature" into the extern declaration:
 
-    extern composer: [compose:ai, main]
+    extern composer: [compose:[int256[],int256]:int256, main:[]:int256]
 
-Here, `ai` means "an array followed by an integer". You can do things like `iiaa`, meaning 2 integers followed by 2 arrays or `iss` meaning an integer followed by 2 strings. If a colon is not provided, as in `main` in this example, that means that the function takes no arguments. If you want to determine the signature to use from a given file, you can do:
+If you want to determine the signature to use from a given file, you can do:
 
     > serpent mk_signature compose_test.se
-    extern compose_test: [compose:ai, main]
+    extern compose_test: [compose:[int256[],int256]:int256, main:[]:int256]
 
 ### Strings
 
@@ -430,8 +437,6 @@ This returns 156, the integer portion of 12.5^2. A purely integer-based version 
 
 ### Miscellaneous
 
-Additional Serpent coding examples can be found here: https://github.com/ethereum/serpent/tree/master/examples
-
 The three other useful features in the tester environment are:
 
 * Block access - you can dig around `s.block` to see block data (eg. `s.block.number`, `s.block.get_balance(addr)`, `s.block.get_storage_data(addr, index)`)
@@ -443,7 +448,7 @@ Serpent also gives you access to many "special variables"; the full list is:
 
 * `tx.origin` - the sender of the transaction
 * `tx.gasprice` - gas price of the transaction
-* `msg.gas` - gas remaining
+* `msg.gas` - estimated gas by sender
 * `msg.sender` - the sender of the message
 * `msg.value` - the number of wei (smallest units of ether) sent with the message
 * `self` - the contract's own address
@@ -460,7 +465,7 @@ Serpent recognises the following "special functions":
 
 * `def init():` - executed upon contract creation, accepts no parameters
 * `def shared():` - executed before running `init` and user functions
-* `def code():` - executed before any user functions
+* `def any():` - executed before any user functions
 
 There are also special commands for a few crypto operations; particularly:
 
@@ -477,7 +482,7 @@ There are also special commands for a few crypto operations; particularly:
 
 * Sometimes you may be intending to use unsigned operators. eg div() and lt() instead of '/' and '<'.
 
-* To upgrade Serpent, you may need to do `pip uninstall ethereum-serpent` and `python setup.py install`.  (Avoid `pip install ethereum-serpent` since it will get from PyPI which is probably old.)
+* To upgrade Serpent, you may need to do `pip uninstall ethereum-serpent` and `python setup.py install`. (Avoid `pip install ethereum-serpent` since it will get from PyPI which is probably old.) (Also avoid using the master branch, which is probably even older than the PyPI version; use the develop branch instead.)
 
 * When calling abi_contract(), if you get this type of error `Exception: Error (file "main", line 1, char 5): Invalid object member (ie. a foo.bar not mapped to anything)` make sure you are specifying correct path to the file you are compiling.
 

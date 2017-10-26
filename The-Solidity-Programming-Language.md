@@ -1,12 +1,18 @@
+<<<<<<< HEAD
+# This page has moved
+=======
 ---
 name: The Solidity Programming Language
 category: 
 ---
 
 # This page is not actively maintained.
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25
 
-The current Solidity documentation can be found at http://ethereum.github.io/solidity/
+The current Solidity documentation can be found at http://solidity.readthedocs.io/en/latest/
 
+<<<<<<< HEAD
+=======
 # Foreword
 
 Solidity is roughly speaking, an object-oriented language designed for writing contracts in Ethereum. Contracts are (typically) small programs which govern the behaviour of accounts within the Ethereum state. These programs operate within the context of the Ethereum environment. Such accounts are able to pass messages between themselves as well as doing practically Turing complete computation.
@@ -237,3 +243,4 @@ There is also a special type
 ## Pre- & Post-conditions
 
 ## The dynamic Keyword
+>>>>>>> b14c975a3152e2312735fd0f93b838a16161bc25

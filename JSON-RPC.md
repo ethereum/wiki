@@ -9,19 +9,26 @@ category:
 
 [JSON-RPC](http://www.jsonrpc.org/specification) is a stateless, light-weight remote procedure call (RPC) protocol. Primarily this specification defines several data structures and the rules around their processing. It is transport agnostic in that the concepts can be used within the same process, over sockets, over HTTP, or in many various message passing environments. It uses JSON ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt)) as data format.
 
+Geth 1.4 has experimental pub/sub support. See [this](https://github.com/ethereum/go-ethereum/wiki/RPC-PUB-SUB) page for more information.
+
+Parity 1.6 has experimental pub/sub support See [this](https://github.com/paritytech/parity/wiki/JSONRPC-Eth-Pub-Sub-Module) for more information.
+
 ## JavaScript API
 
-To talk to an ethereum node from inside a JavaScript application use the [web3.js](https://github.com/ethereum/web3.js) library, which gives an convenient interface for the RPC methods.
+To talk to an ethereum node from inside a JavaScript application use the [web3.js](https://github.com/ethereum/web3.js) library, which gives a convenient interface for the RPC methods.
 See the [JavaScript API](https://github.com/ethereum/wiki/wiki/JavaScript-API) for more.
 
 ## JSON-RPC Endpoint
 
 Default JSON-RPC endpoints:
-```
-C++: http://localhost:8545
-Go: http://localhost:8545
-Py: http://localhost:4000
-```
+
+| Client | URL |
+|-------|:------------:|
+| C++ |  http://localhost:8545 | 
+| Go |http://localhost:8545 | 
+| Py | http://localhost:4000 | 
+| Parity | http://localhost:8545 | 
+
 
 ### Go
 
@@ -66,14 +73,16 @@ You can change the port and listen address by giving a config option.
 
 ## JSON-RPC support
 
-| | cpp-ethereum | go-ethereum | py-ethereum|
-|-------|:------------:|:-----------:|:-----------:|
-| JSON-RPC 1.0 | &#x2713; | | |
-| JSON-RPC 2.0 | &#x2713; | &#x2713; | &#x2713; |
-| Batch requests | &#x2713; |  &#x2713; |  &#x2713; |
-| HTTP | &#x2713; | &#x2713; | &#x2713; |
+| | cpp-ethereum | go-ethereum | py-ethereum| parity |
+|-------|:------------:|:-----------:|:-----------:|:-----:|
+| JSON-RPC 1.0 | &#x2713; | | | |
+| JSON-RPC 2.0 | &#x2713; | &#x2713; | &#x2713; | &#x2713; |
+| Batch requests | &#x2713; |  &#x2713; |  &#x2713; | &#x2713; |
+| HTTP | &#x2713; | &#x2713; | &#x2713; | &#x2713; |
+| IPC | &#x2713; | &#x2713; | | &#x2713; |
+| WS | | &#x2713; | | &#x2713; |
 
-## Output HEX values
+## HEX value encoding
 
 At present there are two key datatypes that are passed over JSON: unformatted byte arrays and quantities. Both are passed with a hex encoding, however with different requirements to formatting:
 
@@ -91,11 +100,11 @@ When encoding **UNFORMATTED DATA** (byte arrays, account addresses, hashes, byte
 - WRONG: 0xf0f0f (must be even number of digits)
 - WRONG: 004200 (must be prefixed 0x)
 
-Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum) and [go-ethereum](https://github.com/ethereum/go-ethereum) provides JSON-RPC communication only over http.
+Currently [cpp-ethereum](https://github.com/ethereum/cpp-ethereum),[go-ethereum](https://github.com/ethereum/go-ethereum), and [parity](https://github.com/paritytech/parity) provide JSON-RPC communication over http and IPC (unix socket Linux and OSX/named pipes on Windows). Version 1.4 of go-ethereum and version 1.6 of Parity onwards have websocket support.
 
 ## The default block parameter
 
-The following methods have a extra default block parameter:
+The following methods have an extra default block parameter:
 
 - [eth_getBalance](#eth_getbalance)
 - [eth_getCode](#eth_getcode)
@@ -111,6 +120,12 @@ The following options are possible for the defaultBlock parameter:
 - `String "earliest"` for the earliest/genesis block
 - `String "latest"` - for the latest mined block
 - `String "pending"` - for the pending state/transactions
+
+## Curl Examples Explained
+
+The curl options below might return a response where the node complains about the content type, this is because the --data option sets the content type to application/x-www-form-urlencoded . If your node does complain, manually set the header by placing -H "Content-Type: application/json" at the start of the call.
+
+The examples also do not include the URL/IP & port combination which must be the last argument given to curl e.x. 127.0.0.1:8545
 
 ## JSON-RPC methods
 
@@ -213,11 +228,11 @@ Returns Keccak-256 (*not* the standardized SHA3-256) of the given data.
 
 ##### Parameters
 
-1. `String` - the data to convert into a SHA3 hash
+1. `DATA` - the data to convert into a SHA3 hash
 
 ```js
 params: [
-  '0x68656c6c6f20776f726c64'
+  "0x68656c6c6f20776f726c64"
 ]
 ```
 
@@ -242,14 +257,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"web3_sha3","params":["0x68656c6c
 
 #### net_version
 
-Returns the current network protocol version.
+Returns the current network id.
 
 ##### Parameters
 none
 
 ##### Returns
 
-`String` - The current network protocol version
+`String` - The current network id.
+- `"1"`: Ethereum Mainnet
+- `"2"`: Morden Testnet  (deprecated)
+- `"3"`: Ropsten Testnet
+- `"4"`: Rinkeby Testnet
+- `"42"`: Kovan Testnet
 
 ##### Example
 ```js
@@ -260,7 +280,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67
 {
   "id":67,
   "jsonrpc": "2.0",
-  "result": "59"
+  "result": "3"
 }
 ```
 
@@ -294,7 +314,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":
 
 #### net_peerCount
 
-Returns number of peers currenly connected to the client.
+Returns number of peers currently connected to the client.
 
 ##### Parameters
 none
@@ -346,7 +366,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_protocolVersion","params":[]
 
 #### eth_syncing
 
-Returns an object object with data about the sync status or FALSE.
+Returns an object with data about the sync status or `false`.
 
 
 ##### Parameters
@@ -362,7 +382,7 @@ none
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_isSyncing","params":[],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}'
 
 // Result
 {
@@ -582,8 +602,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407
 
 #### eth_getStorageAt
 
-Returns the value from a storage position at a given address.
-
+Returns the value from a storage position at a given address. 
 
 ##### Parameters
 
@@ -591,31 +610,55 @@ Returns the value from a storage position at a given address.
 2. `QUANTITY` - integer of the position in the storage.
 3. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
-
-```js
-params: [
-   '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-   '0x0', // storage position at 0
-   '0x2' // state at block number 2
-]
-```
-
 ##### Returns
 
 `DATA` - the value at this storage position.
 
-
 ##### Example
-```js
-// Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getStorageAt","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "0x0", "0x2"],"id":1}'
+Calculating the correct position depends on the storage to retrieve. Consider the following contract deployed at `0x295a70b2de5e3953354a6a8344e616ed314d7251` by address `0x391694e7e0b0cce554cb130d723a9d27458f9298`.
 
-// Result
-{
-  "id":1,
-  "jsonrpc": "2.0",
-  "result": "0x03"
+```
+contract Storage {
+    uint pos0;
+    mapping(address => uint) pos1;
+    
+    function Storage() {
+        pos0 = 1234;
+        pos1[msg.sender] = 5678;
+    }
 }
+```
+
+Retrieving the value of pos0 is straight forward:
+
+```js
+curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"], "id": 1}' localhost:8545
+
+{"jsonrpc":"2.0","id":1,"result":"0x00000000000000000000000000000000000000000000000000000000000004d2"}
+```
+
+Retrieving an element of the map is harder. The position of an element in the map is calculated with:
+```js
+keccack(LeftPad32(key, 0), LeftPad32(map position, 0))
+```
+
+This means to retrieve the storage on pos1["0x391694e7e0b0cce554cb130d723a9d27458f9298"] we need to calculate the position with:
+```js
+keccak(decodeHex("000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + "0000000000000000000000000000000000000000000000000000000000000001"))
+```
+The geth console which comes with the web3 library can be used to make the calculation:
+```js
+> var key = "000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + "0000000000000000000000000000000000000000000000000000000000000001"
+undefined
+> web3.sha3(key, {"encoding": "hex"})
+"0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9"
+```
+Now to fetch the storage:
+```js
+curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"], "id": 1}' localhost:8545
+
+{"jsonrpc":"2.0","id":1,"result":"0x000000000000000000000000000000000000000000000000000000000000162e"}
+
 ```
 
 ***
@@ -694,7 +737,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHa
 
 #### eth_getBlockTransactionCountByNumber
 
-Returns the number of transactions in a block from a block matching the given block number.
+Returns the number of transactions in a block matching the given block number.
 
 
 ##### Parameters
@@ -749,7 +792,7 @@ params: [
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"],"id"Block:1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"],"id":1}'
 
 // Result
 {
@@ -768,7 +811,7 @@ Returns the number of uncles in a block from a block matching the given block nu
 
 ##### Parameters
 
-1. `QUANTITY` - integer of a block number, or the string "latest", "earliest" or "pending", see the [default block parameter](#the-default-block-parameter)
+1. `QUANTITY|TAG` - integer of a block number, or the string "latest", "earliest" or "pending", see the [default block parameter](#the-default-block-parameter)
 
 ```js
 params: [
@@ -835,34 +878,37 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xa94f53
 
 #### eth_sign
 
-Signs data with a given address.
+The sign method calculates an Ethereum specific signature with: `sign(keccak256("\x19Ethereum Signed Message:\n" + len(message) + message)))`.
 
-**Note** the address to sign must be unlocked.
+By adding a prefix to the message makes the calculated signature recognisable as an Ethereum specific signature. This prevents misuse where a malicious DApp can sign arbitrary data (e.g. transaction) and use the signature to impersonate the victim.
+
+**Note** the address to sign with must be unlocked. 
 
 ##### Parameters
+account, message
 
 1. `DATA`, 20 Bytes - address
-2. `DATA`, Data to sign
+2. `DATA`, N Bytes - message to sign
 
 ##### Returns
 
-`DATA`: Signed data
+`DATA`: Signature
 
 ##### Example
 
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sign","params":["0xd1ade25ccd3d550a7eb532ac759cac7be09c2719", "Schoolbus"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sign","params":["0x9b2055d370f73ec7d8a03e965129118dc8f5bf83", "0xdeadbeaf"],"id":1}'
 
 // Result
 {
   "id":1,
   "jsonrpc": "2.0",
-  "result": "0x2ac19db245478a06032e69cdbd2b54e648b78431d0a47bd1fbab18f79f820ba407466e37adbe9e84541cab97ab7d290f4a64a5825c876d22109f3bf813254e8601"
+  "result": "0xa3f20717a250c2b0b729b7e5becbff67fdaef7e0699da4de7ca5895b02a170a12d887fd3b17bfdce3481f10bea41f45ba9f709d39ce8325427b57afcfc994cee1b"
 }
 ```
 
-
+An example how to use solidity ecrecover to verify the signature calculated with `eth_sign` can be found [here](https://gist.github.com/bas-vk/d46d83da2b2b4721efb0907aecdb7ebd). The contract is deployed on the testnet Ropsten and Rinkeby.
 
 ***
 
@@ -878,14 +924,14 @@ Creates new message call transaction or a contract creation, if the data field c
   - `gas`: `QUANTITY`  - (optional, default: 90000) Integer of the gas provided for the transaction execution. It will return unused gas.
   - `gasPrice`: `QUANTITY`  - (optional, default: To-Be-Determined) Integer of the gasPrice used for each paid gas
   - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
-  - `data`: `DATA`  - (optional) The compiled code of a contract
+  - `data`: `DATA`  - The compiled code of a contract OR the hash of the invoked method signature and encoded parameters. For details see [Ethereum Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
   - `nonce`: `QUANTITY`  - (optional) Integer of a nonce. This allows to overwrite your own pending transactions that use the same nonce.
 
 ```js
 params: [{
   "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
-  "to": "0xd46e8dd67c5d32be8058bb8eb970870f072445675",
-  "gas": "0x76c0", // 30400,
+  "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+  "gas": "0x76c0", // 30400
   "gasPrice": "0x9184e72a000", // 10000000000000
   "value": "0x9184e72a", // 2441406250
   "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
@@ -919,13 +965,10 @@ Creates new message call transaction or a contract creation for signed transacti
 
 ##### Parameters
 
-1. `Object` - The transaction object
-  - `data`: `DATA`, The signed transaction data.
+1. `DATA`, The signed transaction data.
 
 ```js
-params: [{
-  "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
-}]
+params: ["0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"]
 ```
 
 ##### Returns
@@ -957,12 +1000,12 @@ Executes a new message call immediately without creating a transaction on the bl
 ##### Parameters
 
 1. `Object` - The transaction call object
-  - `from`: `DATA`, 20 Bytes - (optional) The address the transaction is send from.
+  - `from`: `DATA`, 20 Bytes - (optional) The address the transaction is sent from.
   - `to`: `DATA`, 20 Bytes  - The address the transaction is directed to.
   - `gas`: `QUANTITY`  - (optional) Integer of the gas provided for the transaction execution. eth_call consumes zero gas, but this parameter may be needed by some executions.
   - `gasPrice`: `QUANTITY`  - (optional) Integer of the gasPrice used for each paid gas
   - `value`: `QUANTITY`  - (optional) Integer of the value send with this transaction
-  - `data`: `DATA`  - (optional) The compiled code of a contract
+  - `data`: `DATA`  - (optional) Hash of the method signature and encoded parameters. For details see [Ethereum Contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
 2. `QUANTITY|TAG` - integer block number, or the string `"latest"`, `"earliest"` or `"pending"`, see the [default block parameter](#the-default-block-parameter)
 
 ##### Returns
@@ -978,7 +1021,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{see above}]
 {
   "id":1,
   "jsonrpc": "2.0",
-  "result": "0x0"
+  "result": "0x"
 }
 ```
 
@@ -990,7 +1033,7 @@ Makes a call or transaction, which won't be added to the blockchain and returns 
 
 ##### Parameters
 
-See [eth_call](#eth_call) parameters, expect that all properties are optional.
+See [eth_call](#eth_call) parameters, expect that all properties are optional. If no gas limit is specified geth uses the block gas limit from the pending block as an upper bound. As a result the returned estimate might not be enough to executed the call/transaction when the amount of gas is higher than the pending block gas limit.
 
 ##### Returns
 
@@ -1077,7 +1120,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0
     "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "size":  "0x027f07", // 163591
     "gasLimit": "0x9f759", // 653145
-    "minGasPrice": "0x9f759", // 653145
     "gasUsed": "0x9f759", // 653145
     "timestamp": "0x54e34e8e" // 1424182926
     "transactions": [{...},{ ... }] 
@@ -1226,7 +1268,7 @@ params: [
 
 ##### Returns
 
-See [eth_getBlockByHash](#eth_gettransactionbyhash)
+See [eth_gettransactionbyhash](#eth_gettransactionbyhash)
 
 ##### Example
 ```js
@@ -1267,6 +1309,12 @@ params: [
   - `gasUsed `: `QUANTITY ` - The amount of gas used by this specific transaction alone.
   - `contractAddress `: `DATA`, 20 Bytes - The contract address created, if the transaction was a contract creation, otherwise `null`.
   - `logs`: `Array` - Array of log objects, which this transaction generated.
+  
+It also returns _either_ :
+
+  - `root` : `DATA` 32 bytes of post-transaction stateroot (pre Byzantium)
+  - `status`: `QUANTITY` either `1` (success) or `0` (failure) 
+
 
 ##### Example
 ```js
@@ -1287,7 +1335,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","para
      contractAddress: '0xb60e8dd61c5d32be8058bb8eb970870f07233155' // or null, if none was created
      logs: [{
          // logs as returned by getFilterLogs, etc.
-     }, ...]
+     }, ...],
+     status: '0x1'
   }
 }
 ```
@@ -1474,7 +1523,7 @@ params: [
 ##### Example
 ```js
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSolidity","params":["(returnlll (suicide (caller)))"],"id":1}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileLLL","params":["(returnlll (suicide (caller)))"],"id":1}'
 
 // Result
 {
@@ -1524,20 +1573,28 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"eth_compileSerpent","params":["/
 Creates a filter object, based on filter options, to notify when the state changes (logs).
 To check if the state has changed, call [eth_getFilterChanges](#eth_getfilterchanges).
 
+##### A note on specifying topic filters:
+Topics are order-dependent. A transaction with a log with topics [A, B] will be matched by the following topic filters:
+* `[]` "anything"
+* `[A]` "A in first position (and anything after)"
+* `[null, B]` "anything in first position AND B in second position (and anything after)"
+* `[A, B]` "A in first position AND B in second position (and anything after)"
+* `[[A, B], [A, B]]` "(A OR B) in first position AND (A OR B) in second position (and anything after)"
+
 ##### Parameters
 
 1. `Object` - The filter options:
   - `fromBlock`: `QUANTITY|TAG` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
   - `toBlock`: `QUANTITY|TAG` - (optional, default: `"latest"`) Integer block number, or `"latest"` for the last mined block or `"pending"`, `"earliest"` for not yet mined transactions.
   - `address`: `DATA|Array`, 20 Bytes - (optional) Contract address or a list of addresses from which logs should originate.
-  - `topics`: `Array of DATA`,  - (optional) Array of 32 Bytes `DATA` topics. Each topic can also be an array of DATA with "or" options.
+  - `topics`: `Array of DATA`,  - (optional) Array of 32 Bytes `DATA` topics. Topics are order-dependent. Each topic can also be an array of DATA with "or" options.
 
 ```js
 params: [{
   "fromBlock": "0x1",
   "toBlock": "0x2",
   "address": "0x8888f1f195afa192cfee860698584c030f4c9db1",
-  "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b", null, [0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0x000000000000000000000000aff3454fce5edbc8cca8697c15331677e6ebccc]]
+  "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b", null, ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b", "0x 0000000000000000000000000aff3454fce5edbc8cca8697c15331677e6ebccc"]]
 }]
 ```
 
@@ -1672,7 +1729,7 @@ params: [
 - For filters created with `eth_newPendingTransactionFilter ` the return are transaction hashes (`DATA`, 32 Bytes), e.g. `["0x6345343454645..."]`.
 - For filters created with `eth_newFilter` logs are objects with following params:
 
-  - `type`: `TAG` - `pending` when the log is pending. `mined` if log is already mined.
+  - `removed`: `TAG` - `true` when the log was removed, due to a chain reorganization. `false` if its a valid log.
   - `logIndex`: `QUANTITY` - integer of the log index position in the block. `null` when its pending log.
   - `transactionIndex`: `QUANTITY` - integer of the transactions index position log was created from. `null` when its pending log.
   - `transactionHash`: `DATA`, 32 Bytes - hash of the transactions this log was created from. `null` when its pending log.
@@ -2354,9 +2411,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"shh_getFilterChanges","params":[
 
 #### shh_getMessages
 
-Get all messages matching a filter, which are still existing in the node's buffer.
-
-**Note** calling this method, will also reset the buffer for the [shh_getFilterChanges](#shh_getfilterchanges) method, so that you won't receive duplicate messages.
+Get all messages matching a filter. Unlike `shh_getFilterChanges` this returns all messages.
 
 ##### Parameters
 

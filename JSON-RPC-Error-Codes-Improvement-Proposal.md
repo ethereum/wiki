@@ -35,29 +35,28 @@ They will be contained in the `data` field of the RPC error message as follows:
     message: 'Execution error',
     data: [{
         code: 102,
-        message: 'Innsufficient gas',
-        reason: 'GAS'
+        message: 'Innsufficient gas'
     },
     {
         code: 103,
-        message: 'Gas limit exceeded',
-        reason: 'GAS'
+        message: 'Gas limit exceeded'
     }]
 }
 ```
 
-| Code    | Reson values | Possible Return message | Description |
-| --------|--------------|-------------------------|-------------|
-|100 | ? | X doesn't exist    | Should be used when something which should be there is not found. (Doesn't apply for not found transactions or blocks. They return a success with value `null`)
-|101 | `ETHER` ? | Requires X         | Should be used for actions which require somethin else, e.g. gas or a value.
-|102 | `GAS`, `ETHER` | X to low           | Should be used when a to low value of something was given, e.g. an to low gas amount.
-|103 | `GAS` | X limit exceeded   | Should be used when a limit is exceeded, e.g. for the gas limit in a block.
-|104 | `CODE` ? | Rejected           | Should be used when an action was rejected, e.g. because of its content (to long contract code, containing wrong characters ?, should differ from `-32602` - Invalid params).
+| Code    | Possible Return message | Description |
+| --------|-------------------------|-------------|
+|100 | X doesn't exist    | Should be used when something which should be there is not found. (Doesn't apply to eth_getTransactionBy* and eth_getBlock*. They return a success with value `null`)
+|101 | Requires ether         | Should be used for actions which require somethin else, e.g. gas or a value.
+|102 | Gas too low           | Should be used when a to low value of gas was given.
+|103 | Gas limit exceeded   | Should be used when a limit is exceeded, e.g. for the gas limit in a block.
+|104 | Rejected           | Should be used when an action was rejected, e.g. because of its content (too long contract code, containing wrong characters ?, should differ from `-32602` - Invalid params).
+|105 | Ether too low           | Should be used when a to low value of Ether was given.
 
 
 ## Possible future error codes?
 
 | Code    | Possible Return message | Description |
 | --------|-------------------------|-------------|
-|105 | Timeout            | Should be used when an action timedout.
-|106 | Conflict           | Should be used when an action conflicts with another (ongoing?) action.
+|106 | Timeout            | Should be used when an action timedout.
+|107 | Conflict           | Should be used when an action conflicts with another (ongoing?) action.

@@ -7,7 +7,7 @@ Overview
 
 The Ethereum Foundation ensures three principles concerning the funds it uses to develop Ethereum:
 
-- it is both open source software and Free software after the definition of the Free Software Foundation (so-called FOSS);
+- it is both open source software and Free software after the definition of the Free Software Foundation (so-called FLOSS);
 - no special treatment is given to any single entity concerning the copyright of the software, the Foundation included;
 - source-code will not be distributed ahead of binaries.
 
@@ -31,4 +31,4 @@ In this way we hope our initial version of Solidity and Mix lay down the foundat
 
 ### The Middleware
 
-The middleware of Ethereum, including the Javascript-based ethereum.js, the webthree libraries and eth (the command line client) will be distributed under an Affero license, likely the LGPL variant of it. We wish to allow free development of technologies by allowing linking to arbitrary software, but again would like to incentivise feeding of back-end integration work back into the community, especially regarding the interoperability with legacy systems.
+The middleware of Ethereum, including the Javascript-based web3.js, the webthree libraries and eth (the command line client) will be distributed under an Affero license, likely the LGPL variant of it. We wish to allow free development of technologies by allowing linking to arbitrary software, but again would like to incentivise feeding of back-end integration work back into the community, especially regarding the interoperability with legacy systems.

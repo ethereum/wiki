@@ -9,9 +9,12 @@ This document is intended to specify this protocol comprehensively.
 
 ### Low-Level
 
-ÐΞVp2p nodes may connect to each other over TCP only. Peers are free to advertise and accept connections on any port(s) they wish, however, a default port on which the connection may be listened and made will be 30303.
+ÐΞVp2p nodes communicate by sending messages using RLPx, an encrypted and authenticated transport protocol. Peers are free to advertise and accept connections on any TCP ports they wish, however, a default port on which the connection may be listened and made will be 30303.
+Though TCP provides a connection-oriented medium, ÐΞVp2p nodes communicate in terms of packets.
+RLPx provides facilities to send and receive packets. For more information about RLPx, refer to the [protocol specification](https://github.com/ethereum/devp2p/tree/master/rlpx.md). 
 
-Though TCP provides a connection-oriented medium, ÐΞVp2p nodes communicate in terms of packets. These packets are formed as a 4-byte synchronisation token (0x22400891), a 4-byte "payload size", to be interpreted as a big-endian integer and finally an N-byte RLP-serialised data structure, where N is the aforementioned "payload size". To be clear, the payload size specifies the number of bytes in the packet ''following'' the first 8.
+ÐΞVp2p nodes find peers through the RLPx discovery protocol DHT. Peer connections can also be initiated by supplying
+the endpoint of a peer to a client-specific RPC API.
 
 ### Payload Contents
 
@@ -24,7 +27,7 @@ Message IDs are assumed to be compact from ID 0x10 onwards (0x00-0x10 is reserve
 ### P2P
 
 **Hello**
-[`0x00`: `P`, `p2pVersion`: `P`, `clientId`: `B`, [[`cap1`: `B_3`, `capVersion1`: `P`], [`cap2`: `B_3`, `capVersion2`: `P`], `...`], `listenPort`: `P`, `nodeId`: `B_64`] First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
+`0x00` [`p2pVersion`: `P`, `clientId`: `B`, [[`cap1`: `B_3`, `capVersion1`: `P`], [`cap2`: `B_3`, `capVersion2`: `P`], `...`], `listenPort`: `P`, `nodeId`: `B_64`] First packet sent over the connection, and sent once by both sides. No other messages may be sent until a Hello is received.
 * `p2pVersion` Specifies the implemented version of the P2P protocol. Now must be 1.
 * `clientId` Specifies the client software identity, as a human-readable string (e.g. "Ethereum(++)/1.0.0").
 * `cap` Specifies a peer capability name as a length-3 ASCII string. Current supported capabilities are `eth`, `shh`.
@@ -33,7 +36,7 @@ Message IDs are assumed to be compact from ID 0x10 onwards (0x00-0x10 is reserve
 * `nodeId` is the Unique Identity of the node and specifies a 512-bit hash that identifies this node.
 
 **Disconnect**
-[`0x01`: `P`, `reason`: `P`] Inform the peer that a disconnection is imminent; if received, a peer should disconnect immediately. When sending, well-behaved hosts give their peers a fighting chance (read: wait 2 seconds) to disconnect to before disconnecting themselves.
+`0x01` [`reason`: `P`] Inform the peer that a disconnection is imminent; if received, a peer should disconnect immediately. When sending, well-behaved hosts give their peers a fighting chance (read: wait 2 seconds) to disconnect to before disconnecting themselves.
 * `reason` is an optional integer specifying one of a number of reasons for disconnect:
   * `0x00` Disconnect requested;
   * `0x01` TCP sub-system error;
@@ -50,38 +53,23 @@ Message IDs are assumed to be compact from ID 0x10 onwards (0x00-0x10 is reserve
   * `0x10` Some other reason specific to a subprotocol.
 
 **Ping**
-[`0x02`: `P`] Requests an immediate reply of `Pong` from the peer.
+`0x02` [] Requests an immediate reply of `Pong` from the peer.
 
 **Pong**
-[`0x03`: `P`] Reply to peer's `Ping` packet.
+`0x03` [] Reply to peer's `Ping` packet.
 
 **NotImplemented (was GetPeers)**
-[`0x04`: `...`]
+`0x04`
 
 **NotImplemented (was Peers)**
-[`0x05`: `...`]
+`0x05`
 
 ### Node identity and reputation
 
-In a later version of this protocol, node ID will become the public key. Nodes will have to demonstrate ownership over their ID by interpreting a packet encrypted with their node ID (or perhaps signing a random nonce with their private key).
-
-A proof-of-work may be associated with the node ID through the big-endian magnitude of the public key. Nodes with a great proof-of-work (public key of lower magnitude) may be given preference since it is less likely that the node will alter its ID later or masquerade under multiple IDs.
+The identity of a ÐΞVp2p node is a secp256k1 public key.
 
 Nodes are free to store ratings for given IDs (how useful the node has been in the past) and give preference accordingly. Nodes may also track node IDs (and their provenance) in order to help determine potential man-in-the-middle attacks.
-
-Clients are free to mark down new nodes and use the node ID as a means of determining a node's reputation. In a future version of this wire protocol, n
-
-### Example Packets
-
-`0x22400891000000088400000043414243`
-
-A Hello packet specifying the client id is "ABC".
-
-Peer 1: `0x22400891000000028102`
-
-Peer 2: `0x22400891000000028103`
-
-A Ping and the returned Pong.
+Clients are free to mark down new nodes and use the node ID as a means of determining a node's reputation.
 
 ### Session Management
 

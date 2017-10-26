@@ -5,7 +5,7 @@ category:
 
 # Network Status Monitoring
 
-The [Ethereum (centralised) network status monitor](https://stats.ethdev.com) (known sometimes as "eth-netstats") is a web-based application to monitor the health of the testnet/mainnet through a group of nodes.
+The [Ethereum (centralised) network status monitor](https://ethstats.net) (known sometimes as "eth-netstats") is a web-based application to monitor the health of the testnet/mainnet through a group of nodes.
 
 ## Listing
 
@@ -27,6 +27,12 @@ Then edit the `app.json` file in it to configure for your node:
 - alter the value to the right of `CONTACT_DETAILS` if you wish to share your contact details
 - alter the value to the right of `RPC_PORT` to the rpc port for your node (by default 8545 for both cpp and go);
 - and alter the value to the right of `WS_SECRET` to the secret (you'll have to get this off [the official skype channel](http://tinyurl.com/ofndjbo)).
+
+ethereum (eth or geth) must be running with rpc enabled.
+```
+geth --rpc
+```
+the default port (if one is not specified) for rpc under geth is 8545
 
 Finally run the process with:
 
@@ -59,7 +65,7 @@ bash <(curl https://raw.githubusercontent.com/cubedro/eth-net-intelligence-api/m
 ```
 
 ### Configuration
-Configure the app modifying [processes.json](/eth-net-intelligence-api/blob/master/processes.json). Note that you have to modify the backup processes.json file located in `./bin/processes.json` (to allow you to set your env vars without being rewritten when updating).
+Configure the app modifying [app.json](https://github.com/cubedro/eth-net-intelligence-api/blob/master/app.json.example). Note that you have to modify the backup `app.json` (to allow you to set your env vars without being rewritten when updating).
 
 ```js
 "env":
@@ -70,7 +76,7 @@ Configure the app modifying [processes.json](/eth-net-intelligence-api/blob/mast
 		"LISTENING_PORT"  : "30303", // eth listening port (only used for display)
 		"INSTANCE_NAME"   : "", // whatever you wish to name your node
 		"CONTACT_DETAILS" : "", // add your contact details here if you wish (email/skype)
-		"WS_SERVER"       : "wss://stats.ethdev.com", // path to eth-netstats WebSockets api server
+		"WS_SERVER"       : "wss://rpc.ethstats.net", // path to eth-netstats WebSockets api server
 		"WS_SECRET"       : "", // WebSockets api server secret used for login
 	}
 ```
