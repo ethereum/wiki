@@ -1,6 +1,6 @@
 ---
 name: White Paper
-category: Basics
+category: 
 ---
 
 ### A Next-Generation Smart Contract and Decentralized Application Platform
