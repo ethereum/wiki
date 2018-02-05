@@ -13,7 +13,7 @@ A system with multiple peers should be robust to a few peers having substantiall
 
 Each peer does a ping-sequence, each message timestamped with the hardware clock (H) directly after handshake to determine both the network traversal distance ("ping time") and an estimate of the peer's hardware clock (Hp).
 
-The clock-offset (D) of the peer then becomes it's hardware clock (H) corrected to become the median of the peer hardware clocks (median({H1, H2, ...}) = M).
+The clock-offset (D) of the peer then becomes its hardware clock (H) corrected to become the median of the peer hardware clocks (median({H1, H2, ...}) = M).
 
 The clock offset (D) is dynamically evaluated as the peer set changes.
 

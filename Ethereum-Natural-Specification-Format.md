@@ -35,7 +35,7 @@ There are a few things to note about the above example.
     + @param: Documents a parameter just like in doxygen. Has to be followed by the parameter name.
     + @return: Documents the return type of a contract's function.
 
-- If any of the above are missing they are simply considered as blank and it's not illegal to omit any of them
+- If any of the above are missing they are simply considered as blank, and it's not illegal to omit any of them.
  
 - `(valueInmGAV / 1000).fixed(0,3)` A dynamic expression. This should be a valid Javascript/Paperscript expression, which when evaluated in an EVM Javascript environment initialised with various system values (such as parameters).
 
