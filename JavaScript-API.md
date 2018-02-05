@@ -86,6 +86,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [toAscii(hexString)](#web3toascii)
   * [fromAscii(textString, [padding])](#web3fromascii)
   * [toDecimal(hexString)](#web3todecimal)
+  * [toChecksumAddress(string)](#web3tochecksumaddress)
   * [fromDecimal(number)](#web3fromdecimal)
   * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei)
   * [toWei(numberStringOrBigNumber, unit)](#web3towei)
@@ -468,6 +469,30 @@ console.log(str); // "0x657468657265756d"
 
 var str2 = web3.fromAscii('ethereum', 32);
 console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000000000000"
+```
+
+***
+
+#### web3.toChecksumAddress
+
+    web3.toChecksumAddress(hexString);
+
+Converts a string to the checksummed address equivalent.
+
+##### Parameters
+
+1. `String` - A string to be converted to a checksummed address.
+
+
+##### Returns
+
+`String` - A string containing the checksummed address.
+
+##### Example
+
+```js
+var myAddress = web3.toChecksumAddress('0xa0c876ec9f2d817c4304a727536f36363840c02c');
+console.log(myAddress); // '0xA0C876eC9F2d817c4304A727536f36363840c02c'
 ```
 
 ***
