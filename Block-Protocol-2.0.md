@@ -248,7 +248,7 @@ The protocol altogether can be shown to be incentive-compatible as follows:
 2. The miner of a block, and all uncles inside the block, at the very least have the incentive to respond to challenges.
 3. Light nodes have the incentive to respect the block validity rules because everyone else does, an argument advanced in http://themonetaryfuture.blogspot.ca/2011/07/bitcoin-decentralization-and-nash.html. Without the challenge-response protocol, this argument does not apply because the cost of determining whether or not a block is valid is prohibitively high; with the protocol, this reasoning no longer applies.
 4. Substantial stakeholders have the incentive to promote the perceived integrity of the system to maximize the value of their currency units, and thus may want to help actively submit both challenges and responses where possible.
-5. Statistically speaking, far more than 0.01% of agents inside of real-world economic agents, whether or not weighted by economic power, tend to motivated by altruistic/ideological considerations. The market share of charities around the world is sufficient evidence of this.
+5. Statistically speaking, far more than 0.01% of agents inside of real-world economic agents, whether or not weighted by economic power, tend to be motivated by altruistic/ideological considerations. The market share of charities around the world is sufficient evidence of this.
 
 ### Comparison with Bitcoin
 
