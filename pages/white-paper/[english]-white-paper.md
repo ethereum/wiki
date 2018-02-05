@@ -348,12 +348,12 @@ As described by Sompolinsky and Zohar, GHOST solves the first issue of network s
 Ethereum implements a simplified version of GHOST which only goes down seven levels. Specifically, it is defined as follows:
 
 * A block must specify a parent, and it must specify 0 or more uncles
-* An uncle included in block B must have the following properties:
-  * It must be a direct child of the kth generation ancestor of B, where 2 <= k <= 7.
-  * It cannot be an ancestor of B
+* An uncle included in block `B` must have the following properties:
+  * It must be a direct child of the `k`-th generation ancestor of `B`, where `2 <= k <= 7`.
+  * It cannot be an ancestor of `B`
   * An uncle must be a valid block header, but does not need to be a previously verified or even valid block
   * An uncle must be different from all uncles included in previous blocks and all other uncles included in the same block (non-double-inclusion)
-* For every uncle U in block B, the miner of B gets an additional 3.125% added to its coinbase reward and the miner of U gets 93.75% of a standard coinbase reward.
+* For every uncle `U` in block `B`, the miner of `B` gets an additional 3.125% added to its coinbase reward and the miner of `U` gets 93.75% of a standard coinbase reward.
 
 This limited version of GHOST, with uncles includable only up to 7 generations, was used for two reasons. First, unlimited GHOST would include too many complications into the calculation of which uncles for a given block are valid. Second, unlimited GHOST with compensation as used in Ethereum removes the incentive for a miner to mine on the main chain and not the chain of a public attacker. 
 
@@ -379,7 +379,7 @@ However, there are several important deviations from those assumptions in realit
 
 (1) provides a tendency for the miner to include fewer transactions, and (2) increases `NC`; hence, these two effects at least partially cancel each other out. (3) and (4) are the major issue; to solve them we simply institute a floating cap: no block can have more operations than `BLK_LIMIT_FACTOR` times the long-term exponential moving average. Specifically:
 
-    blk.oplimit = floor((blk.parent.oplimit * (EMAFACTOR - 1) + floor(parent.opcount * BLK_LIMIT_FACTOR)) / EMA_FACTOR)
+    blk.oplimit = floor((blk.parent.oplimit * (EMA_FACTOR - 1) + floor(parent.opcount * BLK_LIMIT_FACTOR)) / EMA_FACTOR)
 
 `BLK_LIMIT_FACTOR` and `EMA_FACTOR` are constants that will be set to 65536 and 1.5 for the time being, but will likely be changed after further analysis.
 
