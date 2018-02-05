@@ -7,7 +7,7 @@ Web3.js 0.9 changes
 
 I would like to apply KISS principle to web3.js. I used the library recently much more and I realised that we are doing to many things implicitly. eg:
 
-1,  newFilter it should either get all logs or poll for new logs. It's shouldn't do both in the same time. In my story, I don't want to poll for filter changes, but I want to get all logs between block X and Y. Same as caktux here: https://github.com/ethereum/web3.js/issues/250
+1,  newFilter it should either get all logs or poll for new logs. It shouldn't do both in the same time. In my story, I don't want to poll for filter changes, but I want to get all logs between block X and Y. Same as caktux here: https://github.com/ethereum/web3.js/issues/250
 
   examples of new solution
 

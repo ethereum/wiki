@@ -3,11 +3,16 @@ name: Standardized Contract APIs
 category: 
 ---
 
-Although Ethereum allows developers to create absolutely any kind of application without restriction to specific feature types, and prides itself on its "lack of features", there is nevertheless a need to standardize certain very common use cases in order to allow users and applications to more easily interact with each other. This includes sending currency units, registering names, making offers on exchanges, and other similar functions. A standard typically consists of a set of function signatures for a few methods, eg. `send`, `register`, `delete`, providing the set of arguments and their formats in the [Ethereum contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI) language.
+Ethereum allows you to standardize common use cases that allow users and applications to more easily interact with each other. This includes currency units, registering names, making offers on exchanges, and other similar functions. A standard typically consists of function signatures for methods, eg. `send`, `register`, `delete`, providing the set of arguments and their formats in the [Ethereum contract ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI) language.
 
 The standards described below have sample implementations available [here](https://github.com/ethereum/dapp-bin/tree/master/standardized_contract_apis).
 
-All function names are in lower camelCase (eg. `sendCoin`) and all event names are in upper CamelCase (eg. `CoinTransfer`). Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`), and output variables are `_r` for pure getter (ie. constant) functions, `_success` (always boolean) when denoting success or failure, and other values (eg. `_maxValue`) for methods that perform an action but need to return a value as an identifier. Addresses are referred to using `_address` when generic, and otherwise if a more specific description exists (eg. `_from`, `_to`).
+All function names are in lower camelCase (eg. `sendCoin`), and all event names are in upper CamelCase (eg. `CoinTransfer`). 
+
+Input variables are in underscore-prefixed lower camelCase (eg. `_offerId`). 
+
+Output variables are `_r` for pure getter (ie. constant) functions - `_success` (always boolean) when denoting success or failur, and other values (eg. `_maxValue`) for methods that perform an action but need to return a value as an identifier. 
+Addresses are referred to using `_address` when generic, and otherwise if a more specific description exists (eg. `_from`, `_to`).
 
 # Transferable Fungibles
 
@@ -39,7 +44,7 @@ balanceOf(address _address) constant returns (uint256 balance)
 Get the account balance of another account with address `_address`
 
 ---
-The `transferFrom` method is used for a "direct debit" workflow, allowing contracts to send coins on your behalf, for example to "deposit" to a contract address and/or to charge fees in sub-currencies; the command should fail unless the `_from` account has deliberately authorized the sender of the message via some mechanism; we propose these standardized APIs for approval:
+The `transferFrom` method is used for a "direct debit" workflow, allowing contracts to send coins on your behalf, for example to "deposit" to a contract address and/or to charge fees in sub-currencies.  The command should fail unless the `_from` account has deliberately authorized the sender of the message via some mechanism.  We propose these standardized APIs for approval:
 
 #### approve
 
@@ -133,7 +138,7 @@ baseUnit(address _token) constant returns (uint256)
 
 Sets or returns the base unit of a token. Although most tokens are displayed to the final user as containing decimal points, token values are unsigned integers counting in the smallest possible unit. The client should always display the total units divided by `baseUnit`. Base units can be any integer but we suggest only using powers of 10. At the moment there is no support for multiple sub-units.
 
-Example: Bob has a balance of 100000 BobTokens, whose base unit is 100. His balance will be displayed on the client as **BOB$100.00**
+Example: Bob has a balance of 100000 BobTokens whose base unit is 100. His balance will be displayed on the client as **BOB$100.00**
 
 ## Registries
 
@@ -263,7 +268,7 @@ setFeeCurrency(address _feeCurrency)
 
 Sets the currency that the fee is paid in
 
-The latter two methods are optional; also, note that the fee may be charged either in ether or subcurrency; if the contract charges in ether then the `setFeeCurrency` method is unnecessary.
+The latter two methods are optional.  Also, note that the fee may be charged either in ether or subcurrency.  If the contract charges in ether then the `setFeeCurrency` method is unnecessary.
 
 
 ## Forwarding contracts (eg. multisig)
