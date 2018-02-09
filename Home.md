@@ -1,6 +1,6 @@
 ---
 name: Home
-category: 
+category: Basics
 ---
 
 # Welcome to the Ethereum Wiki
