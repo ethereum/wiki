@@ -11,12 +11,6 @@ This is the community maintained wiki covering all sorts of information on the n
 
 Users signed in with GitHub can edit and add pages using the [browser](https://help.github.com/articles/editing-wiki-pages-via-the-online-interface) or [locally](https://help.github.com/articles/adding-and-editing-wiki-pages-locally). Do not change the title of a page, as the link for it will change. In particular, if you change the title for this page, the link https://github.com/ethereum/wiki/wiki/, as well as the Wiki tab in the header of this repo, will just direct to a list of pages, rather than this page, so don't change the title of this page! If you want to translate a page, create a new page and translate the original there. Consider previewing your changes before saving them, and if you detect any errors, fix them.
 
-## Status 
-
-### Frontier
-
-Version 1.0 of Ethereum aka Frontier was released on July 30th 2015! Development continues towards the versions named Homestead, Metropolis and Serenity (v1.1). Frontier is aimed at exchangers and [miners](https://github.com/ethereum/wiki/wiki/Mining). Homestead is aiming for [Ðapps developers](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial), while Metropolis is aiming for end users with the release of the Mist browser. Serenity is meant to move from consensus through [Proof-of-Work](https://github.com/ethereum/wiki/wiki/Ethash) to [Proof-of-Stake](https://blog.ethereum.org/2015/08/01/introducing-casper-friendly-ghost/).
-
 ## Getting started
 To get the basic concepts of Ethereum visit the Ethereum homepage over at [http://ethereum.org](http://ethereum.org/). If you want to get a deeper understanding, start by read the [whitepaper](https://github.com/ethereum/wiki/wiki/White-Paper) and the [design rationale](https://github.com/ethereum/wiki/wiki/Design-Rationale). For a more formal review, read the [yellow paper](http://gavwood.com/Paper.pdf). See the [development tutorial](https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial) for quick start to developing smart contracts.
 
