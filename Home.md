@@ -30,6 +30,13 @@ See [here](https://github.com/ethereum/wiki/wiki/Clients).
 
 See [here](https://github.com/ethereum/wiki/wiki/Releases).
 
-
 ## Don't get lost
-Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FAQ](https://github.com/ethereum/wiki/wiki/FAQ). There are separate wikis for information relevant to the [C++](https://github.com/ethereum/cpp-ethereum/wiki) and [Go](https://github.com/ethereum/go-ethereum/wiki) implementations (Python and Javascript coming soon),
+
+If you have any question, check the [FAQS](https://github.com/ethereum/wiki/wiki/FAQS) and [Glossary](https://github.com/ethereum/wiki/wiki/Glossary).
+
+There are separate wikis for some implementations, see here
+
+* [go-ethereum](https://github.com/ethereum/go-ethereum/wiki)
+* [Parity](https://paritytech.github.io/wiki/)
+* [cpp-ethereum](http://www.ethdocs.org/en/latest/ethereum-clients/cpp-ethereum/index.htm)
+* [pyethereum](https://github.com/ethereum/pyethereum/wiki)
