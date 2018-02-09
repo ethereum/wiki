@@ -9,7 +9,7 @@ This is the community maintained wiki covering all sorts of information on the n
 
 ## Contribution guidelines
 
-Users signed in with GitHub can edit and add pages using the [browser](https://help.github.com/articles/editing-wiki-pages-via-the-online-interface) or [locally](https://help.github.com/articles/adding-and-editing-wiki-pages-locally).
+Users signed in with GitHub can edit and add pages using the [browser](https://help.github.com/articles/editing-wiki-pages-via-the-online-interface) or [locally](https://help.github.com/articles/adding-and-editing-wiki-pages-locally). Do not change the title of a page, as the link for it will change. In particular, if you change the title for this page, the link https://github.com/ethereum/wiki/wiki/, as well as the Wiki tab in the header of this repo, will just direct to a list of pages, rather than this page, so don't change the title of this page! If you want to translate a page, create a new page and translate the original there. Consider previewing your changes before saving them, and if you detect any errors, fix them.
 
 ## Status 
 
