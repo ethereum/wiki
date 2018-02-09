@@ -22,12 +22,9 @@ For getting started guides, see here
 * [How to create a private Ethereum network Comments Feed](https://omarmetwally.wordpress.com/2017/07/25/how-to-create-a-private-ethereum-network/)
 
 
+## Downloads
+
+See [here](https://github.com/ethereum/wiki/wiki/Clients).
+
 ## Don't get lost
 Check the [Glossary](https://github.com/ethereum/wiki/wiki/Glossary) and our [FAQ](https://github.com/ethereum/wiki/wiki/FAQ). There are separate wikis for information relevant to the [C++](https://github.com/ethereum/cpp-ethereum/wiki) and [Go](https://github.com/ethereum/go-ethereum/wiki) implementations (Python and Javascript coming soon),
-
-## Downloads
-Bleeding edge code can be cloned from the develop branch of their git repositories:
-- https://github.com/ethereum/cpp-ethereum
-- https://github.com/ethereum/go-ethereum
-- https://github.com/ethereum/pyethapp
-To see the state of the latest Ethereum builds, see the [build server](http://build.ethdev.com/console).
