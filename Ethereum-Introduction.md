@@ -144,12 +144,6 @@ If you want to help contribute to core development, there is also:
 * [The stateless client concept](https://ethresear.ch/t/the-stateless-client-concept/172)
 * [Ethereum 2 and alternative PoS implementations](https://ethresear.ch/t/ethereum-2-and-alternative-pos-implementations/190/7)
 
-# Concluding remarks
-
-Ether certainly seems like a good investment, and a good alternative to using fiat currencies, as well as an enabler for otherwise uneconomical business, due to lower transaction costs. It's more decentralized nature than central banks has advantages for trade from a local to global scale. With governance applications and systems on top Ethereum, it is even possible to do away with the hindering borders surmounted by nation-states. By doing away with these borders, society can be more open, inclusive and equitable.
-
-However, all technology can only help mankind and the world to a certain extent. What is more important is for each and every person to become increasingly blissful. Each person must go within and enter a stillness of body and mind, which is when that bliss starts to manifest, and practice balanced living. Practicing certain techniques such as those given by Self-Realization Fellowship, such as daily Kriya yoga meditation, developing unconditional love that starts in the heart, keeping the mind at the point between the eyebrows, and moral living, helps each person manifest that bliss within, and from there, express that bliss outwardly at all times.
-
 # Further reading
 
 * [Another introduction](https://github.com/jamesray1/Ethereum-introduction/wiki/Ethereum-introduction)
