@@ -21,7 +21,7 @@ The working spec description of Dagger Hashimoto is available at  [https://githu
 The algorithm is intended to have the following key properties:
 
 * ASIC resistance (ie. lowest possible ASIC speedup coefficient)
-* Light-client verifiability, in <1s on Python or Javascript on a desktop or C++ on a Raspberry Pi
+* Light-client verifiability, in <1s on Python or JavaScript on a desktop or C++ on a Raspberry Pi
 
 And should not have any of the following flaws:
 
@@ -87,7 +87,7 @@ The wire protocol should be secure against the following issues:
 
 ### JS / RPC
 
-* Check that there are no exploits in the Javascript API, JSON-RPC API 
+* Check that there are no exploits in the JavaScript API, JSON-RPC API 
 * Define a security model for browser+js bindings. (-or give nathan@leastauthority.com a link to an existing doc.)
 
 ### Libraries

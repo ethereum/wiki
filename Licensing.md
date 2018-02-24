@@ -31,4 +31,4 @@ In this way we hope our initial version of Solidity and Mix lay down the foundat
 
 ### The Middleware
 
-The middleware of Ethereum, including the Javascript-based ethereum.js, the webthree libraries and eth (the command line client) will be distributed under an Affero license, likely the LGPL variant of it. We wish to allow free development of technologies by allowing linking to arbitrary software, but again would like to incentivise feeding of back-end integration work back into the community, especially regarding the interoperability with legacy systems.
+The middleware of Ethereum, including the JavaScript-based ethereum.js, the webthree libraries and eth (the command line client) will be distributed under an Affero license, likely the LGPL variant of it. We wish to allow free development of technologies by allowing linking to arbitrary software, but again would like to incentivise feeding of back-end integration work back into the community, especially regarding the interoperability with legacy systems.

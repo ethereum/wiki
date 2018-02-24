@@ -241,7 +241,7 @@ Note that high-level languages will often have their own wrappers for these opco
 * `eth.watch(acct, index, f)` - calls `f` when the given storage entry of the given account changes
 
 　ethオブジェクトを利用するのに、特別なソースファイルやライブラリは全く要らない。
-しかしながら、そうして作られたDアプリはEthereumクライアントの中で開いたときのみ動作するようになり、一般的なwebブラウザ上では動かない。Javascript APIの実践的使用例として[the source code of this webpage](http://gavwood.com/gavcoin.html)を訪れるとよい。
+しかしながら、そうして作られたDアプリはEthereumクライアントの中で開いたときのみ動作するようになり、一般的なwebブラウザ上では動かない。JavaScript APIの実践的使用例として[the source code of this webpage](http://gavwood.com/gavcoin.html)を訪れるとよい。
 .
 
 ### Fine Points To Keep Track Of

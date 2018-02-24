@@ -36,9 +36,9 @@ def sha3_256(x):
 Ethash is intended to satisfy the following goals:
 
 1. **IO saturation**: the algorithm should consume nearly the entire available memory access bandwidth (this is a strategy toward achieving ASIC resistance)
-2. **Light client verifiability**: a light client should be able to verify a round of mining in under 0.01 seconds on a desktop in C, and under 1 second in Python or Javascript, with at most 32 MB of memory
+2. **Light client verifiability**: a light client should be able to verify a round of mining in under 0.01 seconds on a desktop in C, and under 1 second in Python or JavaScript, with at most 32 MB of memory
 3. **Light client slowdown**: the process of running the algorithm with a light client should be much slower than the process with a full client, to the point that the light client algorithm is not an economically viable route toward making an ASIC implementation.
-4. **Light client fast startup**: a light client should be able to become fully operational and able to verify blocks within 40 seconds in Python or Javascript.
+4. **Light client fast startup**: a light client should be able to become fully operational and able to verify blocks within 40 seconds in Python or JavaScript.
 
 The general route that the algorithm takes is as follows:
 
