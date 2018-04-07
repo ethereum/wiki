@@ -1,4 +1,4 @@
----
+---gg
 name: White Paper
 category: Basics
 ---
@@ -48,7 +48,7 @@ The mechanism behind proof of work was a breakthrough in the space because it si
 
 ### Bitcoin As A State Transition System
 
-![statetransition.png](http://vitalik.ca/files/statetransition.png?2)
+![statetransition.png](https://raw.githubusercontent.com/vbuterin/diagrams/master/statetransition.png)
 
 From a technical standpoint, the ledger of a cryptocurrency such as Bitcoin can be thought of as a state transition system, where there is a "state" consisting of the ownership status of all existing bitcoins and a "state transition function" that takes a state and a transaction and outputs a new state which is the result. In a standard banking system, for example, the state is a balance sheet, a transaction is a request to move $X from A to B, and the state transition function reduces the value in A's account by $X and increases the value in B's account by $X. If A's account has less than $X in the first place, the state transition function returns an error. Hence, one can formally define:
 
@@ -76,7 +76,7 @@ The first half of the first step prevents transaction senders from spending coin
 
 ### Mining
 
-![block_picture.jpg](http://vitalik.ca/files/block_picture.png)
+![block_picture.jpg](https://raw.githubusercontent.com/vbuterin/diagrams/master/block.png)
 
 If we had access to a trustworthy centralized service, this system would be trivial to implement; it could simply be coded exactly as described, using a centralized server's hard drive to keep track of the state. However, with Bitcoin we are trying to build a decentralized currency system, so we will need to combine the state transaction system with a consensus system in order to ensure that everyone agrees on the order of transactions. Bitcoin's decentralized consensus process requires nodes in the network to continuously attempt to produce packages of transactions called "blocks". The network is intended to produce roughly one block every ten minutes, with each block containing a timestamp, a nonce, a reference to (ie. hash of) the previous block and a list of all of the transactions that have taken place since the previous block. Over time, this creates a persistent, ever-growing, "blockchain" that constantly updates to represent the latest state of the Bitcoin ledger.
 
@@ -135,7 +135,7 @@ Even without any extensions, the Bitcoin protocol actually does facilitate a wea
 However, the scripting language as implemented in Bitcoin has several important limitations:
 
 * **Lack of Turing-completeness** - that is to say, while there is a large subset of computation that the Bitcoin scripting language supports, it does not nearly support everything. The main category that is missing is loops. This is done to avoid infinite loops during transaction verification; theoretically it is a surmountable obstacle for script programmers, since any loop can be simulated by simply repeating the underlying code many times with an if statement, but it does lead to scripts that are very space-inefficient. For example, implementing an alternative elliptic curve signature algorithm would likely require 256 repeated multiplication rounds all individually included in the code.
-* **Value-blindness** - there is no way for a UTXO script to provide fine-grained control over the amount that can be withdrawn. For example, one powerful use case of an oracle contract would be a hedging contract, where A and B put in $1000 worth of BTC and after 30 days the script sends $1000 worth of BTC to A and the rest to B. This would require an oracle to determine the value of 1 BTC in USD, but even then it is a massive improvement in terms of trust and infrastructure requirement over the fully centralized solutions that are available now. However, because UTXO are all-or-nothing, the only way to achieve this is through the very inefficient hack of having many UTXO of varying denominations (eg. one UTXO of 2<sup>k</sup> for every k up to 30) and having O pick which UTXO to send to A and which to B.
+* **Value-blindness** - there is no way for a UTXO script to provide fine-grained control over the amount that can be withdrawn. For example, one powerful use case of an oracle contract would be a hedging contract, where A and B put in $1000 worth of BTC and after 30 days the script sends $1000 worth of BTC to A and the rest to B. This would require an oracle to determine the value of 1 BTC in USD, but even then it is a massive improvement in terms of trust and infrastructure requirement over the fully centralized solutions that are available now. However, because UTXO are all-or-nothing, the only way to achieve this is through the very inefficient hack of having many UTXO of varying denominations (eg. one UTXO of 2<sup>k</sup> for every k up to 30) and having the oracle pick which UTXO to send to A and which to B.
 * **Lack of state** - UTXO can either be spent or unspent; there is no opportunity for multi-stage contracts or scripts which keep any other internal state beyond that. This makes it hard to make multi-stage options contracts, decentralized exchange offers or two-stage cryptographic commitment protocols (necessary for secure computational bounties). It also means that UTXO can only be used to build simple, one-off contracts and not more complex "stateful" contracts such as decentralized organizations, and makes meta-protocols difficult to implement. Binary state combined with value-blindness also mean that another important application, withdrawal limits, is impossible.
 * **Blockchain-blindness** - UTXO are blind to blockchain data such as the nonce, the timestamp and previous block hash. This severely limits applications in gambling, and several other categories, by depriving the scripting language of a potentially valuable source of randomness.
 
@@ -189,7 +189,7 @@ Note that the gas allowance assigned by a transaction or contract applies to the
 
 ### Ethereum State Transition Function
 
-![ethertransition.png](http://vitalik.ca/files/ethertransition.png?1)
+![ethertransition.png](https://raw.githubusercontent.com/vbuterin/diagrams/master/ethertransition.png)
 
 The Ethereum state transition function, `APPLY(S,TX) -> S'` can be defined as follows:
 
@@ -232,7 +232,7 @@ The formal execution model of EVM code is surprisingly simple. While the Ethereu
 
 ### Blockchain and Mining
 
-![apply_block_diagram.png](http://vitalik.ca/files/apply_block_diagram.png)
+![apply_block_diagram.png](https://raw.githubusercontent.com/vbuterin/diagrams/master/apply_block_diagram.png)
 
 The Ethereum blockchain is in many ways similar to the Bitcoin blockchain, although it does have some differences. The main difference between Ethereum and Bitcoin with regard to the blockchain architecture is that, unlike Bitcoin, Ethereum blocks contain a copy of both the transaction list and the most recent state. Aside from that, two other values, the block number and the difficulty, are also stored in the block. The basic block validation algorithm in Ethereum is as follows:
 
@@ -348,12 +348,12 @@ As described by Sompolinsky and Zohar, GHOST solves the first issue of network s
 Ethereum implements a simplified version of GHOST which only goes down seven levels. Specifically, it is defined as follows:
 
 * A block must specify a parent, and it must specify 0 or more uncles
-* An uncle included in block B must have the following properties:
-  * It must be a direct child of the kth generation ancestor of B, where 2 <= k <= 7.
-  * It cannot be an ancestor of B
+* An uncle included in block `B` must have the following properties:
+  * It must be a direct child of the `k`-th generation ancestor of `B`, where `2 <= k <= 7`.
+  * It cannot be an ancestor of `B`
   * An uncle must be a valid block header, but does not need to be a previously verified or even valid block
   * An uncle must be different from all uncles included in previous blocks and all other uncles included in the same block (non-double-inclusion)
-* For every uncle U in block B, the miner of B gets an additional 3.125% added to its coinbase reward and the miner of U gets 93.75% of a standard coinbase reward.
+* For every uncle `U` in block `B`, the miner of `B` gets an additional 3.125% added to its coinbase reward and the miner of `U` gets 93.75% of a standard coinbase reward.
 
 This limited version of GHOST, with uncles includable only up to 7 generations, was used for two reasons. First, unlimited GHOST would include too many complications into the calculation of which uncles for a given block are valid. Second, unlimited GHOST with compensation as used in Ethereum removes the incentive for a miner to mine on the main chain and not the chain of a public attacker. 
 
@@ -379,7 +379,7 @@ However, there are several important deviations from those assumptions in realit
 
 (1) provides a tendency for the miner to include fewer transactions, and (2) increases `NC`; hence, these two effects at least partially cancel each other out. (3) and (4) are the major issue; to solve them we simply institute a floating cap: no block can have more operations than `BLK_LIMIT_FACTOR` times the long-term exponential moving average. Specifically:
 
-    blk.oplimit = floor((blk.parent.oplimit * (EMAFACTOR - 1) + floor(parent.opcount * BLK_LIMIT_FACTOR)) / EMA_FACTOR)
+    blk.oplimit = floor((blk.parent.oplimit * (EMA_FACTOR - 1) + floor(parent.opcount * BLK_LIMIT_FACTOR)) / EMA_FACTOR)
 
 `BLK_LIMIT_FACTOR` and `EMA_FACTOR` are constants that will be set to 65536 and 1.5 for the time being, but will likely be changed after further analysis.
 
@@ -434,8 +434,6 @@ The issuance model will be as follows:
 | Miners | 0% | 17.8% | 52.0% |
 
 **Long-Term Supply Growth Rate (percent)**
-
-![SPV in bitcoin](https://www.ethereum.org/gh_wiki/inflation.svg)
 
 _Despite the linear currency issuance, just like with Bitcoin over time the supply growth rate nevertheless tends to zero_
 

@@ -15,7 +15,7 @@ Peer-to-peer communications between nodes running Ethereum clients run using the
 ### Ethereum Sub-protocol
 
 **Status**
-[`+0x00`: `P`, `protocolVersion`: `P`, `networkId`: `P`, `td`: `P`, `bestHash`: `B_32`, `genesisHash`: `B_32`] Inform a peer of it's current **ethereum** state. This message should be sent _after_ the initial handshake and _prior_ to any **ethereum** related messages.
+[`+0x00`: `P`, `protocolVersion`: `P`, `networkId`: `P`, `td`: `P`, `bestHash`: `B_32`, `genesisHash`: `B_32`] Inform a peer of its current **ethereum** state. This message should be sent _after_ the initial handshake and _prior_ to any **ethereum** related messages.
 * `protocolVersion` is one of:
     * `0x00` for PoC-1;
     * `0x01` for PoC-2;

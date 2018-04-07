@@ -12,7 +12,7 @@ Dagger Hashimoto is a proposed spec for the mining algorithm for Ethereum 1.0. D
 
 With an additional modification, we also specify how to fulfill a third goal if desired, but at the cost of additional complexity:
 
-**Full chain storage**: mining should require storage of the complete blockchain state (due to the irregular structure of the Ethereum state trie, we anticipate that some pruning will be possible, particularly of some often-used contracts, but we want to minimize this).
+3. **Full chain storage**: mining should require storage of the complete blockchain state (due to the irregular structure of the Ethereum state trie, we anticipate that some pruning will be possible, particularly of some often-used contracts, but we want to minimize this).
 
 Dagger Hashimoto builds on two key pieces of previous work:
 
@@ -81,7 +81,7 @@ params = {
       "diff": 2**14,                    # Difficulty (adjusted during block evaluation)
       "epochtime": 100000,              # Length of an epoch in blocks (how often the dataset is updated)
       "k": 1,                           # Number of parents of a node
-      "w": w,                          # Used for modular exponentiation hashing
+      "w": w,                           # Used for modular exponentiation hashing
       "accesses": 200,                  # Number of dataset accesses during hashimoto
       "P": SAFE_PRIME_512               # Safe Prime for hashing and random number generation
 }
@@ -148,7 +148,7 @@ The algorithm used to generate the actual set of DAGs used to compute the work f
 def get_prevhash(n):
     from pyethereum.blocks import GENESIS_PREVHASH 
     from pyethreum import chain_manager
-    if num <= 0:
+    if n <= 0:
         return hash_to_int(GENESIS_PREVHASH)
     else:
         prevhash = chain_manager.index.get_block_by_number(n - 1)

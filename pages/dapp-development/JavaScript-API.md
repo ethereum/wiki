@@ -15,7 +15,7 @@ If you want to look at some more sophisticated examples using web3.js check out 
 
 As this API is designed to work with a local RPC node and all its functions are by default use synchronous HTTP requests.con
 
-If you want to make asynchronous request, you can pass an optional callback as the last parameter to most functions.
+If you want to make an asynchronous request, you can pass an optional callback as the last parameter to most functions.
 All callbacks are using an [error first callback](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/) style:
 
 ```js
@@ -60,7 +60,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string
 // "131242344353464564564574574567477"
 ```
 
-The next example wouldn't work as we have more than 20 floating points, therefore it is recommended to keep you balance always in *wei* and only transform it to other units when presenting to the user:
+The next example wouldn't work as we have more than 20 floating points, therefore it is recommended that you always keep your balance  in *wei* and only transform it to other units when presenting to the user:
 ```js
 var balance = new BigNumber('13124.234435346456466666457455567456');
 
@@ -86,6 +86,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
   * [toAscii(hexString)](#web3toascii)
   * [fromAscii(textString, [padding])](#web3fromascii)
   * [toDecimal(hexString)](#web3todecimal)
+  * [toChecksumAddress(string)](#web3tochecksumaddress)
   * [fromDecimal(number)](#web3fromdecimal)
   * [fromWei(numberStringOrBigNumber, unit)](#web3fromwei)
   * [toWei(numberStringOrBigNumber, unit)](#web3towei)
@@ -173,7 +174,7 @@ The `web3` object provides all methods.
 ```js
 var Web3 = require('web3');
 // create an instance of web3 using the HTTP provider.
-// NOTE in mist web3 is already available, so check first if its available before instantiating
+// NOTE in mist web3 is already available, so check first if it's available before instantiating
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 ```
 
@@ -468,6 +469,30 @@ console.log(str); // "0x657468657265756d"
 
 var str2 = web3.fromAscii('ethereum', 32);
 console.log(str2); // "0x657468657265756d000000000000000000000000000000000000000000000000"
+```
+
+***
+
+#### web3.toChecksumAddress
+
+    web3.toChecksumAddress(hexString);
+
+Converts a string to the checksummed address equivalent.
+
+##### Parameters
+
+1. `String` - A string to be converted to a checksummed address.
+
+
+##### Returns
+
+`String` - A string containing the checksummed address.
+
+##### Example
+
+```js
+var myAddress = web3.toChecksumAddress('0xa0c876ec9f2d817c4304a727536f36363840c02c');
+console.log(myAddress); // '0xA0C876eC9F2d817c4304A727536f36363840c02c'
 ```
 
 ***
