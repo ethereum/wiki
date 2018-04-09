@@ -1,8 +1,11 @@
+# The Ethereum Wiki
+
 Newcomers and those seeking an introduction to Ethereum may go to https://ethereum.org or https://github.com/ethereum/wiki/wiki.
 
 Note that you can proofread while you read and learn about anything.
 
-# Contribution guidelines
+## Contribution guidelines
+
 Please just **edit the pages in the wiki directly** as shown in the sidebar here: https://github.com/ethereum/wiki/wiki, rather than making **pull requests**.
 
 Please only create an **issue** if you can't fix it by editing yourself, and only if it is related to the wiki. If it is a technical issue e.g. with [web3 or JSON.RPC](https://github.com/ethereum/web3.js/issues), [geth](https://github.com/ethereum/go-ethereum/issues), [Mist](https://github.com/ethereum/mist) (although note that Mist isn't really user-ready yet, so using alternatives like [MyEtherWallet](https://www.myetherwallet.com/) is recommended instead), etc., please post an issue in the repo for that project as well, and reference the issue that you create in this repo (by copying and pasting the link to the issue in this repo in a comment in the issue in the relevant project repo).
