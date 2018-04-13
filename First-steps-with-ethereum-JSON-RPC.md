@@ -37,7 +37,7 @@ etheruem should be ready to use now
 type in console to check if everything is working fine
 
 ```
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}' http://localhost:8080
+curl -H "Content-Type: application/json" -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}' http://localhost:8080
 ```
 
 #### 3. mine and connect to the network
