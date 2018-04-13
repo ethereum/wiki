@@ -286,7 +286,7 @@ would result in the JSON:
 }]
 ```
 
-# Example Javascript Usage
+# Example JavaScript Usage
 
 ```js
 var Test = eth.contract(

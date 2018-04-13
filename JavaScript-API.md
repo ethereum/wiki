@@ -1,5 +1,5 @@
 ---
-name: Javascript API
+name: JavaScript API
 category: 
 ---
 
@@ -68,7 +68,7 @@ balance.plus(21).toString(10); // toString(10) converts it to a number string, b
 // "13145.23443534645646666646" // you number would be cut after the 20 floating point
 ```
 
-## Web3 Javascript Ðapp API Reference
+## Web3 JavaScript Ðapp API Reference
 
 * [web3](#web3)
   * [version](#web3versionapi)

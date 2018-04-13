@@ -149,7 +149,7 @@ Because of the way the Patricia tree works, if few changes are made then most pa
 
 ### Graphical Interfaces
 
-A contract by itself is a powerful thing, but it is not a complete Đapp. A Đapp, rather, is defined as a combination of a contract and a graphical interface for using that contract (note: this is only true for now; future versions of Ethereum will include whisper, a protocol for allowing nodes in a Đapp to send direct peer-to-peer messages to each other without the blockchain). Right now, the interface is implemented as an HTML/CSS/JS webpage, with a special Javascript API in the form of the `eth` object for working with the Ethereum blockchain. The key parts of the Javascript API are as follows:
+A contract by itself is a powerful thing, but it is not a complete Đapp. A Đapp, rather, is defined as a combination of a contract and a graphical interface for using that contract (note: this is only true for now; future versions of Ethereum will include whisper, a protocol for allowing nodes in a Đapp to send direct peer-to-peer messages to each other without the blockchain). Right now, the interface is implemented as an HTML/CSS/JS webpage, with a special JavaScript API in the form of the `eth` object for working with the Ethereum blockchain. The key parts of the JavaScript API are as follows:
 
 * `eth.transact(from, ethervalue, to, data, gaslimit, gasprice)` - sends a transaction to the desired address from the desired address (note: `from` must be a private key and `to` must be an address in hex form) with the desired parameters
 * `(string).pad(n)` - converts a number, encoded as a string, to binary form `n` bytes long
@@ -159,7 +159,7 @@ A contract by itself is a powerful thing, but it is not a complete Đapp. A Đap
 * `eth.key` - the user's private key
 * `eth.watch(acct, index, f)` - calls `f` when the given storage entry of the given account changes
 
-You do not need any special source file or library to use the `eth` object; however, your Đapp will only work when opened in an Ethereum client, not a regular web browser. For an example of the Javascript API being used in practice, see [the source code of this webpage](http://gavwood.com/gavcoin.html).
+You do not need any special source file or library to use the `eth` object; however, your Đapp will only work when opened in an Ethereum client, not a regular web browser. For an example of the JavaScript API being used in practice, see [the source code of this webpage](http://gavwood.com/gavcoin.html).
 
 ### Fine Points To Keep Track Of
 

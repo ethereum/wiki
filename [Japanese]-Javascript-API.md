@@ -1,5 +1,5 @@
 ---
-name: Javascript API
+name: JavaScript API
 category: 
 ---
 

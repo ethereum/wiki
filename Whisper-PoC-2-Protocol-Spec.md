@@ -75,7 +75,7 @@ A message is formed as the concatenation of a single byte for flags (at present 
 
 In the present protocol version, no explicit authentication token is given to indicate that the data field is encrypted; any would-be readers of the message must know ahead of time, through the choice of topic that they have specifically filtered for, that the message is encrypted with a particular key. This is likely to be altered in a further PoC to include a MAC.
 
-Any determination that the message is indeed from a particular sender is left for a higher-level to address. This is noted through the Javascript API allowing the `to` parameter to be passed only at the point of specifying the filter. Since the signature is a part of the message and not outside in the envelope, those unable to decrypt the message data are also unable to access any signature.
+Any determination that the message is indeed from a particular sender is left for a higher-level to address. This is noted through the JavaScript API allowing the `to` parameter to be passed only at the point of specifying the filter. Since the signature is a part of the message and not outside in the envelope, those unable to decrypt the message data are also unable to access any signature.
 
 - `flags`: 1 byte
 - (`signature`: 65 bytes)
@@ -95,7 +95,7 @@ The signature portion is formed as the concatenation of the *r*, *s* and *v* par
 
 The payload is otherwise unformatted binary data.
 
-In the Javascript API, the distinction between envelopes and messages is blurred. This is because DApps should know nothing about envelopes whose message cannot be inspected; the fact that nodes pass envelopes around regardless of their ability to decode the message (or indeed their interest in it at all) is an important component in Whisper's dark communications strategy.
+In the JavaScript API, the distinction between envelopes and messages is blurred. This is because DApps should know nothing about envelopes whose message cannot be inspected; the fact that nodes pass envelopes around regardless of their ability to decode the message (or indeed their interest in it at all) is an important component in Whisper's dark communications strategy.
 
 ### Basic Operation
 

@@ -32,7 +32,7 @@ This contract, if placed on the blockchain and called, would create a log entry 
 
 ## The Contract
 
-The contract is the basic structure of Solidity. It is a prototype of an object which lives on the blockchain. A contract may be instantiated into a contract-account (or 'object', or sometimes just 'account') at which point it gets a uniquely identifying address with which is may be called. The address here is similar to a reference or pointer in C-like languages, or just a plain old object in Javascript. Like plain objects in many object-oriented languages, contracts can never run themselves - they may only be called, or, put another way, they can only react to the receipt of a message; they can never be proactive.
+The contract is the basic structure of Solidity. It is a prototype of an object which lives on the blockchain. A contract may be instantiated into a contract-account (or 'object', or sometimes just 'account') at which point it gets a uniquely identifying address with which is may be called. The address here is similar to a reference or pointer in C-like languages, or just a plain old object in JavaScript. Like plain objects in many object-oriented languages, contracts can never run themselves - they may only be called, or, put another way, they can only react to the receipt of a message; they can never be proactive.
 
 We denote a contract with the `contract` keyword and a name, followed by its definition enclosed in braces (`{` & `}`). Here is the most basic contract:
 
@@ -43,7 +43,7 @@ contract MostBasicContract {
 
 It doesn't do anything. To make it do something when it receives a message, we can introduce a function. The function you've already seen is the so-called default function. Why this is default will be properly explained later, but for now, suffice it to say that it is simply the function that gets called when this contract (well, an instantiation of it, anyway) receives a message from the Ethereum Environment.
 
-The syntax of a function is similar to Javascript: it begins with the `function` keyword, then has a parenthesised parameter list, and finally has a braced expression block.
+The syntax of a function is similar to JavaScript: it begins with the `function` keyword, then has a parenthesised parameter list, and finally has a braced expression block.
 
 ```
 contract MostBasicContract {
@@ -53,7 +53,7 @@ contract MostBasicContract {
 }
 ```
 
-This expression block is very similar to other C-like languages including Javascript. Within our expression block, we are able to do arbitrary computation; for instance, we might try to determine what the sum of 1 and 1 is and place it into a variable called `two`:
+This expression block is very similar to other C-like languages including JavaScript. Within our expression block, we are able to do arbitrary computation; for instance, we might try to determine what the sum of 1 and 1 is and place it into a variable called `two`:
 
 ```
 contract Simple {
@@ -63,7 +63,7 @@ contract Simple {
 }
 ```
 
-Unlike in Javascript, all variables must be declared prior to use and typed. However, for convenience, `var` is provided as a way to automatically determine the type through the expression it is initialised to. In this case, the type is `uint`, but more on the types later.
+Unlike in JavaScript, all variables must be declared prior to use and typed. However, for convenience, `var` is provided as a way to automatically determine the type through the expression it is initialised to. In this case, the type is `uint`, but more on the types later.
 
 ## Simple Types
 
@@ -138,7 +138,7 @@ Reals are formed similar to integers except that they include a decimal point an
 
 ## Parameters and Returns
 
-Messages can have arbitrary input and output data. Since functions are our way of expressing how messages should be handled, they need a way of expressing how this data should be utilised. As such, like in Javascript and C, functions may take parameters as input; unlike in Javascript and C, they may so return arbitrary parameters as output. The input parameters, and types, must be named, type followed by name. For example, suppose we want our contract to accept messages that present two integers, we would write something like:
+Messages can have arbitrary input and output data. Since functions are our way of expressing how messages should be handled, they need a way of expressing how this data should be utilised. As such, like in JavaScript and C, functions may take parameters as input; unlike in JavaScript and C, they may so return arbitrary parameters as output. The input parameters, and types, must be named, type followed by name. For example, suppose we want our contract to accept messages that present two integers, we would write something like:
 
 ```
 contract Simple {

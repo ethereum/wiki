@@ -1,5 +1,5 @@
 ---
-name: Javascript Development Deficiencies
+name: JavaScript Development Deficiencies
 category: 
 ---
 
