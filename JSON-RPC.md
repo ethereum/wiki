@@ -1267,6 +1267,11 @@ params: [
   - `gasUsed `: `QUANTITY ` - The amount of gas used by this specific transaction alone.
   - `contractAddress `: `DATA`, 20 Bytes - The contract address created, if the transaction was a contract creation, otherwise `null`.
   - `logs`: `Array` - Array of log objects, which this transaction generated.
+  
+  It also returns _either_ :
+
+  - `root` : `DATA` 32 bytes of post-transaction stateroot (pre Byzantium)
+  - `status`: `QUANTITY` either `1` (success) or `0` (failure) 
 
 ##### Example
 ```js
