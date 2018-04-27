@@ -1,6 +1,7 @@
 ---
 name: FAQ
-category: 
+category: null
+published: true
 ---
 
 Answers to questions about Ethereum
@@ -54,13 +55,17 @@ If you prefer to learn by watching videos, see:
  + [Singularity 1 on 1: Ethereum is a Decentralized Consensus Platform](http://youtu.be/fbEtivJIfIU) (Video, 69min)
  + [Our second Reddit "Ask Me Anything" for community selected questions](http://www.reddit.com/r/IAmA/comments/2bjmgb/hi_we_are_the_ethereum_project_team_ask_us/) (not actually a video)
 
+test
+
+
 ### Where can I learn more about Ethereum?
 
 - Main site: https://www.ethereum.org
 - Forums: https://forum.ethereum.org
 - Github: https://github.com/ethereum
 - Blog: https://blog.ethereum.org
-- Wiki: http://wiki.ethereum.org
+- Wiki: http://ethereum.wiki
+- Twitter: https://twitter.com/ethereum
 - Meetups: http://ethereum.meetup.com
 - Whitepaper: http://ethereum.org/ethereum.html
 - Yellow Paper: http://gavwood.com/paper.pdf
