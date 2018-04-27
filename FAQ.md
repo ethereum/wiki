@@ -1,6 +1,7 @@
 ---
 name: FAQ
-category: 
+category: null
+published: true
 ---
 
 Answers to questions about Ethereum
@@ -60,7 +61,8 @@ If you prefer to learn by watching videos, see:
 - Forums: https://forum.ethereum.org
 - Github: https://github.com/ethereum
 - Blog: https://blog.ethereum.org
-- Wiki: http://wiki.ethereum.org
+- Wiki: http://ethereum.wiki
+- Twitter: https://twitter.com/ethereum
 - Meetups: http://ethereum.meetup.com
 - Whitepaper: http://ethereum.org/ethereum.html
 - Yellow Paper: http://gavwood.com/paper.pdf
