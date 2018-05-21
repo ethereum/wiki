@@ -34,7 +34,7 @@ The increasing prominence of cryptoeconomics in the last five years is to a larg
 In traditional applied cryptography, security assumptions tend to look something like this:
 
 伝統的な暗号学では、セキュリティでは、これらのことを考えている。
-1. 誰も 2^79移譲のコンピューターステップを行うことが出来ない。
+1. 誰も 2^79以上のコンピューターステップを行うことが出来ない。
 
 2. 
 
