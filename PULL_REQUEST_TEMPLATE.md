@@ -1,5 +1,1 @@
-**Please do not open a pull request.**
-
-This repository no longer contains any code or documentation; please edit the [wiki](https://github.com/ethereum/wiki/wiki) directly, instead.
-
-If you're having issues editing the wiki, you could try reading the introduction to GitHub wikis,  [here](https://help.github.com/articles/about-github-wikis/).
+Do not make a pull request; chances are that all PRs will be ignored, since any content in the codebase can be in this [wiki](https://github.com/ethereum/wiki/wiki) instead.
