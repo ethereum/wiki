@@ -1,7 +1,7 @@
 # Wiki
 
-All of the content in this repository lives in the  [Wiki](https://github.com/ethereum/wiki/wiki).
+Hello 👋
 
-[![Screenshot](screenshot.png)](https://github.com/ethereum/wiki/wiki)
+This wiki served us well for a very long time, but it's moved to a different platform that will allow for more collaboration, and hopefully better knowledge sharing over time.
 
-There is no longer any code or documentation stored in this repository.
+eth.wiki
